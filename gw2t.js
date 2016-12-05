@@ -7574,8 +7574,22 @@ A = {
 		{
 			return false;
 		}
+		if (pDish.data("isinitialized") === undefined)
+		{
+			pDish.data("isinitialized", true);
+			var originalhtml = pDish.html();
+			if (originalhtml.length)
+			{
+				pDish.data("originalhtml", originalhtml);
+			}
+		}
 		pDish.empty().data("token", A.TokenCurrent);
 		I.updateScrollbar(pDish);
+		// Restore original HTML if available, after wiping the dish
+		if (pDish.data("originalhtml"))
+		{
+			pDish.html(pDish.data("originalhtml"));
+		}
 		return true;
 	},
 	
@@ -9417,65 +9431,6 @@ V = {
 /* =============================================================================
  * @@View and generate account character and bank sections
  * ========================================================================== */
-
-	/*
-	 * Binds a sortable list by binding its clickable header.
-	 * @param jqobject pList to bind.
-	 */
-	bindSortableList: function(pList)
-	{
-		var header = $(pList).find("li").first();
-		header.click(function()
-		{
-			V.toggleSortableHeader($(this));
-			V.sortList($(this).parent(), $(this).data("isdescending"));
-		});
-	},
-	
-	/*
-	 * Toggles the icon and boolean data value of a header.
-	 * @param jqobject pHeader to bind.
-	 */
-	toggleSortableHeader: function(pHeader)
-	{
-		var header = $(pHeader);
-		// Sort and toggle the boolean
-		var isdescending = header.data("isdescending");
-		if (isdescending === undefined)
-		{
-			isdescending = false;
-		}
-		header.data("isdescending", !isdescending);
-		// Change symbol
-		var symbol = (isdescending) ? I.Symbol.TriUp : I.Symbol.TriDown;
-		header.find(".chrHeaderToggle").html(symbol);
-	},
-	
-	/*
-	 * Sorts a list with a single set of numeric data.
-	 * @param jqobject pColumn to sort.
-	 * @param boolean pOrder descending if true, ascending if false.
-	 * @pre Each list item in the column has the data-value attribute initialized.
-	 */
-	sortList: function(pList, pOrder)
-	{
-		var list = $(pList);
-		var sortable = [];
-		// Loop every list items, except the first which is the header
-		list.find("li").slice(1).each(function()
-		{
-			sortable.push({
-				item: $(this),
-				value: parseFloat($(this).attr("data-value"))
-			});
-		});
-		U.sortObjects(sortable, {aKeyName: "value", aIsDescending: pOrder});
-		
-		for (var i = 0; i < sortable.length; i++)
-		{
-			(sortable[i].item).appendTo(list);
-		}
-	},
 	
 	/*
 	 * Rearranges all the characters columns based on one column's data values.
@@ -9843,7 +9798,7 @@ V = {
 			function() { $("#chrSelection_" + U.getSubstringFromHTMLID($(this))).css({outline: "none"}); }
 		);
 		// Insert header above the columns
-		var sym = " <b class='chrHeaderToggle'>" + I.Symbol.TriDown + "</b>";
+		var sym = " <b class='jsSortableHeaderSymbol'>" + I.Symbol.TriDown + "</b>";
 		$("#chrSelection").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrName'>"
 			+ A.Data.Characters.length + " "
 			+ D.getWordCapital("characters") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrCommitment'>"
@@ -9857,7 +9812,7 @@ V = {
 		// Header click to sort the columns
 		$(".chrHeaderLeft, .chrHeaderRight").click(function()
 		{
-			V.toggleSortableHeader($(this));
+			I.toggleSortableHeader($(this));
 			V.sortCharacters($(this).attr("data-classifier"), $(this).data("isdescending"));
 		});
 		// SUMMARY MARQUEE (top)
@@ -9965,9 +9920,8 @@ V = {
 				case "Dungeon": header = D.getModifiedWord("tokens", "dungeon", U.CaseEnum.Every); break;
 				case "Map": header = D.getModifiedWord("tokens", "map", U.CaseEnum.Every); break;
 			}
-			var sym = " <b class='chrHeaderToggle'>" + I.Symbol.TriDown + "</b>";
-			wallet.append("<li class='chrHeader'><var class='chrHeaderLeft curClick'>" + header + sym + "</var></li>");
-			V.bindSortableList(wallet);
+			wallet.append("<li class='chrHeader'><var class='chrHeaderLeft curClick'>" + header + "</var></li>");
+			I.bindSortableTable(wallet, {aIsList: true});
 			
 			// First loop to find max value of the wallet
 			var currency, value, amount, coef, amountstr;
@@ -11791,6 +11745,131 @@ V = {
 	serveSold: function()
 	{
 		B.generateTransactions("Sold", A.URL.HistorySells);
+	},
+	
+	/*
+	 * Generates Pact Supply history and statistics.
+	 */
+	servePact: function()
+	{
+		var dish = $("#accDish_Pact");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		
+		var container = B.createBank($("#pctBank"));
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var tab, slotscontainer, slot;
+		var numtofetch = 0;
+		var numfetched = 0;
+		
+		var history, products = H.Vendor.Products;
+		var occurnums = {}, occurdates = {}, highestoccur = 0, highestprice = 0;
+		U.convertExternalLink("#accDish_Pact a");
+		var generateStatistics = function()
+		{
+			var stat = $("#pctStatTable").append("<tr class='pctTableHeader'><th></th><th>Occurrence</th><th>Recipe</th><th>Price</th><th></th></tr>");
+			for (var i in products)
+			{
+				Q.getItem(products[i], function(pItem)
+				{
+					var name = U.escapeHTML(pItem.name);
+					var priceobj = E.Pricelist[i];
+					var pricevalue = (priceobj) ? priceobj.oPriceSell : 0;
+					var pricestr = ((priceobj) ? E.formatCoinStringColored(priceobj.oPriceSell)
+						: E.formatKarmaString(H.Vendor.Prices[i] || H.Vendor.PriceDefault));
+					stat.append("<tr class='pctStatRow cssStats'>"
+						+ "<td class='pctStatCount' data-value='" + occurnums[i] + "'>" + occurnums[i] + "</td>"
+						+ "<td data-value='" + occurnums[i] +  "'>" + I.getBar((occurnums[i] / highestoccur) * T.cPERCENT_100, true) + "</td>"
+						+ "<td class='pctStatName' data-value='" + name + "' title='" + occurdates[i] + "'>"
+							+ "<a class='" + Q.getRarityClass(pItem.rarity) + "'" + U.convertExternalAnchor(U.getTradingItemLink(i, name)) + "'>" + name + "</a></td>"
+						+ "<td data-value='" + pricevalue + "'>" + I.getBar((((priceobj) ? priceobj.oPriceSell : 0) / highestprice) * T.cPERCENT_100) + "</td>"
+						+ "<td class='pctStatPrice' data-value='" + pricevalue + "'>" + pricestr + "</td>"
+					+ "</tr>");
+				});
+			}
+			I.qTip.init(".pctStatName");
+			I.bindSortableTable(stat, {aPresortColumn: 4});
+		};
+		
+		$.getScript("data/pact.js", function()
+		{
+			history = GW2T_PACT_DATA;
+			// Count occurences
+			for (var i in history)
+			{
+				var day = history[i];
+				var dayoccur = {};
+				for (var ii = 0; ii < day.length; ii++)
+				{
+					var id = day[ii];
+					if (occurnums[id] === undefined) // Initialize occurence entry for this item ID
+					{
+						occurnums[id] = 0;
+						occurdates[id] = "";
+					}
+					if (dayoccur[id] === undefined) // Prevent counting of multiple offers of the same item in a day
+					{
+						occurnums[id]++;
+						occurdates[id] += i + "<br />";
+						dayoccur[id] = true;
+					}
+					if (occurnums[id] > highestoccur)
+					{
+						highestoccur = occurnums[id];
+					}
+				}
+			}
+			// Count the number of items in the bank first, because empty slots are written as "null" in the API
+			var itemids = [];
+			for (var i in products)
+			{
+				itemids.push(i);
+				itemids.push(products[i]);
+			}
+			numtofetch = itemids.length;
+			Q.getPricedItems(itemids, function()
+			{
+				// First generate empty bank slots, then fill them up asynchronously by item details retrieval
+				bank.empty();
+				tab = B.createBankTab(bank);
+				slotscontainer = tab.find(".bnkTabSlots");
+				for (var i = 0; i < itemids.length; i++)
+				{
+					var itemid = itemids[i];
+					var count = occurnums[itemid] || 1;
+					slot = B.createBankSlot(slotscontainer);
+					slot.data("count", 1);
+					(function(iSlot, iSlotData)
+					{
+						Q.getItem(iSlotData.id, function(iItem)
+						{
+							B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+							{
+								numfetched++;
+								A.setProgressBar(numfetched, numtofetch);
+							}});
+						});
+					})(slot, {id: itemid, count: -count});
+					if (occurnums[itemid])
+					{
+						E.getPriceObject(itemid, function(pPrice)
+						{
+							if (pPrice && pPrice.oPriceSell > highestprice)
+							{
+								highestprice = pPrice.oPriceSell;
+							}
+						});
+					}
+				}
+				// Update tallies
+				B.tallyBank(container);
+				// Create search bar
+				B.createBankMenu(bank);
+				generateStatistics();
+			});
+		});
 	}
 };
 B = {
@@ -12071,7 +12150,18 @@ B = {
 		var Settings = pSettings || {};
 		if (pSettings)
 		{
-			var count = Settings.aSlotMeta.count || 1;
+			var count = 1, pricecount = 1;
+			if (Settings.aSlotMeta.count >= 0)
+			{
+				count = Settings.aSlotMeta.count;
+				pricecount = count;
+			}
+			// Negative "count" is regarded as 1 for price, and visually as the positive count
+			else if (Settings.aSlotMeta.count < 0)
+			{
+				count = Settings.aSlotMeta.count * -1;
+				pricecount = 1;
+			}
 			var itemmeta = null;
 			var validmeta = {
 				upgrades: true, infusions: true, skin: true, bound_to: true
@@ -12147,10 +12237,10 @@ B = {
 					}
 				}
 				// Fade the slots that act as collections
-				if (Settings.aSlotMeta.count === 0)
+				if (count === 0)
 				{
 					pSlot.addClass("bnkSlotZero");
-					pSlot.data("count", Settings.aSlotMeta.count);
+					pSlot.data("count", count);
 				}
 				else
 				{
@@ -12162,7 +12252,7 @@ B = {
 				{
 					B.updateSlotPrice(pSlot, {
 						aPrice: Settings.aPrice,
-						aCount: Settings.aSlotMeta.count,
+						aCount: pricecount,
 						aPaymentEnum: E.PaymentEnum.Coin
 					});
 				}
@@ -12170,7 +12260,7 @@ B = {
 				{
 					B.updateSlotPrice(pSlot, {
 						aPrice: Settings.aGem,
-						aCount: Settings.aSlotMeta.count,
+						aCount: pricecount,
 						aPaymentEnum: E.PaymentEnum.Gem
 					});
 				}
@@ -12184,7 +12274,7 @@ B = {
 					{
 						B.updateSlotPrice(pSlot, {
 							aPrice: pPrice,
-							aCount: Settings.aSlotMeta.count,
+							aCount: pricecount,
 							aPaymentEnum: E.PaymentEnum.Coin,
 							aTransactionBuy: Settings.aTransactionBuy,
 							aTransactionSell: Settings.aTransactionSell
@@ -32554,7 +32644,8 @@ I = {
 			Sold: "Sold",
 			PVP: "PVP",
 			Guilds: "Guilds",
-			Achievements: "Achievements"
+			Achievements: "Achievements",
+			Pact: "Pact"
 		}
 	},
 	/*
@@ -33273,8 +33364,9 @@ I = {
 	 */
 	getBar: function(pPercentage, pWantRight, pWantMarker)
 	{
+		var percentage = (pPercentage > 100) ? 100 : pPercentage;
 		return "<samp>"
-			+ "<s class='" + (pWantRight ? "cssRight" : "") + "' style='width:" + pPercentage + "%'>"
+			+ "<s class='" + (pWantRight ? "cssRight" : "") + "' style='width:" + percentage + "%'>"
 				+ (pWantMarker ? "<mark></mark>" : "")
 			+ "</s>"
 		+ "</samp>";
@@ -33828,6 +33920,83 @@ I = {
 				}
 			}, 50);
 		};
+	},
+	
+	/*
+	 * Binds an HTML table to have its <th></th> elements clickable to sort
+	 * the table's elements with "data-value" attribute initialized.
+	 * @param jqobject pTable
+	 * @objparam boolean aIsList whether the "table" is just one column of <li></li>, optional.
+	 * @objparam int aPresortColumn 0 indexed number of column to presort, optional.
+	 */
+	bindSortableTable: function(pTable, pSettings)
+	{
+		var table = $(pTable);
+		var Settings = pSettings || {};
+		var islist = Settings.aIsList;
+		
+		var sortTable = function(pColumn, pOrder)
+		{
+			var sortable = [];
+			// Loop every row, except the first which should be the header
+			var rows = (islist) ? table.find("li") : table.find("tr");
+			rows.slice(1).each(function()
+			{
+				var value = (islist) ? $(this).attr("data-value") : $(this).find("td:eq(" + pColumn + ")").attr("data-value");
+				sortable.push({
+					item: $(this),
+					value: isNaN(value) ? value : parseFloat(value)
+				});
+			});
+			U.sortObjects(sortable, {aKeyName: "value", aIsDescending: pOrder});
+
+			for (var i = 0; i < sortable.length; i++)
+			{
+				(sortable[i].item).appendTo(table);
+			}
+		};
+		
+		// Bind the headers
+		var column = 0;
+		var headers = (islist) ? table.find("li:first") : table.find("th");
+		headers.each(function()
+		{
+			(function(iHeader, iColumn)
+			{
+				iHeader.addClass("curToggle").append("&nbsp;<span class='jsSortableHeaderSymbol'>" + I.Symbol.TriDown + "</span>")
+					.click(function()
+				{
+					I.toggleSortableHeader($(this));
+					sortTable(iColumn, $(this).data("isdescending"));
+				});
+			})($(this), column);
+			column++;
+		});
+		
+		// Trigger click on header to presort if requested
+		if (Settings.aPresortColumn)
+		{
+			headers.eq(Settings.aPresortColumn).trigger("click");
+		}
+	},
+	
+	/*
+	 * Toggles the order symbol and boolean data value of a sortable table's header.
+	 * @param jqobject pHeader to bind.
+	 */
+	toggleSortableHeader: function(pHeader)
+	{
+		var header = $(pHeader);
+		// Sort and toggle the boolean
+		var isdescending = header.data("isdescending");
+		if (isdescending === undefined)
+		{
+			isdescending = false;
+		}
+		header.data("isdescending", !isdescending);
+		// Change symbol
+		var symbol = (isdescending) ? I.Symbol.TriUp : I.Symbol.TriDown;
+		header.find(".jsSortableHeaderSymbol").html(symbol);
 	},
 	
 	/*

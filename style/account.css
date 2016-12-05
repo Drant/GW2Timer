@@ -2553,6 +2553,34 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .acc_recipes_weaponsmith_sword { background-position: -3616px 0; }
 .acc_recipes_weaponsmith_upgradecomponent { background-position: -3648px 0; }
 
+/* Lab
+----------------------------------------------------------------------------- */
+#pctStatistics {
+	text-align: center;
+	font-family: Trebuchet MS, Menomonia;
+}
+#pctStatTable {
+	display: inline-block;
+	text-align: left;
+}
+.pctTableHeader {
+	text-align: center;
+}
+.pctStatRow:hover {
+	background: #444;
+}
+.pctStatCount {
+	padding-right: 16px;
+	text-align: right;
+}
+.pctStatName {
+	padding-left: 16px;
+}
+.pctStatPrice {
+	padding-left: 8px;
+	text-align: right;
+}
+
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */
 @media (max-width: 1080px) {

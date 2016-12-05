@@ -3051,14 +3051,14 @@ laurelunit {
 	background-position: -64px 0;
 }
 
-.rarity_Junk { color: #aaaaaa; /* gray */ }
-.rarity_Basic { color: #ffffff; /* white */ }
-.rarity_Fine { color: #5599ff; /* blue */ }
-.rarity_Masterwork { color: #33cc11; /* green */ }
-.rarity_Rare { color: #ffdd22; /* yellow */ }
-.rarity_Exotic { color: #ffaa00; /* orange */ }
-.rarity_Ascended { color: #ff4488; /* magenta */ }
-.rarity_Legendary { color: #9933ff; /* violet */ }
+.rarity_Junk { color: #aaaaaa !important; /* gray */ }
+.rarity_Basic { color: #ffffff !important; /* white */ }
+.rarity_Fine { color: #5599ff !important; /* blue */ }
+.rarity_Masterwork { color: #33cc11 !important; /* green */ }
+.rarity_Rare { color: #ffdd22 !important; /* yellow */ }
+.rarity_Exotic { color: #ffaa00 !important; /* orange */ }
+.rarity_Ascended { color: #ff4488 !important; /* magenta */ }
+.rarity_Legendary { color: #9933ff !important; /* violet */ }
 
 
 /* =============================================================================
