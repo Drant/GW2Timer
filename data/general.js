@@ -1454,12 +1454,12 @@ Countdown: {
 		Finish: new Date("2017-11-03T16:00:00Z")
 	},*/
 	{
-		name_en: "Wintersday 2016 (Estimated)",
-		name_de: "Wintertag 2016 (Geschätzt)",
-		name_es: "Día Invernal 2016 (Estimado)",
-		name_fr: "Hivernel 2016 (Estimée)",
+		name_en: "Wintersday 2016",
+		name_de: "Wintertag 2016",
+		name_es: "Día Invernal 2016",
+		name_fr: "Hivernel 2016",
 		name_zh: "冬幕节2016",
-		official: "the-game/releases/december-15-2015/",
+		official: "news/wintersday-2016-is-coming/",
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
 	}
@@ -1508,8 +1508,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-11-29T16:00:00Z"),
-	Finish: new Date("2016-12-06T16:00:00Z"),
+	Start: new Date("2016-12-06T16:00:00Z"),
+	Finish: new Date("2016-12-13T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1530,24 +1530,38 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Cosmic Harvesting Tool",
-		id: "79721",
-		price: 1000,
+		name: "Messenger's Travel Pack",
+		id: "http://i.imgur.com/WcKKQDc.png",
+		price: 445,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Eir's Legacy Longbow",
-		id: "79853",
-		price: 600,
+		name: "Fire Quiver Backpack",
+		id: "http://i.imgur.com/2MJdkuU.png",
+		price: 400,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Fancy Winter Outfit",
-		id: "38058",
-		price: 700,
+		name: "Snowflake Glider",
+		id: "77528",
+		price: 500,
 		discount: null,
+		col: 1
+	},
+	{
+		name: "Winter Chimes Dye Kit",
+		id: "77470",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 1
+	},
+	{
+		name: "Vibrant Dye Kit",
+		id: "79695",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]
