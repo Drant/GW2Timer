@@ -2,7 +2,7 @@
  * This file is used by http://gw2timer.com/pact
  * History of Pact Supply Network Agent offerings.
  * Array format: [Mehem, Fox, Derwena, Yana, Katyn, Verma]
- * Dates are UTC; numbers are recipe sheet item ID.
+ * Dates are UTC; numbers are recipe sheet item ID offered by that NPC.
  * Consult bottom portion of http://gw2timer.com/data/general.js for prices.
  */
 

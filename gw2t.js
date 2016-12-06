@@ -144,6 +144,7 @@ O = {
 		bol_showPanel: true,
 		bol_showMap: true,
 		bol_showHUD: true,
+		bol_showHUDWvW: true,
 		bol_showDashboard: true,
 		bol_showTimeline: true,
 		bol_opaqueTimeline: false,
@@ -1365,8 +1366,11 @@ O = {
 		},
 		bol_showHUD: function()
 		{
-			$("#hudOuter").toggle(O.Options.bol_showHUD);
-			$("#hudBoxes").toggle(O.Options.bol_showHUD);
+			$("#mapHUDContainer, #mapHUDContainerInner").toggle(O.Options.bol_showHUD);
+		},
+		bol_showHUDWvW: function()
+		{
+			$("#wvwHUDContainer, #wvwHUDContainerInner").toggle(O.Options.bol_showHUDWvW);
 		},
 		bol_showCoordinatesBar: function()
 		{
@@ -1376,7 +1380,7 @@ O = {
 		{
 			if (O.Options.bol_hideHUD === false)
 			{
-				$("#hudBoxes").show();
+				$("#mapHUDContainerInner").show();
 			}
 		},
 		bol_showTimeline: function()
@@ -3532,12 +3536,25 @@ U = {
 		}
 		return assoc;
 	},
-	convertAssocToArray: function(pAssoc)
+	convertAssocToArray: function(pAssoc, pKeyName)
 	{
 		var arr = [];
-		for (var i in pAssoc)
+		if (pKeyName)
 		{
-			arr.push(i);
+			// An array of objects, with key assigned as a property of each object
+			for (var i in pAssoc)
+			{
+				(pAssoc[i])[pKeyName] = i;
+				arr.push(pAssoc[i]);
+			}
+		}
+		else
+		{
+			// An array of keys
+			for (var i in pAssoc)
+			{
+				arr.push(i);
+			}
 		}
 		return arr;
 	},
@@ -20736,6 +20753,10 @@ M = {
 		{
 			that.goToDefault();
 		});
+		$(htmlidprefix + "ContextToggleHUD").click(function()
+		{
+			$("#opt_bol_showHUD" + that.OptionSuffix).trigger("click");
+		});
 		$(htmlidprefix + "ContextRange").one("mouseenter", function()
 		{
 			that.initializeWeaponPlacer(that);
@@ -20797,10 +20818,6 @@ M = {
 		{
 			case P.MapEnum.Tyria:
 			{
-				$(htmlidprefix + "ContextToggleHUD").click(function()
-				{
-					$("#opt_bol_showHUD").trigger("click");
-				});
 				$(htmlidprefix + "ContextDrawCompletion").click(function()
 				{
 					P.drawCompletionRoute();
@@ -26568,6 +26585,7 @@ W = {
 		I.styleContextMenu("#wvwContext");
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
+		$("#wvwHUDContainer").toggle(O.Options.bol_showHUDWvW);
 		// Finally
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
@@ -32805,7 +32823,7 @@ I = {
 		I.initializeUIForMenu();
 		I.initializeUIForHUD();
 		I.styleContextMenu("#mapContext");
-		$("#hudOuter").toggle(O.Options.bol_showHUD);
+		$("#mapHUDContainer").toggle(O.Options.bol_showHUD);
 		// Bind switch map buttons
 		$("#mapSwitchButton").click(function()
 		{
@@ -33020,7 +33038,7 @@ I = {
 								M.goToZone("dry", M.ZoomEnum.Bird);
 								P.toggleDryTopIcons(true);
 							}
-							$("#hudBoxes").hide();
+							$("#mapHUDContainerInner").hide();
 						} break;
 						case "sectionChains_Special":
 						{
@@ -33041,7 +33059,7 @@ I = {
 						case "sectionChains_Drytop": 
 						{
 							P.toggleDryTopIcons(false);
-							$("#hudBoxes").show();
+							$("#mapHUDContainerInner").show();
 						} break;
 						case "sectionChains_Special":
 						{
@@ -34355,7 +34373,7 @@ I = {
 					{
 						if (O.Options.bol_hideHUD)
 						{
-							$("#hudBoxes").show();
+							$("#mapHUDContainerInner").show();
 						}
 					} break;
 					case I.PageEnum.Map:
@@ -34369,7 +34387,7 @@ I = {
 				$("#paneContent article").hide(); // Hide all plates
 				if (I.PageCurrent !== I.PageEnum.Chains && O.Options.bol_hideHUD)
 				{
-					$("#hudBoxes").hide();
+					$("#mapHUDContainerInner").hide();
 				}
 				
 				// App panel page animation

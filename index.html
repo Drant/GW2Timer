@@ -114,8 +114,8 @@
 			</div>
 			<article id="mapHUDPane">
 			<div id="mapExpandButton" class="mapExpandButton hudButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
-			<div id="hudOuter">
-				<div id="hudBoxes">
+			<div id="mapHUDContainer">
+				<div id="mapHUDContainerInner">
 					<div id="itemDashboard">
 						<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
 						<div id="dsbContainer">
@@ -358,6 +358,7 @@
 			<div id="wvwContext" class="itemContext">
 				<ul>
 					<li id="wvwContextCenter">Center map</li>
+					<li id="wvwContextToggleHUD">Toggle HUD</li>
 					<li id="wvwContextToggleFloor">Toggle terrain</li>
 					<li id="wvwContextRange" class="itemContextSubmenu"><span>Range</span>
 						<ul>
@@ -397,19 +398,62 @@
 			</div>
 			<article id="wvwHUDPane">
 			<div id="wvwExpandButton" class="mapExpandButton hudButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
-			<div id="wvwLeaderboard">
-				<div id="lboContainer">
-					<kbd id="lboToggle" class="btnWindow lboButton btnToggle" title="<dfn>Toggle leaderboard.</dfn>"></kbd>
-					<kbd id="lboCondense" class="btnWindow lboButton btnHorizontal lboExtra" title="<dfn>Condense leaderboard.</dfn>"></kbd>
-					<kbd id="lboRegion" class="btnWindow lboButton btnVertical lboExtra" title="<dfn>Toggle all server matchups.</dfn><br />gw2timer.com/<dfn>wvw/leaderboard</dfn>"></kbd>
-					<kbd id="lboOpaque" class="btnWindow lboButton btnOpaque lboExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
-					<kbd id="lboStats" class="btnWindow lboButton btnStats lboExtra" title="<dfn>Print server population list.</dfn>"></kbd>
-					<span id="lboText">
-						<a class="lboLink" title="<dfn>North America</dfn> Leaderboard" href="./?page=WvW&section=Leaderboard&enu_Server=1008">NA</a> <a title="<dfn>Europe</dfn> Leaderboard" class="lboLink" href="./?page=WvW&section=Leaderboard&enu_Server=2002">EU</a>
-						<time id="lboCountdown" class="lboExtra curClick" title="<dfn>Time until matchup reset.</dfn> Click for WvW Rankings."></time>
-					</span>
-					<div id="lboCurrent"></div>
-					<div id="lboOther"></div>
+			<div id="wvwHUDContainer">
+				<div id="wvwHUDContainerInner">
+					<div id="wvwLeaderboard">
+						<div id="lboContainer">
+							<kbd id="lboToggle" class="btnWindow lboButton btnToggle" title="<dfn>Toggle leaderboard.</dfn>"></kbd>
+							<kbd id="lboCondense" class="btnWindow lboButton btnHorizontal lboExtra" title="<dfn>Condense leaderboard.</dfn>"></kbd>
+							<kbd id="lboRegion" class="btnWindow lboButton btnVertical lboExtra" title="<dfn>Toggle all server matchups.</dfn><br />gw2timer.com/<dfn>wvw/leaderboard</dfn>"></kbd>
+							<kbd id="lboOpaque" class="btnWindow lboButton btnOpaque lboExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
+							<kbd id="lboStats" class="btnWindow lboButton btnStats lboExtra" title="<dfn>Print server population list.</dfn>"></kbd>
+							<span id="lboText">
+								<a class="lboLink" title="<dfn>North America</dfn> Leaderboard" href="./?page=WvW&section=Leaderboard&enu_Server=1008">NA</a> <a title="<dfn>Europe</dfn> Leaderboard" class="lboLink" href="./?page=WvW&section=Leaderboard&enu_Server=2002">EU</a>
+								<time id="lboCountdown" class="lboExtra curClick" title="<dfn>Time until matchup reset.</dfn> Click for WvW Rankings."></time>
+							</span>
+							<div id="lboCurrent"></div>
+							<div id="lboOther"></div>
+						</div>
+					</div>
+					<div id="wvwLogContainer">
+						<kbd id="logToggle" class="btnWindow logButton btnToggle" title="<dfn>Toggle log.</dfn>"></kbd>
+						<kbd id="logExpand" class="btnWindow logButton btnVertical logExtra" title="<dfn>Toggle log height.</dfn>"></kbd>
+						<kbd id="logOpaque" class="btnWindow logButton btnOpaque logExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
+						<div id="wvwLog" class="cntComposition">
+							<label id="wvwZoom" title="Set initial zoom level for WvW map."><img id="wvwZoomIcon" data-src="img/map/zoom.png" /><input id="wvwZoomInput" class="optSlider" type="range" min="0" max="6" step="1" /></label>
+							<select id="wvwServerList"></select>
+							<div id="logOptions">
+								<div id=logNarrationContainer>
+									<label id="logCheckNarrate" title="Toggle narration of WvW events.<br />Uncheck to mute current narration."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logCheckNarrateSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
+									<div id="logNarrationPopup" class="cntComposition cntPopup">
+										<div id="logNarrateLand" class="cssColumn">
+											<b>Narration Filter:</b>
+											<label><input id="opt_bol_narrateRedHome" type="checkbox" /><var></var></label>
+											<label><input id="opt_bol_narrateBlueHome" type="checkbox" /><var></var></label>
+											<label><input id="opt_bol_narrateGreenHome" type="checkbox" /><var></var></label>
+											<label><input id="opt_bol_narrateCenter" type="checkbox" /><var></var></label>
+										</div>
+										<div id="logNarrateObjective" class="cssColumn">
+											<label><input id="opt_bol_narrateClaimed" type="checkbox" /><var></var></label>
+											<label><input id="opt_bol_narrateRuins" type="checkbox" /><var></var></label>
+											<label><input id="opt_bol_narrateCamp" type="checkbox" /><var></var></label>
+											<label><input id="opt_bol_narrateTower" type="checkbox" /><var></var></label>
+											<label><input id="opt_bol_narrateKeep" type="checkbox" /><var></var></label>
+											<label><input id="opt_bol_narrateCastle" type="checkbox" /><var></var></label>
+										</div>
+										<label><input id="logNarrateVolume" type="range" min="0" max="100" step="5" title="Set volume." /></label>
+									</div>
+								</div>
+								<div id="logFilters">
+									<div id="logFiltersRed"><label><input id="opt_bol_logRedHome" type="checkbox" /><var></var></label></div>
+									<div id="logFiltersBlue"><label><input id="opt_bol_logBlueHome" type="checkbox" /><var></var></label></div>
+									<div id="logFiltersGreen"><label><input id="opt_bol_logGreenHome" type="checkbox" /><var></var></label></div>
+									<div><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><span id="logFiltersCenter"><label><input id="opt_bol_logCenter" type="checkbox" /><var></var></label></span></div>
+								</div>
+							</div>
+							<ul id="logWindow"></ul>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div id="wvwCoordinatesBar" class="mapCoordinatesBar">
@@ -521,47 +565,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="hudPeripheral hudPeripheralSouth">
-				<div id="wvwLogContainer">
-					<kbd id="logToggle" class="btnWindow logButton btnToggle" title="<dfn>Toggle log.</dfn>"></kbd>
-					<kbd id="logExpand" class="btnWindow logButton btnVertical logExtra" title="<dfn>Toggle log height.</dfn>"></kbd>
-					<kbd id="logOpaque" class="btnWindow logButton btnOpaque logExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
-					<div id="wvwLog" class="cntComposition">
-						<label id="wvwZoom" title="Set initial zoom level for WvW map."><img id="wvwZoomIcon" data-src="img/map/zoom.png" /><input id="wvwZoomInput" class="optSlider" type="range" min="0" max="6" step="1" /></label>
-						<select id="wvwServerList"></select>
-						<div id="logOptions">
-							<div id=logNarrationContainer>
-								<label id="logCheckNarrate" title="Toggle narration of WvW events.<br />Uncheck to mute current narration."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logCheckNarrateSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
-								<div id="logNarrationPopup" class="cntComposition cntPopup">
-									<div id="logNarrateLand" class="cssColumn">
-										<b>Narration Filter:</b>
-										<label><input id="opt_bol_narrateRedHome" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateBlueHome" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateGreenHome" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateCenter" type="checkbox" /><var></var></label>
-									</div>
-									<div id="logNarrateObjective" class="cssColumn">
-										<label><input id="opt_bol_narrateClaimed" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateRuins" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateCamp" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateTower" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateKeep" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateCastle" type="checkbox" /><var></var></label>
-									</div>
-									<label><input id="logNarrateVolume" type="range" min="0" max="100" step="5" title="Set volume." /></label>
-								</div>
-							</div>
-							<div id="logFilters">
-								<div id="logFiltersRed"><label><input id="opt_bol_logRedHome" type="checkbox" /><var></var></label></div>
-								<div id="logFiltersBlue"><label><input id="opt_bol_logBlueHome" type="checkbox" /><var></var></label></div>
-								<div id="logFiltersGreen"><label><input id="opt_bol_logGreenHome" type="checkbox" /><var></var></label></div>
-								<div><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><label><input id="opt_bol_logCenter" type="checkbox" /><var></var></label></div>
-							</div>
-						</div>
-						<ul id="logWindow"></ul>
-					</div>
-				</div>
-			</div>
+			<div class="hudPeripheral hudPeripheralSouth"></div>
 			</article>
 		</section>
 	</div><!-- End of panelMap -->
@@ -837,7 +841,8 @@
 					<br />
 					<h2>Map</h2>
 					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
-					<label title="Show/Hide the container for Dashboard and Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD over the map</label>
+					<label title="Show/Hide the container for Dashboard and Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD over the Tyria map</label>
+					<label title="Show/Hide the container for Leaderboard and Log."><input id="opt_bol_showHUDWvW" type="checkbox" /> Show HUD over the WvW map</label>
 					<label title="Show/Hide GW2 official event countdowns and gem sales on the top right corner of the map pane. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard (on HUD)</label>
 					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline (on HUD)</label>
 					<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>

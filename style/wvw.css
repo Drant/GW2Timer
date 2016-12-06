@@ -487,6 +487,10 @@ a.lboLink {
 	opacity: 0.8;
 }
 
+#wvwLogContainer {
+	position: absolute; z-index: 10;
+	bottom: 4px; right: 12px;
+}
 #wvwLogContainer:hover .logButton {
 	opacity: 0.8;
 }
@@ -537,6 +541,9 @@ a.lboLink {
 }
 #logFiltersBlue {
 	text-align: right;
+}
+#logFiltersCenter {
+	text-align: left;
 }
 #logOptions input[type="checkbox"] {
 	opacity: 0.5;
