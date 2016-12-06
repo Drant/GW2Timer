@@ -754,7 +754,7 @@ Hard: {
 	{c: [25712, 10253]},
 	{c: [25840, 10763]},
 	{c: [26184, 11077]},
-	{c: [26782, 10182]},
+	{c: [26782, 10182]}
 	]
 },
 Elder: {
@@ -863,6 +863,23 @@ Ancient: {
 	{c: [10967, 27113]},
 	{c: [11134, 28079]},
 	{c: [11750, 28675]}
+	]
+},
+Foxfire: {
+	name_en: "Foxfire",
+	name_de: "Leuchtpilz",
+	name_es: "Lumin",
+	name_fr: "Biolumin",
+	name_zh: "狐火簇",
+	type: "Wood",
+	item: "66933",
+	Rich: [
+	
+	],
+	Regular: [
+	{c: [20215, 21981]}, // maelstrom
+	{c: [15625, 24851]}, // straits
+	{c: [13858, 24941]} // malchor
 	]
 },
 Mixed: {
@@ -1289,23 +1306,6 @@ Spore: {
 	{c: [13040, 15848]},
 	{c: [13108, 14752]},
 	{c: [13152, 14452]}
-	]
-},
-Foxfire: {
-	name_en: "Foxfire",
-	name_de: "Leuchtpilz",
-	name_es: "Lumin",
-	name_fr: "Biolumin",
-	name_zh: "狐火簇",
-	type: "Plant",
-	item: "66933",
-	Rich: [
-	
-	],
-	Regular: [
-	{c: [20215, 21981]}, // maelstrom
-	{c: [15625, 24851]}, // straits
-	{c: [13858, 24941]} // malchor
 	]
 },
 Flax: {
