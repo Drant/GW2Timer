@@ -5689,7 +5689,6 @@ Z = {
 					Z.printRecordEntry(newitems, {
 						aItemIDsKey: "id"
 					});
-					I.bindConsoleInput();
 				}
 				return;
 			}
@@ -5903,6 +5902,7 @@ Z = {
 				$(this).select();
 			});
 		}
+		I.bindConsoleInput();
 	},
 	
 	/*
