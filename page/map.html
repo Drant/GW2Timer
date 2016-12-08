@@ -38,7 +38,7 @@
 
 <h2>Miscellaneous</h2>
 <dl>
-	<dt>Activity<dt><dd>Go to the blue/red flag icon in a city to start. These may be time consuming except for Crab Toss.</dd>
+	<dt>Activity<dt><dd>Go to the red/purple flag icon in a city to start. These may be time consuming except for Crab Toss.</dd>
 	<dt>Mystic Forgesmith<dt><dd>Buy 4 cheapest minor sigils on the Trading Post and use them at the Mystic Forge in Lion's Arch.</dd>
 	<dt>WvW Big Spender<dt><dd>Go to the Armor/Weapon Master NPC at the citadel of your borderland and buy the skins (not the armor). Alternatively, replenish your deployable traps or buy food using the <a href="https://wiki.guildwars2.com/wiki/Permanent_Portable_Provisioner">Permanent Portable Provisioner</a>.</dd>
 	<dt>PvP Dailies<dt><dd>Open the PvP window and click on the Game Browser tab. Look for rooms that say &quot;dailies&quot;; they are specifically for completing dailies and you do not have to fight. You can complete the &quot;Reward&quot; and &quot;Rank&quot; dailies instantly by consuming the potion received from daily rewards.</dd>
@@ -390,6 +390,13 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Ena
 		<span><var id="chlDungeonCalculator_Copper">0</var><img data-src="img/ui/coin_copper.png" alt="Copper" /></span>
 	</div>
 	<button id="chlDungeonUncheck" class="cssRight btnUncheck"></button>
+	<div class="chlDungeonBar" data-name="FOTM">
+		<label title="Island 1"><input data-money="30000" data-mode="F" type="checkbox" />1</label>
+		<label title="Island 2"><input data-money="30000" data-mode="F" type="checkbox" />2</label>
+		<label title="Island 3"><input data-money="30000" data-mode="F" type="checkbox" />3</label>
+		<label title="Daily Scale A"><input data-money="10000" data-mode="F" type="checkbox" />A</label>
+		<label title="Daily Scale B"><input data-money="10000" data-mode="F" type="checkbox" />B</label>
+	</div>
 	<div class="chlDungeonBar" data-name="AC">
 		<img class="chlDungeonNight" src="img/ui/day_night.png" alt="Night" /> 
 		<label title="Hodgins"><input data-money="5000" data-mode="E" type="checkbox" />1</label>
@@ -444,17 +451,10 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Ena
 		<label title="Seer"><input data-money="10000" data-mode="E" type="checkbox" />4</label>
 		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
 	</div>
-	<div class="chlDungeonBar" data-name="FOTM">
-		<label title="Island 1"><input data-money="30000" data-mode="F" type="checkbox" />1</label>
-		<label title="Island 2"><input data-money="30000" data-mode="F" type="checkbox" />2</label>
-		<label title="Island 3"><input data-money="30000" data-mode="F" type="checkbox" />3</label>
-		<label title="Daily Scale A"><input data-money="10000" data-mode="F" type="checkbox" />A</label>
-		<label title="Daily Scale B"><input data-money="10000" data-mode="F" type="checkbox" />B</label>
-	</div>
 </div>
 
-<div id="chlCustom">
-	<kbd class="jsHelpTooltip" title="Type your own text in the boxes then press Enter to make a custom daily checklist. Change the number of checklist items in the Options page, Daily section."></kbd>
+<div id="chlCustom"><kbd class="jsHelpCollapsible"></kbd>
+	<div><br /><p>Type your own text in the boxes then press Enter to make a custom daily checklist. Add more checklist items by going to the Options page, Daily section. Read the <a href="https://wiki.guildwars2.com/wiki/Server_reset">wiki</a> for more dailies suggestions.</p></div>
 	<br />
 	<div id="chlCustomDaily">
 		<ol id="chlCustomListDaily" data-samples="Did dailies|Gathered home and guild nodes|Opened JP chests|Crafted timegates|Fed Mawdrey, Star, Princess|Bought Converter items"></ol>

@@ -1977,7 +1977,7 @@ X = {
 	 * @param enum pJob initial checkbox state.
 	 * @pre These checkboxes can only have a checked and unchecked state only.
 	 */
-	initializeCheckboxlist: function(pChecklist, pCheckboxes, pJob, pRestoreButton)
+	initializeCheckboxlist: function(pChecklist, pCheckboxes, pJob, pRestoreButton, pWantStyle)
 	{
 		X.initializeChecklist(pChecklist, pCheckboxes.length, null, pJob);
 
@@ -1987,12 +1987,18 @@ X = {
 			{
 				var state = X.getCheckboxEnumState($(this));
 				X.setChecklistItem(pChecklist, iIndex, state);
-				X.styleCheckbox(pChecklist, iIndex, $(this));
+				if (pWantStyle !== false)
+				{
+					X.styleCheckbox(pChecklist, iIndex, $(this));
+				}
 			});
 			
 			// Now that this checkbox is bound, trigger it as the state in checklist
 			X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
-			X.styleCheckbox(pChecklist, iIndex, $(this));
+			if (pWantStyle !== false)
+			{
+				X.styleCheckbox(pChecklist, iIndex, $(this));
+			}
 		});
 		
 		// Bind restore default values button
@@ -11800,7 +11806,7 @@ V = {
 						+ "<td class='pctStatCount' data-value='" + occurnums[i] + "'>" + occurnums[i] + "</td>"
 						+ "<td data-value='" + occurnums[i] +  "'>" + I.getBar((occurnums[i] / highestoccur) * T.cPERCENT_100, true) + "</td>"
 						+ "<td class='pctStatName' data-value='" + name + "' title='" + occurdates[i] + "'>"
-							+ "<a class='" + Q.getRarityClass(pItem.rarity) + "'" + U.convertExternalAnchor(U.getTradingItemLink(i, name)) + "'>" + name + "</a></td>"
+							+ "<a class='" + Q.getRarityClass(pItem.rarity) + "'" + U.convertExternalAnchor(U.getTradingItemLink(i, pItem.name)) + "'>" + name + "</a></td>"
 						+ "<td data-value='" + pricevalue + "'>" + I.getBar((((priceobj) ? priceobj.oPriceSell : 0) / highestprice) * T.cPERCENT_100) + "</td>"
 						+ "<td class='pctStatPrice' data-value='" + pricevalue + "'>" + pricestr + "</td>"
 					+ "</tr>");
@@ -17270,8 +17276,8 @@ E = {
 		X.initializeTextlist(X.Textlists.NotifySellLow, $("#trdList .trdNotifySellLow"), null, 16);
 		X.initializeTextlist(X.Textlists.NotifySellHigh, $("#trdList .trdNotifySellHigh"), null, 16);
 		
-		X.initializeCheckboxlist(X.Checklists.TradingOverwrite, $("#trdList .trdOverwrite"), X.ChecklistJob.CheckAll);
-		X.initializeCheckboxlist(X.Checklists.TradingNotify, $("#trdList .trdNotify"), X.ChecklistJob.CheckAll);
+		X.initializeCheckboxlist(X.Checklists.TradingOverwrite, $("#trdList .trdOverwrite"), X.ChecklistJob.CheckAll, null, false);
+		X.initializeCheckboxlist(X.Checklists.TradingNotify, $("#trdList .trdNotify"), X.ChecklistJob.CheckAll, null, false);
 		
 		// Trigger input textboxes to make the output textboxes update
 		$("#trdList .trdSell").trigger("input");
@@ -21619,7 +21625,7 @@ M = {
 	{
 		var str = "<div class='cntComposition'><h2>Map Pins Usage</h2>"
 			+ "<ul>"
-			+ "<li><b>Create a pin:</b> double click an empty area on the map (Multiple pins creates a path).</li>"
+			+ "<li><b>Create a pin:</b> double click an empty area on the map (multiple pins creates a path).</li>"
 			+ "<li><b>Insert a pin between a path:</b> double click a part of the path.</li>"
 			+ "<li><b>Delete a pin:</b> double click that pin.</li>"
 			+ "<li><b>Delete all pins:</b> right click the map for the clear pins function.</li>"
@@ -25055,17 +25061,24 @@ G = {
 		{
 			M.bindMarkerZoomBehavior(pMarker, "contextmenu");
 			M.bindMarkerCoordBehavior(pMarker, "dblclick");
-			pMarker.on("click", function()
+			pMarker.on("click", function(pEvent)
 			{
-				if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
+				if (pEvent.originalEvent.which === 2)
 				{
-					setNodeState(pMarker, X.ChecklistEnum.Unchecked);
-					this.setOpacity(1);
+					M.createPersonalPin(this.getLatLng(), true);
 				}
 				else
 				{
-					setNodeState(pMarker, X.ChecklistEnum.Checked);
-					this.setOpacity(opacityclicked);
+					if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
+					{
+						setNodeState(pMarker, X.ChecklistEnum.Unchecked);
+						this.setOpacity(1);
+					}
+					else
+					{
+						setNodeState(pMarker, X.ChecklistEnum.Checked);
+						this.setOpacity(opacityclicked);
+					}
 				}
 			});
 		};
@@ -34644,7 +34657,7 @@ I = {
 	 */
 	initializeUIForHUD: function()
 	{
-		U.convertModeLink(".hudDirectory a");
+		U.convertModeLink(".hudDirectoryColumn a");
 		$(".hudPeripheral").css({visibility: "visible"});
 	},
 	
