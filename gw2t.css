@@ -688,7 +688,7 @@ html, body,
 	border: 1px solid red;
 }
 
-.cntComposition select {
+.cntComposition select, .cssInputSelect {
 	border: 1px solid #555;
 	background: #444;
 	color: #ffddcc;
