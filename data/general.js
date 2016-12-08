@@ -477,7 +477,8 @@ Bookmark:
 	// Common paths such as daily resource runs
 	"Bitterfrost Frontier: Winterberries": [[21325,7462],[20999,7308],[21099,7143],[21122,7048],[21048,6994],[21359,6959],[21650,6882],[21827,6925],[21995,6951],[21765,7080],[21890,7144],[21974,7158],[22061,7219],[21931,7330],[21780,7252],[21713,7352],[21706,7525],[21573,7581],[22376,7990],[23197,7470],[22679,7073]],
 	"Ember Bay: Petrified": [[7912,29246],[7340,29422],[7377,29663],[7188,29630],[7132,29897],[6917,29868],[6948,29577],[7141,29418],[6834,28772],[6868,28908],[6742,28893],[6559,29195],[5137,29263]],
-	"Bloodstone Fen: Rubies": [[2554,14136],[2483,14115],[2425,14213],[2464,14279],[2438,14307],[2497,14377],[2445,14410],[2708,14445],[2903,14533],[2951,14506],[2952,14351],[2871,14335],[2846,14313],[2800,14261],[2826,14234],[2894,14113],[2950,14127],[2956,14147],[2899,14194],[2890,14250],[2989,14303],[3004,14306],[3077,14333],[3122,14311],[3240,14175],[3217,14171],[3147,14104],[3108,14097],[3029,14149],[3138,14205],[3100,14216],[2716,14196],[2671,14214],[2657,14285]]
+	"Bloodstone Fen: Rubies": [[2554,14136],[2483,14115],[2425,14213],[2464,14279],[2438,14307],[2497,14377],[2445,14410],[2708,14445],[2903,14533],[2951,14506],[2952,14351],[2871,14335],[2846,14313],[2800,14261],[2826,14234],[2894,14113],[2950,14127],[2956,14147],[2899,14194],[2890,14250],[2989,14303],[3004,14306],[3077,14333],[3122,14311],[3240,14175],[3217,14171],[3147,14104],[3108,14097],[3029,14149],[3138,14205],[3100,14216],[2716,14196],[2671,14214],[2657,14285]],
+	"Iron and Platinum": [[6327,15041],[9583,15064],[12697,15954],[12640,15579],[13548,11110],[16935,14020],[18348,13444],[20914,12447],[23758,12739],[24678,9345],[26934,9849],[27751,9674],[29084,9609],[31157,15013],[28961,17355],[20365,15737],[20915,18219],[19167,19252],[20931,22505],[17946,22155],[17293,20362],[15623,20260],[16429,18201]]
 }
 };
 
@@ -1399,7 +1400,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "Click the <a href='http://gw2timer.com/?page=Daily'>Daily Achievements</a> button below for the new &quot;Map Bookmarks&quot; dropdown menu.<br /><a href='http://gw2timer.com/?enu_Language=zh'>简体中文</a>（中国），<a href='http://gw2timer.com/?enu_Language=tw'>繁體中文</a>（台灣）<a href='http://i.imgur.com/vtO5t1z.png'>语言现在可用</a>。",
+	pve: "Click the <a href='http://gw2timer.com/?page=Daily'>Daily Achievements</a> button below for the new &quot;Map Bookmarks&quot; dropdown menu.<br /><a href='http://i.imgur.com/vtO5t1z.png'>语言现在可用</a>：<a href='http://gw2timer.com/?enu_Language=zh'>简体中文</a>（中国），<a href='http://gw2timer.com/?enu_Language=tw'>繁體中文</a>（台灣）。",
 	wvw: "",
 	Start: new Date("2016-11-23T16:00:00Z"),
 	Finish: new Date("2016-12-13T16:00:00Z"),
@@ -1436,10 +1437,10 @@ Countdown: {
 		name_de: "PvP Liga Saison 5",
 		name_es: "Temporada 5 de liga PvP",
 		name_fr: "Saison 5 de la ligue JcJ",
-		url: "http://i.imgur.com/dEObOLZ.png",
-		Start: new Date("2016-11-15T17:00:00Z"),
-		Finish: new Date("2016-11-16T17:00:00Z")
-	}*/
+		official: "news/wintersday-2016-is-coming/",
+		Start: new Date("2016-12-13T17:00:00Z"),
+		Finish: new Date("2017-01-10T17:00:00Z")
+	},*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
@@ -1461,10 +1462,10 @@ Countdown: {
 		Finish: new Date("2017-11-03T16:00:00Z")
 	},*/
 	{
-		name_en: "Wintersday 2016",
-		name_de: "Wintertag 2016",
-		name_es: "Día Invernal 2016",
-		name_fr: "Hivernel 2016",
+		name_en: "Wintersday 2016 &amp; PvP 5",
+		name_de: "Wintertag 2016 &amp; PvP 5",
+		name_es: "Día Invernal 2016 &amp; PvP 5",
+		name_fr: "Hivernel 2016 &amp; JcJ 5",
 		name_zh: "冬幕节2016",
 		official: "news/wintersday-2016-is-coming/",
 		Start: new Date("2016-12-13T17:00:00Z"),
