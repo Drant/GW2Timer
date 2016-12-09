@@ -745,7 +745,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Feuerring",
 	name_es: "Anillo de Fuego",
 	name_fr: "Cercle de feu",
-	name_zh: "火焰之環",
+	name_zh: "火焰之环",
 	color: "firebrick"
 },
 "heart": {
@@ -753,7 +753,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Herz von Maguuma",
 	name_es: "Corazón de Maguuma",
 	name_fr: "Cœur de Maguuma",
-	name_zh: "邁古瑪腹地",
+	name_zh: "迈古玛腹地",
 	color: "yellow"
 },
 "wastes": {
@@ -761,7 +761,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Maguuma-Einöde",
 	name_es: "Páramos Maguuma",
 	name_fr: "Contrées sauvages de Maguuma",
-	name_zh: "邁古瑪荒野",
+	name_zh: "迈古玛荒野",
 	color: "wheat"
 },
 "jungle": {
@@ -785,7 +785,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Orr",
 	name_es: "Orr",
 	name_fr: "Orr",
-	name_zh: "歐爾遺跡",
+	name_zh: "欧尔遗迹",
 	color: "sienna"
 },
 "shiverpeaks": {
@@ -818,7 +818,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Glutbucht",
 	name_es: "Bahía de las Ascuas",
 	name_fr: "Baie des Braises",
-	name_zh: "余燼海灣",
+	name_zh: "余烬海湾",
 	region: "ring",
 	map_rect: [[-46080, -46080], [46080, 46080]],
 	continent_rect: [[4606, 27134], [8446, 30974]]
@@ -830,7 +830,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Blutsteinfenn",
 	name_es: "Pantano de la Hematites",
 	name_fr: "Marais de la pierre de sang",
-	name_zh: "血石沼澤",
+	name_zh: "血石沼泽",
 	region: "heart",
 	map_rect: [[-18432, -6144], [18432, 9216]],
 	continent_rect: [[2048, 13954], [3584, 14594]]
@@ -842,7 +842,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Grasgrüne Schwelle",
 	name_es: "Umbral Verdeante",
 	name_fr: "Orée d'émeraude",
-	name_zh: "蒼翠邊界",
+	name_zh: "苍翠边界",
 	region: "heart",
 	map_rect: [[-36864, -18432], [39936, 18432]],
 	continent_rect: [[640, 14592], [3840, 16128]]
@@ -866,7 +866,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Verschlungene Tiefen",
 	name_es: "Profundidades Enredadas",
 	name_fr: "Profondeurs verdoyantes",
-	name_zh: "纏藤深淵",
+	name_zh: "缠藤深渊",
 	region: "heart",
 	map_rect: [[-39936, -27648], [39936, 27648]],
 	continent_rect: [[2560, 17408], [5888, 19712]]
@@ -878,7 +878,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Widerstand des Drachen",
 	name_es: "Defensa del Dragón",
 	name_fr: "Repli du Dragon",
-	name_zh: "巨龍陣地",
+	name_zh: "巨龙阵地",
 	region: "heart",
 	map_rect: [[-36864, -30720], [36864, 33792]],
 	continent_rect: [[1280, 19712], [4352, 22400]]
@@ -890,7 +890,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Verlorener Abgrund",
 	name_es: "Precipicio Perdido",
 	name_fr: "Précipice perdu",
-	name_zh: "失落懸崖",
+	name_zh: "失落悬崖",
 	region: "heart",
 	map_rect: [[-15360, -15360], [15360, 15360]],
 	continent_rect: [[768, 13312], [2048, 14592]]
@@ -902,7 +902,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Vergoldete Senke",
 	name_es: "Cueva Dorada",
 	name_fr: "Caverne dorée",
-	name_zh: "鍍金山洞",
+	name_zh: "镀金山洞",
 	region: "heart",
 	map_rect: [[-15360, -15360], [15360, 15360]],
 	continent_rect: [[2560, 16128], [3840, 17408]]
@@ -914,7 +914,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Die Silberwüste",
 	name_es: "Los Páramos Argentos",
 	name_fr: "Les Contrées sauvages d'Argent",
-	name_zh: "白銀荒地",
+	name_zh: "干涸高地",
 	region: "wastes",
 	map_rect: [[-24576, -18432], [24576, 18432]],
 	continent_rect: [[3840, 14208], [5888, 15744]]
@@ -950,7 +950,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Brisban-Wildnis",
 	name_es: "Selvas Brisbanas",
 	name_fr: "Terres sauvages de Brisban",
-	name_zh: "布裡斯班野地",
+	name_zh: "布里斯班野地",
 	region: "jungle",
 	map_rect: [[-39936, -30720], [43008, 33792]],
 	continent_rect: [[5888, 14464], [9344, 17152]]
@@ -962,7 +962,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Provinz Metrica",
 	name_es: "Provincia de Métrica",
 	name_fr: "Province de Metrica",
-	name_zh: "度量領域",
+	name_zh: "度量领域",
 	region: "jungle",
 	map_rect: [[-24576, -39936], [27648, 39936]],
 	continent_rect: [[7168, 17152], [9344, 20480]]
@@ -974,7 +974,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Caledon-Wald",
 	name_es: "Bosque de Caledon",
 	name_fr: "Forêt de Caledon",
-	name_zh: "卡勒頓之森",
+	name_zh: "卡勒顿之森",
 	region: "jungle",
 	map_rect: [[-21504, -46080], [24576, 49152]],
 	continent_rect: [[9344, 16128], [11264, 20096]]
@@ -986,7 +986,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Kessex-Hügel",
 	name_es: "Colinas Kessex",
 	name_fr: "Collines de Kessex",
-	name_zh: "凱席斯山",
+	name_zh: "凯席斯山",
 	region: "kryta",
 	map_rect: [[-49152, -24576], [49152, 24576]],
 	continent_rect: [[9344, 14080], [13440, 16128]]
@@ -998,7 +998,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Der Hain",
 	name_es: "La Arboleda",
 	name_fr: "Le Bosquet",
-	name_zh: "聖林之地",
+	name_zh: "圣林之地",
 	region: "jungle",
 	map_rect: [[-15360, -24576], [18432, 24576]],
 	continent_rect: [[9728, 20096], [11136, 22144]]
@@ -1022,7 +1022,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Fluchküste",
 	name_es: "Ribera Maldita",
 	name_fr: "Rivage maudit",
-	name_zh: "詛咒海岸",
+	name_zh: "诅咒海岸",
 	region: "orr",
 	map_rect: [[-24576, -49152], [24576, 49152]],
 	continent_rect: [[10112, 25216], [12160, 29312]]
@@ -1046,7 +1046,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Malchors Sprung",
 	name_es: "Salto de Malchor",
 	name_fr: "Saut de Malchor",
-	name_zh: "馬爾科之躍",
+	name_zh: "马尔科之跃",
 	region: "orr",
 	map_rect: [[-49152, -24576], [49152, 24576]],
 	continent_rect: [[10368, 23168], [14464, 25216]]
@@ -1058,7 +1058,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Südlicht-Bucht",
 	name_es: "Cala del Sol Austral",
 	name_fr: "Crique de Sud-Soleil",
-	name_zh: "南陽海灣",
+	name_zh: "南阳海湾",
 	region: "kryta",
 	map_rect: [[-30720, -21504], [33792, 21504]],
 	continent_rect: [[11520, 18944], [14208, 20736]]
@@ -1082,7 +1082,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Gendarran-Felder",
 	name_es: "Campos de Gendarran",
 	name_fr: "Champs de Gendarran",
-	name_zh: "甘達拉戰區",
+	name_zh: "甘达拉战区",
 	region: "kryta",
 	map_rect: [[-49152, -24576], [52224, 24576]],
 	continent_rect: [[13440, 12288], [17664, 14336]]
@@ -1094,7 +1094,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Meerenge der Verwüstung",
 	name_es: "Estrechos de la Devastación",
 	name_fr: "Détroit de la Dévastation",
-	name_zh: "浩劫海峽",
+	name_zh: "浩劫海峡",
 	region: "orr",
 	map_rect: [[-39936, -33792], [39936, 33792]],
 	continent_rect: [[14464, 22400], [17792, 25216]]
@@ -1106,7 +1106,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Löwenstein",
 	name_es: "Arco del León",
 	name_fr: "L'Arche du Lion",
-	name_zh: "獅子拱門",
+	name_zh: "狮子拱门",
 	region: "kryta",
 	map_rect: [[-27648, -18432], [30720, 18432]],
 	continent_rect: [[15232, 14336], [17664, 15872]]
@@ -1130,7 +1130,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Funkenschwärmersumpf",
 	name_es: "Pantano de las Centellas",
 	name_fr: "Marais de Lumillule",
-	name_zh: "閃螢沼澤",
+	name_zh: "闪萤沼泽",
 	region: "jungle",
 	map_rect: [[-30720, -39936], [30720, 39936]],
 	continent_rect: [[15232, 19072], [17792, 22400]]
@@ -1142,7 +1142,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Lornars Pass",
 	name_es: "Paso de Lornar",
 	name_fr: "Passage de Lornar",
-	name_zh: "羅納通道",
+	name_zh: "罗纳通道",
 	region: "shiverpeaks",
 	map_rect: [[-21504, -58368], [21504, 58368]],
 	continent_rect: [[17664, 13312], [19456, 18176]]
@@ -1166,7 +1166,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Mahlstromgipfel",
 	name_es: "Monte Vorágine",
 	name_fr: "Mont Maelström",
-	name_zh: "漩渦山",
+	name_zh: "漩涡山",
 	region: "jungle",
 	map_rect: [[-46080, -27648], [46080, 30720]],
 	continent_rect: [[17792, 21376], [21632, 23808]]
@@ -1178,7 +1178,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Baumgrenzen-Fälle",
 	name_es: "Cataratas de Linarbórea",
 	name_fr: "Chutes de la Canopée",
-	name_zh: "林線瀑布",
+	name_zh: "林线瀑布",
 	region: "shiverpeaks",
 	map_rect: [[-27648, -36864], [27648, 39936]],
 	continent_rect: [[18944, 18176], [21248, 21376]]
@@ -1202,7 +1202,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Schauflerschreck-Klippen",
 	name_es: "Acantilados de Guaridadraga",
 	name_fr: "Falaises de Hantedraguerre",
-	name_zh: "掘洞懸崖",
+	name_zh: "掘洞悬崖",
 	region: "shiverpeaks",
 	map_rect: [[-27648, -36864], [27648, 39936]],
 	continent_rect: [[19456, 14976], [21760, 18176]]
@@ -1226,7 +1226,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Bitterfrost-Grenzland",
 	name_es: "Frontera de Escarchamarga",
 	name_fr: "Confins de Givramer",
-	name_zh: "酷寒前線",
+	name_zh: "酷寒前线",
 	region: "shiverpeaks",
 	map_rect: [[-36864, -18432], [36864, 18432]],
 	continent_rect: [[20736, 6656], [23808, 8192]]
@@ -1250,7 +1250,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Schwarze Zitadelle",
 	name_es: "Ciudadela Negra",
 	name_fr: "La Citadelle noire",
-	name_zh: "黑煙壁壘",
+	name_zh: "黑烟壁垒",
 	region: "ascalon",
 	map_rect: [[-18432, -24576], [18432, 24576]],
 	continent_rect: [[23552, 13568], [25088, 15616]]
@@ -1298,7 +1298,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Eisenmark",
 	name_es: "Fronteras de Hierro",
 	name_fr: "Marais de fer",
-	name_zh: "鋼鐵平原",
+	name_zh: "钢铁平原",
 	region: "ascalon",
 	map_rect: [[-24576, -49152], [24576, 49152]],
 	continent_rect: [[27136, 9472], [29184, 13568]]
@@ -1310,7 +1310,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Felder der Verwüstung",
 	name_es: "Campos de la Ruina",
 	name_fr: "Champs de Ruine",
-	name_zh: "廢墟原野",
+	name_zh: "废墟原野",
 	region: "ascalon",
 	map_rect: [[-36864, -36864], [36864, 36864]],
 	continent_rect: [[28672, 16256], [31744, 19328]]
@@ -1336,7 +1336,7 @@ var GW2T_ZONE_DATA = {
 var GW2T_TIMELINE = [
 	{
 		isWB: true,
-		name_en: "World Bosses", name_de: "Weltbosses", name_es: "Jefe mundo", name_fr: "Chef monde", name_zh: "頭目世界",
+		name_en: "World Bosses", name_de: "Weltbosses", name_es: "Jefe mundo", name_fr: "Chef monde", name_zh: "头目世界",
 		Segments: [
 			{ time: "00:00", duration: "00:15", primacy: 2},
 			{ time: "00:15", duration: "00:15", primacy: 2},
@@ -1352,7 +1352,7 @@ var GW2T_TIMELINE = [
 		zone: "verdant",
 		Segments: [
 			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
-			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Koptern", name_es: "Autogiros", name_fr: "Hélicos", name_zh: "直升機" },
+			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Koptern", name_es: "Autogiros", name_fr: "Hélicos", name_zh: "直升机" },
 			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Journée", name_zh: "白天" },
 			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" }
 		]
@@ -1361,7 +1361,7 @@ var GW2T_TIMELINE = [
 		zone: "auric",
 		Segments: [
 			{ time: "00:00", duration: "00:45", primacy: 1, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" },
-			{ time: "00:45", duration: "00:15", primacy: 2, name_en: "Challenges", name_de: "Herausforderungen", name_es: "Desafíos", name_fr: "Défis", name_zh: "挑戰" },
+			{ time: "00:45", duration: "00:15", primacy: 2, name_en: "Challenges", name_de: "Herausforderungen", name_es: "Desafíos", name_fr: "Défis", name_zh: "挑战" },
 			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Octovine", name_de: "Rankenkraken", name_es: "Octohiedra", name_fr: "Octoliane", name_zh: "八爪藤" },
 			{ time: "01:20", duration: "00:10", primacy: 2, name_en: "Rest", name_de: "Verschnaufpause", name_es: "Descanso", name_fr: "Répit", name_zh: "休息" },
 			{ time: "01:30", duration: "00:30", primacy: 2, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" }
@@ -1371,19 +1371,19 @@ var GW2T_TIMELINE = [
 		zone: "tangled",
 		Segments: [
 			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
-			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "準備" },
+			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "准备" },
 			{ time: "00:30", duration: "00:20", primacy: 3, name_en: "Gerent", name_de: "Potentaten", name_es: "Regente", name_fr: "Régent", name_zh: "虫王" },
 			{ time: "00:50", duration: "01:10", primacy: 2, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" }
 		]
 	},
 	{
-		name_en: "Dragon's Stand & Dry Top", name_de: "Widerstand des Drachen & Trockenkuppe", name_es: "Defensa del Dragón & Cima Seca", name_fr: "Repli du Dragon & Cimesèche", name_zh: "巨龍陣地 和 干涸高地",
+		name_en: "Dragon's Stand & Dry Top", name_de: "Widerstand des Drachen & Trockenkuppe", name_es: "Defensa del Dragón & Cima Seca", name_fr: "Repli du Dragon & Cimesèche", name_zh: "巨龙阵地 和 干涸高地",
 		Segments: [
 			{ time: "00:00", duration: "00:40", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "00:40", duration: "00:20", primacy: 2, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙塵暴！" },
+			{ time: "00:40", duration: "00:20", primacy: 2, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙尘暴！" },
 			{ time: "01:00", duration: "00:30", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "01:30", duration: "00:10", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
-			{ time: "01:40", duration: "00:20", primacy: 2, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙塵暴！" }
+			{ time: "01:30", duration: "00:10", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突袭" },
+			{ time: "01:40", duration: "00:20", primacy: 2, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙尘暴！" }
 		]
 	}
 ];
@@ -1437,7 +1437,7 @@ Countdown: {
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
 		name_fr: "Bonus de carte Gorges glacées",
-		name_zh: "霜谷之音地圖獎金",
+		name_zh: "霜谷之音地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-01-05T20:00:00Z"),
 		Finish: new Date("2017-01-12T20:00:00Z")
@@ -1447,7 +1447,7 @@ Countdown: {
 		name_de: "Halloween 2017",
 		name_es: "Halloween 2017",
 		name_fr: "Halloween 2017",
-		name_zh: "萬聖夜2017",
+		name_zh: "万圣夜2017",
 		official: "news/shadow-of-the-mad-king-is-live/",
 		Start: new Date("2017-10-24T16:00:00Z"),
 		Finish: new Date("2017-11-03T16:00:00Z")
@@ -1467,6 +1467,7 @@ Countdown: {
 		name_de: "PvP Liga Saison 5",
 		name_es: "Temporada 5 de liga PvP",
 		name_fr: "Saison 5 de la ligue JcJ",
+		name_zh: "玩家对战第5季",
 		official: "news/upcoming-changes-for-pvp-league-season-5/",
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
@@ -1476,7 +1477,7 @@ Countdown: {
 		name_de: "WvW Wieder-verbindung",
 		name_es: "McM Re-unificación",
 		name_fr: "McM Ré-association",
-		name_zh: "世界戰場重新統一",
+		name_zh: "世界战场重新统一",
 		url_en: "https://forum-en.guildwars2.com/forum/game/wuv/WvW-Poll-6-June-World-Linking-Schedule-CLOSED/page/3#post6196507",
 		url_de: "https://forum-de.guildwars2.com/forum/game/wuv/WvW-Abstimmung-vom-6-Juni-Zeitplan-f-r-Weltenverbindung-Ergebnisse/first#post500378",
 		url_es: "https://forum-es.guildwars2.com/forum/game/wuv/Encuesta-de-WvW-del-6-de-junio-Frecuencia-de-la-unificaci-n-de-mundos-Cerrada/first#post121282",

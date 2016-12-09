@@ -761,6 +761,7 @@ O = {
 		);
 		O.bindOptionsInputs();
 		U.initializeAPIURLs();
+		D.initializeDictionary();
 	},
 	
 	/*
@@ -17870,323 +17871,323 @@ D = {
 	Dictionary:
 	{
 		s_TEMPLATE: {de: "", es: "", fr: "",
-			cs: "", it: "", pl: "", pt: "", ru: "", tw: "", zh: ""},
+			cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 		
 		// Time
-		s_y: {de: "j", es: "a", fr: "a", cs: "r", it: "a", pl: "r", pt: "a", ru: "г", tw: "年", zh: "年"},
-		s_mo: {de: "mo", es: "me", fr: "mo", cs: "mě", it: "me", pl: "mi", pt: "mê", ru: "ме", tw: "月", zh: "月"},
-		s_w: {de: "w", es: "s", fr: "s", cs: "t", it: "s", pl: "t", pt: "s", ru: "н", tw: "週", zh: "周"},
-		s_d: {de: "t", es: "d", fr: "j", cs: "d", it: "g", pl: "d", pt: "d", ru: "д", tw: "日", zh: "日"},
-		s_h: {de: "h", es: "h", fr: "h", cs: "h", it: "o", pl: "g", pt: "h", ru: "ч", tw: "時", zh: "时"},
-		s_m: {de: "m", es: "m", fr: "m", cs: "m", it: "m", pl: "m", pt: "m", ru: "м", tw: "分", zh: "分"},
-		s_s: {de: "s", es: "s", fr: "s", cs: "s", it: "s", pl: "s", pt: "s", ru: "с", tw: "秒", zh: "秒"},
-		s_hour: {de: "stunde", es: "hora", fr: "heure", cs: "hodina", it: "ora", pl: "godzinę", pt: "hora", ru: "час", tw: "時", zh: "时"},
-		s_minute: {de: "minute", es: "minuto", fr: "minute", cs: "minuta", it: "minuto", pl: "minuta", pt: "minuto", ru: "минута", tw: "分", zh: "分"},
-		s_second: {de: "sekunde", es: "segundo", fr: "seconde", cs: "sekunda", it: "secondo", pl: "sekund", pt: "segundo", ru: "секунду", tw: "秒", zh: "秒"},
-		s_hours: {de: "stunden", es: "horas", fr: "heures", cs: "hodin", it: "secondi", pl: "godzin", pt: "horas", ru: "часов", tw: "時", zh: "时"},
-		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", cs: "minut", it: "minuti", pl: "minut", pt: "minutos", ru: "минут", tw: "分", zh: "分"},
-		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", cs: "sekund", it: "ore", pl: "sekund", pt: "segundos", ru: "секунд", tw: "秒", zh: "秒"},
+		s_y: {de: "j", es: "a", fr: "a", cs: "r", it: "a", pl: "r", pt: "a", ru: "г", zh: "年"},
+		s_mo: {de: "mo", es: "me", fr: "mo", cs: "mě", it: "me", pl: "mi", pt: "mê", ru: "ме", zh: "月"},
+		s_w: {de: "w", es: "s", fr: "s", cs: "t", it: "s", pl: "t", pt: "s", ru: "н", zh: "周"},
+		s_d: {de: "t", es: "d", fr: "j", cs: "d", it: "g", pl: "d", pt: "d", ru: "д", zh: "日"},
+		s_h: {de: "h", es: "h", fr: "h", cs: "h", it: "o", pl: "g", pt: "h", ru: "ч", zh: "时"},
+		s_m: {de: "m", es: "m", fr: "m", cs: "m", it: "m", pl: "m", pt: "m", ru: "м", zh: "分"},
+		s_s: {de: "s", es: "s", fr: "s", cs: "s", it: "s", pl: "s", pt: "s", ru: "с", zh: "秒"},
+		s_hour: {de: "stunde", es: "hora", fr: "heure", cs: "hodina", it: "ora", pl: "godzinę", pt: "hora", ru: "час", zh: "时"},
+		s_minute: {de: "minute", es: "minuto", fr: "minute", cs: "minuta", it: "minuto", pl: "minuta", pt: "minuto", ru: "минута", zh: "分"},
+		s_second: {de: "sekunde", es: "segundo", fr: "seconde", cs: "sekunda", it: "secondo", pl: "sekund", pt: "segundo", ru: "секунду", zh: "秒"},
+		s_hours: {de: "stunden", es: "horas", fr: "heures", cs: "hodin", it: "secondi", pl: "godzin", pt: "horas", ru: "часов", zh: "时"},
+		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", cs: "minut", it: "minuti", pl: "minut", pt: "minutos", ru: "минут", zh: "分"},
+		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", cs: "sekund", it: "ore", pl: "sekund", pt: "segundos", ru: "секунд", zh: "秒"},
 		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure",
-			cs: "půl hodiny", it: "mezz&apos;ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", tw: "半小時", zh: "半小时"},
+			cs: "půl hodiny", it: "mezz&apos;ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", zh: "半小时"},
 		s_cooldown: {de: "abkühl", es: "recuperación", fr: "recharge",
-			cs: "dobíjení", it: "raffreddamento", pl: "ochładzania", pt: "resfriamento", ru: "перезарядка", tw: "冷卻", zh: "冷却"},
+			cs: "dobíjení", it: "raffreddamento", pl: "ochładzania", pt: "resfriamento", ru: "перезарядка", zh: "冷却"},
 		s_remaining: {de: "verbleibend", es: "restante", fr: "restant",
-			cs: "zbývající", it: "rimanente", pl: "pozostały", pt: "restante", ru: "оставшиеся", tw: "剩餘", zh: "剩馀"},
+			cs: "zbývající", it: "rimanente", pl: "pozostały", pt: "restante", ru: "оставшиеся", zh: "剩馀"},
 		s_daylight: {de: "tageszeit", es: "luz de día", fr: "lumière du jour",
-			cs: "denní světlo", it: "luce del giorno", pl: "światło dzienne", pt: "luz do dia", ru: "дневной свет", tw: "白天", zh: "白天"},
+			cs: "denní světlo", it: "luce del giorno", pl: "światło dzienne", pt: "luz do dia", ru: "дневной свет", zh: "白天"},
 		s_nighttime: {de: "nacht", es: "noche", fr: "nuit",
-			cs: "noc", it: "ore notturne", pl: "nocna pora", pt: "período noturno", ru: "ночь", tw: "夜間", zh: "夜间"},
+			cs: "noc", it: "ore notturne", pl: "nocna pora", pt: "período noturno", ru: "ночь", zh: "夜间"},
 		s_dawn: {de: "tagesanbruch", es: "amanecer", fr: "aube",
-			cs: "svítání", it: "alba", pl: "świt", pt: "alvorecer", ru: "рассвет", tw: "黎明", zh: "黎明"},
+			cs: "svítání", it: "alba", pl: "świt", pt: "alvorecer", ru: "рассвет", zh: "黎明"},
 		s_dusk: {de: "dämmerung", es: "crepúsculo", fr: "crépuscule",
-			cs: "soumrak", it: "crepuscolo", pl: "zmierzch", pt: "crepúsculo", ru: "сумрак", tw: "黃昏", zh: "黄昏"},
+			cs: "soumrak", it: "crepuscolo", pl: "zmierzch", pt: "crepúsculo", ru: "сумрак", zh: "黄昏"},
 		s_approaching: {de: "nähert", es: "acerca", fr: "approchant",
-			cs: "blíží", it: "avvicina", pl: "zbliża", pt: "aproximava", ru: "приближается", tw: "來臨", zh: "来临"},
+			cs: "blíží", it: "avvicina", pl: "zbliża", pt: "aproximava", ru: "приближается", zh: "来临"},
 		
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
-			cs: "účet", it: "conto", pl: "konto", pt: "conta", ru: "счёт", tw: "帳戶​​", zh: "帐户"},
+			cs: "účet", it: "conto", pl: "konto", pt: "conta", ru: "счёт", zh: "帐户"},
 		s_key: {de: "schlüssel", es: "tecla", fr: "clé",
-			cs: "klávesa", it: "chiave", pl: "klawisz", pt: "chave", ru: "ключ", tw: "索引鍵", zh: "索引键"},
+			cs: "klávesa", it: "chiave", pl: "klawisz", pt: "chave", ru: "ключ", zh: "索引键"},
 		s_info: {de: "info", es: "información", fr: "info",
-			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", tw: "資訊", zh: "资讯"},
+			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", zh: "资讯"},
 		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
-			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", tw: "計時器", zh: "计时器"},
+			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", zh: "计时器"},
 		s_tools: {de: "extras", es: "herramientas", fr: "outils",
-			cs: "nástroje", it: "strumenti", pl: "narzędzia", pt: "ferramentas", ru: "инструменты", tw: "工具", zh: "工具"},
+			cs: "nástroje", it: "strumenti", pl: "narzędzia", pt: "ferramentas", ru: "инструменты", zh: "工具"},
 		s_help: {de: "hilfe", es: "ayuda", fr: "assistance",
-			cs: "pomoci", it: "guida", pl: "pomoc", pt: "ajuda", ru: "помощь", tw: "輔助", zh: "辅助"},
+			cs: "pomoci", it: "guida", pl: "pomoc", pt: "ajuda", ru: "помощь", zh: "辅助"},
 		s_options: {de: "optionen", es: "opciónes", fr: "options",
-			cs: "možnosti", it: "opzioni", pl: "opcje", pt: "opções", ru: "параметры", tw: "選項", zh: "选项"},
+			cs: "možnosti", it: "opzioni", pl: "opcje", pt: "opções", ru: "параметры", zh: "选项"},
 		s_arrival: {de: "ankunft", es: "llegada", fr: "arrivée",
-			cs: "příjezd", it: "arrivo", pl: "przyjazd", pt: "chegada", ru: "прибытие", tw: "到來", zh: "到来"},
+			cs: "příjezd", it: "arrivo", pl: "przyjazd", pt: "chegada", ru: "прибытие", zh: "到来"},
 		s_world: {de: "welt", es: "mundo", fr: "monde",
-			cs: "svět", it: "mondo", pl: "świat", pt: "mundo", ru: "босс", tw: "世界", zh: "世界"},
+			cs: "svět", it: "mondo", pl: "świat", pt: "mundo", ru: "босс", zh: "世界"},
 		s_boss: {de: "boss", es: "jefe", fr: "chef",
-			cs: "boss", it: "boss", pl: "szef", pt: "chefe", ru: "босс", tw: "頭目", zh: "头目"},
+			cs: "boss", it: "boss", pl: "szef", pt: "chefe", ru: "босс", zh: "头目"},
 		s_event: {de: "event", es: "evento", fr: "événement",
-			cs: "událost", it: "evento", pl: "wydarzenie", pt: "evento", ru: "собы́тие", tw: "事件", zh: "事件"},
+			cs: "událost", it: "evento", pl: "wydarzenie", pt: "evento", ru: "собы́тие", zh: "事件"},
 		s_section: {de: "abschnitt", es: "sección", fr: "section",
-			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "раздел", tw: "節", zh: "节"},
+			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "раздел", zh: "节"},
 		s_map: {de: "karte", es: "mapa", fr: "carte",
-			cs: "mapa", it: "mappa", pl: "mapa", pt: "mapa", ru: "ка́рта", tw: "地圖", zh: "地图"},
+			cs: "mapa", it: "mappa", pl: "mapa", pt: "mapa", ru: "ка́рта", zh: "地图"},
 		s_terrain: {de: "terrain", es: "terreno", fr: "terrain",
-			cs: "terén", it: "terreno", pl: "teren", pt: "terreno", ru: "местность", tw: "地形", zh: "地形"},
+			cs: "terén", it: "terreno", pl: "teren", pt: "terreno", ru: "местность", zh: "地形"},
 		s_center: {de: "zentrum", es: "centro", fr: "centre",
-			cs: "střed", it: "centro", pl: "środek", pt: "centro", ru: "центр", tw: "中心", zh: "中心"},
+			cs: "střed", it: "centro", pl: "środek", pt: "centro", ru: "центр", zh: "中心"},
 		s_completion: {de: "abschluss", es: "finalización", fr: "progression",
-			cs: "dokončení", it: "completamento", pl: "ukończenie", pt: "progressão", ru: "завершение", tw: "完成", zh: "完成"},
+			cs: "dokončení", it: "completamento", pl: "ukończenie", pt: "progressão", ru: "завершение", zh: "完成"},
 		s_route: {de: "route", es: "ruta", fr: "route",
-			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршру́т", tw: "路線", zh: "路线"},
+			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршру́т", zh: "路线"},
 		s_pins: {de: "stecknadel", es: "alfileres", fr: "épingles",
-			cs: "špendlík", it: "spilli", pl: "szpilka", pt: "alfinetes", ru: "була́вка", tw: "大頭針", zh: "大头针"},
+			cs: "špendlík", it: "spilli", pl: "szpilka", pt: "alfinetes", ru: "була́вка", zh: "大头针"},
 		s_range: {de: "reichweite", es: "alcance", fr: "portée",
-			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", tw: "射程", zh: "射程"},
+			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", zh: "射程"},
 		s_slot: {de: "steckplatz", es: "ranura", fr: "emplacement",
-			cs: "slot", it: "slot", pl: "gniazdo", pt: "slot", ru: "слот", tw: "插槽", zh: "插槽"},
+			cs: "slot", it: "slot", pl: "gniazdo", pt: "slot", ru: "слот", zh: "插槽"},
 		s_bookmarks: {de: "zeichen", es: "marcadores", fr: "signets",
-			cs: "záložky", it: "segnalibri", pl: "zakładki", pt: "favoritos", ru: "закладки", tw: "書籤", zh: "书签"},
+			cs: "záložky", it: "segnalibri", pl: "zakładki", pt: "favoritos", ru: "закладки", zh: "书签"},
 		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
-			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", tw: "鎖定", zh: "锁定"},
+			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", zh: "锁定"},
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
-			cs: "kontrolní seznam", it: "elenco di controllo", pl: "lista kontrolna", pt: "lista de verificação", ru: "контрольный список", tw: "檢查清單", zh: "检查清单"},
+			cs: "kontrolní seznam", it: "elenco di controllo", pl: "lista kontrolna", pt: "lista de verificação", ru: "контрольный список", zh: "检查清单"},
 		s_subscription: {de: "abonnement", es: "suscripción", fr: "abonnement",
-			cs: "předplatné", it: "sottoscrizione", pl: "abonament", pt: "assinatura", ru: "подписка", tw: "訂閱", zh: "订阅"},
+			cs: "předplatné", it: "sottoscrizione", pl: "abonament", pt: "assinatura", ru: "подписка", zh: "订阅"},
 		s_alarm: {de: "alarm", es: "alarma", fr: "alarme",
-			cs: "alarmu", it: "allarme", pl: "alarmu", pt: "alarme", ru: "будильника", tw: "鬧鐘", zh: "闹钟"},
+			cs: "alarmu", it: "allarme", pl: "alarmu", pt: "alarme", ru: "будильника", zh: "闹钟"},
 		s_mode: {de: "modus", es: "modo", fr: "mode",
-			cs: "režim", it: "modalità", pl: "tryb", pt: "modo", ru: "режим", tw: "方式", zh: "方式"},
+			cs: "režim", it: "modalità", pl: "tryb", pt: "modo", ru: "режим", zh: "方式"},
 		s_chatlink: {de: "chatlink", es: "vínculo chat", fr: "lien chat",
-			cs: "chat odkaz", it: "collegamento chat", pl: "czat łącze", pt: "link bate-papo", ru: "чат связь", tw: "連結聊天", zh: "连结聊天"},
+			cs: "chat odkaz", it: "collegamento chat", pl: "czat łącze", pt: "link bate-papo", ru: "чат связь", zh: "连结聊天"},
 		s_stopwatch: {de: "stoppuhr", es: "cronómetro", fr: "chronomètre",
-			cs: "stopky", it: "cronografo", pl: "stoper", pt: "cronômetro", ru: "секундомер", tw: "碼錶", zh: "码表"},
+			cs: "stopky", it: "cronografo", pl: "stoper", pt: "cronômetro", ru: "секундомер", zh: "码表"},
 		s_guilds: {de: "gilden", es: "clanes", fr: "guildes",
-			cs: "cechy", it: "clan", pl: "klany", pt: "clãs", ru: "гильдий", tw: "戰隊", zh: "战队"},
+			cs: "cechy", it: "clan", pl: "klany", pt: "clãs", ru: "гильдий", zh: "战队"},
 		
 		// Verbs
 		s_is: {de: "ist", es: "es", fr: "est",
-			cs: "je", it: "è", pl: "jest", pt: "é", ru: "является", tw: "是", zh: "是"},
+			cs: "je", it: "è", pl: "jest", pt: "é", ru: "является", zh: "是"},
 		s_subscribe: {de: "abonnieren", es: "subscribir", fr: "abonner",
-			cs: "předplatit si", it: "sottoscrivere", pl: "abonować", pt: "assinar", ru: "подписаться", tw: "訂閱", zh: "订阅"},
+			cs: "předplatit si", it: "sottoscrivere", pl: "abonować", pt: "assinar", ru: "подписаться", zh: "订阅"},
 		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera",
-			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", tw: "開始", zh: "开始"},
+			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "开始"},
 		s_click: {de: "klicken", es: "clic", fr: "cliquer",
-			cs: "kliknout", it: "clic", pl: "klikać", pt: "clicar", ru: "щелкнуть", tw: "按一下", zh: "按一下"},
+			cs: "kliknout", it: "clic", pl: "klikać", pt: "clicar", ru: "щелкнуть", zh: "按一下"},
 		s_view: {de: "anzeigen", es: "ver", fr: "afficher",
-			cs: "zobrazit", it: "visualizzare", pl: "wyświetlać", pt: "exibir", ru: "представление", tw: "檢視", zh: "检视"},
+			cs: "zobrazit", it: "visualizzare", pl: "wyświetlać", pt: "exibir", ru: "представление", zh: "检视"},
 		s_load: {de: "laden", es: "cargar", fr: "charger",
-			cs: "načíst", it: "caricare", pl: "załaduj", pt: "carregar", ru: "загрузить", tw: "載入", zh: "载入"},
+			cs: "načíst", it: "caricare", pl: "załaduj", pt: "carregar", ru: "загрузить", zh: "载入"},
 		s_save: {de: "speichern", es: "guardar", fr: "enregistrer",
-			cs: "uložit", it: "salvare", pl: "zapisać", pt: "salvar", ru: "сохранить", tw: "儲存", zh: "储存"},
+			cs: "uložit", it: "salvare", pl: "zapisać", pt: "salvar", ru: "сохранить", zh: "储存"},
 		s_clear: {de: "löschen", es: "borrar", fr: "effacer",
-			cs: "vymazat", it: "cancella", pl: "wyczyść", pt: "limpar", ru: "очистить", tw: "清除", zh: "清除"},
+			cs: "vymazat", it: "cancella", pl: "wyczyść", pt: "limpar", ru: "очистить", zh: "清除"},
 		s_toggle: {de: "umschalten", es: "alternar", fr: "basculer",
-			cs: "přepnout", it: "alterna", pl: "przełączanie", pt: "alternar", ru: "переключить", tw: "切換", zh: "切换"},
+			cs: "přepnout", it: "alterna", pl: "przełączanie", pt: "alternar", ru: "переключить", zh: "切换"},
 		s_expand: {de: "erweiter", es: "expandir", fr: "développer",
-			cs: "rozbalit", it: "espandere", pl: "rozwinąć", pt: "expandir", ru: "развернуть", tw: "展開", zh: "展开"},
+			cs: "rozbalit", it: "espandere", pl: "rozwinąć", pt: "expandir", ru: "развернуть", zh: "展开"},
 		s_collapse: {de: "verkleiner", es: "contraer", fr: "réduire",
-			cs: "sbalit", it: "comprimere", pl: "zwinąć", pt: "recolher", ru: "свернуть", tw: "摺疊", zh: "摺叠"},
+			cs: "sbalit", it: "comprimere", pl: "zwinąć", pt: "recolher", ru: "свернуть", zh: "摺叠"},
 		s_draw: {de: "zeichnen", es: "dibujar", fr: "dessiner",
-			cs: "kreslit", it: "disegnare", pl: "rysować", pt: "desenhar", ru: "рисова́ть", tw: "画", zh: "画"},
+			cs: "kreslit", it: "disegnare", pl: "rysować", pt: "desenhar", ru: "рисова́ть", zh: "画"},
 		s_undo: {de: "rückgängig", es: "deshacer", fr: "annuler",
-			cs: "zpět", it: "annullare", pl: "cofnąć", pt: "desfazer", ru: "отменить", tw: "復原", zh: "复原"},
+			cs: "zpět", it: "annullare", pl: "cofnąć", pt: "desfazer", ru: "отменить", zh: "复原"},
 		s_optimize: {de: "optimieren", es: "optimizar", fr: "optimiser",
-			cs: "optimalizovat", it: "ottimizzare", pl: "optymalizować", pt: "otimizar", ru: "оптимизировать", tw: "最佳化", zh: "最佳化"},
+			cs: "optimalizovat", it: "ottimizzare", pl: "optymalizować", pt: "otimizar", ru: "оптимизировать", zh: "最佳化"},
 		s_search: {de: "suchen", es: "buscar", fr: "rechercher",
-			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", tw: "搜尋", zh: "搜寻"},
+			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜寻"},
 		s_get: {de: "erhalten", es: "conseguir", fr: "obtenir",
-			cs: "dostat", it: "ottenere", pl: "dostawać", pt: "obter", ru: "достава́ть", tw: "获得", zh: "获得"},
+			cs: "dostat", it: "ottenere", pl: "dostawać", pt: "obter", ru: "достава́ть", zh: "获得"},
 		
 		// Adjectives, Adverbs, Participles
 		s_no: {de: "kein", es: "no", fr: "pas de",
-			cs: "žádný", it: "non", pl: "żaden", pt: "nada de", ru: "нет", tw: "沒有", zh: "没有"},
+			cs: "žádný", it: "non", pl: "żaden", pt: "nada de", ru: "нет", zh: "没有"},
 		s_not: {de: "nicht", es: "no", fr: "ne",
-			cs: "ne", it: "non", pl: "nie", pt: "não", ru: "не", tw: "不", zh: "不"},
+			cs: "ne", it: "non", pl: "nie", pt: "não", ru: "не", zh: "不"},
 		s_ago: {de: "vor", es: "hace", fr: "il ya",
-			cs: "před", it: "fa", pl: "temu", pt: "há", ru: "назад", tw: "前", zh: "前"},
+			cs: "před", it: "fa", pl: "temu", pt: "há", ru: "назад", zh: "前"},
 		s_also: {de: "auch", es: "también", fr: "aussi",
-			cs: "také", it: "anche", pl: "też", pt: "também", ru: "то́же", tw: "也", zh: "也"},
+			cs: "také", it: "anche", pl: "też", pt: "também", ru: "то́же", zh: "也"},
 		s_checked: {de: "abgehakt", es: "visto", fr: "coché",
-			cs: "odškrtnout", it: "controllato", pl: "zakończony", pt: "marcado", ru: "включен", tw: "勾掉", zh: "勾掉"},
+			cs: "odškrtnout", it: "controllato", pl: "zakończony", pt: "marcado", ru: "включен", zh: "勾掉"},
 		s_current: {de: "aktuelle", es: "actual", fr: "actuel",
-			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", tw: "活期", zh: "活期"},
+			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
 		s_daily: {de: "täglich", es: "diaria", fr: "quotidien",
-			cs: "denní", it: "giornaliero", pl: "dzienny", pt: "diário", ru: "ежедневно", tw: "每天", zh: "每天"},
+			cs: "denní", it: "giornaliero", pl: "dzienny", pt: "diário", ru: "ежедневно", zh: "每天"},
 		s_dailies: {de: "täglichen", es: "diarios", fr: "quotidiens",
-			cs: "deníky", it: "quotidiani", pl: "dzienniki", pt: "diários", ru: "ежедневных", tw: "每天成就", zh: "每天成就"},
+			cs: "deníky", it: "quotidiani", pl: "dzienniki", pt: "diários", ru: "ежедневных", zh: "每天成就"},
 		s_achievements: {de: "erfolge", es: "logros", fr: "succès",
-			cs: "výsledky", it: "obiettivi", pl: "osiągnięcia", pt: "conquistas", ru: "достижения", tw: "成就", zh: "成就"},
+			cs: "výsledky", it: "obiettivi", pl: "osiągnięcia", pt: "conquistas", ru: "достижения", zh: "成就"},
 		s_previous: {de: "vorhergehend", es: "previo", fr: "préalable",
-			cs: "předchozí", it: "previo", pl: "poprzedni", pt: "prévio", ru: "предыдущий", tw: "以前的", zh: "以前的"},
+			cs: "předchozí", it: "previo", pl: "poprzedni", pt: "prévio", ru: "предыдущий", zh: "以前的"},
 		s_next: {de: "nächste", es: "siguiente", fr: "prochain",
-			cs: "příští", it: "seguente", pl: "następny", pt: "próximo", ru: "следующий", tw: "下一", zh: "下一"},
+			cs: "příští", it: "seguente", pl: "następny", pt: "próximo", ru: "следующий", zh: "下一"},
 		s_off: {de: "aus", es: "desactivado", fr: "désactivé",
-			cs: "vypnuto", it: "disattivato", pl: "wyłączany", pt: "desativado", ru: "выключено", tw: "關", zh: "关"},
+			cs: "vypnuto", it: "disattivato", pl: "wyłączany", pt: "desativado", ru: "выключено", zh: "关"},
 		s_predicted: {de: "vorhergesagt", es: "previsto", fr: "prédit",
-			cs: "předpovídal", it: "previsto", pl: "przewiduje", pt: "predito", ru: "предсказанный", tw: "預測", zh: "预测"},
+			cs: "předpovídal", it: "previsto", pl: "przewiduje", pt: "predito", ru: "предсказанный", zh: "预测"},
 		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit",
-			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписан", tw: "訂閱", zh: "订阅"},
+			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписан", zh: "订阅"},
 		s_then: {de: "dann", es: "luego", fr: "puis",
-			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", tw: "接著", zh: "接着"},
+			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", zh: "接着"},
 		s_found: {de: "gefunden", es: "encontró", fr: "trouvé",
-			cs: "zjištěno", it: "trovato", pl: "stwierdzono", pt: "encontrado", ru: "найден", tw: "發現了", zh: "发现了"},
+			cs: "zjištěno", it: "trovato", pl: "stwierdzono", pt: "encontrado", ru: "найден", zh: "发现了"},
 		s_loading: {de: "laden", es: "cargando", fr: "chargement",
-			cs: "načítání", it: "caricamento", pl: "ładowanie", pt: "carregando", ru: "загрузка", tw: "正在載入", zh: "正在载入"},
+			cs: "načítání", it: "caricamento", pl: "ładowanie", pt: "carregando", ru: "загрузка", zh: "正在载入"},
 		s_automatic: {de: "automatisch", es: "automático", fr: "automatique",
-			cs: "automatický", it: "automatico", pl: "automatyczny", pt: "automático", ru: "автоматический", tw: "自動的", zh: "自动的"},
+			cs: "automatický", it: "automatico", pl: "automatyczny", pt: "automático", ru: "автоматический", zh: "自动的"},
 		
 		// Prepositions and Conjunctions
 		s_at: {de: "um", es: "a", fr: "à",
-			cs: "v", it: "a", pl: "o", pt: "a", ru: "в", tw: "在", zh: "在"},
+			cs: "v", it: "a", pl: "o", pt: "a", ru: "в", zh: "在"},
 		s_and: {de: "und", es: "y", fr: "et",
-			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", tw: "和", zh: "和"},
+			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", zh: "和"},
 		s_by: {de: "von", es: "por", fr: "de",
-			cs: "od", it: "da", pl: "przez", pt: "por", ru: "", tw: "由", zh: "由"},
+			cs: "od", it: "da", pl: "przez", pt: "por", ru: "", zh: "由"},
 		s_if: {de: "wenn", es: "si", fr: "si",
-			cs: "jestliže", it: "se", pl: "jeśli", pt: "se", ru: "если", tw: "如果", zh: "如果"},
+			cs: "jestliže", it: "se", pl: "jeśli", pt: "se", ru: "если", zh: "如果"},
 		s_in: {de: "in", es: "en", fr: "en",
-			cs: "za", it: "in", pl: "w", pt: "em", ru: "в", tw: "在", zh: "在"},
+			cs: "za", it: "in", pl: "w", pt: "em", ru: "в", zh: "在"},
 		s_to: {de: "zu", es: "a", fr: "contre",
-			cs: "ku", it: "a", pl: "na", pt: "a", ru: "до", tw: "比", zh: "比"},
+			cs: "ku", it: "a", pl: "na", pt: "a", ru: "до", zh: "比"},
 		
 		// Automatic
-		s_Sector: {de: "Sektor", es: "Sector", fr: "Secteur", tw: "扇形", zh: "扇形"},
-		s_Waypoint: {de: "Wegmarke", es: "Punto de ruta", fr: "Point de passage", tw: "傳送點", zh: "传送点"},
-		s_Point_of_Interest: {de: "Sehenswürdigkeit", es: "Punto de interés", fr: "Site remarquable", tw: "興趣點", zh: "鸟瞰点"},
-		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", tw: "鳥瞰點", zh: "鸟瞰点"},
-		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", tw: "技能點", zh: "技能点"},
-		s_Heart: {de: "Herzchen-Quest", es: "Corazón de prestigio", fr: "Cœur de renommé", tw: "愛心任務", zh: "爱心任务"},
+		s_Sector: {de: "Sektor", es: "Sector", fr: "Secteur", zh: "扇形"},
+		s_Waypoint: {de: "Wegmarke", es: "Punto de ruta", fr: "Point de passage", zh: "传送点"},
+		s_Point_of_Interest: {de: "Sehenswürdigkeit", es: "Punto de interés", fr: "Site remarquable", zh: "鸟瞰点"},
+		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鸟瞰点"},
+		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "技能点"},
+		s_Heart: {de: "Herzchen-Quest", es: "Corazón de prestigio", fr: "Cœur de renommé", zh: "爱心任务"},
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
-			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", tw: "已排程", zh: "已排程"},
+			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", zh: "已排程"},
 		s_Special_Bosses: {de: "Speziell", es: "Especial", fr: "Spécial",
-			cs: "Speciální", it: "Speciale", pl: "Specjalny", pt: "Especial", ru: "Особый", tw: "特別的", zh: "特别的"},
-		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Cimesèche", tw: "干涸高地", zh: "干涸高地"},
+			cs: "Speciální", it: "Speciale", pl: "Specjalny", pt: "Especial", ru: "Особый", zh: "特别的"},
+		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Cimesèche", zh: "干涸高地"},
 		s_Legacy_Bosses: {de: "Legacy", es: "Heredado", fr: "Hérité",
-			cs: "Starší", it: "Legacy", pl: "Starsze", pt: "Herdado", ru: "Устаревший", tw: "舊版", zh: "旧版"},
+			cs: "Starší", it: "Legacy", pl: "Starsze", pt: "Herdado", ru: "Устаревший", zh: "旧版"},
 		s_Orr_Temples: {de: "Tempel", es: "Templos", fr: "Temples",
-			cs: "Chrámy", it: "Templi", pl: "Świątynie", pt: "Templos", ru: "Храмы", tw: "寺廟", zh: "寺庙"},
+			cs: "Chrámy", it: "Templi", pl: "Świątynie", pt: "Templos", ru: "Храмы", zh: "寺庙"},
 		s_Full_Timetable: {de: "Zeitplan", es: "Horario", fr: "Horaire",
-			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", tw: "時間表", zh: "时间表"},
+			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "时间表"},
 		s_promotions: {de: "Aktionen", es: "promociones", fr: "promotions",
-			cs: "propagace", it: "promozioni", pl: "promocje", pt: "promoções", ru: "продвижения", tw: "促銷", zh: "促销"},
+			cs: "propagace", it: "promozioni", pl: "promocje", pt: "promoções", ru: "продвижения", zh: "促销"},
 		s_menu: {de: "menü", es: "menú", fr: "menu",
-			cs: "nabídka", it: "menu", pl: "menu", pt: "menu", ru: "меню", tw: "功能表", zh: "功能表"},
+			cs: "nabídka", it: "menu", pl: "menu", pt: "menu", ru: "меню", zh: "功能表"},
 		s_wvw: {de: "WvW", es: "McM", fr: "McM",
-			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", tw: "世界戰場", zh: "世界战场"},
+			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界战场"},
 		s_pve: {de: "SgU", es: "JcE", fr: "JcE",
-			cs: "HpP", it: "GcA", pl: "PvE", pt: "JcA", ru: "ИпО", tw: "玩家對抗環境", zh: "玩家对抗环境"},
+			cs: "HpP", it: "GcA", pl: "PvE", pt: "JcA", ru: "ИпО", zh: "玩家对抗环境"},
 		s_display: {de: "anzeige", es: "presentación", fr: "affichage",
-			cs: "zobrazení", it: "visualizzazione", pl: "wyświetlania", pt: "exibição", ru: "отображаемое", tw: "顯示", zh: "显示"},
+			cs: "zobrazení", it: "visualizzazione", pl: "wyświetlania", pt: "exibição", ru: "отображаемое", zh: "显示"},
 		s_zone: {de: "gebiet", es: "zona", fr: "zone",
-			cs: "zóna", it: "zona", pl: "zona", pt: "zona", ru: "зона", tw: "區", zh: "区"},
+			cs: "zóna", it: "zona", pl: "zona", pt: "zona", ru: "зона", zh: "区"},
 		s_forum: {de: "forum", es: "foro", fr: "forum",
-			cs: "fórum", it: "forum", pl: "forum", pt: "fórum", ru: "форум", tw: "論壇", zh: "论坛"},
+			cs: "fórum", it: "forum", pl: "forum", pt: "fórum", ru: "форум", zh: "论坛"},
 		s_possessions: {de: "besitzungen", es: "posesiones", fr: "possessions",
-			cs: "bohatství", it: "patrimonio", pl: "dobytek", pt: "posses", ru: "пожитки", tw: "財產", zh: "财产"},
+			cs: "bohatství", it: "patrimonio", pl: "dobytek", pt: "posses", ru: "пожитки", zh: "财产"},
 		s_catalog: {de: "katalog", es: "catálogo", fr: "catalogue",
-			cs: "katalog", it: "catalogo", pl: "katalog", pt: "catálogo", ru: "каталог", tw: "目錄", zh: "目录"},
+			cs: "katalog", it: "catalogo", pl: "katalog", pt: "catálogo", ru: "каталог", zh: "目录"},
 		s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
-			cs: "audit", it: "audit", pl: "audyt", pt: "auditar", ru: "аудит", tw: "審計", zh: "审计"},
+			cs: "audit", it: "audit", pl: "audyt", pt: "auditar", ru: "аудит", zh: "审计"},
 		s_cleanup: {de: "aufräumen", es: "limpia", fr: "nettoyer",
-			cs: "úklid", it: "ripulire", pl: "oczyszczenie", pt: "limpeza", ru: "уборка", tw: "淨化", zh: "净化"},
+			cs: "úklid", it: "ripulire", pl: "oczyszczenie", pt: "limpeza", ru: "уборка", zh: "净化"},
 		s_simple: {de: "einfach", es: "simple", fr: "simple",
-			cs: "prostý", it: "semplice", pl: "prosty", pt: "simples", ru: "простой", tw: "簡單", zh: "简单"},
+			cs: "prostý", it: "semplice", pl: "prosty", pt: "simples", ru: "простой", zh: "简单"},
 		s_mobile: {de: "mobil", es: "móvil", fr: "mobile",
-			cs: "mobilní", it: "mobile", pl: "mobilna", pt: "móvel", ru: "мобильный", tw: "行動", zh: "行动"},
+			cs: "mobilní", it: "mobile", pl: "mobilna", pt: "móvel", ru: "мобильный", zh: "行动"},
 		s_tile: {de: "kacheln", es: "mosaico", fr: "mosaïque",
-			cs: "dlaždice", it: "affianca", pl: "sąsiadująco", pt: "ladrilho", ru: "замостить", tw: "磚", zh: "砖"},
+			cs: "dlaždice", it: "affianca", pl: "sąsiadująco", pt: "ladrilho", ru: "замостить", zh: "砖"},
 		
 		// Economy
 		s_this: {de: "dieses", es: "esto", fr: "ce",
-			cs: "toto", it: "questo", pl: "to", pt: "isto", ru: "это", tw: "這", zh: "这"},
+			cs: "toto", it: "questo", pl: "to", pt: "isto", ru: "это", zh: "这"},
 		s_your: {de: "dein", es: "tu", fr: "ton",
-			cs: "tvůj", it: "tuo", pl: "twój", pt: "teu", ru: "твой", tw: "你的", zh: "你的"},
+			cs: "tvůj", it: "tuo", pl: "twój", pt: "teu", ru: "твой", zh: "你的"},
 		s_name: {de: "namen", es: "nombre", fr: "nom",
-			cs: "název", it: "nome", pl: "nazwa", pt: "nome", ru: "имя", tw: "名", zh: "名"},
+			cs: "název", it: "nome", pl: "nazwa", pt: "nome", ru: "имя", zh: "名"},
 		s_ordered: {de: "bestellt", es: "pedidos", fr: "demandée",
-			cs: "objednal", it: "ordinato", pl: "zamówiony", pt: "encomendado", ru: "заказал", tw: "訂了", zh: "订了"},
+			cs: "objednal", it: "ordinato", pl: "zamówiony", pt: "encomendado", ru: "заказал", zh: "订了"},
 		s_available: {de: "verfügbar", es: "disponibles", fr: "disponible",
-			cs: "dostupný", it: "disponibile", pl: "dostępny", pt: "disponível", ru: "досту́пный", tw: "可用", zh: "可用"},
+			cs: "dostupný", it: "disponibile", pl: "dostępny", pt: "disponível", ru: "досту́пный", zh: "可用"},
 		s_supply: {de: "angebot", es: "oferta", fr: "stock",
-			cs: "nabídka", it: "offerta", pl: "podaż", pt: "suprimento", ru: "предложение", tw: "供應", zh: "供应"},
+			cs: "nabídka", it: "offerta", pl: "podaż", pt: "suprimento", ru: "предложение", zh: "供应"},
 		s_demand: {de: "nachfrage", es: "demanda", fr: "demande",
-			cs: "poptávka", it: "domanda", pl: "popyt", pt: "demanda", ru: "спрос", tw: "需求", zh: "需求"},
+			cs: "poptávka", it: "domanda", pl: "popyt", pt: "demanda", ru: "спрос", zh: "需求"},
 		s_price: {de: "preis", es: "precio", fr: "prix",
-			cs: "cena", it: "prezzo", pl: "cena", pt: "preço", ru: "цена", tw: "價格", zh: "价格"},
+			cs: "cena", it: "prezzo", pl: "cena", pt: "preço", ru: "цена", zh: "价格"},
 		s_buy: {de: "kaufen", es: "comprar", fr: "acheter",
-			cs: "koupit", it: "comprare", pl: "kupić", pt: "comprar", ru: "купить", tw: "買", zh: "买"},
+			cs: "koupit", it: "comprare", pl: "kupić", pt: "comprar", ru: "купить", zh: "买"},
 		s_sell: {de: "verkaufen", es: "vender", fr: "vendre",
-			cs: "prodat", it: "vendere", pl: "sprzedać", pt: "vender", ru: "продать", tw: "賣", zh: "卖"},
+			cs: "prodat", it: "vendere", pl: "sprzedać", pt: "vender", ru: "продать", zh: "卖"},
 		s_outbid: {de: "überbieten", es: "sobrepujar", fr: "surenchérir",
-			cs: "přelicitovat", it: "prezzo più alto", pl: "przelicytować", pt: "ultrapassar", ru: "перекупать", tw: "出價高於", zh: "出价高於"},
+			cs: "přelicitovat", it: "prezzo più alto", pl: "przelicytować", pt: "ultrapassar", ru: "перекупать", zh: "出价高於"},
 		s_quantity: {de: "anzahl", es: "cantidad", fr: "quantité",
-			cs: "množství", it: "quantità", pl: "ilość", pt: "quantidade", ru: "количество", tw: "量", zh: "量"},
+			cs: "množství", it: "quantità", pl: "ilość", pt: "quantidade", ru: "количество", zh: "量"},
 		s_profit: {de: "gewinn", es: "beneficio", fr: "profit",
-			cs: "zisk", it: "profitto", pl: "zysk", pt: "lucro", ru: "прибыль", tw: "利潤", zh: "利润"},
+			cs: "zisk", it: "profitto", pl: "zysk", pt: "lucro", ru: "прибыль", zh: "利润"},
 		s_cost: {de: "kosten", es: "costo", fr: "coût",
-			cs: "náklady", it: "costo", pl: "koszt", pt: "custo", ru: "стоимость", tw: "成本", zh: "成本"},
+			cs: "náklady", it: "costo", pl: "koszt", pt: "custo", ru: "стоимость", zh: "成本"},
 		s_breakpoint: {de: "gewinnschwelle", es: "punto muerto", fr: "seuil de rentabilité",
-			cs: "bod zvratu", it: "punto di pareggio", pl: "próg rentowności", pt: "ponto de equilíbrio", ru: "точка безубыточности", tw: "收支平衡點", zh: "收支平衡点"},
+			cs: "bod zvratu", it: "punto di pareggio", pl: "próg rentowności", pt: "ponto de equilíbrio", ru: "точка безубыточности", zh: "收支平衡点"},
 		s_tax: {de: "steuer", es: "impuestos", fr: "impôt",
-			cs: "daň", it: "fiscale", pl: "podatek", pt: "fiscal", ru: "налог", tw: "稅", zh: "税"},
+			cs: "daň", it: "fiscale", pl: "podatek", pt: "fiscal", ru: "налог", zh: "税"},
 		s_revenue: {de: "einnahmen", es: "ingresos", fr: "revenus",
-			cs: "příjmy", it: "entrate", pl: "dochody", pt: "receita", ru: "доходов", tw: "收入", zh: "收入"},
+			cs: "příjmy", it: "entrate", pl: "dochody", pt: "receita", ru: "доходов", zh: "收入"},
 		s_margin: {de: "gewinnspanne", es: "margen", fr: "marge",
-			cs: "marže", it: "margine", pl: "marża", pt: "margem", ru: "валовая", tw: "邊際", zh: "边际"},
+			cs: "marže", it: "margine", pl: "marża", pt: "margem", ru: "валовая", zh: "边际"},
 		s_low: {de: "niedrigen", es: "bajo", fr: "bas",
-			cs: "nízký", it: "bassa", pl: "niski", pt: "baixa", ru: "низкая", tw: "低", zh: "低"},
+			cs: "nízký", it: "bassa", pl: "niski", pt: "baixa", ru: "низкая", zh: "低"},
 		s_high: {de: "hohen", es: "alta", fr: "haut",
-			cs: "vysoký", it: "alta", pl: "wysoki", pt: "alta", ru: "высокая", tw: "高", zh: "高"},
+			cs: "vysoký", it: "alta", pl: "wysoki", pt: "alta", ru: "высокая", zh: "高"},
 		s_notify: {de: "benachrichtigen", es: "notificar", fr: "notifier",
-			cs: "oznámit", it: "notifica", pl: "powiadom", pt: "notificar", ru: "уведомить", tw: "通知", zh: "通知"},
+			cs: "oznámit", it: "notifica", pl: "powiadom", pt: "notificar", ru: "уведомить", zh: "通知"},
 		s_overwrite: {de: "überschreiben", es: "sobrescribir", fr: "remplacer",
-			cs: "přepsat", it: "sovrascrivi", pl: "zastąp", pt: "substituir", ru: "перезаписать", tw: "覆寫", zh: "覆写"},
+			cs: "přepsat", it: "sovrascrivi", pl: "zastąp", pt: "substituir", ru: "перезаписать", zh: "覆写"},
 		s_gem: {de: "edelsteine", es: "gema", fr: "gemme",
-			cs: "klenot", it: "gemma", pl: "klejnot", pt: "gema", ru: "самоцвет", tw: "寶石", zh: "宝石"},
+			cs: "klenot", it: "gemma", pl: "klejnot", pt: "gema", ru: "самоцвет", zh: "宝石"},
 		s_coin: {de: "münze", es: "moneda", fr: "monnaie",
-			cs: "mince", it: "moneta", pl: "moneta", pt: "moeda", ru: "монета", tw: "硬幣", zh: "硬币"},
+			cs: "mince", it: "moneta", pl: "moneta", pt: "moeda", ru: "монета", zh: "硬币"},
 		s_dollar: {de: "dollar", es: "dólar", fr: "dollar",
-			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", tw: "元", zh: "元"}
+			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"}
 	},
 	
 	// Strings from the game copied verbatim, for use mainly in tooltips
 	Codex:
 	{
-		s_TEMPLATE: {en: "", de: "", es: "", fr: "", tw: "", zh: ""},
+		s_TEMPLATE: {en: "", de: "", es: "", fr: "", zh: ""},
 
 		// Currency abbreviation
-		s_CoinGold: {en: "g", de: "g", es: "o", fr: "o", cs: "z", it: "o", pl: "z", pt: "o", ru: "з", tw: "金", zh: "金"},
-		s_CoinSilver: {en: "s", de: "s", es: "p", fr: "a", cs: "s", it: "a", pl: "s", pt: "p", ru: "с", tw: "銀", zh: "银"},
-		s_CoinCopper: {en: "c", de: "k", es: "c", fr: "c", cs: "m", it: "r", pl: "m", pt: "c", ru: "м", tw: "銅", zh: "铜"},
+		s_CoinGold: {en: "g", de: "g", es: "o", fr: "o", cs: "z", it: "o", pl: "z", pt: "o", ru: "з", zh: "金"},
+		s_CoinSilver: {en: "s", de: "s", es: "p", fr: "a", cs: "s", it: "a", pl: "s", pt: "p", ru: "с", zh: "银"},
+		s_CoinCopper: {en: "c", de: "k", es: "c", fr: "c", cs: "m", it: "r", pl: "m", pt: "c", ru: "м", zh: "铜"},
 		
 		// Item Type
-		s_Back: {en: "Back Item", de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos", tw: "背包", zh: "背包"},
-		s_Bag: {en: "Bag", de: "Tasche", es: "Saco", fr: "Sac", tw: "格包", zh: "格包"},
-		s_Boost: {en: "Boost", de: "Verstärker", es: "Potenciador", fr: "Augmentation", tw: "增幅劑", zh: "增幅剂"},
-		s_Consumable: {en: "Consumable", de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable", tw: "消耗", zh: "消耗"},
-		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur", tw: "器箱", zh: "器箱"},
-		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d&apos;artisanat", tw: "制作材料", zh: "制作材料"},
-		s_Gathering: {en: "Gathering Tool", de: "Sammelwerkzeug", es: "Herramienta de recolección", fr: "Outil de récolte", tw: "採集工具", zh: "采集工具"},
-		s_Gizmo: {en: "Gizmo", de: "Dingsbums", es: "Aparato", fr: "Machin", tw: "聚能發明", zh: "聚能发明"},
-		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature", tw: "迷你", zh: "迷你"},
-		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable", tw: "食品", zh: "食品"},
-		s_Salvage: {en: "Salvage", de: "Wiederverwertungs", es: "Recicla", fr: "Recyclage", tw: "拆解", zh: "拆解"},
-		s_Tool: {en: "Salvage Kit", de: "Wiederverwertungskit", es: "Kit de recicla", fr: "Nécessaire de recyclage", tw: "拆解工具包", zh: "拆解工具包"},
-		s_Trophy: {en: "Trophy", de: "Trophäe", es: "Trofeo", fr: "Trophée", tw: "戰利品", zh: "战利品"},
-		s_UpgradeComponent: {en: "Upgrade Component", de: "Aufwertung", es: "Componente de mejora", fr: "Composant d&apos;amélioration", tw: "升級", zh: "升级"},
+		s_Back: {en: "Back Item", de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos", zh: "背包"},
+		s_Bag: {en: "Bag", de: "Tasche", es: "Saco", fr: "Sac", zh: "格包"},
+		s_Boost: {en: "Boost", de: "Verstärker", es: "Potenciador", fr: "Augmentation", zh: "增幅剂"},
+		s_Consumable: {en: "Consumable", de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable", zh: "消耗"},
+		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur", zh: "器箱"},
+		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d&apos;artisanat", zh: "制作材料"},
+		s_Gathering: {en: "Gathering Tool", de: "Sammelwerkzeug", es: "Herramienta de recolección", fr: "Outil de récolte", zh: "采集工具"},
+		s_Gizmo: {en: "Gizmo", de: "Dingsbums", es: "Aparato", fr: "Machin", zh: "聚能发明"},
+		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature", zh: "迷你"},
+		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable", zh: "食品"},
+		s_Salvage: {en: "Salvage", de: "Wiederverwertungs", es: "Recicla", fr: "Recyclage", zh: "拆解"},
+		s_Tool: {en: "Salvage Kit", de: "Wiederverwertungskit", es: "Kit de recicla", fr: "Nécessaire de recyclage", zh: "拆解工具包"},
+		s_Trophy: {en: "Trophy", de: "Trophäe", es: "Trofeo", fr: "Trophée", zh: "战利品"},
+		s_UpgradeComponent: {en: "Upgrade Component", de: "Aufwertung", es: "Componente de mejora", fr: "Composant d&apos;amélioration", zh: "升级"},
 		// Item Rarity
-		s_Junk: {en: "Junk", de: "Schrott", es: "Basura", fr: "Inutile", tw: "垃圾", zh: "垃圾"},
-		s_Basic: {en: "Basic", de: "Einfach", es: "Básico", fr: "Simple", tw: "基本", zh: "基本"},
-		s_Fine: {en: "Fine", de: "Edel", es: "Selecto", fr: "Raffiné", tw: "精", zh: "精"},
-		s_Masterwork: {en: "Masterwork", de: "Meisterwerk", es: "Obra de arte", fr: "Chef-d&apos;œuvre", tw: "傑作", zh: "杰作"},
-		s_Rare: {en: "Rare", de: "Selten", es: "Excepcional", fr: "Rare", tw: "罕見", zh: "罕见"},
-		s_Exotic: {en: "Exotic", de: "Exotisch", es: "Exótico", fr: "Exotique", tw: "傀", zh: "傀"},
-		s_Ascended: {en: "Ascended", de: "Aufgestiegen", es: "Ascendido", fr: "Élevé", tw: "上升", zh: "上升"},
-		s_Legendary: {en: "Legendary", de: "Legendär", es: "Legendario", fr: "Légendaire", tw: "傳奇的", zh: "传奇的"},
+		s_Junk: {en: "Junk", de: "Schrott", es: "Basura", fr: "Inutile", zh: "垃圾"},
+		s_Basic: {en: "Basic", de: "Einfach", es: "Básico", fr: "Simple", zh: "基本"},
+		s_Fine: {en: "Fine", de: "Edel", es: "Selecto", fr: "Raffiné", zh: "精"},
+		s_Masterwork: {en: "Masterwork", de: "Meisterwerk", es: "Obra de arte", fr: "Chef-d&apos;œuvre", zh: "杰作"},
+		s_Rare: {en: "Rare", de: "Selten", es: "Excepcional", fr: "Rare", zh: "罕见"},
+		s_Exotic: {en: "Exotic", de: "Exotisch", es: "Exótico", fr: "Exotique", zh: "傀"},
+		s_Ascended: {en: "Ascended", de: "Aufgestiegen", es: "Ascendido", fr: "Élevé", zh: "上升"},
+		s_Legendary: {en: "Legendary", de: "Legendär", es: "Legendario", fr: "Légendaire", zh: "传奇的"},
 		// Item Weight
-		s_Light: {en: "Light", de: "Leicht", es: "Ligero", fr: "Légèr", tw: "輕", zh: "轻"},
-		s_Medium: {en: "Medium", de: "Mittel", es: "Medio", fr: "Intermédiaire", tw: "中型", zh: "中型"},
-		s_Heavy: {en: "Heavy", de: "Schwer", es: "Pesado", fr: "Lourd", tw: "重", zh: "重"},
+		s_Light: {en: "Light", de: "Leicht", es: "Ligero", fr: "Légèr", zh: "轻"},
+		s_Medium: {en: "Medium", de: "Mittel", es: "Medio", fr: "Intermédiaire", zh: "中型"},
+		s_Heavy: {en: "Heavy", de: "Schwer", es: "Pesado", fr: "Lourd", zh: "重"},
 		// Item Attributes
 		s_Power: {en: "Power", de: "Kraft", es: "Potencia", fr: "Puissance"},
 		s_Toughness: {en: "Toughness", de: "Zähigkeit", es: "Dureza", fr: "Robustesse"},
@@ -18291,6 +18292,57 @@ D = {
 	},
 	
 	/*
+	 * Gets translation string that was written within an element's data attribute.
+	 * @param jqobject pElm
+	 * @returns string
+	 */
+	getDataAttribute: function(pElm)
+	{
+		var elm = $(pElm);
+		if (D.isLanguageDefault() === false)
+		{
+			var str = pElm.attr("data-" + O.Options.enu_Language);
+			if (str)
+			{
+				return str;
+			}
+			else if (D.isLanguageTraditional())
+			{
+				return $.s2t(pElm.attr("data-" + O.OptionEnum.Language.ChineseSimplified));
+			}
+		}
+		return elm.text();
+	},
+	
+	/*
+	 * Settings for special languages.
+	 */
+	initializeDictionary: function()
+	{
+		// Use Simplified Chinese to create a Traditional Chinese dictionary
+		if (D.isLanguageTraditional())
+		{
+			var entry, simp = O.OptionEnum.Language.ChineseSimplified, trad = O.OptionEnum.Language.ChineseTraditional;
+			for (var i in D.Dictionary)
+			{
+				entry = (D.Dictionary[i])[simp];
+				if (entry)
+				{
+					(D.Dictionary[i])[trad] = $.s2t(entry);
+				}
+			}
+			for (var i in D.Codex)
+			{
+				entry = (D.Codex[i])[simp];
+				if (entry)
+				{
+					(D.Codex[i])[trad] = $.s2t(entry);
+				}
+			}
+		}
+	},
+	
+	/*
 	 * Adds new words to the dictionary from an object of the same structure.
 	 * Note that the words have to be unique from the ones here.
 	 * @param object pDictionary.
@@ -18301,6 +18353,7 @@ D = {
 		{
 			D.Dictionary[i] = pDictionary[i];
 		}
+		D.initializeDictionary();
 	},
 	
 	/*
@@ -18394,7 +18447,7 @@ D = {
 	},
 	getPhraseOriginal: function(pString)
 	{
-		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+		if (D.isLanguageDefault() === false)
 		{
 			return D.getPhrase(pString, U.CaseEnum.Original);
 		}
@@ -18448,7 +18501,7 @@ D = {
 	 */
 	translateElements: function()
 	{
-		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+		if (D.isLanguageDefault() === false)
 		{
 			// Translate each word individually for these elements
 			$(".jsTranslate").each(function()
@@ -18471,7 +18524,7 @@ D = {
 	 */
 	translateAfter: function()
 	{
-		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+		if (D.isLanguageDefault() === false)
 		{
 			// Translate tooltips
 			$(".hudButton").each(function()
@@ -18506,6 +18559,10 @@ D = {
 	isLanguageDefault: function()
 	{
 		return O.Options.enu_Language === O.OptionEnum.Language.Default;
+	},
+	isLanguageTraditional: function()
+	{
+		return O.Options.enu_Language === O.OptionEnum.Language.ChineseTraditional;
 	},
 	isLanguageModifierFirst: function()
 	{
@@ -18583,11 +18640,12 @@ D = {
 			}
 			else if (O.Options.enu_Language === O.OptionEnum.Language.ChineseTraditional)
 			{
-				// API has only Simplified Chinese, so use it when when Traditional is not available
+				// Obtain Traditional Chinese from Simplified Chinese
 				var simp = pObject[pPrefix + O.OptionEnum.Language.ChineseSimplified];
 				if (simp)
 				{
-					return simp;
+					pObject[key] = $.s2t(simp);
+					return pObject[key];
 				}
 			}
 			return pObject[pPrefix + O.OptionEnum.Language.Default];
@@ -32857,9 +32915,6 @@ I = {
 		
 		// Default content plate
 		I.PageCurrent = I.PageEnum.Chains;
-		
-		// Temporary option manual overrides
-		localStorage["int_setFloor"] = 1;
 	},
 	
 	/*
@@ -33660,7 +33715,7 @@ I = {
 				// If it is a menu item
 				if ($(this).hasClass("itemContextSubmenu") === false)
 				{
-					if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+					if (D.isLanguageDefault() === false)
 					{
 						$(this).text(D.getPhraseOriginal($(this).text()));
 					}
@@ -34098,7 +34153,7 @@ I = {
 			var section = header.next().addClass("cntSection");
 			var headercontent = $(this).children("var").first();
 			// Translate header if available
-			var headertext = headercontent.data(O.Options.enu_Language) || header.text();
+			var headertext = D.getDataAttribute(headercontent);
 			headercontent.text(headertext);
 			// Hide the entire collapsible div tag next to the header tag
 			section.hide();

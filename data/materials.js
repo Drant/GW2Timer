@@ -7,13 +7,13 @@
  * Category translations.
  */
 var GW2T_MATERIALS_HEADERS = {
-	Common: {name_en: "Common Crafting Materials", name_de: "Gewöhnliche Handwerksmaterialien", name_es: "Materiales de artesanía comunes", name_fr: "Matériaux d'artisanat courants", name_tw: "普通制作材料", name_zh: "普通制作材料"},
-	Fine: {name_en: "Fine Crafting Materials", name_de: "Edle Handwerksmaterialien", name_es: "Materiales de artesanía selectos", name_fr: "Matériaux d'artisanat exquis", name_tw: "優質制作材料", name_zh: "优质制作材料"},
-	Rare: {name_en: "Rare Crafting Materials", name_de: "Seltene Handwerksmaterialien", name_es: "Materiales de artesanía excepcionales", name_fr: "Matériaux d'artisanat rares", name_tw: "稀有制作材料", name_zh: "稀有制作材料"},
-	Ascended: {name_en: "Ascended Materials", name_de: "Aufgestiegene Materialien", name_es: "Materiales ascendidos", name_fr: "Matériaux élevés", name_tw: "升華材料", name_zh: "升华材料"},
-	Jewel: {name_en: "Gemstones and Jewels", name_de: "Edelsteine und Juwelen", name_es: "Gemas y joyas", name_fr: "Pierres précieuses et joyaux", name_tw: "寶石", name_zh: "宝石"},
-	Cooking: {name_en: "Cooking Materials", name_de: "Zutaten zum Kochen", name_es: "Materiales de cocina", name_fr: "Matériaux de cuisine", name_tw: "烹飪材料", name_zh: "烹饪材料"},
-	Festive: {name_en: "Festive Materials", name_de: "Festliche Materialien", name_es: "Materiales festivos", name_fr: "Matériaux de festival", name_tw: "節日材料", name_zh: "节日材料"}
+	Common: {name_en: "Common Crafting Materials", name_de: "Gewöhnliche Handwerksmaterialien", name_es: "Materiales de artesanía comunes", name_fr: "Matériaux d'artisanat courants", name_zh: "普通制作材料"},
+	Fine: {name_en: "Fine Crafting Materials", name_de: "Edle Handwerksmaterialien", name_es: "Materiales de artesanía selectos", name_fr: "Matériaux d'artisanat exquis", name_zh: "优质制作材料"},
+	Rare: {name_en: "Rare Crafting Materials", name_de: "Seltene Handwerksmaterialien", name_es: "Materiales de artesanía excepcionales", name_fr: "Matériaux d'artisanat rares", name_zh: "稀有制作材料"},
+	Ascended: {name_en: "Ascended Materials", name_de: "Aufgestiegene Materialien", name_es: "Materiales ascendidos", name_fr: "Matériaux élevés", name_zh: "升华材料"},
+	Jewel: {name_en: "Gemstones and Jewels", name_de: "Edelsteine und Juwelen", name_es: "Gemas y joyas", name_fr: "Pierres précieuses et joyaux", name_zh: "宝石"},
+	Cooking: {name_en: "Cooking Materials", name_de: "Zutaten zum Kochen", name_es: "Materiales de cocina", name_fr: "Matériaux de cuisine", name_zh: "烹饪材料"},
+	Festive: {name_en: "Festive Materials", name_de: "Festliche Materialien", name_es: "Materiales festivos", name_fr: "Matériaux de festival", name_zh: "节日材料"}
 };
 var GW2T_MATERIALS_METADATA = {
 	CategoryAssoc: { // Associate the API's materials category ID number with the category variable name here
