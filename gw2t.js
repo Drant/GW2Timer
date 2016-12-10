@@ -9067,7 +9067,7 @@ A = {
 					{
 						var audstamps = hist["Timestamps"];
 						var historylength = audstamps.length;
-						if (historylength > 1 && confirm("This will delete your history so there is only one entry per day. Continue?"))
+						if (historylength > 1 && confirm("This will delete your history so there is one entry max per day. Continue?"))
 						{
 							var histnew = {}, uniquedates = {}, ithstamp;
 							for (var i in A.Currency.AuditHistory)
