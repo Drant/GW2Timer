@@ -228,6 +228,8 @@ O = {
 		// Account
 		bol_showRarity: false,
 		bol_condenseBank: false,
+		bol_auditTransactions: true,
+		bol_auditVault: true,
 		bol_auditAccountOnReset: false,
 		int_numAuditReports: 512,
 		// Trading
@@ -8202,8 +8204,6 @@ A = {
 		var buttonalt = $("#audExecuteAlternate").hide();
 		I.suspendElement(button);
 		var container = $("#accAudit").empty();
-		var wantvaults = $("#audWantVaults").prop("checked");
-		var wanttransactions = $("#audWantTransactions").prop("checked");
 		var auditpayments = A.Currency.AuditPayments; // Auditable payment objects
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
 		var untradeabledb;
@@ -9365,7 +9365,7 @@ A = {
 					priceids[iID] = true;
 				});
 				// Load unbought and unsold items in the account's Trading Post
-				if (wanttransactions === false)
+				if (O.Options.bol_auditTransactions === false)
 				{
 					fetchPrices();
 					return;
@@ -9477,7 +9477,7 @@ A = {
 		A.initializePossessions(function()
 		{
 			fetchUnlocks();
-		}, wantvaults);
+		}, O.Options.bol_auditVault);
 	}
 };
 V = {
@@ -9525,6 +9525,8 @@ V = {
 			+ "<label><input id='audWantVaults' type='checkbox' />" + D.getPhraseOriginal("Include guilds vault") + ".</label><br />"
 			+ "<label><input id='audWantAutomatic' type='checkbox' />" + D.getPhraseOriginal("Automatic daily audit") + ".</label>"
 		);
+		O.mimicInput("#audWantTransactions", "bol_auditTransactions");
+		O.mimicInput("#audWantVaults", "bol_auditVault");
 		O.mimicInput("#audWantAutomatic", "bol_auditAccountOnReset");
 		// Audit buttons
 		var buttoncontainer = $("#accAuditCenter");
@@ -9542,12 +9544,10 @@ V = {
 			}
 		});
 		// Alternate button up top
-		var executebtnalt = $("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account using all options.<br />gw2timer.com/audit'> "
+		var executebtnalt = $("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account.<br />gw2timer.com/audit'> "
 			+ "<img src='img/ui/stats.png' /></button>").insertAfter("#chrAccountReload").click(function()
 		{
 			$(this).hide();
-			$("#audWantTransactions").prop("checked", true);
-			$("#audWantVaults").prop("checked", true);
 			executebtn.trigger("click");
 		});
 		I.qTip.init("#audExecuteAlternate");
@@ -20808,7 +20808,7 @@ M = {
 		{
 			if (that.isMouseOnHUD) { return; }
 			that.saveBackupPins();
-			that.createPersonalPin(pEvent.latlng, true, true);
+			that.createPersonalPin(pEvent.latlng, true);
 		});
 
 		/*
@@ -21008,12 +21008,20 @@ M = {
 	/*
 	 * Shows or hides the map tiles.
 	 */
-	toggleFloor: function()
+	toggleFloor: function(pIsInitialProjection)
 	{
 		var that = this;
 		var htmlidprefix = "#" + that.MapEnum;
 		var mappane = $(htmlidprefix + "Pane");
 		var wantfloor, levelfloor;
+		
+		if (pIsInitialProjection)
+		{
+			// Have terrain initially hidden if using projection
+			mappane.toggleClass("mapPaneOff", true);
+			that.changeFloor();
+			return;
+		}
 		
 		switch (that.MapEnum)
 		{
@@ -26808,13 +26816,20 @@ W = {
 		W.toggleObjectiveLabels();
 		
 		// Show floor if opted
-		if (O.Options.bol_showFloorWvW || I.ModeCurrent !== I.ModeEnum.Overlay)
+		if (I.isProjectionEnabled)
 		{
-			W.changeFloor(O.Options.int_setFloorWvW);
+			W.toggleFloor(true);
 		}
 		else
 		{
-			W.toggleFloor();
+			if (O.Options.bol_showFloorWvW || I.ModeCurrent !== I.ModeEnum.Overlay)
+			{
+				W.changeFloor(O.Options.int_setFloorWvW);
+			}
+			else
+			{
+				W.toggleFloor();
+			}
 		}
 		
 		// The function below would have been called already if world completion icons were generated
@@ -33085,23 +33100,30 @@ I = {
 		// Set tile after viewing the coordinate so it downloads the tiles last
 		if (I.isMapEnabled)
 		{
-			if (O.Options.bol_showFloor || I.ModeCurrent !== I.ModeEnum.Overlay)
+			if (I.isProjectionEnabled)
 			{
-				if (I.PageInitial === "wvw")
-				{
-					$("#wvwSwitchButton").one("click", function()
-					{
-						M.changeFloor(O.Options.int_setFloor);
-					});
-				}
-				else
-				{
-					M.changeFloor(O.Options.int_setFloor);
-				}
+				M.toggleFloor(true);
 			}
 			else
 			{
-				M.toggleFloor();
+				if (O.Options.bol_showFloor || I.ModeCurrent !== I.ModeEnum.Overlay)
+				{
+					if (I.PageInitial === "wvw")
+					{
+						$("#wvwSwitchButton").one("click", function()
+						{
+							M.changeFloor(O.Options.int_setFloor);
+						});
+					}
+					else
+					{
+						M.changeFloor(O.Options.int_setFloor);
+					}
+				}
+				else
+				{
+					M.toggleFloor();
+				}
 			}
 		}
 		
