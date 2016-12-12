@@ -4463,15 +4463,21 @@ U = {
 		pString = pString.replace(/ /g, "_");
 		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/wiki/" + U.encodeURL(pString);
 	},
+	getWikiLinkCode: function(pID, pName)
+	{
+		var chatlink = U.getChatlinkFromPoiID(pID);
+		var name = (pName) ? ("&name=" + pName.replace(/ /g, "_")) : "";
+		return "https://wiki.guildwars2.com/index.php?search=" + encodeURIComponent(chatlink) + name;
+	},
 	getWikiSearchDefault: function(pString)
 	{
 		pString = pString.replace(/ /g, "+"); // Replace spaces with plus sign
-		return "http://wiki.guildwars2.com/index.php?title=Special%3ASearch&search=" + U.encodeURL(pString);
+		return "https://wiki.guildwars2.com/index.php?search=" + U.encodeURL(pString);
 	},
 	getWikiSearchLanguage: function(pString)
 	{
 		pString = pString.replace(/ /g, "_");
-		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/index.php?title=Special%3ASearch&search=" + U.encodeURL(pString);
+		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/index.php?search=" + U.encodeURL(pString);
 	},
 	getWikiItemDefault: function(pItem)
 	{
@@ -17909,6 +17915,8 @@ D = {
 			cs: "účet", it: "conto", pl: "konto", pt: "conta", ru: "счёт", zh: "帐户"},
 		s_key: {de: "schlüssel", es: "tecla", fr: "clé",
 			cs: "klávesa", it: "chiave", pl: "klawisz", pt: "chave", ru: "ключ", zh: "索引键"},
+		s_history: {de: "verlauf", es: "historial", fr: "historique",
+			cs: "historie", it: "cronologia", pl: "historii", pt: "histórico", ru: "истории", zh: "历史"},
 		s_info: {de: "info", es: "información", fr: "info",
 			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", zh: "资讯"},
 		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
@@ -23473,7 +23481,14 @@ P = {
 								});
 								marker.on("dblclick", function()
 								{
-									U.openExternalURL(U.getWikiLinkLanguage(this.options.markername));
+									if (D.isLanguageDefault())
+									{
+										U.openExternalURL(U.getWikiLinkLanguage(this.options.markername));
+									}
+									else
+									{
+										U.openExternalURL(U.getWikiLinkCode(this.options.id, this.options.markername));
+									}
 								});
 								that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 							}
