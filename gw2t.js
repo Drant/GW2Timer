@@ -2685,6 +2685,7 @@ U = {
 	URL_API:
 	{
 		// Achievements
+		Achievements: "https://api.guildwars2.com/v2/achievements/",
 		Daily: "https://api.guildwars2.com/v2/achievements/daily",
 		Tomorrow: "https://api.guildwars2.com/v2/achievements/daily/tomorrow",
 		Fractal: "https://api.guildwars2.com/v2/achievements/categories/88",
@@ -2936,7 +2937,7 @@ U = {
 	 * @param array pIDs numbers.
 	 * @objparam function aCallback with array of raw API objects accumulated.
 	 * @objparam boolean aWantCache use browser cache from previous fetches, optional.
-	 * @objparam boolean aLanguage code, otherwise user's language is used, optional.
+	 * @objparam string aLanguage code, otherwise user's language is used, optional.
 	 */
 	fetchAPI: function(pURL, pIDs, pSettings)
 	{
@@ -3204,10 +3205,9 @@ U = {
 	 * Extracts arguments from a https://en.wikipedia.org/wiki/Query_string
 	 * @returns object containing the key-value pairs.
 	 */
-	getURLArguments: function()
+	convertQueryString: function(pString)
 	{
-		var loc = window.location;
-		var urlargs = loc.search.substr(1).split("&");
+		var urlargs = pString.substr(1).split("&"); // Skip the "?" at the beginning of the query string
 		if (urlargs === "")
 		{
 			return {};
@@ -3216,13 +3216,19 @@ U = {
 		var argsobject = {};
 		for (var i = 0; i < urlargs.length; ++i)
 		{
-			var p = urlargs[i].split("=");
-			if (p.length !== 2)
+			var pair = urlargs[i].split("=");
+			if (pair.length !== 2)
 			{
 				continue;
 			}
-			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+			argsobject[pair[0]] = decodeURIComponent(pair[1].replace(/\+/g, " "));
 		}
+		return argsobject;
+	},
+	getURLArguments: function()
+	{
+		var loc = window.location;
+		var argsobject = U.convertQueryString(loc.search);
 		// The URL substring after # will be assigned to the fragment key
 		if (loc.hash.length)
 		{
@@ -4789,11 +4795,11 @@ Z = {
 				try { Z.APICacheConsole = JSON.parse(argstr); I.print("Parse JSON successful."); }
 				catch (e) { I.print("Parse JSON failed."); }
 			}},
-			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
+			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, str_querystring (optional)</em>", f: function()
 			{
 				if (args[1])
 				{
-					Z.printAPI(args[1], args[2], args[3]);
+					Z.printAPI(args[1], args[2]);
 				}
 				else
 				{
@@ -4927,15 +4933,12 @@ Z = {
 	 * @param int pLimit of array elements to print, optional.
 	 * @param string pQueryStr arguments for the API url, optional.
 	 */
-	printAPI: function(pString, pLimit, pQueryStr)
+	printAPI: function(pString, pQueryStr)
 	{
 		I.print("Gathering elements...");
 		var versionprefix = "v1";
-		var limit = Number.POSITIVE_INFINITY;
 		var providedarray = null;
-		var scrapethreshold = 256; // Minimum array size to delegate the scrape function
 		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
-		var counter = 0;
 		var url = U.URL_API.Prefix + pString;
 		
 		var printResult = function()
@@ -4959,53 +4962,17 @@ Z = {
 		// Function to print retrieved data, or fetch more data if the original data is an array
 		var iterateData = function(pData)
 		{
-			var length = (pData.length === undefined) ? 0 : pData.length;
 			if (Array.isArray(pData))
 			{
-				if (length > scrapethreshold)
+				var queryobj = U.convertQueryString(querystr);
+				U.fetchAPI(url, pData, {
+					aLanguage: (queryobj.lang) ? queryobj.lang : null,
+					aCallback: function(pDataInner)
 				{
-					// Delegate the heavier task of large array scraping to another function
-					I.print("Array is too big for one simultaneous request, requesting in batches with wait in between...");
-					Z.scrapeAPIArray(pString, pData, {aQueryStr: querystr});
-				}
-				else
-				{
-					I.print("Retrieved array:<br />" + U.escapeJSON(pData));
 					Z.APICacheArrayOfIDs = pData;
-					Z.APICacheArrayOfObjects = [];
-					var successlength = length;
-					for (var i = 0; i < length; i++)
-					{
-						if (i === limit)
-						{
-							break;
-						}
-						(function(iIndex)
-						{
-							$.getJSON(url + "/" + pData[iIndex] + querystr, function(pDataInner)
-							{
-								I.print("Retrieved an element: " + iIndex);
-								Z.APICacheArrayOfObjects.push(pDataInner);
-							}).done(function()
-							{
-								// Print the result when all elements have been queried
-								if (counter === successlength - 1 || counter === limit - 1)
-								{
-									printResult();
-								}
-								counter++;
-							}).fail(function()
-							{
-								successlength--;
-								if (counter === successlength - 1 || counter === limit - 1)
-								{
-									printResult();
-								}
-								I.print("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[iIndex]));
-							});
-						})(i);
-					}
-				}
+					Z.APICacheArrayOfObjects = pDataInner;
+					printResult();
+				}});
 			}
 			else
 			{
@@ -5014,40 +4981,10 @@ Z = {
 			}
 		};
 		
-		// Determine actions depending on parameters
-		if (pLimit !== undefined && pString !== versionprefix)
-		{
-			// Query string may be sent in place of the limit parameter
-			if (U.isInteger(pLimit))
-			{
-				limit = pLimit;
-			}
-			// If provided an array of IDs
-			else if (typeof pLimit === "string" && pLimit.charAt(0) === "[")
-			{
-				try
-				{
-					providedarray = JSON.parse(pLimit);
-					if (Array.isArray(providedarray))
-					{
-						iterateData(providedarray);
-					}
-				}
-				catch (e)
-				{
-					I.print("Error parsing custom array.");
-				}
-			}
-			else
-			{
-				querystr = pLimit;
-			}
-		}
-		
 		// If requesting v1 API by entering it in the first parameter
 		if (pString === versionprefix)
 		{
-			url = U.URL_API.Prefix1 + pLimit;
+			url = U.URL_API.Prefix1 + pQueryStr;
 		}
 		
 		// Fetch if did not provide an array in the parameter
@@ -31370,7 +31307,7 @@ K = {
 		K.tickFrequent();
 		K.updateDigitalClockMinutely();
 		K.initializeClipboard();
-		//K.refreshFestival();
+		K.refreshFestival();
 		
 		// Hide chain progress bar for main mode
 		if (I.ModeCurrent === I.ModeEnum.Website && O.Options.int_setClock !== O.IntEnum.Clock.None)
@@ -31834,7 +31771,7 @@ K = {
 			/*
 			 * If crossing a 1 minute mark.
 			 */
-			//K.refreshFestival();
+			K.refreshFestival();
 			K.updateDigitalClockMinutely();
 			H.updateTimelineIndicator();
 			// Refresh the chain time countdown opted
