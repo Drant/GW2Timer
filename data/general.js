@@ -1414,10 +1414,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "Click the <a href='http://gw2timer.com/?page=Daily'>Daily Achievements</a> button below for the new &quot;Map Bookmarks&quot; dropdown menu.",
+	pve: "<a href='http://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
 	wvw: "",
-	Start: new Date("2016-11-23T16:00:00Z"),
-	Finish: new Date("2016-12-13T16:00:00Z"),
+	Start: new Date("2016-12-13T16:00:00Z"),
+	Finish: new Date("2016-12-20T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1472,20 +1472,20 @@ Countdown: {
 		name_es: "Día Invernal 2016",
 		name_fr: "Hivernel 2016",
 		name_zh: "冬幕节2016",
-		official: "news/wintersday-2016-is-coming/",
-		Start: new Date("2016-12-13T17:00:00Z"),
-		Finish: new Date("2017-01-10T17:00:00Z")
-	},
-	{
-		name_en: "PvP League Season 5",
-		name_de: "PvP Liga Saison 5",
-		name_es: "Temporada 5 de liga PvP",
-		name_fr: "Saison 5 de la ligue JcJ",
-		name_zh: "玩家对战第5季",
-		official: "news/upcoming-changes-for-pvp-league-season-5/",
+		official: "news/wintersday-2016-is-here/",
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
 	}
+	/*{
+		name_en: "PvP League Season 6",
+		name_de: "PvP Liga Saison 6",
+		name_es: "Temporada 6 de liga PvP",
+		name_fr: "Saison 6 de la ligue JcJ",
+		name_zh: "玩家对战第6季",
+		official: "news/upcoming-changes-for-pvp-league-season-5/",
+		Start: new Date("2016-12-13T17:00:00Z"),
+		Finish: new Date("2017-01-10T17:00:00Z")
+	}*/
 	/*{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",
@@ -1531,8 +1531,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-12-06T16:00:00Z"),
-	Finish: new Date("2016-12-13T16:00:00Z"),
+	Start: new Date("2016-12-13T16:00:00Z"),
+	Finish: new Date("2016-12-20T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1553,10 +1553,10 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Messenger's Travel Pack",
-		id: "http://i.imgur.com/WcKKQDc.png",
-		price: 445,
-		discount: null,
+		name: "Wintersday Wreath Backpack",
+		id: "77494",
+		price: 500,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 0
 	},
 	{
@@ -1567,22 +1567,22 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Snowflake Glider",
-		id: "77528",
-		price: 500,
+		name: "Festive Hat",
+		id: "65202",
+		price: 150,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Winter Solstice Appearance Pack",
+		id: "http://i.imgur.com/92cVON9.png",
+		price: 2000,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Winter Chimes Dye Kit",
 		id: "77470",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 1
-	},
-	{
-		name: "Vibrant Dye Kit",
-		id: "79695",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1

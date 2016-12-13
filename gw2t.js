@@ -30652,7 +30652,9 @@ H = {
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
 			+ "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u> "
 			+ "<img data-src='img/ui/info.png' /><a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a>"
+				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
+			+ "<img data-src='img/ui/tradingpost.png' /><a" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
+				+ "title='Previous recipes and frequency statistics.'>" + D.getWordCapital("history") + "</a>"
 			+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>").hide();
 
 		// Bind buttons
