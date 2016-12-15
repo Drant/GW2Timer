@@ -2755,6 +2755,7 @@ U = {
 		Ascended: "data/ascended.js",
 		Recipes: "data/recipes.js",
 		Prices: "cache/prices.json",
+		Museum:  "data/museum.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -5080,13 +5081,14 @@ Z = {
 		{
 			catarr = pRecord[i];
 			arrlength = catarr.length;
+			var keyq = (isNaN(i.chatAt(0)) === false) ? "\"" : "";
 			if (pIsFlat)
 			{
-				output += i + ": [" + catarr.toString() + "]";
+				output += keyq + i + keyq + ": [" + catarr.toString() + "]";
 			}
 			else
 			{
-				output += i + ": [\r\n";
+				output += keyq + i + keyq + ": [\r\n";
 				for (var ii = 0; ii < arrlength; ii++)
 				{
 					output += "\t" + U.lineJSON(catarr[ii], false)
@@ -5658,7 +5660,7 @@ Z = {
 	{
 		var wantrebuild = (pIsRebuild === true);
 		var counter = 0;
-		var newitemslist, newitems;
+		var newitemslist, newitems, newitemids;
 		var updateDBLang = function()
 		{
 			// Stopping condition for this recursive function
@@ -5670,6 +5672,7 @@ Z = {
 					Z.printRecordEntry(newitems, {
 						aItemIDsKey: "id"
 					});
+					Z.collateMuseum(newitemids);
 				}
 				return;
 			}
@@ -5688,7 +5691,7 @@ Z = {
 					currentitemids.push(parseInt(ithitemid));
 				}
 				// Find what item IDs are missing by comparing the API's current list with the one here
-				var newitemids = (wantrebuild) ? currentitemids : U.getDifference(newitemslist, currentitemids);
+				newitemids = (wantrebuild) ? currentitemids : U.getDifference(newitemslist, currentitemids);
 				if (newitemids.length)
 				{
 					U.fetchAPI(U.URL_API.ItemDetail, newitemids, {
@@ -6732,6 +6735,29 @@ Z = {
 					idstocache[iEntry.t] = true;
 				}
 			});
+		});
+	},
+	
+	/*
+	 * Updates the record of new API items.
+	 * @param array pIDs from the update database function.
+	 */
+	collateMuseum: function(pIDs)
+	{
+		var datestr = ((new Date()).toISOString()).split("T")[0];
+		var timestamp = datestr[0] + "-" + datestr[1];
+		U.getScript(U.URL_DATA.Museum, function()
+		{
+			var record = U.getRecordData("museum");
+			if (record[timestamp])
+			{
+				record[timestamp] = U.getUnion(record[timestamp], pIDs);
+			}
+			else
+			{
+				record[timestamp] = pIDs;
+			}
+			Z.printUnlockables(record, true);
 		});
 	},
 	
@@ -11744,6 +11770,25 @@ V = {
 	},
 	
 	/*
+	 * Creates the bank of historical API items.
+	 */
+	serveMuseum: function()
+	{
+		var dish = $("#accDish_Museum");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		
+		var container = B.createBank(dish, {aIsCollection: true});
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		U.getScript(U.URL_DATA.Museum, function()
+		{
+			
+		});
+	},
+	
+	/*
 	 * Generates Pact Supply history and statistics.
 	 */
 	servePact: function()
@@ -13051,15 +13096,16 @@ B = {
 	 * @objparam object aHeaders containing category header translations.
 	 * @objparam object aRecord containing categorized unlockable entries.
 	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API, or an associative array containing a count property.
-	 * @objparam boolean aIsCatalog whether to use the user's possessions rather than unlockeds.
-	 * @objparam boolean aIsLookup whether to generate unlocked slots only.
-	 * @objparam boolean aWantItems whether to prefetch item details for all items.
-	 * @objparam boolean aWantPrices whether to prefetch TP prices for all items.
-	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
-	 * @objparam boolean aWantDefaultHelp whether to append the unlockables help message, optional.
+	 * @objparam boolean aIsCatalog to use the user's possessions rather than unlockeds.
+	 * @objparam boolean aIsLookup to generate unlocked slots only.
+	 * @objparam boolean aIsCollapsed if all tabs should be initially collapsed.
+	 * @objparam boolean aWantItems to prefetch item details for all items.
+	 * @objparam boolean aWantPrices to prefetch TP prices for all items.
+	 * @objparam boolean aWantSearchHighlight to use search highlight, optional.
+	 * @objparam boolean aWantDefaultHelp to append the unlockables help message, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
-	 * @objparam string aIsCustomCatalog whether it is the default catalog with custom tabs.
+	 * @objparam string aIsCustomCatalog if is the default catalog with custom tabs.
 	 * An unlockables record has arrays that hold entries with these properties:
 	 * u: Unlockable ID (such as a skin ID, or mini ID)
 	 * i: Item ID associated with that unlock
@@ -13170,7 +13216,7 @@ B = {
 				catarr = record[i];
 				tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
 					aTitle: D.getObjectName(catobj),
-					aIsCollapsed: catobj.iscollapsed,
+					aIsCollapsed: (Settings.aIsCollapsed !== undefined) ? Settings.aIsCollapsed : catobj.iscollapsed,
 					aIsCustomCatalog: catobj.iscustomtab
 				});
 				(function(iTab, iCatObj, iCatArr, iCatArrName)
@@ -25793,7 +25839,11 @@ G = {
 				// If article URL query string exists, show collectible of specified index
 				U.verifyArticle(X.Collectibles[i].urlkey, function()
 				{
-					$("#ned_" + i).trigger("click");
+					var elm = $("#ned_" + i).trigger("click");
+					setTimeout(function()
+					{
+						I.scrollToElement(elm, {aOffset: -64, aSpeed: "fast"});
+					}, 2000);
 				});
 			}
 			U.convertExternalLink("#cltList cite a");
@@ -30642,20 +30692,21 @@ H = {
 			vendorcodes += i + "@" + (H.Vendor.Codes[i])[weekdaylocation] + " ";
 		}
 		vendorcodes += "- " + vendorname;
-		$("#dsbMenuVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
+		$("#dsbMenuVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle jsTitle' "
 			+  "title='<dfn>Pact Supply Network Agent</dfn><br />Expires: " + T.formatWeektime(H.Vendor.Finish, true)
 				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + vendorname + "</var></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled");
 		$("#dsbVendor").empty().append("<div id='dsbVendorMenu'>"
-			+ "<img data-src='img/ui/copy.png' /><input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' "
+			+ "<img data-src='img/ui/copy.png' /><input id='dsbVendorCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
 			+ "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u> "
-			+ "<img data-src='img/ui/info.png' /><a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+			+ "<img data-src='img/ui/info.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
-			+ "<img data-src='img/ui/tradingpost.png' /><a" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
+			+ "<img data-src='img/ui/tradingpost.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
 				+ "title='Previous recipes and frequency statistics.'>" + D.getWordCapital("history") + "</a>"
 			+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>").hide();
+		I.qTip.reinit();
 
 		// Bind buttons
 		var vendorcopy = $("#dsbVendorCodes");
@@ -32739,10 +32790,11 @@ I = {
 			Selling: "Selling",
 			Bought: "Bought",
 			Sold: "Sold",
+			Museum: "Museum",
+			Pact: "Pact",
 			PVP: "PVP",
 			Guilds: "Guilds",
-			Achievements: "Achievements",
-			Pact: "Pact"
+			Achievements: "Achievements"
 		}
 	},
 	/*
@@ -33392,10 +33444,10 @@ I = {
 	/*
 	 * Scrolls to an element at specified rate, or the top if specified no element.
 	 * @param string pElement selector to scroll to.
-	 * @objparam string aContainer selector container with the scroll bar.
-	 * @objparam function aCallback to execute after scrolling.
-	 * @objparam int or string aSpeed duration to animate.
-	 * @objparam int aOffset from scroll point.
+	 * @objparam string aContainer selector container with the scroll bar, optional.
+	 * @objparam function aCallback to execute after scrolling, optional.
+	 * @objparam int or string aSpeed duration to animate, optional.
+	 * @objparam int aOffset from scroll point, optional.
 	 */
 	scrollToElement: function(pElement, pSettings)
 	{
@@ -35048,6 +35100,14 @@ I = {
 						I.qTip.hide();
 					};
 				}
+			});
+		},
+		reinit: function()
+		{
+			$(".jsTitle").each(function()
+			{
+				$(this).removeClass("jsTitle");
+				I.qTip.init($(this));
 			});
 		},
 		move: function(pEvent)

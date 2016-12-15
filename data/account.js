@@ -52,6 +52,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "obchod", it: "commercio", pl: "handel", pt: "comércio", ru: "продажа", zh: "贸易"},
 	s_recent: {de: "aktuell", es: "reciente", fr: "récent",
 		cs: "poslední", it: "recenti", pl: "ostatnie", pt: "recente", ru: "последние", zh: "最近"},
+	s_museum: {de: "museum", es: "museo", fr: "musée",
+		cs: "muzeum", it: "museo", pl: "muzeum", pt: "museu", ru: "музей", zh: "博物馆"},
 	s_pvp: {de: "pvp", es: "jcj", fr: "jcj",
 		cs: "hph", it: "gcg", pl: "pvp", pt: "jcj", ru: "ипи", zh: "玩家对战"},
 	
