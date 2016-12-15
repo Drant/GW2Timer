@@ -33,7 +33,7 @@ var GW2T_CATALOG_HEADERS = {
  * Items to be excluded from collate.
  */
 var GW2T_CATALOG_BLACKLIST = {
-	
+	"45017": "Quip"
 };
 
 /*
@@ -656,7 +656,13 @@ Aura: [
 	{i: 78030, n: "Moto's Unstable Bauble Infusion: Red", p: {achievement: 0}},
 	{i: 78031, n: "Moto's Unstable Bauble Infusion: Red", p: {achievement: 0}},
 	{i: 78057, n: "Moto's Unstable Bauble Infusion: Red", p: {achievement: 0}},
-	{i: 78097, n: "Moto's Unstable Bauble Infusion: Red", p: {achievement: 0}}
+	{i: 78097, n: "Moto's Unstable Bauble Infusion: Red", p: {achievement: 0}},
+	{i: 79943, n: "Winter's Heart Infusion"},
+	{i: 79957, n: "Winter's Heart Infusion"},
+	{i: 79959, n: "Winter's Heart Infusion"},
+	{i: 79978, n: "Winter's Heart Infusion"},
+	{i: 79994, n: "Winter's Heart Infusion"},
+	{i: 80063, n: "Winter's Heart Infusion"}
 ],
 Legendary: [
 	{i: 30684, n: "Frostfang"},
@@ -735,7 +741,8 @@ Glider: [
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
 	{i: 79663, n: "Bloodstone Glider", p: {gem: 500}},
 	{i: 79660, n: "Grasping Phantom Glider", p: {gem: 0}},
-	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}}
+	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}},
+	{i: 80018, n: "Infinirarium Glider", p: {gem: 0}}
 ],
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},

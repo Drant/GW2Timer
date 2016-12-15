@@ -626,7 +626,8 @@ Armor_Light_Helm: [
 	{u: 6899, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
 	{u: 6955, i: 79457, n: "Light Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6914, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
-	{u: 6975, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}}
+	{u: 6975, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
+	{u: 5620, i: 67141, n: "Ardent Glorious Crown", p: {glory: 175}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -711,7 +712,8 @@ Armor_Light_Shoulders: [
 	{u: 6586, i: 77645, n: "Winter's Presence", p: {achievement: 0}},
 	{u: 6722, i: 78579, n: "Triumphant Epaulets", p: {badge: 0}},
 	{u: 6824, i: 78874, n: "Experimental Envoy Mantle", p: {craft: true}},
-	{u: 6970, i: 79455, n: "Light Dragonscale Epaulets", p: {achievement: 0}}
+	{u: 6970, i: 79455, n: "Light Dragonscale Epaulets", p: {achievement: 0}},
+	{u: 5631, i: 79984, n: "Ardent Glorious Epaulets", p: {glory: 150}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", t: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -864,7 +866,8 @@ Armor_Light_Gloves: [
 	{u: 6738, i: 78196, n: "Triumphant Armguards", p: {badge: 0}},
 	{u: 6818, i: 78969, n: "Experimental Envoy Gloves", p: {craft: true}},
 	{u: 6910, i: 79391, n: "Pirate Hook", p: {gem: 300}},
-	{u: 7028, i: 79874, n: "Light Glacial Gauntlets", p: {achievement: 0}}
+	{u: 7028, i: 79874, n: "Light Glacial Gauntlets", p: {achievement: 0}},
+	{u: 5629, i: 79953, n: "Ardent Glorious Armguards", p: {glory: 150}}
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", t: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -934,7 +937,8 @@ Armor_Light_Leggings: [
 	{u: 6378, i: 70899, n: "Bladed Pants", p: {map_vb: 500}},
 	{u: 6436, i: 76484, n: "Leystone Pants", p: {coin: 0}},
 	{u: 6728, i: 78143, n: "Triumphant Leggings", p: {badge: 0}},
-	{u: 6834, i: 78862, n: "Experimental Envoy Pants", p: {craft: true}}
+	{u: 6834, i: 78862, n: "Experimental Envoy Pants", p: {craft: true}},
+	{u: 5630, i: 67151, n: "Ardent Glorious Leggings", p: {glory: 275}}
 ],
 Armor_Light_Boots: [
 	{u: 16, i: 3173, n: "Apprentice Shoes", t: [2932, 2933, 2938, 2936, 2937, 2935, 2941, 2940, 2942, 2945, 2944, 2931, 2946, 2934, 2939, 2943, 3119, 3137, 3155, 3173, 3300, 3317, 3301, 3302, 3303, 3304, 3306, 3308, 3307, 3313, 3312, 3309, 3311, 3299, 3316, 3318, 3305, 3310, 3314, 3315, 5068, 5050, 5122, 5021, 5034, 5104, 5140, 5158, 5086, 5194, 5176, 5230, 5212, 5248, 5266, 5284]},
@@ -1007,7 +1011,8 @@ Armor_Light_Boots: [
 	{u: 6456, i: 73997, n: "Invisible Slippers", t: [73997]},
 	{u: 6705, i: 78179, n: "Triumphant Footgear", p: {badge: 0}},
 	{u: 6791, i: 78974, n: "Experimental Envoy Shoes", p: {craft: true}},
-	{u: 6905, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}}
+	{u: 6905, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
+	{u: 5602, i: 80017, n: "Ardent Glorious Footgear", p: {glory: 150}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1149,7 +1154,8 @@ Armor_Medium_Helm: [
 	{u: 6900, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
 	{u: 6969, i: 79471, n: "Medium Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6915, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
-	{u: 6974, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}}
+	{u: 6974, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
+	{u: 5635, i: 79947, n: "Ardent Glorious Cap", p: {glory: 175}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1233,7 +1239,8 @@ Armor_Medium_Shoulders: [
 	{u: 6059, i: 69991, n: "Druid's Shoulderguards", p: {achievement: 0}},
 	{u: 6733, i: 78269, n: "Triumphant Shoulderguards", p: {badge: 0}},
 	{u: 6794, i: 78971, n: "Experimental Envoy Shoulderpads", p: {craft: true}},
-	{u: 6964, i: 79481, n: "Medium Dragonscale Epaulets", p: {achievement: 0}}
+	{u: 6964, i: 79481, n: "Medium Dragonscale Epaulets", p: {achievement: 0}},
+	{u: 5619, i: 80012, n: "Ardent Glorious Shoulderguards", p: {glory: 150}}
 ],
 Armor_Medium_Coat: [
 	{u: 6, i: 41169, n: "Rawhide Vest", p: {badge: 30}},
@@ -1302,7 +1309,8 @@ Armor_Medium_Coat: [
 	{u: 6343, i: 75562, n: "Ornate Guild Jerkin", p: {craft: true}},
 	{u: 6381, i: 74543, n: "Bladed Jerkin", p: {achievement: 0}},
 	{u: 6685, i: 78178, n: "Triumphant Brigandine", p: {badge: 0}},
-	{u: 6838, i: 78800, n: "Experimental Envoy Jerkin", p: {craft: true}}
+	{u: 6838, i: 78800, n: "Experimental Envoy Jerkin", p: {craft: true}},
+	{u: 5633, i: 67115, n: "Ardent Glorious Brigandine", p: {glory: 400}}
 ],
 Armor_Medium_Gloves: [
 	{u: 32, i: 41170, n: "Rawhide Bracers", p: {badge: 10}},
@@ -1383,7 +1391,8 @@ Armor_Medium_Gloves: [
 	{u: 6684, i: 78351, n: "Triumphant Wristplates", p: {badge: 0}},
 	{u: 6839, i: 78892, n: "Experimental Envoy Vambraces", p: {craft: true}},
 	{u: 6903, i: 79391, n: "Pirate Hook", p: {gem: 300}},
-	{u: 7032, i: 79937, n: "Medium Glacial Gauntlets", p: {achievement: 0}}
+	{u: 7032, i: 79937, n: "Medium Glacial Gauntlets", p: {achievement: 0}},
+	{u: 5634, i: 79955, n: "Ardent Glorious Wristplates", p: {glory: 150}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1452,7 +1461,8 @@ Armor_Medium_Leggings: [
 	{u: 6229, i: 75368, n: "Bladed Leggings", p: {map_vb: 500}},
 	{u: 6260, i: 71349, n: "Ornate Guild Leggings", p: {craft: true}},
 	{u: 6687, i: 78471, n: "Triumphant Legguards", p: {badge: 0}},
-	{u: 6829, i: 78896, n: "Experimental Envoy Mask", p: {craft: true}}
+	{u: 6829, i: 78896, n: "Experimental Envoy Mask", p: {craft: true}},
+	{u: 5636, i: 79968, n: "Ardent Glorious Legguards", p: {glory: 275}}
 ],
 Armor_Medium_Boots: [
 	{u: 19, i: 41168, n: "Rawhide Boots", p: {badge: 10}},
@@ -1524,7 +1534,8 @@ Armor_Medium_Boots: [
 	{u: 6283, i: 72745, n: "Invisible Boots", t: [72745]},
 	{u: 6688, i: 78211, n: "Triumphant Shinplates", p: {badge: 0}},
 	{u: 6792, i: 78796, n: "Experimental Envoy Boots", p: {craft: true}},
-	{u: 6916, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}}
+	{u: 6916, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
+	{u: 5632, i: 80000, n: "Ardent Glorious Shinplates", p: {glory: 150}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", t: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1665,7 +1676,8 @@ Armor_Heavy_Helm: [
 	{u: 6888, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
 	{u: 6968, i: 79508, n: "Heavy Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6931, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
-	{u: 6972, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}}
+	{u: 6972, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
+	{u: 5624, i: 80010, n: "Ardent Glorious Plate Helm", p: {glory: 175}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -1753,7 +1765,8 @@ Armor_Heavy_Shoulders: [
 	{u: 6577, i: 77645, n: "Winter's Presence", p: {achievement: 0}},
 	{u: 6719, i: 78326, n: "Triumphant Pauldrons", p: {badge: 0}},
 	{u: 6796, i: 78977, n: "Experimental Envoy Pauldrons", p: {craft: true}},
-	{u: 6951, i: 79468, n: "Heavy Dragonscale Epaulets", p: {achievement: 0}}
+	{u: 6951, i: 79468, n: "Heavy Dragonscale Epaulets", p: {achievement: 0}},
+	{u: 5626, i: 79987, n: "Ardent Glorious Pauldrons", p: {glory: 150}}
 ],
 Armor_Heavy_Coat: [
 	{u: 2, i: 3168, n: "Chainmail Chestpiece", t: [2868, 2870, 2869, 2858, 2856, 2857, 2859, 2861, 2860, 2862, 2865, 2864, 2863, 2867, 2866, 2871, 3114, 3132, 3150, 3168, 3207, 3205, 3206, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3208, 3224, 3209, 3210, 3211, 5018, 5045, 5063, 5081, 5099, 5030, 5135, 5117, 5153, 5171, 5189, 5207, 5225, 5243, 5261, 5279]},
@@ -1824,7 +1837,8 @@ Armor_Heavy_Coat: [
 	{u: 6244, i: 74957, n: "Bladed Breastplate", p: {achievement: 0}},
 	{u: 6523, i: 74079, n: "Mistward Plate", p: {achievement: 0}},
 	{u: 6740, i: 78608, n: "Triumphant Breastplate", p: {badge: 0}},
-	{u: 6820, i: 78923, n: "Experimental Envoy Breastplate", p: {craft: true}}
+	{u: 6820, i: 78923, n: "Experimental Envoy Breastplate", p: {craft: true}},
+	{u: 5622, i: 67143, n: "Ardent Glorious Breastplate", p: {glory: 400}}
 ],
 Armor_Heavy_Gloves: [
 	{u: 20, i: 3169, n: "Chainmail Gauntlets", t: [2876, 2877, 2878, 2881, 2874, 2880, 2886, 2885, 2882, 2875, 2873, 2887, 2884, 3115, 2872, 3133, 3151, 2883, 3228, 3231, 3230, 2879, 3169, 3233, 3236, 3232, 3226, 3227, 3244, 3229, 3234, 3237, 3225, 3235, 3238, 3239, 3240, 3241, 3242, 3243, 5064, 5046, 5031, 5082, 5019, 5100, 5118, 5154, 5136, 5262, 5172, 5208, 5190, 5244, 5280, 5226]},
@@ -1907,7 +1921,8 @@ Armor_Heavy_Gloves: [
 	{u: 6730, i: 78644, n: "Triumphant Gauntlets", p: {badge: 0}},
 	{u: 6811, i: 78799, n: "Experimental Envoy Gauntlets", p: {craft: true}},
 	{u: 6943, i: 79391, n: "Pirate Hook", p: {gem: 300}},
-	{u: 7006, i: 79818, n: "Heavy Glacial Gauntlets", p: {achievement: 0}}
+	{u: 7006, i: 79818, n: "Heavy Glacial Gauntlets", p: {achievement: 0}},
+	{u: 5623, i: 79965, n: "Ardent Glorious Gauntlets", p: {glory: 150}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", t: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -1978,7 +1993,8 @@ Armor_Heavy_Leggings: [
 	{u: 6262, i: 73850, n: "Bladed Tassets", p: {map_vb: 500}},
 	{u: 6511, i: 70598, n: "Mistward Legguards", p: {achievement: 0}},
 	{u: 6726, i: 78198, n: "Triumphant Legplates", p: {badge: 0}},
-	{u: 6840, i: 78858, n: "Experimental Envoy Tassets", p: {craft: true}}
+	{u: 6840, i: 78858, n: "Experimental Envoy Tassets", p: {craft: true}},
+	{u: 5625, i: 67146, n: "Ardent Glorious Legplates", p: {glory: 275}}
 ],
 Armor_Heavy_Boots: [
 	{u: 27, i: 886, n: "Scallywag Greaves", t: [801, 807, 802, 820, 830, 841, 810, 846, 834, 853, 848, 827, 866, 886, 859, 874, 896, 903, 45064, 45136, 876]},
@@ -2051,7 +2067,8 @@ Armor_Heavy_Boots: [
 	{u: 6484, i: 74386, n: "Invisible Stompers", t: [74386]},
 	{u: 6682, i: 78288, n: "Triumphant Wargreaves", p: {badge: 0}},
 	{u: 6828, i: 78934, n: "Experimental Envoy Greaves", p: {craft: true}},
-	{u: 6909, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}}
+	{u: 6909, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
+	{u: 5621, i: 80045, n: "Ardent Glorious Wargreaves", p: {glory: 150}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
@@ -2218,7 +2235,8 @@ Weapon_Axe: [
 	{u: 6928, i: 79379, n: "Bloodstone Axe", t: [79379]},
 	{u: 6942, i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}},
 	{u: 6929, i: 79603, n: "Carnival Axe", p: {coin: 1000000}},
-	{u: 6989, i: 79686, n: "Gargoyle Axe", t: [79686]}
+	{u: 6989, i: 79686, n: "Gargoyle Axe", t: [79686]},
+	{u: 7062, i: 79992, n: "Frostforged Axe", t: [79992]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
@@ -2353,7 +2371,8 @@ Weapon_Mace: [
 	{u: 6971, i: 79537, n: "For Science", p: {craft: true}},
 	{u: 6958, i: 79570, n: "Endeavor", p: {craft: true}},
 	{u: 6966, i: 79562, n: "Eureka", p: {craft: true}},
-	{u: 6990, i: 79670, n: "Gargoyle Mace", t: [79670]}
+	{u: 6990, i: 79670, n: "Gargoyle Mace", t: [79670]},
+	{u: 7059, i: 80014, n: "Frostforged Mace", t: [80014]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", t: [49353]},
@@ -2508,7 +2527,8 @@ Weapon_Sword: [
 	{u: 6924, i: 79511, n: "Carnival Sword", p: {coin: 1000000}},
 	{u: 6984, i: 79644, n: "Gargoyle Sword", t: [79644]},
 	{u: 7011, i: 79815, n: "Caustic Nightmare Thornblade", p: {coin: -1}},
-	{u: 7030, i: 79840, n: "Nightmare Thornblade", p: {coin: -1}}
+	{u: 7030, i: 79840, n: "Nightmare Thornblade", p: {coin: -1}},
+	{u: 7049, i: 80062, n: "Frostforged Sword", t: [80062]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2653,7 +2673,8 @@ Weapon_Dagger: [
 	{u: 6948, i: 79474, n: "Carnival Dagger", p: {coin: 1000000}},
 	{u: 6987, i: 79685, n: "Gargoyle Dagger", t: [79685]},
 	{u: 7009, i: 79920, n: "Caustic Nightmare Anelace", p: {coin: -1}},
-	{u: 7016, i: 79724, n: "Nightmare Anelace", p: {coin: -1}}
+	{u: 7016, i: 79724, n: "Nightmare Anelace", p: {coin: -1}},
+	{u: 7044, i: 80061, n: "Frostforged Dagger", t: [80061]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},
@@ -2791,7 +2812,8 @@ Weapon_Pistol: [
 	{u: 6930, i: 79369, n: "Bloodstone Pistol", t: [79369]},
 	{u: 6946, i: 79617, n: "Carnival Pistol", p: {coin: 1000000}},
 	{u: 6981, i: 79689, n: "Gargoyle Pistol", t: [79689]},
-	{u: 6994, i: 79637, n: "Grim Pact", t: [79637]}
+	{u: 6994, i: 79637, n: "Grim Pact", t: [79637]},
+	{u: 7057, i: 80020, n: "Frostforged Pistol", t: [80020]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},
@@ -2932,7 +2954,8 @@ Weapon_Scepter: [
 	{u: 6920, i: 79375, n: "Bloodstone Scepter", t: [79375]},
 	{u: 6940, i: 79365, n: "Peacock Scepter", p: {gem: 600}},
 	{u: 6945, i: 79461, n: "Carnival Scepter", p: {coin: 1000000}},
-	{u: 6993, i: 79682, n: "Gargoyle Scepter", t: [79682]}
+	{u: 6993, i: 79682, n: "Gargoyle Scepter", t: [79682]},
+	{u: 7053, i: 79976, n: "Frostforged Scepter", t: [79976]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -3091,7 +3114,8 @@ Weapon_Focus: [
 	{u: 6977, i: 79638, n: "Jailbroken", t: [79638]},
 	{u: 6995, i: 79687, n: "Gargoyle Focus", t: [79687]},
 	{u: 7019, i: 79767, n: "Caustic Nightmare Corsage", p: {coin: -1}},
-	{u: 7033, i: 79753, n: "Nightmare Corsage", p: {coin: -1}}
+	{u: 7033, i: 79753, n: "Nightmare Corsage", p: {coin: -1}},
+	{u: 7054, i: 80021, n: "Frostforged Focus", t: [80021]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", t: [49344]},
@@ -3250,7 +3274,8 @@ Weapon_Shield: [
 	{u: 7022, i: 79900, n: "Trust", p: {craft: true}},
 	{u: 7026, i: 79894, n: "Loyalty", p: {craft: true}},
 	{u: 7035, i: 79836, n: "Friendship", p: {craft: true}},
-	{u: 7024, i: 79802, n: "Shooshadoo", p: {craft: true}}
+	{u: 7024, i: 79802, n: "Shooshadoo", p: {craft: true}},
+	{u: 7048, i: 79979, n: "Frostforged Shield", t: [79979]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3383,7 +3408,8 @@ Weapon_Torch: [
 	{u: 6873, i: 79101, n: "Embellished Torch", t: [79101]},
 	{u: 6936, i: 79393, n: "Bloodstone Torch", t: [79393]},
 	{u: 6913, i: 79487, n: "Carnival Torch", p: {coin: 500000}},
-	{u: 6996, i: 79649, n: "Gargoyle Torch", t: [79649]}
+	{u: 6996, i: 79649, n: "Gargoyle Torch", t: [79649]},
+	{u: 7036, i: 79944, n: "Frostforged Torch", t: [79944]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", t: [49359]},
@@ -3516,7 +3542,8 @@ Weapon_Warhorn: [
 	{u: 6876, i: 79307, n: "Embellished Warhorn", t: [79307]},
 	{u: 6933, i: 79399, n: "Bloodstone Warhorn", t: [79399]},
 	{u: 6944, i: 79482, n: "Carnival Warhorn", p: {coin: 500000}},
-	{u: 6976, i: 79658, n: "Gargoyle Warhorn", t: [79658]}
+	{u: 6976, i: 79658, n: "Gargoyle Warhorn", t: [79658]},
+	{u: 7052, i: 79973, n: "Frostforged Warhorn", t: [79973]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", t: [49321, 49323]},
@@ -3666,7 +3693,8 @@ Weapon_Greatsword: [
 	{u: 6882, i: 79261, n: "Embellished Greatsword", t: [79261]},
 	{u: 6950, i: 79389, n: "Bloodstone Greatsword", t: [79389]},
 	{u: 6918, i: 79480, n: "Carnival Greatsword", p: {coin: 1500000}},
-	{u: 6979, i: 79655, n: "Gargoyle Greatsword", t: [79655]}
+	{u: 6979, i: 79655, n: "Gargoyle Greatsword", t: [79655]},
+	{u: 7050, i: 80041, n: "Frostforged Greatsword", t: [80041]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -3809,7 +3837,8 @@ Weapon_Hammer: [
 	{u: 6908, i: 79377, n: "Bloodstone Hammer", t: [79377]},
 	{u: 6923, i: 79520, n: "Carnival Hammer", p: {coin: 1500000}},
 	{u: 6986, i: 79659, n: "Gargoyle Hammer", t: [79659]},
-	{u: 6991, i: 79690, n: "Onus", t: [79690]}
+	{u: 6991, i: 79690, n: "Onus", t: [79690]},
+	{u: 7060, i: 79967, n: "Frostforged Hammer", t: [79967]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", t: [44906]},
@@ -3952,7 +3981,8 @@ Weapon_Longbow: [
 	{u: 6925, i: 79409, n: "Bloodstone Longbow", t: [79409]},
 	{u: 6922, i: 79416, n: "Carnival Longbow", p: {coin: 1500000}},
 	{u: 6999, i: 79652, n: "Gargoyle Longbow", t: [79652]},
-	{u: 7021, i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}}
+	{u: 7021, i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}},
+	{u: 7041, i: 80035, n: "Frostforged Longbow", t: [80035]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
@@ -4096,7 +4126,8 @@ Weapon_Shortbow: [
 	{u: 6862, i: 79125, n: "Embellished Short Bow", t: [79125]},
 	{u: 6947, i: 79395, n: "Bloodstone Short Bow", t: [79395]},
 	{u: 6927, i: 79563, n: "Carnival Short Bow", p: {coin: 1500000}},
-	{u: 6988, i: 79648, n: "Gargoyle Short Bow", t: [79648]}
+	{u: 6988, i: 79648, n: "Gargoyle Short Bow", t: [79648]},
+	{u: 7039, i: 79963, n: "Frostforged Short Bow", t: [79963]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -4236,7 +4267,8 @@ Weapon_Rifle: [
 	{u: 6871, i: 79074, n: "Embellished Rifle", t: [79074]},
 	{u: 6921, i: 79407, n: "Bloodstone Rifle", t: [79407]},
 	{u: 6938, i: 79530, n: "Carnival Rifle", p: {coin: 1500000}},
-	{u: 6992, i: 79636, n: "Gargoyle Rifle", t: [79636]}
+	{u: 6992, i: 79636, n: "Gargoyle Rifle", t: [79636]},
+	{u: 7046, i: 79977, n: "Frostforged Rifle", t: [79977]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", t: [49348, 49350]},
@@ -4391,7 +4423,9 @@ Weapon_Staff: [
 	{u: 6901, i: 79315, n: "Emissary's Staff", p: {gem: 600}},
 	{u: 6932, i: 79362, n: "Bloodstone Staff", t: [79362]},
 	{u: 6939, i: 79539, n: "Carnival Staff", p: {coin: 1500000}},
-	{u: 6998, i: 79662, n: "Gargoyle Staff", t: [79662]}
+	{u: 6998, i: 79662, n: "Gargoyle Staff", t: [79662]},
+	{u: 6978, i: 79680, n: "Candelabra Staff", p: {gem: 0}},
+	{u: 7056, i: 80039, n: "Frostforged Staff", t: [80039]}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},

@@ -4842,7 +4842,7 @@ Z = {
 					{
 						for (var ii in pDatabase[i])
 						{
-							Q.printItemInfo((pDatabase[i])[ii], false);
+							Q.printItemInfo((pDatabase[i])[ii]);
 						}
 					}
 				});
@@ -5081,7 +5081,7 @@ Z = {
 		{
 			catarr = pRecord[i];
 			arrlength = catarr.length;
-			var keyq = (isNaN(i.chatAt(0)) === false) ? "\"" : "";
+			var keyq = (isNaN(i.charAt(0)) === false) ? "\"" : "";
 			if (pIsFlat)
 			{
 				output += keyq + i + keyq + ": [" + catarr.toString() + "]";
@@ -5846,7 +5846,7 @@ Z = {
 	printRecordEntry: function(pEntries, pSettings)
 	{
 		var Settings = pSettings || {};
-		var ithentry, entryobj, entrystr, itemidsproperty, itemids, itemid, name;
+		var ithentry, entryobj, entrystr, entrystrs = [], itemidsproperty, itemids, itemid, name;
 		var icon, entryelm, itemselm, inputselm;
 		
 		for (var i in pEntries)
@@ -5879,6 +5879,7 @@ Z = {
 					inputselm = $("<aside>&nbsp;<a" + U.convertExternalAnchor(U.getWikiLinkDefault(name)) + ">" + name + "</a></aside>").appendTo(itemselm);
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(entrystr);
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(itemid);
+					entrystrs.push(entrystr);
 				}
 			}
 			entryelm.find(".cssInputText").click(function()
@@ -5886,6 +5887,7 @@ Z = {
 				$(this).select();
 			});
 		}
+		I.print(entrystrs.join("<br />"));
 		I.bindConsoleInput();
 	},
 	
@@ -6212,6 +6214,67 @@ Z = {
 	},
 	
 	/*
+	 * Reads the item database for collectionesque items.
+	 */
+	collateCatalog: function()
+	{
+		var section = "Catalog";
+		
+		// Returns the category name of an item, if fitting
+		var categorizeItem = function(pItem)
+		{
+			var name = pItem.name.toLowerCase();
+			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
+			if (pItem.type === "UpgradeComponent" && name.indexOf("infusion") !== -1)
+			{
+				return "Aura";
+			}
+			if (pItem.details && pItem.details.unlock_type === "GliderSkin")
+			{
+				return "Glider";
+			}
+			if (pItem.rarity === "Legendary" && pItem.type === "Weapon")
+			{
+				return "Legendary";
+			}
+			return null;
+		};
+		
+		I.print("Loading items database...");
+		Z.getItemsDatabase(function(pDatabase)
+		{
+			I.print("Loading " + section);
+			U.getScript(U.getDataScriptURL(section), function()
+			{
+				var item, catname;
+				var record = U.getRecordData(section);
+				var assoc = A.flattenRecord(record);
+				var blacklist = U.getRecordBlacklist(section);
+				for (var i in pDatabase)
+				{
+					item = pDatabase[i];
+					// Exclude blacklisted
+					if (blacklist[item.id])
+					{
+						continue;
+					}
+					catname = categorizeItem(item);
+					// Add the item if matched
+					if (catname && assoc[item.id] === undefined)
+					{
+						record[catname].push({
+							i: item.id,
+							n: item.name,
+							p: {gem: null}
+						});
+					}
+				}
+				Z.printUnlockables(record);
+			});
+		});
+	},
+	
+	/*
 	 * Reads the item database for container items and "useless" items.
 	 */
 	collateCleanup: function()
@@ -6455,7 +6518,8 @@ Z = {
 					{
 						pReturn.oRecord[category].push({
 							i: item.id,
-							n: item.name
+							n: item.name,
+							p: {coin: -1}
 						});
 					}
 				}
@@ -7003,7 +7067,7 @@ A = {
 		Q.bindItemSearch("#accSearch", {
 			aCallback: function(pItem)
 			{
-				Q.printItemInfo(pItem);
+				Q.printItemInfo(pItem, true);
 			}}
 		);
 		
@@ -11780,11 +11844,22 @@ V = {
 			return;
 		}
 		
-		var container = B.createBank(dish, {aIsCollection: true});
+		var container = B.createBank(dish, {
+			aIsCollection: true,
+			aWantGem: false
+		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
+		
 		U.getScript(U.URL_DATA.Museum, function()
 		{
-			
+			B.generateUnlockables(bank, {
+				aRecord: U.getRecordData("Museum"),
+				aIsCollapsed: true,
+				aWantItems: true,
+				aWantSearchHighlight: false,
+				aWantDefaultHelp: false,
+				aHelpMessage: $("#accHelpMuseum").html()
+			});
 		});
 	},
 	
@@ -11874,7 +11949,9 @@ V = {
 			{
 				// First generate empty bank slots, then fill them up asynchronously by item details retrieval
 				bank.empty();
-				tab = B.createBankTab(bank);
+				tab = B.createBankTab(bank, {
+					aTitle: $("#pctStatistics").attr("data-date")
+				});
 				slotscontainer = tab.find(".bnkTabSlots");
 				for (var i = 0; i < itemids.length; i++)
 				{
@@ -11907,7 +11984,9 @@ V = {
 				// Update tallies
 				B.tallyBank(container);
 				// Create search bar
-				B.createBankMenu(bank);
+				B.createBankMenu(bank, {
+					aHelpMessage: $("#accHelpPact").html()
+				});
 				generateStatistics();
 			});
 		});
@@ -12710,32 +12789,39 @@ B = {
 		});
 		
 		// Button to filter tradeable items
-		var isfilteringtrade = true;
-		$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter: <dfn>tradeable</dfn> items.'></div>")
+		var tradefilterstate = 0;
+		$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter:<br />1st click: <dfn>tradeable</dfn> items<br />2nd click: bound items<br />3rd click: any items (reset).'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			var slots = pBank.find(".bnkSlot");
-			if (isfilteringtrade)
+			if (tradefilterstate === 0 || tradefilterstate === 1)
 			{
 				slots.each(function()
 				{
 					if ($(this).data("istradeable"))
 					{
-						$(this).show();
+						$(this).toggle(tradefilterstate === 0);
 					}
 					else
+					{
+						$(this).toggle(tradefilterstate === 1);
+					}
+					if ($(this).data("count") === undefined)
 					{
 						$(this).hide();
 					}
 				});
+				$(this).addClass("bnkButtonFocused");
+				pBank.addClass("bnkTradeable");
+				tradefilterstate++;
 			}
 			else
 			{
 				slots.show();
+				$(this).removeClass("bnkButtonFocused");
+				pBank.removeClass("bnkTradeable");
+				tradefilterstate = 0;
 			}
-			pBank.toggleClass("bnkTradeable", isfilteringtrade);
-			$(this).toggleClass("bnkButtonFocused");
-			isfilteringtrade = !isfilteringtrade;
 			A.adjustAccountScrollbar();
 		});
 		
@@ -13128,29 +13214,40 @@ B = {
 		}
 		else
 		{
-			if (Array.isArray(Settings.aUnlockeds))
+			if (Settings.aUnlockeds === undefined)
 			{
-				if (isNaN(Settings.aUnlockeds[0]))
+				Settings.aUnlockeds = [];
+				A.iterateRecord(Settings.aRecord, function(pEntry)
 				{
-					for (var i = 0; i < Settings.aUnlockeds.length; i++)
+					unlocksassoc[pEntry] = true;
+				});
+			}
+			else
+			{
+				if (Array.isArray(Settings.aUnlockeds))
+				{
+					if (isNaN(Settings.aUnlockeds[0]))
 					{
-						if (Settings.aUnlockeds[i].permanent !== false)
+						for (var i = 0; i < Settings.aUnlockeds.length; i++)
 						{
-							unlocksassoc[(Settings.aUnlockeds[i].id)] = true;
+							if (Settings.aUnlockeds[i].permanent !== false)
+							{
+								unlocksassoc[(Settings.aUnlockeds[i].id)] = true;
+							}
+						}
+					}
+					else
+					{
+						for (var i = 0; i < Settings.aUnlockeds.length; i++)
+						{
+							unlocksassoc[(Settings.aUnlockeds[i])] = true;
 						}
 					}
 				}
 				else
 				{
-					for (var i = 0; i < Settings.aUnlockeds.length; i++)
-					{
-						unlocksassoc[(Settings.aUnlockeds[i])] = true;
-					}
+					unlocksassoc = Settings.aUnlockeds;
 				}
-			}
-			else
-			{
-				unlocksassoc = Settings.aUnlockeds;
 			}
 		}
 
@@ -13210,8 +13307,18 @@ B = {
 			var numsunlockedtotal = 0;
 			var numintabstotal = 0;
 			var numacquiredtotal = 0;
+			var isheadersundefined = false;
+			if (headers === undefined)
+			{
+				headers = {};
+				isheadersundefined = true;
+			}
 			for (var i in record)
 			{
+				if (isheadersundefined)
+				{
+					headers[i] = {name_en: i};
+				}
 				catobj = headers[i];
 				catarr = record[i];
 				tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
@@ -15993,6 +16100,7 @@ E = {
 		provisioner: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_provisioner'></ins>"; },
 		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_tournament'></ins>"; },
 		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
+		glory: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_glory'></ins>"; },
 		dungeon_ac: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_ac'></ins>"; },
 		dungeon_arah: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_arah'></ins>"; },
 		dungeon_cm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_cm'></ins>"; },
@@ -18059,7 +18167,7 @@ D = {
 			cs: "Chrámy", it: "Templi", pl: "Świątynie", pt: "Templos", ru: "Храмы", zh: "寺庙"},
 		s_Full_Timetable: {de: "Zeitplan", es: "Horario", fr: "Horaire",
 			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "时间表"},
-		s_promotions: {de: "Aktionen", es: "promociones", fr: "promotions",
+		s_promotions: {de: "aktionen", es: "promociones", fr: "promotions",
 			cs: "propagace", it: "promozioni", pl: "promocje", pt: "promoções", ru: "продвижения", zh: "促销"},
 		s_menu: {de: "menü", es: "menú", fr: "menu",
 			cs: "nabídka", it: "menu", pl: "menu", pt: "menu", ru: "меню", zh: "功能表"},
@@ -18067,6 +18175,8 @@ D = {
 			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界战场"},
 		s_pve: {de: "SgU", es: "JcE", fr: "JcE",
 			cs: "HpP", it: "GcA", pl: "PvE", pt: "JcA", ru: "ИпО", zh: "玩家对抗环境"},
+		s_pvp: {de: "PvP", es: "JcJ", fr: "JcJ",
+			cs: "HpH", it: "GcG", pl: "PvP", pt: "JcJ", ru: "ИпИ", zh: "玩家對戰"},
 		s_display: {de: "anzeige", es: "presentación", fr: "affichage",
 			cs: "zobrazení", it: "visualizzazione", pl: "wyświetlania", pt: "exibição", ru: "отображаемое", zh: "显示"},
 		s_zone: {de: "gebiet", es: "zona", fr: "zone",

@@ -323,7 +323,14 @@ Special: [
 	{u: 422, i: 79877, n: "Mini Ice Beast", p: {karma: 105000}},
 	{u: 423, i: 79783, n: "Mini Arctic Quaggan", p: {karma: 105000}},
 	{u: 425, i: 79904, n: "Mini Icebrood Ogre", p: {karma: 105000}},
-	{u: 426, i: 79774, n: "Mini Owl Griffon Hatchling", p: {karma: 105000}}
+	{u: 426, i: 79774, n: "Mini Owl Griffon Hatchling", p: {karma: 105000}},
+	{u: 432, i: 80033, n: "Mini Black Llama", p: {league: 10}},
+	{u: 429, i: 80052, n: "Mini Fancy Black Llama", p: {craft: true}},
+	{u: 431, i: 79962, n: "Mini Elegant Black Llama", p: {craft: true}},
+	{u: 427, i: 80013, n: "Mini Lavish Black Llama", p: {craft: true}},
+	{u: 434, i: 80059, n: "Mini Tiny Snowball"},
+	{u: 433, i: 80053, n: "Mini Snowball", p: {craft: true}},
+	{u: 428, i: 79981, n: "Mini Large Snowball", p: {craft: true}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},

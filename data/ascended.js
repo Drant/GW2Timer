@@ -932,7 +932,12 @@ Ring: [
 	{i: 79712, n: "Black Ice Band", p: {map_bf: 200}},
 	{i: 79816, n: "Black Ice Band (Infused)", p: {map_bf: 200}},
 	{i: 79780, n: "Attuned Black Ice Band", p: {map_bf: 200}},
-	{i: 79710, n: "Attuned Black Ice Band (Infused)", p: {map_bf: 200}}
+	{i: 79710, n: "Attuned Black Ice Band (Infused)", p: {map_bf: 200}},
+	{i: 79446, n: "Rurik's Engagement Ring", p: {craft: true}},
+	{i: 79460, n: "Rurik's Engagement Ring", p: {craft: true}},
+	{i: 79477, n: "Rurik's Engagement Ring", p: {craft: true}},
+	{i: 79587, n: "Rurik's Engagement Ring", p: {craft: true}},
+	{i: 80058, n: "Mist Band (Infused)", p: {craft: true}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -994,7 +999,9 @@ Accessory: [
 	{i: 78878, n: "Rounded Keep Fragment", p: {raid_ft: 250}},
 	{i: 78915, n: "Hardened Keep Fragment", p: {raid_ft: 250}},
 	{i: 79444, n: "Sparking Petrified Wood", p: {map_eb: 150}},
-	{i: 79745, n: "Black Ice Earring", p: {map_bf: 300}}
+	{i: 79745, n: "Black Ice Earring", p: {map_bf: 300}},
+	{i: 80002, n: "Mist Talisman", p: {pvp: true}},
+	{i: 80028, n: "Mist Talisman", p: {pvp: true}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1059,7 +1066,8 @@ Amulet: [
 	{i: 72529, n: "Vigil's Honor", p: {achievement: 0}},
 	{i: 74695, n: "Whisper's Secret", p: {achievement: 0}},
 	{i: 67898, n: "Wynne's Locket", p: {laurel: 20}},
-	{i: 79269, n: "Blood Ruby Pendant", p: {map_bs: 125}}
+	{i: 79269, n: "Blood Ruby Pendant", p: {map_bs: 125}},
+	{i: 79980, n: "Mist Pendant", p: {pvp: true}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1096,7 +1104,8 @@ LightHelm: [
 	{i: 78834, n: "Experimental Envoy Cowl", p: {coin: 900000}},
 	{i: 78955, n: "Healer's Keep Construct Mask", p: {coin: 900000}},
 	{i: 78985, n: "Defender's Keep Construct Mask", p: {coin: 900000}},
-	{i: 79000, n: "Malicious Keep Construct Mask", p: {coin: 900000}}
+	{i: 79000, n: "Malicious Keep Construct Mask", p: {coin: 900000}},
+	{i: 67141, n: "Ardent Glorious Crown", p: {coin: 900000}}
 ],
 LightShoulders: [
 	{i: 48101, n: "Ahamid's Epaulets", p: {coin: 900000}},
@@ -1134,7 +1143,9 @@ LightShoulders: [
 	{i: 77844, n: "Defender's White Mantle Shoulders", p: {coin: 900000}},
 	{i: 77852, n: "Healer's White Mantle Shoulders", p: {coin: 900000}},
 	{i: 74332, n: "Nightfury", p: {craft: true}},
-	{i: 78874, n: "Experimental Envoy Mantle", p: {coin: 900000}}
+	{i: 78874, n: "Experimental Envoy Mantle", p: {coin: 900000}},
+	{i: 67152, n: "Ardent Glorious Epaulets", p: {coin: 900000}},
+	{i: 79984, n: "Ardent Glorious Epaulets", p: {coin: 900000}}
 ],
 LightCoat: [
 	{i: 48097, n: "Ahamid's Doublet", p: {coin: 1200000}},
@@ -1207,7 +1218,9 @@ LightGloves: [
 	{i: 77837, n: "Malicious Sloth-Skin Handwraps", p: {coin: 900000}},
 	{i: 77829, n: "Defender's Sloth-Skin Handwraps", p: {coin: 900000}},
 	{i: 77827, n: "Healer's Sloth-Skin Handwraps", p: {coin: 900000}},
-	{i: 78969, n: "Experimental Envoy Gloves", p: {coin: 900000}}
+	{i: 78969, n: "Experimental Envoy Gloves", p: {coin: 900000}},
+	{i: 67131, n: "Ardent Glorious Armguards", p: {coin: 900000}},
+	{i: 79953, n: "Ardent Glorious Armguards", p: {coin: 900000}}
 ],
 LightLeggings: [
 	{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -1243,7 +1256,8 @@ LightLeggings: [
 	{i: 77340, n: "Multifarious Defender Breeches", p: {coin: 1100000}},
 	{i: 77308, n: "Multifarious Healer Breeches", p: {coin: 1100000}},
 	{i: 77426, n: "Multifarious Malicious Breeches", p: {coin: 1100000}},
-	{i: 78862, n: "Experimental Envoy Pants", p: {coin: 1100000}}
+	{i: 78862, n: "Experimental Envoy Pants", p: {coin: 1100000}},
+	{i: 67151, n: "Ardent Glorious Leggings", p: {coin: 1100000}}
 ],
 LightBoots: [
 	{i: 48096, n: "Ahamid's Footwear", p: {coin: 1000000}},
@@ -1279,7 +1293,9 @@ LightBoots: [
 	{i: 77387, n: "Malicious Guardian Footwear", p: {coin: 1000000}},
 	{i: 77434, n: "Defender's Guardian Footwear", p: {coin: 1000000}},
 	{i: 77271, n: "Healer's Guardian Footwear", p: {coin: 1000000}},
-	{i: 78974, n: "Experimental Envoy Shoes", p: {coin: 1000000}}
+	{i: 78974, n: "Experimental Envoy Shoes", p: {coin: 1000000}},
+	{i: 67148, n: "Ardent Glorious Footgear", p: {coin: 1000000}},
+	{i: 80017, n: "Ardent Glorious Footgear", p: {coin: 1000000}}
 ],
 MediumHelm: [
 	{i: 48105, n: "Ahamid's Visage", p: {coin: 900000}},
@@ -1316,7 +1332,9 @@ MediumHelm: [
 	{i: 78856, n: "Defender's Keep Construct Hood", p: {coin: 900000}},
 	{i: 78888, n: "Assaulter's Keep Construct Hood", p: {coin: 900000}},
 	{i: 78948, n: "Healer's Keep Construct Hood", p: {coin: 900000}},
-	{i: 78995, n: "Experimental Envoy Leggings", p: {coin: 1100000}}
+	{i: 78995, n: "Experimental Envoy Leggings", p: {coin: 1100000}},
+	{i: 67156, n: "Ardent Glorious Cap", p: {coin: 1000000}},
+	{i: 79947, n: "Ardent Glorious Cap", p: {coin: 1000000}}
 ],
 MediumShoulders: [
 	{i: 48107, n: "Ahamid's Shoulderguard", p: {coin: 900000}},
@@ -1354,7 +1372,9 @@ MediumShoulders: [
 	{i: 77868, n: "Defender's White Mantle Amice", p: {coin: 900000}},
 	{i: 77966, n: "Healer's White Mantle Amice", p: {coin: 900000}},
 	{i: 74547, n: "Nightfury", p: {craft: true}},
-	{i: 78971, n: "Experimental Envoy Shoulderpads", p: {coin: 900000}}
+	{i: 78971, n: "Experimental Envoy Shoulderpads", p: {coin: 900000}},
+	{i: 67158, n: "Ardent Glorious Shoulderguards", p: {coin: 1000000}},
+	{i: 80012, n: "Ardent Glorious Shoulderguards", p: {coin: 1000000}}
 ],
 MediumCoat: [
 	{i: 48103, n: "Ahamid's Guise", p: {coin: 1200000}},
@@ -1390,7 +1410,8 @@ MediumCoat: [
 	{i: 77408, n: "Sabetha's Defender Guise", p: {coin: 1200000}},
 	{i: 77409, n: "Sabetha's Healer Guise", p: {coin: 1200000}},
 	{i: 77306, n: "Sabetha's Malicious Guise", p: {coin: 1200000}},
-	{i: 78800, n: "Experimental Envoy Jerkin", p: {coin: 1200000}}
+	{i: 78800, n: "Experimental Envoy Jerkin", p: {coin: 1200000}},
+	{i: 67115, n: "Ardent Glorious Brigandine", p: {coin: 1200000}}
 ],
 MediumGloves: [
 	{i: 48104, n: "Ahamid's Grips", p: {coin: 900000}},
@@ -1427,7 +1448,9 @@ MediumGloves: [
 	{i: 77952, n: "Malicious Sloth-Skin Gloves", p: {coin: 900000}},
 	{i: 77875, n: "Defender's Sloth-Skin Gloves", p: {coin: 900000}},
 	{i: 78001, n: "Healer's Sloth-Skin Gloves", p: {coin: 900000}},
-	{i: 78892, n: "Experimental Envoy Vambraces", p: {coin: 900000}}
+	{i: 78892, n: "Experimental Envoy Vambraces", p: {coin: 900000}},
+	{i: 67117, n: "Ardent Glorious Wristplates", p: {coin: 900000}},
+	{i: 79955, n: "Ardent Glorious Wristplates", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -1463,7 +1486,9 @@ MediumLeggings: [
 	{i: 77406, n: "Multifarious Defender Leggings", p: {coin: 1100000}},
 	{i: 77430, n: "Multifarious Healer Leggings", p: {coin: 1100000}},
 	{i: 77313, n: "Multifarious Malicious Leggings", p: {coin: 1100000}},
-	{i: 78896, n: "Experimental Envoy Mask", p: {coin: 900000}}
+	{i: 78896, n: "Experimental Envoy Mask", p: {coin: 900000}},
+	{i: 67157, n: "Ardent Glorious Legguards", p: {coin: 900000}},
+	{i: 79968, n: "Ardent Glorious Legguards", p: {coin: 900000}}
 ],
 MediumBoots: [
 	{i: 48102, n: "Ahamid's Striders", p: {coin: 1000000}},
@@ -1499,7 +1524,9 @@ MediumBoots: [
 	{i: 77420, n: "Malicious Guardian Striders", p: {coin: 1000000}},
 	{i: 77347, n: "Defender's Guardian Striders", p: {coin: 1000000}},
 	{i: 77377, n: "Healer's Guardian Striders", p: {coin: 1000000}},
-	{i: 78796, n: "Experimental Envoy Boots", p: {coin: 1000000}}
+	{i: 78796, n: "Experimental Envoy Boots", p: {coin: 1000000}},
+	{i: 67128, n: "Ardent Glorious Shinplates", p: {coin: 1000000}},
+	{i: 80000, n: "Ardent Glorious Shinplates", p: {coin: 1000000}}
 ],
 HeavyHelm: [
 	{i: 48093, n: "Ahamid's Visor", p: {coin: 900000}},
@@ -1536,7 +1563,9 @@ HeavyHelm: [
 	{i: 78823, n: "Malicious Keep Construct Helm", p: {coin: 900000}},
 	{i: 78860, n: "Defender's Keep Construct Helm", p: {coin: 900000}},
 	{i: 78949, n: "Healer's Keep Construct Helm", p: {coin: 900000}},
-	{i: 78940, n: "Experimental Envoy Helmet", p: {coin: 900000}}
+	{i: 78940, n: "Experimental Envoy Helmet", p: {coin: 900000}},
+	{i: 67145, n: "Ardent Glorious Plate Helm", p: {coin: 900000}},
+	{i: 80010, n: "Ardent Glorious Plate Helm", p: {coin: 900000}}
 ],
 HeavyShoulders: [
 	{i: 48095, n: "Ahamid's Pauldrons", p: {coin: 900000}},
@@ -1574,7 +1603,9 @@ HeavyShoulders: [
 	{i: 77987, n: "Defender's White Mantle Spaulders", p: {coin: 900000}},
 	{i: 77873, n: "Healer's White Mantle Spaulders", p: {coin: 900000}},
 	{i: 76885, n: "Nightfury", p: {craft: true}},
-	{i: 78977, n: "Experimental Envoy Pauldrons", p: {coin: 900000}}
+	{i: 78977, n: "Experimental Envoy Pauldrons", p: {coin: 900000}},
+	{i: 67147, n: "Ardent Glorious Pauldrons", p: {coin: 900000}},
+	{i: 79987, n: "Ardent Glorious Pauldrons", p: {coin: 900000}}
 ],
 HeavyCoat: [
 	{i: 48091, n: "Ahamid's Breastplate", p: {coin: 1200000}},
@@ -1610,7 +1641,8 @@ HeavyCoat: [
 	{i: 77382, n: "Sabetha's Defender Breastplate", p: {coin: 1200000}},
 	{i: 77294, n: "Sabetha's Healer Breastplate", p: {coin: 1200000}},
 	{i: 77295, n: "Sabetha's Malicious Breastplate", p: {coin: 1200000}},
-	{i: 78923, n: "Experimental Envoy Breastplate", p: {coin: 1200000}}
+	{i: 78923, n: "Experimental Envoy Breastplate", p: {coin: 1200000}},
+	{i: 67143, n: "Ardent Glorious Breastplate", p: {coin: 1200000}}
 ],
 HeavyGloves: [
 	{i: 48092, n: "Ahamid's Warfists", p: {coin: 900000}},
@@ -1647,7 +1679,9 @@ HeavyGloves: [
 	{i: 77999, n: "Malicious Sloth-Skin Gauntlets", p: {coin: 900000}},
 	{i: 77954, n: "Defender's Sloth-Skin Gauntlets", p: {coin: 900000}},
 	{i: 77836, n: "Healer's Sloth-Skin Gauntlets", p: {coin: 900000}},
-	{i: 78799, n: "Experimental Envoy Gauntlets", p: {coin: 900000}}
+	{i: 78799, n: "Experimental Envoy Gauntlets", p: {coin: 900000}},
+	{i: 67144, n: "Ardent Glorious Gauntlets", p: {coin: 900000}},
+	{i: 79965, n: "Ardent Glorious Gauntlets", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -1683,7 +1717,8 @@ HeavyLeggings: [
 	{i: 77436, n: "Multifarious Defender Tassets", p: {coin: 1100000}},
 	{i: 77304, n: "Multifarious Healer Tassets", p: {coin: 1100000}},
 	{i: 77383, n: "Multifarious Malicious Tassets", p: {coin: 1100000}},
-	{i: 78858, n: "Experimental Envoy Tassets", p: {coin: 1100000}}
+	{i: 78858, n: "Experimental Envoy Tassets", p: {coin: 1100000}},
+	{i: 67146, n: "Ardent Glorious Legplates", p: {coin: 1100000}}
 ],
 HeavyBoots: [
 	{i: 48090, n: "Ahamid's Greaves", p: {coin: 900000}},
@@ -1719,7 +1754,9 @@ HeavyBoots: [
 	{i: 77309, n: "Malicious Guardian Greaves", p: {coin: 900000}},
 	{i: 77300, n: "Defender's Guardian Greaves", p: {coin: 900000}},
 	{i: 77337, n: "Healer's Guardian Greaves", p: {coin: 900000}},
-	{i: 78934, n: "Experimental Envoy Greaves", p: {coin: 900000}}
+	{i: 78934, n: "Experimental Envoy Greaves", p: {coin: 900000}},
+	{i: 67142, n: "Ardent Glorious Wargreaves", p: {coin: 900000}},
+	{i: 80045, n: "Ardent Glorious Wargreaves", p: {coin: 900000}}
 ],
 LightHelmAquatic: [
 	{i: 73723, n: "Ahamid's Cloth Breather", p: {coin: 900000}},

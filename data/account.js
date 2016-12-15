@@ -169,8 +169,6 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 4, coefficient: "gem", payment: "gem", name_en: "Gem", name_de: "Edelstein", name_es: "Gema", name_fr: "Gemme", name_zh: "宝石" },
 			{ id: 2, coefficient: 1, payment: "karma", name_en: "Karma", name_de: "Karma", name_es: "Karma", name_fr: "Karma", name_zh: "业力" },
 			{ id: 3, coefficient: 10000, payment: "laurel", name_en: "Laurel", name_de: "Lorbeer", name_es: "Laurel", name_fr: "Laurier", name_zh: "桂冠" },
-			{ id: 15, coefficient: 100, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "荣誉徽章" },
-			{ id: 31, coefficient: 500, payment: "proof", name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄证明" },
 			{ id: 16, coefficient: 10000, payment: "commendation", name_en: "Guild Commendation", name_de: "Gilden-Belobigung", name_es: "Mención de clan", name_fr: "Recommandation de guilde", name_zh: "公会奖状" },
 			{ id: 29, coefficient: 5000, payment: "provisioner", name_en: "Provisioner Token", name_de: "Versorger-Marke", name_es: "Vale de suministrador", name_fr: "Coupon de fournisseur", name_zh: "供给官徽记" },
 			{ id: 23, coefficient: 1000, name_en: "Spirit Shard", name_de: "Geister-Scherbe", name_es: "Esquirla espiritual", name_fr: "Éclat d'esprit", name_zh: "灵魂碎片" },
@@ -183,8 +181,11 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 22, payment: "map_ab", name_en: "Lump of Aurillium", name_de: "Aurilliumklumpen", name_es: "Trozo de aurilio", name_fr: "Bloc d'aurillium", name_zh: "块状赤金元素" },
 			{ id: 20, payment: "map_td", name_en: "Ley Line Crystal", name_de: "Ley-Linien-Kristall", name_es: "Cristal de línea ley", name_fr: "Cristal des lignes de force", name_zh: "魔径水晶" },
 			{ id: 32, coefficient: 0.1, payment: "magic", name_en: "Unbound Magic", name_de: "Entfesselte Magie", name_es: "Magia liberada", name_fr: "Magie déliée", name_zh: "未受约束的魔法" },
+			{ id: 15, coefficient: 0.1, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "荣誉徽章" },
+			{ id: 31, payment: "proof", name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄证明" },
 			{ id: 26, name_en: "WvW Tournament Claim Ticket", name_de: "WvW-Turnier-Ticket", name_es: "Tique de recogida de torneo WvW", name_fr: "Billet de retrait de tournoi McM", name_zh: "世界之战锦标赛兑换券" },
-			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP联赛兑换券" }
+			{ id: 30, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP联赛兑换券" },
+			{ id: 33, payment: "glory", name_en: "Ascended Shards of Glory", name_de: "Aufgestiegene Scherben des Ruhms", name_es: "Esquirlas de gloria ascendidas", name_fr: "Éclats de gloire élevés", name_zh: "升华荣誉碎片" }
 		]
 	},
 	AuditWallet: {}, // Will contain a flattened version of the wallet object
@@ -231,6 +232,7 @@ var GW2T_CURRENCY_DATA = {
 		laurel: {id: 3, color: "#44dd44", conversion: [0.33, 24351], isliquid: true}, // Vicious Claw
 		badge: {id: 15, color: "#8c7047", conversion: [30, 71473], isliquid: true}, // Badge of Tribute
 		proof: {id: 31, color: "#ffff53", conversion: [6, 21262], isliquid: true, ishidden: true}, // Superior Catapult Blueprints
+		glory: {id: 33, color: "#d675ef", conversion: [400, 48079], isappraised: true}, // Zojja Doublet
 		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true}, // Sentinel's Orichalcum Imbued Inscription
 		provisioner: {id: 29, color: "#2c9c4b", conversion: [1, 15350], isappraised: true, ishidden: true}, // Rampager's Krait Morning Star
 		dungeon_ac: {id: 5, color: "#73c7ee", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
@@ -243,7 +245,7 @@ var GW2T_CURRENCY_DATA = {
 		dungeon_arah: {id: 6, color: "#aab084", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
 		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000], isappraised: true, isbound: true}, // Quiver of a Thousand Arrows
 		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000], isappraised: true, isbound: true}, // Quiver of a Thousand Arrows
-		raid_ft: {id: 28, color: "#27454a", conversion: [1000, 77310, 200000], isliquid: true}, // Zojja Doublet
+		raid_ft: {id: 28, color: "#27454a", conversion: [1000, 77310, 200000], isliquid: true}, // Ghostly Infusion
 		map_dt: {id: 25, color: "#eeebba", conversion: 0},
 		map_sw: {id: 27, color: "#ebd1a1", conversion: 0},
 		map_vb: {id: 19, color: "#cecea0", conversion: 0},
