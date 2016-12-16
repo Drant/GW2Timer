@@ -1199,7 +1199,7 @@ DonationDrive: {
 	name_es: "Recogida de donativos",
 	name_fr: "Pulsion généreuse",
 	category: "festivals",
-	color: "white",
+	color: "palegreen",
 	view: "divinity",
 	wiki: "http://wiki.guildwars2.com/wiki/Wintersday_2015",
 	credit: "https://www.reddit.com/r/Guildwars2/comments/3wzgt1/orphans_map_divinitys_reach/",
