@@ -6465,15 +6465,27 @@ Z = {
 	{
 		var categorizeItem = function(pItem)
 		{
-			if (pItem.type === "Weapon" || pItem.type === "Trinket")
+			var name = pItem.name.toLowerCase();
+			if (pItem.type === "Container" && name.indexOf("recipe") === -1)
+			{
+				if (name.indexOf("weapon") !== -1)
+				{
+					return "ContainerWeapon";
+				}
+				if (name.indexOf("armor") !== -1)
+				{
+					return "ContainerArmor";
+				}
+			}
+			else if (pItem.type === "Weapon" || pItem.type === "Trinket")
 			{
 				return pItem.details.type;
 			}
-			if (pItem.type === "Armor")
+			else if (pItem.type === "Armor")
 			{
 				return pItem.details.weight_class + pItem.details.type;
 			}
-			if (pItem.type === "Back")
+			else if (pItem.type === "Back")
 			{
 				return pItem.type;
 			}
@@ -6492,12 +6504,9 @@ Z = {
 				type = item.type;
 				if (item.rarity === "Ascended")
 				{
-					if (categorizeItem(item) || type === "Container")
+					if (categorizeItem(item))
 					{
-						if (item.name.indexOf("Recipe") === -1)
-						{
-							ascendedids.push(item.id);
-						}
+						ascendedids.push(item.id);
 					}
 				}
 			}
@@ -6808,7 +6817,7 @@ Z = {
 	 */
 	collateMuseum: function(pIDs)
 	{
-		var datestr = ((new Date()).toISOString()).split("T")[0];
+		var datestr = (((new Date()).toISOString()).split("T")[0]).split("-");
 		var timestamp = datestr[0] + "-" + datestr[1];
 		U.getScript(U.URL_DATA.Museum, function()
 		{

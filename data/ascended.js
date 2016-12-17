@@ -937,6 +937,7 @@ Ring: [
 	{i: 79460, n: "Rurik's Engagement Ring", p: {craft: true}},
 	{i: 79477, n: "Rurik's Engagement Ring", p: {craft: true}},
 	{i: 79587, n: "Rurik's Engagement Ring", p: {craft: true}},
+	{i: 79982, n: "Mist Band (Infused)", p: {craft: true}},
 	{i: 80058, n: "Mist Band (Infused)", p: {craft: true}}
 ],
 Accessory: [
@@ -1067,7 +1068,8 @@ Amulet: [
 	{i: 74695, n: "Whisper's Secret", p: {achievement: 0}},
 	{i: 67898, n: "Wynne's Locket", p: {laurel: 20}},
 	{i: 79269, n: "Blood Ruby Pendant", p: {map_bs: 125}},
-	{i: 79980, n: "Mist Pendant", p: {pvp: true}}
+	{i: 79980, n: "Mist Pendant", p: {pvp: true}},
+	{i: 79993, n: "Mist Pendant", p: {pvp: true}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1105,7 +1107,8 @@ LightHelm: [
 	{i: 78955, n: "Healer's Keep Construct Mask", p: {coin: 900000}},
 	{i: 78985, n: "Defender's Keep Construct Mask", p: {coin: 900000}},
 	{i: 79000, n: "Malicious Keep Construct Mask", p: {coin: 900000}},
-	{i: 67141, n: "Ardent Glorious Crown", p: {coin: 900000}}
+	{i: 67141, n: "Ardent Glorious Crown", p: {coin: 900000}},
+	{i: 79989, n: "Ardent Glorious Crown", p: {coin: 900000}}
 ],
 LightShoulders: [
 	{i: 48101, n: "Ahamid's Epaulets", p: {coin: 900000}},
@@ -1181,7 +1184,8 @@ LightCoat: [
 	{i: 77325, n: "Sabetha's Defender Doublet", p: {coin: 1200000}},
 	{i: 77391, n: "Sabetha's Healer Doublet", p: {coin: 1200000}},
 	{i: 77395, n: "Sabetha's Malicious Doublet", p: {coin: 1200000}},
-	{i: 78876, n: "Experimental Envoy Vestments", p: {coin: 1200000}}
+	{i: 78876, n: "Experimental Envoy Vestments", p: {coin: 1200000}},
+	{i: 80027, n: "Ardent Glorious Raiment", p: {coin: 1200000}}
 ],
 LightGloves: [
 	{i: 48098, n: "Ahamid's Wristguards", p: {coin: 900000}},
@@ -1411,7 +1415,8 @@ MediumCoat: [
 	{i: 77409, n: "Sabetha's Healer Guise", p: {coin: 1200000}},
 	{i: 77306, n: "Sabetha's Malicious Guise", p: {coin: 1200000}},
 	{i: 78800, n: "Experimental Envoy Jerkin", p: {coin: 1200000}},
-	{i: 67115, n: "Ardent Glorious Brigandine", p: {coin: 1200000}}
+	{i: 67115, n: "Ardent Glorious Brigandine", p: {coin: 1200000}},
+	{i: 80001, n: "Ardent Glorious Brigandine", p: {coin: 1200000}}
 ],
 MediumGloves: [
 	{i: 48104, n: "Ahamid's Grips", p: {coin: 900000}},
@@ -1642,7 +1647,8 @@ HeavyCoat: [
 	{i: 77294, n: "Sabetha's Healer Breastplate", p: {coin: 1200000}},
 	{i: 77295, n: "Sabetha's Malicious Breastplate", p: {coin: 1200000}},
 	{i: 78923, n: "Experimental Envoy Breastplate", p: {coin: 1200000}},
-	{i: 67143, n: "Ardent Glorious Breastplate", p: {coin: 1200000}}
+	{i: 67143, n: "Ardent Glorious Breastplate", p: {coin: 1200000}},
+	{i: 80016, n: "Ardent Glorious Breastplate", p: {coin: 1200000}}
 ],
 HeavyGloves: [
 	{i: 48092, n: "Ahamid's Warfists", p: {coin: 900000}},
@@ -1718,7 +1724,8 @@ HeavyLeggings: [
 	{i: 77304, n: "Multifarious Healer Tassets", p: {coin: 1100000}},
 	{i: 77383, n: "Multifarious Malicious Tassets", p: {coin: 1100000}},
 	{i: 78858, n: "Experimental Envoy Tassets", p: {coin: 1100000}},
-	{i: 67146, n: "Ardent Glorious Legplates", p: {coin: 1100000}}
+	{i: 67146, n: "Ardent Glorious Legplates", p: {coin: 1100000}},
+	{i: 79974, n: "Ardent Glorious Legplates", p: {coin: 1100000}}
 ],
 HeavyBoots: [
 	{i: 48090, n: "Ahamid's Greaves", p: {coin: 900000}},

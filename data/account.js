@@ -181,11 +181,11 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 22, payment: "map_ab", name_en: "Lump of Aurillium", name_de: "Aurilliumklumpen", name_es: "Trozo de aurilio", name_fr: "Bloc d'aurillium", name_zh: "块状赤金元素" },
 			{ id: 20, payment: "map_td", name_en: "Ley Line Crystal", name_de: "Ley-Linien-Kristall", name_es: "Cristal de línea ley", name_fr: "Cristal des lignes de force", name_zh: "魔径水晶" },
 			{ id: 32, coefficient: 0.1, payment: "magic", name_en: "Unbound Magic", name_de: "Entfesselte Magie", name_es: "Magia liberada", name_fr: "Magie déliée", name_zh: "未受约束的魔法" },
-			{ id: 15, coefficient: 0.1, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "荣誉徽章" },
+			{ id: 15, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "荣誉徽章" },
 			{ id: 31, payment: "proof", name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄证明" },
-			{ id: 26, name_en: "WvW Tournament Claim Ticket", name_de: "WvW-Turnier-Ticket", name_es: "Tique de recogida de torneo WvW", name_fr: "Billet de retrait de tournoi McM", name_zh: "世界之战锦标赛兑换券" },
-			{ id: 30, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP联赛兑换券" },
-			{ id: 33, payment: "glory", name_en: "Ascended Shards of Glory", name_de: "Aufgestiegene Scherben des Ruhms", name_es: "Esquirlas de gloria ascendidas", name_fr: "Éclats de gloire élevés", name_zh: "升华荣誉碎片" }
+			{ id: 26, coefficient: 10, name_en: "WvW Tournament Claim Ticket", name_de: "WvW-Turnier-Ticket", name_es: "Tique de recogida de torneo WvW", name_fr: "Billet de retrait de tournoi McM", name_zh: "世界之战锦标赛兑换券" },
+			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP联赛兑换券" },
+			{ id: 33, coefficient: 10, payment: "glory", name_en: "Ascended Shards of Glory", name_de: "Aufgestiegene Scherben des Ruhms", name_es: "Esquirlas de gloria ascendidas", name_fr: "Éclats de gloire élevés", name_zh: "升华荣誉碎片" }
 		]
 	},
 	AuditWallet: {}, // Will contain a flattened version of the wallet object

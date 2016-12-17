@@ -1201,7 +1201,7 @@ DonationDrive: {
 	category: "festivals",
 	color: "palegreen",
 	view: "divinity",
-	wiki: "http://wiki.guildwars2.com/wiki/Wintersday_2015",
+	wiki: "https://wiki.guildwars2.com/wiki/Orphan",
 	credit: "https://www.reddit.com/r/Guildwars2/comments/3wzgt1/orphans_map_divinitys_reach/",
 	needles: [
 	{n: 1, c: [10897, 10824]},
