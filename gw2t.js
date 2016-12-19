@@ -4800,7 +4800,7 @@ Z = {
 			{
 				if (args[1])
 				{
-					Z.printAPI(args[1], args[2]);
+					Z.printAPI(args[1], args[2], args[3]);
 				}
 				else
 				{
@@ -4931,16 +4931,20 @@ Z = {
 	 * Prints a v2 API endpoint by querying each element in the array it
 	 * returned, or just the object.
 	 * @param string pString of API
-	 * @param int pLimit of array elements to print, optional.
-	 * @param string pQueryStr arguments for the API url, optional.
+	 * @param string pQueryStr arguments for the API url, or an array of IDs, optional.
 	 */
-	printAPI: function(pString, pQueryStr)
+	printAPI: function(pString, pQueryStr, pArray)
 	{
 		I.print("Gathering elements...");
 		var versionprefix = "v1";
 		var providedarray = null;
 		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
 		var url = U.URL_API.Prefix + pString;
+		try
+		{
+			providedarray = JSON.parse(pArray || pQueryStr);
+		}
+		catch (e) {}
 		
 		var printResult = function()
 		{
@@ -4989,7 +4993,11 @@ Z = {
 		}
 		
 		// Fetch if did not provide an array in the parameter
-		if ( ! providedarray)
+		if (providedarray && Array.isArray(providedarray))
+		{
+			iterateData(providedarray);
+		}
+		else
 		{
 			$.get(url + querystr, function(pData)
 			{
@@ -25220,11 +25228,12 @@ G = {
 				var fractal = T.Daily.Fractal;
 				var scaleA = T.DailyAssociation[(ach[0])]; // The daily scales are located in these API array indexes
 				var scaleB = T.DailyAssociation[(ach[1])];
+				var scaleC = T.DailyAssociation[(ach[ach.length - 1])];
 				var scalestr = "";
-				if (scaleA && scaleB)
+				if (scaleA && scaleB && scaleC)
 				{
 					scalestr = "<a class='dlyFractalScales' title='" + D.getObjectName(fractal.Scale) + "' "
-						+ U.convertExternalAnchor(D.getObjectURL(fractal)) + ">" + scaleA + " &amp; " + scaleB + "</a>";
+						+ U.convertExternalAnchor(D.getObjectURL(fractal)) + ">" + scaleA + " " + scaleB + " " + scaleC + "</a>";
 				}
 				
 				// Daily fractal islands
