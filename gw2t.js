@@ -4851,6 +4851,17 @@ Z = {
 			{
 				Z.printItemsAPI(args[1]);
 			}},
+			sortitems: {usage: "Sorts an array of item IDs by item type. <em>Parameters: arr_itemids</em>", f: function()
+			{
+				try
+				{
+					Q.sortItems(JSON.parse(args[1]), function(pItems, pIDs)
+					{
+						I.print(U.lineJSON(pIDs));
+					});
+				}
+				catch (e) {}
+			}},
 			events: {usage: "Prints the event names of the current zone, dynamic events option must be enabled.", f: function()
 			{
 				P.printZoneEvents();
@@ -4883,7 +4894,7 @@ Z = {
 			}},
 			collate: {usage: "Executes a function to update and categorize an unlockables record. <em>Parameters: str_section</em>", f: function()
 			{
-				Z.executeCollate(args[1]);
+				Z.executeCollate(args[1], args[2]);
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -5677,10 +5688,13 @@ Z = {
 				I.print("Items database of all languages updated.");
 				if (newitems && !wantrebuild)
 				{
-					Z.printRecordEntry(newitems, {
-						aItemIDsKey: "id"
+					Q.sortItems(newitemids, function(pSortedItems, pSortedIDs)
+					{
+						Z.printRecordEntry(pSortedItems, {
+							aItemIDsKey: "id"
+						});
+						Z.collateMuseum(pSortedIDs);
 					});
-					Z.collateMuseum(newitemids);
 				}
 				return;
 			}
@@ -5903,7 +5917,7 @@ Z = {
 	 * Executes a collate function.
 	 * @param string pName of the function.
 	 */
-	executeCollate: function(pName)
+	executeCollate: function(pName, pExtra)
 	{
 		var prefix = "collate", name;
 		var printFunctions = function()
@@ -5924,7 +5938,7 @@ Z = {
 			var functionname = prefix + U.toFirstUpperCase(pName);
 			if (Z[functionname])
 			{
-				(Z[functionname])();
+				(Z[functionname])(pExtra);
 			}
 			else
 			{
@@ -5974,7 +5988,7 @@ Z = {
 					item = sortabledb[ii];
 					db.push([item.i, item.n]);
 				}
-				var dbstr = U.compressToJS(db, false);
+				var dbstr = U.compressToJS(db);
 				Z.createFile(dbstr, "search_" + iLang + I.cJSON);
 			});
 		});
@@ -6827,18 +6841,23 @@ Z = {
 	{
 		var datestr = (((new Date()).toISOString()).split("T")[0]).split("-");
 		var timestamp = datestr[0] + "-" + datestr[1];
+		var ids;
 		U.getScript(U.URL_DATA.Museum, function()
 		{
 			var record = U.getRecordData("museum");
 			if (record[timestamp])
 			{
-				record[timestamp] = U.getUnion(record[timestamp], pIDs);
+				ids = U.getUnion(record[timestamp], pIDs);
 			}
 			else
 			{
-				record[timestamp] = pIDs;
+				ids = pIDs;
 			}
-			Z.printUnlockables(record, true);
+			Q.sortItems(ids, function(pSortedItems, pSortedIDs)
+			{
+				record[timestamp] = pSortedIDs;
+				Z.printUnlockables(record, true);
+			});
 		});
 	},
 	
@@ -10155,6 +10174,7 @@ V = {
 	 */
 	createHeroMenu: function()
 	{
+		$("#accDish_Hero").empty();
 		var dishmenu = A.getDishMenu("Hero");
 		var container = $("<div class='eqpSelectContainer'></div>").appendTo(dishmenu);
 		A.Data.Characters.forEach(function(iChar)
@@ -14039,9 +14059,12 @@ B = {
 							},
 							aBind: function(pSlot, pItem)
 							{
-								pSlot.click(function()
+								pSlot.click(function(pEvent)
 								{
-									E.printListings(pItem.id);
+									if (pEvent.which === I.ClickEnum.Left)
+									{
+										E.printListings(pItem.id);
+									}
 								});
 							}
 						});
@@ -14231,6 +14254,23 @@ Q = {
 		MiniPet: "MiniPet",
 		Trophy: "Trophy"
 	},
+	ItemRank:
+	{
+		Gathering: "A",
+		Tool: "B",
+		Gizmo: "C",
+		Bag: "D",
+		Back: "E",
+		Armor: "F",
+		Weapon: "G",
+		Trinket: "H",
+		UpgradeComponent: "I",
+		Consumable: "J",
+		Container: "K",
+		CraftingMaterial: "L",
+		MiniPet: "M",
+		Trophy: "N"
+	},
 	RarityEnum: // Corresponds to API names for rarity levels
 	{
 		Junk: "Junk",
@@ -14241,6 +14281,61 @@ Q = {
 		Exotic: "Exotic",
 		Ascended: "Ascended",
 		Legendary: "Legendary"
+	},
+	RarityRank:
+	{
+		Junk: "A",
+		Basic: "B",
+		Fine: "C",
+		Masterwork: "D",
+		Rare: "E",
+		Exotic: "F",
+		Ascended: "G",
+		Legendary: "H"
+	},
+	WeightRank:
+	{
+		Light: "A",
+		Medium: "B",
+		Heavy: "C"
+	},
+	ArmorRank:
+	{
+		HelmAquatic: "A",
+		Helm: "B",
+		Shoulders: "C",
+		Coat: "D",
+		Gloves: "E",
+		Leggings: "F",
+		Boots: "G"
+	},
+	WeaponRank:
+	{
+		Axe: "A",
+		Dagger: "B",
+		Mace: "C",
+		Pistol: "D",
+		Scepter: "E",
+		Sword: "F",
+		Focus: "G",
+		Shield: "H",
+		Torch: "I",
+		Warhorn: "J",
+		Greatsword: "K",
+		Hammer: "L",
+		LongBow: "M",
+		Rifle: "N",
+		ShortBow: "O",
+		Staff: "P",
+		Harpoon: "Q",
+		Speargun: "R",
+		Trident: "S"
+	},
+	TrinketRank:
+	{
+		Amulet: "A",
+		Accessory: "B",
+		Ring: "C"
 	},
 	RunePieces:
 	{
@@ -14422,12 +14517,12 @@ Q = {
 	sumItemAttribute: function(pAttrObj, pSettings)
 	{
 		var Settings = pSettings || {};
+		var det, attrstr, points, keyextracted, keyproper;
 		// This object translates the current language extracted attribute name to the proper key name
 		var assocobj = A.Attribute["KeyDescription_" + D.getFullySupportedLanguage()];
 		// Reuseable function to parse array of attribute strings which are language dependent
 		var sumAttributeArray = function(pArray)
 		{
-			var attrstr, points, keyextracted, keyproper;
 			var length = pArray.length;
 			var runepieces = 0;
 			// Special case if summing for a rune
@@ -14474,8 +14569,8 @@ Q = {
 		var item = Settings.aItem;
 		if (item && item.details)
 		{
-			var det = item.details;
-
+			det = item.details;
+			
 			// Non-rune items
 			if (det.infix_upgrade && det.infix_upgrade.attributes)
 			{
@@ -14796,7 +14891,7 @@ Q = {
 	getItems: function(pItemIDs, pCallback)
 	{
 		// Check for items already cached
-		var arr = U.getUnique(pItemIDs);
+		var arr = [];
 		pItemIDs.forEach(function(iID)
 		{
 			if (Q.Box[iID] === undefined)
@@ -14804,6 +14899,7 @@ Q = {
 				arr.push(iID);
 			}
 		});
+		arr = U.getUnique(pItemIDs);
 		// Fetch if any uncached
 		U.fetchAPI(U.URL_API.ItemDetail, arr, {
 			aWantCache: true,
@@ -14832,6 +14928,74 @@ Q = {
 			{
 				pCallback();
 			});
+		});
+	},
+	
+	/*
+	 * Sorts an array of item IDs by item type, subtype, and other properties.
+	 * @param intarray pItemIDs
+	 * @param function pCallback with sorted items and IDs.
+	 */
+	sortItems: function(pItemIDs, pCallback)
+	{
+		var categorizeItem = function(pItem)
+		{
+			var itemrank = Q.ItemRank[pItem.type] || "0";
+			var name = pItem.name;
+			var type = pItem.type;
+			var subtype = (pItem.details && pItem.details.type) ? pItem.details.type : "";
+			var rarity = pItem.rarity;
+			var rarityrank = Q.RarityRank[rarity];
+			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
+			var midstr = "?" + subtype;
+			if (type === "Armor")
+			{
+				midstr = Q.WeightRank[pItem.details.weight_class] + "_" + Q.ArmorRank[subtype];
+			}
+			else if (type === "Weapon")
+			{
+				midstr = Q.WeaponRank[subtype];
+			}
+			else if (type === "Trinket")
+			{
+				midstr = Q.TrinketRank[subtype];
+			}
+			else if (desc.indexOf("decoration") !== -1)
+			{
+				midstr = "Decoration";
+			}
+			else if (desc.indexOf("recipe") !== -1)
+			{
+				midstr = "Recipe";
+			}
+
+			return itemrank + "_" + midstr + "_" + rarityrank + "_" + U.stripToAlphanumeric(name);
+		};
+		
+		Q.getItems(pItemIDs, function()
+		{
+			var items = [], id, item, retitems = [], retids = [];
+			// Create an array of objects for the sort function
+			for (var i = 0; i < pItemIDs.length; i++)
+			{
+				id = pItemIDs[i];
+				if (Q.Box[id])
+				{
+					item = Q.Box[id].oItem;
+					items.push({
+						oItem: item,
+						oType: categorizeItem(item)
+					});
+				}
+			}
+			// Sort then return as plain array of IDs
+			U.sortObjects(items, {aKeyName: "oType"});
+			items.forEach(function(iObject)
+			{
+				retitems.push(iObject.oItem);
+				retids.push(iObject.oItem.id);
+			});
+			pCallback(retitems, retids);
 		});
 	},
 	
@@ -14983,6 +15147,10 @@ Q = {
 				// Armors, weapons, trinkets
 				if (isequipment)
 				{
+					if (det.infix_upgrade.buff)
+					{
+						attrstr += U.escapeHTML(det.infix_upgrade.buff.description) + "<br />";
+					}
 					attr.forEach(function(iStats)
 					{
 						attrstr += "+" + parseInt(iStats.modifier) + " " + Q.getAttributeTranslation(iStats.attribute) + "<br />";
@@ -18351,8 +18519,8 @@ D = {
 		s_Gloves: {en: "Hand Armor", de: "Hand-Rüstung", es: "Armadura de mano", fr: "Armure : Gants"},
 		s_Leggings: {en: "Leg Armor", de: "Bein-Rüstung", es: "Armadura de pierna", fr: "Armure : Jambières"},
 		s_Boots: {en: "Foot Armor", de: "Fuß-Rüstung", es: "Armadura de pie", fr: "Armure : Bottes"},
-		s_Accessory: {en: "Accessory", de: "Accessoire", es: "Accesorio", fr: "Accessoire"},
 		s_Amulet: {en: "Amulet", de: "Amulett", es: "Amuleto", fr: "Amulette"},
+		s_Accessory: {en: "Accessory", de: "Accessoire", es: "Accesorio", fr: "Accessoire"},
 		s_Ring: {en: "Ring", de: "Ring", es: "Anillo", fr: "Anneau"},
 		// Item Tooltip
 		s_Defense: {en: "Defense", de: "Verteidigung", es: "Defensa", fr: "Défense"},

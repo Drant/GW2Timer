@@ -1261,7 +1261,8 @@ LightLeggings: [
 	{i: 77308, n: "Multifarious Healer Breeches", p: {coin: 1100000}},
 	{i: 77426, n: "Multifarious Malicious Breeches", p: {coin: 1100000}},
 	{i: 78862, n: "Experimental Envoy Pants", p: {coin: 1100000}},
-	{i: 67151, n: "Ardent Glorious Leggings", p: {coin: 1100000}}
+	{i: 67151, n: "Ardent Glorious Leggings", p: {coin: 1100000}},
+	{i: 80038, n: "Ardent Glorious Leggings", p: {coin: 1100000}}
 ],
 LightBoots: [
 	{i: 48096, n: "Ahamid's Footwear", p: {coin: 1000000}},
