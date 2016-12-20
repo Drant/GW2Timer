@@ -5826,7 +5826,7 @@ Z = {
 			else
 			{
 				// Fetch new entries
-				Z.scrapeAPIArray(endpoint, filteredids, {aCallback: function(pData)
+				U.fetchAPI(U.URL_API.Prefix + endpoint, filteredids, {aCallback: function(pData)
 				{
 					pCallback({
 						oRecord: record,
@@ -5961,6 +5961,7 @@ Z = {
 		I.print("Loading items database...");
 		Z.loadItemsDatabase(function()
 		{
+			I.print("Generating language search files...");
 			Z.DatabaseLanguages.forEach(function(iLang)
 			{
 				var db = [];
@@ -6583,24 +6584,25 @@ Z = {
 			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
 			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon"
 		];
-		var record = {}, item, entry;
+		var db, record = {}, item, entry, entries;
 		var sheets = {};
 		var sheetstradeable = {};
-		// Construct categories to insert the recipes orderly
-		disciplines.forEach(function(iDisc)
+		var doCollate = function(pReturn)
 		{
-			types.forEach(function(iType)
+			record = pReturn.oRecord;
+			entries = pReturn.oEntries;
+			// Construct categories to insert the recipes orderly
+			disciplines.forEach(function(iDisc)
 			{
-				record[iDisc + "_" + iType] = [];
+				types.forEach(function(iType)
+				{
+					record[iDisc + "_" + iType] = [];
+				});
 			});
-		});
-		
-		Z.getItemsDatabase(function(pDatabase)
-		{
 			// Create a list of recipe sheets
-			for (var i in pDatabase)
+			for (var i in db)
 			{
-				item = pDatabase[i];
+				item = db[i];
 				if (item.details && item.details.unlock_type === "CraftingRecipe")
 				{
 					if (Q.isTradeable(item))
@@ -6610,59 +6612,67 @@ Z = {
 					sheets[(item.details.recipe_id)] = item.id;
 				}
 			};
-			
-			$.getJSON("test/recipes.json", function(pData)
+
+			var recipe, catname, discipline, ingredients, type, itemid;
+			for (var i in entries)
 			{
-				var recipe, catname, discipline, ingredients, type, itemid;
-				for (var i in pData)
+				recipe = entries[i];
+				type = recipe.type;
+				itemid = recipe.output_item_id;
+				for (var ii = 0; ii < recipe.disciplines.length; ii++)
 				{
-					recipe = pData[i];
-					type = recipe.type;
-					itemid = recipe.output_item_id;
-					for (var ii = 0; ii < recipe.disciplines.length; ii++)
+					discipline = recipe.disciplines[ii];
+					catname = discipline + "_" + recipe.type;
+					// Merge some smaller categories into a bigger category
+					if (recipe.type === "RefinementObsidian" || recipe.type === "RefinementEctoplasm")
 					{
-						discipline = recipe.disciplines[ii];
-						catname = discipline + "_" + recipe.type;
-						// Merge some smaller categories into a bigger category
-						if (recipe.type === "RefinementObsidian" || recipe.type === "RefinementEctoplasm")
+						catname = discipline + "_" + "Refinement";
+					}
+					if (db[itemid] && record[catname])
+					{
+						ingredients = [];
+						recipe.ingredients.forEach(function(iIngredient)
 						{
-							catname = discipline + "_" + "Refinement";
-						}
-						if (pDatabase[itemid] && record[catname])
+							ingredients.push([iIngredient.item_id, iIngredient.count]);
+						});
+						entry = {
+							u: recipe.id,
+							i: itemid,
+							n: db[itemid].name,
+							r: ingredients
+						};
+						if (sheets[recipe.id])
 						{
-							ingredients = [];
-							recipe.ingredients.forEach(function(iIngredient)
-							{
-								ingredients.push([iIngredient.item_id, iIngredient.count]);
-							});
-							entry = {
-								u: recipe.id,
-								i: itemid,
-								n: pDatabase[itemid].name,
-								r: ingredients
-							};
-							if (sheets[recipe.id])
-							{
-								entry.s = sheets[recipe.id];
-							}
-							if (sheetstradeable[recipe.id])
-							{
-								entry.t = sheetstradeable[recipe.id];
-							}
-							record[catname].push(entry);
+							entry.s = sheets[recipe.id];
 						}
+						if (sheetstradeable[recipe.id])
+						{
+							entry.t = sheetstradeable[recipe.id];
+						}
+						record[catname].push(entry);
 					}
 				}
-				// Discard the empty array categories
-				var newrecord = {};
-				for (var i in record)
+			}
+			// Discard the empty array categories
+			var newrecord = {};
+			for (var i in record)
+			{
+				if (record[i].length)
 				{
-					if (record[i].length)
-					{
-						newrecord[i] = record[i];
-					}
+					newrecord[i] = record[i];
 				}
-				Z.printUnlockables(newrecord);
+			}
+			Z.printUnlockables(newrecord);
+		};
+		
+		I.print("Loading items database...");
+		Z.getItemsDatabase(function(pDatabase)
+		{
+			I.print("Looking for difference...");
+			Z.getNewAPIEntries("Recipes", "Recipes", function(pReturn)
+			{
+				db = pDatabase;
+				doCollate(pReturn);
 			});
 		});
 	},
@@ -24594,17 +24604,22 @@ P = {
 			});
 			U.sortObjects(arr, {aKeyName: "oSortableCoord"});
 			// Print the coordinates and event names
+			var console = $("#cslContent");
 			arr.forEach(function(iLayer)
 			{
 				var obj = iLayer.options;
-				I.print("<input type='text' class='cssInputText' value='" + obj.eventid + "' /> "
+				$("<div class='mapEventListEntry'><input type='text' class='cssInputText' value='" + obj.eventid + "' /> "
 					+ "<input type='text' class='cssInputText' value='[" + obj.coord + "]' /> "
 					+ "<a" + U.convertExternalAnchor(C.getEventWiki(obj.wiki)) + ">[W]</a> "
-					+ "<dfn class='cssGameTitle' data-coord='" + obj.coord + "'>" + obj.wiki + "</dfn>"
-				);
+					+ "<dfn class='cssGameTitle' data-coord='" + obj.coord + "'>" + obj.wiki + "</dfn></div>")
+				.appendTo(console).data("keywords", obj.wiki);
 			});
+			I.print("");
 			M.bindMapLinks("#itemConsole");
 			I.bindConsoleInput();
+			// Create search bar
+			var search = $("<div class='cntSearchContainer'></div>").prependTo(console);
+			I.createSearchBar(search, ".mapEventListEntry");
 		}
 		else
 		{

@@ -673,7 +673,7 @@ html, body,
 	animation: aniDisplayFadeIn 0.2s;
 }
 
-.cntComposition input[type="text"], .cntComposition textarea {
+.cntComposition input[type="text"], .cntComposition textarea, input[type="text"].cntSearch {
 	width: auto;
 	margin: 0;
 	padding: 2px;

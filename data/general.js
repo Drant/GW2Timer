@@ -1531,8 +1531,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-12-13T16:00:00Z"),
-	Finish: new Date("2016-12-20T16:00:00Z"),
+	Start: new Date("2016-12-20T16:00:00Z"),
+	Finish: new Date("2016-12-27T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1553,16 +1553,16 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Wintersday Wreath Backpack",
-		id: "77494",
-		price: 500,
-		discount: [[1, 125], [5, 500], [25, 2500]],
+		name: "Gifts Mail Delivery",
+		id: "68104",
+		price: 280,
+		discount: 350,
 		col: 0
 	},
 	{
-		name: "Fire Quiver Backpack",
-		id: "79771",
-		price: 400,
+		name: "Ice Encasement Outfit",
+		id: "80049",
+		price: 700,
 		discount: null,
 		col: 0
 	},
@@ -1571,34 +1571,13 @@ Sale: {
 		id: "65202",
 		price: 150,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Wintersday Earmuffs",
 		id: "65200",
 		price: 25,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Winter Solstice Appearance Pack",
-		id: "http://i.imgur.com/92cVON9.png",
-		price: 2000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Crystalline Dragon Wings Backpack",
-		id: "79707",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Winter Chimes Dye Kit",
-		id: "77470",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]

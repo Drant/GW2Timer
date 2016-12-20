@@ -2528,7 +2528,8 @@ Weapon_Sword: [
 	{u: 6984, i: 79644, n: "Gargoyle Sword", t: [79644]},
 	{u: 7011, i: 79815, n: "Caustic Nightmare Thornblade", p: {coin: -1}},
 	{u: 7030, i: 79840, n: "Nightmare Thornblade", p: {coin: -1}},
-	{u: 7049, i: 80062, n: "Frostforged Sword", t: [80062]}
+	{u: 7049, i: 80062, n: "Frostforged Sword", t: [80062]},
+	{u: 7037, i: 80040, n: "Wrapped Sword", p: {achievement: 0}}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2955,7 +2956,8 @@ Weapon_Scepter: [
 	{u: 6940, i: 79365, n: "Peacock Scepter", p: {gem: 600}},
 	{u: 6945, i: 79461, n: "Carnival Scepter", p: {coin: 1000000}},
 	{u: 6993, i: 79682, n: "Gargoyle Scepter", t: [79682]},
-	{u: 7053, i: 79976, n: "Frostforged Scepter", t: [79976]}
+	{u: 7053, i: 79976, n: "Frostforged Scepter", t: [79976]},
+	{u: 7063, i: 80057, n: "Wrapped Scepter", p: {achievement: 0}}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -3275,7 +3277,8 @@ Weapon_Shield: [
 	{u: 7026, i: 79894, n: "Loyalty", p: {craft: true}},
 	{u: 7035, i: 79836, n: "Friendship", p: {craft: true}},
 	{u: 7024, i: 79802, n: "Shooshadoo", p: {craft: true}},
-	{u: 7048, i: 79979, n: "Frostforged Shield", t: [79979]}
+	{u: 7048, i: 79979, n: "Frostforged Shield", t: [79979]},
+	{u: 7061, i: 79985, n: "Wrapped Shield", p: {achievement: 0}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3694,7 +3697,8 @@ Weapon_Greatsword: [
 	{u: 6950, i: 79389, n: "Bloodstone Greatsword", t: [79389]},
 	{u: 6918, i: 79480, n: "Carnival Greatsword", p: {coin: 1500000}},
 	{u: 6979, i: 79655, n: "Gargoyle Greatsword", t: [79655]},
-	{u: 7050, i: 80041, n: "Frostforged Greatsword", t: [80041]}
+	{u: 7050, i: 80041, n: "Frostforged Greatsword", t: [80041]},
+	{u: 7058, i: 80037, n: "Wrapped Greatsword", p: {achievement: 0}}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -4425,7 +4429,8 @@ Weapon_Staff: [
 	{u: 6939, i: 79539, n: "Carnival Staff", p: {coin: 1500000}},
 	{u: 6998, i: 79662, n: "Gargoyle Staff", t: [79662]},
 	{u: 6978, i: 79680, n: "Candelabra Staff", p: {gem: 0}},
-	{u: 7056, i: 80039, n: "Frostforged Staff", t: [80039]}
+	{u: 7056, i: 80039, n: "Frostforged Staff", t: [80039]},
+	{u: 7043, i: 80036, n: "Wrapped Staff", p: {achievement: 0}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},
