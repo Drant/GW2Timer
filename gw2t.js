@@ -5869,8 +5869,7 @@ Z = {
 	{
 		var Settings = pSettings || {};
 		var ithentry, entryobj, entrystr, entrystrs = [], itemidsproperty, itemids, itemid, name;
-		var icon, entryelm, itemselm, inputselm;
-		
+		var icon, entryelm, itemselm, inputselm, unlockid;
 		for (var i in pEntries)
 		{
 			ithentry = pEntries[i];
@@ -5879,7 +5878,8 @@ Z = {
 				+ "</span></div>").appendTo("#cslContent");
 			itemselm = $("<div></div>").appendTo(entryelm);
 			
-			itemidsproperty = ithentry[Settings.aItemIDsKey];
+			unlockid = ithentry["unlock_items"];
+			itemidsproperty = (unlockid) ? (unlockid || unlockid[0]) : ithentry[Settings.aItemIDsKey];
 			if (itemidsproperty)
 			{
 				itemids = (Array.isArray(itemidsproperty)) ? itemidsproperty : [itemidsproperty];
