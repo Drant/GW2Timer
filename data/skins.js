@@ -2526,8 +2526,8 @@ Weapon_Sword: [
 	{u: 6911, i: 79385, n: "Bloodstone Sword", t: [79385]},
 	{u: 6924, i: 79511, n: "Carnival Sword", p: {coin: 1000000}},
 	{u: 6984, i: 79644, n: "Gargoyle Sword", t: [79644]},
-	{u: 7011, i: 79815, n: "Caustic Nightmare Thornblade", p: {coin: -1}},
-	{u: 7030, i: 79840, n: "Nightmare Thornblade", p: {coin: -1}},
+	{u: 7030, i: 79840, n: "Nightmare Thornblade", p: {achievement: 0}},
+	{u: 7011, i: 79815, n: "Caustic Nightmare Thornblade", p: {matrix: 200}},
 	{u: 7049, i: 80062, n: "Frostforged Sword", t: [80062]},
 	{u: 7037, i: 80040, n: "Wrapped Sword", p: {achievement: 0}}
 ],
@@ -2673,8 +2673,8 @@ Weapon_Dagger: [
 	{u: 6906, i: 79386, n: "Dragon Kama Skin", p: {gem: 600}},
 	{u: 6948, i: 79474, n: "Carnival Dagger", p: {coin: 1000000}},
 	{u: 6987, i: 79685, n: "Gargoyle Dagger", t: [79685]},
-	{u: 7009, i: 79920, n: "Caustic Nightmare Anelace", p: {coin: -1}},
-	{u: 7016, i: 79724, n: "Nightmare Anelace", p: {coin: -1}},
+	{u: 7016, i: 79724, n: "Nightmare Anelace", p: {achievement: 0}},
+	{u: 7009, i: 79920, n: "Caustic Nightmare Anelace", p: {matrix: 200}},
 	{u: 7044, i: 80061, n: "Frostforged Dagger", t: [80061]}
 ],
 Weapon_Pistol: [
@@ -3115,8 +3115,8 @@ Weapon_Focus: [
 	{u: 6919, i: 79614, n: "Carnival Focus", p: {coin: 500000}},
 	{u: 6977, i: 79638, n: "Jailbroken", t: [79638]},
 	{u: 6995, i: 79687, n: "Gargoyle Focus", t: [79687]},
-	{u: 7019, i: 79767, n: "Caustic Nightmare Corsage", p: {coin: -1}},
-	{u: 7033, i: 79753, n: "Nightmare Corsage", p: {coin: -1}},
+	{u: 7033, i: 79753, n: "Nightmare Corsage", p: {achievement: 0}},
+	{u: 7019, i: 79767, n: "Caustic Nightmare Corsage", p: {matrix: 200}},
 	{u: 7054, i: 80021, n: "Frostforged Focus", t: [80021]}
 ],
 Weapon_Shield: [
@@ -3271,8 +3271,8 @@ Weapon_Shield: [
 	{u: 6935, i: 79360, n: "Amethyst Shield", p: {gem: 600}},
 	{u: 6949, i: 79517, n: "Carnival Shield", p: {coin: 500000}},
 	{u: 6982, i: 79681, n: "Gargoyle Shield", t: [79681]},
-	{u: 7015, i: 79891, n: "Nightmare Nettleguard", p: {coin: -1}},
-	{u: 7020, i: 79797, n: "Caustic Nightmare Nettleguard", p: {coin: -1}},
+	{u: 7015, i: 79891, n: "Nightmare Nettleguard", p: {achievement: 0}},
+	{u: 7020, i: 79797, n: "Caustic Nightmare Nettleguard", p: {matrix: 200}},
 	{u: 7022, i: 79900, n: "Trust", p: {craft: true}},
 	{u: 7026, i: 79894, n: "Loyalty", p: {craft: true}},
 	{u: 7035, i: 79836, n: "Friendship", p: {craft: true}},

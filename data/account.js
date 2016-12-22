@@ -230,6 +230,7 @@ var GW2T_CURRENCY_DATA = {
 		gem: {id: 4, color: "#66aaff", conversion: null}, // To be assigned by gem exchange
 		karma: {id: 2, color: "#ee55cc", conversion: [5250, 24295], isliquid: true}, // Vial of Powerful Blood
 		laurel: {id: 3, color: "#44dd44", conversion: [0.33, 24351], isliquid: true}, // Vicious Claw
+		//cob: {color: "#e99213", conversion: [1, 47909], isappraised: true}, // Candy Corn Cob
 		badge: {id: 15, color: "#8c7047", conversion: [30, 71473], isliquid: true}, // Badge of Tribute
 		proof: {id: 31, color: "#ffff53", conversion: [6, 21262], isliquid: true, ishidden: true}, // Superior Catapult Blueprints
 		glory: {id: 33, color: "#d675ef", conversion: [400, 48079], isappraised: true}, // Zojja Doublet
@@ -245,6 +246,7 @@ var GW2T_CURRENCY_DATA = {
 		dungeon_arah: {id: 6, color: "#aab084", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
 		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000], isappraised: true, isbound: true}, // Quiver of a Thousand Arrows
 		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000], isappraised: true, isbound: true}, // Quiver of a Thousand Arrows
+		//matrix: {color: "#8ce7ff", conversion: [1, 73248], isappraised: true}, // Stabilizing Matrix
 		raid_ft: {id: 28, color: "#27454a", conversion: [1000, 77310, 200000], isliquid: true}, // Ghostly Infusion
 		map_dt: {id: 25, color: "#eeebba", conversion: 0},
 		map_sw: {id: 27, color: "#ebd1a1", conversion: 0},

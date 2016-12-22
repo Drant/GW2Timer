@@ -11902,12 +11902,16 @@ V = {
 			B.generateUnlockables(bank, {
 				aRecord: U.getRecordData("Museum"),
 				aIsCollapsed: true,
-				aWantItems: true,
 				aWantSearchHighlight: false,
 				aWantDefaultHelp: false,
 				aHelpMessage: $("#accHelpMuseum").html()
 			});
 		});
+		// Open the first tab, leaving the rest collapsed
+		setTimeout(function()
+		{
+			dish.find(".bnkTabSeparator").first().trigger("click");
+		}, 1000);
 	},
 	
 	/*
@@ -12137,12 +12141,9 @@ B = {
 		
 		tabseparator.click(function(pEvent)
 		{
-			if (pEvent.which === I.ClickEnum.Left)
-			{
-				var state = tabslots.is(":visible");
-				I.toggleToggleIcon(tabtoggle, !state);
-				tabslots.slideToggle("fast");
-			}
+			var state = tabslots.is(":visible");
+			I.toggleToggleIcon(tabtoggle, !state);
+			tabslots.slideToggle("fast");
 		});
 		if (Settings.aIsCollapsed)
 		{
@@ -16306,6 +16307,7 @@ E = {
 		dungeon_coe: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_coe'></ins>"; },
 		fotm_relic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_relic'></ins>"; },
 		fotm_pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_pristine'></ins>"; },
+		matrix: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_matrix'></ins>"; },
 		raid_ft: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_raid_ft'></ins>"; },
 		map_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dt'></ins>"; },
 		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sw'></ins>"; },
