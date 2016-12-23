@@ -11911,7 +11911,7 @@ V = {
 		setTimeout(function()
 		{
 			dish.find(".bnkTabSeparator").first().trigger("click");
-		}, 1000);
+		}, 400);
 	},
 	
 	/*
@@ -15102,6 +15102,7 @@ Q = {
 		var type = item.type;
 		var subtype = "";
 		var det = item.details;
+		var buff = (det && det.infix_upgrade && det.infix_upgrade.buff) ? det.infix_upgrade.buff : null;
 		var isweapon = (type === "Weapon");
 		var isequipment = (isweapon || type === "Armor" || type === "Trinket" || type === "Back");
 		var isbackitem = (type === "Back");
@@ -15158,9 +15159,9 @@ Q = {
 				// Armors, weapons, trinkets
 				if (isequipment)
 				{
-					if (det.infix_upgrade.buff)
+					if (buff && buff.description.indexOf("\n") === -1) // Disallow multi-line buff descriptions
 					{
-						attrstr += U.escapeHTML(det.infix_upgrade.buff.description) + "<br />";
+						attrstr += U.escapeHTML(buff.description) + "<br />";
 					}
 					attr.forEach(function(iStats)
 					{
@@ -15168,7 +15169,7 @@ Q = {
 					});
 				}
 				// Sigils
-				else if (det.infix_upgrade.buff)
+				else if (buff)
 				{
 					attrstr += "<span class='itmBuff'>" + Q.formatItemDescription(item) + "</span>";
 					statsbrktop = "<br />";
