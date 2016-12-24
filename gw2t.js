@@ -14242,10 +14242,11 @@ B = {
 };
 Q = {
 /* =============================================================================
- * @@Quantify items, attributes, traits
+ * @@Quantify items, attributes, traits, and achievements
  * ========================================================================== */
 
 	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
+	Case: {}, // For achievements
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	SearchDatabase: null,
 	ItemEnum: // Corresponds to item details type property
@@ -15643,6 +15644,73 @@ Q = {
 		if (numfetched === numtofetch)
 		{
 			finalizeTooltip();
+		}
+	},
+	
+	/*
+	 * Lightweight preliminary function to check if the requested achievement.
+	 * @param object pAchievement details.
+	 * @param object pSettings.
+	 */
+	scanAchievement: function(pAchievement, pSettings)
+	{
+		var Settings = pSettings || {};
+		var box = Q.Case[pAchievement.id];
+		
+		if (box && box.oHTML)
+		{
+			if (Settings.aElement)
+			{
+				var elm = $(Settings.aElement);
+				elm.attr("title", box.oHTML);
+				I.qTip.init(elm);
+			}
+			// Execute callback if provided
+			if (Settings.aCallback)
+			{
+				Settings.aCallback(box);
+			}
+		}
+		else
+		{
+			Q.analyzeAchievement(pAchievement, pSettings);
+		}
+	},
+	
+	/*
+	 * Generates achievement tooltip HTML
+	 * @param object pAchievement details retrieved from API.
+	 * @objparam jqobject aElement to bind tooltip.
+	 * @objparam function aCallback what to do after the tooltip generation.
+	 */
+	analyzeAchievement: function(pAchievement, pSettings)
+	{
+		var Settings = pSettings || {};
+		var ach = pAchievement;
+		
+		var html = "<div class='itmTooltip'>"
+			+ "<aside class='itmName'><img class='itmIcon itmIconMain' src='" + ach.icon + "' />" + U.escapeHTML(ach.name) + "</aside>"
+			+ "<aside>" + ach.description + "</aside>"
+		+ "</div>";
+		// Bind tooltip if provided an element
+		if (Settings.aElement)
+		{
+			var elm = $(Settings.aElement);
+			elm.attr("title", html);
+			I.qTip.init(elm);
+		}
+		/*
+		 * This object is the result of the analysis, containing tooltip
+		 * information and additionally retrieved slotted items.
+		 */
+		var box = {
+			oAchievement: ach,
+			oHTML: html
+		};
+		Q.Box[ach.id] = box;
+		if (Settings.aCallback)
+		{
+			Settings.aCallback(box);
 		}
 	},
 	
@@ -30506,7 +30574,6 @@ T = {
 						break;
 					}
 				}
-				
 			}
 		}
 		

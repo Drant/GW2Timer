@@ -286,6 +286,9 @@ img {
 	font-family: Menomonia;
 	font-size: 18px;
 }
+.achName {
+	color: #ffeebb;
+}
 .itmIcon {
 	width: 40px; height: 40px;
 }
