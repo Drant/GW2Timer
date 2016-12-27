@@ -1531,8 +1531,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-12-20T16:00:00Z"),
-	Finish: new Date("2016-12-27T16:00:00Z"),
+	Start: new Date("2016-12-27T16:00:00Z"),
+	Finish: new Date("2017-01-03T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1553,10 +1553,10 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Gifts Mail Delivery",
-		id: "68104",
-		price: 280,
-		discount: 350,
+		name: "Mini Festive Aurene",
+		id: "http://i.imgur.com/gCsb0LZ.png",
+		price: 400,
+		discount: null,
 		col: 0
 	},
 	{
