@@ -10721,9 +10721,9 @@ V = {
 		{
 			return;
 		}
-		else if ( ! A.Data.Characters[0].equipment)
+		else if ( ! A.Data.Characters[0].bags)
 		{
-			A.printError(A.PermissionEnum.Builds);
+			A.printError(A.PermissionEnum.Inventories);
 			return;
 		}
 		
@@ -15160,7 +15160,7 @@ Q = {
 				// Armors, weapons, trinkets
 				if (isequipment)
 				{
-					if (buff && buff.description.indexOf("\n") === -1) // Disallow multi-line buff descriptions
+					if (buff && buff.description && buff.description.indexOf("\n") === -1) // Disallow multi-line buff descriptions
 					{
 						attrstr += U.escapeHTML(buff.description) + "<br />";
 					}
