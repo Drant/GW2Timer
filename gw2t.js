@@ -5867,8 +5867,19 @@ Z = {
 	 */
 	printRecordEntry: function(pEntries, pSettings)
 	{
+		I.print("");
+		if (pEntries.length)
+		{
+			I.print("New items added:");
+		}
+		else
+		{
+			I.print("No new items added. Record is up to date.");
+			return;
+		}
+		
 		var Settings = pSettings || {};
-		var ithentry, entryobj, entrystr, entrystrs = [], itemidsproperty, itemids, itemid, name;
+		var ithentry, entryobj, entrystr, blackliststr = "", entrystrs = [], itemidsproperty, itemids, itemid, name;
 		var icon, entryelm, itemselm, inputselm, unlockid;
 		for (var i in pEntries)
 		{
@@ -5902,6 +5913,8 @@ Z = {
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(entrystr);
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(itemid);
 					entrystrs.push(entrystr);
+					blackliststr += "&quot;" + ithentry.id + "&quot;" + ": " + "&quot;<a"
+						+ U.convertExternalAnchor(U.getWikiLinkDefault(name)) + "'>" + name + "</a>&quot;,<br />";
 				}
 			}
 			entryelm.find(".cssInputText").click(function()
@@ -5909,6 +5922,7 @@ Z = {
 				$(this).select();
 			});
 		}
+		I.print(blackliststr);
 		I.print(entrystrs.join("<br />"));
 		I.bindConsoleInput();
 	},
@@ -6096,20 +6110,10 @@ Z = {
 			}
 			// Final output
 			Z.printUnlockables(record);
-			I.print("<br />");
-			if (newskins)
-			{
-				I.print("New skins added:");
-				// Print the new skins and also items associated with that skin, for manually reassigning the "representative" item
-				Z.printRecordEntry(newskins, {
-					aItemDB: itemdb,
-					aItemIDsKey: "oAssocItems"
-				});
-			}
-			else
-			{
-				I.print("No new skins added. Skins database is up to date.");
-			}
+			Z.printRecordEntry(newskins, {
+				aItemDB: itemdb,
+				aItemIDsKey: "oAssocItems"
+			});
 		};
 		
 		// Find new API entries
@@ -6237,7 +6241,8 @@ Z = {
 	},
 	
 	/*
-	 * Reads the item database for collectionesque items.
+	 * Reads the item database for some collectionesque items. Other items such
+	 * as toys will have to be manually added.
 	 */
 	collateCatalog: function()
 	{
@@ -6248,17 +6253,43 @@ Z = {
 		{
 			var name = pItem.name.toLowerCase();
 			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
+			if (desc.indexOf("to transform") !== -1 || desc.indexOf("to become") !== -1)
+			{
+				if (pItem.type === "Gizmo")
+				{
+					return "TonicEndless";
+				}
+				if (pItem.type === "Consumable")
+				{
+					return "TonicConsumable";
+				}
+			}
 			if (pItem.type === "UpgradeComponent" && name.indexOf("infusion") !== -1)
 			{
 				return "Aura";
 			}
-			if (pItem.details && pItem.details.unlock_type === "GliderSkin")
-			{
-				return "Glider";
-			}
 			if (pItem.rarity === "Legendary" && pItem.type === "Weapon")
 			{
 				return "Legendary";
+			}
+			if (pItem.details && pItem.details.unlock_type)
+			{
+				var unlock = pItem.details.unlock_type;
+				if (unlock === "GliderSkin")
+				{
+					return "Glider";
+				}
+				else if (unlock === "Content" && name.indexOf("mail") !== -1)
+				{
+					return "Carrier";
+				}
+			}
+			if (pItem.type === "Consumable")
+			{
+				if (desc.indexOf("home") !== -1)
+				{
+					return "Node";
+				}
 			}
 			return null;
 		};
@@ -6270,6 +6301,7 @@ Z = {
 			U.getScript(U.getDataScriptURL(section), function()
 			{
 				var item, catname;
+				var newitems = [];
 				var record = U.getRecordData(section);
 				var assoc = A.flattenRecord(record);
 				var blacklist = U.getRecordBlacklist(section);
@@ -6285,6 +6317,7 @@ Z = {
 					// Add the item if matched
 					if (catname && assoc[item.id] === undefined)
 					{
+						newitems.push(item);
 						record[catname].push({
 							i: item.id,
 							n: item.name,
@@ -6293,6 +6326,9 @@ Z = {
 					}
 				}
 				Z.printUnlockables(record);
+				Z.printRecordEntry(newitems, {
+					aItemIDsKey: "id"
+				});
 			});
 		});
 	},
@@ -6519,7 +6555,6 @@ Z = {
 		Z.getItemsDatabase(function(pDatabase)
 		{
 			var item, name, type, category;
-			var blackliststr = "", entrystr = "";
 			// Compile a list of desired ascended items from the database
 			for (var i in pDatabase)
 			{
@@ -6536,14 +6571,11 @@ Z = {
 			// Filter against current list of ascendeds and print the new items
 			Z.getNewAPIEntries("ascended", ascendedids, function(pReturn)
 			{
+				var newitems = [];
 				for (var i in pReturn.oEntries)
 				{
 					item = pDatabase[(pReturn.oEntries[i])];
 					name = U.escapeHTML(item.name);
-					// Print out the list of new items for manual blacklisting or categorizing
-					blackliststr += "&quot;" + item.id + "&quot;" + ": " + "&quot;<a"
-						+ U.convertExternalAnchor(U.getWikiLinkDefault(name)) + "'>" + name + "</a>&quot;,<br />";
-					entrystr += "{i: " + item.id + ", n: &quot;" + name + "&quot;},<br />";
 					// Add the categorizable items to the record and output as file
 					category = categorizeItem(item);
 					if (category)
@@ -6554,11 +6586,12 @@ Z = {
 							p: {coin: -1}
 						});
 					}
+					newitems.push(item);
 				}
 				Z.printUnlockables(pReturn.oRecord);
-				I.print("");
-				I.print(blackliststr);
-				I.print(entrystr);
+				Z.printRecordEntry(newitems, {
+					aItemIDsKey: "id"
+				});
 			});
 		});
 	},
