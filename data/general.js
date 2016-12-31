@@ -1414,7 +1414,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a> for <a href='http://forum.renaka.com/topic/5546166/'>GPS app</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
+	pve: "Character Slots and Bank Tabs are 20% off in the gem store until Tuesday.<br /><a href='http://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a> for <a href='http://forum.renaka.com/topic/5546166/'>GPS app</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
 	wvw: "",
 	Start: new Date("2016-12-13T16:00:00Z"),
 	Finish: new Date("2017-01-10T16:00:00Z"),
@@ -1553,18 +1553,60 @@ Sale: {
 	],
 	Items: [
 	{
+		name: "Character Slot Expansion",
+		id: "http://i.imgur.com/bYMfxCX.png",
+		price: 640,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Bank Tab Expansion",
+		id: "19995",
+		price: 480,
+		discount: 600,
+		col: 0
+	},
+	{
+		name: "Captain's Airship Pass",
+		id: "50104",
+		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Lava Lounge Pass",
+		id: "79500",
+		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Noble's Folly Pass",
+		id: "79140",
+		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Royal Terrace Pass",
+		id: "49149",
+		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Mini Festive Aurene",
 		id: "http://i.imgur.com/gCsb0LZ.png",
 		price: 400,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Ice Encasement Outfit",
 		id: "80049",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Festive Hat",
