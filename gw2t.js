@@ -4639,8 +4639,14 @@ U = {
 		{
 			I.write("Invalid chatlink to decode.");
 		}
-
-		return (pWantType === undefined) ? id : id + " (" + type + ")";
+		
+		if (pWantType)
+		{
+			var idtype = id + " (" + type + ")";
+			I.print("<input class='cssInputText' type='text' value='" + id + "'></input>&nbsp;<span>" + idtype + "</span>");
+			I.bindConsoleInput();
+		}
+		return id;
 	}
 };
 Z = {
@@ -4703,10 +4709,19 @@ Z = {
 			// If input starts with a console command
 			Z.parseCommand(pString, pMapObject);
 		}
+		else if (pString.indexOf(I.cChatencodedPrefix) !== -1)
+		{
+			try
+			{
+				var chatcode = decodeURIComponent(decodeURIComponent(pString));
+				U.getGameIDFromChatlink(chatcode.substring(chatcode.indexOf("["), chatcode.indexOf("]")), true);
+			}
+			catch (e) {}
+		}
 		else if (pString.indexOf(I.cChatcodePrefix) === 0)
 		{
 			// If input is a chatcode
-			I.print(U.getGameIDFromChatlink(pString, true));
+			U.getGameIDFromChatlink(pString, true);
 		}
 		else if (pMapObject.parsePersonalPath(pString) === false)
 		{
@@ -33030,6 +33045,7 @@ I = {
 	cTXT: ".txt", // Plain text and test files
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cChatcodePrefix: "[&",
+	cChatencodedPrefix: "%255B%2526",
 	cChatcodeSuffix: "]",
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,

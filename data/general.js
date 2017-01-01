@@ -1661,7 +1661,7 @@ Vendor:
 	Prices: {"43799":12600, "49737":12600, "43798":12600, "49734": 12600, "49738":50400, "49739":50400, "49740":50400},
 	PriceDefault: 25200,
 	// Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
-	Offers: [44713, 49773, 49772, 43833, 49735, 49774],
+	Offers: [43799, 43820, 49755, 73199, 48908, 43798],
 	OffersAssoc: {Mehem: 0, Fox: 1, Derwena: 2, Yana: 3, Katelyn: 4, Verma: 5}
 }
 };
