@@ -2685,7 +2685,7 @@ U = {
 	URL_API:
 	{
 		// Achievements
-		Achievements: "https://api.guildwars2.com/v2/achievements/",
+		Achievements: "https://api.guildwars2.com/v2/achievements",
 		Daily: "https://api.guildwars2.com/v2/achievements/daily",
 		Tomorrow: "https://api.guildwars2.com/v2/achievements/daily/tomorrow",
 		Fractal: "https://api.guildwars2.com/v2/achievements/categories/88",
@@ -10504,12 +10504,11 @@ V = {
 								{
 									subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
 								}
-								// Add faux charges number over gathering tools
-								if (iItem.type === "Gathering" && iItem.rarity !== Q.RarityEnum.Rare)
+								// Add charges number over gathering tools
+								if (iItem.type === "Gathering" && iEquipment.charges)
 								{
-									// Ignore Rare rarity tools which have unlimited charges
 									sloticon.attr("src", iBox.oItem.icon);
-									subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
+									subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + iEquipment.charges + "</span>");
 								}
 								// Bind click behavior for the icon
 								Q.bindItemSlotBehavior(sloticon, {
@@ -12435,22 +12434,10 @@ B = {
 					var countmaxclass = (count % Q.ItemLimit.StackSize === 0) ? "bnkSlotCountMax" : "";
 					pSlot.append("<var class='bnkSlotCount " + countmaxclass + "'>" + count + "</var>");
 				}
-				else if (Settings.aItem.type === "Tool")
+				else if ((Settings.aItem.type === "Tool" || Settings.aItem.type === "Gathering") && Settings.aSlotMeta && Settings.aSlotMeta.charges)
 				{
 					// Salvage Kits gets a faux count number representing their remaining charges
-					var salv = A.Equipment.SalvageCharges;
-					if (salv && salv[Settings.aItem.id])
-					{
-						pSlot.append("<var class='bnkSlotCount'>" + salv[Settings.aItem.id] + "</var>");
-					}
-				}
-				else if (Settings.aItem.type === "Gathering")
-				{
-					var gath = A.Equipment.GatheringCharges;
-					if (gath && Settings.aItem.rarity !== Q.RarityEnum.Rare)
-					{
-						pSlot.append("<var class='bnkSlotCount'>" + gath[Settings.aItem.details.type] + "</var>");
-					}
+					pSlot.append("<var class='bnkSlotCount'>" + Settings.aSlotMeta.charges + "</var>");
 				}
 				// Fade the slots that act as collections
 				if (count === 0)
@@ -15696,6 +15683,45 @@ Q = {
 	},
 	
 	/*
+	 * Retrieves achievements details from the API.
+	 * @param intarray or int pIDs
+	 * @param function pCallback
+	 */
+	getAchievements: function(pIDs, pCallback)
+	{
+		var ids = pIDs;
+		var idstofetch = [];
+		if (isNaN(pIDs) === false)
+		{
+			ids = [pIDs];
+		}
+		// Filter out cached achievements
+		for (var i in ids)
+		{
+			if (Q.Case[ids[i]] === undefined)
+			{
+				idstofetch.push(ids[i]);
+			}
+		}
+		// Fetch
+		U.fetchAPI(U.URL_API.Achievements, idstofetch, {
+			aCallback: function(pData)
+			{
+				for (var i in pData)
+				{
+					var ithach = pData[i];
+					if (Q.Case[ithach.id] === undefined)
+					{
+						Q.Case[ithach.id] = {};
+						Q.Case[ithach.id].oAch = ithach;
+					}
+				}
+				pCallback();
+			}
+		});
+	},
+	
+	/*
 	 * Lightweight preliminary function to check if the requested achievement.
 	 * @param object pAchievement details.
 	 * @param object pSettings.
@@ -15703,7 +15729,8 @@ Q = {
 	scanAchievement: function(pAchievement, pSettings)
 	{
 		var Settings = pSettings || {};
-		var box = Q.Case[pAchievement.id];
+		var id = pAchievement.id || pAchievement;
+		var box = Q.Case[id];
 		
 		if (box && box.oHTML)
 		{
@@ -15721,7 +15748,7 @@ Q = {
 		}
 		else
 		{
-			Q.analyzeAchievement(pAchievement, pSettings);
+			Q.analyzeAchievement(box.oAch, pSettings);
 		}
 	},
 	
@@ -15735,10 +15762,44 @@ Q = {
 	{
 		var Settings = pSettings || {};
 		var ach = pAchievement;
+		var namestr = "<aside class='itmName achName'>" + U.escapeHTML(ach.name) + "</aside>";
+		var descstr = "";
+		var reqstr = "";
+		var countstr = "";
+		var tierstr = "";
+		var pointsstr = "";
+		var sumcount = 0;
+		var sumpoints = 0;
+		var ithtier;
+		
+		if (ach.description)
+		{
+			descstr = "<aside class='achDescription'>" + ach.description + "</aside>";
+		}
+		if (ach.requirement)
+		{
+			reqstr = "<aside class='achRequirement'>" + ach.requirement + "</aside>";
+		}
+		
+		// Sum the tiers for a combined count of achievement requirements
+		for (var i in ach.tiers)
+		{
+			ithtier = ach.tiers[i];
+			sumcount += ithtier.count;
+			sumpoints += ithtier.points;
+		}
+		var tierword = D.getWordCapital("tier");
+		countstr = "<aside class='achCount'>0 / " + ithtier.count + " " + D.getWordCapital("completion") + "</aside>";
+		tierstr = "<aside class='achTier'>" + tierword + " 1 " + D.getWord("of") + " " + + ach.tiers.length + " " + tierword + "</aside>";
+		pointsstr = "<aside class='achPoints'>" + sumpoints + " <img src='img/ui/ap.png' /></aside";
 		
 		var html = "<div class='itmTooltip'>"
-			+ "<aside class='itmName'><img class='itmIcon itmIconMain' src='" + ach.icon + "' />" + U.escapeHTML(ach.name) + "</aside>"
-			+ "<aside>" + ach.description + "</aside>"
+			+ namestr
+			+ reqstr
+			+ descstr
+			+ countstr
+			+ tierstr
+			+ pointsstr
 		+ "</div>";
 		// Bind tooltip if provided an element
 		if (Settings.aElement)
@@ -15747,15 +15808,11 @@ Q = {
 			elm.attr("title", html);
 			I.qTip.init(elm);
 		}
-		/*
-		 * This object is the result of the analysis, containing tooltip
-		 * information and additionally retrieved slotted items.
-		 */
 		var box = {
-			oAchievement: ach,
+			oAch: ach,
 			oHTML: html
 		};
-		Q.Box[ach.id] = box;
+		Q.Case[ach.id] = box;
 		if (Settings.aCallback)
 		{
 			Settings.aCallback(box);
@@ -18324,6 +18381,8 @@ D = {
 			cs: "historie", it: "cronologia", pl: "historii", pt: "histórico", ru: "истории", zh: "历史"},
 		s_info: {de: "info", es: "información", fr: "info",
 			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", zh: "资讯"},
+		s_tier: {de: "rang", es: "rango", fr: "niveau",
+			cs: "pořadí", it: "rango", pl: "ranga", pt: "classe", ru: "ранг", zh: "级"},
 		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
 			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", zh: "计时器"},
 		s_tools: {de: "extras", es: "herramientas", fr: "outils",
@@ -18456,6 +18515,8 @@ D = {
 			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", zh: "和"},
 		s_by: {de: "von", es: "por", fr: "de",
 			cs: "od", it: "da", pl: "przez", pt: "por", ru: "", zh: "由"},
+		s_of: {de: "von", es: "de", fr: "de",
+			cs: "z", it: "di", pl: "z", pt: "de", ru: "из", zh: "的"},
 		s_if: {de: "wenn", es: "si", fr: "si",
 			cs: "jestliže", it: "se", pl: "jeśli", pt: "se", ru: "если", zh: "如果"},
 		s_in: {de: "in", es: "en", fr: "en",
@@ -25340,6 +25401,30 @@ G = {
 			});
 			I.bindPseudoCheckbox(calendar.find("ins"));
 			I.qTip.init(calendar.find("ins"));
+			
+			// Create achievement tooltips
+			var dailyids = [];
+			$(".dly").each(function()
+			{
+				var id = $(this).attr("data-ach");
+				if (id)
+				{
+					dailyids.push(id);
+				}
+			});
+			Q.getAchievements(dailyids, function()
+			{
+				$(".dly").each(function()
+				{
+					var that = $(this);
+					var id = $(this).attr("data-ach");
+					if (id)
+					{
+						Q.scanAchievement(id, {aElement: that});
+					}
+				});
+			});
+			
 			I.removeThrobber(calendar.parent());
 		};
 		
@@ -25399,52 +25484,52 @@ G = {
 		var wvw = pDailyObj["wvw"];
 		var dayclass = "";
 		var bosshtml = "";
-		var dailynicks, dtitle, d0, d1, d2, d3;
+		var dailynicks, d0, d1, d2, d3, d4;
 		
 		// PVE daily nicknames may be suffixed by a region, or prefixed by its daily type
 		var parsePVE = function(pDaily)
 		{
 			dailynicks = pDaily.split(" ");
-			dtitle = pDaily;
-			d0 = dailynicks[0].toLowerCase();
-			d1 = (dailynicks.length > 1) ? dailynicks[1].toLowerCase() : "";
+			d0 = dailynicks[0];
+			d1 = dailynicks[1].toLowerCase();
 			d2 = (dailynicks.length > 2) ? dailynicks[2].toLowerCase() : "";
 			d3 = (dailynicks.length > 3) ? dailynicks[3].toLowerCase() : "";
+			d4 = (dailynicks.length > 4) ? dailynicks[4].toLowerCase() : "";
 			
-			if (dailynicks.length === 1)
+			if (d1 === "misc")
 			{
-				return "<ins class='dly dly_pve_" + d0 + "' title='" + dtitle + "'></ins>";
+				return "<ins class='dly dly_pve_" + d2 + " dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + d3 + "'></ins>";
 			}
-			else if (d0 === "jp" || d0 === "adventure")
+			else if (d1 === "jp" || d1 === "adventure")
+			{
+				return "<ins class='dlyRegion dly_region_" + d3 + "'>"
+					+ "<ins class='dly dly_pve_" + d1 + " dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + d4 + "'></ins>"
+				+ "</ins>";
+			}
+			else if (d1 === "vista" || d1 === "miner" || d1 === "lumberer" || d1 === "forager")
 			{
 				return "<ins class='dlyRegion dly_region_" + d2 + "'>"
-					+ "<ins class='dly dly_pve_" + d0 + " dlyZoom curZoom' title='" + dtitle + "' data-coord='" + d3 + "'></ins>"
+					+ "<ins class='dly dly_pve_" + d1 + " dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + d3 + "'></ins>"
 				+ "</ins>";
 			}
-			else if (d0 === "vista" || d0 === "miner" || d0 === "lumberer" || d0 === "forager")
+			else if (d1 === "dungeon")
 			{
-				return "<ins class='dlyRegion dly_region_" + d1 + "'>"
-					+ "<ins class='dly dly_pve_" + d0 + " dlyZoom curZoom' title='" + dtitle + "' data-coord='" + d2 + "'></ins>"
+				return "<ins class='dlyRegion dly_region_" + d3 + "'>"
+					+ "<ins class='dly dly_pve_dungeon_" + d2 + " dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + d4 + "'></ins>"
 				+ "</ins>";
 			}
-			else if (d0 === "dungeon")
+			else if (d1 === "boss")
 			{
-				return "<ins class='dlyRegion dly_region_" + d2 + "'>"
-					+ "<ins class='dly dly_pve_dungeon_" + d1 + " dlyZoom curZoom' title='" + dtitle + "' data-coord='" + d3 + "'></ins>"
-				+ "</ins>";
-			}
-			else if (d0 === "boss")
-			{
-				var bosschain = C.getChainByAlias(d1);
-				bosshtml = "<em class='dlyBossIconContainer dlyMonthday'><img class='dlyBossIcon' src='img/chain/" + d1 + I.cPNG + "' /></em>";
+				var bosschain = C.getChainByAlias(d2);
+				bosshtml = "<em class='dlyBossIconContainer dlyMonthday'><img class='dlyBossIcon' src='img/chain/" + d2 + I.cPNG + "' /></em>";
 				return "<ins class='dlyRegion dly_region_" + C.getChainRegion(bosschain) + "'>"
-					+ "<ins class='dly dly_pve_boss dlyZoom curZoom' title='" + dtitle + "' data-coord='" + bosschain.finalCoord + "'></ins>"
+					+ "<ins class='dly dly_pve_boss dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + bosschain.finalCoord + "'></ins>"
 				+ "</ins>";
 			}
-			else if (d0 === "event")
+			else if (d1 === "event")
 			{
-				return "<ins class='dlyRegion dly_region_" + M.getZoneRegion(d1) + "'>"
-					+ "<ins class='dly dly_pve_event dlyZoom curZoom' title='" + dtitle + "' data-coord='" + d1 + "'></ins>"
+				return "<ins class='dlyRegion dly_region_" + M.getZoneRegion(d2) + "'>"
+					+ "<ins class='dly dly_pve_event dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + d2 + "'></ins>"
 				+ "</ins>";
 			}
 			return "";
@@ -25454,21 +25539,24 @@ G = {
 		var parsePVP = function(pDaily)
 		{
 			dailynicks = pDaily.split(" ");
-			dtitle = pDaily;
-			d0 = dailynicks[0].toLowerCase();
-			if (dailynicks.length === 1)
+			d0 = dailynicks[0];
+			d1 = dailynicks[1].toLowerCase();
+			if (dailynicks.length === 2)
 			{
-				return "<ins class='dly dly_pvp_" + d0 + "' title='" + dtitle + "'></ins>";
+				return "<ins class='dly dly_pvp_" + d1 + "' data-ach='" + d0 + "'></ins>";
 			}
 			
-			var dspec = dailynicks[1].toLowerCase();
-			return "<ins class='dly dly_pvp_profession_" + d0 + "_0' title='" + dtitle + "'><ins class='dly dly_pvp_profession_" + dspec + "_1'></ins></ins>";
+			var dspec = dailynicks[2].toLowerCase();
+			return "<ins class='dly dly_pvp_profession_" + d1 + "_0' data-ach='" + d0 + "'><ins class='dly dly_pvp_profession_" + dspec + "_1'></ins></ins>";
 		};
 		
 		// WvW daily nicknames are always 1 word long
 		var parseWVW = function(pDaily)
 		{
-			return "<ins class='dly dly_wvw_" + pDaily.toLowerCase() + "' title='" + pDaily + "'></ins>";
+			dailynicks = pDaily.split(" ");
+			d0 = dailynicks[0];
+			d1 = dailynicks[1].toLowerCase();
+			return "<ins class='dly dly_wvw_" + d1 + "' data-ach='" + d0 + "'></ins>";
 		};
 		
 		// Generate the daily icons for each game mode
@@ -30599,13 +30687,17 @@ T = {
 	},
 	
 	/*
-	 * Converts an API daily object to a nickname based object with similar structure
+	 * Converts an API daily object to a nickname based object with similar structure.
 	 * @param object pObj from API.
 	 * @returns object reformatted.
 	 */
 	convertDailyObject: function(pObj)
 	{
-		var dailyobj = {};
+		var dailyobj = {
+			pve: [],
+			pvp: [],
+			wvw: []
+		};
 		var a = T.DailyAssociation;
 		var newpve = [];
 		for (var i = 0; i < pObj.pve.length; i++)
@@ -30624,12 +30716,29 @@ T = {
 				}
 			}
 		}
+		var sets = {
+			pve: newpve,
+			pvp: pObj.pvp,
+			wvw: pObj.wvw
+		};
 		
 		// Turn the achievement IDs into achievement nicknames
-		var u = "unknown";
-		dailyobj.pve = [a[(newpve[0].id)] || u, a[(newpve[1].id)] || u, a[(newpve[2].id)] || u, a[(newpve[3].id)] || u];
-		dailyobj.pvp = [a[(pObj.pvp[0].id)] || u, a[(pObj.pvp[1].id)] || u, a[(pObj.pvp[2].id)] || u, a[(pObj.pvp[3].id)] || u];
-		dailyobj.wvw = [a[(pObj.wvw[0].id)] || u, a[(pObj.wvw[1].id)] || u, a[(pObj.wvw[2].id)] || u, a[(pObj.wvw[3].id)] || u];
+		for (var i in sets)
+		{
+			var ithset = sets[i];
+			for (var ii in ithset)
+			{
+				if (a[(ithset[ii].id)])
+				{
+					// First keyword in the daily string is the achievement ID
+					dailyobj[i].push(ithset[ii].id + " " + a[(ithset[ii].id)]);
+				}
+				else
+				{
+					dailyobj[i].push("0 unknown");
+				}
+			}
+		}
 		return dailyobj;
 	},
 	
@@ -30645,9 +30754,9 @@ T = {
 			for (var i in pDaily.pve)
 			{
 				var dcode = pDaily.pve[i].split(" ");
-				if (dcode[0] === "Boss")
+				if (dcode[1] === "Boss")
 				{
-					return C.getChainByAlias(dcode[1].toLowerCase());
+					return C.getChainByAlias(dcode[2].toLowerCase());
 				}
 			}
 		}
@@ -30774,7 +30883,7 @@ T = {
 				if (Settings.aIsReset === true && O.isServerReset)
 				{
 					// Mention special dailies if appropriate
-					if (T.DailyToday.pve && T.DailyToday.pve[1] === "Forger")
+					if (T.DailyToday.pve && T.DailyToday.pve[1].indexOf("Forger") !== -1)
 					{
 						var dailyspecialstr = U.convertExternalString(H.Announcement.Messages.Forger);
 						I.greet(dailyspecialstr, 25);
@@ -33010,6 +33119,7 @@ K = {
 	 */
 	refreshFestival: function()
 	{
+		return;
 		var numsnowflakes = 144;
 		var canvas = document.getElementById("paneClockCanvas");
 		var context = canvas.getContext("2d");

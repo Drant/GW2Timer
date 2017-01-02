@@ -441,30 +441,30 @@ var GW2T_ACCOUNT_METADATA = {
 		],
 		RanksPerModifier: 15,
 		Modifiers: [
-			{en: "", de: "", es: "", fr: ""},
-			{en: "Bronze", de: "Bronze", es: "Bronce", fr: "Bronze"},
-			{en: "Silver", de: "Silber", es: "Plata", fr: "Argent"},
-			{en: "Gold", de: "Gold", es: "Oro", fr: "Or"},
-			{en: "Platinum", de: "Platin", es: "Platino", fr: "Platine"},
-			{en: "Mithril", de: "Mithril", es: "Mithril", fr: "Mithril"},
-			{en: "Diamond", de: "Diamant", es: "Diamante", fr: "Diamant"}
+			{en: "", de: "", es: "", fr: "", zh: ""},
+			{en: "Bronze", de: "Bronze", es: "Bronce", fr: "Bronze", zh: "青铜"},
+			{en: "Silver", de: "Silber", es: "Plata", fr: "Argent", zh: "白银"},
+			{en: "Gold", de: "Gold", es: "Oro", fr: "Or", zh: "黄金"},
+			{en: "Platinum", de: "Platin", es: "Platino", fr: "Platine", zh: "白金"},
+			{en: "Mithril", de: "Mithril", es: "Mithril", fr: "Mithril", zh: "秘银"},
+			{en: "Diamond", de: "Diamant", es: "Diamante", fr: "Diamant", zh: "钻石"}
 		],
 		Titles: [
-			{en: "Invader", de: "Eindringling", es: "Invasor", fr: "Envahisseur"},
-			{en: "Assaulter", de: "Angreifer", es: "Asaltador", fr: "Agresseur"},
-			{en: "Raider", de: "Plünderer", es: "Asaltante", fr: "Raider"},
-			{en: "Recruit", de: "Rekrut", es: "Recluta", fr: "Recrue"},
-			{en: "Scout", de: "Späher", es: "Explorador", fr: "Éclaireur"},
-			{en: "Soldier", de: "Soldat", es: "Soldado", fr: "Soldat"},
-			{en: "Squire", de: "Knappe", es: "Escudero", fr: "Écuyer"},
-			{en: "Footman", de: "Infanterist", es: "Lacayo", fr: "Valet de pied"},
-			{en: "Knight", de: "Ritter", es: "Caballero", fr: "Chevalier"},
-			{en: "Major", de: "Major", es: "Comandante", fr: "Commandant"},
-			{en: "Colonel", de: "Oberst", es: "Coronel", fr: "Colonel"},
-			{en: "General", de: "General", es: "General", fr: "Général"},
-			{en: "Veteran", de: "Veteran", es: "Veterano", fr: "Vétéran"},
-			{en: "Champion", de: "Champion", es: "Campeón", fr: "Champion"},
-			{en: "Legend", de: "Legende", es: "Leyenda", fr: "Légende"}
+			{en: "Invader", de: "Eindringling", es: "Invasor", fr: "Envahisseur", zh: "入侵者"},
+			{en: "Assaulter", de: "Angreifer", es: "Asaltante", fr: "Assaillant", zh: "突击兵"},
+			{en: "Raider", de: "Plünderer", es: "Atracador", fr: "Pillard", zh: "掠夺者"},
+			{en: "Recruit", de: "Rekrut", es: "Recluta", fr: "Recrue", zh: "新兵"},
+			{en: "Scout", de: "Späher", es: "Explorador", fr: "Eclaireur", zh: "斥候"},
+			{en: "Soldier", de: "Soldat", es: "Soldado", fr: "Soldat", zh: "士兵"},
+			{en: "Squire", de: "Knappe", es: "Escudero", fr: "Ecuyer", zh: "侍卫"},
+			{en: "Footman", de: "Infanterist", es: "Lacayo", fr: "Valet", zh: "步兵"},
+			{en: "Knight", de: "Ritter", es: "Caballero", fr: "Chevalier", zh: "骑士"},
+			{en: "Major", de: "Major", es: "Comandante", fr: "Major", zh: "少校"},
+			{en: "Colonel", de: "Oberst", es: "Coronel", fr: "Colonel", zh: "上校"},
+			{en: "General", de: "General", es: "General", fr: "Général", zh: "将军"},
+			{en: "Veteran", de: "Veteran", es: "Veterano", fr: "Vétéran", zh: "老兵"},
+			{en: "Champion", de: "Champion", es: "Campeón", fr: "Champion", zh: "勇士"},
+			{en: "Legend", de: "Legende", es: "Leyenda", fr: "Légende", zh: "传奇"}
 		]
 	}
 };

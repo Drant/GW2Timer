@@ -286,9 +286,6 @@ img {
 	font-family: Menomonia;
 	font-size: 18px;
 }
-.achName {
-	color: #ffeebb;
-}
 .itmIcon {
 	width: 40px; height: 40px;
 }
@@ -362,6 +359,35 @@ img {
 .itmPrefaceName {
 	font-family: Menomonia;
 	font-size: 24px;
+}
+
+
+/*
+ * Achievement tooltips.
+ */
+.achName {
+	color: #ffcc77;
+}
+.achRequirement {
+	margin-top: 6px;
+}
+.achDescription {
+	margin-top: 6px;
+	font-style: italic;
+	color: #aaaaaa;
+}
+.achCount {
+	margin-top: 6px;
+}
+.achTier {
+	margin-top: 6px;
+}
+.achPoints {
+	margin-top: 12px;
+	font-family: Menomonia;
+	font-size: 18px;
+	color: #ffcc77;
+	opacity: 0.6;
 }
 
 /*
@@ -1762,19 +1788,19 @@ input.mapCoordinatesName {
 
 #clkWaypoints .cssWaypoint { /* Festival sensitive */
 	/*background-image: url("img/map/halloween.png");*/
-	background-image: url("img/map/wintersday.png");
+	/*background-image: url("img/map/wintersday.png");*/
 }
 #paneClockBackground { /* Festival sensitive */
 	/*background: url("img/background/globe_halloween.png") no-repeat center;*/
-	background: url("img/background/globe_wintersday.png") no-repeat center;
-	/*background: url("img/background/globe.jpg") no-repeat center;*/
-	/*filter: blur(1px);*/
+	/*background: url("img/background/globe_wintersday.png") no-repeat center;*/
+	background: url("img/background/globe.jpg") no-repeat center;
+	filter: blur(1px);
 	opacity: 0;
 }
 #paneClockFace {
 	background: url("img/background/face.png") no-repeat center;
 	background-size: 100% 100%;
-	opacity: 0.9;
+	/*opacity: 0.9;*/
 }
 
 .iconHC {
