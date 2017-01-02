@@ -25401,31 +25401,27 @@ G = {
 			});
 			I.bindPseudoCheckbox(calendar.find("ins"));
 			I.qTip.init(calendar.find("ins"));
+			I.removeThrobber(calendar.parent());
 			
 			// Create achievement tooltips
-			var dailyids = [];
+			var ids = [];
+			var elms = [];
 			$(".dly").each(function()
 			{
 				var id = $(this).attr("data-ach");
 				if (id)
 				{
-					dailyids.push(id);
+					ids.push(id);
+					elms.push($(this));
 				}
 			});
-			Q.getAchievements(dailyids, function()
+			Q.getAchievements(ids, function()
 			{
-				$(".dly").each(function()
+				for (var i = 0; i < elms.length; i++)
 				{
-					var that = $(this);
-					var id = $(this).attr("data-ach");
-					if (id)
-					{
-						Q.scanAchievement(id, {aElement: that});
-					}
-				});
+					Q.scanAchievement(ids[i], {aElement: elms[i]});
+				}
 			});
-			
-			I.removeThrobber(calendar.parent());
 		};
 		
 		G.createDailyBookmarks(calendar);
@@ -25435,8 +25431,10 @@ G = {
 			G.insertDailyDay(calendar, T.DailyToday, pDate, true, pIsDashboard); // Today's dailies
 			T.getDaily({aWantGetTomorrow: true}).done(function() // Tomorrow's dailies
 			{
-				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), false, pIsDashboard);
-				finalizeDailies(calendar);
+				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), false, pIsDashboard, function()
+				{
+					finalizeDailies(calendar);
+				});
 			});
 		}).fail(function()
 		{
@@ -25475,7 +25473,7 @@ G = {
 	 * @param object pDaily daily object from general.js
 	 * @param object pDate of the day.
 	 */
-	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsToday, pIsDashboard)
+	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsToday, pIsDashboard, pFinalize)
 	{
 		var calendar = $(pContainer);
 		// Daily category rows (game modes)
@@ -25592,13 +25590,13 @@ G = {
 		+ "</div>").appendTo(calendar);
 
 		// Insert fractal row
-		var insertFractal = function(pIslands, pScaleStr)
+		var insertFractal = function(pIslands, pIDs, pScaleStr)
 		{
 			dailybox.append("<span class='dlyMode dlyModeFractal'>"
 				+ "<ins class='dly dly_daily_fractal'></ins>"
-				+ "<ins class='chl_fractal chl_" + pIslands[0].toLowerCase() + "' title='" + pIslands[0] + "'></ins>"
-				+ "<ins class='chl_fractal chl_" + pIslands[1].toLowerCase() + "' title='" + pIslands[1] + "'></ins>"
-				+ "<ins class='chl_fractal chl_" + pIslands[2].toLowerCase() + "' title='" + pIslands[2] + "'></ins>"
+				+ "<ins class='dly chl_fractal chl_" + pIslands[0].toLowerCase() + "' title='" + pIslands[0] + "' " + ((pIDs) ? ("data-ach='" + pIDs[0] + "'") : "") + "></ins>"
+				+ "<ins class='dly chl_fractal chl_" + pIslands[1].toLowerCase() + "' title='" + pIslands[1] + "' " + ((pIDs) ? ("data-ach='" + pIDs[1] + "'") : "") + "></ins>"
+				+ "<ins class='dly chl_fractal chl_" + pIslands[2].toLowerCase() + "' title='" + pIslands[2] + "' " + ((pIDs) ? ("data-ach='" + pIDs[2] + "'") : "") + "></ins>"
 				+ (pScaleStr || "")
 			+ "</span>");
 			I.qTip.init(dailybox.find("ins"));
@@ -25627,16 +25625,23 @@ G = {
 				}
 				
 				// Daily fractal islands
-				var islandA = T.DailyAssociation[(ach[3])]; // The daily islands are located in these API array indexes
-				var islandB = T.DailyAssociation[(ach[7])];
-				var islandC = T.DailyAssociation[(ach[11])];
+				var islandids = [ach[3], ach[7], ach[11]]; // The daily islands are located in these API array indexes
+				var islandA = T.DailyAssociation[islandids[0]];
+				var islandB = T.DailyAssociation[islandids[1]];
+				var islandC = T.DailyAssociation[islandids[2]];
 				if (islandA && islandB && islandC)
 				{
-					insertFractal([islandA, islandB, islandC], scalestr);
+					insertFractal([islandA, islandB, islandC], islandids, scalestr);
 				}
 			}).fail(function()
 			{
 				I.write("Unable to retrieve daily fractal API.");
+			}).always(function()
+			{
+				if (pFinalize)
+				{
+					pFinalize();
+				}
 			});
 		}
 		else
@@ -25644,6 +25649,10 @@ G = {
 			// If getting future fractals then use prewritten schedule
 			var fractalday = T.getDaysSince(pDate, T.Daily.Fractal.Epoch) % T.cDAYS_IN_BIWEEK;
 			insertFractal(T.Daily.Fractal.Schedule[fractalday]);
+			if (pFinalize)
+			{
+				pFinalize();
+			}
 		}
 	},
 	
