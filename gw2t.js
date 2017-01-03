@@ -19731,7 +19731,7 @@ C = {
 		$(pChain.htmllist).append(
 		"<div id='chnBar_" + pChain.nexus + "' class='chnBar'>"
 			+ "<div class='chnTitle'>"
-				+ "<img id='chnIcon_" + pChain.nexus + "' src='" + pChain.iconSrc + "' />"
+				+ "<img id='chnIcon_" + pChain.nexus + "' data-src='" + pChain.iconSrc + "' />"
 				+ "<kbd id='chnCheck_" + pChain.nexus + "' class='chnCheck'></kbd>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + chainname + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
@@ -20083,6 +20083,7 @@ C = {
 					}
 					C.initializeChain(chain);
 					P.drawChainPaths(chain);
+					I.loadImg($(chain.htmllist));
 				}
 				C.isUnscheduledChainsLoaded = true;
 			});
@@ -25119,6 +25120,7 @@ P = {
 				}
 				I.qTip.init(".leaflet-marker-icon");
 			}
+			I.loadImg($("#sectionChains_Drytop"));
 			
 			// Finally
 			C.isDryTopGenerated = true;
@@ -33769,6 +33771,7 @@ I = {
 		});
 
 		// Create chain bars for unscheduled chains only when manually expanded the header
+		I.loadImg($("#sectionChains_Scheduled"));
 		if (I.ModeCurrent === I.ModeEnum.Tile)
 		{
 			$("#headerChains_Drytop").hide();
@@ -33781,6 +33784,10 @@ I = {
 				P.generateDryTop();
 			});
 		}
+		$("#headerChains_Special").one("click", function()
+		{
+			I.loadImg($("#sectionChains_Special"));
+		});
 		$("#headerChains_Legacy").one("click", function()
 		{
 			C.initializeUnscheduledChains(C.LegacyChains);
@@ -35672,7 +35679,7 @@ I = {
 			var winheight = $(window).height();
 			
 			// Mouse movement as detector for program use
-			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			if (I.ModeCurrent === I.ModeEnum.Overlay || I.isProgramEmbedded)
 			{
 				I.sleepOverlay();
 			}
