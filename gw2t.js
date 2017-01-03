@@ -19731,7 +19731,7 @@ C = {
 		$(pChain.htmllist).append(
 		"<div id='chnBar_" + pChain.nexus + "' class='chnBar'>"
 			+ "<div class='chnTitle'>"
-				+ "<img id='chnIcon_" + pChain.nexus + "' data-src='" + pChain.iconSrc + "' />"
+				+ "<img id='chnIcon_" + pChain.nexus + "' src='" + pChain.iconSrc + "' />"
 				+ "<kbd id='chnCheck_" + pChain.nexus + "' class='chnCheck'></kbd>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + chainname + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
@@ -20083,7 +20083,6 @@ C = {
 					}
 					C.initializeChain(chain);
 					P.drawChainPaths(chain);
-					I.loadImg($(chain.htmllist));
 				}
 				C.isUnscheduledChainsLoaded = true;
 			});
@@ -25433,10 +25432,11 @@ G = {
 			G.insertDailyDay(calendar, T.DailyToday, pDate, true, pIsDashboard); // Today's dailies
 			T.getDaily({aWantGetTomorrow: true}).done(function() // Tomorrow's dailies
 			{
-				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), false, pIsDashboard, function()
+				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), false, pIsDashboard);
+				setTimeout(function()
 				{
 					finalizeDailies(calendar);
-				});
+				}, 2000);
 			});
 		}).fail(function()
 		{
@@ -25475,7 +25475,7 @@ G = {
 	 * @param object pDaily daily object from general.js
 	 * @param object pDate of the day.
 	 */
-	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsToday, pIsDashboard, pFinalize)
+	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsToday, pIsDashboard)
 	{
 		var calendar = $(pContainer);
 		// Daily category rows (game modes)
@@ -25638,12 +25638,6 @@ G = {
 			}).fail(function()
 			{
 				I.write("Unable to retrieve daily fractal API.");
-			}).always(function()
-			{
-				if (pFinalize)
-				{
-					pFinalize();
-				}
 			});
 		}
 		else
@@ -25651,10 +25645,6 @@ G = {
 			// If getting future fractals then use prewritten schedule
 			var fractalday = T.getDaysSince(pDate, T.Daily.Fractal.Epoch) % T.cDAYS_IN_BIWEEK;
 			insertFractal(T.Daily.Fractal.Schedule[fractalday]);
-			if (pFinalize)
-			{
-				pFinalize();
-			}
 		}
 	},
 	
@@ -33771,7 +33761,6 @@ I = {
 		});
 
 		// Create chain bars for unscheduled chains only when manually expanded the header
-		I.loadImg($("#sectionChains_Scheduled"));
 		if (I.ModeCurrent === I.ModeEnum.Tile)
 		{
 			$("#headerChains_Drytop").hide();
@@ -33784,10 +33773,6 @@ I = {
 				P.generateDryTop();
 			});
 		}
-		$("#headerChains_Special").one("click", function()
-		{
-			I.loadImg($("#sectionChains_Special"));
-		});
 		$("#headerChains_Legacy").one("click", function()
 		{
 			C.initializeUnscheduledChains(C.LegacyChains);
@@ -35364,15 +35349,7 @@ I = {
 			$("#itemProjector").show();
 			$("#itemProjection").show().click(function()
 			{
-				var mainwindow = $("#windowMain");
-				if (mainwindow.is(":visible"))
-				{
-					mainwindow.hide();
-				}
-				else
-				{
-					mainwindow.css({display: "table"});
-				}
+				$("#opt_bol_showFloor" + P.SuffixCurrent).trigger("click");
 			}).contextmenu(function(pEvent)
 			{
 				pEvent.preventDefault();
