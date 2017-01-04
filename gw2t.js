@@ -15820,6 +15820,32 @@ Q = {
 	},
 	
 	/*
+	 * Gives tooltip to elemenets with data-ach attribute.
+	 * @param jqobject or string pSelector
+	 */
+	bindAchievement: function(pSelector)
+	{
+		var ids = [];
+		var elms = [];
+		$(pSelector).each(function()
+		{
+			var id = $(this).attr("data-ach");
+			if (id)
+			{
+				ids.push(id);
+				elms.push($(this));
+			}
+		});
+		Q.getAchievements(ids, function()
+		{
+			for (var i = 0; i < elms.length; i++)
+			{
+				Q.scanAchievement(ids[i], {aElement: elms[i]});
+			}
+		});
+	},
+	
+	/*
 	 * Formats a trait or skill object to be used in tooltips.
 	 * @param object pTrait details retrieved from API.
 	 * @returns string content for tooltip window.
@@ -25405,24 +25431,7 @@ G = {
 			I.removeThrobber(calendar.parent());
 			
 			// Create achievement tooltips
-			var ids = [];
-			var elms = [];
-			$(".dly").each(function()
-			{
-				var id = $(this).attr("data-ach");
-				if (id)
-				{
-					ids.push(id);
-					elms.push($(this));
-				}
-			});
-			Q.getAchievements(ids, function()
-			{
-				for (var i = 0; i < elms.length; i++)
-				{
-					Q.scanAchievement(ids[i], {aElement: elms[i]});
-				}
-			});
+			Q.bindAchievement(".dly");
 		};
 		
 		G.createDailyBookmarks(calendar);
@@ -25433,10 +25442,7 @@ G = {
 			T.getDaily({aWantGetTomorrow: true}).done(function() // Tomorrow's dailies
 			{
 				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), false, pIsDashboard);
-				setTimeout(function()
-				{
-					finalizeDailies(calendar);
-				}, 2000);
+				finalizeDailies(calendar);
 			});
 		}).fail(function()
 		{
@@ -25635,6 +25641,7 @@ G = {
 				{
 					insertFractal([islandA, islandB, islandC], islandids, scalestr);
 				}
+				Q.bindAchievement(".chl_fractal");
 			}).fail(function()
 			{
 				I.write("Unable to retrieve daily fractal API.");
@@ -35656,7 +35663,7 @@ I = {
 			var winheight = $(window).height();
 			
 			// Mouse movement as detector for program use
-			if (I.ModeCurrent === I.ModeEnum.Overlay || I.isProgramEmbedded)
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
 			{
 				I.sleepOverlay();
 			}
