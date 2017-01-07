@@ -5105,7 +5105,7 @@ Z = {
 	 * @param boolean pIsFlat whether the record is just an array of numbers
 	 * rather than objects.
 	 */
-	printUnlockables: function(pRecord, pIsFlat)
+	printUnlockables: function(pRecord, pIsFlat, pFilename)
 	{
 		var output = "";
 		var catarr, arrlength;
@@ -5133,7 +5133,7 @@ Z = {
 			output += ((objlengthcounter === objlength - 1) ? "" : ",") + "\r\n";
 			objlengthcounter++;
 		}
-		Z.createFile(output);
+		Z.createFile(output, pFilename);
 	},
 	
 	/*
@@ -6125,7 +6125,7 @@ Z = {
 			}
 			// Final output
 			Z.printUnlockables(record);
-			Z.printRecordEntry(newskins, {
+			Z.printRecordEntry(newentries, {
 				aItemDB: itemdb,
 				aItemIDsKey: "oAssocItems"
 			});
@@ -6914,7 +6914,7 @@ Z = {
 			Q.sortItems(ids, function(pSortedItems, pSortedIDs)
 			{
 				record[timestamp] = pSortedIDs;
-				Z.printUnlockables(record, true);
+				Z.printUnlockables(record, true, "museum.txt");
 			});
 		});
 	},

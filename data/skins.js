@@ -479,7 +479,8 @@ Back: [
 	{u: 7017, i: 79830, n: "Icebrood Horn Backpack", p: {map_bf: 400}},
 	{u: 5998, i: 69754, n: "Canach's Backpack", p: {gem: 500}},
 	{u: 6618, i: 77767, n: "Brewmaster's Backpack Skin", p: {achievement: 0}},
-	{u: 7012, i: 79771, n: "Fire Quiver Backpack", p: {gem: 400}}
+	{u: 7012, i: 79771, n: "Fire Quiver Backpack", p: {gem: 400}},
+	{u: 7047, i: 80019, n: "Scruffy Backpack", p: {gem: 400}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", t: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -627,7 +628,8 @@ Armor_Light_Helm: [
 	{u: 6955, i: 79457, n: "Light Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6914, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6975, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
-	{u: 5620, i: 67141, n: "Ardent Glorious Crown", p: {glory: 175}}
+	{u: 5620, i: 67141, n: "Ardent Glorious Crown", p: {glory: 175}},
+	{u: 7045, i: 80026, n: "Ice Crown", p: {gem: 400}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -1155,7 +1157,8 @@ Armor_Medium_Helm: [
 	{u: 6969, i: 79471, n: "Medium Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6915, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6974, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
-	{u: 5635, i: 79947, n: "Ardent Glorious Cap", p: {glory: 175}}
+	{u: 5635, i: 79947, n: "Ardent Glorious Cap", p: {glory: 175}},
+	{u: 7040, i: 80026, n: "Ice Crown", p: {gem: 400}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1677,7 +1680,8 @@ Armor_Heavy_Helm: [
 	{u: 6968, i: 79508, n: "Heavy Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6931, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6972, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
-	{u: 5624, i: 80010, n: "Ardent Glorious Plate Helm", p: {glory: 175}}
+	{u: 5624, i: 80010, n: "Ardent Glorious Plate Helm", p: {glory: 175}},
+	{u: 7038, i: 80026, n: "Ice Crown", p: {gem: 400}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
