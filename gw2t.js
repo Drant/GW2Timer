@@ -6618,20 +6618,6 @@ Z = {
 	 */
 	collateRecipes: function()
 	{
-		var disciplines = ["Tailor", "Leatherworker", "Armorsmith", "Artificer", "Huntsman", "Weaponsmith", "Scribe", "Chef", "Jeweler"];
-		var types = [
-			"Refinement", "Component", "UpgradeComponent", "LegendaryComponent",
-			"Insignia", "Inscription",
-			"Potion", "Consumable", "Bag", "Bulk",
-			"GuildDecoration", "GuildConsumable", "GuildConsumableWvw",
-			"Seasoning", "IngredientCooking", "Snack", "Dessert", "Soup", "Meal", "Feast", "Dye",
-			"Amulet", "Ring", "Earring",
-			"Backpack",
-			"Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots",
-			"Scepter", "Focus", "Staff", "Trident",
-			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
-			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon"
-		];
 		var db, record = {}, item, entry, entries;
 		var sheets = {};
 		var sheetstradeable = {};
@@ -6639,14 +6625,6 @@ Z = {
 		{
 			record = pReturn.oRecord;
 			entries = pReturn.oEntries;
-			// Construct categories to insert the recipes orderly
-			disciplines.forEach(function(iDisc)
-			{
-				types.forEach(function(iType)
-				{
-					record[iDisc + "_" + iType] = [];
-				});
-			});
 			// Create a list of recipe sheets
 			for (var i in db)
 			{
@@ -6661,7 +6639,7 @@ Z = {
 				}
 			};
 
-			var recipe, catname, discipline, ingredients, type, itemid;
+			var recipe, catname, discipline, ingredients, type, itemid, newitems = [];
 			for (var i in entries)
 			{
 				recipe = entries[i];
@@ -6698,6 +6676,7 @@ Z = {
 							entry.t = sheetstradeable[recipe.id];
 						}
 						record[catname].push(entry);
+						newitems.push(db[itemid]);
 					}
 				}
 			}
@@ -6711,6 +6690,7 @@ Z = {
 				}
 			}
 			Z.printUnlockables(newrecord);
+			Z.printRecordEntry(newitems);
 		};
 		
 		I.print("Loading items database...");
@@ -11140,6 +11120,10 @@ V = {
 					if (itemlookup[entry.i])
 					{
 						entry.oComment = "<var class='itmColor_reminder'>" + craftstr + (itemlookup[entry.i]).join(", ") + "</var>";
+					}
+					else
+					{
+						delete entry.oComment;
 					}
 				}
 			}
