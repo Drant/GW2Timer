@@ -16113,7 +16113,7 @@ Q = {
 		var resultslist = $("<div class='itmSearchResultList'></div>").appendTo(resultsscroll);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
 		var isitemsearch = (Settings.aDatabase === undefined);
-		var searchtimestamp;
+		var searchindexes = [], isdirectionchanged, searchtimestamp;
 		
 		if (Settings.aFillerText !== null)
 		{
@@ -16126,6 +16126,11 @@ Q = {
 		I.bindScrollbar(resultsscroll);
 		
 		// Toggles display of the results container popup
+		var resetSearch = function()
+		{
+			isdirectionchanged = true;
+			searchindexes = [];
+		};
 		var toggleResults = function(pBoolean, pMessage)
 		{
 			resultslist.empty().removeData("selectedresult");
@@ -16136,6 +16141,7 @@ Q = {
 			}
 			if (pBoolean === false)
 			{
+				resetSearch();
 				I.qTip.hide();
 			}
 		};
@@ -16228,27 +16234,52 @@ Q = {
 				}
 				I.updateScrollbar(resultsscroll);
 			}
-			// Note at bottom of results list to indicate there's more available
+			// Traversal buttons
 			if (pResults.length === resultslimit)
 			{
-				I.qTip.init($("<span class='itmSearchResultEntryFinal' "
-					+ "title='More results available. Please refine your search.'>...</span>").appendTo(resultslist));
+				$("<span class='itmSearchResultNext curClick'>" + D.getWordCapital("next") + " &gt;</span>")
+					.prependTo(resultslist).click(function()
+				{
+					if (isdirectionchanged === false)
+					{
+						isdirectionchanged = true;
+						executeSearch(searchindexes[searchindexes.length - 1]);
+					}
+					executeSearch(searchindexes[searchindexes.length - 1]);
+				});
+			}
+			if (searchindexes.length > 1)
+			{
+				$("<span class='itmSearchResultPrev curClick'>&lt; " + D.getWordCapital("previous") + "</span>")
+					.prependTo(resultslist).click(function()
+				{
+					if (isdirectionchanged === true)
+					{
+						searchindexes.pop();
+						isdirectionchanged = false;
+					}
+					searchindexes.pop();
+					executeSearch(searchindexes[searchindexes.length - 1]);
+					searchindexes.pop();
+				});
 			}
 		};
 		
 		// Searches the search database for matching items' names
-		var executeSearch = function(pQuery)
+		var executeSearch = function(pIndex)
 		{
+			var startingindex = (pIndex === undefined) ? 0 : pIndex;
+			var query = elm.val().toLowerCase();
 			// If query is empty or below minimum length
-			if (pQuery.length < queryminchar)
+			if (query.length < queryminchar)
 			{
 				toggleResults(false);
 				return;
 			}
 			// If query is an integer, assume it is an item ID
-			if (U.isInteger(pQuery))
+			if (U.isInteger(query))
 			{
-				renderSearch([parseInt(pQuery)], pQuery);
+				renderSearch([parseInt(query)], query);
 				return;
 			}
 
@@ -16257,10 +16288,10 @@ Q = {
 			var resultsarr = [];
 			var searchdatabase = (isitemsearch) ? Q.SearchDatabase : Settings.aDatabase;
 			
-			for (var i = 0; i < searchdatabase.length; i++)
+			for (var i = startingindex; i < searchdatabase.length; i++)
 			{
 				entry = searchdatabase[i];
-				subqueries = pQuery.split(" ");
+				subqueries = query.split(" ");
 				result = entry[0];
 				searchname = entry[1];
 				// Search using every space separated substrings in the query
@@ -16281,12 +16312,20 @@ Q = {
 				// Show the results if found enough matching items
 				if (resultsarr.length >= resultslimit)
 				{
-					renderSearch(resultsarr, pQuery);
+					if (pIndex !== undefined || searchindexes.length === 0)
+					{
+						searchindexes.push(i+1);
+					}
+					renderSearch(resultsarr, query);
 					return;
 				}
 			}
 			// In case number of items found is below the limit
-			renderSearch(resultsarr, pQuery);
+			if (pIndex !== undefined || searchindexes.length === 0)
+			{
+				searchindexes.push(startingindex);
+			}
+			renderSearch(resultsarr, query);
 		};
 		
 		// Select an entry from the result list when user presses up or down arrow key
@@ -16320,10 +16359,10 @@ Q = {
 				// Bind search execution
 				elm.on("input", $.throttle(E.cSEARCH_LIMIT, function()
 				{
-					executeSearch($(this).val().toLowerCase());
+					executeSearch();
 				})).click(function()
 				{
-					executeSearch($(this).val().toLowerCase());
+					executeSearch();
 					$(this).select();
 				}).onEscapeKey(function()
 				{
@@ -16364,6 +16403,9 @@ Q = {
 			{
 				bindSearch();
 			}
+		}).click(function()
+		{
+			resetSearch();
 		});
 	},
 	

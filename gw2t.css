@@ -467,6 +467,15 @@ img {
 .itmSearchResultPrice {
 	margin-left: 8px;
 }
+.itmSearchResultPrev {
+	margin-right: 16px;
+}
+.itmSearchResultNext, .itmSearchResultPrev {
+	font-size: 16px;
+}
+.itmSearchResultNext:hover, .itmSearchResultPrev:hover {
+	color: red;
+}
 
 /*
  * Style for perfect-scrollbar JS plugin by Hyunje Alex Jun.
