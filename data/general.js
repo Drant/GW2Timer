@@ -1414,10 +1414,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "Pact Supply daily offers dashboard feature will be <a href='http://forum.renaka.com/topic/8054449/'>discontinued</a>. GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a>.<br /><a href='http://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a> for <a href='http://forum.renaka.com/topic/5546166/'>GPS app</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
+	pve: "Pact Supply daily offers dashboard feature will be <a href='http://forum.renaka.com/topic/8054449/'>discontinued</a>. GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a>.",
 	wvw: "",
-	Start: new Date("2016-12-13T16:00:00Z"),
-	Finish: new Date("2017-01-10T16:00:00Z"),
+	Start: new Date("2016-01-10T16:00:00Z"),
+	Finish: new Date("2017-01-17T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1456,16 +1456,16 @@ Countdown: {
 		Start: new Date("2017-10-24T16:00:00Z"),
 		Finish: new Date("2017-11-03T16:00:00Z")
 	},*/
-	{
-		name_en: "Wintersday 2016",
-		name_de: "Wintertag 2016",
-		name_es: "Día Invernal 2016",
-		name_fr: "Hivernel 2016",
-		name_zh: "冬幕节2016",
+	/*{
+		name_en: "Wintersday 2017",
+		name_de: "Wintertag 2017",
+		name_es: "Día Invernal 2017",
+		name_fr: "Hivernel 2017",
+		name_zh: "冬幕节2017",
 		official: "the-game/releases/december-13-2016/",
-		Start: new Date("2016-12-13T17:00:00Z"),
-		Finish: new Date("2017-01-10T17:00:00Z")
-	},
+		Start: new Date("2017-12-12T17:00:00Z"),
+		Finish: new Date("2018-01-09T17:00:00Z")
+	},*/
 	/*{
 		name_en: "PvP League Season 6",
 		name_de: "PvP Liga Saison 6",
@@ -1506,8 +1506,8 @@ Countdown: {
 		name_fr: "Festival lunaire (Estimée)",
 		name_zh: "新春：公鸡（估计）",
 		url: "https://en.wikipedia.org/wiki/Chinese_New_Year",
-		Start: new Date("2017-01-17T17:00:00Z"),
-		Finish: new Date("2017-01-31T17:00:00Z")
+		Start: new Date("2017-01-24T17:00:00Z"),
+		Finish: new Date("2017-02-07T17:00:00Z")
 	}
 	]
 },
@@ -1541,8 +1541,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-01-03T16:00:00Z"),
-	Finish: new Date("2017-01-10T16:00:00Z"),
+	Start: new Date("2017-01-10T16:00:00Z"),
+	Finish: new Date("2017-01-17T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1563,6 +1563,20 @@ Sale: {
 	],
 	Items: [
 	{
+		name: "Arctic Explorer Outfit",
+		id: "67868",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Ice Encasement Outfit",
+		id: "80049",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Ice Crown",
 		id: "80026",
 		price: 400,
@@ -1570,11 +1584,18 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Bank Job Package",
+		id: "http://i.imgur.com/Sj3gatz.png",
+		price: 1200,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Scruffy Backpack",
 		id: "80019",
 		price: 400,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Mini Festive Aurene",

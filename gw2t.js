@@ -31264,8 +31264,9 @@ H = {
 			vendorcodes += i + "@" + (H.Vendor.Codes[i])[weekdaylocation] + " ";
 		}
 		vendorcodes += "- " + vendorname;
+		var expirestr = (H.Vendor.Offers.length) ? ("<br />Expires: " + T.formatWeektime(H.Vendor.Finish, true)) : "";
 		$("#dsbMenuVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle jsTitle' "
-			+  "title='<dfn>Pact Supply Network Agent</dfn><br />Expires: " + T.formatWeektime(H.Vendor.Finish, true)
+			+  "title='<dfn>Pact Supply Network Agent</dfn>" + expirestr
 				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + vendorname + "</var></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled");
@@ -31342,7 +31343,7 @@ H = {
 		};
 		
 		// Collapse and empty the table if currently expanded, else generate
-		if (table.is(":empty") === false)
+		if ($("#dsbVendorMenu").is(":visible"))
 		{
 			I.toggleToggleIcon("#dsbVendorToggleIcon", false);
 			table.animate({height: 0}, animationspeed, function()
@@ -31359,57 +31360,64 @@ H = {
 			I.loadImg($("#dsbVendorMenu"));
 			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
 			table.empty();
-			if (T.isTimely(H.Vendor, new Date(), T.cSECONDS_IN_DAY) === false)
-			{
-				table.append("&nbsp;");
-				return;
-			}
 			
-			table.append(I.cThrobber);
-			for (var i in H.Vendor.OffersAssoc)
+			if (H.Vendor.Offers.length && T.isTimely(H.Vendor, new Date(), T.cSECONDS_IN_DAY))
 			{
-				table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
-				(function(iIndex)
+				table.append(I.cThrobber);
+				for (var i in H.Vendor.OffersAssoc)
 				{
-					var offerid = H.Vendor.Offers[(H.Vendor.OffersAssoc[iIndex])];
-					Q.getItem(offerid, function(pData)
+					table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
+					(function(iIndex)
 					{
-						var wikiquery = (D.isLanguageDefault()) ? pData.name : offerid.toString();
-						$("#dsbVendorEntry_" + iIndex).html(
-							"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
-							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
-								+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offerid] || H.Vendor.PriceDefault) + "</span>"
-							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>");
-						// Get TP prices also
-						$.getJSON(U.getAPIPrice(offerid), function(pData)
+						var offerid = H.Vendor.Offers[(H.Vendor.OffersAssoc[iIndex])];
+						Q.getItem(offerid, function(pData)
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" " + I.Symbol.Approx + " " + E.formatCoinStringColored(E.processPrice(pData).oPriceSellTaxed));
+							var wikiquery = (D.isLanguageDefault()) ? pData.name : offerid.toString();
+							$("#dsbVendorEntry_" + iIndex).html(
+								"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
+								+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
+									+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
+								+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offerid] || H.Vendor.PriceDefault) + "</span>"
+								+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>");
+							// Get TP prices also
+							$.getJSON(U.getAPIPrice(offerid), function(pData)
+							{
+								$("#dsbVendorPriceCoin_" + iIndex).html(" " + I.Symbol.Approx + " " + E.formatCoinStringColored(E.processPrice(pData).oPriceSellTaxed));
+							}).fail(function()
+							{
+								$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
+							});
+							M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
+							// Get the product that the recipe crafts
+							var product = H.Vendor.Products[offerid] || offerid;
+							Q.getItem(product, function(pProduct)
+							{
+								var icon = $("#dsbVendorIcon_" + iIndex);
+								icon.attr("src", pProduct.icon);
+								Q.scanItem(pProduct, {aElement: icon});
+							});
+							// Finalize the table after every offer has been added
+							if ($(".dsbVendorItem").length === H.Vendor.Offers.length)
+							{
+								finalizeVendorTable();
+							}
 						}).fail(function()
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
+							table.empty();
+							I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid)) + ">"
+								+ offerid + "</a>. ArenaNet API server may be down.");
 						});
-						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
-						// Get the product that the recipe crafts
-						var product = H.Vendor.Products[offerid] || offerid;
-						Q.getItem(product, function(pProduct)
-						{
-							var icon = $("#dsbVendorIcon_" + iIndex);
-							icon.attr("src", pProduct.icon);
-							Q.scanItem(pProduct, {aElement: icon});
-						});
-						// Finalize the table after every offer has been added
-						if ($(".dsbVendorItem").length === H.Vendor.Offers.length)
-						{
-							finalizeVendorTable();
-						}
-					}).fail(function()
-					{
-						table.empty();
-						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid)) + ">"
-							+ offerid + "</a>. ArenaNet API server may be down.");
-					});
-				})(i);
+					})(i);
+				}
+			}
+			else
+			{
+				for (var i in H.Vendor.OffersAssoc)
+				{
+					var elm = $("<dfn id='dsbVendorEntry_" + i + "' class='dsbVendorEntry' data-coord='"
+						+ (H.Vendor.Coords[i])[weekdaylocation] + "'>" + i + "</dfn>").appendTo(table);
+					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
+				}
 			}
 		}
 	},
