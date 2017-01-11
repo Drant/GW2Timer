@@ -955,8 +955,7 @@ Potato: {
 	item: "12135",
 	Rich: [
 	{c: [8860, 19448], q: 8}, // metrica
-	{c: [21930, 13888]}, // wayfarer
-	{c: [28359, 15491]} // plains
+	{c: [28359, 15491], q: 8} // plains
 	],
 	Regular: [
 		
