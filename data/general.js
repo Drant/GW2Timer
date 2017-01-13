@@ -1414,7 +1414,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "Pact Supply daily offers dashboard feature will be <a href='http://forum.renaka.com/topic/8054449/'>discontinued</a>. GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a>.",
+	pve: "Try the new GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a> &quot;fullscreen&quot; overlay and with custom hi-vis cursors.",
 	wvw: "",
 	Start: new Date("2016-01-10T16:00:00Z"),
 	Finish: new Date("2017-01-17T16:00:00Z"),
@@ -1489,16 +1489,16 @@ Countdown: {
 		Start: new Date("2017-02-24T18:00:00Z"),
 		Finish: new Date("2017-02-25T02:00:00Z")
 	},*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
 		name_fr: "Bonus de carte Gorges glacées",
 		name_zh: "霜谷之音地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-01-05T20:00:00Z"),
-		Finish: new Date("2017-01-12T20:00:00Z")
-	},
+		Start: new Date("2017-03-02T20:00:00Z"),
+		Finish: new Date("2017-03-09T20:00:00Z")
+	},*/
 	{
 		name_en: "Lunar Festival (Estimated)",
 		name_de: "Mond Festival (Geschätzt)",
@@ -1643,7 +1643,7 @@ Vendor:
 	Prices: {"43799":12600, "49737":12600, "43798":12600, "49734": 12600, "49738":50400, "49739":50400, "49740":50400},
 	PriceDefault: 25200,
 	// Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
-	Offers: [43825, 43483, 49749, 48920, 49762, 44656],
+	Offers: [],
 	OffersAssoc: {Mehem: 0, Fox: 1, Derwena: 2, Yana: 3, Katelyn: 4, Verma: 5}
 }
 };
