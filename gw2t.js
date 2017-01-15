@@ -2868,6 +2868,7 @@ U = {
 					Z.scrapeAPIArray(url + "&page=", pagenumbers, {
 						aIsStandard: false,
 						aCooldown: 60,
+						aNumRetries: 10,
 						aCallback: function(pPages)
 					{
 						book = book.concat(pData);
@@ -5215,6 +5216,7 @@ Z = {
 	 * @objparam function aIterator to execute for every fetched data.
 	 * @objparam function aCallback to execute after finishing scraping.
 	 * @objparam int aCooldown seconds between cooldown.
+	 * @objparam int aNumRetries number of retries.
 	 * @objparam int aRetryCount used internally for recursive retrieval of failed IDs.
 	 * @objparam array aCacheArray from previous scrape.
 	 */
@@ -5228,7 +5230,7 @@ Z = {
 		var failedids = [];
 		var failedindexes = [];
 		var reqindex = 0;
-		var numretries = 3;
+		var numretries = (Settings.aNumRetries === undefined) ? 3 : Settings.aNumRetries;
 		var reqlimit = 500;
 		var reqcooldownms = (Settings.aCooldown || 30) * T.cMSECONDS_IN_SECOND;
 		var numtofetch = 0;
@@ -5259,6 +5261,7 @@ Z = {
 					var retrycount = (Settings.aRetryCount || numretries) - 1;
 					I.print("Retrying " + retrycount + " times to fetch failed IDs...");
 					Z.scrapeAPIArray(pSuffix, failedids, {
+						aNumRetries: numretries,
 						aRetryCount: retrycount,
 						aCacheArray: cachearr,
 						aFailedIndexes: failedindexes,

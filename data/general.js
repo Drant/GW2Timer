@@ -1643,7 +1643,7 @@ Vendor:
 	Prices: {"43799":12600, "49737":12600, "43798":12600, "49734": 12600, "49738":50400, "49739":50400, "49740":50400},
 	PriceDefault: 25200,
 	// Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
-	Offers: [],
+	Offers: [], // This feature is discontinued, more info: http://forum.renaka.com/topic/8054449/
 	OffersAssoc: {Mehem: 0, Fox: 1, Derwena: 2, Yana: 3, Katelyn: 4, Verma: 5}
 }
 };
