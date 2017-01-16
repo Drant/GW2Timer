@@ -224,6 +224,7 @@ O = {
 		bol_alertAutosubscribe: true,
 		bol_alertUnsubscribe: true,
 		bol_alertDaylight: false,
+		bol_alertMystic: false,
 		// Account
 		bol_showRarity: false,
 		bol_condenseBank: false,
@@ -4029,6 +4030,16 @@ U = {
 			case U.CaseEnum.All: return pString.toUpperCase();
 		}
 		return pString;
+	},
+	
+	/*
+	 * Converts an HTML string to plain text.
+	 * @param string pHTML
+	 * @returns string
+	 */
+	toText: function(pHTML)
+	{
+		return $("<div>" + pHTML + "</div>").text();
 	},
 	
 	/*
@@ -30923,6 +30934,13 @@ T = {
 					{
 						var dailyspecialstr = U.convertExternalString(H.Announcement.Messages.Forger);
 						I.greet(dailyspecialstr, 25);
+						if (O.Options.bol_alertMystic)
+						{
+							setTimeout(function()
+							{
+								D.speak(U.toText(dailyspecialstr));
+							}, 5000);
+						}
 					}
 				}
 			}
