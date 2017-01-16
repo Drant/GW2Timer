@@ -28866,13 +28866,10 @@ W = {
 								&& obj.type !== W.ObjectiveEnum.Ruins) // Ruins do not have immunity
 						{
 							/*
-							 * During reset or API server problems, numerous
-							 * objectives may have the same last flipped timestamp,
-							 * so ignore these objectives until they're past the immunity limit.
+							 * During reset or API server problems, numerous objectives may have the same last flipped timestamp,
+							 * so ignore those objectives.
 							 */
-							if (fliptimeignore === null ||
-								(fliptimeignore !== null && (fliptimeignore !== obj.last_flipped)
-								&& (nowmsec - (new Date(fliptimeignore).getTime())) > W.cMSECONDS_IMMUNITY))
+							if (fliptimeignore === null || ((fliptimeignore !== null) && (fliptimeignore !== obj.last_flipped)))
 							{
 								W.Objectives[obj.id].isImmune = true;
 								$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
