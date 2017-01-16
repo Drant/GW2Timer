@@ -21,7 +21,6 @@
 	Objects are camel case: ExampleObject.
 	Array names are plural (end with s or es): exampleElements.
 	Functions are lower camel case and starts with a verb: getExample().
-	(function(){ // blah })(); this is an anonymous self-executing function.
 	~~ operator (reverse bits twice) is shorthand for parseInt and is used in integer division.
 	Functions that are repeated in milliseconds should use core JS instead of jQuery.
 	Arguments in double quotes: $("argument"), single quotes for HTML generation.
