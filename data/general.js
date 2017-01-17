@@ -1500,14 +1500,14 @@ Countdown: {
 		Finish: new Date("2017-03-09T20:00:00Z")
 	},*/
 	{
-		name_en: "Lunar Festival (Estimated)",
-		name_de: "Mond Festival (Geschätzt)",
-		name_es: "Festival lunar (Estimado)",
-		name_fr: "Festival lunaire (Estimée)",
-		name_zh: "新春：公鸡（估计）",
-		url: "https://en.wikipedia.org/wiki/Chinese_New_Year",
-		Start: new Date("2017-01-24T17:00:00Z"),
-		Finish: new Date("2017-02-07T17:00:00Z")
+		name_en: "Lunar Festival",
+		name_de: "Mond Festival",
+		name_es: "Festival lunar",
+		name_fr: "Festival lunaire",
+		name_zh: "新春：公鸡",
+		official: "news/happy-lunar-new-year/",
+		Start: new Date("2017-01-17T17:00:00Z"),
+		Finish: new Date("2017-01-31T17:00:00Z")
 	}
 	]
 },
