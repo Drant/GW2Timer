@@ -71,7 +71,7 @@ O = {
 
 	cLengthOfPrefixes: 3,
 	cPrefixOption: "opt_",
-	legalLocalStorageKeys: [],
+	legalLocalStorageKeys: {},
 	isServerReset: false,
 
 	/*
@@ -446,8 +446,8 @@ O = {
 	},
 	
 	/*
-	 * Initializes the array of strings of legal localStorage variable keys so
-	 * another function can later erase all unrecognized variables.
+	 * Initializes the associative array of strings of legal localStorage
+	 * variable keys so other functions can erase all unrecognized variables.
 	 * @pre All legal variable keys are unique.
 	 */
 	initializeLegalLocalStorageKeys: function()
@@ -455,23 +455,23 @@ O = {
 		var i;
 		for (i in O.Utilities)
 		{
-			O.legalLocalStorageKeys.push(O.Utilities[i].key);
+			O.legalLocalStorageKeys[O.Utilities[i].key] = true;
 		}
 		for (i in O.Options)
 		{
-			O.legalLocalStorageKeys.push(i);
+			O.legalLocalStorageKeys[i] = true;
 		}
 		for (i in X.Checklists)
 		{
-			O.legalLocalStorageKeys.push(X.Checklists[i].key);
+			O.legalLocalStorageKeys[X.Checklists[i].key] = true;
 		}
 		for (i in X.Collectibles)
 		{
-			O.legalLocalStorageKeys.push(X.Collectibles[i].key);
+			O.legalLocalStorageKeys[X.Collectibles[i].key] = true;
 		}
 		for (i in X.Textlists)
 		{
-			O.legalLocalStorageKeys.push(X.Textlists[i].key);
+			O.legalLocalStorageKeys[X.Textlists[i].key] = true;
 		}
 	},
 	
@@ -480,27 +480,13 @@ O = {
 	 */
 	cleanLocalStorage: function()
 	{
-		var i, ii;
 		var key;
-		var match;
-		for (i = 0; i < localStorage.length; i++)
+		for (var i = 0; i < localStorage.length; i++)
 		{
 			key = localStorage.key(i);
-			for (ii in O.legalLocalStorageKeys)
-			{
-				if (key === O.legalLocalStorageKeys[ii])
-				{
-					match = true;
-					break;
-				}
-			}
-			if (match !== true)
+			if (O.legalLocalStorageKeys[key] === undefined)
 			{
 				localStorage.removeItem(key);
-			}
-			else
-			{
-				match = false;
 			}
 		}
 	},
@@ -1155,7 +1141,7 @@ O = {
 						line = U.toHalf(arr[i], I.cOptionsDelimiter);
 						key = line[0];
 						value = line[1];
-						if (O.Options[key] !== undefined) // Make sure key exists, also sanitize before writing to storage
+						if (O.legalLocalStorageKeys[key]) // Make sure key exists
 						{
 							datatype = key.substring(0, O.cLengthOfPrefixes);
 							if (datatype === U.TypeEnum.isString)
@@ -1163,7 +1149,7 @@ O = {
 								// Convert newline substitute to actual newline
 								value = value.replace(/\\r\\n/g, "\r\n");
 							}
-							localStorage[key] = U.sanitizeURLOptionsValue(key, value);
+							localStorage[key] = value;
 						}
 					}
 					I.print("Options loaded. Please refresh your browser.");
