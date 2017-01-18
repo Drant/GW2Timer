@@ -81,7 +81,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 161201},
+		programVersion: {key: "int_utlProgramVersion", value: 170118},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -6283,20 +6283,24 @@ Z = {
 			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
 			if (desc.indexOf("to transform") !== -1 || desc.indexOf("to become") !== -1)
 			{
-				if (pItem.type === "Gizmo")
+				if (pItem.type === Q.ItemEnum.Gizmo)
 				{
 					return "TonicEndless";
 				}
-				if (pItem.type === "Consumable")
+				if (pItem.type === Q.ItemEnum.Consumable)
 				{
 					return "TonicConsumable";
 				}
 			}
-			if (pItem.type === "UpgradeComponent" && name.indexOf("infusion") !== -1)
+			if (pItem.type === Q.ItemEnum.Gathering && pItem.rarity === Q.RarityEnum.Exotic)
+			{
+				return "Gathering";
+			}
+			if (pItem.type === Q.ItemEnum.UpgradeComponent && name.indexOf("infusion") !== -1)
 			{
 				return "Aura";
 			}
-			if (pItem.rarity === "Legendary" && pItem.type === "Weapon")
+			if (pItem.rarity === Q.RarityEnum.Legendary && pItem.type === Q.ItemEnum.Weapon)
 			{
 				return "Legendary";
 			}
@@ -6312,7 +6316,7 @@ Z = {
 					return "Carrier";
 				}
 			}
-			if (pItem.type === "Consumable")
+			if (pItem.type === Q.ItemEnum.Consumable)
 			{
 				if (desc.indexOf("home") !== -1)
 				{
@@ -6377,7 +6381,7 @@ Z = {
 			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
 			if (desc.indexOf("decoration") !== -1)
 			{
-				if (pItem.type === "Gizmo" || pItem.type === "Consumable" || pItem.type === "Trophy")
+				if (pItem.type === Q.ItemEnum.Gizmo || pItem.type === Q.ItemEnum.Consumable || pItem.type === Q.ItemEnum.Trophy)
 				{
 					return "Decoration";
 				}
@@ -6392,7 +6396,7 @@ Z = {
 			}
 			if (pItem.rarity === "Rare" && pItem.level && pItem.level > Q.ItemLimit.EctoSalvageLevel)
 			{
-				if (pItem.type === "Weapon" || pItem.type === "Armor" || pItem.type === "Trinket" || pItem.type === "Back")
+				if (pItem.type === Q.ItemEnum.Weapon || pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Trinket || pItem.type === Q.ItemEnum.Back)
 				{
 					if (pItem.flags.indexOf("NoSalvage") === -1)
 					{
@@ -6400,7 +6404,7 @@ Z = {
 					}
 				}
 			}
-			if (pItem.type === "Container")
+			if (pItem.type === Q.ItemEnum.Container)
 			{
 				if (pItem.rarity === "Ascended")
 				{
@@ -6420,7 +6424,7 @@ Z = {
 				}
 				return "Container";
 			}
-			if (pItem.type === "Trophy")
+			if (pItem.type === Q.ItemEnum.Trophy)
 			{
 				if (desc.indexOf("salvage item") !== -1)
 				{
@@ -6442,14 +6446,14 @@ Z = {
 					}
 				}
 			}
-			if (pItem.type === "Gizmo")
+			if (pItem.type === Q.ItemEnum.Gizmo)
 			{
 				if (desc.indexOf("combine") !== -1 && desc.indexOf("tier") === -1)
 				{
 					return "Combine";
 				}
 			}
-			if (pItem.type === "Consumable")
+			if (pItem.type === Q.ItemEnum.Consumable)
 			{
 				if (pItem.details.type === "Food" || pItem.details.type === "Utility")
 				{
@@ -6553,7 +6557,7 @@ Z = {
 		var categorizeItem = function(pItem)
 		{
 			var name = pItem.name.toLowerCase();
-			if (pItem.type === "Container" && name.indexOf("recipe") === -1)
+			if (pItem.type === Q.ItemEnum.Container && name.indexOf("recipe") === -1)
 			{
 				if (name.indexOf("weapon") !== -1)
 				{
@@ -6564,15 +6568,15 @@ Z = {
 					return "ContainerArmor";
 				}
 			}
-			else if (pItem.type === "Weapon" || pItem.type === "Trinket")
+			else if (pItem.type === Q.ItemEnum.Weapon || pItem.type === Q.ItemEnum.Trinket)
 			{
 				return pItem.details.type;
 			}
-			else if (pItem.type === "Armor")
+			else if (pItem.type === Q.ItemEnum.Armor)
 			{
 				return pItem.details.weight_class + pItem.details.type;
 			}
-			else if (pItem.type === "Back")
+			else if (pItem.type === Q.ItemEnum.Back)
 			{
 				return pItem.type;
 			}

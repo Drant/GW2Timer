@@ -49,7 +49,8 @@ var GW2T_DYES_HEADERS = {
 	Chimes: {id: 77470, name_en: "Winter Chimes Dye Kit", name_de: "Winterglocken-Farbkit", name_es: "Kit de tintes de campanitas invernales", name_fr: "Kit de teintures Carillons d'hiver", name_zh: "冬日铃音染料包"},
 	Shift: {id: 78734, name_en: "Blue Shift Dye Kit", name_de: "Blauverschiebung-Farbkit", name_es: "Kit de tintes de corrimiento al azul", name_fr: "Kit de teintures Variation de bleu", name_zh: "蓝移染料包"},
 	Bloodstone: {id: 79354, name_en: "Bloodstone Dye Kit", name_de: "Blutstein-Farbkit", name_es: "Kit de tintes de hematites", name_fr: "Kit de teintures de pierre de Sang", name_zh: "血石染料包"},
-	Vibrant: {id: 79695, name_en: "Vibrant Dye Kit", name_de: "Lebendige-Farben-Farbkit", name_es: "Kit de tintes vibrantes", name_fr: "Kit de teintures vibrantes", name_zh: "醒目染料包"}
+	Vibrant: {id: 79695, name_en: "Vibrant Dye Kit", name_de: "Lebendige-Farben-Farbkit", name_es: "Kit de tintes vibrantes", name_fr: "Kit de teintures vibrantes", name_zh: "醒目染料包"},
+	Solar: {id: 80069, name_en: "Solar and Lunar Dye Kit", name_de: "Sonne-und-Mond-Farbkit", name_es: "Kit de tintes solares y lunares", name_fr: "Kit de teinture solaire et lunaire", name_zh: "日月染料包"}
 };
 
 /*
@@ -621,5 +622,13 @@ Vibrant: [
 	{u: 1495, i: 79694, n: "Slime Green Dye", c: ["#7a9600", "#7a9600", "#7a9600"], h: "Green", m: "Vibrant", l: "[&AgFONwEA]", en: "Slime Green", de: "Schleimgrün", es: "Verde baba", fr: "Vert baveux", zh: "黏液绿"},
 	{u: 1486, i: 79697, n: "Aqua Satin Dye", c: ["#185240", "#185240", "#185240"], h: "Green", m: "Vibrant", l: "[&AgFRNwEA]", en: "Aqua Satin", de: "Aqua-Satin", es: "Aguamarina satinado", fr: "Satin azuré", zh: "水缎"},
 	{u: 1493, i: 79692, n: "Blue Orchid Dye", c: ["#172585", "#172585", "#172585"], h: "Blue", m: "Vibrant", l: "[&AgFMNwEA]", en: "Blue Orchid", de: "Blaue Orchidee", es: "Azul orquídea", fr: "Bleu orchidée", zh: "蓝紫"}
+],
+Solar: [
+	{u: 1485, i: 80078, n: "Silver Satin Dye", c: ["#898989", "#898989", "#898989"], h: "Gray", m: "Vibrant", l: "[&AgHOOAEA]", en: "Silver Satin", de: "Silbersatin", es: "Plata satinado", fr: "Satin argenté", zh: "银缎"},
+	{u: 1489, i: 80073, n: "Glossy Black Dye", c: ["#1e1c1f", "#1e1c1f", "#1e1c1f"], h: "Gray", m: "Vibrant", l: "[&AgHJOAEA]", en: "Glossy Black", de: "Hochglanzschwarz", es: "Negro brillante", fr: "Noir brillant", zh: "亮黑"},
+	{u: 1478, i: 80070, n: "Midnight Bronze Dye", c: ["#210000", "#210000", "#210000"], h: "Brown", m: "Vibrant", l: "[&AgHGOAEA]", en: "Midnight Bronze", de: "Mitternachtsbronze", es: "Bronce medianoche", fr: "Bronze foncé", zh: "午夜铜"},
+	{u: 1499, i: 80079, n: "Rose Gold Dye", c: ["#b08f80", "#b08f80", "#b08f80"], h: "Red", m: "Vibrant", l: "[&AgHPOAEA]", en: "Rose Gold", de: "Rotgold", es: "Oro rosado", fr: "Or rose", zh: "玫瑰金"},
+	{u: 1481, i: 80068, n: "Daybreak Dye", c: ["#f6f0b3", "#f6f0b3", "#f6f0b3"], h: "Yellow", m: "Vibrant", l: "[&AgHEOAEA]", en: "Daybreak", de: "Tagesanbruch", es: "Alba", fr: "Point du jour", zh: "破晓"},	
+	{u: 1498, i: 80071, n: "Blue Whale Dye", c: ["#2d2c3f", "#2d2c3f", "#2d2c3f"], h: "Purple", m: "Vibrant", l: "[&AgHHOAEA]", en: "Blue Whale", de: "Blauwal", es: "Azul ballena", fr: "Bleu baleine", zh: "蓝鲸"}	
 ]
 };

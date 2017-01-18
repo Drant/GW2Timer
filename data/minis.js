@@ -438,6 +438,7 @@ Gem: [
 	{u: 419, i: 79651, n: "Mini Feline Familiar", p: {gem: 350}},
 	{u: 420, i: 79693, n: "Mini Bloodstone Rock", p: {gem: 350}},
 	{u: 331, i: 70112, n: "Mini Mushroom Stomper", p: {gem: 0}},
-	{u: 430, i: 80044, n: "Mini Festive Aurene", p: {gem: 400}}
+	{u: 430, i: 80044, n: "Mini Festive Aurene", p: {gem: 400}},
+	{u: 435, i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}}
 ]
 };

@@ -1505,7 +1505,7 @@ Countdown: {
 		name_es: "Festival lunar",
 		name_fr: "Festival lunaire",
 		name_zh: "新春：公鸡",
-		official: "news/happy-lunar-new-year/",
+		official: "news/open-up-a-solar-and-lunar-dye-kit-and-lunar-new-year-chest-today/",
 		Start: new Date("2017-01-17T17:00:00Z"),
 		Finish: new Date("2017-01-31T17:00:00Z")
 	}
@@ -1541,8 +1541,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-01-10T16:00:00Z"),
-	Finish: new Date("2017-01-17T16:00:00Z"),
+	Start: new Date("2017-01-17T16:00:00Z"),
+	Finish: new Date("2017-01-24T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1563,45 +1563,31 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Arctic Explorer Outfit",
-		id: "67868",
-		price: 700,
-		discount: null,
+		name: "Imperial Outfit",
+		id: "68654",
+		price: 560,
+		discount: 700,
 		col: 0
 	},
 	{
-		name: "Ice Encasement Outfit",
-		id: "80049",
-		price: 700,
-		discount: null,
+		name: "Red Envelope Mail Carrier",
+		id: "68652",
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
-		name: "Ice Crown",
-		id: "80026",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Bank Job Package",
-		id: "http://i.imgur.com/Sj3gatz.png",
-		price: 1200,
+		name: "Celestial Rooster Harvesting Tool",
+		id: "80067",
+		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Scruffy Backpack",
-		id: "80019",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mini Festive Aurene",
-		id: "80044",
-		price: 400,
-		discount: null,
+		name: "Solar and Lunar Dye Kit",
+		id: "80069",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]

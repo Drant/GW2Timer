@@ -33,6 +33,16 @@ var GW2T_CATALOG_HEADERS = {
  * Items to be excluded from collate.
  */
 var GW2T_CATALOG_BLACKLIST = {
+	"8645": "Potion of Wolf Transformation",
+	"22335": "Commander's Compendium",
+	"36105": "Endless Multicolored Ooze Tonic",
+	"67335": "Commander's Compendium",
+	"67336": "Red Commander's Compendium",
+	"67337": "Purple Commander's Compendium",
+	"67338": "Yellow Commander's Compendium",
+	"70314": "Commander's Compendium",
+	"79383": "Green Commander's Compendium",
+	"79392": "Orange Commander's Compendium",
 	"45017": "Quip",
 	"37123": "Healing +7 Agony Infusion",
 	"37125": "Healing +9 Agony Infusion",
@@ -246,7 +256,8 @@ Gathering: [
 	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 800}},
 	{i: 79591, n: "Unbound Harvesting Sickle", p: {karma: 4900}},
 	{i: 79465, n: "Unbound Logging Axe", p: {karma: 4900}},
-	{i: 79581, n: "Unbound Mining Pick", p: {karma: 4900}}
+	{i: 79581, n: "Unbound Mining Pick", p: {karma: 4900}},
+	{i: 80067, n: "Celestial Rooster Harvesting Tool", p: {gem: 1000}}
 ],
 Salvage: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
@@ -678,7 +689,8 @@ Bundle: [
 	{i: 8773, n: "Inquest Golem Arm", p: {karma: 14}},
 	{i: 8780, n: "Spiky Fruit", p: {coin: 16}},
 	{i: 36031, n: "Toilet Paper", p: {coin: 0}},
-	{i: 79424, n: "Pocket Jade Armor", p: {karma: 3150}}
+	{i: 79424, n: "Pocket Jade Armor", p: {karma: 3150}},
+	{i: 80080, n: "Visage of the Great Rooster Firework"}
 ],
 Aura: [
 	{i: 68440, n: "Preserved Queen Bee"},
