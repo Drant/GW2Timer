@@ -975,7 +975,7 @@ O = {
 			if (O.Options.bol_showWorldCompletion === true
 				&& M.isMappingIconsGenerated === false)
 			{
-				location.reload();
+				document.location.reload();
 			}
 			
 			$("#mapOptionsCompletion label input").each(function()
@@ -1124,15 +1124,52 @@ O = {
 			// Sort them alphabetically
 			keys.sort();
 			
-			var s = "";
+			var htmlstr = "";
+			var filestr = "";
 			// Print the key-value pairs by the key's order
 			for (i in keys)
 			{
-				var value = U.escapeHTML(localStorage.getItem(keys[i]));
-				s += keys[i] + ": " + value + "<br />";
+				var value = localStorage.getItem(keys[i]);
+				// Convert newline to substitute
+				htmlstr += keys[i] + I.cOptionsDelimiter + U.escapeHTML(value) + "<br />";
+				filestr += keys[i] + I.cOptionsDelimiter + value.replace(/(?:\r\n|\r|\n)/g, "\\r\\n") + "\r\n";
 			}
 			
-			I.print(s, true);
+			I.print("Please click the link below to save the options file.", true);
+			Z.createFile(filestr, "gw2t_options.txt");
+			I.print(htmlstr);
+		});
+		/*
+		 * Imports the new-line separated options.
+		 */
+		$("#optImportLocalStorage").change(function()
+		{
+			try
+			{
+				Z.openTextFile($(this)[0].files[0], function(pString)
+				{
+					var arr = pString.split(/\r\n/);
+					var line, key, value, datatype;
+					for (var i in arr)
+					{
+						line = U.toHalf(arr[i], I.cOptionsDelimiter);
+						key = line[0];
+						value = line[1];
+						datatype = key.substring(0, O.cLengthOfPrefixes);
+						if (datatype === U.TypeEnum.isString)
+						{
+							// Convert newline substitute to actual newline
+							value = value.replace(/\\r\\n/g, "\r\n");
+						}
+						localStorage[key] = value;
+					}
+					I.print("Options loaded. Please refresh your browser.");
+				});
+			}
+			catch (e)
+			{
+				I.write("Error loading file.");
+			}
 		});
 	},
 	
@@ -4043,6 +4080,22 @@ U = {
 	},
 	
 	/*
+	 * Splits a string in half.
+	 * @param string pString
+	 * @param string pDelimiter
+	 * @returns array
+	 */
+	toHalf: function(pString, pDelimiter)
+	{
+		var divind = pString.indexOf(pDelimiter);
+		if (divind !== -1)
+		{
+			return [pString.substr(0, divind), pString.substr(divind + pDelimiter.length, pString.length)];
+		}
+		return [pString, ""];
+	},
+	
+	/*
 	 * Shortens a title/name string based on limit, and add ellipses.
 	 * @param string pString.
 	 * @returns string truncated if it's too long.
@@ -4945,6 +4998,21 @@ Z = {
 		var filenameoutput = (pFileName) ? "<input class='cslFilename cssInputText' type='text' value='" + pFileName + "' /> " : "";
 		I.print(filenameoutput + "<a href='" + fileurl + "' download='" + filename + "'>" + fileurl + "</a>");
 		return fileurl;
+	},
+	
+	/*
+	 * Converts a text file into a string.
+	 * @param object pFile
+	 * @param function pCallback with string.
+	 */
+	openTextFile: function(pFile, pCallback)
+	{
+		var reader = new FileReader();
+		reader.readAsText(pFile);
+		reader.onload = function()
+		{
+			pCallback(reader.result);
+		};
 	},
 	
 	/*
@@ -33222,6 +33290,7 @@ I = {
 	cChatcodeSuffix: "]",
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,
+	cOptionsDelimiter: ": ",
 	cClipboardAttribute: "data-clipboard-text",
 	cClipboardSuccessText: "Text copied to clipboard :)<br />",
 	cTooltipAttribute: "data-tip",

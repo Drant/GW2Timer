@@ -895,21 +895,24 @@
 					<h2>Advanced</h2>
 					<label title="DST for showing ArenaNet Washington-US time."><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
 					<label title="Promote GW2Timer.com by including the site's name in auto-copied clipboard text. Changes will take effect when the next chain starts."><input id="opt_bol_useSiteTag" type="checkbox" /> Affix site tag to clipboard text</label>
+					<div id="optTimestamps">
+						<div><time id="optTimestampServerReset">00:00</time> Next Server Reset (<time id="optTimeTillReset">00:00</time>)</div>
+						<div><time id="optTimestampUTC">00:00</time> UNIX Timestamp</div>
+						<div><time id="optTimestampLocalReset">00:00</time> Last Local Reset</div>
+					</div>
 					<br />
 					<h2>Defaults</h2>
 					<div class="optButtons">
 						<button id="optClearLocalStorage" title="Clear the localStorage which stores options and states, as if you visited for the first time.">Clear Website Memory</button>
 					</div>
 					<br />
-					<h2>Debug</h2>
+					<h3>Export</h3>
+					<span>The Print button will generate a file (containing all options and user data) that you can save and transfer to another computer. Use the Import button to load that file.</span>
 					<div class="optButtons">
 						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these key-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showMap=false&amp;int_setClock=3">Print Website Memory</button>
-						<div id="optTimestamps">
-							<div><time id="optTimestampServerReset">00:00</time> Next Server Reset (<time id="optTimeTillReset">00:00</time>)</div>
-							<div><time id="optTimestampUTC">00:00</time> UNIX Timestamp</div>
-							<div><time id="optTimestampLocalReset">00:00</time> Last Local Reset</div>
-						</div>
 					</div>
+					<h3>Import</h3>
+					<input id="optImportLocalStorage" type="file" />
 					<br />
 				</div>
 			</article>
