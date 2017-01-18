@@ -1414,10 +1414,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "Try the new GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a> &quot;fullscreen&quot; overlay and with custom hi-vis cursors.",
+	pve: "<dfn data-coord='[[10769,11022],[10786,10856],[10811,10861],[10811,10830],[10834,10739],[10724,10696],[10704,10690],[10658,10722],[10560,10844],[10517,10902]]'>Lunar Firecrackers</dfn>. GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a> &quot;fullscreen&quot; overlay and with custom hi-vis cursors.",
 	wvw: "",
-	Start: new Date("2016-01-10T16:00:00Z"),
-	Finish: new Date("2017-01-17T16:00:00Z"),
+	Start: new Date("2016-01-17T16:00:00Z"),
+	Finish: new Date("2017-01-24T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
