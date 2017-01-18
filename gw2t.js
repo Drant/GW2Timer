@@ -1155,13 +1155,16 @@ O = {
 						line = U.toHalf(arr[i], I.cOptionsDelimiter);
 						key = line[0];
 						value = line[1];
-						datatype = key.substring(0, O.cLengthOfPrefixes);
-						if (datatype === U.TypeEnum.isString)
+						if (O.Options[key] !== undefined) // Make sure key exists, also sanitize before writing to storage
 						{
-							// Convert newline substitute to actual newline
-							value = value.replace(/\\r\\n/g, "\r\n");
+							datatype = key.substring(0, O.cLengthOfPrefixes);
+							if (datatype === U.TypeEnum.isString)
+							{
+								// Convert newline substitute to actual newline
+								value = value.replace(/\\r\\n/g, "\r\n");
+							}
+							localStorage[key] = U.sanitizeURLOptionsValue(key, value);
 						}
-						localStorage[key] = value;
 					}
 					I.print("Options loaded. Please refresh your browser.");
 				});
