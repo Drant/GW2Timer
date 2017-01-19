@@ -31418,7 +31418,8 @@ H = {
 				I.updateScrollbar("#dsbVendorTable");
 			});
 			I.removeThrobber(table);
-			table.append("<span id='dsbVendorNote'>This list is user contributed. Please correct items using the Update link above.</span>");
+			table.append("<span id='dsbVendorNote'>This list is user contributed. "
+				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.official) + ">Update</a> link.</span>");
 		};
 		
 		var listOffers = function(pData)
