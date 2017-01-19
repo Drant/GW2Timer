@@ -1134,6 +1134,7 @@ O = {
 			{
 				Z.openTextFile($(this)[0].files[0], function(pString)
 				{
+					var counter = 0;
 					var arr = pString.split(/\r\n/);
 					var line, key, value, datatype;
 					for (var i in arr)
@@ -1150,9 +1151,17 @@ O = {
 								value = value.replace(/\\r\\n/g, "\r\n");
 							}
 							localStorage[key] = value;
+							counter++;
 						}
 					}
-					I.print("Options loaded. Please refresh your browser.");
+					if (counter > 0)
+					{
+						I.print(counter + " options loaded. Please refresh your browser.");
+					}
+					else
+					{
+						I.print("No options loaded. Please make sure the file is properly formatted.");
+					}
 				});
 			}
 			catch (e)
@@ -2893,7 +2902,7 @@ U = {
 					}
 					Z.scrapeAPIArray(url + "&page=", pagenumbers, {
 						aIsStandard: false,
-						aCooldown: 60,
+						aCooldown: 30,
 						aNumRetries: 10,
 						aCallback: function(pPages)
 					{
@@ -5297,7 +5306,7 @@ Z = {
 		var failedids = [];
 		var failedindexes = [];
 		var reqindex = 0;
-		var numretries = (Settings.aNumRetries === undefined) ? 3 : Settings.aNumRetries;
+		var numretries = (Settings.aNumRetries || 3);
 		var reqlimit = 500;
 		var reqcooldownms = (Settings.aCooldown || 30) * T.cMSECONDS_IN_SECOND;
 		var numtofetch = 0;
@@ -22307,7 +22316,7 @@ M = {
 	 */
 	printPinHelp: function()
 	{
-		var str = "<div class='cntComposition'><h2>Map Pins Usage</h2>"
+		var str = "<h2>Map Pins Usage</h2>"
 			+ "<ul>"
 			+ "<li><b>Create a pin:</b> double click an empty area on the map (multiple pins creates a path).</li>"
 			+ "<li><b>Insert a pin between a path:</b> double click a part of the path.</li>"
@@ -22320,8 +22329,8 @@ M = {
 			+ "<li><b>Get coordinates of a path:</b> single click on the path.</li>"
 			+ "<li><b>Generate a path:</b> paste the path coordinates into the coordinates bar and press Enter.</li>"
 			+ "<li><b>Optimize a path:</b> middle click that pin, it will become the starting pin.</li>"
-			+ "</ul></div>";
-		I.print(str);
+			+ "</ul>";
+		I.help(str);
 	},
 	
 	/*
@@ -31359,7 +31368,7 @@ H = {
 			+ "<img data-src='img/ui/tradingpost.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
 				+ "title='Previous recipes and frequency statistics.'>" + D.getWordCapital("history") + "</a> "
 			+ "<img data-src='img/ui/import.png' /><a class='jsTitle'" + U.convertExternalAnchor(H.Vendor.official)
-					+ "title='Help update and verify the daily offers list.'>" + D.getWordCapital("update") + "</a>"
+					+ "title='Update and verify the collaborative daily offers list.'>" + D.getWordCapital("update") + "</a>"
 			+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>").hide();
 		I.qTip.reinit();
 
@@ -31418,7 +31427,7 @@ H = {
 				I.updateScrollbar("#dsbVendorTable");
 			});
 			I.removeThrobber(table);
-			table.append("<span id='dsbVendorNote'>This list is user contributed. "
+			table.append("<span id='dsbVendorNote'>This daily list is user contributed. "
 				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.official) + ">Update</a> link.</span>");
 		};
 		
@@ -31444,11 +31453,11 @@ H = {
 			catch (e) {}
 			if (list.length !== H.Vendor.numOffers)
 			{
+				I.removeThrobber(table);
 				I.write("Error parsing external data. Please collaboratively update the list.");
 				return;
 			}
 			
-			table.append(I.cThrobber);
 			for (var i in H.Vendor.OffersAssoc)
 			{
 				table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
@@ -31517,6 +31526,7 @@ H = {
 			
 			if (H.Vendor.isEnabled)
 			{
+				table.append(I.cThrobber);
 				$.ajax({
 					dataType: "json",
 					url: H.Vendor.url,
