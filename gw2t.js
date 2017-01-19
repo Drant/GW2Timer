@@ -18595,6 +18595,8 @@ D = {
 			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜寻"},
 		s_get: {de: "erhalten", es: "conseguir", fr: "obtenir",
 			cs: "dostat", it: "ottenere", pl: "dostawać", pt: "obter", ru: "достава́ть", zh: "获得"},
+		s_update: {de: "aktualisieren", es: "actualizar", fr: "mettre à jour",
+			cs: "aktualizovat", it: "aggiornare", pl: "aktualizować", pt: "atualizar", ru: "обновить", zh: "更新"},
 		
 		// Adjectives, Adverbs, Participles
 		s_no: {de: "kein", es: "no", fr: "pas de",
@@ -31355,7 +31357,9 @@ H = {
 			+ "<img data-src='img/ui/info.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
 			+ "<img data-src='img/ui/tradingpost.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
-				+ "title='Previous recipes and frequency statistics.'>" + D.getWordCapital("history") + "</a>"
+				+ "title='Previous recipes and frequency statistics.'>" + D.getWordCapital("history") + "</a> "
+			+ "<img data-src='img/ui/import.png' /><a class='jsTitle'" + U.convertExternalAnchor(H.Vendor.official)
+					+ "title='Help update and verify the daily offers list.'>" + D.getWordCapital("update") + "</a>"
 			+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>").hide();
 		I.qTip.reinit();
 
@@ -31413,11 +31417,82 @@ H = {
 				I.bindScrollbar("#dsbVendorTable");
 				I.updateScrollbar("#dsbVendorTable");
 			});
-			if (T.isTimely(H.Vendor, new Date()) === false)
-			{
-				$("#dsbVendorTable").prepend("<div class='dsbNote'>Note: These items have expired.</div>");
-			}
 			I.removeThrobber(table);
+			table.append("<span id='dsbVendorNote'>This list is user contributed. Please correct items using the Update link above.</span>");
+		};
+		
+		var listOffers = function(pData)
+		{
+			var list = [];
+			try
+			{
+				var data = pData.feed.entry[0];
+				for (var i in H.Vendor.OffersAssoc)
+				{
+					var id = parseInt(data["gsx$" + i.toLowerCase()].$t);
+					if (H.Vendor.Products[id])
+					{
+						list.push(id);
+					}
+					else
+					{
+						list.push(43798);
+					}
+				}
+			}
+			catch (e) {}
+			if (list.length !== H.Vendor.numOffers)
+			{
+				I.write("Error parsing external data. Please collaboratively update the list.");
+				return;
+			}
+			
+			table.append(I.cThrobber);
+			for (var i in H.Vendor.OffersAssoc)
+			{
+				table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
+				(function(iIndex)
+				{
+					var offerid = list[(H.Vendor.OffersAssoc[iIndex])];
+					Q.getItem(offerid, function(pData)
+					{
+						var wikiquery = (D.isLanguageDefault()) ? pData.name : offerid.toString();
+						$("#dsbVendorEntry_" + iIndex).html(
+							"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
+							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
+								+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
+							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offerid] || H.Vendor.PriceDefault) + "</span>"
+							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>");
+						// Get TP prices also
+						$.getJSON(U.getAPIPrice(offerid), function(pData)
+						{
+							$("#dsbVendorPriceCoin_" + iIndex).html(" " + I.Symbol.Approx + " " + E.formatCoinStringColored(E.processPrice(pData).oPriceSellTaxed));
+						}).fail(function()
+						{
+							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
+						});
+						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
+						// Get the product that the recipe crafts
+						var product = H.Vendor.Products[offerid] || offerid;
+						Q.getItem(product, function(pProduct)
+						{
+							var icon = $("#dsbVendorIcon_" + iIndex);
+							icon.attr("src", pProduct.icon);
+							Q.scanItem(pProduct, {aElement: icon});
+						});
+						// Finalize the table after every offer has been added
+						if ($(".dsbVendorItem").length === H.Vendor.numOffers)
+						{
+							finalizeVendorTable();
+						}
+					}).fail(function()
+					{
+						table.empty();
+						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid)) + ">"
+							+ offerid + "</a>. ArenaNet API server may be down.");
+					});
+				})(i);
+			}
 		};
 		
 		// Collapse and empty the table if currently expanded, else generate
@@ -31439,54 +31514,17 @@ H = {
 			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
 			table.empty();
 			
-			if (H.Vendor.Offers.length && T.isTimely(H.Vendor, new Date(), T.cSECONDS_IN_DAY))
+			if (H.Vendor.isEnabled)
 			{
-				table.append(I.cThrobber);
-				for (var i in H.Vendor.OffersAssoc)
-				{
-					table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
-					(function(iIndex)
+				$.ajax({
+					dataType: "json",
+					url: H.Vendor.url,
+					cache: false,
+					success: function(pData)
 					{
-						var offerid = H.Vendor.Offers[(H.Vendor.OffersAssoc[iIndex])];
-						Q.getItem(offerid, function(pData)
-						{
-							var wikiquery = (D.isLanguageDefault()) ? pData.name : offerid.toString();
-							$("#dsbVendorEntry_" + iIndex).html(
-								"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
-								+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
-									+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-								+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offerid] || H.Vendor.PriceDefault) + "</span>"
-								+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>");
-							// Get TP prices also
-							$.getJSON(U.getAPIPrice(offerid), function(pData)
-							{
-								$("#dsbVendorPriceCoin_" + iIndex).html(" " + I.Symbol.Approx + " " + E.formatCoinStringColored(E.processPrice(pData).oPriceSellTaxed));
-							}).fail(function()
-							{
-								$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
-							});
-							M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
-							// Get the product that the recipe crafts
-							var product = H.Vendor.Products[offerid] || offerid;
-							Q.getItem(product, function(pProduct)
-							{
-								var icon = $("#dsbVendorIcon_" + iIndex);
-								icon.attr("src", pProduct.icon);
-								Q.scanItem(pProduct, {aElement: icon});
-							});
-							// Finalize the table after every offer has been added
-							if ($(".dsbVendorItem").length === H.Vendor.Offers.length)
-							{
-								finalizeVendorTable();
-							}
-						}).fail(function()
-						{
-							table.empty();
-							I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid)) + ">"
-								+ offerid + "</a>. ArenaNet API server may be down.");
-						});
-					})(i);
-				}
+						listOffers(pData);
+					}
+				});
 			}
 			else
 			{

@@ -1306,6 +1306,12 @@ textarea.jsCopyCode {
 	line-height: 64px;
 	text-decoration: underline;
 }
+#dsbVendorNote {
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 14px;
+	line-height: normal;
+	color: #aaaaaa;
+}
 
 #dsbDaily {
 	text-align: center;
