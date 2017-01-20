@@ -1563,6 +1563,13 @@ Sale: {
 	],
 	Items: [
 	{
+		name: "Silver-Fed Salvage-o-Matic",
+		id: "67027",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Imperial Outfit",
 		id: "68654",
 		price: 560,
