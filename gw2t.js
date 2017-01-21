@@ -9130,21 +9130,26 @@ A = {
 						I.print(liquidtip);
 					}
 				});
-				I.qTip.init(appraisedelm);
-				I.qTip.init(liquidelm);
 				
 				// Show the summary box animated
+				var animationspeed = 3000;
 				summary.show("slow", function()
 				{
 					I.animateNumber(totalappraisedsell, function(pValue)
 					{
 						appraisedelm[0].innerHTML = E.formatCoinString(pValue, {aWantBig: true});
-					}, 3000, "easeInOutQuart");
+					}, animationspeed, "easeInOutQuart");
 					I.animateNumber(totalliquidsell, function(pValue)
 					{
 						liquidelm[0].innerHTML = E.formatCoinString(pValue, {aWantBig: true});
-					}, 3000, "easeInOutQuart");
+					}, animationspeed, "easeInOutQuart");
 					historycontainer.show();
+					// Bind tooltip after the animation
+					setTimeout(function()
+					{
+						I.qTip.init(appraisedelm);
+						I.qTip.init(liquidelm);
+					}, animationspeed);
 				});
 				
 				/*
