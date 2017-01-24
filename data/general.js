@@ -1414,10 +1414,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "The <a href='http://forum.renaka.com/topic/8054449/1/#post603537'>Pact Supply</a> daily offers list is now user-contributed. Please help update it if you can.<br /><dfn data-coord='[[10769,11022],[10786,10856],[10811,10861],[10811,10830],[10834,10739],[10724,10696],[10704,10690],[10658,10722],[10560,10844],[10517,10902]]'>Lunar Firecrackers</dfn>. GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a> &quot;fullscreen&quot; overlay and with custom hi-vis cursors.",
+	pve: "<dfn data-coord='[[10769,11022],[10786,10856],[10811,10861],[10811,10830],[10834,10739],[10724,10696],[10704,10690],[10658,10722],[10560,10844],[10517,10902]]'>Lunar Firecrackers</dfn>. GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a> &quot;fullscreen&quot; overlay and with custom hi-vis cursors.",
 	wvw: "",
-	Start: new Date("2016-01-17T16:00:00Z"),
-	Finish: new Date("2017-01-24T16:00:00Z"),
+	Start: new Date("2016-01-24T16:00:00Z"),
+	Finish: new Date("2017-01-31T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
@@ -1541,8 +1541,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-01-17T16:00:00Z"),
-	Finish: new Date("2017-01-24T16:00:00Z"),
+	Start: new Date("2017-01-24T16:00:00Z"),
+	Finish: new Date("2017-01-31T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1563,10 +1563,10 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Silver-Fed Salvage-o-Matic",
-		id: "67027",
-		price: 500,
-		discount: null,
+		name: "Ancestral Outfit",
+		id: "66279",
+		price: 560,
+		discount: 700,
 		col: 0
 	},
 	{
@@ -1577,16 +1577,44 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Red Envelope Mail Carrier",
-		id: "68652",
-		price: 480,
-		discount: 600,
+		name: "Rox's Pathfinder Outfit",
+		id: "http://i.imgur.com/JOsJJId.png",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Celestial Rooster Glider",
+		id: "http://i.imgur.com/sYQlOER.png",
+		price: 500,
+		discount: null,
 		col: 0
 	},
 	{
 		name: "Celestial Rooster Harvesting Tool",
 		id: "80067",
 		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Ram Balloon",
+		id: "68650",
+		price: 250,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Red Lantern",
+		id: "68614",
+		price: 250,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Plush Ram Backpack",
+		id: "68612",
+		price: 300,
 		discount: null,
 		col: 1
 	},
