@@ -1578,14 +1578,14 @@ Sale: {
 	},
 	{
 		name: "Rox's Pathfinder Outfit",
-		id: "http://i.imgur.com/JOsJJId.png",
+		id: "80077",
 		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Celestial Rooster Glider",
-		id: "http://i.imgur.com/sYQlOER.png",
+		id: "80066",
 		price: 500,
 		discount: null,
 		col: 0

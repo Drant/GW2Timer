@@ -63,7 +63,8 @@ General: [
 	{u: 43, i: 79671, n: "Ghostly Outfit", p: {gem: 700}},
 	{u: 45, i: 79705, n: "Marjory's Shrouded Outfit", p: {gem: 700}},
 	{u: 44, i: 79703, n: "Braham's Wolfblood Outfit", p: {gem: 700}},
-	{u: 46, i: 80049, n: "Ice Encasement Outfit", p: {gem: 700}}
+	{u: 46, i: 80049, n: "Ice Encasement Outfit", p: {gem: 700}},
+	{u: 47, i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}}
 ],
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},
