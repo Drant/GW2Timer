@@ -4836,6 +4836,11 @@ Z = {
 				}
 				I.print(str);
 			}},
+			cal: {usage: "Prints a HTML calendar input element.", f: function()
+			{
+				I.print("<br /><input id='cslCalendar' type='date' /><br />");
+				$("#cslCalendar")[0].valueAsDate = new Date();
+			}},
 			lock: {usage: "Map cannot be moved.", f: function()
 			{
 				that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked.");

@@ -1508,6 +1508,16 @@ Countdown: {
 		official: "news/open-up-a-solar-and-lunar-dye-kit-and-lunar-new-year-chest-today/",
 		Start: new Date("2017-01-17T17:00:00Z"),
 		Finish: new Date("2017-01-31T17:00:00Z")
+	},
+	{
+		name_en: "LS3: Episode IV (Estimated)",
+		name_de: "LG3: Episode IV (Geschätzt)",
+		name_es: "HV3: Episodio IV (Estimado)",
+		name_fr: "HV3: Épisode IV (Estimée)",
+		name_zh: "第二生活世界：第四集（估计）",
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/Quick-note-on-Ep4-bundled-updates",
+		Start: new Date("2017-02-14T17:00:00Z"),
+		Finish: new Date("2017-02-15T18:00:00Z")
 	}
 	]
 },
@@ -1577,8 +1587,22 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Phoenix Kite Glider",
+		id: "77738",
+		price: 320,
+		discount: 400,
+		col: 0
+	},
+	{
 		name: "Rox's Pathfinder Outfit",
 		id: "80077",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Golden Feather Wings Glider Combo",
+		id: "77270",
 		price: 700,
 		discount: null,
 		col: 0
@@ -1595,7 +1619,7 @@ Sale: {
 		id: "80067",
 		price: 1000,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Ram Balloon",
