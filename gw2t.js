@@ -9339,7 +9339,7 @@ A = {
 			});
 			
 			// Finally
-			I.scrollToElement("#accAuditCenter", {aSpeed: "fast"});
+			I.scrollToElement("#accAudit", {aSpeed: "fast"});
 			I.suspendElement(button, false);
 			buttonalt.show();
 		};
