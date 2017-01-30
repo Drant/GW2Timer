@@ -1587,22 +1587,8 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Phoenix Kite Glider",
-		id: "77738",
-		price: 320,
-		discount: 400,
-		col: 0
-	},
-	{
 		name: "Rox's Pathfinder Outfit",
 		id: "80077",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Golden Feather Wings Glider Combo",
-		id: "77270",
 		price: 700,
 		discount: null,
 		col: 0
@@ -1619,7 +1605,7 @@ Sale: {
 		id: "80067",
 		price: 1000,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Ram Balloon",
