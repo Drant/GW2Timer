@@ -1414,10 +1414,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<dfn data-coord='[[10769,11022],[10786,10856],[10811,10861],[10811,10830],[10834,10739],[10724,10696],[10704,10690],[10658,10722],[10560,10844],[10517,10902]]'>Lunar Firecrackers</dfn>. GW2Navi <a href='http://forum.renaka.com/topic/5546166/4/#post-603314'>2017 beta</a> &quot;fullscreen&quot; overlay and with custom hi-vis cursors.",
+	pve: "<dfn data-coord='[[10769,11022],[10786,10856],[10811,10861],[10811,10830],[10834,10739],[10724,10696],[10704,10690],[10658,10722],[10560,10844],[10517,10902]]'>Lunar Firecrackers</dfn>. <a href='http://buy.guildwars2.com'>Heart of Thorns</a> is 50% off.",
 	wvw: "",
 	Start: new Date("2016-01-24T16:00:00Z"),
-	Finish: new Date("2017-01-31T16:00:00Z"),
+	Finish: new Date("2017-02-07T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
@@ -1507,17 +1507,17 @@ Countdown: {
 		name_zh: "新春：公鸡",
 		official: "news/open-up-a-solar-and-lunar-dye-kit-and-lunar-new-year-chest-today/",
 		Start: new Date("2017-01-17T17:00:00Z"),
-		Finish: new Date("2017-01-31T17:00:00Z")
+		Finish: new Date("2017-02-07T17:00:00Z")
 	},
 	{
-		name_en: "LS3: Episode IV (Estimated)",
-		name_de: "LG3: Episode IV (Geschätzt)",
-		name_es: "HV3: Episodio IV (Estimado)",
-		name_fr: "HV3: Épisode IV (Estimée)",
-		name_zh: "第二生活世界：第四集（估计）",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Quick-note-on-Ep4-bundled-updates",
-		Start: new Date("2017-02-14T17:00:00Z"),
-		Finish: new Date("2017-02-15T18:00:00Z")
+		name_en: "LS3: Episode IV",
+		name_de: "LG3: Episode IV",
+		name_es: "HV3: Episodio IV",
+		name_fr: "HV3: Épisode IV",
+		name_zh: "第二生活世界：第四集",
+		official: "news/watch-the-trailer-for-the-head-of-the-snake/",
+		Start: new Date("2017-02-07T17:00:00Z"),
+		Finish: new Date("2017-02-08T17:00:00Z")
 	}
 	]
 },
@@ -1551,8 +1551,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-01-24T16:00:00Z"),
-	Finish: new Date("2017-01-31T16:00:00Z"),
+	Start: new Date("2017-01-31T16:00:00Z"),
+	Finish: new Date("2017-02-07T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1573,17 +1573,31 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Ancestral Outfit",
-		id: "66279",
-		price: 560,
-		discount: 700,
+		name: "Trickster's Light-Armor Skin",
+		id: "43102",
+		price: 520,
+		discount: 800,
 		col: 0
 	},
 	{
-		name: "Imperial Outfit",
-		id: "68654",
-		price: 560,
-		discount: 700,
+		name: "Viper's Medium-Armor Skin",
+		id: "43101",
+		price: 520,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Phalanx Heavy-Armor Skin",
+		id: "43100",
+		price: 520,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Lord Caudecus's Sword Skin",
+		id: "79089",
+		price: 600,
+		discount: null,
 		col: 0
 	},
 	{
@@ -1591,48 +1605,20 @@ Sale: {
 		id: "80077",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Celestial Rooster Glider",
 		id: "80066",
 		price: 500,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Celestial Rooster Harvesting Tool",
 		id: "80067",
 		price: 1000,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Ram Balloon",
-		id: "68650",
-		price: 250,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Red Lantern",
-		id: "68614",
-		price: 250,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Plush Ram Backpack",
-		id: "68612",
-		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Solar and Lunar Dye Kit",
-		id: "80069",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]
