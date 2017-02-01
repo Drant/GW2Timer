@@ -1505,7 +1505,7 @@ Countdown: {
 		name_es: "Festival lunar",
 		name_fr: "Festival lunaire",
 		name_zh: "新春：公鸡",
-		official: "news/open-up-a-solar-and-lunar-dye-kit-and-lunar-new-year-chest-today/",
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/Lunar-New-Year-Festival-Update",
 		Start: new Date("2017-01-17T17:00:00Z"),
 		Finish: new Date("2017-02-07T17:00:00Z")
 	},
