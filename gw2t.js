@@ -28870,6 +28870,10 @@ W = {
 				W.reinitializeServerChange(false);
 				return;
 			}
+			var map, obj, apiobj;
+			var numobjflipped = 0;
+			var maxobjflipped = 12;
+			var istoomanyflips = false;
 			
 			// Initialize stagnant variables once
 			if (W.MatchFinishTimeISO !== pData.end_time)
@@ -28913,10 +28917,6 @@ W = {
 			}
 			
 			// Update objectives
-			var map, obj, apiobj;
-			var numobjflipped = 0;
-			var maxobjflipped = 12;
-			var istoomanyflips = false;
 			for (var i in pData.maps)
 			{
 				map = pData.maps[i];
