@@ -1594,16 +1594,23 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Lord Caudecus's Sword Skin",
-		id: "79089",
-		price: 600,
-		discount: null,
+		name: "Metallurgic Dye Kit",
+		id: "47900",
+		price: 93,
+		discount: [[1, 93, 125], [5, 375, 500], [25, 1875, 2500]],
 		col: 0
 	},
 	{
 		name: "Rox's Pathfinder Outfit",
 		id: "80077",
 		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Lord Caudecus's Sword Skin",
+		id: "79089",
+		price: 600,
 		discount: null,
 		col: 1
 	},
