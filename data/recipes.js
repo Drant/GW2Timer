@@ -8129,7 +8129,8 @@ Huntsman_Rifle: [
 	{u: 11568, i: 75261, n: "Crusader Pearl Blunderbuss", r: [[70434, 1], [12918, 1], [12953, 1]]},
 	{u: 11611, i: 71629, n: "Tenebrous Rifle", r: [[70718, 10], [42021, 1], [19721, 10], [50343, 1]]},
 	{u: 11697, i: 73318, n: "Wanderer's Pearl Blunderbuss", r: [[71433, 1], [73874, 1], [73555, 1]], s: 72246, t: 72246},
-	{u: 10112, i: 71219, n: "Tizlak's Musket", r: [[72902, 1], [45834, 1], [45843, 1], [46746, 1]], s: 73845, t: 73845}
+	{u: 10112, i: 71219, n: "Tizlak's Musket", r: [[72902, 1], [45834, 1], [45843, 1], [46746, 1]], s: 73845, t: 73845},
+	{u: 10468, i: 73357, n: "Laranthir's Musket", r: [[72550, 1], [45834, 1], [45843, 1], [46746, 1]], s: 76873, t: 76873}
 ],
 Huntsman_Speargun: [
 	{u: 4501, i: 30000, n: "Charr Speargun", r: [[19710, 4], [19767, 1]], s: 9514},
@@ -10934,7 +10935,8 @@ Scribe_GuildDecoration: [
 	{u: 11894, i: 80034, n: "Large Cube of Snow", r: [[24277, 2], [71146, 1]]},
 	{u: 11895, i: 79945, n: "Hemisphere of Snow", r: [[24277, 1], [70454, 1]]},
 	{u: 11898, i: 79952, n: "Wedge of Snow", r: [[24277, 1], [70454, 1]]},
-	{u: 11769, i: 77736, n: "Gold Shatterer Trophy", r: [[70933, 1]]}
+	{u: 11769, i: 77736, n: "Gold Shatterer Trophy", r: [[70933, 1]]},
+	{u: 11899, i: 80081, n: "Rooster Statue", r: [[70926, 1], [80076, 1]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
