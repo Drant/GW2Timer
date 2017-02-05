@@ -9136,6 +9136,11 @@ A = {
 					}
 				});
 				
+				// Show results
+				I.scrollToElement("#accAudit", {aSpeed: "fast"});
+				I.suspendElement(button, false);
+				buttonalt.show();
+				
 				// Show the summary box animated
 				var animationspeed = 3000;
 				summary.show("slow", function()
@@ -9321,11 +9326,6 @@ A = {
 						window.location.href = "about:blank";
 					}
 				});
-				
-				// Finally
-				I.scrollToElement("#accAudit", {aSpeed: "fast"});
-				I.suspendElement(button, false);
-				buttonalt.show();
 			});
 			
 			// Debug buttons at the bottom
@@ -30537,6 +30537,7 @@ T = {
 	/*
 	 * Gets standard localized time string with weekday word included.
 	 * @param Date pDate object.
+	 * @param boolean pWantTime to include other time units.
 	 * @returns string.
 	 */
 	formatWeektime: function(pDate, pWantTime)
@@ -31423,7 +31424,7 @@ H = {
 		var weekdaylocation = H.getDashboardVendorWeekday();
 		var table = $("#dsbVendorTable");
 		
-		var finalizeVendorTable = function()
+		var finalizeVendorTable = function(pUpdateTime)
 		{
 			$(".dsbVendorItem").each(function()
 			{
@@ -31437,12 +31438,15 @@ H = {
 				I.updateScrollbar("#dsbVendorTable");
 			});
 			I.removeThrobber(table);
-			table.append("<span id='dsbVendorNote'>This daily list is user contributed. "
-				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.official) + ">Update</a> link.</span>");
+			var timestamp = (pUpdateTime) ? T.formatWeektime(pUpdateTime, true) : "";
+			table.append("<div id='dsbVendorNote'>This daily list is user contributed. "
+				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.official) + ">Update</a> link."
+				+ "<br /><time id='dsbVendorTime'>" + timestamp + "</time></div>");
 		};
 		
 		var listOffers = function(pData)
 		{
+			var updatetime;
 			var list = [];
 			try
 			{
@@ -31459,6 +31463,7 @@ H = {
 						list.push(43798);
 					}
 				}
+				updatetime = pData.feed.updated.$t;
 			}
 			catch (e) {}
 			if (list.length !== H.Vendor.numOffers)
@@ -31503,7 +31508,7 @@ H = {
 						// Finalize the table after every offer has been added
 						if ($(".dsbVendorItem").length === H.Vendor.numOffers)
 						{
-							finalizeVendorTable();
+							finalizeVendorTable(updatetime);
 						}
 					}).fail(function()
 					{
