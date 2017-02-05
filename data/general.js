@@ -1414,7 +1414,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<dfn data-coord='[[10769,11022],[10786,10856],[10811,10861],[10811,10830],[10834,10739],[10724,10696],[10704,10690],[10658,10722],[10560,10844],[10517,10902]]'>Lunar Firecrackers</dfn>. <a href='http://buy.guildwars2.com'>Heart of Thorns</a> is 50% off.",
+	pve: "<dfn data-coord='[[10769,11022],[10786,10856],[10811,10861],[10811,10830],[10834,10739],[10724,10696],[10704,10690],[10658,10722],[10560,10844],[10517,10902]]'>Lunar Firecrackers</dfn>. <a href='http://buy.guildwars2.com'>Heart of Thorns</a> is 50% off. <a href='http://gw2timer.com/?page=Audit'>Audit</a> to keep track of all your assets.",
 	wvw: "",
 	Start: new Date("2016-01-24T16:00:00Z"),
 	Finish: new Date("2017-02-07T16:00:00Z"),

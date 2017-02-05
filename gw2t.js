@@ -9321,6 +9321,11 @@ A = {
 						window.location.href = "about:blank";
 					}
 				});
+				
+				// Finally
+				I.scrollToElement("#accAudit", {aSpeed: "fast"});
+				I.suspendElement(button, false);
+				buttonalt.show();
 			});
 			
 			// Debug buttons at the bottom
@@ -9337,11 +9342,6 @@ A = {
 			{
 				I.prettyJSON(categoriesview);
 			});
-			
-			// Finally
-			I.scrollToElement("#accAudit", {aSpeed: "fast"});
-			I.suspendElement(button, false);
-			buttonalt.show();
 		};
 		
 		/*
