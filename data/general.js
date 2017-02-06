@@ -1594,13 +1594,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Metallurgic Dye Kit",
-		id: "47900",
-		price: 93,
-		discount: [[1, 93, 125], [5, 375, 500], [25, 1875, 2500]],
-		col: 0
-	},
-	{
 		name: "Rox's Pathfinder Outfit",
 		id: "80077",
 		price: 700,
@@ -1643,7 +1636,7 @@ Vendor:
 	resetHour: 8,
 	name_en: "Pact Supply",
 	name_de: "Pakt-Vorratsnetzwerk",
-	name_es: "Ssuministros Pacto",
+	name_es: "Suministros Pacto",
 	name_fr: "Réseau Pacte",
 	name_zh: "特殊商人",
 	Codes:

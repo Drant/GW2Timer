@@ -613,6 +613,14 @@ O = {
 			O.clearWeeklySensitiveOptions(isweeklyreset);
 			O.updateResetTimestamp(O.Utilities.timestampWeekly);
 		}
+		
+		// Update reset Date objects
+		var secondstoday = O.Utilities.timestampDaily.value;
+		var secondstomorrow = T.getUNIXSeconds() + T.cSECONDS_IN_DAY - secondssincemidnight;
+		T.ResetToday = new Date(secondstoday * T.cMSECONDS_IN_SECOND);
+		T.ResetTomorrow = new Date(secondstomorrow * T.cMSECONDS_IN_SECOND);
+		$("#optTimestampLocalReset").text(secondstoday);
+		$("#optTimestampServerReset").text(secondstomorrow);
 	},
 	
 	/*
@@ -18630,6 +18638,8 @@ D = {
 			cs: "odškrtnout", it: "controllato", pl: "zakończony", pt: "marcado", ru: "включен", zh: "勾掉"},
 		s_current: {de: "aktuelle", es: "actual", fr: "actuel",
 			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
+		s_expired: {de: "abgelaufen", es: "expirado", fr: "expiré",
+			cs: "vypršel", it: "scaduto", pl: "wygasłe", pt: "expirado", ru: "просрочен", zh: "已过期"},
 		s_daily: {de: "täglich", es: "diaria", fr: "quotidien",
 			cs: "denní", it: "giornaliero", pl: "dzienny", pt: "diário", ru: "ежедневно", zh: "每天"},
 		s_dailies: {de: "täglichen", es: "diarios", fr: "quotidiens",
@@ -29440,6 +29450,8 @@ T = {
 	DailyAssociation: GW2T_DAILY_ASSOCIATION,
 	DailyToday: null,
 	DailyTomorrow: null,
+	ResetToday: null,
+	ResetTomorrow: null,
 	Schedule: {},
 	DryTopSets: {},
 	DryTopCodes: {},
@@ -31438,10 +31450,22 @@ H = {
 				I.updateScrollbar("#dsbVendorTable");
 			});
 			I.removeThrobber(table);
-			var timestamp = (pUpdateTime) ? T.formatWeektime(pUpdateTime, true) : "";
+			// Insert timestamp of daily offers
+			var timestamp = "";
+			var expiredstr = "";
+			if (pUpdateTime)
+			{
+				var updatetime = new Date(pUpdateTime);
+				var now = new Date();
+				timestamp = T.formatWeektime(pUpdateTime, true) + " (" + T.formatMilliseconds(now - updatetime) + " " + D.getWord("ago") + ")";
+				expiredstr = (T.isTimely({
+					Start: T.ResetToday,
+					Finish: T.ResetTomorrow
+				}, updatetime)) ? "" : D.getWordCapital("expired") + ". ";
+			}
 			table.append("<div id='dsbVendorNote'>This daily list is user contributed. "
 				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.official) + ">Update</a> link."
-				+ "<br /><time id='dsbVendorTime'>" + timestamp + "</time></div>");
+				+ "<br />" + expiredstr + "<time id='dsbVendorTime'>" + timestamp + "</time></div>");
 		};
 		
 		var listOffers = function(pData)
@@ -32069,8 +32093,6 @@ K = {
 		K.timeLog = $("#logTime")[0];
 		K.countdownWvW = $("#lboCountdown")[0];
 		K.timestampUTC = $("#optTimestampUTC")[0];
-		K.timestampLocal = $("#optTimestampLocalReset")[0];
-		K.timestampServer = $("#optTimestampServerReset")[0];
 		K.timestampReset = $("#optTimeTillReset")[0];
 		K.stopwatchUp = $("#watUp")[0];
 		K.stopwatchDown = $("#watDown")[0];
@@ -32586,8 +32608,6 @@ K = {
 		K.timeLocal.innerHTML = localtime;
 		// Times in the Options page Debug section
 		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
-		K.timestampLocal.innerHTML = O.Utilities.timestampDaily.value;
-		K.timestampServer.innerHTML = T.TIMESTAMP_UNIX_SECONDS + T.SECONDS_TILL_DAILY;
 		K.timestampReset.innerHTML = T.getTimeFormatted(
 		{
 			aCustomTimeInSeconds: T.SECONDS_TILL_DAILY,

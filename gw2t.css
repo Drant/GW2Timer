@@ -1307,6 +1307,7 @@ textarea.jsCopyCode {
 	text-decoration: underline;
 }
 #dsbVendorNote {
+	margin-left: 4px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 14px;
 	line-height: normal;
