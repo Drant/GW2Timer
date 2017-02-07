@@ -1414,10 +1414,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<dfn data-coord='[[10769,11022],[10786,10856],[10811,10861],[10811,10830],[10834,10739],[10724,10696],[10704,10690],[10658,10722],[10560,10844],[10517,10902]]'>Lunar Firecrackers</dfn>. <a href='http://buy.guildwars2.com'>Heart of Thorns</a> is 50% off. <a href='http://gw2timer.com/?page=Audit'>Audit</a> to keep track of all your assets.",
+	pve: "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time.",
 	wvw: "",
-	Start: new Date("2016-01-24T16:00:00Z"),
-	Finish: new Date("2017-02-07T16:00:00Z"),
+	Start: new Date("2016-02-07T16:00:00Z"),
+	Finish: new Date("2017-02-14T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
@@ -1446,6 +1446,16 @@ Announcement:
  */
 Countdown: {
 	Events: [
+	/*{
+		name_en: "Lunar Festival",
+		name_de: "Mond Festival",
+		name_es: "Festival lunar",
+		name_fr: "Festival lunaire",
+		name_zh: "新春：公鸡",
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/Lunar-New-Year-Festival-Update",
+		Start: new Date("2018-02-06T17:00:00Z"),
+		Finish: new Date("2018-02-20T17:00:00Z")
+	},*/
 	/*{
 		name_en: "Halloween 2017",
 		name_de: "Halloween 2017",
@@ -1499,16 +1509,6 @@ Countdown: {
 		Start: new Date("2017-03-02T20:00:00Z"),
 		Finish: new Date("2017-03-09T20:00:00Z")
 	},*/
-	/*{
-		name_en: "Lunar Festival",
-		name_de: "Mond Festival",
-		name_es: "Festival lunar",
-		name_fr: "Festival lunaire",
-		name_zh: "新春：公鸡",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Lunar-New-Year-Festival-Update",
-		Start: new Date("2018-02-06T17:00:00Z"),
-		Finish: new Date("2018-02-20T17:00:00Z")
-	},*/
 	{
 		name_en: "LS3: Episode IV",
 		name_de: "LG3: Episode IV",
@@ -1516,7 +1516,7 @@ Countdown: {
 		name_fr: "HV3: Épisode IV",
 		name_zh: "第二生活世界：第四集",
 		url: "https://twitter.com/GuildWars2/status/829028232020316160",
-		Start: new Date("2017-02-07T21:00:00Z"),
+		Start: new Date("2017-02-08T00:00:00Z"),
 		Finish: new Date("2017-02-08T17:00:00Z")
 	}
 	]
