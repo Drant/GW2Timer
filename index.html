@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170207A"></script>
+	<script type="text/javascript" src="data/general.js?v=20170207B"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -768,6 +768,11 @@
 							<input id="opt_int_setVolume" type="range" min="0" max="100" step="5" title="Set volume." />
 							<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
 						</div>
+						<div id="chnOptionsOther">
+							<label title="This is checked every minute."><input id="opt_bol_alertBuild" type="checkbox" /> Alert new game build version</label>
+							<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
+							<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>
+						</div>
 					</div>
 				</div>
 				<kbd id="chnToggle" class="btnWindow btnVertical" title="<dfn>Toggle Active Chains</dfn>"></kbd>
@@ -865,9 +870,6 @@
 					<label><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
 					<label title="This happens at server reset or timestamp expiration. Alarm must be in Subscription Mode."><input id="opt_bol_alertAutosubscribe" type="checkbox" /> Autosubscribe to today's daily world boss</label>
 					<label title="This is based on the prediction."><input id="opt_bol_alertUnsubscribe" type="checkbox" /> Unsubscribe from boss after it dies</label>
-					<h3>Reminders</h3>
-					<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
-					<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>
 					<br />
 					<h2>Account</h2>
 					<label title="Show/Hide colored borders over items in account banks."><input id="opt_bol_showRarity" type="checkbox" /> Always show rarity on item slots</label>

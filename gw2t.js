@@ -82,6 +82,7 @@ O = {
 	Utilities:
 	{
 		programVersion: {key: "int_utlProgramVersion", value: 170118},
+		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -116,6 +117,26 @@ O = {
 		}
 		
 		localStorage[O.Utilities.programVersion.key] = O.Utilities.programVersion.value;
+	},
+	enforceBuildVersion: function()
+	{
+		// Also update the game build version
+		$.getJSON(U.URL_API.Build, function(pData)
+		{
+			O.Utilities.buildVersion.value = parseInt(pData.id);
+			var storedbuild = localStorage[O.Utilities.buildVersion.key];
+			if (storedbuild !== undefined && parseInt(storedbuild) !== O.Utilities.buildVersion.value)
+			{
+				var message = "New game build available";
+				I.print(message + "! GW2 Build ID: " + O.Utilities.buildVersion.value + "<br />" + T.formatWeektime(new Date(), true));
+				D.speak("Alert! Alert! Alert! " + message);
+				localStorage[O.Utilities.buildVersion.key] = O.Utilities.buildVersion.value;
+			}
+			else if (storedbuild === undefined || parseInt(storedbuild) !== O.Utilities.buildVersion.value)
+			{
+				localStorage[O.Utilities.buildVersion.key] = O.Utilities.buildVersion.value;
+			}
+		});
 	},
 	
 	/*
@@ -223,6 +244,7 @@ O = {
 		int_alertSubscribedSecond: 15,
 		bol_alertAutosubscribe: true,
 		bol_alertUnsubscribe: true,
+		bol_alertBuild: false,
 		bol_alertDaylight: false,
 		bol_alertMystic: false,
 		// Account
@@ -2758,6 +2780,7 @@ U = {
 		MatchesFallback: "https://api.guildwars2.com/v1/wvw/matches.json",
 		
 		// Other
+		Build: "https://api.guildwars2.com/v2/build",
 		Worlds: "https://api.guildwars2.com/v2/worlds",
 		Prefix: "https://api.guildwars2.com/v2/",
 		Prefix1: "https://api.guildwars2.com/v1/",
@@ -32580,6 +32603,11 @@ K = {
 			{
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedFirst);
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
+			}
+			// Check new build
+			if (O.Options.bol_alertBuild)
+			{
+				O.enforceBuildVersion();
 			}
 		}
 		

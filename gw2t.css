@@ -2310,6 +2310,12 @@ header.jsSection sup {
 	margin-left: 4px;
 	border-left: 1px solid gray;
 }
+#chnOptionsOther {
+	margin-top: 4px;
+	padding-top: 8px;
+	border-top: 1px solid gray;
+	text-align: left;
+}
 #chnOptionsStopwatchUp, #chnOptionsStopwatchDown {
 	width: 100%;
 	padding-bottom: 8px;
