@@ -123,18 +123,22 @@ O = {
 		// Also update the game build version
 		$.getJSON(U.URL_API.Build, function(pData)
 		{
-			O.Utilities.buildVersion.value = parseInt(pData.id);
-			var storedbuild = localStorage[O.Utilities.buildVersion.key];
-			if (storedbuild !== undefined && parseInt(storedbuild) !== O.Utilities.buildVersion.value)
+			if (pData && pData.id)
 			{
-				var message = "New game build available";
-				I.print(message + "! GW2 Build ID: " + O.Utilities.buildVersion.value + "<br />" + T.formatWeektime(new Date(), true));
-				D.speak("Alert! Alert! Alert! " + message);
-				localStorage[O.Utilities.buildVersion.key] = O.Utilities.buildVersion.value;
-			}
-			else if (storedbuild === undefined || parseInt(storedbuild) !== O.Utilities.buildVersion.value)
-			{
-				localStorage[O.Utilities.buildVersion.key] = O.Utilities.buildVersion.value;
+				var valA = parseInt(pData.id);
+				var valB = localStorage[O.Utilities.buildVersion.key];
+				O.Utilities.buildVersion.value = valA;
+				if (valB !== undefined && parseInt(valB) !== valA)
+				{
+					var message = "New game build available";
+					I.print(message + "! GW2 Build ID: " + valA + "<br />" + T.formatWeektime(new Date(), true));
+					D.speak("Alert! Alert! Alert! " + message);
+					localStorage[O.Utilities.buildVersion.key] = valA;
+				}
+				else if (valB === undefined || parseInt(valB) !== valA)
+				{
+					localStorage[O.Utilities.buildVersion.key] = valA;
+				}
 			}
 		});
 	},
@@ -19411,7 +19415,8 @@ D = {
 			msg.lang = "en-US";
 			speechSynthesis.speak(msg);
 		 */
-		try {
+		try
+		{
 			if (I.isSpeechSynthesisEnabled)
 			{
 				var msg = new SpeechSynthesisUtterance(pString);
@@ -19431,7 +19436,8 @@ D = {
 				return;
 			}
 		}
-		catch (e) {
+		catch (e)
+		{
 			I.isSpeechSynthesisEnabled = false;
 		}
 		
@@ -19457,7 +19463,7 @@ D = {
 			});
 		};
 		
-		if (pDuration === undefined)
+		if (pDuration === undefined || pDuration === null)
 		{
 			// If no duration is given, then estimate speech length
 			var charspersecond = (D.isLanguageLogographic()) ? 4 : 12;
