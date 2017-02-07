@@ -231,7 +231,7 @@ O = {
 		bol_auditTransactions: true,
 		bol_auditVault: true,
 		bol_auditAccountOnReset: false,
-		int_numAuditReports: 512,
+		int_numAuditReports: 1024,
 		// Trading
 		bol_refreshPrices: true,
 		int_numTradingCalculators: 25,

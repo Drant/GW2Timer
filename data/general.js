@@ -1499,24 +1499,24 @@ Countdown: {
 		Start: new Date("2017-03-02T20:00:00Z"),
 		Finish: new Date("2017-03-09T20:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
 		name_es: "Festival lunar",
 		name_fr: "Festival lunaire",
 		name_zh: "新春：公鸡",
 		url: "https://forum-en.guildwars2.com/forum/game/gw2/Lunar-New-Year-Festival-Update",
-		Start: new Date("2017-01-17T17:00:00Z"),
-		Finish: new Date("2017-02-07T17:00:00Z")
-	},
+		Start: new Date("2018-02-06T17:00:00Z"),
+		Finish: new Date("2018-02-20T17:00:00Z")
+	},*/
 	{
 		name_en: "LS3: Episode IV",
 		name_de: "LG3: Episode IV",
 		name_es: "HV3: Episodio IV",
 		name_fr: "HV3: Épisode IV",
 		name_zh: "第二生活世界：第四集",
-		official: "news/watch-the-trailer-for-the-head-of-the-snake/",
-		Start: new Date("2017-02-07T17:00:00Z"),
+		url: "https://twitter.com/GuildWars2/status/829028232020316160",
+		Start: new Date("2017-02-07T21:00:00Z"),
 		Finish: new Date("2017-02-08T17:00:00Z")
 	}
 	]
@@ -1551,8 +1551,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-01-31T16:00:00Z"),
-	Finish: new Date("2017-02-07T16:00:00Z"),
+	Start: new Date("2017-02-07T16:00:00Z"),
+	Finish: new Date("2017-02-14T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1573,51 +1573,16 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Trickster's Light-Armor Skin",
-		id: "43102",
-		price: 520,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Viper's Medium-Armor Skin",
-		id: "43101",
-		price: 520,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Phalanx Heavy-Armor Skin",
-		id: "43100",
-		price: 520,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Rox's Pathfinder Outfit",
-		id: "80077",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Lord Caudecus's Sword Skin",
 		id: "79089",
 		price: 600,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
-		name: "Celestial Rooster Glider",
-		id: "80066",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Celestial Rooster Harvesting Tool",
-		id: "80067",
-		price: 1000,
+		name: "Lord Caudecus's Pistol Skin",
+		id: "79179",
+		price: 600,
 		discount: null,
 		col: 1
 	}
