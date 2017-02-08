@@ -1515,9 +1515,9 @@ Countdown: {
 		name_es: "HV3: Episodio IV",
 		name_fr: "HV3: Épisode IV",
 		name_zh: "第二生活世界：第四集",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Dev-Celebration-Chat-on-Reddit-Tomorrow",
-		Start: new Date("2017-02-08T02:00:00Z"),
-		Finish: new Date("2017-02-08T17:00:00Z")
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/The-Head-of-the-Snake-delayed",
+		Start: new Date("2017-02-08T18:00:00Z"),
+		Finish: new Date("2017-02-09T18:00:00Z")
 	}
 	]
 },

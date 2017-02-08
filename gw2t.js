@@ -118,9 +118,12 @@ O = {
 		
 		localStorage[O.Utilities.programVersion.key] = O.Utilities.programVersion.value;
 	},
+	
+	/*
+	 * Checks the game build ID API to alert when a new patch is released.
+	 */
 	enforceBuildVersion: function()
 	{
-		// Also update the game build version
 		$.getJSON(U.URL_API.Build, function(pData)
 		{
 			if (pData && pData.id)
