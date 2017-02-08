@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170208"></script>
+	<script type="text/javascript" src="data/general.js?v=20170208A"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -760,7 +760,7 @@
 						</div>
 						<div id="chnOptionsAlarm">
 							<div id="optChainsToggle"><button id="optChainsExpand">+</button><button id="optChainsCollapse">−</button></div>
-							<fieldset name="int_setAlarm"><legend id="optAlarmLegend" class="jsTranslate">Alarm Mode</legend>
+							<fieldset name="int_setAlarm"><legend id="optAlarmLegend" class="jsTranslate">Boss Alarm</legend>
 								<label title="Turn off the boss alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /><var class="jsTranslate">Off</var></label>
 								<label title="Alert you when an unchecked world boss starts.<br />Checkmark a chain by clicking its boss icon (left side)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /><var class="jsTranslate">Checklist</var></label>
 								<label title="Alert you X minutes before a subscribed chain starts.<br />Subscribe to a chain by clicking its time (right side)."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /><var class="jsTranslate">Subscription</var></label>
@@ -769,6 +769,7 @@
 							<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
 						</div>
 						<div id="chnOptionsOther">
+							<b class="jsTranslate">Info Alarm</b>
 							<label title="Checks https://api.guildwars2.com/v2/build<br />every minute to see if build ID changed."><input id="opt_bol_alertBuild" type="checkbox" /> Alert new game build version</label>
 							<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
 							<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>

@@ -128,20 +128,22 @@ O = {
 		{
 			if (pData && pData.id)
 			{
+				var key = O.Utilities.buildVersion.key;
 				var valA = parseInt(pData.id);
-				var valB = localStorage[O.Utilities.buildVersion.key];
+				var valB = localStorage[key];
 				O.Utilities.buildVersion.value = valA;
 				if (valB !== undefined && parseInt(valB) !== valA)
 				{
 					var message = "New game build available";
-					I.print(message + "! GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + "<br />"
+					I.print("<a" + U.convertExternalAnchor(U.URL_META.BuildNotes) + ">" + message + "</a>! "
+						+ "GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + "<br />"
 						+ T.formatWeektime(new Date(), true) + " - <a href='./?bol_alertBuild=false'>Turn off this alert?</a>");
 					D.speak("Alert! Alert! Alert! " + message);
-					localStorage[O.Utilities.buildVersion.key] = valA;
+					localStorage[key] = valA;
 				}
 				else if (valB === undefined || parseInt(valB) !== valA)
 				{
-					localStorage[O.Utilities.buildVersion.key] = valA;
+					localStorage[key] = valA;
 				}
 			}
 		});
@@ -2748,7 +2750,8 @@ U = {
 	URL_META:
 	{
 		News: "http://forum.renaka.com/topic/5500046/",
-		Overlay: "http://forum.renaka.com/topic/5546166/"
+		Overlay: "http://forum.renaka.com/topic/5546166/",
+		BuildNotes: "https://forum-{0}.guildwars2.com/forum/info/updates"
 	},
 	ScriptURLs: {}, // Associative array of script URLs, so they are not loaded again
 	APIKey: null,
@@ -2846,6 +2849,7 @@ U = {
 		U.URL_API.LangKey = "lang=" + lang;
 		var langsuffix = "&lang=" + lang;
 		
+		U.URL_META.BuildNotes = U.URL_META.BuildNotes.replace("{0}", lang);
 		U.URL_API.Worlds += "?" + U.URL_API.LangKey + "&ids=";
 		U.URL_API.MapFloorTyria += langsuffix;
 		U.URL_API.MapFloorMists += langsuffix;

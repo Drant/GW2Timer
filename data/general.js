@@ -1515,9 +1515,9 @@ Countdown: {
 		name_es: "HV3: Episodio IV",
 		name_fr: "HV3: Épisode IV",
 		name_zh: "第二生活世界：第四集",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/The-Head-of-the-Snake-delayed",
-		Start: new Date("2017-02-08T18:00:00Z"),
-		Finish: new Date("2017-02-09T18:00:00Z")
+		official: "news/the-head-of-the-snake-is-live/",
+		Start: new Date("2017-02-08T17:00:00Z"),
+		Finish: new Date("2017-02-09T17:00:00Z")
 	}
 	]
 },
@@ -1583,6 +1583,62 @@ Sale: {
 		name: "Lord Caudecus's Pistol Skin",
 		id: "79179",
 		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mask of the Jubilee",
+		id: "44607",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mask of the Queen",
+		id: "44608",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Ringmaster's Hat",
+		id: "64745",
+		price: 200,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Necrotic Glider",
+		id: "http://i.imgur.com/pcmNHv7.png",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Shining Blade Backpack Glider Combo",
+		id: "79288",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Cosmic Logging Tool",
+		id: "79472",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Cosmic Mining Tool",
+		id: "78731",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Bloodstone Rock",
+		id: "79693",
+		price: 350,
 		discount: null,
 		col: 1
 	}
