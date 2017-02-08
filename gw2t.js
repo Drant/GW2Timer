@@ -28129,6 +28129,10 @@ W = {
 				apiobj = map.objectives[ii];
 				objid = (W.isFallbackEnabled) ? landprefix + apiobj.id : apiobj.id;
 				obj = W.Objectives[objid];
+				if (obj === undefined) // Ignore unknown objectives
+				{
+					continue;
+				}
 				owner = apiobj.owner;
 				land = obj.map_type; // Example: "RedHome"
 				value = W.getObjectiveTypeValue(obj.type);
@@ -28971,6 +28975,10 @@ W = {
 				{
 					apiobj = map.objectives[ii];
 					obj = W.Objectives[apiobj.id];
+					if (obj === undefined) // Ignore unknown objectives
+					{
+						continue;
+					}
 					/*
 					 * Only update the objectives if they have changed server ownership.
 					 */
