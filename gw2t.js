@@ -134,7 +134,8 @@ O = {
 				if (valB !== undefined && parseInt(valB) !== valA)
 				{
 					var message = "New game build available";
-					I.print(message + "! GW2 Build ID: " + valA + "<br />" + T.formatWeektime(new Date(), true));
+					I.print(message + "! GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + "<br />"
+						+ T.formatWeektime(new Date(), true) + " - <a href='./?bol_alertBuild=false'>Turn off this alert?</a>");
 					D.speak("Alert! Alert! Alert! " + message);
 					localStorage[O.Utilities.buildVersion.key] = valA;
 				}
