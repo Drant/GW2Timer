@@ -138,7 +138,7 @@ O = {
 					I.print("<a" + U.convertExternalAnchor(U.URL_META.BuildNotes) + ">" + message + "</a>! "
 						+ "GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + "<br />"
 						+ T.formatWeektime(new Date(), true) + " - <a href='./?bol_alertBuild=false'>Turn off this alert?</a>");
-					D.speak("Alert! Alert! Alert! " + message);
+					D.speak("Alert! " + message);
 					localStorage[key] = valA;
 				}
 				else if (valB === undefined || parseInt(valB) !== valA)
@@ -4960,7 +4960,7 @@ Z = {
 			}},
 			item: {usage: "Prints an item's information. <em>Parameters: int_itemid</em>", f: function()
 			{
-				Z.scrapeAPIArrayMultilingual([parseInt(args[1])], "items", function(pDatabase)
+				Z.scrapeAPIArrayMultilingual("items", [parseInt(args[1])], function(pDatabase)
 				{
 					I.clear();
 					for (var i in pDatabase)
@@ -5481,7 +5481,7 @@ Z = {
 		numtofetch = idsarray.length;
 		iterateIDs();
 	},
-	scrapeAPIArrayMultilingual: function(pArray, pSuffix, pCallback, pSettings)
+	scrapeAPIArrayMultilingual: function(pSuffix, pArray, pCallback, pSettings)
 	{
 		var Settings = pSettings || {};
 		Z.DatabaseCache[pSuffix] = {};
@@ -6369,7 +6369,7 @@ Z = {
 				record = pReturn.oRecord;
 				newentries = pReturn.oEntries;
 				I.print("Downloading color translations...");
-				Z.scrapeAPIArrayMultilingual(pReturn.oNewIDs, "colors", function(pDataColor)
+				Z.scrapeAPIArrayMultilingual("colors", pReturn.oNewIDs, function(pDataColor)
 				{
 					I.clear();
 					newentries.forEach(function(iEntry)
@@ -16670,7 +16670,7 @@ E = {
 		fotm_relic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_relic'></ins>"; },
 		fotm_pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_pristine'></ins>"; },
 		matrix: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_matrix'></ins>"; },
-		raid_ft: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_raid_ft'></ins>"; },
+		magnetite: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_magnetite'></ins>"; },
 		map_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dt'></ins>"; },
 		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sw'></ins>"; },
 		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_vb'></ins>"; },

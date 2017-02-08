@@ -1414,7 +1414,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time.",
+	pve: "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release.",
 	wvw: "",
 	Start: new Date("2016-02-07T16:00:00Z"),
 	Finish: new Date("2017-02-14T16:00:00Z"),
@@ -1609,7 +1609,7 @@ Sale: {
 	},
 	{
 		name: "Necrotic Glider",
-		id: "http://i.imgur.com/pcmNHv7.png",
+		id: "80484",
 		price: 500,
 		discount: null,
 		col: 1

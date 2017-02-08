@@ -288,7 +288,8 @@ var GW2T_SKINS_BLACKLIST = {
 	"6781": "Guild Cavalier Dagger",
 	"6782": "Guild Cavalier Scepter",
 	"6962": "Cosmic Logging Tool",
-	"7034": ""
+	"7034": "",
+	"7068": ""
 };
 
 /*
@@ -440,7 +441,7 @@ Back: [
 	{u: 6304, i: 72416, n: "Warmaster's Pack", p: {achievement: 0}},
 	{u: 6279, i: 70969, n: "Auric Backplate", p: {achievement: 0}},
 	{u: 6149, i: 72145, n: "Luminate's Backplate", p: {achievement: 0}},
-	{u: 6135, i: 77464, n: "Sabetha's Scorcher", p: {raid_ft: 600}},
+	{u: 6135, i: 77464, n: "Sabetha's Scorcher", p: {magnetite: 600}},
 	{u: 6558, i: 77507, n: "Recruit's Wings of Glory", p: {league: 10}},
 	{u: 6560, i: 77522, n: "Veteran's Wings of Glory", p: {league: 20}},
 	{u: 6573, i: 77477, n: "Champion's Wings of Glory", p: {league: 30}},
@@ -464,7 +465,7 @@ Back: [
 	{u: 6744, i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}},
 	{u: 6745, i: 78733, n: "Sloth Backpack", p: {gem: 500}},
 	{u: 6774, i: 78745, n: "Moth Wings Backpack", p: {gem: 700}},
-	{u: 6809, i: 78848, n: "Keep Construct Mask", p: {raid_ft: 600}},
+	{u: 6809, i: 78848, n: "Keep Construct Mask", p: {magnetite: 600}},
 	{u: 6854, i: 79288, n: "Shining Blade Backpack", p: {gem: 700}},
 	{u: 6875, i: 79157, n: "Blood Ruby Backpack", p: {map_bs: 200}},
 	{u: 6890, i: 79337, n: "Rata Sum Apparatus", p: {starting: true}},
@@ -482,7 +483,8 @@ Back: [
 	{u: 7012, i: 79771, n: "Fire Quiver Backpack", p: {gem: 400}},
 	{u: 7047, i: 80019, n: "Scruffy Backpack", p: {gem: 400}},
 	{u: 7065, i: 80065, n: "Lucky Rooster Lantern", t: [80065]},
-	{u: 7069, i: 80076, n: "Lucky Great Rooster Lantern", t: [80076]}
+	{u: 7069, i: 80076, n: "Lucky Great Rooster Lantern", t: [80076]},
+	{u: 7089, i: null, n: "White Mantle Scroll"}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", t: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -631,7 +633,9 @@ Armor_Light_Helm: [
 	{u: 6914, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6975, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
 	{u: 5620, i: 67141, n: "Ardent Glorious Crown", p: {glory: 175}},
-	{u: 7045, i: 80026, n: "Ice Crown", p: {gem: 400}}
+	{u: 7045, i: 80026, n: "Ice Crown", p: {gem: 400}},
+	{u: 7073, i: 80267, n: "White Mantle Elite Guard Mask", p: {gem: null}},
+	{u: 7139, i: 80360, n: "Confessor Caudecus's Mask", p: {gem: null}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -1160,7 +1164,9 @@ Armor_Medium_Helm: [
 	{u: 6915, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6974, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
 	{u: 5635, i: 79947, n: "Ardent Glorious Cap", p: {glory: 175}},
-	{u: 7040, i: 80026, n: "Ice Crown", p: {gem: 400}}
+	{u: 7040, i: 80026, n: "Ice Crown", p: {gem: 400}},
+	{u: 7074, i: 80477, n: "Confessor Caudecus's Mask", p: {gem: null}},
+	{u: 7106, i: 80519, n: "White Mantle Elite Guard Mask", p: {gem: null}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1683,7 +1689,9 @@ Armor_Heavy_Helm: [
 	{u: 6931, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6972, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
 	{u: 5624, i: 80010, n: "Ardent Glorious Plate Helm", p: {glory: 175}},
-	{u: 7038, i: 80026, n: "Ice Crown", p: {gem: 400}}
+	{u: 7038, i: 80026, n: "Ice Crown", p: {gem: 400}},
+	{u: 7102, i: 80096, n: "White Mantle Elite Guard Mask", p: {gem: null}},
+	{u: 7119, i: 80147, n: "Confessor Caudecus's Mask", p: {gem: null}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -2236,13 +2244,15 @@ Weapon_Axe: [
 	{u: 6692, i: 78427, n: "Spectral Axe", t: [78427]},
 	{u: 6749, i: 78777, n: "Cavalier Axe", t: [78777]},
 	{u: 6789, i: 78872, n: "Privateer Axe", p: {blticket: 1}},
-	{u: 6810, i: 78963, n: "White Mantle Axe", p: {raid_ft: 600}},
+	{u: 6810, i: 78963, n: "White Mantle Axe", p: {magnetite: 600}},
 	{u: 6874, i: 79174, n: "Embellished Axe", t: [79174]},
 	{u: 6928, i: 79379, n: "Bloodstone Axe", t: [79379]},
 	{u: 6942, i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}},
 	{u: 6929, i: 79603, n: "Carnival Axe", p: {coin: 1000000}},
 	{u: 6989, i: 79686, n: "Gargoyle Axe", t: [79686]},
-	{u: 7062, i: 79992, n: "Frostforged Axe", t: [79992]}
+	{u: 7062, i: 79992, n: "Frostforged Axe", t: [79992]},
+	{u: 7091, i: null, n: "Axe of the Unseen"},
+	{u: 7122, i: 80398, n: "Devoted Axe", t: [80398]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
@@ -2365,7 +2375,7 @@ Weapon_Mace: [
 	{u: 6595, i: 77571, n: "Timekeeper Mace", t: [77571]},
 	{u: 6605, i: 77793, n: "Soaring Mace", t: [77793]},
 	{u: 6637, i: 77956, n: "Dominator Mace", t: [77956]},
-	{u: 6649, i: 77977, n: "White Mantle Gavel", p: {raid_ft: 600}},
+	{u: 6649, i: 77977, n: "White Mantle Gavel", p: {magnetite: 600}},
 	{u: 6675, i: 78098, n: "Kaiser Snake Mace", t: [78013]},
 	{u: 6709, i: 78316, n: "Spectral Mace", t: [78316]},
 	{u: 6747, i: 78779, n: "Cavalier Mace", t: [78779]},
@@ -2378,7 +2388,8 @@ Weapon_Mace: [
 	{u: 6958, i: 79570, n: "Endeavor", p: {craft: true}},
 	{u: 6966, i: 79562, n: "Eureka", p: {craft: true}},
 	{u: 6990, i: 79670, n: "Gargoyle Mace", t: [79670]},
-	{u: 7059, i: 80014, n: "Frostforged Mace", t: [80014]}
+	{u: 7059, i: 80014, n: "Frostforged Mace", t: [80014]},
+	{u: 7105, i: 80299, n: "Devoted Mace", t: [80299]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", t: [49353]},
@@ -2526,7 +2537,7 @@ Weapon_Sword: [
 	{u: 6696, i: 78523, n: "Spectral Sword", t: [78523]},
 	{u: 6772, i: 78747, n: "Cavalier Sword", t: [78747]},
 	{u: 6817, i: 78831, n: "Privateer Sword", p: {blticket: 1}},
-	{u: 6788, i: 78901, n: "White Mantle Gladius", p: {raid_ft: 600}},
+	{u: 6788, i: 78901, n: "White Mantle Gladius", p: {magnetite: 600}},
 	{u: 6859, i: 79192, n: "Embellished Sword", t: [79192]},
 	{u: 6884, i: 79089, n: "Lord Caudecus's Sword", p: {gem: 600}},
 	{u: 6911, i: 79385, n: "Bloodstone Sword", t: [79385]},
@@ -2535,7 +2546,9 @@ Weapon_Sword: [
 	{u: 7030, i: 79840, n: "Nightmare Thornblade", p: {achievement: 0}},
 	{u: 7011, i: 79815, n: "Caustic Nightmare Thornblade", p: {matrix: 200}},
 	{u: 7049, i: 80062, n: "Frostforged Sword", t: [80062]},
-	{u: 7037, i: 80040, n: "Wrapped Sword", p: {achievement: 0}}
+	{u: 7037, i: 80040, n: "Wrapped Sword", p: {achievement: 0}},
+	{u: 7125, i: 80647, n: "Indomitable Gladius", p: {gem: null}},
+	{u: 7140, i: 80629, n: "Devoted Sword", t: [80629]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2663,7 +2676,7 @@ Weapon_Dagger: [
 	{u: 6462, i: 74231, n: "Plated Dagger", p: {token: 300}},
 	{u: 6496, i: 73700, n: "Improvised Dagger", t: [73700]},
 	{u: 6513, i: 71366, n: "Kingmaker", t: [71366]},
-	{u: 6528, i: 77344, n: "Assaulter's Sparking Dagger", p: {raid_ft: 600}},
+	{u: 6528, i: 77344, n: "Assaulter's Sparking Dagger", p: {magnetite: 600}},
 	{u: 6529, i: 77326, n: "Plasma Dagger", t: [77326]},
 	{u: 6572, i: 77532, n: "Merciless Dagger", t: [77532]},
 	{u: 6591, i: 77641, n: "Timekeeper Dagger", t: [77641]},
@@ -2673,7 +2686,7 @@ Weapon_Dagger: [
 	{u: 6729, i: 78263, n: "Spectral Dagger", t: [78263]},
 	{u: 6751, i: 78780, n: "Cavalier Dagger", t: [78780]},
 	{u: 6793, i: 78956, n: "Privateer Dagger", p: {blticket: 1}},
-	{u: 6815, i: 78943, n: "White Mantle Seax", p: {raid_ft: 600}},
+	{u: 6815, i: 78943, n: "White Mantle Seax", p: {magnetite: 600}},
 	{u: 6877, i: 79246, n: "Embellished Dagger", t: [79246]},
 	{u: 6907, i: 79404, n: "Bloodstone Dagger", t: [79404]},
 	{u: 6906, i: 79386, n: "Dragon Kama Skin", p: {gem: 600}},
@@ -2681,7 +2694,8 @@ Weapon_Dagger: [
 	{u: 6987, i: 79685, n: "Gargoyle Dagger", t: [79685]},
 	{u: 7016, i: 79724, n: "Nightmare Anelace", p: {achievement: 0}},
 	{u: 7009, i: 79920, n: "Caustic Nightmare Anelace", p: {matrix: 200}},
-	{u: 7044, i: 80061, n: "Frostforged Dagger", t: [80061]}
+	{u: 7044, i: 80061, n: "Frostforged Dagger", t: [80061]},
+	{u: 7096, i: 80617, n: "Devoted Dagger", t: [80617]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},
@@ -2808,7 +2822,7 @@ Weapon_Pistol: [
 	{u: 6557, i: 77526, n: "Merciless Pistol", t: [77526]},
 	{u: 6590, i: 77603, n: "Timekeeper Pistol", t: [77603]},
 	{u: 6609, i: 77797, n: "Soaring Pistol", t: [77797]},
-	{u: 6635, i: 77887, n: "White Mantle Pistol", p: {raid_ft: 600}},
+	{u: 6635, i: 77887, n: "White Mantle Pistol", p: {magnetite: 600}},
 	{u: 6655, i: 77961, n: "Dominator Pistol", t: [77961]},
 	{u: 6666, i: 78077, n: "Kaiser Snake Pistol", t: [78077]},
 	{u: 6723, i: 78648, n: "Spectral Pistol", t: [78648]},
@@ -2820,7 +2834,9 @@ Weapon_Pistol: [
 	{u: 6946, i: 79617, n: "Carnival Pistol", p: {coin: 1000000}},
 	{u: 6981, i: 79689, n: "Gargoyle Pistol", t: [79689]},
 	{u: 6994, i: 79637, n: "Grim Pact", t: [79637]},
-	{u: 7057, i: 80020, n: "Frostforged Pistol", t: [80020]}
+	{u: 7057, i: 80020, n: "Frostforged Pistol", t: [80020]},
+	{u: 7101, i: 80659, n: "Indomitable Pistol", p: {gem: null}},
+	{u: 7138, i: 80392, n: "Devoted Pistol", t: [80392]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},
@@ -2955,15 +2971,16 @@ Weapon_Scepter: [
 	{u: 6731, i: 78208, n: "Spectral Scepter", t: [78208]},
 	{u: 6746, i: 78774, n: "Cavalier Scepter", t: [78774]},
 	{u: 6808, i: 78854, n: "Privateer Scepter", p: {blticket: 1}},
-	{u: 6804, i: 78847, n: "White Mantle Rod", p: {raid_ft: 600}},
-	{u: 6813, i: 78852, n: "Xera's Scepter", p: {raid_ft: 600}},
+	{u: 6804, i: 78847, n: "White Mantle Rod", p: {magnetite: 600}},
+	{u: 6813, i: 78852, n: "Xera's Scepter", p: {magnetite: 600}},
 	{u: 6861, i: 79131, n: "Embellished Scepter", t: [79131]},
 	{u: 6920, i: 79375, n: "Bloodstone Scepter", t: [79375]},
 	{u: 6940, i: 79365, n: "Peacock Scepter", p: {gem: 600}},
 	{u: 6945, i: 79461, n: "Carnival Scepter", p: {coin: 1000000}},
 	{u: 6993, i: 79682, n: "Gargoyle Scepter", t: [79682]},
 	{u: 7053, i: 79976, n: "Frostforged Scepter", t: [79976]},
-	{u: 7063, i: 80057, n: "Wrapped Scepter", p: {achievement: 0}}
+	{u: 7063, i: 80057, n: "Wrapped Scepter", p: {achievement: 0}},
+	{u: 7148, i: 80365, n: "Devoted Scepter", t: [80365]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -3109,13 +3126,13 @@ Weapon_Focus: [
 	{u: 6567, i: 77502, n: "Merciless Focus", t: [77502]},
 	{u: 6597, i: 77575, n: "Timekeeper Focus", t: [77575]},
 	{u: 6608, i: 77803, n: "Soaring Focus", t: [77803]},
-	{u: 6639, i: 77894, n: "Slothasor Effigy", p: {raid_ft: 600}},
+	{u: 6639, i: 77894, n: "Slothasor Effigy", p: {magnetite: 600}},
 	{u: 6650, i: 77973, n: "Dominator Focus", t: [77973]},
 	{u: 6678, i: 78022, n: "Kaiser Snake Focus", t: [78022]},
 	{u: 6708, i: 78406, n: "Spectral Focus", t: [78406]},
 	{u: 6767, i: 78755, n: "Cavalier Focus", t: [78755]},
 	{u: 6816, i: 78798, n: "Privateer Focus", p: {blticket: 1}},
-	{u: 6821, i: 78844, n: "White Mantle Icon", p: {raid_ft: 600}},
+	{u: 6821, i: 78844, n: "White Mantle Icon", p: {magnetite: 600}},
 	{u: 6848, i: 79109, n: "Embellished Focus", t: [79109]},
 	{u: 6934, i: 79382, n: "Bloodstone Focus", t: [79382]},
 	{u: 6919, i: 79614, n: "Carnival Focus", p: {coin: 500000}},
@@ -3123,7 +3140,8 @@ Weapon_Focus: [
 	{u: 6995, i: 79687, n: "Gargoyle Focus", t: [79687]},
 	{u: 7033, i: 79753, n: "Nightmare Corsage", p: {achievement: 0}},
 	{u: 7019, i: 79767, n: "Caustic Nightmare Corsage", p: {matrix: 200}},
-	{u: 7054, i: 80021, n: "Frostforged Focus", t: [80021]}
+	{u: 7054, i: 80021, n: "Frostforged Focus", t: [80021]},
+	{u: 7154, i: 80174, n: "Devoted Focus", t: [80174]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", t: [49344]},
@@ -3261,12 +3279,12 @@ Weapon_Shield: [
 	{u: 6450, i: 72119, n: "Ley Guard's Protector", t: [72119]},
 	{u: 6481, i: 29177, n: "The Chosen", t: [29177]},
 	{u: 6504, i: 72655, n: "Opulent Defender", t: [72655]},
-	{u: 6536, i: 77444, n: "Assaulter's Spirit Ward", p: {raid_ft: 600}},
+	{u: 6536, i: 77444, n: "Assaulter's Spirit Ward", p: {magnetite: 600}},
 	{u: 6542, i: 77405, n: "Plasma Shield", t: [77405]},
 	{u: 6566, i: 77529, n: "Merciless Shield", t: [77529]},
 	{u: 6578, i: 77602, n: "Timekeeper Shield", t: [77602]},
 	{u: 6600, i: 77799, n: "Soaring Shield", t: [77799]},
-	{u: 6651, i: 77964, n: "White Mantle Bulwark", p: {raid_ft: 600}},
+	{u: 6651, i: 77964, n: "White Mantle Bulwark", p: {magnetite: 600}},
 	{u: 6654, i: 77951, n: "Dominator Shield", t: [77951]},
 	{u: 6664, i: 78112, n: "Kaiser Snake Shield", t: [78112]},
 	{u: 6681, i: 78354, n: "Spectral Shield", t: [78354]},
@@ -3284,7 +3302,9 @@ Weapon_Shield: [
 	{u: 7035, i: 79836, n: "Friendship", p: {craft: true}},
 	{u: 7024, i: 79802, n: "Shooshadoo", p: {craft: true}},
 	{u: 7048, i: 79979, n: "Frostforged Shield", t: [79979]},
-	{u: 7061, i: 79985, n: "Wrapped Shield", p: {achievement: 0}}
+	{u: 7061, i: 79985, n: "Wrapped Shield", p: {achievement: 0}},
+	{u: 7111, i: 80242, n: "Devoted Shield", t: [80242]},
+	{u: 7135, i: 80526, n: "Seraph Protector", p: {gem: null}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3407,18 +3427,19 @@ Weapon_Torch: [
 	{u: 6574, i: 77475, n: "Merciless Torch", t: [77475]},
 	{u: 6576, i: 77671, n: "Timekeeper Torch", t: [77671]},
 	{u: 6606, i: 77791, n: "Soaring Torch", t: [77791]},
-	{u: 6633, i: 77904, n: "White Mantle Censer", p: {raid_ft: 600}},
+	{u: 6633, i: 77904, n: "White Mantle Censer", p: {magnetite: 600}},
 	{u: 6640, i: 77996, n: "Dominator Torch", t: [77996]},
 	{u: 6670, i: 78033, n: "Kaiser Snake Torch", t: [78033]},
 	{u: 6714, i: 78311, n: "Spectral Torch", t: [78311]},
 	{u: 6780, i: 78761, n: "Cavalier Torch", t: [78761]},
 	{u: 6807, i: 78803, n: "Privateer Torch", p: {blticket: 1}},
-	{u: 6836, i: 78986, n: "Keep Construct Torch", p: {raid_ft: 600}},
+	{u: 6836, i: 78986, n: "Keep Construct Torch", p: {magnetite: 600}},
 	{u: 6873, i: 79101, n: "Embellished Torch", t: [79101]},
 	{u: 6936, i: 79393, n: "Bloodstone Torch", t: [79393]},
 	{u: 6913, i: 79487, n: "Carnival Torch", p: {coin: 500000}},
 	{u: 6996, i: 79649, n: "Gargoyle Torch", t: [79649]},
-	{u: 7036, i: 79944, n: "Frostforged Torch", t: [79944]}
+	{u: 7036, i: 79944, n: "Frostforged Torch", t: [79944]},
+	{u: 7159, i: 80649, n: "Devoted Torch", t: [80649]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", t: [49359]},
@@ -3542,7 +3563,7 @@ Weapon_Warhorn: [
 	{u: 6553, i: 77501, n: "Merciless Warhorn", t: [77501]},
 	{u: 6589, i: 77644, n: "Timekeeper Warhorn", t: [77644]},
 	{u: 6607, i: 77792, n: "Soaring Warhorn", t: [77792]},
-	{u: 6626, i: 77896, n: "White Mantle Bugle", p: {raid_ft: 600}},
+	{u: 6626, i: 77896, n: "White Mantle Bugle", p: {magnetite: 600}},
 	{u: 6627, i: 77991, n: "Dominator Warhorn", t: [77991]},
 	{u: 6671, i: 78096, n: "Kaiser Snake Warhorn", t: [78096]},
 	{u: 6735, i: 78189, n: "Spectral Warhorn", t: [78189]},
@@ -3552,7 +3573,9 @@ Weapon_Warhorn: [
 	{u: 6933, i: 79399, n: "Bloodstone Warhorn", t: [79399]},
 	{u: 6944, i: 79482, n: "Carnival Warhorn", p: {coin: 500000}},
 	{u: 6976, i: 79658, n: "Gargoyle Warhorn", t: [79658]},
-	{u: 7052, i: 79973, n: "Frostforged Warhorn", t: [79973]}
+	{u: 7052, i: 79973, n: "Frostforged Warhorn", t: [79973]},
+	{u: 7092, i: 80352, n: "Devoted Warhorn", t: [80352]},
+	{u: 7147, i: 80482, n: "Watchkeeper Trophy Warhorn", p: {gem: null}}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", t: [49321, 49323]},
@@ -3687,12 +3710,12 @@ Weapon_Greatsword: [
 	{u: 6482, i: 76528, n: "Mordrem Warblade", t: [76528]},
 	{u: 6507, i: 71400, n: "Improvised Greatsword", t: [71400]},
 	{u: 6526, i: 72683, n: "Glittering Greatsword", t: [72683]},
-	{u: 6532, i: 77427, n: "Assaulter's Sparking Vanquisher", p: {raid_ft: 600}},
+	{u: 6532, i: 77427, n: "Assaulter's Sparking Vanquisher", p: {magnetite: 600}},
 	{u: 6546, i: 77414, n: "Plasma Greatsword", t: [77414]},
 	{u: 6564, i: 77518, n: "Merciless Greatsword", t: [77518]},
 	{u: 6580, i: 77673, n: "Timekeeper Greatsword", t: [77673]},
 	{u: 6598, i: 77790, n: "Soaring Greatsword", t: [77790]},
-	{u: 6630, i: 77942, n: "White Mantle Sunderer", p: {raid_ft: 600}},
+	{u: 6630, i: 77942, n: "White Mantle Sunderer", p: {magnetite: 600}},
 	{u: 6648, i: 77898, n: "Dominator Greatsword", t: [77898]},
 	{u: 6677, i: 78053, n: "Kaiser Snake Greatsword", t: [78053]},
 	{u: 6703, i: 78660, n: "Spectral Greatsword", t: [78660]},
@@ -3704,7 +3727,8 @@ Weapon_Greatsword: [
 	{u: 6918, i: 79480, n: "Carnival Greatsword", p: {coin: 1500000}},
 	{u: 6979, i: 79655, n: "Gargoyle Greatsword", t: [79655]},
 	{u: 7050, i: 80041, n: "Frostforged Greatsword", t: [80041]},
-	{u: 7058, i: 80037, n: "Wrapped Greatsword", p: {achievement: 0}}
+	{u: 7058, i: 80037, n: "Wrapped Greatsword", p: {achievement: 0}},
+	{u: 7090, i: 80179, n: "Devoted Greatsword", t: [80179]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -3837,18 +3861,19 @@ Weapon_Hammer: [
 	{u: 6596, i: 77624, n: "Timekeeper Hammer", t: [77624]},
 	{u: 6613, i: 77794, n: "Soaring Hammer", t: [77794]},
 	{u: 6629, i: 77881, n: "Dominator Hammer", t: [77881]},
-	{u: 6642, i: 77970, n: "Sloth-Hunting Hammer", p: {raid_ft: 600}},
+	{u: 6642, i: 77970, n: "Sloth-Hunting Hammer", p: {magnetite: 600}},
 	{u: 6672, i: 78081, n: "Kaiser Snake Hammer", t: [78081]},
 	{u: 6724, i: 78166, n: "Spectral Hammer", t: [78166]},
 	{u: 6764, i: 78750, n: "Cavalier Hammer", t: [78750]},
 	{u: 6787, i: 78993, n: "Privateer Hammer", p: {blticket: 1}},
-	{u: 6805, i: 78875, n: "White Mantle Sledge", p: {raid_ft: 600}},
+	{u: 6805, i: 78875, n: "White Mantle Sledge", p: {magnetite: 600}},
 	{u: 6868, i: 79277, n: "Embellished Hammer", t: [79277]},
 	{u: 6908, i: 79377, n: "Bloodstone Hammer", t: [79377]},
 	{u: 6923, i: 79520, n: "Carnival Hammer", p: {coin: 1500000}},
 	{u: 6986, i: 79659, n: "Gargoyle Hammer", t: [79659]},
 	{u: 6991, i: 79690, n: "Onus", t: [79690]},
-	{u: 7060, i: 79967, n: "Frostforged Hammer", t: [79967]}
+	{u: 7060, i: 79967, n: "Frostforged Hammer", t: [79967]},
+	{u: 7132, i: 80630, n: "Devoted Hammer", t: [80630]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", t: [44906]},
@@ -3981,7 +4006,7 @@ Weapon_Longbow: [
 	{u: 6592, i: 77674, n: "Timekeeper Longbow", t: [77674]},
 	{u: 6612, i: 77805, n: "Soaring Longbow", t: [77805]},
 	{u: 6628, i: 77985, n: "Dominator Longbow", t: [77985]},
-	{u: 6652, i: 77924, n: "White Mantle Greatbow", p: {raid_ft: 600}},
+	{u: 6652, i: 77924, n: "White Mantle Greatbow", p: {magnetite: 600}},
 	{u: 6669, i: 78048, n: "Kaiser Snake Longbow", t: [78048]},
 	{u: 6689, i: 78629, n: "Spectral Longbow", t: [78629]},
 	{u: 6758, i: 78776, n: "Cavalier Longbow", t: [78776]},
@@ -3992,7 +4017,9 @@ Weapon_Longbow: [
 	{u: 6922, i: 79416, n: "Carnival Longbow", p: {coin: 1500000}},
 	{u: 6999, i: 79652, n: "Gargoyle Longbow", t: [79652]},
 	{u: 7021, i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}},
-	{u: 7041, i: 80035, n: "Frostforged Longbow", t: [80035]}
+	{u: 7041, i: 80035, n: "Frostforged Longbow", t: [80035]},
+	{u: 7097, i: 80414, n: "Arbiter Greatbow", p: {gem: null}},
+	{u: 7137, i: 80246, n: "Devoted Longbow", t: [80246]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
@@ -4123,7 +4150,7 @@ Weapon_Shortbow: [
 	{u: 6563, i: 77560, n: "Merciless Short Bow", t: [77560]},
 	{u: 6594, i: 77609, n: "Timekeeper Short Bow", t: [77609]},
 	{u: 6603, i: 77795, n: "Soaring Short Bow", t: [77795]},
-	{u: 6638, i: 77933, n: "White Mantle Short Bow", p: {raid_ft: 600}},
+	{u: 6638, i: 77933, n: "White Mantle Short Bow", p: {magnetite: 600}},
 	{u: 6647, i: 77880, n: "Dominator Short Bow", t: [77880]},
 	{u: 6676, i: 78067, n: "Kaiser Snake Short Bow", t: [78067]},
 	{u: 6702, i: 78330, n: "The Hunt", p: {craft: true}},
@@ -4137,7 +4164,9 @@ Weapon_Shortbow: [
 	{u: 6947, i: 79395, n: "Bloodstone Short Bow", t: [79395]},
 	{u: 6927, i: 79563, n: "Carnival Short Bow", p: {coin: 1500000}},
 	{u: 6988, i: 79648, n: "Gargoyle Short Bow", t: [79648]},
-	{u: 7039, i: 79963, n: "Frostforged Short Bow", t: [79963]}
+	{u: 7039, i: 79963, n: "Frostforged Short Bow", t: [79963]},
+	{u: 7081, i: 80395, n: "Devoted Short Bow", t: [80395]},
+	{u: 7155, i: null, n: "Watchkeeper Trophy Bow"}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -4251,7 +4280,7 @@ Weapon_Rifle: [
 	{u: 6070, i: 69954, n: "Gallant Rifle", t: [69954]},
 	{u: 6114, i: 70208, n: "Dwayna's Rifle", t: [70208]},
 	{u: 6120, i: 70196, n: "Immortal Rifle", p: {gem: 2000}},
-	{u: 6141, i: 77396, n: "Sabetha's Rifle", p: {raid_ft: 600}},
+	{u: 6141, i: 77396, n: "Sabetha's Rifle", p: {magnetite: 600}},
 	{u: 6171, i: 71629, n: "Tenebrous Rifle", p: {craft: true}},
 	{u: 6192, i: 71164, n: "Gold Fractal Rifle", p: {craft: true}},
 	{u: 6195, i: 73714, n: "Plated Rifle", p: {token: 450}},
@@ -4273,12 +4302,17 @@ Weapon_Rifle: [
 	{u: 6704, i: 78131, n: "Spectral Rifle", t: [78131]},
 	{u: 6757, i: 78775, n: "Cavalier Rifle", t: [78775]},
 	{u: 6822, i: 78841, n: "Privateer Rifle", p: {blticket: 1}},
-	{u: 6835, i: 78927, n: "White Mantle Rifle", p: {raid_ft: 600}},
+	{u: 6835, i: 78927, n: "White Mantle Rifle", p: {magnetite: 600}},
 	{u: 6871, i: 79074, n: "Embellished Rifle", t: [79074]},
 	{u: 6921, i: 79407, n: "Bloodstone Rifle", t: [79407]},
 	{u: 6938, i: 79530, n: "Carnival Rifle", p: {coin: 1500000}},
 	{u: 6992, i: 79636, n: "Gargoyle Rifle", t: [79636]},
-	{u: 7046, i: 79977, n: "Frostforged Rifle", t: [79977]}
+	{u: 7046, i: 79977, n: "Frostforged Rifle", t: [79977]},
+	{u: 7078, i: 80488, n: "The HMS Divinity", p: {gem: null}},
+	{u: 7080, i: 80135, n: "Man o' War", p: {gem: null}},
+	{u: 7086, i: 80524, n: "Schooner", p: {gem: null}},
+	{u: 7117, i: 80377, n: "Frigate", p: {gem: null}},
+	{u: 7152, i: 80307, n: "Devoted Rifle", t: [80307]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", t: [49348, 49350]},
@@ -4416,19 +4450,19 @@ Weapon_Staff: [
 	{u: 6475, i: 72877, n: "Machined Staff", p: {achievement: 0}},
 	{u: 6515, i: 71718, n: "Daredevil's Staff", p: {achievement: 0}},
 	{u: 6520, i: 76546, n: "Shimmering Staff", p: {craft: true}},
-	{u: 6531, i: 77346, n: "Assaulter's Spirit Branch", p: {raid_ft: 600}},
+	{u: 6531, i: 77346, n: "Assaulter's Spirit Branch", p: {magnetite: 600}},
 	{u: 6537, i: 77301, n: "Plasma Staff", t: [77301]},
 	{u: 6568, i: 77561, n: "Merciless Staff", t: [77561]},
 	{u: 6587, i: 77587, n: "Timekeeper Staff", t: [77587]},
 	{u: 6599, i: 77806, n: "Soaring Staff", t: [77806]},
-	{u: 6645, i: 77891, n: "Staff of Matthias", p: {raid_ft: 600}},
+	{u: 6645, i: 77891, n: "Staff of Matthias", p: {magnetite: 600}},
 	{u: 6656, i: 77960, n: "Dominator Staff", t: [77960]},
 	{u: 6674, i: 78050, n: "Kaiser Snake Staff", t: [78050]},
 	{u: 6069, i: 69974, n: "Yggdrasil"},
 	{u: 6710, i: 78580, n: "Spectral Staff", t: [78580]},
 	{u: 6783, i: 78759, n: "Cavalier Staff", t: [78759]},
 	{u: 6826, i: 78908, n: "Privateer Staff", p: {blticket: 1}},
-	{u: 6825, i: 78911, n: "White Mantle Spire", p: {raid_ft: 600}},
+	{u: 6825, i: 78911, n: "White Mantle Spire", p: {magnetite: 600}},
 	{u: 6887, i: 79054, n: "Embellished Staff", t: [79054]},
 	{u: 6901, i: 79315, n: "Emissary's Staff", p: {gem: 600}},
 	{u: 6932, i: 79362, n: "Bloodstone Staff", t: [79362]},
@@ -4436,7 +4470,10 @@ Weapon_Staff: [
 	{u: 6998, i: 79662, n: "Gargoyle Staff", t: [79662]},
 	{u: 6978, i: 79680, n: "Candelabra Staff", p: {gem: 0}},
 	{u: 7056, i: 80039, n: "Frostforged Staff", t: [80039]},
-	{u: 7043, i: 80036, n: "Wrapped Staff", p: {achievement: 0}}
+	{u: 7043, i: 80036, n: "Wrapped Staff", p: {achievement: 0}},
+	{u: 7112, i: 80665, n: "Devoted Staff", t: [80665]},
+	{u: 7113, i: null, n: "Spire of Samarog"},
+	{u: 7118, i: 80304, n: "Bloodstone Savant's Staff", p: {gem: null}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},

@@ -130,6 +130,7 @@ Key: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
 ],
 Token: [
+	{i: 80332, n: "Jade Shard", p: {magic: 37}},
 	{i: 79899, n: "Fresh Winterberry", p: {magic: 37}},
 	{i: 79469, n: "Petrified Wood", p: {magic: 37}},
 	{i: 79280, n: "Blood Ruby", p: {magic: 37}},
@@ -209,6 +210,7 @@ Contract: [
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: 1000}},
 	{i: 79140, n: "Noble's Folly Pass", p: {gem: 1000}},
 	{i: 79500, n: "Lava Lounge Pass", p: {gem: 1000}},
+	{i: 80328, n: "Noran's Safe Room Pass", p: {coin: -1}},
 	{i: 79744, n: "Exalted Portal Stone", p: {achievement: 0}},
 	{i: 79794, n: "Bitterfrost Vantage Point", p: {gem: 0}},
 	{i: 76293, n: "Rata Sum Portal Scroll", p: {craft: true}},
@@ -221,7 +223,8 @@ Contract: [
 	{i: 79073, n: "Bloodstone Fen Portal Scroll", p: {magic: 1000}},
 	{i: 79456, n: "Ember Bay Portal Scroll", p: {magic: 1000}},
 	{i: 79905, n: "Bitterfrost Frontier Portal Scroll", p: {magic: 1000}},
-	{i: 78978, n: "White Mantle Portal Device", p: {raid_ft: 1000}}
+	{i: 80238, n: "Lake Doric Portal Scroll", p: {magic: 1000}},
+	{i: 78978, n: "White Mantle Portal Device", p: {magnetite: 1000}}
 ],
 Gathering: [
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
@@ -276,6 +279,7 @@ Converter: [
 	{i: 77093, n: "Herta", p: {achievement: 0}},
 	{i: 79197, n: "Sentient Anomaly", p: {achievement: 0}},
 	{i: 79558, n: "Sentient Aberration", p: {achievement: 0}},
+	{i: 80144, n: "Sentient Oddity", p: {achievement: 0}},
 	{i: 79995, n: "Shards of Glory Converter", p: {league: 50}},
 	{i: 49501, n: "Tarrktun Personal Delivery Portal", p: {coin: 888888}},
 	{i: 67270, n: "Karmic Converter", p: {achievement: 0}},
@@ -460,6 +464,7 @@ TonicEndless: [
 	{i: 79668, n: "Endless Hellfire Skeleton Tonic", p: {craft: true}},
 	{i: 79664, n: "Endless Ignited Wraith Tonic", p: {craft: true}},
 	{i: 79849, n: "Endless Kodan Tonic", p: {karma: 175000}},
+	{i: 80172, n: "Endless Miniature Tonic", p: {coin: -1}},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},
@@ -760,6 +765,7 @@ Legendary: [
 	{i: 72713, n: "HOPE", p: {craft: true}},
 	{i: 79802, n: "Shooshadoo", p: {craft: true}},
 	{i: 78556, n: "Chuka and Champawat", p: {craft: true}},
+	{i: 80488, n: "The HMS Divinity", p: {craft: true}},
 	{i: 71383, n: "Nevermore", p: {craft: true}},
 	{i: 77474, n: "The Ascension", p: {craft: true}},
 	{i: 74155, n: "Ad Infinitum", p: {craft: true}}
@@ -812,7 +818,8 @@ Glider: [
 	{i: 79660, n: "Grasping Phantom Glider", p: {gem: 0}},
 	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}},
 	{i: 80018, n: "Infinirarium Glider", p: {gem: 0}},
-	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}}
+	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
+	{i: 80484, n: "Necrotic Glider", p: {gem: 500}}
 ],
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},
@@ -830,6 +837,7 @@ Node: [
 	{i: 79217, n: "Bloodstone Crystal Node", p: {coin: 500000}},
 	{i: 79898, n: "Petrified Wood Node", p: {coin: 500000}},
 	{i: 79903, n: "Winterberry Bush Node", p: {coin: 500000}},
+	{i: 80450, n: "Jade Fragment Node", p: {coin: 500000}},
 	{i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
 	{i: 66769, n: "Basic Lumber Node Pack", p: {gem: 800}},
 	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},

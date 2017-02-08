@@ -162,7 +162,7 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 6, payment: "dungeon_arah", name_en: "Shard of Zhaitan", name_de: "Scherbe des Zhaitan", name_es: "Esquirla de Zhaitan", name_fr: "Eclat de Zhaïtan", name_zh: "泽坦碎片" },
 			{ id: 7, payment: "fotm_relic", name_en: "Fractal Relic", name_de: "Fraktal-Relikt", name_es: "Reliquia fractal", name_fr: "Relique fractale", name_zh: "碎层古物" },
 			{ id: 24, payment: "fotm_pristine", coefficient: 15, name_en: "Pristine Fractal Relic", name_de: "Makelloses Fraktal-Relikt", name_es: "Reliquia fractal prístina", name_fr: "Relique fractale immaculée", name_zh: "原始碎层古物" },
-			{ id: 28, payment: "raid_ft", coefficient: 10, name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁铁碎块" }
+			{ id: 28, payment: "magnetite", coefficient: 10, name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁铁碎块" }
 		],
 		General: [
 			{ id: 1, coefficient: 1, name_en: "Coin", name_de: "Münze", name_es: "Moneda", name_fr: "Pièce", name_zh: "钱币" },
@@ -247,7 +247,7 @@ var GW2T_CURRENCY_DATA = {
 		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000], isappraised: true, isbound: true}, // Quiver of a Thousand Arrows
 		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000], isappraised: true, isbound: true}, // Quiver of a Thousand Arrows
 		//matrix: {color: "#8ce7ff", conversion: [1, 73248], isappraised: true}, // Stabilizing Matrix
-		raid_ft: {id: 28, color: "#27454a", conversion: [1000, 77310, 200000], isliquid: true}, // Ghostly Infusion
+		magnetite: {id: 28, color: "#27454a", conversion: [1000, 77310, 200000], isliquid: true}, // Ghostly Infusion
 		map_dt: {id: 25, color: "#eeebba", conversion: 0},
 		map_sw: {id: 27, color: "#ebd1a1", conversion: 0},
 		map_vb: {id: 19, color: "#cecea0", conversion: 0},
