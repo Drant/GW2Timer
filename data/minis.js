@@ -341,6 +341,8 @@ Special: [
 	{u: 446, i: 80203, n: "Mini Captive Canach", p: {coin: -1}},
 	{u: 447, i: 80424, n: "Mini Eye of Janthir", p: {coin: -1}},
 	{u: 448, i: 80368, n: "Mini Convalescent Logan", p: {coin: -1}},
+	{u: 436, i: 80327, n: "Mini Ragged White Mantle Figurehead", p: {coin: -1}},
+	{u: 440, i: 80545, n: "Mini White Mantle Figurehead", p: {coin: -1}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},

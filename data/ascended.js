@@ -710,7 +710,8 @@ Back: [
 	{i: 79566, n: "Lava Skull Backpack (Infused)", p: {map_eb: 200}},
 	{i: 79830, n: "Icebrood Horn Backpack", p: {map_bf: 400}},
 	{i: 79837, n: "Icebrood Horn Backpack (Infused)", p: {map_bf: 400}},
-	{i: 80369, n: "Seraph Backpack", p: {coin: -1}}
+	{i: 80369, n: "Seraph Backpack", p: {coin: -1}},
+	{i: 80289, n: "Assaulter's Burden", p: {coin: -1}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1072,7 +1073,8 @@ Amulet: [
 	{i: 67898, n: "Wynne's Locket", p: {laurel: 20}},
 	{i: 79269, n: "Blood Ruby Pendant", p: {map_bs: 125}},
 	{i: 79980, n: "Mist Pendant", p: {pvp: true}},
-	{i: 79993, n: "Mist Pendant", p: {pvp: true}}
+	{i: 79993, n: "Mist Pendant", p: {pvp: true}},
+	{i: 80241, n: "Jade Pendant", p: {coin: -1}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1877,8 +1879,10 @@ Axe: [
 	{i: 78963, n: "Assaulter's White Mantle Axe", p: {magnetite: 600}},
 	{i: 78981, n: "Malicious White Mantle Axe", p: {magnetite: 600}},
 	{i: 78987, n: "Healer's White Mantle Axe", p: {magnetite: 600}},
+	{i: 80678, n: "Assaulter's Axe of the Unseen", p: {coin: -1}},
+	{i: 80611, n: "Malicious Axe of the Unseen", p: {coin: -1}},
 	{i: 80180, n: "Defender's Axe of the Unseen", p: {coin: -1}},
-	{i: 80611, n: "Malicious Axe of the Unseen", p: {coin: -1}}
+	{i: 80568, n: "Healer's Axe of the Unseen", p: {coin: -1}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -2267,9 +2271,10 @@ Warhorn: [
 	{i: 77979, n: "Defender's White Mantle Bugle", p: {magnetite: 600}},
 	{i: 78044, n: "Kaiser Snake Warhorn", p: {coin: 1000000}},
 	{i: 78109, n: "Kaiser Snake Warhorn", p: {coin: 1000000}},
+	{i: 80235, n: "Assaulter's Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
+	{i: 80249, n: "Malicious Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
 	{i: 80482, n: "Defender's Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
-	{i: 80249, n: "Malicious Watchkeeper Trophy Warhorn", p: {coin: -1}},
-	{i: 80537, n: "Healer's Watchkeeper Trophy Warhorn", p: {coin: -1}}
+	{i: 80537, n: "Healer's Watchkeeper Trophy Warhorn", p: {magnetite: 600}}
 ],
 Greatsword: [
 	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
@@ -2442,7 +2447,10 @@ ShortBow: [
 	{i: 78055, n: "Kaiser Snake Short Bow", p: {coin: 1300000}},
 	{i: 78091, n: "Kaiser Snake Short Bow", p: {coin: 1300000}},
 	{i: 78425, n: "Tigris", p: {coin: 1300000}},
-	{i: 80499, n: "Assaulter's Watchkeeper Trophy Bow", p: {coin: -1}}
+	{i: 80499, n: "Assaulter's Watchkeeper Trophy Bow", p: {magnetite: 600}},
+	{i: 80199, n: "Defender's Watchkeeper Trophy Bow", p: {magnetite: 600}},
+	{i: 80333, n: "Healer's Watchkeeper Trophy Bow", p: {magnetite: 600}},
+	{i: 80461, n: "Malicious Watchkeeper Trophy Bow", p: {magnetite: 600}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
@@ -2538,9 +2546,11 @@ Staff: [
 	{i: 78911, n: "Assaulter's White Mantle Staff", p: {magnetite: 600}},
 	{i: 78931, n: "Healer's White Mantle Staff", p: {magnetite: 600}},
 	{i: 79364, n: "Great Destroyer's Talon", p: {coin: 1200000}},
-	{i: 80193, n: "Malicious Spire of Samarog", p: {coin: -1}},
-	{i: 80527, n: "Defender's Spire of Samarog", p: {coin: -1}},
-	{i: 80605, n: "Healer's Spire of Samarog", p: {coin: -1}}
+	{i: 80193, n: "Malicious Spire of Samarog", p: {magnetite: 600}},
+	{i: 80188, n: "Assaulter's Spire of Samarog", p: {magnetite: 600}},
+	{i: 80527, n: "Defender's Spire of Samarog", p: {magnetite: 600}},
+	{i: 80605, n: "Healer's Spire of Samarog", p: {magnetite: 600}},
+	{i: 80278, n: "Malicious Treasured Bough", p: {coin: -1}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},

@@ -484,7 +484,8 @@ Back: [
 	{u: 7047, i: 80019, n: "Scruffy Backpack", p: {gem: 400}},
 	{u: 7065, i: 80065, n: "Lucky Rooster Lantern", t: [80065]},
 	{u: 7069, i: 80076, n: "Lucky Great Rooster Lantern", t: [80076]},
-	{u: 7089, i: null, n: "White Mantle Scroll"}
+	{u: 7114, i: 80289, n: "Burden", p: {gem: null}},
+	{u: 7089, i: 80369, n: "White Mantle Scroll", p: {gem: null}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", t: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -1690,8 +1691,8 @@ Armor_Heavy_Helm: [
 	{u: 6972, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
 	{u: 5624, i: 80010, n: "Ardent Glorious Plate Helm", p: {glory: 175}},
 	{u: 7038, i: 80026, n: "Ice Crown", p: {gem: 400}},
-	{u: 7102, i: 80096, n: "White Mantle Elite Guard Mask", p: {gem: null}},
-	{u: 7119, i: 80147, n: "Confessor Caudecus's Mask", p: {gem: null}}
+	{u: 7119, i: 80147, n: "Confessor Caudecus's Mask", p: {gem: null}},
+	{u: 7102, i: 80096, n: "White Mantle Elite Guard Mask", p: {gem: null}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -2251,8 +2252,8 @@ Weapon_Axe: [
 	{u: 6929, i: 79603, n: "Carnival Axe", p: {coin: 1000000}},
 	{u: 6989, i: 79686, n: "Gargoyle Axe", t: [79686]},
 	{u: 7062, i: 79992, n: "Frostforged Axe", t: [79992]},
-	{u: 7091, i: null, n: "Axe of the Unseen"},
-	{u: 7122, i: 80398, n: "Devoted Axe", t: [80398]}
+	{u: 7122, i: 80398, n: "Devoted Axe", t: [80398]},
+	{u: 7091, i: 80678, n: "Axe of the Unseen", p: {gem: null}}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
@@ -4166,7 +4167,7 @@ Weapon_Shortbow: [
 	{u: 6988, i: 79648, n: "Gargoyle Short Bow", t: [79648]},
 	{u: 7039, i: 79963, n: "Frostforged Short Bow", t: [79963]},
 	{u: 7081, i: 80395, n: "Devoted Short Bow", t: [80395]},
-	{u: 7155, i: null, n: "Watchkeeper Trophy Bow"}
+	{u: 7155, i: 80499, n: "Watchkeeper Trophy Bow", p: {gem: null}}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -4472,8 +4473,9 @@ Weapon_Staff: [
 	{u: 7056, i: 80039, n: "Frostforged Staff", t: [80039]},
 	{u: 7043, i: 80036, n: "Wrapped Staff", p: {achievement: 0}},
 	{u: 7112, i: 80665, n: "Devoted Staff", t: [80665]},
-	{u: 7113, i: null, n: "Spire of Samarog"},
-	{u: 7118, i: 80304, n: "Bloodstone Savant's Staff", p: {gem: null}}
+	{u: 7118, i: 80304, n: "Bloodstone Savant's Staff", p: {gem: null}},
+	{u: 7104, i: 80278, n: "Prisoner's Treasured Bough", p: {gem: null}},
+	{u: 7113, i: 80188, n: "Spire of Samarog", p: {gem: null}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},

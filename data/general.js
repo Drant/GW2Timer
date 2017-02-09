@@ -42,6 +42,7 @@ var GW2T_ZONE_ASSOCIATION = {
 	"218": "citadel",
 	"326": "hoelbrak",
 	"873": "southsun",
+	"1185": "doric",
 	"988": "dry",
 	"1015": "silverwastes",
 	"1041": "dragon",
@@ -1076,6 +1077,18 @@ var GW2T_ZONE_DATA = {
 	region: "kryta",
 	map_rect: [[-30720, -21504], [33792, 21504]],
 	continent_rect: [[11520, 18944], [14208, 20736]]
+},
+"doric":
+{
+	id: "1185",
+	name_en: "Lake Doric",
+	name_de: "Doric-See",
+	name_es: "Lago Doric",
+	name_fr: "Lac Doric",
+	name_zh: "多里克湖",
+	region: "kryta",
+	map_rect: [[-15360, -30720], [15360, 30720]],
+	continent_rect: [[12160, 9088], [13440, 11648]]
 },
 "harathi":
 {
