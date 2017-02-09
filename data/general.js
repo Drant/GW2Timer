@@ -1622,16 +1622,9 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Necrotic Glider",
-		id: "80484",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Shining Blade Backpack Glider Combo",
-		id: "79288",
-		price: 700,
+		name: "White Mantle Appearance Pack",
+		id: "http://i.imgur.com/SXJh076.png",
+		price: 2000,
 		discount: null,
 		col: 1
 	},
@@ -1646,6 +1639,20 @@ Sale: {
 		name: "Cosmic Mining Tool",
 		id: "78731",
 		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Shining Blade Backpack Glider Combo",
+		id: "79288",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Necrotic Glider",
+		id: "80484",
+		price: 500,
 		discount: null,
 		col: 1
 	},
