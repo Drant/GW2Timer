@@ -464,7 +464,7 @@ TonicEndless: [
 	{i: 79668, n: "Endless Hellfire Skeleton Tonic", p: {craft: true}},
 	{i: 79664, n: "Endless Ignited Wraith Tonic", p: {craft: true}},
 	{i: 79849, n: "Endless Kodan Tonic", p: {karma: 175000}},
-	{i: 80172, n: "Endless Miniature Tonic", p: {coin: -1}},
+	{i: 80172, n: "Endless Miniature Tonic", p: {karma: 175000}},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},

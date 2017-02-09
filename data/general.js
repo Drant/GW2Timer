@@ -518,6 +518,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[12232, 14028], [12234, 14141]], // kessex to queensdale
 	[[10301, 14182], [10476, 13932]], // kessex to queensdale
 	[[13353, 14230], [13561, 14110]], // kessex to gendarran
+	[[11900, 10461], [12217, 10587]], // divinity to doric
 	[[11245, 11602], [11021, 11934]], // divinity to queensdale
 	[[13327, 12613], [13523, 12681]], // queensdale to gendarran
 	[[14344, 12335], [14341, 12140]], // gendarran to harathi
@@ -1522,7 +1523,7 @@ Countdown: {
 		Start: new Date("2017-03-02T20:00:00Z"),
 		Finish: new Date("2017-03-09T20:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "LS3: Episode IV",
 		name_de: "LG3: Episode IV",
 		name_es: "HV3: Episodio IV",
@@ -1531,7 +1532,7 @@ Countdown: {
 		official: "news/the-head-of-the-snake-is-live/",
 		Start: new Date("2017-02-08T17:00:00Z"),
 		Finish: new Date("2017-02-09T17:00:00Z")
-	}
+	}*/
 	]
 },
 

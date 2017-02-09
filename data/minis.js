@@ -338,7 +338,7 @@ Special: [
 	{u: 442, i: 80218, n: "Mini Samarog", p: {coin: -1}},
 	{u: 443, i: 80492, n: "Mini White Mantle Battle Mage", p: {coin: -1}},
 	{u: 445, i: 80148, n: "Mini Lady Valette Wi", p: {coin: -1}},
-	{u: 446, i: 80203, n: "Mini Captive Canach", p: {coin: -1}},
+	{u: 446, i: 80203, n: "Mini Captive Canach", p: {karma: 105000}},
 	{u: 447, i: 80424, n: "Mini Eye of Janthir", p: {coin: -1}},
 	{u: 448, i: 80368, n: "Mini Convalescent Logan", p: {coin: -1}},
 	{u: 436, i: 80327, n: "Mini Ragged White Mantle Figurehead", p: {coin: -1}},

@@ -1161,7 +1161,7 @@ O = {
 				filestr += keys[i] + I.cOptionsDelimiter + value.replace(/(?:\r\n|\r|\n)/g, "\\r\\n") + "\r\n";
 			}
 			
-			I.print("Please click the link below to save the options file.", true);
+			I.print("Please click the link below to save the options file.<br />Or copy and paste all the text below to a text file.", true);
 			Z.createFile(filestr, "gw2t_options.txt");
 			I.print(htmlstr);
 		});
@@ -8414,16 +8414,37 @@ A = {
 			hour: "%l:%M %p"
 		};
 	},
-	getChartsCurrencyFormat: function(pPoints)
+	
+	/*
+	 * Macro function to be used in graph tooltip property.
+	 * @param object pPoints
+	 * @param object pColors to colorize the lines and format values.
+	 * @returns string html.
+	 */
+	getChartsCurrencyFormat: function(pPoints, pColors)
 	{
 		var html = (T.formatWeektime(pPoints[0].x, true)) + "<table>";
 		for (var i = 0; i < pPoints.length; i++)
 		{
 			var ipoint = pPoints[i];
 			var series = ipoint.series;
-			var currencystr = (series.name === "TotalGems") ? E.formatGemString(ipoint.y, true) : E.formatCoinStringColored(ipoint.y);
+			var name = series.name;
+			var currencystr = "";
+			if (pColors && pColors[name].currency)
+			{
+				switch (pColors[name].currency)
+				{
+					case "gem": { currencystr = E.formatGemString(ipoint.y, true); } break;
+					case "karma": { currencystr = E.formatKarmaString(ipoint.y, true); } break;
+				}
+			}
+			else
+			{
+				currencystr = E.formatCoinStringColored(ipoint.y); 
+			}
+			
 			html += "<tr>"
-				+ "<td style='color:" + series.color + "'>" + D.getWordCapital(series.name.toLowerCase()) + "</td>"
+				+ "<td style='color:" + series.color + "'>" + D.getWordCapital(name.toLowerCase()) + "</td>"
 				+ "<td><b>" + currencystr + "</b></td>"
 			+ "</tr>";
 		};
@@ -8976,7 +8997,8 @@ A = {
 				{
 					var ithline = {
 						name: i,
-						data: []
+						data: [],
+						color: A.Currency.AuditColor[i].color
 					};
 					histcat = pHistory[i];
 					for (var ii = 0; ii < histcat.length; ii++)
@@ -9179,11 +9201,6 @@ A = {
 					}
 				});
 				
-				// Show results
-				I.scrollToElement("#accAudit", {aSpeed: "fast"});
-				I.suspendElement(button, false);
-				buttonalt.show();
-				
 				// Show the summary box animated
 				var animationspeed = 3000;
 				summary.show("slow", function()
@@ -9245,6 +9262,7 @@ A = {
 				// Append the new audit data to the history
 				hist["Timestamps"].push(T.formatISO(now));
 				hist["WalletCoin"].push(walletcat["coin_liquidsell"]);
+				hist["WalletKarma"].push(walletcat["karma"]);
 				hist["TotalGems"].push(totalgems);
 				hist["TotalAppraisedSellNoGems"].push(totalappraisedsellnogems);
 				hist["TotalLiquidSellNoGems"].push(totalliquidsellnogems);
@@ -9287,7 +9305,7 @@ A = {
 							useHTML: true,
 							formatter: function()
 							{
-								return A.getChartsCurrencyFormat(this.points);
+								return A.getChartsCurrencyFormat(this.points, A.Currency.AuditColor);
 							}
 						}
 					});
@@ -9385,6 +9403,11 @@ A = {
 			{
 				I.prettyJSON(categoriesview);
 			});
+			
+			// Finalize elements
+			I.scrollToElement("#accAuditCenter", {aSpeed: "fast"});
+			I.suspendElement(button, false);
+			buttonalt.show();
 		};
 		
 		/*
@@ -16676,11 +16699,12 @@ E = {
 		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_vb'></ins>"; },
 		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ab'></ins>"; },
 		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_td'></ins>"; },
-		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; },
+		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ds'></ins>"; },
 		magic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_magic'></ins>"; },
-		map_bs: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_blood'></ins>"; },
-		map_eb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_petrified'></ins>"; },
-		map_bf: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_winterberry'></ins>"; }
+		map_bs: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_bs'></ins>"; },
+		map_eb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_eb'></ins>"; },
+		map_bf: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_bf'></ins>"; },
+		map_ld: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ld'></ins>"; }
 	},
 	PaymentEnum:
 	{
@@ -25817,6 +25841,7 @@ G = {
 		}
 		else
 		{
+			return; // Temporarily disabled
 			// If getting future fractals then use prewritten schedule
 			var fractalday = T.getDaysSince(pDate, T.Daily.Fractal.Epoch) % T.cDAYS_IN_BIWEEK;
 			insertFractal(T.Daily.Fractal.Schedule[fractalday]);

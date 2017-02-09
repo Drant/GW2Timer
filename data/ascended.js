@@ -710,8 +710,10 @@ Back: [
 	{i: 79566, n: "Lava Skull Backpack (Infused)", p: {map_eb: 200}},
 	{i: 79830, n: "Icebrood Horn Backpack", p: {map_bf: 400}},
 	{i: 79837, n: "Icebrood Horn Backpack (Infused)", p: {map_bf: 400}},
-	{i: 80369, n: "Seraph Backpack", p: {coin: -1}},
-	{i: 80289, n: "Assaulter's Burden", p: {coin: -1}}
+	{i: 80369, n: "Seraph Backpack", p: {map_ld: 200}},
+	{i: 80289, n: "Assaulter's Burden", p: {coin: -1}},
+	{i: 80434, n: "Malicious Burden", p: {coin: -1}},
+	{i: 80541, n: "Healer's Burden", p: {coin: -1}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1113,7 +1115,8 @@ LightHelm: [
 	{i: 78985, n: "Defender's Keep Construct Mask", p: {coin: 900000}},
 	{i: 79000, n: "Malicious Keep Construct Mask", p: {coin: 900000}},
 	{i: 67141, n: "Ardent Glorious Crown", p: {coin: 900000}},
-	{i: 79989, n: "Ardent Glorious Crown", p: {coin: 900000}}
+	{i: 79989, n: "Ardent Glorious Crown", p: {coin: 900000}},
+	{i: 80661, n: "Thackeray's Masque", p: {coin: 900000}}
 ],
 LightShoulders: [
 	{i: 48101, n: "Ahamid's Epaulets", p: {coin: 900000}},
@@ -1153,7 +1156,8 @@ LightShoulders: [
 	{i: 74332, n: "Nightfury", p: {craft: true}},
 	{i: 78874, n: "Experimental Envoy Mantle", p: {coin: 900000}},
 	{i: 67152, n: "Ardent Glorious Epaulets", p: {coin: 900000}},
-	{i: 79984, n: "Ardent Glorious Epaulets", p: {coin: 900000}}
+	{i: 79984, n: "Ardent Glorious Epaulets", p: {coin: 900000}},
+	{i: 80448, n: "Thackeray's Epaulets", p: {coin: 900000}}
 ],
 LightCoat: [
 	{i: 48097, n: "Ahamid's Doublet", p: {coin: 1200000}},
@@ -1190,7 +1194,8 @@ LightCoat: [
 	{i: 77391, n: "Sabetha's Healer Doublet", p: {coin: 1200000}},
 	{i: 77395, n: "Sabetha's Malicious Doublet", p: {coin: 1200000}},
 	{i: 78876, n: "Experimental Envoy Vestments", p: {coin: 1200000}},
-	{i: 80027, n: "Ardent Glorious Raiment", p: {coin: 1200000}}
+	{i: 80027, n: "Ardent Glorious Raiment", p: {coin: 1200000}},
+	{i: 80244, n: "Thackeray's Doublet", p: {coin: 1200000}}
 ],
 LightGloves: [
 	{i: 48098, n: "Ahamid's Wristguards", p: {coin: 900000}},
@@ -1229,7 +1234,8 @@ LightGloves: [
 	{i: 77827, n: "Healer's Sloth-Skin Handwraps", p: {coin: 900000}},
 	{i: 78969, n: "Experimental Envoy Gloves", p: {coin: 900000}},
 	{i: 67131, n: "Ardent Glorious Armguards", p: {coin: 900000}},
-	{i: 79953, n: "Ardent Glorious Armguards", p: {coin: 900000}}
+	{i: 79953, n: "Ardent Glorious Armguards", p: {coin: 900000}},
+	{i: 80268, n: "Thackeray's Gloves", p: {coin: 900000}}
 ],
 LightLeggings: [
 	{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -1267,7 +1273,8 @@ LightLeggings: [
 	{i: 77426, n: "Multifarious Malicious Breeches", p: {coin: 1100000}},
 	{i: 78862, n: "Experimental Envoy Pants", p: {coin: 1100000}},
 	{i: 67151, n: "Ardent Glorious Leggings", p: {coin: 1100000}},
-	{i: 80038, n: "Ardent Glorious Leggings", p: {coin: 1100000}}
+	{i: 80038, n: "Ardent Glorious Leggings", p: {coin: 1100000}},
+	{i: 80664, n: "Thackeray's Pants", p: {coin: 1100000}}
 ],
 LightBoots: [
 	{i: 48096, n: "Ahamid's Footwear", p: {coin: 1000000}},
@@ -1344,7 +1351,8 @@ MediumHelm: [
 	{i: 78948, n: "Healer's Keep Construct Hood", p: {coin: 900000}},
 	{i: 78995, n: "Experimental Envoy Leggings", p: {coin: 1100000}},
 	{i: 67156, n: "Ardent Glorious Cap", p: {coin: 1000000}},
-	{i: 79947, n: "Ardent Glorious Cap", p: {coin: 1000000}}
+	{i: 79947, n: "Ardent Glorious Cap", p: {coin: 1000000}},
+	{i: 80370, n: "Thackeray's Visage", p: {coin: 1000000}}
 ],
 MediumShoulders: [
 	{i: 48107, n: "Ahamid's Shoulderguard", p: {coin: 900000}},
@@ -1384,7 +1392,8 @@ MediumShoulders: [
 	{i: 74547, n: "Nightfury", p: {craft: true}},
 	{i: 78971, n: "Experimental Envoy Shoulderpads", p: {coin: 900000}},
 	{i: 67158, n: "Ardent Glorious Shoulderguards", p: {coin: 1000000}},
-	{i: 80012, n: "Ardent Glorious Shoulderguards", p: {coin: 1000000}}
+	{i: 80012, n: "Ardent Glorious Shoulderguards", p: {coin: 1000000}},
+	{i: 80137, n: "Thackeray's Shoulders", p: {coin: 1000000}}
 ],
 MediumCoat: [
 	{i: 48103, n: "Ahamid's Guise", p: {coin: 1200000}},
@@ -1422,7 +1431,8 @@ MediumCoat: [
 	{i: 77306, n: "Sabetha's Malicious Guise", p: {coin: 1200000}},
 	{i: 78800, n: "Experimental Envoy Jerkin", p: {coin: 1200000}},
 	{i: 67115, n: "Ardent Glorious Brigandine", p: {coin: 1200000}},
-	{i: 80001, n: "Ardent Glorious Brigandine", p: {coin: 1200000}}
+	{i: 80001, n: "Ardent Glorious Brigandine", p: {coin: 1200000}},
+	{i: 80280, n: "Thackeray's Cuirass", p: {coin: 1200000}}
 ],
 MediumGloves: [
 	{i: 48104, n: "Ahamid's Grips", p: {coin: 900000}},
@@ -1461,7 +1471,8 @@ MediumGloves: [
 	{i: 78001, n: "Healer's Sloth-Skin Gloves", p: {coin: 900000}},
 	{i: 78892, n: "Experimental Envoy Vambraces", p: {coin: 900000}},
 	{i: 67117, n: "Ardent Glorious Wristplates", p: {coin: 900000}},
-	{i: 79955, n: "Ardent Glorious Wristplates", p: {coin: 900000}}
+	{i: 79955, n: "Ardent Glorious Wristplates", p: {coin: 900000}},
+	{i: 80588, n: "Thackeray's Vambraces", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -1499,7 +1510,8 @@ MediumLeggings: [
 	{i: 77313, n: "Multifarious Malicious Leggings", p: {coin: 1100000}},
 	{i: 78896, n: "Experimental Envoy Mask", p: {coin: 900000}},
 	{i: 67157, n: "Ardent Glorious Legguards", p: {coin: 900000}},
-	{i: 79968, n: "Ardent Glorious Legguards", p: {coin: 900000}}
+	{i: 79968, n: "Ardent Glorious Legguards", p: {coin: 900000}},
+	{i: 80637, n: "Thackeray's Leggings", p: {coin: 900000}}
 ],
 MediumBoots: [
 	{i: 48102, n: "Ahamid's Striders", p: {coin: 1000000}},
@@ -1693,7 +1705,8 @@ HeavyGloves: [
 	{i: 77836, n: "Healer's Sloth-Skin Gauntlets", p: {coin: 900000}},
 	{i: 78799, n: "Experimental Envoy Gauntlets", p: {coin: 900000}},
 	{i: 67144, n: "Ardent Glorious Gauntlets", p: {coin: 900000}},
-	{i: 79965, n: "Ardent Glorious Gauntlets", p: {coin: 900000}}
+	{i: 79965, n: "Ardent Glorious Gauntlets", p: {coin: 900000}},
+	{i: 80572, n: "Malicious Gauntlets of the Obedient", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -1882,7 +1895,8 @@ Axe: [
 	{i: 80678, n: "Assaulter's Axe of the Unseen", p: {coin: -1}},
 	{i: 80611, n: "Malicious Axe of the Unseen", p: {coin: -1}},
 	{i: 80180, n: "Defender's Axe of the Unseen", p: {coin: -1}},
-	{i: 80568, n: "Healer's Axe of the Unseen", p: {coin: -1}}
+	{i: 80568, n: "Healer's Axe of the Unseen", p: {coin: -1}},
+	{i: 80318, n: "Thackeray's Cleaver", p: {coin: -1}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -1922,7 +1936,10 @@ Mace: [
 	{i: 77977, n: "Assaulter's White Mantle Gavel", p: {magnetite: 600}},
 	{i: 78056, n: "Kaiser Snake Mace", p: {coin: 1100000}},
 	{i: 78098, n: "Kaiser Snake Mace", p: {coin: 1100000}},
-	{i: 79570, n: "Endeavor", p: {coin: 1100000}}
+	{i: 79570, n: "Endeavor", p: {coin: 1100000}},
+	{i: 80206, n: "Defender's Demon Virge", p: {coin: -1}},
+	{i: 80310, n: "Healer's Demon Virge", p: {coin: -1}},
+	{i: 80337, n: "Malicious Demon Virge", p: {coin: -1}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2139,7 +2156,8 @@ Focus: [
 	{i: 78844, n: "Assaulter's White Mantle Icon", p: {magnetite: 600}},
 	{i: 78880, n: "Defender's White Mantle Icon", p: {magnetite: 600}},
 	{i: 78964, n: "Healer's White Mantle Icon", p: {magnetite: 600}},
-	{i: 78991, n: "Malicious White Mantle Icon", p: {magnetite: 600}}
+	{i: 78991, n: "Malicious White Mantle Icon", p: {magnetite: 600}},
+	{i: 80486, n: "Thackeray's Focus", p: {coin: -1}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -2362,7 +2380,10 @@ Hammer: [
 	{i: 78835, n: "Healer's White Mantle Hammer", p: {magnetite: 600}},
 	{i: 78843, n: "Defender's White Mantle Hammer", p: {magnetite: 600}},
 	{i: 78875, n: "Assaulter's White Mantle Hammer", p: {magnetite: 600}},
-	{i: 78919, n: "Malicious White Mantle Hammer", p: {magnetite: 600}}
+	{i: 78919, n: "Malicious White Mantle Hammer", p: {magnetite: 600}},
+	{i: 80331, n: "Malicious Demon Gavel", p: {coin: -1}},
+	{i: 80341, n: "Assaulter's Demon Gavel", p: {coin: -1}},
+	{i: 80606, n: "Healer's Demon Gavel", p: {coin: -1}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
@@ -2550,7 +2571,10 @@ Staff: [
 	{i: 80188, n: "Assaulter's Spire of Samarog", p: {magnetite: 600}},
 	{i: 80527, n: "Defender's Spire of Samarog", p: {magnetite: 600}},
 	{i: 80605, n: "Healer's Spire of Samarog", p: {magnetite: 600}},
-	{i: 80278, n: "Malicious Treasured Bough", p: {coin: -1}}
+	{i: 80278, n: "Malicious Treasured Bough", p: {coin: -1}},
+	{i: 80158, n: "Thackeray's Pillar", p: {coin: -1}},
+	{i: 80243, n: "Healer's Treasured Bough", p: {coin: -1}},
+	{i: 80273, n: "Assaulter's Treasured Bough", p: {coin: -1}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},

@@ -161,8 +161,8 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 14, payment: "dungeon_coe", name_en: "Knowledge Crystal", name_de: "Wissenskristall", name_es: "Cristal del conocimiento", name_fr: "Cristal de connaissance", name_zh: "知识水晶" },
 			{ id: 6, payment: "dungeon_arah", name_en: "Shard of Zhaitan", name_de: "Scherbe des Zhaitan", name_es: "Esquirla de Zhaitan", name_fr: "Eclat de Zhaïtan", name_zh: "泽坦碎片" },
 			{ id: 7, payment: "fotm_relic", name_en: "Fractal Relic", name_de: "Fraktal-Relikt", name_es: "Reliquia fractal", name_fr: "Relique fractale", name_zh: "碎层古物" },
-			{ id: 24, payment: "fotm_pristine", coefficient: 15, name_en: "Pristine Fractal Relic", name_de: "Makelloses Fraktal-Relikt", name_es: "Reliquia fractal prístina", name_fr: "Relique fractale immaculée", name_zh: "原始碎层古物" },
-			{ id: 28, payment: "magnetite", coefficient: 10, name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁铁碎块" }
+			{ id: 24, coefficient: 15, payment: "fotm_pristine", name_en: "Pristine Fractal Relic", name_de: "Makelloses Fraktal-Relikt", name_es: "Reliquia fractal prístina", name_fr: "Relique fractale immaculée", name_zh: "原始碎层古物" },
+			{ id: 28, coefficient: 10, payment: "magnetite", name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁铁碎块" }
 		],
 		General: [
 			{ id: 1, coefficient: 1, name_en: "Coin", name_de: "Münze", name_es: "Moneda", name_fr: "Pièce", name_zh: "钱币" },
@@ -210,9 +210,31 @@ var GW2T_CURRENCY_DATA = {
 	{
 		Timestamps: null, // Array of ISO timestamp strings
 		WalletCoin: null, // All other entries are integer arrays
+		WalletKarma: null,
 		TotalGems: null,
 		TotalAppraisedSellNoGems: null,
 		TotalLiquidSellNoGems: null
+	},
+	AuditColor: {
+		WalletCoin: {color: "#fdc84e"},
+		WalletKarma: {color: "#ee55cc", currency: "karma"},
+		TotalGems: {color: "#71a3d8", currency: "gem"},
+		TotalAppraisedSellNoGems: {color: "gold"},
+		TotalLiquidSellNoGems: {color: "yellow"},
+		Wallet: {color: "seagreen"},
+		Characters: {color: "crimson"},
+		Shared: {color: "firebrick"},
+		Bank: {color: "orange"},
+		Materials: {color: "peru"},
+		Vault: {color: "saddlebrown"},
+		Skins: {color: "papayawhip"},
+		Outfits: {color: "peachpuff"},
+		Dyes: {color: "deepskyblue"},
+		Minis: {color: "aquamarine"},
+		Finishers: {color: "slateblue"},
+		Recipes: {color: "purple"},
+		Buying: {color: "silver"},
+		Selling: {color: "gray"}
 	},
 	/*
 	 * Payments to show on the account audit table in this order.
