@@ -2163,8 +2163,13 @@ MasteryInsight: {
 	{n: 26, c: [7828, 28989], t: "Bleeding Pulpit", e: 2},
 	// bitterfrost
 	{n: 27, c: [20936, 7812], t: "The Svanir Hive", e: 1},
-	{n: 28, c: [21415, 7372], t: "Griffon Old Growth", e: 0},
-	{n: 29, c: [23665, 6849], t: "The Bitter Cold", e: 3}
+	{n: 28, c: [21415, 7372], t: "Griffon Old Growth"},
+	{n: 29, c: [23665, 6849], t: "The Bitter Cold", e: 2},
+	// doric
+	{n: 30, c: [12645, 9214], t: "Watcher's Hollow", e: 1},
+	{n: 31, c: [13023, 10923], t: "Lakeside Bazaar"},
+	{n: 32, c: [13429, 11145], t: "Melandru's Flourish"},
+	{n: 33, c: [13269, 11547], t: "Melandru's Refuge", e: 3}
 	]
 },
 HeroChallenge: {

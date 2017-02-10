@@ -81,7 +81,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170118},
+		programVersion: {key: "int_utlProgramVersion", value: 170209},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -135,7 +135,7 @@ O = {
 				if (valB !== undefined && parseInt(valB) !== valA)
 				{
 					var message = "New game build available";
-					I.print("<a" + U.convertExternalAnchor(U.URL_META.BuildNotes) + ">" + message + "</a>! "
+					I.print("<a" + U.convertExternalAnchor(U.URL_META.BuildNotes) + ">" + message + "!</a> "
 						+ "GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + "<br />"
 						+ T.formatWeektime(new Date(), true) + " - <a href='./?bol_alertBuild=false'>Turn off this alert?</a>");
 					D.speak("Alert! " + message);

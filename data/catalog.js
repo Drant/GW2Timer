@@ -117,6 +117,7 @@ Key: [
 	{i: 70892, n: "Vial of Chak Acid", p: {map_td: 8}},
 	{i: 72210, n: "Machete", p: {token: 15}},
 	{i: 79528, n: "Skritt Worker Contract", p: {karma: 980}},
+	{i: 80262, n: "Key to Noran's Secret Chest", p: {karma: 0}},
 	{i: 66624, n: "Zephyrite Lockpick", p: {coin: 0}},
 	{i: 67826, n: "Silverwastes Shovel", p: {coin: 0}},
 	{i: 67777, n: "Bandit Skeleton Key", p: {coin: 0}},

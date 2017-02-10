@@ -1141,6 +1141,9 @@ Chest: {
 		{c: [4279, 21071]},
 		{c: [4468, 18537]},
 		{c: [4815, 18769]},
+		{c: [13310, 9282]},
+		{c: [13236, 9349]},
+		{c: [13375, 9158]},
 		// Central Tyria
 		{c: [3863, 16630], t: "In entangled cave, entrance opens rarely during sandstorm"},
 		{c: [4637, 17091], t: "Climb the wall edge south of the POI and climb eastward"},

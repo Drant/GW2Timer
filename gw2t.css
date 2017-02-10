@@ -1635,10 +1635,12 @@ input.mapCoordinatesName {
 	margin-bottom: 16px;
 }
 #mapSearch {
-	width: 144px;
+	width: calc(100% - 4px);
+	margin-bottom: -12px;
 }
 .mapSearchResults {
-	left: -192px;
+	left: -64px;
+	margin-top: 8px;
 }
 
 /* Marker classes

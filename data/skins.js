@@ -3305,7 +3305,7 @@ Weapon_Shield: [
 	{u: 7048, i: 79979, n: "Frostforged Shield", t: [79979]},
 	{u: 7061, i: 79985, n: "Wrapped Shield", p: {achievement: 0}},
 	{u: 7111, i: 80242, n: "Devoted Shield", t: [80242]},
-	{u: 7135, i: 80526, n: "Seraph Protector", p: {gem: null}}
+	{u: 7135, i: 80526, n: "Seraph Protector", p: {karma: 210000}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -4473,7 +4473,7 @@ Weapon_Staff: [
 	{u: 7056, i: 80039, n: "Frostforged Staff", t: [80039]},
 	{u: 7043, i: 80036, n: "Wrapped Staff", p: {achievement: 0}},
 	{u: 7112, i: 80665, n: "Devoted Staff", t: [80665]},
-	{u: 7118, i: 80304, n: "Bloodstone Savant's Staff", p: {gem: null}},
+	{u: 7118, i: 80304, n: "Bloodstone Savant's Staff", p: {karma: 210000}},
 	{u: 7104, i: 80278, n: "Prisoner's Treasured Bough", p: {gem: null}},
 	{u: 7113, i: 80188, n: "Spire of Samarog", p: {gem: null}}
 ],

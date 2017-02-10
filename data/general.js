@@ -490,6 +490,7 @@ Fractal:
 Bookmark:
 {
 	// Common paths such as daily resource runs
+	"Lake Doric: Jade": [[12348,10228],[12382,10328],[12470,10305],[12575,10795],[12693,10707],[12720,10686],[12885,10647],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]],
 	"Bitterfrost Frontier: Winterberries": [[21325,7462],[20999,7308],[21099,7143],[21122,7048],[21048,6994],[21359,6959],[21650,6882],[21827,6925],[21995,6951],[21765,7080],[21890,7144],[21974,7158],[22061,7219],[21931,7330],[21780,7252],[21713,7352],[21706,7525],[21573,7581],[22376,7990],[23197,7470],[22679,7073]],
 	"Ember Bay: Petrified": [[7912,29246],[7340,29422],[7377,29663],[7188,29630],[7132,29897],[6917,29868],[6948,29577],[7141,29418],[6834,28772],[6868,28908],[6742,28893],[6559,29195],[5137,29263]],
 	"Bloodstone Fen: Rubies": [[2554,14136],[2483,14115],[2425,14213],[2464,14279],[2438,14307],[2497,14377],[2445,14410],[2708,14445],[2903,14533],[2951,14506],[2952,14351],[2871,14335],[2846,14313],[2800,14261],[2826,14234],[2894,14113],[2950,14127],[2956,14147],[2899,14194],[2890,14250],[2989,14303],[3004,14306],[3077,14333],[3122,14311],[3240,14175],[3217,14171],[3147,14104],[3108,14097],[3029,14149],[3138,14205],[3100,14216],[2716,14196],[2671,14214],[2657,14285]],
@@ -1428,7 +1429,8 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release.",
+	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
+	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12575,10795],[12693,10707],[12720,10686],[12885,10647],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>resource nodes</a>. Right click on Lake Doric zone for map completion route.",
 	wvw: "",
 	Start: new Date("2016-02-07T16:00:00Z"),
 	Finish: new Date("2017-02-14T16:00:00Z"),
