@@ -2752,6 +2752,7 @@ U = {
 
 	URL_META:
 	{
+		Forum: "http://forum.renaka.com/forum/368355/",
 		News: "http://forum.renaka.com/topic/5500046/",
 		Overlay: "http://forum.renaka.com/topic/5546166/",
 		BuildNotes: "https://forum-{0}.guildwars2.com/forum/info/updates"
@@ -3414,6 +3415,10 @@ U = {
 			// Only proceed if "page" is not an actual content page
 			else if (U.isEnumWithin(page, I.PageEnum) === false)
 			{
+				if (page === "forum" || page === "forums")
+				{
+					go(U.URL_META.Forum);
+				}
 				if (page === "navi" || page === "overlay")
 				{
 					go(U.URL_META.Overlay);
@@ -7770,7 +7775,7 @@ A = {
 				// Ask for confirmation if key is not empty
 				if (str.length > 0)
 				{
-					if (confirm("Delete this API token?"))
+					if (confirm("Delete this API token?\nNote: Audit history must be manually deleted at http://gw2timer.com/audit"))
 					{
 						token.remove();
 						A.saveTokens();
@@ -12103,12 +12108,12 @@ V = {
 				aWantDefaultHelp: false,
 				aHelpMessage: $("#accHelpMuseum").html()
 			});
+			// Open the first tab, leaving the rest collapsed
+			setTimeout(function()
+			{
+				dish.find(".bnkTabSeparator").first().trigger("click");
+			}, 400);
 		});
-		// Open the first tab, leaving the rest collapsed
-		setTimeout(function()
-		{
-			dish.find(".bnkTabSeparator").first().trigger("click");
-		}, 400);
 	},
 	
 	/*
@@ -25017,7 +25022,7 @@ P = {
 					+ "<input type='text' class='cssInputText' value='[" + obj.coord + "]' /> "
 					+ "<a" + U.convertExternalAnchor(C.getEventWiki(obj.wiki)) + ">[W]</a> "
 					+ "<dfn class='cssGameTitle' data-coord='" + obj.coord + "'>" + obj.wiki + "</dfn></div>")
-				.appendTo(console).data("keywords", obj.wiki);
+				.appendTo(console).data("keywords", obj.wiki.toLowerCase());
 			});
 			I.print("");
 			M.bindMapLinks("#itemConsole");
@@ -26759,14 +26764,14 @@ G = {
 				title: markertitle
 			};
 
-			if (collectible.iscushion) // If here then the needle has an array of coordinates
+			if (collectible.iscushion) // Special set of markers without tracing
 			{
 				for (ii = 0; ii < ithneedle.c.length; ii++)
 				{
 					createMarker(ithneedle.c[ii], markeroptions);
 				}
 			}
-			else // If here then the needle has one single coordinates
+			else // Regular set of markers with tracing
 			{
 				createMarker(ithneedle.c, markeroptions);
 				// Draw a segment from the current and next needle's coordinates
@@ -26780,6 +26785,20 @@ G = {
 						opacity: 0.5
 					});
 					P.Layer[pType].addLayer(pathline);
+				}
+				// Draw path for the node itself, if provided
+				if (ithneedle.p)
+				{
+					for (ii = 0; ii < ithneedle.p.length - 1; ii++)
+					{
+						pathline = L.polyline(M.convertGCtoLCDual([ithneedle.p[ii], ithneedle.p[ii+1]]),
+						{
+							color: "white",
+							dashArray: "5,15",
+							opacity: 0.5
+						});
+						P.Layer[pType].addLayer(pathline);
+					}
 				}
 			}
 		}

@@ -854,6 +854,20 @@ JP: {
 		zone: "malchor",
 		description: "Malchor's convoluted orrian ruins cave collecting 12 orbs"
 	},
+	"trap": {
+		id: 78,
+		difficulty: 4,
+		name_en: "It's a Trap",
+		name_de: "Vorsicht, Falle",
+		name_es: "Es una trampa",
+		name_fr: "C'est un piège",
+		coord: [12505, 9294],
+		path: [[12535,9315],[12533,9274],[12515,9267],[12514,9293],[12499,9295]],
+		img: "http://i.imgur.com/S1sYzp0.png",
+		chest: null,
+		zone: "ember",
+		description: "Spikes, steam, and pit traps cave. Interact with the wall-stack of barrels in Noran's basement to enter."
+	},
 	"neighborhood": {
 		id: 46,
 		difficulty: 4,
@@ -1141,9 +1155,6 @@ Chest: {
 		{c: [4279, 21071]},
 		{c: [4468, 18537]},
 		{c: [4815, 18769]},
-		{c: [13310, 9282]},
-		{c: [13236, 9349]},
-		{c: [13375, 9158]},
 		// Central Tyria
 		{c: [3863, 16630], t: "In entangled cave, entrance opens rarely during sandstorm"},
 		{c: [4637, 17091], t: "Climb the wall edge south of the POI and climb eastward"},
