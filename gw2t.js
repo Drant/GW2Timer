@@ -3451,15 +3451,6 @@ U = {
 							}
 						}
 					}
-					// Check if is a zone name
-					for (i in M.Zones)
-					{
-						if (page.indexOf(i) !== -1)
-						{
-							U.Args[U.KeyEnum.Go] = i;
-							return;
-						}
-					}
 					// Check if is a server ID
 					if (isNaN(page) === false && page.length === U.ServerIDLength)
 					{
@@ -3493,6 +3484,18 @@ U = {
 				// Setting the article key will tell the generate collectibles function to do so for that one
 				I.ArticleCurrent = ithpage;
 				return;
+			}
+		}
+		// Check if is a zone name
+		if (page)
+		{
+			for (i in M.Zones)
+			{
+				if (page.indexOf(i) !== -1)
+				{
+					U.Args[U.KeyEnum.Go] = i;
+					return;
+				}
 			}
 		}
 	},
