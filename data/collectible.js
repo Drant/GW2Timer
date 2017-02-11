@@ -35,7 +35,7 @@ var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
 
 HarathiStrongboxes: {
-	name_en: "Harathi Strongbox",
+	name_en: "Harathi Strongboxes",
 	name_de: "Harathi-Schatulle",
 	name_es: "Arca harathi",
 	name_fr: "Coffre-fort harathi",
