@@ -33,6 +33,38 @@ var GW2T_COLLECTIBLE_METADATA = {
 
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
+
+HarathiStrongboxes: {
+	name_en: "Harathi Strongbox",
+	name_de: "Harathi-Schatulle",
+	name_es: "Arca harathi",
+	name_fr: "Coffre-fort harathi",
+	category: "chests",
+	color: "brown",
+	view: "[13282, 9321]",
+	wiki: "https://wiki.guildwars2.com/wiki/Harathi_Strongbox",
+	credit: "https://www.reddit.com/r/Guildwars2/comments/5t5nd6/farms_harathi_leather_farm_route/",
+	needles: [
+	{n: 1, c: [13097, 9193]},
+	{n: 2, c: [13138, 9277]},
+	{n: 3, c: [13237, 9347]},
+	{n: 4, c: [13228, 9248]},
+	{n: 5, c: [13306, 9211]},
+	{n: 6, c: [13307, 9276]},
+	{n: 7, c: [13383, 9158]},
+	{n: 8, c: [13421, 9289]},
+	{n: 9, c: [13420, 9329]},
+	{n: 10, c: [13377, 9372]},
+	{n: 11, c: [13334, 9396]},
+	{n: 12, c: [13273, 9411]},
+	{n: 13, c: [13361, 9438]},
+	{n: 14, c: [13273, 9505]},
+	{n: 15, c: [13198, 9502]},
+	{n: 16, c: [13220, 9431]},
+	{n: 17, c: [13203, 9381]},
+	{n: 18, c: [13170, 9399]},
+	]
+},
 IceboundChests: {
 	name_en: "Icebound Chests",
 	name_de: "Eingefrorene Truhe",
@@ -1234,6 +1266,56 @@ DonationDrive: {
 	{n: 28, c: [11140, 10198]},
 	{n: 29, c: [10944, 10208]},
 	{n: 30, c: [10814, 10446]}
+	]
+},
+CinsGoods: {
+	name_en: "Cin Business",
+	name_de: "Geschäfte mit Cin",
+	name_es: "Las cosillas de Cin",
+	name_fr: "Affaires de Cin",
+	category: "achievements",
+	color: "rosybrown",
+	view: "doric",
+	wiki: "https://wiki.guildwars2.com/wiki/Cin_Business",
+	credit: "http://dulfy.net/2017/02/09/gw2-cin-business-achievement-guide/",
+	needles: [
+	{n: 1, c: [12246, 10297], s: "http://i.imgur.com/AwgCGqp.png", t: "Doric Dam Splinter"},
+	{n: 2, c: [12539, 10199], s: "http://i.imgur.com/n2U4BB2.png", t: "Quaggan Food"},
+	{n: 3, c: [12764, 10169], s: "http://i.imgur.com/e2lMQxh.png", t: "Pinkeens's Sextant"},
+	{n: 4, c: [12451, 9835], s: "http://i.imgur.com/ZYn1R2B.png", t: "Cord of Stolen Wood<br />Loot from Bandit Spirit event: &quot;Solve the mysterious happenings frightening Seraph lumber workers&quot;."},
+	{n: 5, c: [12539, 9227], s: "http://i.imgur.com/CfFjX9J.png", t: "Warm Animal Pelt<br />In Noran's Homestead basement, right side tunnel."},
+	{n: 6, c: [13042, 9466], s: "http://i.imgur.com/2AvQ1vu.png", t: "Stolen Flank Steak<br />Loot from Siegemeaster Immelhoof event: &quot;Defeat Siegemeaster Immelhoof before he reaches the Harvest Cascades&quot;."},
+	{n: 7, c: [12965, 9235], s: "http://i.imgur.com/YPCm2Be.png", t: "Magic-Imbued Peace Core<br />Talk to Nature's Watcher NPC and consume the given peach."},
+	{n: 8, c: [13055, 9196], s: "http://i.imgur.com/VidB6ga.png", t: "Lost Locket"},
+	{n: 9, c: [13204, 9231], s: "http://i.imgur.com/Rd5IJkh.png", t: "Tower Shard"},
+	{n: 10, c: [13349, 9840], s: "http://i.imgur.com/PnBB8zK.png", t: "Bottle of Red Mantle Wine"},
+	{n: 11, c: [13266, 10247], s: "http://i.imgur.com/rtdGrAw.png", t: "Mystic Cloth<br />Loot from Justiciar Agatha event: &quot;Intercept the White Mantle supply dolyak before it reaches Saidra's Haven&quot;."},
+	{n: 12, c: [13362, 10886], s: "http://i.imgur.com/Uf9r46J.png", t: "Shipping Orders"},
+	{n: 13, c: [12837, 11096], s: "http://i.imgur.com/SoTVby8.png", t: "Fishing Supplies"},
+	{n: 14, c: [13225, 11482], s: "http://i.imgur.com/aa2MhKt.png", t: "Bloodstone-Infused Toadstool"},
+	{n: 15, c: [12532, 11584], s: "http://i.imgur.com/xpitzeB.png", t: "Queenslayer Jade Chunk<br />Loot from Cairn the Queenslayer event: &quot;Stop the Reinforcements&quot;."},
+	{n: 16, c: [12245, 11373], s: "http://i.imgur.com/N7gY6e2.png", t: "Pearl Shell<br />Talk to child NPC by sewer."},
+	{n: 17, c: [12213, 11311], s: "http://i.imgur.com/lMmS5rt.png", t: "Fancy Greatsword"}
+	]
+},
+LettersFromE: {
+	name_en: "Letters from E",
+	name_de: "Lettres d'E",
+	name_es: "Briefe von E",
+	name_fr: "Cartas de E",
+	category: "achievements",
+	color: "navajowhite",
+	view: "doric",
+	wiki: "https://wiki.guildwars2.com/wiki/Letters_from_E",
+	credit: "http://dulfy.net/2017/02/09/gw2-letters-from-e-achievements-guide/",
+	needles: [
+	{n: 1, c: [13135, 9372], s: "http://i.imgur.com/GPi4Q2b.png"},
+	{n: 2, c: [12732, 10451], s: "http://i.imgur.com/QdzP9XZ.png"},
+	{n: 3, c: [12395, 10997], s: "http://i.imgur.com/eLOIJoG.png"},
+	{n: 4, c: [12255, 10937], s: "http://i.imgur.com/tDqUPC4.png"},
+	{n: 5, c: [13316, 10830], s: "http://i.imgur.com/iCnfRmZ.png"},
+	{n: 6, c: [13326, 11165], s: "http://i.imgur.com/Jrb3VA3.png"},
+	{n: 7, c: [12553, 11600], s: "http://i.imgur.com/lFp0mmu.png"}
 	]
 },
 ThoroughSampling: {

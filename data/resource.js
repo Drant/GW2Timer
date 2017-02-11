@@ -320,6 +320,8 @@ Magic: {
 		
 	],
 	Hotspot: [
+	{c: [23583, 8050]}, // bitterfrost
+	{c: [3078, 14239]}, // bloodstone
 	{c: [12835, 9230]}, // doric
 	{c: [13377, 11207]}
 	]

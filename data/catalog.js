@@ -189,6 +189,7 @@ Festival: [
 	{i: 36041, n: "Piece of Candy Corn"},
 	{i: 47909, n: "Candy Corn Cob"},
 	{i: 77604, n: "Wintersday Gift"},
+	{i: 77669, n: "Wrapped Gift"},
 	{i: 38449, n: "Ugly Wool Hat"},
 	{i: 38448, n: "Ugly Wool Sock"},
 	{i: 38450, n: "Ugly Wool Sweater"},

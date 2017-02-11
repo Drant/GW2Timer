@@ -1622,6 +1622,7 @@ X = {
 	Collectibles:
 	{
 		// Chests
+		HarathiStrongboxes: { key: "str_chlHarathiStrongboxes", urlkey: "harathistrongboxes"},
 		IceboundChests: { key: "str_chlIceboundChests", urlkey: "iceboundchests"},
 		SkrittStashes: { key: "str_chlSkrittStashes", urlkey: "skrittstashes"},
 		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods"},
@@ -1635,7 +1636,9 @@ X = {
 		// Festival
 		PumpkinCarving: { key: "str_chlPumpkinCarving", urlkey: "pumpkins"},
 		DonationDrive: { key: "str_chlDonationDrive", urlkey: "orphans"},
-		// Achievements
+		// Achievements: Heart of Thorns Living Story
+		CinsGoods: { key: "str_chlCinsGoods", urlkey: "cinsgoods"},
+		LettersFromE: { key: "str_chlLettersFromE", urlkey: "lettersfrome"},
 		ThoroughSampling: { key: "str_chlThoroughSampling", urlkey: "thoroughsampling"},
 		MursaatTokens: { key: "str_chlMursaatTokens", urlkey: "mursaattokens"},
 		MursaatTablets: { key: "str_chlMursaatTablets", urlkey: "mursaattablets"},
@@ -6508,7 +6511,7 @@ Z = {
 			{
 				return "Recipe";
 			}
-			if (pItem.rarity === "Rare" && pItem.level && pItem.level > Q.ItemLimit.EctoSalvageLevel)
+			if (pItem.rarity === Q.RarityEnum.Rare && pItem.level && pItem.level > Q.ItemLimit.EctoSalvageLevel)
 			{
 				if (pItem.type === Q.ItemEnum.Weapon || pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Trinket || pItem.type === Q.ItemEnum.Back)
 				{
@@ -6520,7 +6523,7 @@ Z = {
 			}
 			if (pItem.type === Q.ItemEnum.Container)
 			{
-				if (pItem.rarity === "Ascended")
+				if (pItem.rarity === Q.RarityEnum.Ascended)
 				{
 					return "ContainerAscended";
 				}
@@ -6528,7 +6531,7 @@ Z = {
 				{
 					return "ContainerGear";
 				}
-				if (pItem.rarity === "Rare" || pItem.rarity === "Exotic")
+				if (pItem.rarity === Q.RarityEnum.Rare || pItem.rarity === Q.RarityEnum.Exotic)
 				{
 					if (name.indexOf("gear") !== -1 
 						|| desc.indexOf("weapon") !== -1 || desc.indexOf("armor") !== -1 || desc.indexOf("gear") !== -1 || desc.indexOf("skin") !== -1)
@@ -6548,16 +6551,17 @@ Z = {
 				{
 					return "Combine";
 				}
-				if (pItem.rarity === "Junk")
+				if (pItem.rarity === Q.RarityEnum.Junk)
 				{
 					return "Junk";
 				}
-				if (desc.indexOf("event item") !== -1 || desc.indexOf("task item") !== -1 || (pItem.vendor_value > 0 && pItem.flags.indexOf("NoSell") === -1))
+				if (pItem.rarity !== "Legendary" &&
+					(Q.isTradeable(pItem) === false
+					|| desc.indexOf("event item") !== -1
+					|| desc.indexOf("task item") !== -1
+					|| (pItem.vendor_value > 0 && pItem.flags.indexOf("NoSell") === -1)))
 				{
-					if (pItem.rarity !== "Legendary")
-					{
-						return "Collection";
-					}
+					return "Collection";
 				}
 			}
 			if (pItem.type === Q.ItemEnum.Gizmo)
@@ -6638,7 +6642,7 @@ Z = {
 			for (var i in db)
 			{
 				var item = db[i];
-				if (item.rarity === "Junk" && item.vendor_value > 0)
+				if (item.rarity === Q.RarityEnum.Junk && item.vendor_value > 0)
 				{
 					junkvalue[item.id] = item.vendor_value;
 				}
@@ -6706,7 +6710,7 @@ Z = {
 			{
 				item = pDatabase[i];
 				type = item.type;
-				if (item.rarity === "Ascended")
+				if (item.rarity === Q.RarityEnum.Ascended)
 				{
 					if (categorizeItem(item))
 					{
@@ -26536,7 +26540,7 @@ G = {
 				samplelink = I.cSiteLink + "<dfn>" + X.Collectibles[i].urlkey + "</dfn>";
 				$("<div class='cltBox cltBox_" + collectible.category + "'>"
 					+ "<label style='color:" + collectible.color + "'>"
-						+ "<ins id='cltPins_" + i + "' class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
+						+ "<img id='cltPins_" + i + "' class='cltIcon' src='img/collectible/" + i.toLowerCase() + ".png' /><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
 					+ "<span class='cltLinks' title='" + samplelink + "' ><cite>"
 						+ "<a href='" + U.getYouTubeLink(defaultname) + "'>[Y]</a>&nbsp;"//

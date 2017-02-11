@@ -1635,8 +1635,9 @@ input.mapCoordinatesName {
 	margin-bottom: 16px;
 }
 #mapSearch {
-	width: calc(100% - 4px);
-	margin-bottom: -12px;
+	width: calc(100% - 16px);
+	margin-left: 8px;
+	margin-top: 8px;
 }
 .mapSearchResults {
 	left: -64px;
