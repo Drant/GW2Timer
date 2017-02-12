@@ -24987,9 +24987,9 @@ P = {
 	 */
 	drawCompletionRoute: function(pZone)
 	{
-		var path = (pZone) ? pZone.path : M.ZoneCurrent.path;
 		if (M.isItineraryRetrieved)
 		{
+			var path = (pZone) ? pZone.path : M.ZoneCurrent.path;
 			M.redrawPersonalPath(path);
 		}
 		else
@@ -25002,7 +25002,7 @@ P = {
 					M.Zones[i].path = GW2T_COMPLETION_DATA[i].path;
 				}
 				M.isItineraryRetrieved = true;
-				P.drawCompletionRoute();
+				P.drawCompletionRoute(pZone);
 			});
 		}
 	},
