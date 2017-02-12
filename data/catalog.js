@@ -123,7 +123,6 @@ Key: [
 	{i: 67777, n: "Bandit Skeleton Key", p: {coin: 0}},
 	{i: 67981, n: "Essence of Nightmares", p: {coin: 0}},
 	{i: 67979, n: "Key of Greater Nightmares", p: {coin: 0}},
-	{i: 36708, n: "Black Lion Chest Key", p: {gem: 125}},
 	{i: 19980, n: "Black Lion Chest Key", p: {gem: 125}},
 	{i: 20316, n: "Black Lion Chest"},
 	{i: 43992, n: "Black Lion Claim Ticket", p: {gem: 0}},

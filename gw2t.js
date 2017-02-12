@@ -23500,9 +23500,17 @@ M = {
 		}
 		if (qsdraw)
 		{
-			this.parsePersonalPath(qsdraw);
-			U.Args[U.KeyEnum.Draw] = null;
-			goPage();
+			var cmd = qsdraw.toLowerCase();
+			if (cmd === "completion" || cmd === "true")
+			{
+				P.drawCompletionRoute();
+			}
+			else
+			{
+				this.parsePersonalPath(qsdraw);
+				U.Args[U.KeyEnum.Draw] = null;
+				goPage();
+			}
 		}
 		
 		// Start GPS if on overlay

@@ -520,6 +520,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[10301, 14182], [10476, 13932]], // kessex to queensdale
 	[[13353, 14230], [13561, 14110]], // kessex to gendarran
 	[[11900, 10461], [12217, 10587]], // divinity to doric
+	[[13385, 10069], [13623, 10120]], // doric to harathi
 	[[11245, 11602], [11021, 11934]], // divinity to queensdale
 	[[13327, 12613], [13523, 12681]], // queensdale to gendarran
 	[[14344, 12335], [14341, 12140]], // gendarran to harathi

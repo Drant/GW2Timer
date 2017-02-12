@@ -415,7 +415,7 @@ Back: [
 	{u: 2370, i: 39500, n: "Green Quaggan Backpack", p: {gem: 0}},
 	{u: 2371, i: 39516, n: "Covert Charr Backpack", p: {gem: 300}},
 	{u: 2372, i: 39519, n: "Warrior Quaggan Backpack", p: {gem: 300}},
-	{u: 2381, i: 49521, n: "Antitoxin Injector", p: {achievement: 0}},
+	{u: 2381, i: 49521, n: "Antitoxin Injector", p: {laurel: 5}},
 	{u: 5532, i: 66924, n: "Mysterious Vine", p: {craft: true}},
 	{u: 5545, i: 66982, n: "Cultivated Vine", p: {craft: true}},
 	{u: 5544, i: 67004, n: "Mawdrey", p: {craft: true}},
