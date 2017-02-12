@@ -5,6 +5,26 @@
  */
 
 /*
+ * Map containers. Setting their current floor number changes the map tileset images.
+ */
+var GW2T_CONTINENT_DATA = {
+	"map": { // Tyria
+		id: 1,
+		Bound: [32768, 32768],
+		Center: [16384, 16384],
+		CenterInitial: [-1024, 1024], // Initial coords are in Leaflet system, and are out of bounds so browser doesn't download tiles yet
+		Floors: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-18,-19,-20,-21,-22,20,21,22,23,24,25,26,27,28,29,30,34,36,37,40,38,39,42,43,44,45,46,47,48,-24]
+	},
+	"wvw": { // The Mists
+		id: 2,
+		Bound: [16384, 16384],
+		Center: [10494, 12414], // Actual: [8192, 8192]
+		CenterInitial: [-193.96875, 163.96875],
+		Floors: [1,3,5,6,7,8,9,10,13,14,16,18,19,20,21,22,23,24,25,26,27,28,29,30,-27,-28,-29,-30,-31,35,32,-32,-33,37]
+	}
+};
+
+/*
  * This associates the zone's nick with their ID number in the API JSON for
  * access in constant time.
  */
@@ -1431,7 +1451,8 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12575,10795],[12693,10707],[12720,10686],[12885,10647],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a> and <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a> achievements. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a> <a href='http://forum.renaka.com/topic/5546166/'>GPS</a>.",
+	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12575,10795],[12693,10707],[12720,10686],[12885,10647],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a> and <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a> achievements. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>.<br />"
+		+ "<a href='http://forum.renaka.com/topic/5546166/'>Overlay GPS</a> now works with LS3 missions <a href='http://gw2timer.com/?page=CaudecusLetters'>Master of Puppets</a>. Lake Doric <a href='http://gw2timer.com/?page=Map&bol_showWorldCompletion=true&draw=Doric'>map completion</a>.",
 	wvw: "",
 	Start: new Date("2016-02-07T16:00:00Z"),
 	Finish: new Date("2017-02-14T16:00:00Z"),

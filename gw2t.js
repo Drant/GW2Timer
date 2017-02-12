@@ -1312,11 +1312,11 @@ O = {
 		},
 		int_setFloor: function()
 		{
-			M.changeFloor(O.Options.int_setFloor);
+			M.changeFloor();
 		},
 		int_setFloorWvW: function()
 		{
-			W.changeFloor(O.Options.int_setFloorWvW);
+			W.changeFloor();
 		},
 		bol_showFloor: function()
 		{
@@ -1639,6 +1639,7 @@ X = {
 		// Achievements: Heart of Thorns Living Story
 		CinsGoods: { key: "str_chlCinsGoods", urlkey: "cinsgoods"},
 		LettersFromE: { key: "str_chlLettersFromE", urlkey: "lettersfrome"},
+		CaudecusLetters: { key: "str_chlCaudecusLetters", urlkey: "caudecusletters"},
 		ThoroughSampling: { key: "str_chlThoroughSampling", urlkey: "thoroughsampling"},
 		MursaatTokens: { key: "str_chlMursaatTokens", urlkey: "mursaattokens"},
 		MursaatTablets: { key: "str_chlMursaatTablets", urlkey: "mursaattablets"},
@@ -2772,18 +2773,15 @@ U = {
 		
 		// Map
 		LangKey: "",
-		TilesTyria: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
-		TilesMists: "https://tiles.guildwars2.com/2/1/{z}/{x}/{y}.jpg",
+		Maps: "https://api.guildwars2.com/v1/maps",
 		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 		MapFloorMists: "https://api.guildwars2.com/v1/map_floor.json?continent_id=2&floor=1",
-		MapsList: "https://api.guildwars2.com/v1/maps.json",
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
 		
 		// Exchange
 		ItemListing: "https://api.guildwars2.com/v2/commerce/listings",
 		ItemPrice: "https://api.guildwars2.com/v2/commerce/prices",
 		ItemDetail: "https://api.guildwars2.com/v2/items",
-		ItemRender: "https://render.guildwars2.com/file/",
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
 		
@@ -3133,6 +3131,10 @@ U = {
 		var idstr = (pID === undefined) ? "" : "/" + pID;
 		var url = U.URL_API.Prefix + pAPI + idstr;
 		return U.getLangURL(url);
+	},
+	getAPIMap: function(pID)
+	{
+		return U.getAPI("maps", pID);
 	},
 	getAPIAchievement: function(pID)
 	{
@@ -4895,6 +4897,10 @@ Z = {
 				I.print("<br /><input id='cslCalendar' type='date' /><br />");
 				$("#cslCalendar")[0].valueAsDate = new Date();
 			}},
+			floor: {usage: "Sets the map floor. <em>Parameters: int_floornumber</em>", f: function()
+			{
+				that.changeFloor(parseInt(args[1]));
+			}}, 
 			lock: {usage: "Map cannot be moved.", f: function()
 			{
 				that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked.");
@@ -8428,7 +8434,7 @@ A = {
 	},
 	
 	/*
-	 * Macro function to be used in graph tooltip property.
+	 * Macro function to be used in chart tooltip property.
 	 * @param object pPoints
 	 * @param object pColors to colorize the lines and format values.
 	 * @returns string html.
@@ -8899,7 +8905,7 @@ A = {
 			currencyheaders.prepend("<div class='audTableCell audTableHeaderCorner'></div>");
 		};
 		
-		// Creates an audit category containing the max amount found from multiple categories, for creating mini bar graphs
+		// Creates an audit category containing the max amount found from multiple categories, for creating mini bar charts
 		var createCurrencyMaxes = function(pCategories)
 		{
 			var ithcat;
@@ -9235,7 +9241,7 @@ A = {
 				});
 				
 				/*
-				 * Load audit history and generate graph.
+				 * Load audit history and generate chart.
 				 */
 				var now = new Date();
 				var histbook = O.loadCompressedObject(O.Utilities.AuditHistory.key) || {};
@@ -9286,7 +9292,7 @@ A = {
 				histbook[accname] = hist;
 				O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
 				
-				// Draw the history graph
+				// Draw the history chart
 				A.initializeCharts(function()
 				{
 					historychart.highcharts("StockChart", {
@@ -21172,14 +21178,16 @@ M = {
 	 */
 	MapEnum: "map", // Type of map this map is
 	OptionSuffix: "", // Tyria map has unsuffixed option variable names
+	Continent: GW2T_CONTINENT_DATA["map"],
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
+	Subzones: {},
 	Regions: GW2T_REGION_DATA,
 	Submaps: GW2T_SUBMAP_DATA,
 	Weapons: GW2T_RANGE_DATA,
 	cInitialZone: "lion",
 	Map: {},
-	Floors: [],
+	FloorCurrent: {},
 	ZoneCurrent: {},
 	numPins: 0,
 	numPinsSlots: 32,
@@ -21196,10 +21204,6 @@ M = {
 	isMappingIconsGenerated: false,
 	isEventIconsGenerated: false,
 	ContextLatLng: null, // Coordinates to store when user right clicks on the map
-	cMAP_NUMFLOORS: 4,
-	cMAP_BOUND: 32768, // The map is a square
-	cMAP_CENTER: [16384, 16384],
-	cMAP_CENTER_INITIAL: [-1024, 1024], // Out of map boundary so browser doesn't download tiles yet
 	cMAP_MOUSEMOVE_RATE: 100,
 	cInertiaThreshold: 100, // Milliseconds between drag and release to flick pan
 	cZoomFactor: 2,
@@ -21224,6 +21228,7 @@ M = {
 	GPSPreviousCoord: [],
 	GPSPreviousAngleCharacter: 0,
 	GPSPreviousAngleCamera: 0,
+	GPSisInstance: false,
 	
 	/*
 	 * All objects in the map are called "markers". Some markers are grouped into iterable "layers".
@@ -21287,7 +21292,7 @@ M = {
 			zoomControl: false, // Hide the zoom UI
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
-		}).setView(this.cMAP_CENTER_INITIAL, initialzoom); // Out of map boundary so browser doesn't download tiles yet
+		}).setView(this.Continent.CenterInitial, initialzoom); // Out of map boundary so browser doesn't download tiles yet
 		// Because the map will interfere with scrolling the website on touch devices
 		if (I.isTouchEnabled)
 		{
@@ -21303,7 +21308,7 @@ M = {
 		for (var i in this.Zones)
 		{
 			zone = this.Zones[i];
-			zone.center = this.computeZoneCenter(i);
+			zone.center = this.computeZoneCenter(zone);
 			zone.nick = i;
 			zone.Layers = {
 				Path: new L.layerGroup(),
@@ -21324,11 +21329,9 @@ M = {
 		this.ZoneCurrent = this.Zones[this.cInitialZone];
 		
 		// Do other initialization functions
-		var mapnumber;
 		switch (this.MapEnum)
 		{
 			case P.MapEnum.Tyria: {
-				mapnumber = 1;
 				this.createPins();
 				P.populateMap(M);
 				P.drawZoneBorders();
@@ -21337,19 +21340,9 @@ M = {
 			} break;
 			
 			case P.MapEnum.Mists: {
-				mapnumber = 2;
 				this.createPins();
 				P.populateMap(W);
 			} break;
-		}
-		
-		// Initialize floors for setting the map tiles
-		for (var i = 0; i < this.cMAP_NUMFLOORS; i++)
-		{
-			this.Floors.push(L.tileLayer("https://tiles.guildwars2.com/" + mapnumber + "/" + i + "/{z}/{x}/{y}.jpg",
-			{
-				continuousWorld: true
-			}));
 		}
 		
 		// Bind map click functions for non-touch devices
@@ -21697,17 +21690,23 @@ M = {
 	
 	/*
 	 * Changes the floor tile layer.
-	 * @param int pFloor number. If not provided then will just remove all floors.
+	 * @param int pFloor number.
+	 * If "true" or undefined then will reset to default floor, if "false" then will hide the map tiles.
 	 */
 	changeFloor: function(pFloor)
 	{
-		for (var i = 0; i < this.Floors.length; i++)
+		this.Map.removeLayer(this.FloorCurrent);
+		if (pFloor === undefined || pFloor === true)
 		{
-			this.Map.removeLayer(this.Floors[i]);
+			pFloor = O.Options["int_setFloor" + this.OptionSuffix];
 		}
-		if (pFloor !== undefined)
+		if (pFloor !== false)
 		{
-			this.Floors[pFloor].addTo(this.Map);
+			this.FloorCurrent = L.tileLayer("https://tiles.guildwars2.com/" + this.Continent.id + "/" + pFloor + "/{z}/{x}/{y}.jpg",
+			{
+				continuousWorld: true
+			});
+			this.FloorCurrent.addTo(this.Map);
 		}
 	},
 	
@@ -21719,38 +21718,24 @@ M = {
 		var that = this;
 		var htmlidprefix = "#" + that.MapEnum;
 		var mappane = $(htmlidprefix + "Pane");
-		var wantfloor, levelfloor;
+		var wantfloor = O.Options["bol_showFloor" + that.OptionSuffix];
 		
 		if (pIsInitialProjection)
 		{
 			// Have terrain initially hidden if using projection
 			mappane.toggleClass("mapPaneOff", true);
-			that.changeFloor();
+			that.changeFloor(false);
 			return;
-		}
-		
-		switch (that.MapEnum)
-		{
-			case P.MapEnum.Tyria:
-			{
-				wantfloor = O.Options.bol_showFloor;
-				levelfloor = O.Options.int_setFloor;
-			} break;
-			case P.MapEnum.Mists:
-			{
-				wantfloor = O.Options.bol_showFloorWvW;
-				levelfloor = O.Options.int_setFloorWvW;
-			} break;
 		}
 		
 		mappane.toggleClass("mapPaneOff", !wantfloor);
 		if (wantfloor)
 		{
-			that.changeFloor(levelfloor);
+			that.changeFloor();
 		}
 		else if (I.ModeCurrent === I.ModeEnum.Overlay)
 		{
-			that.changeFloor();
+			that.changeFloor(false);
 		}
 	},
 	
@@ -21790,6 +21775,14 @@ M = {
 	isZoneValid: function(pZoneID)
 	{
 		if (this.ZoneAssociation[pZoneID] === undefined)
+		{
+			return false;
+		}
+		return true;
+	},
+	isSubzoneValid: function(pZoneID)
+	{
+		if (this.Subzones[pZoneID] === undefined || this.Subzones[pZoneID].map_rect === undefined)
 		{
 			return false;
 		}
@@ -21986,12 +21979,12 @@ M = {
 	
 	/*
 	 * Gets the center coordinates of a zone.
-	 * @param string pNick short name of the zone.
+	 * @param object pZone
 	 * @returns array of x and y coordinates.
 	 */
-	computeZoneCenter: function(pNick)
+	computeZoneCenter: function(pZone)
 	{
-		var rect = this.Zones[pNick].continent_rect;
+		var rect = pZone.continent_rect;
 		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
 		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
 		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
@@ -22746,8 +22739,8 @@ M = {
 		var x, y;
 		for (var i = 0; i < qty; i++)
 		{
-			x = T.getRandomIntRange(0, this.cMAP_BOUND);
-			y = T.getRandomIntRange(0, this.cMAP_BOUND);
+			x = T.getRandomIntRange(0, this.Continent.Bound[0]);
+			y = T.getRandomIntRange(0, this.Continent.Bound[1]);
 			this.createPersonalPin(this.convertGCtoLC([x, y]));
 		}
 		this.drawPersonalPath();
@@ -23349,7 +23342,7 @@ M = {
 	refreshView: function(pCoord)
 	{
 		var latlng = (pCoord) ? this.convertGCtoLC(pCoord) : this.Map.getCenter();
-		this.Map.setView(M.cMAP_CENTER_INITIAL, this.Map.getZoom());
+		this.Map.setView(M.Continent.CenterInitial, this.Map.getZoom());
 		this.Map.setView(latlng, this.Map.getZoom());
 	},
 	
@@ -23407,7 +23400,7 @@ M = {
 		{
 			pZoom = this.getAdaptiveZoom();
 		}
-		this.Map.setView(this.convertGCtoLC(this.cMAP_CENTER), pZoom);
+		this.Map.setView(this.convertGCtoLC(this.Continent.Center), pZoom);
 	},
 	
 	/*
@@ -23500,17 +23493,24 @@ M = {
 		}
 		if (qsdraw)
 		{
-			var cmd = qsdraw.toLowerCase();
-			if (cmd === "completion" || cmd === "true")
+			var drawstr = qsdraw.toLowerCase();
+			var wantdrawzone = false;
+			// If draw string is a zone name, then draw completion route
+			for (var i in M.Zones)
 			{
-				P.drawCompletionRoute();
+				if (drawstr.indexOf(i) !== -1)
+				{
+					P.drawCompletionRoute(M.Zones[i]);
+					wantdrawzone = true;
+					break;
+				}
 			}
-			else
+			if (wantdrawzone === false)
 			{
 				this.parsePersonalPath(qsdraw);
-				U.Args[U.KeyEnum.Draw] = null;
 				goPage();
 			}
+			U.Args[U.KeyEnum.Draw] = null;
 		}
 		
 		// Start GPS if on overlay
@@ -23608,17 +23608,16 @@ M = {
 	/*
 	 * Converts a MumbleLink player coordinates to the map coordinates system.
 	 * @param 2D float array pPos [latitude altitude longitude] player position.
-	 * @param string pZoneID of the zone the player is in.
+	 * @param object pZone the player is in.
 	 * @returns 2D int array map coordinates.
 	 */
-	convertGPSCoord: function(pPos, pZoneID)
+	convertGPSCoord: function(pPos, pZone)
 	{
-		var zone = this.getZoneFromID(pZoneID);
 		var coord = new Array(3);
 		coord[0] = pPos[0] * T.cMETERS_TO_UNITS; // x coordinate
 		coord[1] = pPos[2] * T.cMETERS_TO_UNITS; // y coordinate
 		coord[2] = pPos[1] * T.cMETERS_TO_UNITS; // z coordinate
-		return this.convertEventCoord(coord, zone);
+		return this.convertEventCoord(coord, pZone);
 	},
 	
 	/*
@@ -24984,12 +24983,14 @@ P = {
 	/*
 	 * Draws a map completion route for the current moused zone, using the
 	 * personal pins system.
+	 * @param object pZone
 	 */
-	drawCompletionRoute: function()
+	drawCompletionRoute: function(pZone)
 	{
+		var path = (pZone) ? pZone.path : M.ZoneCurrent.path;
 		if (M.isItineraryRetrieved)
 		{
-			M.redrawPersonalPath(M.ZoneCurrent.path);
+			M.redrawPersonalPath(path);
 		}
 		else
 		{
@@ -25486,6 +25487,34 @@ P = {
 	},
 	
 	/*
+	 * Loads a new zone (ingame map instance) if haven't already.
+	 * @param int pID
+	 * @param object pMapObject
+	 */
+	loadSubzone: function(pID, pMapObject)
+	{
+		var that = pMapObject;
+		var subzones = that.Subzones;
+		if (subzones[pID] !== undefined)
+		{
+			return;
+		}
+		subzones[pID] = {};
+		$.getJSON(U.getAPIMap(pID), function(pData)
+		{
+			// Initialize the added zone
+			subzones[pID] = {
+				map_rect: pData.map_rect,
+				continent_rect: pData.continent_rect,
+				floors: pData.floors,
+				center: that.computeZoneCenter(pData)
+			};
+			var namekey = "name_" + D.getPartiallySupportedLanguage();
+			(subzones[pID])[namekey] = pData.name;
+		});
+	},
+	
+	/*
 	 * Imitates the character pin as in the game minimap, as informed by the overlay.
 	 * This function is shared by the Tyria and Mists maps.
 	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
@@ -25518,36 +25547,61 @@ P = {
 		{
 			return;
 		}
+		var zone;
 		var zoneid = GPSIdentityJSON["map_id"];
-		if (that.isZoneValid(zoneid) === false)
+		if (that.isZoneValid(zoneid))
 		{
+			zone = that.getZoneFromID(zoneid);
+			if (that.GPSisInstance)
+			{
+				that.GPSisInstance = false;
+				that.changeFloor();
+			}
+		}
+		else if (that.isSubzoneValid(zoneid))
+		{
+			zone = that.Subzones[zoneid];
+			that.GPSisInstance = true;
+		}
+		else
+		{
+			P.loadSubzone(zoneid, that);
 			that.movePin(that.Pin.Character);
 			that.movePin(that.Pin.Camera);
 			return;
 		}
-		var coord = that.convertGPSCoord(GPSPositionArray, zoneid);
-		if (coord[0] > that.cMAP_BOUND || coord[0] <= 0
-			|| coord[1] > that.cMAP_BOUND || coord[1] <= 0)
+		var coord = that.convertGPSCoord(GPSPositionArray, zone);
+		
+		var iscoordchanged = false;
+		var iszonechanged = false;
+		// Character has moved
+		if (that.GPSPreviousCoord[0] !== coord[0] && that.GPSPreviousCoord[1] !== coord[1])
 		{
-			return;
+			iscoordchanged = true;
+			that.GPSPreviousCoord = coord;
+		}
+		// Zone has changed
+		if (that.GPSPreviousZoneID !== zoneid)
+		{
+			iszonechanged = true;
+			that.GPSPreviousZoneID = zoneid;
+			if (that.GPSisInstance)
+			{
+				that.changeFloor(zone.floors[0]);
+			}
 		}
 		
-		// Follow character if opted and position has changed (character moved)
-		var zonecoord;
-		if ((followenum === O.IntEnum.Follow.Character && that.GPSPreviousCoord[0] !== coord[0] && that.GPSPreviousCoord[1] !== coord[1])
-			|| pForceCode >= 0)
+		// Follow character if detected change
+		if ((followenum === O.IntEnum.Follow.Character && iscoordchanged) || pForceCode >= 0)
 		{
 			that.Map.setView(that.convertGCtoLC(coord), that.Map.getZoom());
 			that.showCurrentZone(coord);
-			that.GPSPreviousCoord = coord;
 			pForceCode = -1; // Also update pin position
 		}
-		else if (followenum === O.IntEnum.Follow.Zone && that.GPSPreviousZoneID !== zoneid && that.ZoneAssociation[zoneid])
+		if (followenum === O.IntEnum.Follow.Zone && iszonechanged && that.ZoneAssociation[zoneid])
 		{
-			zonecoord = that.getZoneCenter(that.ZoneAssociation[zoneid]);
-			that.refreshView(zonecoord);
-			that.showCurrentZone(zonecoord);
-			that.GPSPreviousZoneID = zoneid;
+			that.refreshView(zone.center);
+			that.showCurrentZone(zone.center);
 			pForceCode = -1; // Also update pin position
 		}
 		
@@ -27300,12 +27354,10 @@ W = {
 
 	MapEnum: "wvw",
 	OptionSuffix: "WvW",
+	Continent: GW2T_CONTINENT_DATA["wvw"],
 	ZoneAssociation: GW2T_LAND_ASSOCIATION,
+	Subzones: {},
 	cInitialZone: "eternal",
-	cMAP_BOUND: 16384,
-	cMAP_CENTER: [10494, 12414], // This centers on the WvW portion of the map
-	cMAP_CENTER_INITIAL: [-193.96875, 163.96875], // LatLng equivalent
-	cMAP_CENTER_ACTUAL: [8192, 8192],
 	Floors: [],
 	isMappingIconsGenerated: false,
 	ZoomEnum:
@@ -27579,11 +27631,11 @@ W = {
 		{
 			if (O.Options.bol_showFloorWvW || I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
-				W.changeFloor(O.Options.int_setFloorWvW);
+				W.changeFloor();
 			}
 			else
 			{
-				W.toggleFloor();
+				W.toggleFloor(false);
 			}
 		}
 		
@@ -33972,12 +34024,12 @@ I = {
 					{
 						$("#wvwSwitchButton").one("click", function()
 						{
-							M.changeFloor(O.Options.int_setFloor);
+							M.changeFloor();
 						});
 					}
 					else
 					{
-						M.changeFloor(O.Options.int_setFloor);
+						M.changeFloor();
 					}
 				}
 				else
@@ -35634,6 +35686,7 @@ I = {
 	initializeUIForHUD: function()
 	{
 		U.convertModeLink(".hudDirectoryColumn a");
+		I.bindScrollbar("#hudDirectoryGuides");
 		$(".hudPeripheral").css({visibility: "visible"});
 	},
 	

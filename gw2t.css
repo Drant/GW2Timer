@@ -1543,6 +1543,9 @@ input.mapCoordinatesName {
 	vertical-align: top;
 	text-align: left;
 }
+#hudDirectoryGuides {
+	max-height: 240px;
+}
 .hudDirectoryMode {
 	position: relative;
 }

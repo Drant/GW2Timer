@@ -176,6 +176,9 @@ input.mapCoordinatesName {
 #lboCountdown {
 	margin-top: -6px !important;
 }
+#wvwLogContainer {
+	bottom: 0 !important; right: 0 !important;
+}
 #wvwLog {
 	margin: 0 !important;
 }

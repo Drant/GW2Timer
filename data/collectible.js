@@ -1318,6 +1318,39 @@ LettersFromE: {
 	{n: 7, c: [12553, 11600], s: "http://i.imgur.com/lFp0mmu.png"}
 	]
 },
+CaudecusLetters: {
+	name_en: "Master of Puppets",
+	name_de: "Wer zieht die Strippen?",
+	name_es: "Quien tira de los hilos",
+	name_fr: "Maître des marionnettes",
+	category: "achievements",
+	color: "lemonchiffon",
+	view: "[12853, 11505]",
+	wiki: "https://wiki.guildwars2.com/wiki/Master_of_Puppets",
+	credit: "http://dulfy.net/2017/02/10/gw2-master-of-puppets-achievements-guide/",
+	needles: [
+	{n: 1, c: [12853, 11505], s: "http://i.imgur.com/lEma2PL.png", t: "7: A New Protégé"},
+	{n: 2, c: [12864, 11421], s: "http://i.imgur.com/pOWricJ.png", t: "8: Unrefined, Yet Effective"},
+	{n: 3, c: [13013, 11569], s: "http://i.imgur.com/6t3Xqs9.png", t: "2: Purged by Fire"},
+	{n: 4, c: [12824, 11736], s: "http://i.imgur.com/Lq2gnV1.png", t: "14: Old Friends, Older Enemies"},
+	{n: 5, c: [13023, 11814], s: "http://i.imgur.com/GTo3AsU.png", t: "15: Trouble at Home"},
+	{n: 6, c: [13059, 11732], s: "http://i.imgur.com/idSArBM.png", t: "16: Pirates? Really?"},
+	{n: 7, c: [13040, 11760], s: "http://i.imgur.com/ISPGK5y.png", t: "1: Concerning Convert"},
+	{n: 8, c: [13067, 11761], s: "http://i.imgur.com/mwS7kHM.png", t: "9: Sacrifices Must Be Made"},
+	{n: 9, c: [13043, 11808], s: "http://i.imgur.com/pEeGJJg.png", t: "11: A Minor Setback"},
+	{n: 10, c: [13031, 11835], s: "http://i.imgur.com/ohoCfFd.png", t: "10: The Curtain Falls"},
+	{n: 11, c: [13201, 11805], s: "http://i.imgur.com/Us4Asze.png", t: "5: Flea-Bitten Bedfellows"},
+	{n: 12, c: [13131, 11869], s: "http://i.imgur.com/LtduYqm.png", t: "4: A Timely Promotion"},
+	{n: 13, c: [13149, 11890], s: "http://i.imgur.com/1qqMmB7.png", t: "12: The Enemies of My Enemy"},
+	{n: 14, c: [13094, 11684], s: "http://i.imgur.com/m76IqnK.png", t: "17: A Wi Problem"},
+	{n: 15, c: [13208, 11790], s: "http://i.imgur.com/UscZ545.png", t: "19: Yet Another New Protégé"},
+	{n: 16, c: [13186, 11768], s: "http://i.imgur.com/YsTMlTl.png", t: "6: He Lives..."},
+	{n: 17, c: [13089, 11688], s: "http://i.imgur.com/t3tf4Na.png", t: "18: Eye for an Eye, Child for a Child"},
+	{n: 18, c: [13137, 11723], s: "http://i.imgur.com/egXEdMK.png", t: "13: Under New Management"},
+	{n: 19, c: [13048, 11773], s: "http://i.imgur.com/d4sXXRH.png", t: "3: Falcon Company"},
+	{n: 20, c: [13023, 11829], s: "http://i.imgur.com/sFwku4P.png", t: "20: And Stay Dead"}
+	]
+},
 ThoroughSampling: {
 	name_en: "Thorough Sampling",
 	name_de: "Sorgfältige Suche",
