@@ -4292,7 +4292,7 @@ U = {
 			
 			if (I.ModeCurrent !== I.ModeEnum.Website)
 			{
-				modestring = "&mode=" + ((I.isProjectionEnabled) ? I.ModeEnum.Projection : I.ModeCurrent);
+				modestring = "&mode=" + I.getMode();
 			}
 
 			if (section)
@@ -4451,8 +4451,16 @@ U = {
 	{
 		$(pSelector).each(function()
 		{
-			$(this).attr("href", I.cSiteExternal + U.encodeURL($(this).attr("href")))
-				.attr("target", "_blank");
+			var url = $(this).attr("href");
+			if (I.ModeCurrent === I.ModeEnum.Overlay && url.indexOf(I.cSiteURL + "?") !== -1)
+			{
+				// For overlay, self-linking URLs should not new open window and must contain the mode
+				$(this).attr("href", url + U.getDivider(url) + "mode=" + I.getMode());
+			}
+			else
+			{
+				$(this).attr("href", I.cSiteExternal + U.encodeURL(url)).attr("target", "_blank");
+			}
 		});
 	},
 	convertExternalURL: function(pURL)
@@ -4490,14 +4498,13 @@ U = {
 	{
 		if (I.ModeCurrent !== I.ModeEnum.Website)
 		{
-			var mode = (I.isProjectionEnabled) ? I.ModeEnum.Projection : I.ModeCurrent;
 			$(pSelector).each(function()
 			{
 				var url = $(this).attr("href");
 				if (url && url.indexOf(I.cSiteExternal) !== 0
 					&& (url.indexOf(I.cSiteURL) === 0 || url.indexOf("./") === 0))
 				{
-					$(this).attr("href", url + U.getDivider(url) + "mode=" + mode);
+					$(this).attr("href", url + U.getDivider(url) + "mode=" + I.getMode());
 				}
 			});
 		}
@@ -5057,8 +5064,9 @@ Z = {
 		var fileurl = window.URL.createObjectURL(data);
 		Z.APICacheFiles.push(fileurl);
 		
-		var filename = pFileName || "";
-		var filenameoutput = (pFileName) ? "<input class='cslFilename cssInputText' type='text' value='" + pFileName + "' /> " : "";
+		var wantfilename = typeof pFileName === "string";
+		var filename = (wantfilename) ? pFileName : "";
+		var filenameoutput = (wantfilename) ? "<input class='cslFilename cssInputText' type='text' value='" + pFileName + "' /> " : "";
 		I.print(filenameoutput + "<a href='" + fileurl + "' download='" + filename + "'>" + fileurl + "</a>");
 		return fileurl;
 	},
@@ -5245,6 +5253,7 @@ Z = {
 	 * Creates a file from a regenerated unlockables record.
 	 * @param object pRecord.
 	 * @param boolean pIsFlat whether the record is just an array of numbers
+	 * @param string pFilename or if "true" then will print to console.
 	 * rather than objects.
 	 */
 	printUnlockables: function(pRecord, pIsFlat, pFilename)
@@ -5274,6 +5283,10 @@ Z = {
 			}
 			output += ((objlengthcounter === objlength - 1) ? "" : ",") + "\r\n";
 			objlengthcounter++;
+		}
+		if (pFilename === true)
+		{
+			I.printFile(output);
 		}
 		Z.createFile(output, pFilename);
 	},
@@ -6649,7 +6662,7 @@ Z = {
 					record[catname].push(item.id);
 				}
 			}
-			Z.printUnlockables(record, true);
+			Z.printUnlockables(record, true, true);
 
 			// Also print junk items prices
 			var junkvalue = {};
@@ -6661,7 +6674,7 @@ Z = {
 					junkvalue[item.id] = item.vendor_value;
 				}
 			}
-			I.print(U.lineJSON(junkvalue));
+			I.printFile(U.lineJSON(junkvalue));
 		};
 		
 		// Retrieve data first
@@ -7043,7 +7056,7 @@ Z = {
 			Q.sortItems(ids, function(pSortedItems, pSortedIDs)
 			{
 				record[timestamp] = pSortedIDs;
-				Z.printUnlockables(record, true, "museum.txt");
+				Z.printUnlockables(record, true, true);
 			});
 		});
 	},
@@ -7650,7 +7663,7 @@ A = {
 		{
 			if (pStatus === "error")
 			{
-				I.write("Unable to retrieve response. ArenaNet API server may be down.");
+				I.write("Unable to retrieve response. " + I.cErrorAPI);
 			}
 			else
 			{
@@ -21803,6 +21816,19 @@ M = {
 		}
 		return null;
 	},
+	getZoneFromString: function(pString)
+	{
+		// Returns zone if string contains a zone's nick
+		var nick = pString.toLowerCase();
+		for (var i in this.Zones)
+		{
+			if (nick.indexOf(i) !== -1)
+			{
+				return this.Zones[i];
+			}
+		}
+		return null;
+	},
 	
 	/*
 	 * Gets a zone's translated name if available.
@@ -23493,24 +23519,17 @@ M = {
 		}
 		if (qsdraw)
 		{
-			var drawstr = qsdraw.toLowerCase();
-			var wantdrawzone = false;
-			// If draw string is a zone name, then draw completion route
-			for (var i in M.Zones)
+			var drawzone = this.getZoneFromString(qsdraw);
+			if (drawzone)
 			{
-				if (drawstr.indexOf(i) !== -1)
-				{
-					P.drawCompletionRoute(M.Zones[i]);
-					wantdrawzone = true;
-					break;
-				}
+				P.drawCompletionRoute(drawzone);
 			}
-			if (wantdrawzone === false)
+			else
 			{
 				this.parsePersonalPath(qsdraw);
-				goPage();
 			}
 			U.Args[U.KeyEnum.Draw] = null;
+			goPage();
 		}
 		
 		// Start GPS if on overlay
@@ -25511,6 +25530,9 @@ P = {
 			};
 			var namekey = "name_" + D.getPartiallySupportedLanguage();
 			(subzones[pID])[namekey] = pData.name;
+		}).fail(function()
+		{
+			I.write("Unable to retrieve zone ID: " + pID + ". " + I.cErrorAPI);
 		});
 	},
 	
@@ -25712,7 +25734,7 @@ G = {
 			});
 		}).fail(function()
 		{
-			I.write("Unable to retrieve daily API. ArenaNet API server may be down.");
+			I.write("Unable to retrieve daily API. " + I.cErrorAPI);
 			I.removeThrobber(calendar.parent());
 		});
 	},
@@ -29154,7 +29176,7 @@ W = {
 				D.stopSpeech();
 				W.reinitializeServerChange(false);
 				W.addLogEntry("Restarted due to API error.");
-				I.write("Too many objectives updated. ArenaNet API server may be having problems.");
+				I.write("Too many objectives updated. " + I.cErrorAPI);
 			}
 			if (W.isAPIFailed)
 			{
@@ -31694,7 +31716,7 @@ H = {
 					{
 						table.empty();
 						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid)) + ">"
-							+ offerid + "</a>. ArenaNet API server may be down.");
+							+ offerid + "</a>. " + I.cErrorAPI);
 					});
 				})(i);
 			}
@@ -33513,6 +33535,7 @@ I = {
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
+	cErrorAPI: "ArenaNet API server may be down.",
 	cLevelMax: 80,
 	cAJAXGlobalTimeout: 30000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
@@ -34249,6 +34272,16 @@ I = {
 		var content = document.getElementById("cslContent");
 		console.style.display = "block";
 		content.insertAdjacentHTML("beforeend", pString + "<br />");
+	},
+	printFile: function(pString)
+	{
+		I.print("");
+		$("<textarea class='cssText cslText'></textarea>").appendTo("#cslContent")
+			.val(pString).click(function()
+		{
+			$(this).select();
+		});
+		I.print("");
 	},
 	
 	/*
@@ -35837,6 +35870,10 @@ I = {
 		{
 			pEvent.stopPropagation();
 		});
+	},
+	getMode: function()
+	{
+		return (I.isProjectionEnabled) ? I.ModeEnum.Projection : I.ModeCurrent;
 	},
 	
 	/*

@@ -1325,7 +1325,7 @@ CaudecusLetters: {
 	name_fr: "Maître des marionnettes",
 	category: "achievements",
 	color: "lemonchiffon",
-	view: "[12853, 11505]",
+	view: "[13014, 11679]",
 	wiki: "https://wiki.guildwars2.com/wiki/Master_of_Puppets",
 	credit: "http://dulfy.net/2017/02/10/gw2-master-of-puppets-achievements-guide/",
 	needles: [

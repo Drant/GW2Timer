@@ -283,6 +283,7 @@ Converter: [
 	{i: 80144, n: "Sentient Oddity", p: {achievement: 0}},
 	{i: 79995, n: "Shards of Glory Converter", p: {league: 50}},
 	{i: 49501, n: "Tarrktun Personal Delivery Portal", p: {coin: 888888}},
+	{i: 80672, n: "Magnetite Shard Converter", p: {achievement: 0}},
 	{i: 67270, n: "Karmic Converter", p: {achievement: 0}},
 	{i: 72606, n: "Fractal Reliquary", p: {achievement: 0}},
 	{i: 73718, n: "Ley-Energy Matter Converter", p: {achievement: 0}},

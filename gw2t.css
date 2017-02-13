@@ -227,6 +227,10 @@ img {
 .cslModal { /* Container of HTML to be written in the console as messages */
 	max-width: 360px;
 }
+.cslText {
+	width: 100%;
+	height: 180px;
+}
 
 #jsAuditFrame, #jsTTSAudio {
 	display: none;
@@ -710,8 +714,7 @@ html, body,
 	animation: aniDisplayFadeIn 0.2s;
 }
 
-.cntComposition input[type="text"], .cntComposition textarea, input[type="text"].cntSearch {
-	width: auto;
+.cntComposition input[type="text"], .cntComposition textarea, input[type="text"].cntSearch, .cssText {
 	margin: 0;
 	padding: 2px;
 	overflow: hidden;
@@ -721,7 +724,7 @@ html, body,
 	color: #ffddcc;
 }
 
-.cntComposition input[type="text"]:hover, .cntComposition textarea:hover {
+.cntComposition input[type="text"]:hover, .cntComposition textarea:hover, .cssText:hover {
 	border: 1px solid red;
 }
 
