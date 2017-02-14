@@ -5171,6 +5171,7 @@ Z = {
 		if (pString === versionprefix)
 		{
 			url = U.URL_API.Prefix1 + pQueryStr;
+			querystr = pArray || "";
 		}
 		
 		// Fetch if did not provide an array in the parameter
@@ -28205,7 +28206,7 @@ W = {
 		{
 			$("#opt_bol_opaqueLeaderboard").trigger("click");
 		});
-		$("#lboCountdownReset").click(function()
+		$("#lboCountdown").click(function()
 		{
 			U.openExternalURL(W.LeaderboardURL[W.LocaleCurrent]);
 		});
