@@ -753,6 +753,7 @@ var GW2T_SERVER_DATA = {
  * Red: 0, 70, 0
  * Blue: 200, 80, 0
  * Green: 140, 60, 0
+ * Neutral: Curves 176 Output, 96 Input
  */
 var GW2T_OBJECTIVE_DATA = {
 "eternal": 
@@ -1079,7 +1080,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "伊瑟隆丘陵",
 		direction: "East",
 		id: "94-32",
-		map_id: 94,
+		map_id: "94",
 		coord: [11671, 10961]
 	},
 	"94-33": {
@@ -1093,7 +1094,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "入梦港",
 		direction: "West",
 		id: "94-33",
-		map_id: 94,
+		map_id: "94",
 		coord: [9451, 11037]
 	},
 	"94-34": {
@@ -1107,7 +1108,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "胜利酒馆",
 		direction: "South",
 		id: "94-34",
-		map_id: 94,
+		map_id: "94",
 		coord: [10497, 12100]
 	},
 	"94-35": {
@@ -1121,7 +1122,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "绿荆地",
 		direction: "Southwest",
 		id: "94-35",
-		map_id: 94,
+		map_id: "94",
 		coord: [10105, 11419]
 	},
 	"94-36": {
@@ -1135,7 +1136,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "澄蓝之湖",
 		direction: "Southeast",
 		id: "94-36",
-		map_id: 94,
+		map_id: "94",
 		coord: [10997, 11490]
 	},
 	"94-37": {
@@ -1149,7 +1150,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "要塞",
 		alias: "Garrison",
 		id: "94-37",
-		map_id: 94,
+		map_id: "94",
 		coord: [10470, 10516]
 	},
 	"94-38": {
@@ -1163,7 +1164,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "远眺之地",
 		direction: "Northwest",
 		id: "94-38",
-		map_id: 94,
+		map_id: "94",
 		coord: [9861, 10158]
 	},
 	"94-39": {
@@ -1177,7 +1178,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "神语之地",
 		direction: "North",
 		id: "94-39",
-		map_id: 94,
+		map_id: "94",
 		coord: [10499, 9308]
 	},
 	"94-40": {
@@ -1191,7 +1192,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "崖壁",
 		direction: "Northeast",
 		id: "94-40",
-		map_id: 94,
+		map_id: "94",
 		coord: [11099, 10110]
 	},
 	"94-50": {
@@ -1205,7 +1206,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "蓝水低地",
 		direction: "Southeast",
 		id: "94-50",
-		map_id: 94,
+		map_id: "94",
 		coord: [11437, 11581]
 	},
 	"94-51": {
@@ -1219,7 +1220,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "群星岛",
 		direction: "Northeast",
 		id: "94-51",
-		map_id: 94,
+		map_id: "94",
 		coord: [11448, 10216]
 	},
 	"94-52": {
@@ -1233,7 +1234,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "亚拉之冀",
 		direction: "Northwest",
 		id: "94-52",
-		map_id: 94,
+		map_id: "94",
 		coord: [9637, 10279]
 	},
 	"94-53": {
@@ -1247,7 +1248,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "绿谷避难所",
 		direction: "Southwest",
 		id: "94-53",
-		map_id: 94,
+		map_id: "94",
 		coord: [9674, 11534]
 	},
 	"94-62": {
@@ -1261,7 +1262,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "迷途祷告者神殿",
 		direction: "South",
 		id: "94-62",
-		map_id: 94,
+		map_id: "94",
 		coord: [10481, 11420]
 	},
 	"94-63": {
@@ -1275,7 +1276,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "战斗山谷",
 		direction: "Southwest",
 		id: "94-63",
-		map_id: 94,
+		map_id: "94",
 		coord: [10177, 11155]
 	},
 	"94-64": {
@@ -1289,7 +1290,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "鲍尔庄园",
 		direction: "Northwest",
 		id: "94-64",
-		map_id: 94,
+		map_id: "94",
 		coord: [10275, 10783]
 	},
 	"94-65": {
@@ -1303,7 +1304,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "果园了望台",
 		direction: "Northeast",
 		id: "94-65",
-		map_id: 94,
+		map_id: "94",
 		coord: [10743, 10837]
 	},
 	"94-66": {
@@ -1317,12 +1318,26 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "雕塑者之坡",
 		direction: "Southeast",
 		id: "94-66",
-		map_id: 94,
+		map_id: "94",
 		coord: [10778, 11192]
 	}
 },
 "alpinegreen":
 {
+	"alpinegreen_bloodlust": {
+		nativeowner: "Green",
+		map_type: "GreenHome",
+		type: "Bloodlust",
+		name_en: "Bloodlust",
+		name_de: "Blutgier",
+		name_es: "Sed de sangre",
+		name_fr: "Soif de sang",
+		name_zh: "嗜血法",
+		alias: "Bloodlust",
+		id: "alpinegreen_bloodlust",
+		map_id: "95",
+		coord: [6913, 13597]
+	},
 	"95-32": {
 		nativeowner: "Green",
 		map_type: "GreenHome",
@@ -1334,7 +1349,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "夏达然丘陵",
 		direction: "East",
 		id: "95-32",
-		map_id: 95,
+		map_id: "95",
 		coord: [8087, 13521]
 	},
 	"95-33": {
@@ -1348,7 +1363,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "恐惧海湾",
 		direction: "West",
 		id: "95-33",
-		map_id: 95,
+		map_id: "95",
 		coord: [5867, 13597]
 	},
 	"95-34": {
@@ -1362,7 +1377,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "英雄酒馆",
 		direction: "South",
 		id: "95-34",
-		map_id: 95,
+		map_id: "95",
 		coord: [6913, 14660]
 	},
 	"95-35": {
@@ -1376,7 +1391,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "蓝荆地",
 		direction: "Southwest",
 		id: "95-35",
-		map_id: 95,
+		map_id: "95",
 		coord: [6521, 13979]
 	},
 	"95-36": {
@@ -1390,7 +1405,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "血红之湖",
 		direction: "Southeast",
 		id: "95-36",
-		map_id: 95,
+		map_id: "95",
 		coord: [7413, 14050]
 	},
 	"95-37": {
@@ -1404,7 +1419,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "要塞",
 		alias: "Garrison",
 		id: "95-37",
-		map_id: 95,
+		map_id: "95",
 		coord: [6886, 13076]
 	},
 	"95-38": {
@@ -1418,7 +1433,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "旭光之丘",
 		direction: "Northwest",
 		id: "95-38",
-		map_id: 95,
+		map_id: "95",
 		coord: [6277, 12718]
 	},
 	"95-39": {
@@ -1432,7 +1447,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "泰坦之爪",
 		direction: "North",
 		id: "95-39",
-		map_id: 95,
+		map_id: "95",
 		coord: [6915, 11868]
 	},
 	"95-40": {
@@ -1446,7 +1461,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "崖顶",
 		direction: "Northeast",
 		id: "95-40",
-		map_id: 95,
+		map_id: "95",
 		coord: [7515, 12670]
 	},
 	"95-50": {
@@ -1460,7 +1475,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "赤水低地",
 		direction: "Southeast",
 		id: "95-50",
-		map_id: 95,
+		map_id: "95",
 		coord: [7853, 14141]
 	},
 	"95-51": {
@@ -1474,7 +1489,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "迷雾避难所",
 		direction: "Northeast",
 		id: "95-51",
-		map_id: 95,
+		map_id: "95",
 		coord: [7864, 12776]
 	},
 	"95-52": {
@@ -1488,7 +1503,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "信仰之跃",
 		direction: "Northwest",
 		id: "95-52",
-		map_id: 95,
+		map_id: "95",
 		coord: [6053, 12839]
 	},
 	"95-53": {
@@ -1502,7 +1517,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "蓝谷避难所",
 		direction: "Southwest",
 		id: "95-53",
-		map_id: 95,
+		map_id: "95",
 		coord: [6090, 14094]
 	},
 	"95-62": {
@@ -1516,7 +1531,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "迷途祷告者神殿",
 		direction: "South",
 		id: "95-62",
-		map_id: 95,
+		map_id: "95",
 		coord: [6897, 13980]
 	},
 	"95-63": {
@@ -1530,7 +1545,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "战斗山谷",
 		direction: "Southwest",
 		id: "95-63",
-		map_id: 95,
+		map_id: "95",
 		coord: [6593, 13715]
 	},
 	"95-64": {
@@ -1544,7 +1559,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "鲍尔庄园",
 		direction: "Northwest",
 		id: "95-64",
-		map_id: 95,
+		map_id: "95",
 		coord: [6691, 13343]
 	},
 	"95-65": {
@@ -1558,7 +1573,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "果园了望台",
 		direction: "Northeast",
 		id: "95-65",
-		map_id: 95,
+		map_id: "95",
 		coord: [7159, 13397]
 	},
 	"95-66": {
@@ -1572,12 +1587,26 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "雕塑者之坡",
 		direction: "Southeast",
 		id: "95-66",
-		map_id: 95,
+		map_id: "95",
 		coord: [7194, 13752]
 	}
 },
 "alpineblue":
 {
+	"alpineblue_bloodlust": {
+		nativeowner: "Blue",
+		map_type: "BlueHome",
+		type: "Bloodlust",
+		name_en: "Bloodlust",
+		name_de: "Blutgier",
+		name_es: "Sed de sangre",
+		name_fr: "Soif de sang",
+		name_zh: "嗜血法",
+		alias: "Bloodlust",
+		id: "alpineblue_bloodlust",
+		map_id: "96",
+		coord: [14082, 12958]
+	},
 	"96-32": {
 		nativeowner: "Blue",
 		map_type: "BlueHome",
@@ -1589,7 +1618,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "阿斯卡里昂丘陵",
 		direction: "East",
 		id: "96-32",
-		map_id: 96,
+		map_id: "96",
 		coord: [15255, 12881]
 	},
 	"96-33": {
@@ -1603,7 +1632,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "攀天海湾",
 		direction: "West",
 		id: "96-33",
-		map_id: 96,
+		map_id: "96",
 		coord: [13035, 12957]
 	},
 	"96-34": {
@@ -1617,7 +1646,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "冠军领土",
 		direction: "South",
 		id: "96-34",
-		map_id: 96,
+		map_id: "96",
 		coord: [14081, 14020]
 	},
 	"96-35": {
@@ -1631,7 +1660,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "红荆地",
 		direction: "Southwest",
 		id: "96-35",
-		map_id: 96,
+		map_id: "96",
 		coord: [13689, 13339]
 	},
 	"96-36": {
@@ -1645,7 +1674,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "翠绿之湖",
 		direction: "Southeast",
 		id: "96-36",
-		map_id: 96,
+		map_id: "96",
 		coord: [14581, 13410]
 	},
 	"96-37": {
@@ -1659,7 +1688,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "要塞",
 		alias: "Garrison",
 		id: "96-37",
-		map_id: 96,
+		map_id: "96",
 		coord: [14054, 12436]
 	},
 	"96-38": {
@@ -1673,7 +1702,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "荒木岗",
 		direction: "Northwest",
 		id: "96-38",
-		map_id: 96,
+		map_id: "96",
 		coord: [13445, 12078]
 	},
 	"96-39": {
@@ -1687,7 +1716,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "灵魂沙洲",
 		direction: "North",
 		id: "96-39",
-		map_id: 96,
+		map_id: "96",
 		coord: [14083, 11228]
 	},
 	"96-40": {
@@ -1701,7 +1730,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "破晓高地",
 		direction: "Northeast",
 		id: "96-40",
-		map_id: 96,
+		map_id: "96",
 		coord: [14683, 12030]
 	},
 	"96-50": {
@@ -1715,7 +1744,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "绿水低地",
 		direction: "Southeast",
 		id: "96-50",
-		map_id: 96,
+		map_id: "96",
 		coord: [15021, 13501]
 	},
 	"96-51": {
@@ -1729,7 +1758,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "辰星之林",
 		direction: "Northeast",
 		id: "96-51",
-		map_id: 96,
+		map_id: "96",
 		coord: [15032, 12136]
 	},
 	"96-52": {
@@ -1743,7 +1772,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "神学之地",
 		direction: "Northwest",
 		id: "96-52",
-		map_id: 96,
+		map_id: "96",
 		coord: [13221, 12199]
 	},
 	"96-53": {
@@ -1757,7 +1786,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "红谷避难所",
 		direction: "Southwest",
 		id: "96-53",
-		map_id: 96,
+		map_id: "96",
 		coord: [13258, 13454]
 	},
 	"96-62": {
@@ -1771,7 +1800,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "迷途祷告者神殿",
 		direction: "South",
 		id: "96-62",
-		map_id: 96,
+		map_id: "96",
 		coord: [14065, 13340]
 	},
 	"96-63": {
@@ -1785,7 +1814,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "战斗山谷",
 		direction: "Southwest",
 		id: "96-63",
-		map_id: 96,
+		map_id: "96",
 		coord: [13761, 13075]
 	},
 	"96-64": {
@@ -1799,7 +1828,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "鲍尔庄园",
 		direction: "Northwest",
 		id: "96-64",
-		map_id: 96,
+		map_id: "96",
 		coord: [13859, 12703]
 	},
 	"96-65": {
@@ -1813,7 +1842,7 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "果园了望台",
 		direction: "Northeast",
 		id: "96-65",
-		map_id: 96,
+		map_id: "96",
 		coord: [14327, 12757]
 	},
 	"96-66": {
@@ -1827,12 +1856,26 @@ var GW2T_OBJECTIVE_DATA = {
 		name_zh: "雕塑者之坡",
 		direction: "Southeast",
 		id: "96-66",
-		map_id: 96,
+		map_id: "96",
 		coord: [14362, 13112]
 	}
 },
 "desertred":
 {
+	"desertred_bloodlust": {
+		nativeowner: "Red",
+		map_type: "RedHome",
+		type: "Bloodlust",
+		name_en: "Bloodlust",
+		name_de: "Blutgier",
+		name_es: "Sed de sangre",
+		name_fr: "Soif de sang",
+		name_zh: "嗜血法",
+		alias: "Bloodlust",
+		id: "desertred_bloodlust",
+		map_id: "1099",
+		coord: [10732, 10763]
+	},
 	"1099-99": {
 		nativeowner: "Red",
 		map_type: "RedHome",
@@ -2995,6 +3038,7 @@ var GW2T_WVW_METADATA = {
 	ObjectiveEnum: {
 		Sentry: "Sentry",
 		Ruins: "Ruins",
+		Bloodlust: "Bloodlust",
 		Camp: "Camp",
 		Tower: "Tower",
 		Keep: "Keep",
@@ -3084,6 +3128,9 @@ var GW2T_WVW_METADATA = {
 	},
 	Garrison: {
 		name_en: "Garrison", name_de: "Festung", name_es: "Fuerte", name_fr: "Garnison", name_zh: "要塞"
+	},
+	Bloodlust: {
+		name_en: "Bloodlust", name_de: "Blutgier", name_es: "Sed de sangre", name_fr: "Soif de sang", name_zh: "嗜血法"
 	},
 	Borderlands: {
 		name_en: "Borderlands", name_de: "Grenzlande", name_es: "Tierras de", name_fr: "Territoires", name_zh: "边境之地",

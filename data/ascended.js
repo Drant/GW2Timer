@@ -1239,6 +1239,7 @@ LightGloves: [
 	{i: 80268, n: "Thackeray's Gloves", p: {coin: 900000}},
 	{i: 80668, n: "Assaulter's Gages of the Obedient", p: {magnetite: 600}},
 	{i: 80128, n: "Malicious Gages of the Obedient", p: {magnetite: 600}},
+	{i: 80321, n: "Defender's Gages of the Obedient", p: {magnetite: 600}},
 	{i: 80669, n: "Healer's Gages of the Obedient", p: {magnetite: 600}}
 ],
 LightLeggings: [
@@ -1717,9 +1718,10 @@ HeavyGloves: [
 	{i: 78799, n: "Experimental Envoy Gauntlets", p: {coin: 900000}},
 	{i: 67144, n: "Ardent Glorious Gauntlets", p: {coin: 900000}},
 	{i: 79965, n: "Ardent Glorious Gauntlets", p: {coin: 900000}},
-	{i: 80572, n: "Malicious Gauntlets of the Obedient", p: {coin: 900000}},
-	{i: 80227, n: "Thackeray's Gauntlets", p: {coin: 900000}},
-	{i: 80335, n: "Assaulter's Gauntlets of the Obedient", p: {magnetite: 600}}
+	{i: 80335, n: "Assaulter's Gauntlets of the Obedient", p: {magnetite: 600}},
+	{i: 80572, n: "Malicious Gauntlets of the Obedient", p: {magnetite: 600}},
+	{i: 80639, n: "Healer's Gauntlets of the Obedient", p: {magnetite: 600}},
+	{i: 80227, n: "Thackeray's Gauntlets", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -1952,10 +1954,11 @@ Mace: [
 	{i: 78056, n: "Kaiser Snake Mace", p: {coin: 1100000}},
 	{i: 78098, n: "Kaiser Snake Mace", p: {coin: 1100000}},
 	{i: 79570, n: "Endeavor", p: {coin: 1100000}},
+	{i: 80186, n: "Assaulter's Demon Virge", p: {magnetite: 600}},
+	{i: 80337, n: "Malicious Demon Virge", p: {magnetite: 600}},
 	{i: 80206, n: "Defender's Demon Virge", p: {magnetite: 600}},
 	{i: 80310, n: "Healer's Demon Virge", p: {magnetite: 600}},
-	{i: 80337, n: "Malicious Demon Virge", p: {magnetite: 600}},
-	{i: 80186, n: "Assaulter's Demon Virge", p: {magnetite: 600}}
+	{i: 80624, n: "Thackeray's Gavel", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2311,7 +2314,8 @@ Warhorn: [
 	{i: 80235, n: "Assaulter's Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
 	{i: 80249, n: "Malicious Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
 	{i: 80482, n: "Defender's Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
-	{i: 80537, n: "Healer's Watchkeeper Trophy Warhorn", p: {magnetite: 600}}
+	{i: 80537, n: "Healer's Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
+	{i: 80407, n: "Thackeray's Bugle", p: {coin: 1000000}}
 ],
 Greatsword: [
 	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
@@ -2355,7 +2359,8 @@ Greatsword: [
 	{i: 77942, n: "Assaulter's White Mantle Sunderer", p: {magnetite: 600}},
 	{i: 77943, n: "Malicious White Mantle Sunderer", p: {magnetite: 600}},
 	{i: 78037, n: "Kaiser Snake Greatsword", p: {coin: 1200000}},
-	{i: 78059, n: "Kaiser Snake Greatsword", p: {coin: 1200000}}
+	{i: 78059, n: "Kaiser Snake Greatsword", p: {coin: 1200000}},
+	{i: 80226, n: "Thackeray's Crusader", p: {coin: 1200000}}
 ],
 Hammer: [
 	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -2447,7 +2452,8 @@ LongBow: [
 	{i: 80414, n: "Assaulter's Arbiter Greatbow", p: {magnetite: 600}},
 	{i: 80581, n: "Malicious Arbiter Greatbow", p: {magnetite: 600}},
 	{i: 80493, n: "Defender's Arbiter Greatbow", p: {magnetite: 600}},
-	{i: 80194, n: "Healer's Arbiter Greatbow", p: {magnetite: 600}}
+	{i: 80194, n: "Healer's Arbiter Greatbow", p: {magnetite: 600}},
+	{i: 80402, n: "Thackeray's Greatbow", p: {coin: 1300000}}
 ],
 ShortBow: [
 	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},

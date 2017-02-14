@@ -136,7 +136,7 @@ O = {
 				{
 					var message = "New game build available";
 					I.print("<a" + U.convertExternalAnchor(U.URL_META.BuildNotes) + ">" + message + "!</a> "
-						+ "GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + "<br />"
+						+ "GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + " Diff: " + (valA - parseInt(valB)) + "<br />"
 						+ T.formatWeektime(new Date(), true) + " - <a href='./?bol_alertBuild=false'>Turn off this alert?</a>");
 					D.speak("Alert! " + message);
 					localStorage[key] = valA;
@@ -4452,6 +4452,11 @@ U = {
 		$(pSelector).each(function()
 		{
 			var url = $(this).attr("href");
+			if (url.indexOf("./") === 0)
+			{
+				// Don't convert relative links
+				return;
+			}
 			if (I.ModeCurrent === I.ModeEnum.Overlay && url.indexOf(I.cSiteURL + "?") !== -1)
 			{
 				// For overlay, self-linking URLs should not new open window and must contain the mode
@@ -9364,7 +9369,7 @@ A = {
 					{
 						var audstamps = hist["Timestamps"];
 						var historylength = audstamps.length;
-						if (historylength > 1 && confirm("This will delete your history so there is one entry max per day. Continue?"))
+						if (historylength > 1 && confirm("This will delete some of your history so there is one entry max per day. Continue?"))
 						{
 							var histnew = {}, uniquedates = {}, ithstamp;
 							for (var i in A.Currency.AuditHistory)
@@ -9889,6 +9894,7 @@ V = {
 		// Retrieve characters data
 		I.suspendElement(menusubsection);
 		dish.prepend(I.cThrobber);
+		I.print(D.getPhraseOriginal("Loading characters name") + "...");
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
 		{
 			A.adjustAccountScrollbar();
@@ -9905,10 +9911,12 @@ V = {
 			{
 				charnames.push(U.encodeURL(iName));
 			});
+			I.print(D.getWordCapital("loading") + " " + charnames.length + " " + D.getWord("characters") + "...");
 			U.fetchAPI(A.getURL(A.URL.Characters), charnames, {
 				aWantCache: true,
 				aCallback: function(pData)
 			{
+				I.clear();
 				I.removeThrobber(dish);
 				var charindex = 0;
 				pData.forEach(function(iCharData)
@@ -14413,8 +14421,10 @@ B = {
 					tabcapacity = 0, tabcount = 0;
 					// The tab title is the year number and the month word
 					calkey = i.split("-");
-					tabtitle = new Date(Date.UTC(calkey[0], calkey[1], 1, 0, 0, 0))
-						.toLocaleString(window.navigator.language, {year: "numeric", month: "long"});
+					tabtitle = T.formatLocal(
+						new Date(Date.UTC(calkey[0], calkey[1], 1, 0, 0, 0)),
+						{year: "numeric", month: "long"}
+					);
 					// Create bank tabs representing months
 					tab = B.createBankTab(bank, {aTitle: tabtitle, aIsCollapsed: wantcollapsed});
 					if (wantcollapsed)
@@ -27573,7 +27583,7 @@ W = {
 		for (var i in W.Objectives)
 		{
 			obj = W.Objectives[i];
-			subobjclass = (obj.type === W.ObjectiveEnum.Ruins) ? "objSubobjective" : "";
+			subobjclass = (obj.type === W.ObjectiveEnum.Ruins || obj.type === W.ObjectiveEnum.Bloodlust) ? "objSubobjective" : "";
 			marker = L.marker(W.convertGCtoLC(obj.coord),
 			{
 				clickable: true,
@@ -27614,8 +27624,8 @@ W = {
 					icon: L.divIcon(
 					{
 						className: "mapSec",
-						html: "<span class='mapSecIn wvwSpawnLabel wvwColor" + ii + "'>"
-							+ "<em class='wvwMapBonus'></em><var data-owner='" + ii + "'></var>"
+						html: "<span class='mapSecIn wvwSpawnContainer wvwColor" + ii + "' id='wvwSpawn_" + i + "_" + ii + "' data-owner='" + ii + "'>"
+							+ "<var class='wvwSpawnLabel'></var>"
 						+ "</span>",
 						iconSize: [128, 64],
 						iconAnchor: [64, 32]
@@ -27788,7 +27798,50 @@ W = {
 	 */
 	toggleObjectiveLabels: function()
 	{
-		$(".objInfo, .wvwSpawnLabel").toggle(O.Options.bol_showObjectiveLabels);
+		$(".objInfo, .wvwSpawnContainer").toggle(O.Options.bol_showObjectiveLabels);
+	},
+	
+	/*
+	 * Gets the date for the next WvW re-linking of server alliances.
+	 * @param Date pDate from matches API, the reset weekday is same as relink.
+	 * @returns object Date
+	 */
+	getWorldRelink: function(pDate)
+	{
+		var inputdate = pDate;
+		var outputdate = new Date(pDate);
+		var month = outputdate.getUTCMonth(), year = outputdate.getUTCFullYear();
+		// Last target weekday of even numbered months, but check for oddness because month is zero-indexed
+		if (month % 2 === 0)
+		{
+			month = (month % T.cMONTHS_IN_YEAR) + 1;
+			outputdate.setUTCMonth(month);
+		}
+		
+		var daysinmonth = T.getDaysInMonth(outputdate);
+		// Look from the last day of the month back for the target weekday
+		for (var i = daysinmonth; i > 0; i--)
+		{
+			if ((new Date(year, month, i)).getDay() === inputdate.getUTCDay())
+			{
+				outputdate.setUTCDate(i);
+				break;
+			}
+		}
+		if (outputdate < inputdate)
+		{
+			// If past that day but still on the same month, then get the next
+			var nextmonth = month + 1;
+			outputdate.setUTCMonth(nextmonth);
+			if (nextmonth >= T.cMONTHS_IN_YEAR)
+			{
+				outputdate.setUTCFullYear(year + 1);
+				outputdate.setUTCMonth(nextmonth % T.cMONTHS_IN_YEAR);
+			}
+			return T.getWorldRelink(outputdate);
+		}
+		// If here then that day will occur in this month
+		return outputdate;
 	},
 	
 	/*
@@ -28037,6 +28090,10 @@ W = {
 		{
 			return "img/wvw/ruins/" + (pObjective.direction + "_" + owner).toLowerCase() + I.cPNG;
 		}
+		if (pObjective.type === W.ObjectiveEnum.Bloodlust)
+		{
+			return "img/wvw/ruins/" + (pObjective.alias + "_" + owner).toLowerCase() + I.cPNG;
+		}
 		return "img/wvw/objectives/" + (pObjective.type + "_" + owner).toLowerCase() + I.cPNG;
 	},
 	
@@ -28148,7 +28205,7 @@ W = {
 		{
 			$("#opt_bol_opaqueLeaderboard").trigger("click");
 		});
-		$("#lboCountdown").click(function()
+		$("#lboCountdownReset").click(function()
 		{
 			U.openExternalURL(W.LeaderboardURL[W.LocaleCurrent]);
 		});
@@ -28817,6 +28874,7 @@ W = {
 			|| (land === W.LandEnum.BlueHome && O.Options.bol_narrateBlueHome === false)
 			|| (land === W.LandEnum.GreenHome && O.Options.bol_narrateGreenHome === false)
 			|| (land === W.LandEnum.Center && O.Options.bol_narrateCenter === false)
+			|| (type === W.ObjectiveEnum.Bloodlust && O.Options.bol_narrateRuins === false)
 			|| (type === W.ObjectiveEnum.Ruins && O.Options.bol_narrateRuins === false)
 			|| (type === W.ObjectiveEnum.Camp && O.Options.bol_narrateCamp === false)
 			|| (type === W.ObjectiveEnum.Tower && O.Options.bol_narrateTower === false)
@@ -28968,11 +29026,11 @@ W = {
 			W.addLogEntry(W.MatchupCurrent["green"].oNickStr + " : " + W.MatchupCurrent["blue"].oNickStr + " : " + W.MatchupCurrent["red"].oNickStr);
 			
 			// Update map spawn labels
-			$(".wvwSpawnLabel").find("var").each(function()
+			$(".wvwSpawnContainer").each(function()
 			{
 				var owner = $(this).attr("data-owner").toLowerCase();
 				var label = W.MatchupCurrent[owner].oNameLinesStr;
-				$(this).html(label);
+				$(this).find(".wvwSpawnLabel").html(label);
 			});
 		}
 	},
@@ -29028,7 +29086,8 @@ W = {
 		var fliptimeignore = null;
 		var maxattemptsuntilfallback = 3;
 		var maxduplicatefliptime = 18; // Number of non-neutral objectives in the borderlands during reset
-		var nowmsec = (new Date()).getTime();
+		var now = new Date();
+		var nowmsec = now.getTime();
 		var succeedReconnection = function()
 		{
 			W.numFailedAPICalls = 0;
@@ -29062,6 +29121,8 @@ W = {
 			// Initialize stagnant variables once
 			if (W.MatchFinishTimeISO !== pData.end_time)
 			{
+				var relinkdate = W.getWorldRelink(new Date(pData.end_time));
+				var timetillrelink = relinkdate.getTime() - nowmsec;
 				W.MatchFinishTimeISO = pData.end_time;
 				W.MatchStartTimeMS = (new Date(pData.start_time)).getTime();
 				W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
@@ -29069,6 +29130,8 @@ W = {
 				W.MatchupIDCurrent = pData.id;
 				W.MatchupCurrent = W.formatMatchup(pData);
 				W.updateParticipants();
+				W.addLogEntry("Next server relink: " + T.formatLocal(relinkdate, {year: "numeric", month: "numeric", day: "numeric"})
+					+ " (" + T.formatMilliseconds(timetillrelink) + ")");
 			}
 			
 			// Update scoreboard
@@ -29167,6 +29230,25 @@ W = {
 				{
 					istoomanyflips = true;
 					break;
+				}
+				
+				// Update bloodlust, must simulate API structure of objective because bloodlust do not
+				for (var ii in map.bonuses)
+				{
+					var apiobjowner = map.bonuses[ii].owner;
+					apiobjowner = apiobjowner || W.OwnerEnum.Neutral;
+					var landnick = W.Rotation[map.type];
+					var obj = W.Objectives[landnick + "_" + "bloodlust"];
+					if (obj && obj.owner !== apiobjowner)
+					{
+						obj.last_flipped = nowmsec;
+						obj.last_flipped_msec = nowmsec;
+						obj.prevowner = obj.owner;
+						obj.owner = apiobjowner;
+						obj.claimed_by = null;
+						W.updateObjectiveIcon(obj);
+						W.updateObjectiveTooltip(obj);
+					}
 				}
 			}
 			
@@ -29661,6 +29743,7 @@ T = {
 	cDAYS_IN_BIWEEK: 14,
 	cDAYS_IN_MONTH: 30,
 	cDAYS_IN_YEAR: 365,
+	cMONTHS_IN_YEAR: 12,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
 	cMINUTES_IN_MINIFRAME: 5,
@@ -30741,6 +30824,10 @@ T = {
 		}
 		return date.toLocaleString(window.navigator.language, options);
 	},
+	formatLocal: function(pDate, pOptions)
+	{
+		return pDate.toLocaleString(window.navigator.language, pOptions);
+	},
 	
 	/*
 	 * Checks a time sensitive object if its Start and Finish date objects are
@@ -30947,6 +31034,17 @@ T = {
 		var newdate = new Date(pDate);
 		newdate.setDate(pDate.getDate() + pDays);
 		return newdate;
+	},
+	
+	/*
+	 * Gets the number of days in a month.
+	 * @param object pDate
+	 * @returns int days
+	 * Source: http://stackoverflow.com/questions/1184334/get-number-days-in-a-specified-month-using-javascript
+	 */
+	getDaysInMonth: function(pDate)
+	{
+		return (new Date(pDate.getUTCFullYear(), pDate.getUTCMonth() + 1, 0)).getUTCDate();
 	},
 	
 	/*
@@ -35719,6 +35817,7 @@ I = {
 	initializeUIForHUD: function()
 	{
 		U.convertModeLink(".hudDirectoryColumn a");
+		U.convertExternalLink(".hudDirectoryColumn a");
 		I.bindScrollbar("#hudDirectoryGuides");
 		$(".hudPeripheral").css({visibility: "visible"});
 	},
@@ -35890,7 +35989,8 @@ I = {
 		I.SleepTimeout = setTimeout(function()
 		{
 			I.isSleeping = true;
-			$(".hudButton, .btnWindow").addClass("jsSleeped");
+			var filter = (I.isProjectionEnabled) ? ".mapExpandButton" : "";
+			$(".hudButton, .btnWindow").not(filter).addClass("jsSleeped");
 		}, I.cMSECONDS_SLEEP);
 	},
 	

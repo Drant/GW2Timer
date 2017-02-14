@@ -375,6 +375,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"3232": "51",
 	"3237": "53",
 	"3185": "54",
+	"3192": "58",
 	"3228": "59",
 	"3172": "60",
 	"3198": "61",
@@ -382,6 +383,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"3189": "65",
 	"3184": "66",
 	"3201": "67",
+	"3203": "70",
 	"3222": "72",
 	"3204": "74",
 	"3238": "75",
@@ -510,7 +512,7 @@ Fractal:
 Bookmark:
 {
 	// Common paths such as daily resource runs
-	"Lake Doric: Jade": [[12348,10228],[12382,10328],[12470,10305],[12575,10795],[12693,10707],[12720,10686],[12885,10647],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]],
+	"Lake Doric: Jade": [[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]],
 	"Bitterfrost Frontier: Winterberries": [[21325,7462],[20999,7308],[21099,7143],[21122,7048],[21048,6994],[21359,6959],[21650,6882],[21827,6925],[21995,6951],[21765,7080],[21890,7144],[21974,7158],[22061,7219],[21931,7330],[21780,7252],[21713,7352],[21706,7525],[21573,7581],[22376,7990],[23197,7470],[22679,7073]],
 	"Ember Bay: Petrified": [[7912,29246],[7340,29422],[7377,29663],[7188,29630],[7132,29897],[6917,29868],[6948,29577],[7141,29418],[6834,28772],[6868,28908],[6742,28893],[6559,29195],[5137,29263]],
 	"Bloodstone Fen: Rubies": [[2554,14136],[2483,14115],[2425,14213],[2464,14279],[2438,14307],[2497,14377],[2445,14410],[2708,14445],[2903,14533],[2951,14506],[2952,14351],[2871,14335],[2846,14313],[2800,14261],[2826,14234],[2894,14113],[2950,14127],[2956,14147],[2899,14194],[2890,14250],[2989,14303],[3004,14306],[3077,14333],[3122,14311],[3240,14175],[3217,14171],[3147,14104],[3108,14097],[3029,14149],[3138,14205],[3100,14216],[2716,14196],[2671,14214],[2657,14285]],
@@ -1451,11 +1453,11 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12575,10795],[12693,10707],[12720,10686],[12885,10647],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a> and <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a> achievements. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>.<br />"
+	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a> and <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a> achievements. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>.<br />"
 		+ "<a href='http://forum.renaka.com/topic/5546166/'>Overlay GPS</a> now works with LS3 missions <a href='http://gw2timer.com/?page=CaudecusLetters'>Master of Puppets</a>. Lake Doric <a href='http://gw2timer.com/?page=Map&bol_showWorldCompletion=true&draw=Doric'>map completion</a>.",
 	wvw: "",
-	Start: new Date("2016-02-07T16:00:00Z"),
-	Finish: new Date("2017-02-14T16:00:00Z"),
+	Start: new Date("2016-02-14T16:00:00Z"),
+	Finish: new Date("2017-02-28T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
@@ -1548,14 +1550,14 @@ Countdown: {
 		Finish: new Date("2017-03-09T20:00:00Z")
 	},*/
 	/*{
-		name_en: "LS3: Episode IV",
-		name_de: "LG3: Episode IV",
-		name_es: "HV3: Episodio IV",
-		name_fr: "HV3: Épisode IV",
-		name_zh: "第二生活世界：第四集",
-		official: "news/the-head-of-the-snake-is-live/",
-		Start: new Date("2017-02-08T17:00:00Z"),
-		Finish: new Date("2017-02-09T17:00:00Z")
+		name_en: "LS3: Episode V",
+		name_de: "LG3: Episode V",
+		name_es: "HV3: Episodio V",
+		name_fr: "HV3: Épisode V",
+		name_zh: "第二生活世界：第五集",
+		official: "",
+		Start: new Date("2017-05-08T17:00:00Z"),
+		Finish: new Date("2017-05-09T17:00:00Z")
 	}*/
 	]
 },
@@ -1589,8 +1591,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-02-07T16:00:00Z"),
-	Finish: new Date("2017-02-14T16:00:00Z"),
+	Start: new Date("2017-02-14T16:00:00Z"),
+	Finish: new Date("2017-02-21T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1611,72 +1613,93 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Lord Caudecus's Sword Skin",
-		id: "79089",
-		price: 600,
+		name: "Gwen's Attire",
+		id: "78008",
+		price: 525,
+		discount: 700,
+		col: 0
+	},
+	{
+		name: "Mini Demmi Beetlestone",
+		id: "http://i.imgur.com/F6m2T01.png",
+		price: 400,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Lord Caudecus's Pistol Skin",
-		id: "79179",
-		price: 600,
+		name: "Wedding Preparation Package",
+		id: "http://i.imgur.com/WIycepj.png",
+		price: 1560,
 		discount: null,
 		col: 0
+	},
+	{
+		name: "Wings of Love Glider",
+		id: "77804",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Necrotic Glider",
+		id: "80484",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Bouquet of Roses",
+		id: "49933",
+		price: 250,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Box of Chocolate",
+		id: "43528",
+		price: 250,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Profane Light Armor Skin",
+		id: "20274",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Krytan Medium Armor Skin",
+		id: "20273",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Primeval Heavy Armor Skin",
+		id: "20272",
+		price: 500,
+		discount: null,
+		col: 1
 	},
 	{
 		name: "Mask of the Jubilee",
 		id: "44607",
 		price: 400,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Mask of the Queen",
 		id: "44608",
 		price: 400,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Ringmaster's Hat",
 		id: "64745",
 		price: 200,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "White Mantle Appearance Pack",
-		id: "http://i.imgur.com/SXJh076.png",
-		price: 2000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Cosmic Logging Tool",
-		id: "79472",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Cosmic Mining Tool",
-		id: "78731",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Shining Blade Backpack Glider Combo",
-		id: "79288",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Necrotic Glider",
-		id: "80484",
-		price: 500,
 		discount: null,
 		col: 1
 	},
