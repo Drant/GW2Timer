@@ -1404,8 +1404,8 @@ var GW2T_TIMELINE = [
 		zone: "doric",
 		Segments: [
 			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "00:25", duration: "00:35", primacy: 3, name_en: "Noran, Immelhoof, Lumberyard", name_de: "Noran, Immelhuf, Holzlager", name_es: "Noran, Immelhoof, Aserradero", name_fr: "Noran, Immelsabot, Scierie", name_zh: "诺兰，伊梅尔霍夫，伐木场" },
-			{ time: "01:00", duration: "00:40", primacy: 3, name_en: "Saidra, Agatha, Jade", name_de: "Saidra, Agatha, Jade", name_es: "Saidra, Agatha, Jade", name_fr: "Saidra, Agatha, Jade", name_zh: "塞德拉，翠玉" },
+			{ time: "00:25", duration: "00:35", primacy: 3, name_en: "Noran, Immelhoof", name_de: "Noran, Immelhuf", name_es: "Noran, Immelhoof", name_fr: "Noran, Immelsabot", name_zh: "诺兰，伊梅尔霍夫" },
+			{ time: "01:00", duration: "00:40", primacy: 3, name_en: "Saidra, Agatha", name_de: "Saidra, Agatha", name_es: "Saidra, Agatha", name_fr: "Saidra, Agatha", name_zh: "塞德拉，阿加莎" },
 			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Loamhurst, Cairn", name_de: "Neulehmwald, Cairn", name_es: "Loamhurst, Cairn", name_fr: "Sylveglèbe, Cairn", name_zh: "新沃土之森，凯恩" }
 		]
 	},
