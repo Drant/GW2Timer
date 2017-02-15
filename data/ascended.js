@@ -2002,7 +2002,8 @@ Sword: [
 	{i: 80647, n: "Assaulter's Indomitable Gladius", p: {magnetite: 600}},
 	{i: 80123, n: "Malicious Indomitable Gladius", p: {magnetite: 600}},
 	{i: 80510, n: "Defender's Indomitable Gladius", p: {magnetite: 600}},
-	{i: 80197, n: "Healer's Indomitable Gladius", p: {magnetite: 600}}
+	{i: 80197, n: "Healer's Indomitable Gladius", p: {magnetite: 600}},
+	{i: 80512, n: "Thackeray's Gladius", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -2270,7 +2271,8 @@ Torch: [
 	{i: 78869, n: "Healer's Keep Construct Torch", p: {magnetite: 600}},
 	{i: 78903, n: "Malicious Keep Construct Torch", p: {magnetite: 600}},
 	{i: 78953, n: "Defender's Keep Construct Torch", p: {magnetite: 600}},
-	{i: 78986, n: "Assaulter's Keep Construct Torch", p: {magnetite: 600}}
+	{i: 78986, n: "Assaulter's Keep Construct Torch", p: {magnetite: 600}},
+	{i: 80683, n: "Thackeray's Flame", p: {coin: 1000000}}
 ],
 Warhorn: [
 	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
@@ -2497,7 +2499,8 @@ ShortBow: [
 	{i: 80499, n: "Assaulter's Watchkeeper Trophy Bow", p: {magnetite: 600}},
 	{i: 80199, n: "Defender's Watchkeeper Trophy Bow", p: {magnetite: 600}},
 	{i: 80333, n: "Healer's Watchkeeper Trophy Bow", p: {magnetite: 600}},
-	{i: 80461, n: "Malicious Watchkeeper Trophy Bow", p: {magnetite: 600}}
+	{i: 80461, n: "Malicious Watchkeeper Trophy Bow", p: {magnetite: 600}},
+	{i: 80391, n: "Thackeray's Crescent", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},

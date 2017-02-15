@@ -1632,7 +1632,7 @@ Sale: {
 	},
 	{
 		name: "Mini Demmi Beetlestone",
-		id: "http://i.imgur.com/F6m2T01.png",
+		id: "80371",
 		price: 400,
 		discount: null,
 		col: 0

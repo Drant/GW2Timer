@@ -342,7 +342,8 @@ Special: [
 	{u: 440, i: 80545, n: "Mini White Mantle Figurehead", p: {magnetite: 300}},
 	{u: 441, i: 80562, n: "Mini Cairn the Indomitable", p: {magnetite: 300}},
 	{u: 438, i: 80224, n: "Mini Mursaat Overseer", p: {magnetite: 300}},
-	{u: 442, i: 80218, n: "Mini Samarog", p: {magnetite: 300}}
+	{u: 442, i: 80218, n: "Mini Samarog", p: {magnetite: 300}},
+	{u: 444, i: 80371, n: "Mini Demmi Beetlestone", p: {gem: 400}},
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},
