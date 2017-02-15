@@ -19737,8 +19737,8 @@ C = {
 		ScheduledCutoff: 2,
 		Standard: 2, // Scheduled non-hardcore chains
 		Hardcore: 3, // Scheduled challenging chains with a separate schedule from non-hardcores
-		WorldBossCuttoff: 3,
 		Miscellaneous: 4, // Any scheduled chains not already defined here
+		WorldBossCuttoff: 4,
 		DryTop: 5, // Scheduled Dry Top chains
 		LivingStory: 6 // Seasonal events
 	},
@@ -24401,6 +24401,7 @@ P = {
 		{
 			var blacklist = [
 				"scarlet", "molten all", "overdue emi", "aetherblade", "queen's cha", "mordrem inv", "offshoot", "vigil eng", "haunted", // Obsolete events
+				"stabilize the rift", // Rift events
 				"guild", // Guild missions
 				"subdue", // Guild bounty
 				"hero cha" // Hero challenges
@@ -27803,7 +27804,7 @@ W = {
 	},
 	
 	/*
-	 * Gets the date for the next WvW re-linking of server alliances.
+	 * Gets the time for the next WvW re-linking of server alliances.
 	 * @param Date pDate from matches API, the reset weekday is same as relink.
 	 * @returns object Date
 	 */

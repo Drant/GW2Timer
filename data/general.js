@@ -1404,9 +1404,9 @@ var GW2T_TIMELINE = [
 		zone: "doric",
 		Segments: [
 			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "00:25", duration: "00:35", primacy: 3, name_en: "Noran, Immelhoof", name_de: "Noran, Immelhuf", name_es: "Noran, Immelhoof", name_fr: "Noran, Immelsabot", name_zh: "诺兰，伊梅尔霍夫" },
-			{ time: "01:00", duration: "00:40", primacy: 3, name_en: "Saidra, Agatha", name_de: "Saidra, Agatha", name_es: "Saidra, Agatha", name_fr: "Saidra, Agatha", name_zh: "塞德拉，阿加莎" },
-			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Loamhurst, Cairn", name_de: "Neulehmwald, Cairn", name_es: "Loamhurst, Cairn", name_fr: "Sylveglèbe, Cairn", name_zh: "新沃土之森，凯恩" }
+			{ time: "00:25", duration: "00:35", primacy: 3, name_en: "Noran: Immelhoof", name_de: "Noran: Immelhuf", name_es: "Noran: Immelhoof", name_fr: "Noran: Immelsabot", name_zh: "诺兰：伊梅尔霍夫" },
+			{ time: "01:00", duration: "00:40", primacy: 3, name_en: "Saidra: Agatha", name_de: "Saidra: Agatha", name_es: "Saidra: Agatha", name_fr: "Saidra: Agatha", name_zh: "塞德拉：阿加莎" },
+			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Loamhurst: Cairn", name_de: "Neulehmwald: Cairn", name_es: "Loamhurst: Cairn", name_fr: "Sylveglèbe: Cairn", name_zh: "新沃土之森：凯恩" }
 		]
 	},
 	{
@@ -1535,19 +1535,6 @@ Countdown: {
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
 	}*/
-	/*{ // Last Friday of even numbered months
-		name_en: "WvW Re-linking",
-		name_de: "WvW Wieder-verbindung",
-		name_es: "McM Re-unificación",
-		name_fr: "McM Ré-association",
-		name_zh: "世界战场重新统一",
-		url_en: "https://forum-en.guildwars2.com/forum/game/wuv/WvW-Poll-6-June-World-Linking-Schedule-CLOSED/page/3#post6196507",
-		url_de: "https://forum-de.guildwars2.com/forum/game/wuv/WvW-Abstimmung-vom-6-Juni-Zeitplan-f-r-Weltenverbindung-Ergebnisse/first#post500378",
-		url_es: "https://forum-es.guildwars2.com/forum/game/wuv/Encuesta-de-WvW-del-6-de-junio-Frecuencia-de-la-unificaci-n-de-mundos-Cerrada/first#post121282",
-		url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sondage-McM-du-6-juin-Programme-de-l-association-de-mondes-ferm/first#post292620",
-		Start: new Date("2017-02-24T18:00:00Z"),
-		Finish: new Date("2017-02-25T02:00:00Z")
-	},*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
