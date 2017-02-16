@@ -1535,7 +1535,7 @@ Countdown: {
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
 	}*/
-	/*{ // 8 weeks cycle, repeats 56 days after this event's start
+	{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
@@ -1544,7 +1544,7 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-03-02T20:00:00Z"),
 		Finish: new Date("2017-03-09T20:00:00Z")
-	},*/
+	}
 	/*{
 		name_en: "LS3: Episode V",
 		name_de: "LG3: Episode V",
@@ -1656,6 +1656,41 @@ Sale: {
 		price: 250,
 		discount: null,
 		col: 0
+	},
+	{
+		name: "Warrior Quaggan Backpack Cover",
+		id: "39519",
+		price: 300,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Wintersday Earmuffs",
+		id: "65200",
+		price: 25,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Zodiac Light Armor Skin",
+		id: "43018",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Zodiac Medium Armor Skin",
+		id: "43017",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Zodiac Heavy Armor Skin",
+		id: "43016",
+		price: 800,
+		discount: null,
+		col: 1
 	},
 	{
 		name: "Profane Light Armor Skin",

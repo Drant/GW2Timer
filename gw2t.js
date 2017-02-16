@@ -20267,6 +20267,7 @@ C = {
 						chain.htmllist = "#sectionChains_Scheduled";
 					}
 					C.MiscellaneousChains.push(chain);
+					C.RegularChains.push(chain);
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.LivingStory:
