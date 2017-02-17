@@ -1481,6 +1481,7 @@ MediumGloves: [
 	{i: 80588, n: "Thackeray's Vambraces", p: {coin: 900000}},
 	{i: 80142, n: "Assaulter's Gloves of the Obedient", p: {magnetite: 600}},
 	{i: 80283, n: "Malicious Gloves of the Obedient", p: {magnetite: 600}},
+	{i: 80481, n: "Defender's Gloves of the Obedient", p: {magnetite: 600}},
 	{i: 80610, n: "Healer's Gloves of the Obedient", p: {magnetite: 600}}
 ],
 MediumLeggings: [

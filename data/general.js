@@ -489,24 +489,23 @@ Fractal:
 		name_es: "Fractal recomendado escala",
 		name_fr: "Fractale recommandée de niveau"
 	},
-	Epoch: new Date("2016-09-04T00:00:00Z"),
+	Epoch: new Date("2017-02-14T00:00:00Z"),
 	Schedule: [
-		// Week A, 0 index is Sunday
-		["Thaumanova", "Underground", "Molten"],
-		["Swamp", "Aetherblade", "Volcanic"],
-		["Snowblind", "Thaumanova", "Aquatic"],
-		["Underground", "Ocean", "Urban"],
-		["Chaos", "Aetherblade", "Nightmare"],
-		["Maitrin", "Cliffside", "Molten"],
-		["Swamp", "Uncategorized", "Ocean"],
-		// Week B
+		["Aquatic", "Furnace", "Molten"],
 		["Volcanic", "Snowblind", "Nightmare"],
 		["Aetherblade", "Uncategorized", "Thaumanova"],
 		["Chaos", "Cliffside", "Urban"],
 		["Maitrin", "Underground", "Volcanic"],
 		["Nightmare", "Snowblind", "Ocean"],
 		["Chaos", "Uncategorized", "Urban"],
-		["Swamp", "Cliffside", "Furnace"]
+		["Swamp", "Cliffside", "Furnace"],
+		["Thaumanova", "Underground", "Molten"],
+		["Swamp", "Aetherblade", "Volcanic"],
+		["Snowblind", "Thaumanova", "Aquatic"],
+		["Underground", "Ocean", "Urban"],
+		["Chaos", "Aetherblade", "Nightmare"],
+		["Maitrin", "Cliffside", "Molten"],
+		["Swamp", "Uncategorized", "Ocean"]
 	]
 },
 Bookmark:
@@ -1463,7 +1462,7 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>.<br />"
-		+ "<a href='http://gw2timer.com/?page=Map&bol_showWorldCompletion=true&draw=Doric'>Lake Doric</a> event <a href='http://gw2timer.com/?mode=Tile'>timers</a> are in beta. <a href='http://gw2timer.com/?page=WvW'>WvW live map</a> now has server relinking countdown.",
+		+ "<a href='http://gw2timer.com/?page=Map&bol_showWorldCompletion=true&draw=Doric'>Lake Doric</a> event <a href='http://gw2timer.com/?mode=Tile'>timers</a> are in beta. <a href='http://gw2timer.com/?page=Daily'>Tomorrow Fractal</a> rotation has been resynced.",
 	wvw: "",
 	Start: new Date("2016-02-14T16:00:00Z"),
 	Finish: new Date("2017-02-28T16:00:00Z"),

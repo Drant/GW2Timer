@@ -6213,7 +6213,7 @@ Z = {
 						catname = assoc[catarr.id];
 						record[catname] = catarr.items;
 					}
-					Z.printUnlockables(record, true);
+					Z.printUnlockables(record, true, true);
 				}});
 			});
 		});
@@ -6287,7 +6287,7 @@ Z = {
 				}
 			}
 			// Final output
-			Z.printUnlockables(record);
+			Z.printUnlockables(record, null, true);
 			Z.printRecordEntry(newentries, {
 				aItemDB: itemdb,
 				aItemIDsKey: "oAssocItems"
@@ -6771,7 +6771,7 @@ Z = {
 					}
 					newitems.push(item);
 				}
-				Z.printUnlockables(pReturn.oRecord);
+				Z.printUnlockables(pReturn.oRecord, null, true);
 				Z.printRecordEntry(newitems, {
 					aItemIDsKey: "id"
 				});
@@ -25950,10 +25950,10 @@ G = {
 		}
 		else
 		{
-			return; // Temporarily disabled
 			// If getting future fractals then use prewritten schedule
-			var fractalday = T.getDaysSince(pDate, T.Daily.Fractal.Epoch) % T.cDAYS_IN_BIWEEK;
-			insertFractal(T.Daily.Fractal.Schedule[fractalday]);
+			var sched = T.Daily.Fractal.Schedule;
+			var fractalday = T.getDaysSince(pDate, T.Daily.Fractal.Epoch) % sched.length;
+			insertFractal(sched[fractalday]);
 		}
 	},
 	
@@ -30336,13 +30336,13 @@ T = {
 	/*
 	 * Gets a stepped output of a linear equation.
 	 * @param int pX
+	 * @param int pDivisor
 	 * @param int pMin
 	 * @param int pMax
-	 * @param int pDivisor
 	 * @param int pMultiplier
 	 * @returns int y, or pMin or pMax if out of these range.
 	 */
-	stepFunction: function(pX, pMin, pMax, pDivisor, pMultiplier)
+	stepFunction: function(pX, pDivisor, pMin, pMax, pMultiplier)
 	{
 		var result = (~~(pX / pDivisor) * pMultiplier) + pMin;
 		return (result > pMax) ? pMax : result;
@@ -34377,12 +34377,9 @@ I = {
 	printFile: function(pString)
 	{
 		I.print("");
-		$("<textarea class='cssText cslText'></textarea>").appendTo("#cslContent")
-			.val(pString).click(function()
-		{
-			$(this).select();
-		});
+		$("<textarea class='cssText cslText'></textarea>").appendTo("#cslContent").val(pString);
 		I.print("");
+		I.bindConsoleInput();
 	},
 	
 	/*
@@ -34456,7 +34453,7 @@ I = {
 	 */
 	bindConsoleInput: function()
 	{
-		$("#cslContent").find(".cssInputText").each(function()
+		$("#cslContent").find(".cssInputText, .cssText").each(function()
 		{
 			I.bindClipboard($(this), $(this).val(), false);
 			$(this).unbind("click").click(function()
@@ -36047,7 +36044,7 @@ I = {
 		{
 			return;
 		}
-		var result = T.stepFunction($(window).width(), 14, 22, 400, 3);
+		var result = T.stepFunction($(window).width(), 200, 14, 22, 1);
 		$(".chnTitle h1, .chnTitle time").css({fontSize: result + "px"});
 	},
 	

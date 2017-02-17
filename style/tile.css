@@ -144,13 +144,13 @@ body, #paneContent article {
 
 .chnTitle h1 {
 	width: 62%;
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 18px;
-	font-weight: bold;
 	text-align: center;
 	cursor: url("../img/cursor/auto.cur"), auto;
 }
 .chnTitleMisc {
-	text-decoration: underline;
+	font-style: italic;
 }
 
 .chnTitle time {
