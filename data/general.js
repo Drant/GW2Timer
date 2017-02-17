@@ -1494,6 +1494,12 @@ Announcement:
  */
 Countdown: {
 	Events: [
+	{
+		name: "Balance Patch",
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/Skill-Balance-Coming",
+		Start: new Date("2017-02-22T17:00:00Z"),
+		Finish: new Date("2017-02-23T17:00:00Z")
+	},
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
