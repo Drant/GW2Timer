@@ -1664,6 +1664,20 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Fuzzy Bear Hat",
+		id: "64755",
+		price: 200,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Fuzzy Leopard Hat",
+		id: "64746",
+		price: 200,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Wintersday Earmuffs",
 		id: "65200",
 		price: 25,

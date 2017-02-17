@@ -9223,14 +9223,14 @@ A = {
 					+ "<dfn>" + D.getPhraseOriginal("Liquid Summary Exclude Gems") + ":</dfn> <br />"
 					+ D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsellnogems) + "<br />"
 					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuynogems) + "<br />";
-				var appraisedelm = $("#audSummaryAppraised").attr("title", appraisedtip).click(function(pEvent)
+				var appraisedelm = $("#audSummaryAppraised").click(function(pEvent)
 				{
 					if (pEvent.which === I.ClickEnum.Left)
 					{
 						I.print(appraisedtip);
 					}
 				});
-				var liquidelm = $("#audSummaryLiquid").attr("title", liquidtip).click(function(pEvent)
+				var liquidelm = $("#audSummaryLiquid").click(function(pEvent)
 				{
 					if (pEvent.which === I.ClickEnum.Left)
 					{
@@ -9254,8 +9254,8 @@ A = {
 					// Bind tooltip after the animation
 					setTimeout(function()
 					{
-						I.qTip.init(appraisedelm);
-						I.qTip.init(liquidelm);
+						I.qTip.init(appraisedelm.attr("title", appraisedtip));
+						I.qTip.init(liquidelm.attr("title", liquidtip));
 					}, animationspeed);
 				});
 				

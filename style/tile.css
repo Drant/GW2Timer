@@ -151,6 +151,7 @@ body, #paneContent article {
 }
 .chnTitleMisc {
 	font-style: italic;
+	font-weight: normal;
 }
 
 .chnTitle time {

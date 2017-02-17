@@ -96,7 +96,7 @@ body, html, .panelMain, #windowMain, #paneContent article {
 
 .chnTitle img {
 	width: 64px; height: 64px;
-	border-radius: 8px;
+	border-radius: 4px;
 }
 
 .chnCheck, .chnChecked {
@@ -108,12 +108,13 @@ body, html, .panelMain, #windowMain, #paneContent article {
 
 .chnTitle h1 {
 	width: 178px;
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 22px;
-	font-weight: bold;
 	text-align: center;
 }
 .chnTitleMisc {
-	text-decoration: underline;
+	font-style: italic;
+	font-weight: normal;
 }
 
 .chnTitle time {
