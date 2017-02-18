@@ -2092,7 +2092,8 @@ Pistol: [
 	{i: 80659, n: "Assaulter's Indomitable Pistol", p: {magnetite: 600}},
 	{i: 80531, n: "Malicious Indomitable Pistol", p: {magnetite: 600}},
 	{i: 80330, n: "Defender's Indomitable Pistol", p: {magnetite: 600}},
-	{i: 80559, n: "Healer's Indomitable Pistol", p: {magnetite: 600}}
+	{i: 80559, n: "Healer's Indomitable Pistol", p: {magnetite: 600}},
+	{i: 80520, n: "Thackeray's Handcannon", p: {coin: 1100000}}
 ],
 Scepter: [
 	{i: 77441, n: "Chest of Scepters", p: {coin: 1100000}},

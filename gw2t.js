@@ -185,8 +185,6 @@ O = {
 		int_setFloorWvW: 1,
 		int_setInitialZoom: 3,
 		int_setInitialZoomWvW: 4,
-		bol_showFloor: true,
-		bol_showFloorWvW: true,
 		bol_showCoordinatesBar: true,
 		bol_showZoneBorders: false,
 		bol_showZoneGateways: false,
@@ -1318,14 +1316,6 @@ O = {
 		{
 			W.changeFloor();
 		},
-		bol_showFloor: function()
-		{
-			M.toggleFloor();
-		},
-		bol_showFloorWvW: function()
-		{
-			W.toggleFloor();
-		},
 		int_setInitialZoom: function()
 		{
 			M.Map.setZoom(O.Options.int_setInitialZoom);
@@ -1445,7 +1435,7 @@ O = {
 						});
 						$(".mapExpandButton").css({right: 0, left: "auto"});
 						$("#itemExpandButton").css({right: "auto", left: "auto", "margin-left": "-16px"});
-						$("#itemProjection").css({right: "auto"});
+						$("#prjController").css({right: "auto"});
 					}
 				}
 				else
@@ -1459,7 +1449,7 @@ O = {
 					});
 					$(".mapExpandButton").css({right: "auto", left: 0});
 					$("#itemExpandButton").css({right: "auto", left: "auto", "margin-left": (I.cPANEL_WIDTH - 16) + "px"});
-					$("#itemProjection").css({right: 0});
+					$("#prjController").css({right: 0});
 				}
 			}
 		},
@@ -21228,6 +21218,7 @@ M = {
 	isMouseOnHUD: false,
 	isUserDragging: false,
 	isZoneLocked: false,
+	isFloorShown: true,
 	isMapAJAXDone: false,
 	isAPIRetrieved_MAPFLOOR: false,
 	isItineraryRetrieved: false,
@@ -21311,7 +21302,7 @@ M = {
 	{
 		var that = this;
 		var htmlidprefix = "#" + this.MapEnum;
-		var initialzoom = O.Options["int_setInitialZoom" + P.SuffixCurrent];
+		var initialzoom = O.Options["int_setInitialZoom" + P.MapSwitchSuffix];
 		
 		// ?.Map is the actual Leaflet map object, initialize it
 		this.Map = L.map(this.MapEnum + "Pane", {
@@ -21604,14 +21595,14 @@ M = {
 		{
 			if (that.isPersonalPinsLaid(true))
 			{
-				var urlmod = (P.WebsiteCurrentMap === P.MapEnum.Mists) ? "wvw/" : "";
+				var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
 				I.print(I.cSiteURL + urlmod + that.getPersonalString(), true);
 				I.selectConsole();
 			}
 		});
 		$(htmlidprefix + "ContextToggleFloor").click(function()
 		{
-			$("#opt_bol_showFloor" + that.OptionSuffix).trigger("click");
+			that.toggleFloor();
 		});
 		$(htmlidprefix + "ContextToggleLock").click(function()
 		{
@@ -21743,25 +21734,17 @@ M = {
 	},
 	
 	/*
-	 * Shows or hides the map tiles.
+	 * Shows or hides the map tiles and map background.
 	 */
-	toggleFloor: function(pIsInitialProjection)
+	toggleFloor: function(pBoolean)
 	{
 		var that = this;
 		var htmlidprefix = "#" + that.MapEnum;
 		var mappane = $(htmlidprefix + "Pane");
-		var wantfloor = O.Options["bol_showFloor" + that.OptionSuffix];
+		that.isFloorShown = (pBoolean === undefined) ? !that.isFloorShown : pBoolean;
 		
-		if (pIsInitialProjection)
-		{
-			// Have terrain initially hidden if using projection
-			mappane.toggleClass("mapPaneOff", true);
-			that.changeFloor(false);
-			return;
-		}
-		
-		mappane.toggleClass("mapPaneOff", !wantfloor);
-		if (wantfloor)
+		mappane.toggleClass("mapPaneOff", !that.isFloorShown);
+		if (that.isFloorShown)
 		{
 			that.changeFloor();
 		}
@@ -23962,9 +23945,10 @@ P = {
  * @@Populate shared and independent map properties and functions
  * ========================================================================== */
 
-	SuffixCurrent: "", // Map options with suffix to differentiate for which map
-	WebsiteCurrentMap: "map", // The map currently displayed on the website
-	GPSCurrentMap: null, // The map which the player resides in game
+	MapSwitchObject: M, // Reference to the map superobject
+	MapSwitchSuffix: "", // Map options with suffix to differentiate for which map
+	MapSwitchWebsite: "map", // The map currently displayed on the website
+	MapSwitchGPS: null, // The map which the player resides in game
 	MapEnum:
 	{
 		Tyria: "map",
@@ -25522,38 +25506,6 @@ P = {
 	},
 	
 	/*
-	 * Checks whether the player is in a Tyria or a Mists associated zone then
-	 * switch the map automatically if it is not already displayed.
-	 */
-	switchMapCheck: function()
-	{
-		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
-		{
-			return;
-		}
-		
-		var previousmap = P.GPSCurrentMap;
-		var currentnick = GPSIdentityJSON["map_id"];
-		var htmlidprefix = "#" + P.WebsiteCurrentMap;
-		
-		// Get the map the player is in
-		if (M.ZoneAssociation[currentnick] !== undefined)
-		{
-			P.GPSCurrentMap = P.MapEnum.Tyria;
-		}
-		else if (W.ZoneAssociation[currentnick] !== undefined)
-		{
-			P.GPSCurrentMap = P.MapEnum.Mists;
-		}
-		
-		// If the player has changed the map in game and the website's map is different from it, then switch the website's map
-		if (P.GPSCurrentMap !== previousmap && P.GPSCurrentMap !== P.WebsiteCurrentMap)
-		{
-			$(htmlidprefix + "SwitchButton").trigger("click");
-		}
-	},
-	
-	/*
 	 * Loads a new zone (ingame map instance) if haven't already.
 	 * @param int pID
 	 * @param object pMapObject
@@ -25585,6 +25537,38 @@ P = {
 	},
 	
 	/*
+	 * Checks whether the player is in a Tyria or a Mists associated zone then
+	 * switch the map automatically if it is not already displayed.
+	 */
+	switchMapCheck: function()
+	{
+		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
+		{
+			return;
+		}
+		
+		var previousmap = P.MapSwitchGPS;
+		var currentnick = GPSIdentityJSON["map_id"];
+		var htmlidprefix = "#" + P.MapSwitchWebsite;
+		
+		// Get the map the player is in
+		if (M.ZoneAssociation[currentnick] !== undefined)
+		{
+			P.MapSwitchGPS = P.MapEnum.Tyria;
+		}
+		else if (W.ZoneAssociation[currentnick] !== undefined)
+		{
+			P.MapSwitchGPS = P.MapEnum.Mists;
+		}
+		
+		// If the player has changed the map in game and the website's map is different from it, then switch the website's map
+		if (P.MapSwitchGPS !== previousmap && P.MapSwitchGPS !== P.MapSwitchWebsite)
+		{
+			$(htmlidprefix + "SwitchButton").trigger("click");
+		}
+	},
+	
+	/*
 	 * Imitates the character pin as in the game minimap, as informed by the overlay.
 	 * This function is shared by the Tyria and Mists maps.
 	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
@@ -25592,9 +25576,9 @@ P = {
 	updateCharacter: function(pForceCode)
 	{
 		var that;
-		var followenum = O.Options["int_setFollow" + P.SuffixCurrent];
-		var displayboolean = O.Options["bol_displayCharacter" + P.SuffixCurrent];
-		switch (P.WebsiteCurrentMap)
+		var followenum = O.Options["int_setFollow" + P.MapSwitchSuffix];
+		var displayboolean = O.Options["bol_displayCharacter" + P.MapSwitchSuffix];
+		switch (P.MapSwitchWebsite)
 		{
 			case P.MapEnum.Tyria: { that = M; } break;
 			case P.MapEnum.Mists: { that = W; } break;
@@ -25712,8 +25696,8 @@ P = {
 	 */
 	tickGPS: function()
 	{
-		if (O.Options["int_setFollow" + P.SuffixCurrent]
-			|| O.Options["bol_displayCharacter" + P.SuffixCurrent])
+		if (O.Options["int_setFollow" + P.MapSwitchSuffix]
+			|| O.Options["bol_displayCharacter" + P.MapSwitchSuffix])
 		{
 			P.updateCharacter();
 			window.clearTimeout(P.GPSTimeout);
@@ -27692,21 +27676,10 @@ W = {
 		// Hide map labels if opted
 		W.toggleObjectiveLabels();
 		
-		// Show floor if opted
+		// Hide floor initially for projection
 		if (I.isProjectionEnabled)
 		{
-			W.toggleFloor(true);
-		}
-		else
-		{
-			if (O.Options.bol_showFloorWvW || I.ModeCurrent !== I.ModeEnum.Overlay)
-			{
-				W.changeFloor();
-			}
-			else
-			{
-				W.toggleFloor(false);
-			}
+			W.toggleFloor(false);
 		}
 		
 		// The function below would have been called already if world completion icons were generated
@@ -28769,7 +28742,7 @@ W = {
 		var log = $("#logWindow");
 		var windowheight = $(window).height();
 		var oldheight = log.data("oldHeight");
-		var newheight = windowheight - (oldheight + $("#logOptions").height());
+		var newheight = windowheight - ((I.ModeCurrent === I.ModeEnum.Overlay) ? 164 : 210); // Just enough to snap with the leaderboard
 
 		if (O.Options.bol_maximizeLog)
 		{
@@ -29271,22 +29244,18 @@ W = {
 				}
 				
 				// Update bloodlust, must simulate API structure of objective because bloodlust do not
-				for (var ii in map.bonuses)
+				var apiobjowner = (map.bonuses && map.bonuses.length) ? map.bonuses[0].owner : W.OwnerEnum.Neutral;
+				var landnick = W.Rotation[map.type];
+				obj = W.Objectives[landnick + "_" + "bloodlust"];
+				if (obj && obj.owner !== apiobjowner)
 				{
-					var apiobjowner = map.bonuses[ii].owner;
-					apiobjowner = apiobjowner || W.OwnerEnum.Neutral;
-					var landnick = W.Rotation[map.type];
-					var obj = W.Objectives[landnick + "_" + "bloodlust"];
-					if (obj && obj.owner !== apiobjowner)
-					{
-						obj.last_flipped = nowmsec;
-						obj.last_flipped_msec = nowmsec;
-						obj.prevowner = obj.owner;
-						obj.owner = apiobjowner;
-						obj.claimed_by = null;
-						W.updateObjectiveIcon(obj);
-						W.updateObjectiveTooltip(obj);
-					}
+					obj.last_flipped = nowmsec;
+					obj.last_flipped_msec = nowmsec;
+					obj.prevowner = obj.owner;
+					obj.owner = apiobjowner;
+					obj.claimed_by = null;
+					W.updateObjectiveIcon(obj);
+					W.updateObjectiveTooltip(obj);
 				}
 			}
 			
@@ -34173,28 +34142,18 @@ I = {
 		{
 			if (I.isProjectionEnabled)
 			{
-				M.toggleFloor(true);
+				M.toggleFloor(false);
 			}
 			else
 			{
-				if (O.Options.bol_showFloor || I.ModeCurrent !== I.ModeEnum.Overlay)
+				if (I.PageInitial === "wvw")
 				{
-					if (I.PageInitial === "wvw")
+					$("#wvwSwitchButton").one("click", function()
 					{
-						$("#wvwSwitchButton").one("click", function()
-						{
-							M.changeFloor();
-						});
-					}
-					else
-					{
-						M.changeFloor();
-					}
+						M.toggleFloor(true);
+					});
 				}
-				else
-				{
-					M.toggleFloor();
-				}
+				M.toggleFloor(true);
 			}
 		}
 		
@@ -35570,7 +35529,7 @@ I = {
 				var plate = $(this).attr("id");
 				I.PageCurrent = plate.substring(I.cMenuPrefix.length - 1, plate.length);
 				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
-				if (P.WebsiteCurrentMap === P.MapEnum.Mists)
+				if (P.MapSwitchWebsite === P.MapEnum.Mists)
 				{
 					I.PagePrevious = I.PageCurrent;
 				}
@@ -35641,7 +35600,7 @@ I = {
 	switchMap: function()
 	{
 		// When first switching to the WvW, do initializations
-		if (P.WebsiteCurrentMap === P.MapEnum.Tyria && W.isWvWPrepped === false)
+		if (P.MapSwitchWebsite === P.MapEnum.Tyria && W.isWvWPrepped === false)
 		{
 			W.isWvWPrepped = true;
 			I.loadStylesheet("wvw");
@@ -35667,7 +35626,7 @@ I = {
 		}
 		
 		// Execute map switch
-		switch (P.WebsiteCurrentMap)
+		switch (P.MapSwitchWebsite)
 		{
 			case P.MapEnum.Tyria: {
 				$("#mapPane").hide();
@@ -35678,8 +35637,9 @@ I = {
 				}
 				I.PagePrevious = I.PageCurrent;
 				I.PageCurrent = I.SpecialPageEnum.WvW;
-				P.WebsiteCurrentMap = P.MapEnum.Mists;
-				P.SuffixCurrent = W.OptionSuffix;
+				P.MapSwitchObject = W;
+				P.MapSwitchWebsite = P.MapEnum.Mists;
+				P.MapSwitchSuffix = W.OptionSuffix;
 			} break;
 			
 			case P.MapEnum.Mists: {
@@ -35688,8 +35648,9 @@ I = {
 				M.refreshMap();
 				I.PageCurrent = I.PagePrevious;
 				I.PagePrevious = I.SpecialPageEnum.WvW;
-				P.WebsiteCurrentMap = P.MapEnum.Tyria;
-				P.SuffixCurrent = M.OptionSuffix;
+				P.MapSwitchObject = M;
+				P.MapSwitchWebsite = P.MapEnum.Tyria;
+				P.MapSwitchSuffix = M.OptionSuffix;
 			} break;
 		}
 		U.updateQueryString();
@@ -35711,7 +35672,7 @@ I = {
 				if (I.isMapEnabled && O.Options.bol_showMap)
 				{
 					$("#panelMap").show();
-					switch (P.WebsiteCurrentMap)
+					switch (P.MapSwitchWebsite)
 					{
 						case P.MapEnum.Tyria: {
 							$("#mapPane").show();
@@ -35879,15 +35840,25 @@ I = {
 			I.isProjectionEnabled = true;
 			$("#panelMap, #windowMain").css({background: "transparent"});
 			$("#itemVignette").remove();
-			$("#itemProjector").show();
-			$("#itemProjection").show().click(function()
-			{
-				$("#opt_bol_showFloor" + P.SuffixCurrent).trigger("click");
-			}).contextmenu(function(pEvent)
+			$("#itemProjector, #prjController").show();
+			// Bind special buttons
+			$("#prjController").contextmenu(function(pEvent)
 			{
 				pEvent.preventDefault();
-				var htmlidprefix = "#" + P.WebsiteCurrentMap;
+				var htmlidprefix = "#" + P.MapSwitchWebsite;
 				I.showContextMenu(htmlidprefix + "Context");
+			});
+			$("#prjToggleTerrain").click(function()
+			{
+				P.MapSwitchObject.toggleFloor();
+			});
+			$("#prjToggleHUD").click(function()
+			{
+				$("#opt_bol_showHUD" + P.MapSwitchSuffix).trigger("click");
+			});
+			$("#prjTogglePanel").click(function()
+			{
+				$("#opt_bol_showPanel").trigger("click");
 			});
 			// Initialize this submode
 			if (false) // Temporary disable

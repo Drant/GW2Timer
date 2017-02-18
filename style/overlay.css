@@ -12,19 +12,31 @@
 }
 
 /* Overlay exclusive elements */
-#itemProjection {
+#prjController {
 	position: fixed; z-index: 100;
-	top: calc(50% - 16px);
+	top: calc(50% - 48px); /* Total height of all the buttons divided by two*/
+}
+.prjToggle {
+	display: block;
 	width: 32px; height: 32px;
-	background: url("../img/ui/pages/map.png"), radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
 	border-radius: 50%;
 	opacity: 0.8;
 }
-#itemProjection:hover {
+.prjToggle:hover {
 	opacity: 1;
 }
-#itemProjection:active {
+.prjToggle:active {
 	opacity: 0.6;
+}
+#prjToggleTerrain {
+	background: url("../img/ui/pages/map.png"), radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+}
+#prjToggleHUD {
+	background: url("../img/ui/switch.png"), radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+}
+#prjTogglePanel {
+	background: url("../img/ui/switch.png"), radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+	transform: rotate(90deg);
 }
 #itemProjector {
 	position: absolute; z-index: 9;
@@ -72,12 +84,18 @@
 	margin-bottom: 2px;
 	padding: 1px 2px 1px 4px;
 }
+.tmlOpaqueNot .tmlSegment {
+	background: transparent;
+}
+.tmlOpaqueNot .tmlSegmentActive, #tmlHeader .tmlTimestampActive {
+	background: transparent;
+}
 .tmlOpaque {
 	background: linear-gradient(to right, #111 0%, #383838 50%, #111 100%);
 	transition: none;
 }
 .tmlOpaqueNot {
-	background: rgba(0, 0, 0, 0.6);
+	background: transparent;
 	transition: none;
 }
 #tmlToggle {

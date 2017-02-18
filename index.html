@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170217A"></script>
+	<script type="text/javascript" src="data/general.js?v=20170218"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -40,7 +40,11 @@
 	<div id="itemProjector"></div>
 	<div id="itemNull"></div><!-- Container for creating temporary elements to get their computed dimensions -->
 	<div id="itemAutoscroll"></div><!-- Cursor for autoscrolling -->
-	<kbd id="itemProjection" title="<dfn>Click to toggle map terrain.<br />Right click for map menu.</dfn>"></kbd><!-- Menu button for projection overlay -->
+	<div id="prjController">
+		<kbd id="prjToggleTerrain" class="prjToggle curToggle" title="<dfn>Toggle Terrain</dfn>"></kbd>
+		<kbd id="prjToggleHUD" class="prjToggle curToggle" title="<dfn>Toggle HUD</dfn>"></kbd>
+		<kbd id="prjTogglePanel" class="prjToggle curToggle" title="<dfn>Toggle Panel</dfn>"></kbd>
+	</div>
 	<div id="itemVignette"></div><!-- Ornamental shadow frame for window overlay -->
 	<div id="itemConsole">
 		<div id="cslButtons">
@@ -198,7 +202,7 @@
 								<li><a href="http://forum.renaka.com/topic/6209670/">LS3: Transfer Chaser</a></li>
 								<li><a href="http://forum.renaka.com/topic/6205181/">LS3: Bloodstone-Crazed Creatures</a></li>
 								<li><a href="https://www.reddit.com/r/Guildwars2/comments/4urr23/leyline_anomaly_tldr_guide_v2/">LS3: Ley-Line Anomaly</a></li>
-								<li><a href="http://gw2timer.com/?page=Schedules">World Bosses</a></li>
+								<li><a href="http://gw2timer.com/?page=Schedules">World Bosses &amp; Temples</a></li>
 								<li><a href="https://www.reddit.com/r/Guildwars2/comments/3p5lw3/i_spent_50_hours_running_through_tyria_with_a_gps/">GPS World Completion</a></li>
 								<li><a href="https://www.reddit.com/r/Guildwars2/comments/4bijoi/lets_catch_all_50_ranger_pets_a_map_and_pokedex/">Ranger Pets Map</a></li>
 							</ul>
