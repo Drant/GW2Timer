@@ -3437,6 +3437,11 @@ U = {
 				{
 					U.Args[U.KeyEnum.Mode] = I.ModeEnum.Tile;
 				}
+				else if (page === "draw")
+				{
+					U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
+					U.Args[U.KeyEnum.Draw] = U.Args[U.KeyEnum.Section];
+				}
 				else
 				{
 					// Check if is a page's section
@@ -21286,7 +21291,8 @@ M = {
 		Challenge: 4,
 		Heart: 5,
 		EventIcon: 6,
-		EventRing: 7
+		EventRing: 7,
+		EventLabel: 8
 	},
 	APIPOIEnum:
 	{
@@ -21344,7 +21350,8 @@ M = {
 				Heart: new L.layerGroup(),
 				Sector: new L.layerGroup(),
 				EventIcon: new L.layerGroup(),
-				EventRing: new L.layerGroup()
+				EventRing: new L.layerGroup(),
+				EventLabel: new L.layerGroup()
 			};
 			if (that.MapEnum === P.MapEnum.Tyria)
 			{
@@ -21965,6 +21972,7 @@ M = {
 					if (O.Options.bol_displayEvents) {
 						this.ZoneCurrent.Layers.EventIcon.addTo(this.Map);
 						this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
+						this.ZoneCurrent.Layers.EventLabel.addTo(this.Map);
 					}
 				} break;
 				case P.MapEnum.Mists:
@@ -22093,6 +22101,7 @@ M = {
 			landmark: [32, 24, 16, 12, 0, 0, 0, 0],
 			eventicon: [32, 24, 16, 12, 0, 0, 0, 0],
 			eventring: [256, 128, 64, 32, 0, 0, 0, 0],
+			eventlabelfont: [14, 0, 0, 0, 0, 0, 0, 0],
 			sectorfont: [28, 20, 16, 0, 0, 0, 0, 0],
 			sectoropacity: [0.9, 0.6, 0.3, 0, 0, 0, 0, 0],
 			objicon: [38, 38, 38, 38, 32, 24, 16, 0],
@@ -22111,6 +22120,7 @@ M = {
 		var landmarksize = getZoomValue("landmark");
 		var eventiconsize = getZoomValue("eventicon");
 		var eventringsize = getZoomValue("eventring");
+		var eventlabelfont = getZoomValue("eventlabelfont");
 		var sectorfont = getZoomValue("sectorfont");
 		var sectoropacity = getZoomValue("sectoropacity");
 		var objiconsize = getZoomValue("objicon");
@@ -22148,6 +22158,17 @@ M = {
 						if (iLayer._icon)
 						{
 							iLayer._icon.style.zIndex = M.cZIndexBury;
+						}
+					});
+					
+					// Event Label
+					this.ZoneCurrent.Layers.EventLabel.eachLayer(function(iLayer)
+					{
+						if (iLayer._icon)
+						{
+							iLayer._icon.style.fontSize = eventlabelfont + "px";
+							iLayer._icon.style.zIndex = that.cZIndexBury + 1; // Don't cover other icons
+							iLayer._icon.style.display = "table"; // For middle vertical alignment
 						}
 					});
 				}
@@ -24526,6 +24547,20 @@ P = {
 						})
 					});
 					zoneobj.Layers.EventRing.addLayer(marker);
+					
+					// Create event's label
+					marker = L.marker(coordmarker,
+					{
+						clickable: false,
+						icon: L.divIcon(
+						{
+							className: "mapSec",
+							html: "<span class='mapSecIn'>" + newname + "</span>",
+							iconSize: [128, 128],
+							iconAnchor: [64, 64]
+						})
+					});
+					zoneobj.Layers.EventLabel.addLayer(marker);
 
 					// Create event's icon
 					icon = "img/event/" + determineEventIcon(searchname) + I.cPNG;
