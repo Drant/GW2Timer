@@ -25581,7 +25581,7 @@ P = {
 		switch (P.MapSwitchWebsite)
 		{
 			case P.MapEnum.Tyria: { that = M; } break;
-			case P.MapEnum.Mists: { that = W; } break;
+			case P.MapEnum.Mists: { that = W; if (W.isWvWLoaded === false) { return; } } break;
 		}
 		
 		/*
@@ -25598,6 +25598,10 @@ P = {
 			return;
 		}
 		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
+		{
+			return;
+		}
+		if (P.MapSwitchGPS !== P.MapSwitchWebsite)
 		{
 			return;
 		}
@@ -27680,6 +27684,10 @@ W = {
 		if (I.isProjectionEnabled)
 		{
 			W.toggleFloor(false);
+		}
+		else
+		{
+			W.toggleFloor(true);
 		}
 		
 		// The function below would have been called already if world completion icons were generated
