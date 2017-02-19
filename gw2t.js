@@ -1358,6 +1358,10 @@ O = {
 		{
 			M.toggleLayerArray(P.LayerArray.ChainPath, O.Options.bol_showChainPaths);
 		},
+		bol_tourPrediction: function()
+		{
+			C.isTouring = O.Options.bol_tourPrediction;
+		},
 		int_setFollow: function()
 		{
 			if (O.Options.int_setFollow !== O.IntEnum.Follow.Off)
@@ -4581,7 +4585,7 @@ U = {
 	},
 	
 	/*
-	 * Converts a search query to GW2 wiki http link.
+	 * Converts a search query to GW2 wiki URL.
 	 * @param string pString search entry.
 	 * @returns string wiki link.
 	 */
@@ -4594,6 +4598,10 @@ U = {
 	{
 		pString = pString.replace(/ /g, "_");
 		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/wiki/" + U.encodeURL(pString);
+	},
+	getWikiLinkObject: function(pObject)
+	{
+		return D.isLanguageFullySupported() ? U.getWikiLinkLanguage(D.getObjectName(pObject)) : U.getWikiLinkDefault(D.getObjectDefaultName(pObject));
 	},
 	getWikiLinkCode: function(pID, pName)
 	{
@@ -4972,6 +4980,10 @@ Z = {
 			{
 				Z.printAPICache(U.TypeEnum.isInteger, false);
 			}},
+			apilang: {usage: "Prints all languages of an API data point. <em>Parameters: str_endpoint, int_id</em>", f: function()
+			{
+				Z.printAPIMultilingual(args[1], args[2]);
+			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. "
 				+ "Type &quot;acc&quot; alone to see list of URL suffixes. Please replace spaces in character's name with &quot;%20&quot;", f: function()
@@ -4984,7 +4996,7 @@ Z = {
 			}},
 			item: {usage: "Prints an item's information. <em>Parameters: int_itemid</em>", f: function()
 			{
-				Z.scrapeAPIArrayMultilingual("items", [parseInt(args[1])], function(pDatabase)
+				Z.scrapeAPIArrayMultilingual("items", parseInt(args[1]), function(pDatabase)
 				{
 					I.clear();
 					for (var i in pDatabase)
@@ -5184,6 +5196,19 @@ Z = {
 				I.print("Unable to retrieve API at: " + U.escapeHTML(url));
 			});
 		}
+	},
+	printAPIMultilingual: function(pSuffix, pID)
+	{
+		Z.scrapeAPIArrayMultilingual(pSuffix, parseInt(pID), function(pDatabase)
+		{
+			for (var i in pDatabase)
+			{
+				for (var ii in pDatabase[i])
+				{
+					Q.printItemInfo((pDatabase[i])[ii]);
+				}
+			}
+		});
 	},
 	
 	/*
@@ -5516,6 +5541,7 @@ Z = {
 	{
 		var Settings = pSettings || {};
 		Z.DatabaseCache[pSuffix] = {};
+		var array;
 		var multidb = Z.DatabaseCache[pSuffix]; 
 		var counter = 0;
 		var retrieveData = function()
@@ -5534,7 +5560,7 @@ Z = {
 						});
 						retrieveData();
 					};
-					Z.scrapeAPIArray(pSuffix, pArray, Settings);
+					Z.scrapeAPIArray(pSuffix, array, Settings);
 				})(Z.DatabaseLanguages[counter]);
 				counter++;
 			}
@@ -5544,8 +5570,14 @@ Z = {
 				pCallback(multidb);
 			}
 		};
-		if (pArray)
+		if (Array.isArray(pArray))
 		{
+			array = pArray;
+			retrieveData();
+		}
+		else if (isNaN(pArray) === false)
+		{
+			array = [pArray];
 			retrieveData();
 		}
 		else
@@ -5553,7 +5585,7 @@ Z = {
 			// If not provided an array of IDs then retrieve it from the API
 			$.getJSON(U.getAPI(pSuffix), function(pData)
 			{
-				pArray = pData;
+				array = pData;
 				retrieveData();
 			});
 		}
@@ -6059,7 +6091,7 @@ Z = {
 			ithentry = pEntries[i];
 			icon = (ithentry.icon) ? "<img src='" + ithentry.icon + "' />" : "";
 			entryelm = $("<div style='margin-bottom:24px'><span>" + icon + U.escapeHTML(U.lineJSON(ithentry))
-				+ "</span></div>").appendTo("#cslContent");
+				+ "</span></div>").appendTo(I.getConsole());
 			itemselm = $("<div></div>").appendTo(entryelm);
 			
 			unlockid = ithentry["unlock_items"];
@@ -17398,7 +17430,7 @@ E = {
 				},
 				error: function()
 				{
-					I.removeThrobber("#cslContent");
+					I.removeThrobber(I.getConsole());
 					I.print("Item is not on the Trading Post.");
 				}
 			});
@@ -18782,7 +18814,7 @@ D = {
 		s_Waypoint: {de: "Wegmarke", es: "Punto de ruta", fr: "Point de passage", zh: "传送点"},
 		s_Point_of_Interest: {de: "Sehenswürdigkeit", es: "Punto de interés", fr: "Site remarquable", zh: "鸟瞰点"},
 		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鸟瞰点"},
-		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "技能点"},
+		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "英雄挑战"},
 		s_Heart: {de: "Herzchen-Quest", es: "Corazón de prestigio", fr: "Cœur de renommé", zh: "爱心任务"},
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
 			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", zh: "已排程"},
@@ -19748,6 +19780,7 @@ C = {
 	isDryTopGenerated: false,
 	isDryTopIconsShown: false,
 	isTimetableGenerated: false,
+	isTouring: true,
 	
 	/*
 	 * Gets a chain from its alias.
@@ -20436,7 +20469,7 @@ C = {
 				{
 					aWantLetters: true,
 					aWantSeconds: false,
-					aCustomTimeInSeconds: T.getSecondsUntilChainStarts(ithchain) + delayseconds
+					aCustomTimeInSeconds: Math.abs(T.getSecondsUntilChainStarts(ithchain) + delayseconds)
 				});
 				time = T.getTimeFormatted(
 				{
@@ -20984,7 +21017,16 @@ C = {
 			if (P.wantTourPrediction() && M.isMapAJAXDone
 				&& C.isChainUnchecked(pChain) && isregularchain && !pChain.flags.isSpecial)
 			{
-				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
+				if (C.isTouring)
+				{
+					C.isTouring = false;
+					$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
+					// Prevent simultaneous touring, which would waste bandwidth from downloading unseen map tiles
+					setTimeout(function()
+					{
+						C.isTouring = true;
+					}, 1000);
+				}
 			}
 			
 			// If the final event is just starting, alert if opted
@@ -22351,8 +22393,8 @@ M = {
 		for (var i = 0; i < pNumSlots; i++)
 		{
 			htmlsuffix = " " + wordslot + ": <input class='cssInputText mapContextSlot' type='text' value='" + "#" + (i+1) + "' /></li>";
-			listload.append("<li data-index='" + i + "'>" + wordload + htmlsuffix);
-			listsave.append("<li data-index='" + i + "'>" + wordsave + htmlsuffix);
+			listload.append("<li data-index='" + i + "' class='mapContextLine'>" + wordload + htmlsuffix);
+			listsave.append("<li data-index='" + i + "' class='mapContextLine'>" + wordsave + htmlsuffix);
 		}
 		X.initializeTextlist(X.Textlists["Slot" + pName + that.OptionSuffix], listload.find(".mapContextSlot"), null, 64);
 		X.initializeTextlist(X.Textlists["Slot" + pName + that.OptionSuffix], listsave.find(".mapContextSlot"), null, 64);
@@ -22370,6 +22412,9 @@ M = {
 		{
 			pLoadFunction($(this).attr("data-index"));
 		});
+		// Create server bar
+		I.createSearchBar($("<div class='mapContextSearch'></div>").prependTo(listload), listload.find(".mapContextSlot"), ".mapContextLine");
+		I.createSearchBar($("<div class='mapContextSearch'></div>").prependTo(listsave), listsave.find(".mapContextSlot"), ".mapContextLine");
 		I.bindScrollbar(listload);
 		I.bindScrollbar(listsave);
 	},
@@ -25074,7 +25119,7 @@ P = {
 			});
 			U.sortObjects(arr, {aKeyName: "oSortableCoord"});
 			// Print the coordinates and event names
-			var console = $("#cslContent");
+			var console = I.getConsole();
 			arr.forEach(function(iLayer)
 			{
 				var obj = iLayer.options;
@@ -26347,7 +26392,7 @@ G = {
 			P.JPs = GW2T_JP_DATA.JP;
 			X.Checklists.JP.length = U.getObjectLength(P.JPs);
 			P.NodeArray.JP = P.createNodeArray(X.Checklists.JP.length);
-			var jp, jplink, marker, path, translatedname, keywords;
+			var jp, jplink, wikilink, marker, path, defaultname, translatedname, keywords;
 			var pathcolor = P.getUserPathColor();
 			
 			// Translate headers
@@ -26358,15 +26403,16 @@ G = {
 		
 			for (var i in P.JPs)
 			{
+				jp = P.JPs[i];
+				translatedname = D.getObjectName(jp);
 				/*
 				 * Create JP markers.
 				 */
-				jp = P.JPs[i];
 				marker = L.marker(M.convertGCtoLC(jp.coord),
 				{
 					id: jp.id,
 					difficulty: jp.difficulty,
-					title: "<div class='mapLoc'><dfn>" + D.getObjectName(jptype[jp.difficulty]) + ":</dfn> " + D.getObjectName(jp)
+					title: "<div class='mapLoc'><dfn>" + D.getObjectName(jptype[jp.difficulty]) + ":</dfn> " + translatedname
 						+ "<img src='" + jp.img + "' /></div>"
 				});
 				P.NodeArray.JP[jp.id].oMarker = marker;
@@ -26388,13 +26434,12 @@ G = {
 				/*
 				 * Create JP HTML entries.
 				 */
-				translatedname = D.getObjectName(jp);
 				keywords = (translatedname + " " + M.getZoneName(jp.zone)).toLowerCase();
 				$("<aside class='jpzItem'><dt id='jpz_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
 					+ "<label><input type='checkbox' id='jpzCheck_" + jp.id + "' /></label>"
 					+ "&nbsp;<cite><a href='"
 					+ U.getYouTubeLink(translatedname) + "'>[Y]</a> <a href='"
-					+ U.getWikiLinkLanguage(translatedname) + "'>[W]</a></cite>"
+					+ U.getWikiLinkObject(jp) + "'>[W]</a></cite>"
 					+ "<dd>" + jp.description + "</dd></aside>").data("keywords", keywords)
 					.appendTo("#jpzList_" + jp.difficulty);
 				jplink = $("#jpz_" + jp.id);
@@ -30481,6 +30526,7 @@ T = {
 	 * @objparam boolean aWantSeconds to include the seconds.
 	 * @objparam boolean aWantHours to include the hours.
 	 * @objparam boolean aWantLetters to format #h #m #s instead of colons. Overrides want24.
+	 * @objparam boolean aWantNegative allow negative time.
 	 * @objparam Date aCustomTimeInDate to convert to time string.
 	 * @objparam int aCustomTimeInSeconds to convert to a time string, will use
 	 * current time if undefined.
@@ -30526,7 +30572,10 @@ T = {
 		else
 		{
 			// Regard negative input
-			Settings.aCustomTimeInSeconds = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
+			if (Settings.aWantNegative !== true)
+			{
+				Settings.aCustomTimeInSeconds = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
+			}
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
@@ -34047,7 +34096,7 @@ I = {
 		});
 		$("#cslToggle").click(function()
 		{
-			$("#cslContent").toggle("fast");
+			I.getConsole().toggle("fast");
 		});
 		$(".hudItem").one("mouseenter", function()
 		{
@@ -34291,6 +34340,19 @@ I = {
 	},
 	
 	/*
+	 * Gets the console content element for appending.
+	 * @returns jqobject
+	 */
+	getConsole: function(pWantShow)
+	{
+		if (pWantShow)
+		{
+			$("#itemConsole").show();
+		}
+		return $("#cslContent");
+	},
+	
+	/*
 	 * Writes an HTML string to the "console" area in the top left corner of
 	 * the website that disappears after a while.
 	 * @param string pString to write.
@@ -34379,7 +34441,7 @@ I = {
 	printFile: function(pString)
 	{
 		I.print("");
-		$("<textarea class='cssText cslText'></textarea>").appendTo("#cslContent").val(pString);
+		$("<textarea class='cssText cslText'></textarea>").appendTo(I.getConsole()).val(pString);
 		I.print("");
 		I.bindConsoleInput();
 	},
@@ -34455,7 +34517,7 @@ I = {
 	 */
 	bindConsoleInput: function()
 	{
-		$("#cslContent").find(".cssInputText, .cssText").each(function()
+		I.getConsole().find(".cssInputText, .cssText").each(function()
 		{
 			I.bindClipboard($(this), $(this).val(), false);
 			$(this).unbind("click").click(function()
@@ -34803,9 +34865,10 @@ I = {
 	 * Binds a search input to filter in matching keywords.
 	 * @param jqobject pContainer to create search bar.
 	 * @param jqobject pElements to filter.
+	 * @param string pParentSelector to filter container of elements, optional.
 	 * @pre Each element must have its data "keywords" assigned for the matching.
 	 */
-	createSearchBar: function(pContainer, pElements)
+	createSearchBar: function(pContainer, pElements, pParentSelector)
 	{
 		var container = $(pContainer);
 		var elements = $(pElements);
@@ -34822,7 +34885,7 @@ I = {
 				// Search for every substring in the user's query, which is space separated
 				elements.each(function()
 				{
-					keywords = $(this).data("keywords");
+					keywords = $(this).data("keywords") || $(this).val();
 					var ismatch = true;
 					if (keywords)
 					{
@@ -34831,7 +34894,14 @@ I = {
 							// If at least one substring of the search query isn't found, then hide that item
 							if (keywords.indexOf(queries[i]) === -1)
 							{
-								$(this).hide();
+								if (pParentSelector)
+								{
+									$(this).closest(pParentSelector).hide();
+								}
+								else
+								{
+									$(this).hide();
+								}
 								ismatch = false;
 								break;
 							}
@@ -34848,11 +34918,19 @@ I = {
 			{
 				elements.each(function()
 				{
-					$(this).show();
+					if (pParentSelector)
+					{
+						$(this).closest(pParentSelector).show();
+					}
+					else
+					{
+						$(this).show();
+					}
 				});
 			}
-		})).click(function()
+		})).click(function(pEvent)
 		{
+			pEvent.stopPropagation();
 			$(this).select();
 		});
 	},

@@ -39,6 +39,7 @@ HarathiStrongboxes: {
 	name_de: "Harathi-Schatulle",
 	name_es: "Arca harathi",
 	name_fr: "Coffre-fort harathi",
+	name_zh: "哈拉希利保险箱",
 	category: "chests",
 	color: "brown",
 	view: "[13282, 9321]",
@@ -62,7 +63,7 @@ HarathiStrongboxes: {
 	{n: 15, c: [13198, 9502]},
 	{n: 16, c: [13220, 9431]},
 	{n: 17, c: [13203, 9381]},
-	{n: 18, c: [13170, 9399]},
+	{n: 18, c: [13170, 9399]}
 	]
 },
 IceboundChests: {
@@ -70,6 +71,7 @@ IceboundChests: {
 	name_de: "Eingefrorene Truhe",
 	name_es: "Cofre congelado",
 	name_fr: "Coffre de Prisonglace",
+	name_zh: "冰封宝箱",
 	category: "chests",
 	color: "snow",
 	view: "bitterfrost",
@@ -166,6 +168,7 @@ SkrittStashes: {
 	name_de: "Skritt-Vorrat",
 	name_es: "Alijo Skritt",
 	name_fr: "Réserve skritt",
+	name_zh: "斯克鼠储物堆",
 	category: "chests",
 	color: "orchid",
 	view: "ember",
@@ -205,6 +208,7 @@ NoxiousPods: {
 	name_de: "Giftigen Kapseln",
 	name_es: "Vainas nocivas",
 	name_fr: "Cosses nocives",
+	name_zh: "毒荚",
 	category: "chests",
 	color: "yellowgreen",
 	view: "dragon",
@@ -328,6 +332,7 @@ CrystallizedCaches: {
 	name_de: "Kristallisierten Vorratslagern",
 	name_es: "Alijos de suministros cristalizados",
 	name_fr: "Planques de ravitaillement cristallisées",
+	name_zh: "晶化补给箱",
 	category: "chests",
 	color: "lightcyan",
 	view: "tangled",
@@ -483,6 +488,7 @@ ExaltedChests: {
 	name_de: "Erhabenen-Truhen",
 	name_es: "Cofres exaltados",
 	name_fr: "Coffres exaltés",
+	name_zh: "启赤金盆地",
 	category: "chests",
 	color: "peru",
 	view: "auric",
@@ -509,6 +515,7 @@ AirshipCargo: {
 	name_de: "Luftschiff-Fracht",
 	name_es: "Cargamentos de aeronave",
 	name_fr: "Cargaison d'aéronef",
+	name_zh: "飞船货物",
 	category: "chests",
 	color: "turquoise",
 	view: "verdant",
@@ -673,6 +680,7 @@ BuriedChests: {
 	name_de: "Trockenkuppe Vergrabene Truhen",
 	name_es: "Cima Seca Cofres Enterrados",
 	name_fr: "Cimesèche Coffres Enterrés",
+	name_zh: "干涸高地上埋藏的宝箱",
 	category: "chests",
 	color: "cornsilk",
 	view: "dry",
@@ -792,6 +800,7 @@ BanditChests: {
 	name_de: "Silberwüste Banditen-Truhe",
 	name_es: "Páramos Argentos Cofre de Bandido",
 	name_fr: "Sauvages d'Argent Coffres de Bandit",
+	name_zh: "白银荒地遗失的强盗宝箱",
 	category: "chests",
 	color: "wheat",
 	view: "silverwastes",
@@ -925,6 +934,7 @@ MatrixCubeKey: {
 	name_de: "Matrixwürfel-Schlüssel",
 	name_es: "Llave de cubo matricial",
 	name_fr: "Clé matricielle cubique",
+	name_zh: "矩阵立方钥匙",
 	category: "chests",
 	color: "greenyellow",
 	view: "[7588, 17619]",
@@ -957,6 +967,7 @@ SkrittBurglar: {
 	name_de: "Skritt-Einbrecherin",
 	name_es: "Ladrona skritt",
 	name_fr: "Cambrioleuse skritt",
+	name_zh: "斯克鼠窃贼",
 	category: "chests",
 	color: "gold",
 	view: "default",
@@ -1070,6 +1081,7 @@ PumpkinCarving: {
 	name_de: "Kürbisschnitzen",
 	name_es: "Tallado de calabazas",
 	name_fr: "Sculpture de citrouilles",
+	name_zh: "南瓜雕刻",
 	category: "festivals",
 	color: "orange",
 	view: "lion",
@@ -1230,6 +1242,7 @@ DonationDrive: {
 	name_de: "Spendenaktion",
 	name_es: "Recogida de donativos",
 	name_fr: "Pulsion généreuse",
+	name_zh: "捐赠冲动",
 	category: "festivals",
 	color: "palegreen",
 	view: "divinity",
@@ -1273,6 +1286,7 @@ CinsGoods: {
 	name_de: "Geschäfte mit Cin",
 	name_es: "Las cosillas de Cin",
 	name_fr: "Affaires de Cin",
+	name_zh: "辛的生意",
 	category: "achievements",
 	color: "rosybrown",
 	view: "doric",
@@ -1282,14 +1296,14 @@ CinsGoods: {
 	{n: 1, c: [12246, 10297], s: "http://i.imgur.com/AwgCGqp.png", t: "Doric Dam Splinter"},
 	{n: 2, c: [12539, 10199], s: "http://i.imgur.com/n2U4BB2.png", t: "Quaggan Food"},
 	{n: 3, c: [12764, 10169], s: "http://i.imgur.com/e2lMQxh.png", t: "Pinkeens's Sextant"},
-	{n: 4, c: [12451, 9835], s: "http://i.imgur.com/ZYn1R2B.png", t: "Cord of Stolen Wood<br />Loot from Bandit Spirit event: &quot;Solve the mysterious happenings frightening Seraph lumber workers&quot;."},
+	{n: 4, c: [12451, 9835], s: "http://i.imgur.com/ZYn1R2B.png", t: "Cord of Stolen Wood<br />Loot from Bandit Spirit night event: &quot;Solve the mysterious happenings frightening Seraph lumber workers&quot;."},
 	{n: 5, c: [12539, 9227], s: "http://i.imgur.com/CfFjX9J.png", t: "Warm Animal Pelt<br />In Noran's Homestead basement, right side tunnel."},
 	{n: 6, c: [13042, 9466], s: "http://i.imgur.com/2AvQ1vu.png", t: "Stolen Flank Steak<br />Loot from Siegemeaster Immelhoof event: &quot;Defeat Siegemeaster Immelhoof before he reaches the Harvest Cascades&quot;."},
 	{n: 7, c: [12965, 9235], s: "http://i.imgur.com/YPCm2Be.png", t: "Magic-Imbued Peace Core<br />Talk to Nature's Watcher NPC and consume the given peach."},
 	{n: 8, c: [13055, 9196], s: "http://i.imgur.com/VidB6ga.png", t: "Lost Locket"},
 	{n: 9, c: [13204, 9231], s: "http://i.imgur.com/Rd5IJkh.png", t: "Tower Shard"},
 	{n: 10, c: [13349, 9840], s: "http://i.imgur.com/PnBB8zK.png", t: "Bottle of Red Mantle Wine"},
-	{n: 11, c: [13266, 10247], s: "http://i.imgur.com/rtdGrAw.png", t: "Mystic Cloth<br />Loot from Justiciar Agatha event: &quot;Intercept the White Mantle supply dolyak before it reaches Saidra's Haven&quot;."},
+	{n: 11, c: [13266, 10247], s: "http://i.imgur.com/rtdGrAw.png", t: "Mystic Cloth<br />Loot from Justiciar Agatha event: &quot;Prevent White Mantle reinforcements from reaching Saidra's Haven&quot;."},
 	{n: 12, c: [13362, 10886], s: "http://i.imgur.com/Uf9r46J.png", t: "Shipping Orders"},
 	{n: 13, c: [12837, 11096], s: "http://i.imgur.com/SoTVby8.png", t: "Fishing Supplies"},
 	{n: 14, c: [13225, 11482], s: "http://i.imgur.com/aa2MhKt.png", t: "Bloodstone-Infused Toadstool"},
@@ -1303,6 +1317,7 @@ LettersFromE: {
 	name_de: "Lettres d'E",
 	name_es: "Briefe von E",
 	name_fr: "Cartas de E",
+	name_zh: "E写的信",
 	category: "achievements",
 	color: "navajowhite",
 	view: "doric",
@@ -1323,6 +1338,7 @@ CaudecusLetters: {
 	name_de: "Wer zieht die Strippen?",
 	name_es: "Quien tira de los hilos",
 	name_fr: "Maître des marionnettes",
+	name_zh: "傀儡大师",
 	category: "achievements",
 	color: "lemonchiffon",
 	view: "[13014, 11679]",
@@ -1356,6 +1372,7 @@ ThoroughSampling: {
 	name_de: "Sorgfältige Suche",
 	name_es: "Muestreo concienzudo",
 	name_fr: "Échantillonnage minutieux",
+	name_zh: "完整抽样",
 	category: "achievements",
 	color: "ivory",
 	view: "bitterfrost",
@@ -1388,6 +1405,7 @@ MursaatTokens: {
 	name_de: "Markensammlerin",
 	name_es: "Coleccionista de fichas",
 	name_fr: "Collectionneuse de trophées",
+	name_zh: "徽记收集者",
 	category: "achievements",
 	color: "orangered",
 	view: "ember",
@@ -1441,6 +1459,7 @@ MursaatTablets: {
 	name_de: "Tafeln der Ungesehenen",
 	name_es: "Tablas de los Ocultos",
 	name_fr: "Tablettes des Invisibles",
+	name_zh: "无形之碑",
 	category: "achievements",
 	color: "tomato",
 	view: "ember",
@@ -1464,6 +1483,7 @@ CamiJournals: {
 	name_de: "Camis letzte Reise",
 	name_es: "El útimo viaje de Cami",
 	name_fr: "L'ultime voyage de Cami",
+	name_zh: "卡米的最后旅程",
 	category: "achievements",
 	color: "coral",
 	view: "ember",
@@ -1484,6 +1504,7 @@ BloodstoneCreatures: {
 	name_de: "Blutstein-Sichtungen",
 	name_es: "Avistamientos de hematites",
 	name_fr: "Repérages de pierra de sang",
+	name_zh: "血石生物目击者",
 	category: "achievements",
 	color: "crimson",
 	view: "default",
@@ -1569,6 +1590,7 @@ BloodstoneSlivers: {
 	name_de: "Blutstein-Ernte",
 	name_es: "Recolección de hematites",
 	name_fr: "Récolte de pierres de sang",
+	name_zh: "血石采集",
 	category: "achievements",
 	color: "red",
 	view: "default",
@@ -1592,6 +1614,7 @@ PaperScraps: {
 	name_de: "Verschwörung der Tollköpfe",
 	name_es: "Una conspiración de lerdos",
 	name_fr: "Conspiration de Dunces",
+	name_zh: "傻瓜的阴谋",
 	category: "achievements",
 	color: "lemonchiffon",
 	view: "bloodstone",
@@ -1647,6 +1670,7 @@ TigerSpirit: {
 	name_de: "Geist des Tigers",
 	name_es: "Espíritu del tigre",
 	name_fr: "Esprit du Tigre",
+	name_zh: "猛虎之灵",
 	category: "achievements",
 	color: "orange",
 	view: "default",
@@ -1671,6 +1695,7 @@ ItzelTotems: {
 	name_de: "Dschungeltotem-Jägerin",
 	name_es: "Cazadora de tótems de la selva",
 	name_fr: "Chasseuse de totems de la jungle",
+	name_zh: "图腾猎手",
 	category: "achievements",
 	color: "burlywood",
 	view: "verdant",
@@ -1694,6 +1719,7 @@ PriorySeals: {
 	name_de: "Baumkronen-Bergung",
 	name_es: "Recuperadora en la copa",
 	name_fr: "Exploratrice des cimes",
+	name_zh: "树冠搜寻",
 	category: "achievements",
 	color: "lightskyblue",
 	view: "[1004, 16496]",
@@ -1717,6 +1743,7 @@ AuricTablets: {
 	name_de: "Eine Studie in Gold",
 	name_es: "Un estudio de oro",
 	name_fr: "Adepte des tablettes",
+	name_zh: "黄金研究",
 	category: "achievements",
 	color: "goldenrod",
 	view: "[1538, 17534]",
@@ -1747,6 +1774,7 @@ ExaltedMasks: {
 	name_de: "Keine Maske zurückgelassen",
 	name_es: "No sin mi máscara",
 	name_fr: "Bas les masques",
+	name_zh: "面具迷踪",
 	category: "achievements",
 	color: "palegoldenrod",
 	view: "auric",
@@ -1785,6 +1813,7 @@ LionsArchExterminator: {
 	name_de: "Löwenstein-Vernichterin",
 	name_es: "Exterminadora de Arco del León",
 	name_fr: "Exterminatrice de l'Arche du Lion",
+	name_zh: "狮城灭虫者",
 	category: "achievements",
 	color: "darkorange",
 	view: "lion",
@@ -1848,6 +1877,7 @@ CoinProspect: {
 	name_de: "Münzensammlerin: Schürftal",
 	name_es: "Monedas: el Valle de las Promesas",
 	name_fr: "Pièces: Vallée du prospecteur",
+	name_zh: "硬币收集者：远景山谷",
 	category: "achievements",
 	color: "yellow",
 	view: "dry",
@@ -1891,6 +1921,7 @@ CoinUplands: {
 	name_de: "Münzensammlerin: Hochland",
 	name_es: "Monedas: Altiplanos",
 	name_fr: "Pièces: Hauteurs",
+	name_zh: "硬币收集者：高地",
 	category: "achievements",
 	color: "orange",
 	view: "dry",
@@ -1934,6 +1965,7 @@ CoinChallenger: {
 	name_de: "Münzensammlerin: Herausfordererklippen",
 	name_es: "Monedas: Acantilados del Desafío",
 	name_fr: "Pièces: Falaises du combattant",
+	name_zh: "硬币收集者：挑战者峭壁",
 	category: "achievements",
 	color: "tomato",
 	view: "dry",
@@ -1959,6 +1991,7 @@ LostBadges: {
 	name_de: "Verlorene Abzeichen",
 	name_es: "Insignias perdidas",
 	name_fr: "Insigne perdu",
+	name_zh: "遗失的胸针",
 	category: "achievements",
 	color: "silver",
 	view: "silverwastes",
@@ -1998,10 +2031,11 @@ LostBadges: {
 	]
 },
 GoldenLostBadges: {
-	name_en: "Golden Lost Badges",
-	name_de: "Goldenen Verlorenen Abzeichen",
-	name_es: "Insignias de oro perdidas",
-	name_fr: "Insignes dorés perdus",
+	name_en: "Go for the Gold",
+	name_de: "Holt das Gold",
+	name_es: "Hazte de oro",
+	name_fr: "Chasse à l'or",
+	name_zh: "找寻金光",
 	category: "achievements",
 	color: "gold",
 	view: "silverwastes",
@@ -2045,6 +2079,7 @@ DiveMaster: {
 	name_de: "Tauchmeisterin",
 	name_es: "Maestra Submarinista",
 	name_fr: "Maître de la plongée",
+	name_zh: "跳水大师",
 	category: "achievements",
 	color: "cyan",
 	view: "default",
@@ -2096,6 +2131,7 @@ SpeedyReader: {
 	name_de: "Leseratte",
 	name_es: "Lectura rápida",
 	name_fr: "Lecture avide",
+	name_zh: "速读者",
 	category: "achievements",
 	color: "tan",
 	view: "[29237, 18813]",
@@ -2129,6 +2165,7 @@ CleaningUp: {
 	name_de: "In der Nachbarschaft aufräumen",
 	name_es: "Limpieza de vecindario",
 	name_fr: "Nettoyage de printemps",
+	name_zh: "清扫街区",
 	category: "achievements",
 	color: "bisque",
 	view: "[29392, 18760]",
@@ -2183,6 +2220,7 @@ HistoryBuff: {
 	name_de: "Geschichtsfreundin",
 	name_es: "Rata de biblioteca",
 	name_fr: "Férue d'histoire",
+	name_zh: "历史迷",
 	category: "achievements",
 	color: "khaki",
 	view: "lion",
@@ -2208,6 +2246,7 @@ Strongboxes: {
 	name_de: "Schatulle",
 	name_es: "Arca",
 	name_fr: "Coffre de l'aéronef",
+	name_zh: "保险箱",
 	category: "unlocks",
 	color: "aliceblue",
 	view: "[2558, 17406, 3]",
@@ -2239,6 +2278,7 @@ MasteryInsight: {
 	name_de: "Einsicht in die Beherrschung",
 	name_es: "Percepción de dominio",
 	name_fr: "Connaissances de maîtrise",
+	name_zh: "专精揭秘点",
 	category: "unlocks",
 	color: "limegreen",
 	view: "[2558, 17406, 3]",
@@ -2292,6 +2332,7 @@ HeroChallenge: {
 	name_de: "Heldenherausforderung",
 	name_es: "Desafío de héroe",
 	name_fr: "Défi de héros",
+	name_zh: "英雄挑战",
 	category: "unlocks",
 	color: "yellow",
 	view: "default",
@@ -2545,6 +2586,7 @@ RangerPets: {
 	name_de: "Waldläufer Tiergefährte",
 	name_es: "Mascota Guardabosque",
 	name_fr: "Familier Rôdeur",
+	name_zh: "游侠宠物",
 	category: "unlocks",
 	color: "chartreuse",
 	view: "default",
@@ -2555,203 +2597,203 @@ RangerPets: {
 	ringsize: 48,
 	needles: [
 	{// TERRESTRIAL // BIRD
-		n: 1, i: "eagle", name_en: "Eagle", name_de: "Adler", name_es: "Águila", name_fr: "Aigle",
+		n: 1, i: "eagle", name_en: "Eagle", name_de: "Adler", name_es: "Águila", name_fr: "Aigle", name_zh: "鹰",
 		a: {bleeding: [2, 15], recharge: 6, range: 130, damage: 160},
 		c: [[31210,16741],[31206,16735],[31210,16727],[20724,19630],[10915,14418],[17588,17264],[17578,17258],[17572,17239],[17605,17219],[17427,18768],[17451,18919],[17470,18959],[11428,14432],[12587,14471],[12692,14403],[16927,13918],[16902,14068],[16896,13998],[16904,13878],[16945,13841],[17005,13747],[16377,11389],[16267,11338],[16259,11240],[16143,11292],[28878,18163],[28884,18174],[28870,18179]]
 	},{
-		n: 2, i: "hawk", name_en: "Hawk", name_de: "Falke", name_es: "Halcón", name_fr: "Faucon",
+		n: 2, i: "hawk", name_en: "Hawk", name_de: "Falke", name_es: "Halcón", name_fr: "Faucon", name_zh: "猎隼",
 		a: {bleeding: [2, 15], recharge: 6, range: 130, damage: 160},
 		c: [[29015,9789],[29096,9720],[29058,9666],[29004,9655],[29095,9884]]
 	},{
-		n: 3, i: "owl", name_en: "Owl", name_de: "Eule", name_es: "Lechuza", name_fr: "Chouette",
+		n: 3, i: "owl", name_en: "Owl", name_de: "Eule", name_es: "Lechuza", name_fr: "Chouette", name_zh: "猫头鹰",
 		a: {chilled: [1, 3], recharge: 20, range: 130, damage: 322},
 		c: [[21460,16618],[21435,16495],[20456,12979],[20461,12965],[21441,12917],[21422,12904],[23399,9756],[23345,9483],[23244,9372],[23133,9435],[23111,9894],[24274,9292],[24305,9343],[24366,8758],[24377,8828],[24309,8865]]
 	},{
-		n: 4, i: "raven", name_en: "Raven", name_de: "Rabe", name_es: "Cuervo", name_fr: "Corbeau",
+		n: 4, i: "raven", name_en: "Raven", name_de: "Rabe", name_es: "Cuervo", name_fr: "Corbeau", name_zh: "乌鸦",
 		a: {blind: [1, 5], recharge: 18, range: 130, damage: 322},
 		c: [[18275,15333],[18354,14967],[20949,13824],[20951,13803],[20972,13807],[22596,14599],[28782,16933],[28785,16938],[28793,16933]]
 	},{
-		n: 5, i: "whiteraven", name_en: "White Raven", name_de: "Wießer Rabe", name_es: "Cuervo blanco", name_fr: "Corbeau blanc",
+		n: 5, i: "whiteraven", name_en: "White Raven", name_de: "Wießer Rabe", name_es: "Cuervo blanco", name_fr: "Corbeau blanc", name_zh: "白鸦",
 		a: {blind: [1, 5], recharge: 18, range: 130, damage: 322},
 		c: [[25059,5425]]
 	},{// CANINE
-		n: 6, i: "alpinewolf", name_en: "Alpine Wolf", name_de: "Gebirgswolf", name_es: "Lobo alpino", name_fr: "Loup alpin",
+		n: 6, i: "alpinewolf", name_en: "Alpine Wolf", name_de: "Gebirgswolf", name_es: "Lobo alpino", name_fr: "Loup alpin", name_zh: "高山狼",
 		a: {chilled: [1, 3], recharge: 30, targets: 5, radius: 600, damage: 49},
 		c: [[21257,14473],[21267,14483],[21278,14475],[18903,13860],[18928,13833],[18848,13886],[19019,14568],[19028,14532],[18993,14493],[20275,19523],[20270,19497],[19340,18489],[19296,18404],[19275,18324]]
 	},{
-		n: 7, i: "fernhound", name_en: "Fern Hound", name_de: "Farn-Hund", name_es: "Sabueso de helecho", name_fr: "Chien de fougère",
+		n: 7, i: "fernhound", name_en: "Fern Hound", name_de: "Farn-Hund", name_es: "Sabueso de helecho", name_fr: "Chien de fougère", name_zh: "蕨犬",
 		a: {healing: 1000, recharge: 25, regeneration: [1, 10], targets: 5, radius: 600},
 		c: [[17730,24169],[10448,21069],[10450,21112],[10389,21248],[10447,21021],[9630,17565],[9668,17493],[9737,17427],[9087,16127],[9140,16146],[9184,16242],[9121,16077],[9041,16063],[17121,21889],[19001,21846],[19058,21890],[19046,21899],[19565,22408],[19586,22484],[19518,22419]]
 	},{
-		n: 8, i: "hyena", name_en: "Hyena", name_de: "Hyäne", name_es: "Hiena", name_fr: "Hyène",
+		n: 8, i: "hyena", name_en: "Hyena", name_de: "Hyäne", name_es: "Hiena", name_fr: "Hyène", name_zh: "鬣狗",
 		a: {pet: "Summon", recharge: 45, duration: 40},
 		c: [[30267,14118],[30234,14137],[30716,18605],[30704,18600],[30701,18609]]
 	},{
-		n: 9, i: "krytandrakehound", name_en: "Krytan Drakehound", name_de: "Kryta-Spürhund", name_es: "Dracosabueso krytense", name_fr: "Lévridrake krytien",
+		n: 9, i: "krytandrakehound", name_en: "Krytan Drakehound", name_de: "Kryta-Spürhund", name_es: "Dracosabueso krytense", name_fr: "Lévridrake krytien", name_zh: "科瑞塔龙蜥猎犬",
 		a: {immobilize: [1, 2], recharge: 20, targets: 5, range: 600, damage: 49},
 		c: [[16577,15160],[14829,13353],[17509,24120],[11720,10909],[11703,10918],[11708,10900],[10983,11284],[10988,11250],[10997,11241],[11004,11270],[29519,19161]]
 	},{
-		n: 10, i: "wolf", name_en: "Wolf", name_de: "Wolf", name_es: "Lobo", name_fr: "Loup",
+		n: 10, i: "wolf", name_en: "Wolf", name_de: "Wolf", name_es: "Lobo", name_fr: "Loup", name_zh: "高山狼",
 		a: {fear: [1, 2], recharge: 45, targets: 5, range: 600, damage: 49},
 		c: [[16577, 15581]]
 	},{// FELINE
-		n: 11, i: "lynx", name_en: "Lynx", name_de: "Schneeluchs", name_es: "Lince", name_fr: "Lynx",
+		n: 11, i: "lynx", name_en: "Lynx", name_de: "Schneeluchs", name_es: "Lince", name_fr: "Lynx", name_zh: "猞猁",
 		a: {bleeding: [4, 10], recharge: 30, combo: "Leap", range: 600, damage: 244},
 		c: [[16576,15157],[29518,19158],[19610,12197],[19598,12174],[19608,12149],[20649,15526],[20739,15473],[20816,15511]]
 	},{// MOA
-		n: 12, i: "blackmoa", name_en: "Black Moa", name_de: "Schwarzer Moa", name_es: "Moa negro", name_fr: "Moa noir",
+		n: 12, i: "blackmoa", name_en: "Black Moa", name_de: "Schwarzer Moa", name_es: "Moa negro", name_fr: "Moa noir", name_zh: "黑色陆行鸟",
 		a: {daze: [1, 3], recharge: 30, targets: 5, range: 280, damage: 122},
 		c: [[25068,5420]]
 	},{
-		n: 13, i: "bluemoa", name_en: "Blue Moa", name_de: "Blauer Moa", name_es: "Moa azul", name_fr: "Moa bleu",
+		n: 13, i: "bluemoa", name_en: "Blue Moa", name_de: "Blauer Moa", name_es: "Moa azul", name_fr: "Moa bleu", name_zh: "蓝色陆行鸟",
 		a: {protection: [1, 4], recharge: 24, targets: 5, radius: 600},
 		c: [[31234,18836],[9886,18371],[16410,16621],[16311,16427],[16485,16324],[16417,18478],[16454,18507],[16458,18530],[16585,18494],[17607,24102],[17729,24104],[17651,24067]]
 	},{
-		n: 14, i: "pinkmoa", name_en: "Pink Moa", name_de: "Rosa Moa", name_es: "Moa rosa", name_fr: "Moa rose",
+		n: 14, i: "pinkmoa", name_en: "Pink Moa", name_de: "Rosa Moa", name_es: "Moa rosa", name_fr: "Moa rose", name_zh: "粉色陆行鸟",
 		a: {daze: [1, 3], recharge: 30, targets: 5, range: 280, damage: 122},
 		c: [[9017,16305],[19041,21619],[19058,21715],[19061,21725],[19156,21598],[19159,21676],[10420,21133],[10409,21105],[10386,21116],[10361,21076],[10791,16625],[10872,16685],[10942,16507],[10486,18201],[10627,18093],[5906,20555],[8196,16683],[3975,15842],[3960,15824],[3989,15829]]
 	},{
-		n: 15, i: "redmoa", name_en: "Red Moa", name_de: "Roter Moa", name_es: "Moa rojo", name_fr: "Moa rouge",
+		n: 15, i: "redmoa", name_en: "Red Moa", name_de: "Roter Moa", name_es: "Moa rojo", name_fr: "Moa rouge", name_zh: "红色陆行鸟",
 		a: {fury: [1, 15], recharge: 25, targets: 5, radius: 600},
 		c: [[31234,18837],[31230,18836],[31236,18830],[30878,13927],[24377,10614],[24298,10528],[24418,10557],[26792,9795],[26776,9766],[26834,9736],[26805,9739]]
 	},{
-		n: 16, i: "whitemoa", name_en: "White Moa", name_de: "Weißer Moa", name_es: "Moa blanco", name_fr: "Moa blanc",
+		n: 16, i: "whitemoa", name_en: "White Moa", name_de: "Weißer Moa", name_es: "Moa blanco", name_fr: "Moa blanc", name_zh: "白色陆行鸟",
 		a: {chilled: [1, 3], recharge: 24, targets: 5, damage: 122},
 		c: [[18040,15411],[18092,15408],[18216,15372],[18130,15546],[18228,15488],[19892,12217],[20123,12187],[20108,12209],[20100,12210],[20120,12054],[19106,16278],[19097,16294],[19076,16281],[19076,16311],[22900,10250],[22984,10227],[23030,10378],[22559,9135],[22865,9151],[22877,9254],[23059,9284],[23141,9296]]
 	},{// PORCINE
-		n: 17, i: "boar", name_en: "Boar", name_de: "Eber", name_es: "Jabalí", name_fr: "Sanglier",
+		n: 17, i: "boar", name_en: "Boar", name_de: "Eber", name_es: "Jabalí", name_fr: "Sanglier", name_zh: "野猪",
 		a: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[17706,24193],[17643,24181],[17584,23234],[17582,23250]]
 	},{
-		n: 18, i: "pig", name_en: "Pig", name_de: "Schwein", name_es: "Cerdo", name_fr: "Cochon",
+		n: 18, i: "pig", name_en: "Pig", name_de: "Schwein", name_es: "Cerdo", name_fr: "Cochon", name_zh: "猪",
 		a: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[17675,24123],[17630,24138],[17595,24181],[11601,11230],[11595,11217],[11594,11255],[10909,10330],[10921,10331],[10925,10325],[17298,15149],[17283,15154],[17290,15147],[15943,13632],[15964,13632],[15966,13648],[29016,19146]]
 	},{
-		n: 19, i: "siamoth", name_en: "Siamoth", name_de: "Siamoth", name_es: "Siamoth", name_fr: "Siamouth",
+		n: 19, i: "siamoth", name_en: "Siamoth", name_de: "Siamoth", name_es: "Siamoth", name_fr: "Siamouth", name_zh: "巨貘",
 		a: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[15758,21430],[16660,21458],[8197,16712],[8258,16739],[8166,16774],[5844,20915],[5851,20933],[5859,20941],[16952,20130]]
 	},{
-		n: 20, i: "warthog", name_en: "Warthog", name_de: "Warzenschwein", name_es: "Jabalí verrugoso", name_fr: "Phacochère",
+		n: 20, i: "warthog", name_en: "Warthog", name_de: "Warzenschwein", name_es: "Jabalí verrugoso", name_fr: "Phacochère", name_zh: "疣猪",
 		a: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[982,18065],[971,18085],[937,18077],[31463,18844],[31460,18814],[31471,18822],[25239,12490],[25257,12309],[25236,12191],[25139,12372],[26755,12684],[26877,12571],[26827,12457],[26842,13000],[30762,18357],[25347,10682],[25427,10667],[25457,10786],[24873,10667],[24806,10637],[24844,10699],[16405,12674],[16275,12691],[16199,12683],[16244,12717],[16385,12839]]
 	},{// SAURIAN
-		n: 21, i: "bristleback", name_en: "Bristleback", name_de: "Borstenrücken", name_es: "Lomoespinado", name_fr: "Hérissosaure",
+		n: 21, i: "bristleback", name_en: "Bristleback", name_de: "Borstenrücken", name_es: "Lomoespinado", name_fr: "Hérissosaure", name_zh: "钢背兽",
 		a: {damage: 4650, recharge: 15, range: 1200},
 		c: [[2289,17783]]
 	},{
-		n: 22, i: "smokescale", name_en: "Smokescale", name_de: "Rauchschuppe", name_es: "Escamahumada", name_fr: "Fumécaille",
+		n: 22, i: "smokescale", name_en: "Smokescale", name_de: "Rauchschuppe", name_es: "Escamahumada", name_fr: "Fumécaille", name_zh: "雾鳞蜥",
 		a: {combo: "Smoke", recharge: 20, duration: 5, radius: 240},
 		c: [[5430,19322],[5438,19300],[4384,18297],[4348,18320]]
 	},{// SPIDER
-		n: 23, i: "blackwidowspider", name_en: "Black Widow Spider", name_de: "Schwarze Witwe", name_es: "Araña viuda negra", name_fr: "Jeune araignée veuve",
+		n: 23, i: "blackwidowspider", name_en: "Black Widow Spider", name_de: "Schwarze Witwe", name_es: "Araña viuda negra", name_fr: "Jeune araignée veuve", name_zh: "黑寡妇蜘蛛",
 		a: {immobilize: [1, 3], recharge: 45, duration: 30},
 		c: [[25068,5420]]
 	},{
-		n: 24, i: "cavespider", name_en: "Cave Spider", name_de: "Höhlenspinne", name_es: "Araña de cueva", name_fr: "Araignée cavernicole",
+		n: 24, i: "cavespider", name_en: "Cave Spider", name_de: "Höhlenspinne", name_es: "Araña de cueva", name_fr: "Araignée cavernicole", name_zh: "穴蛛",
 		a: {vulnerability: [3, 10], recharge: 30, weakness: [1, 5], duration: 30},
 		c: [[14234,12043],[14241,11980],[14173,11967],[14073,11993],[19165,14493],[19131,14428],[19112,14385]]
 	},{
-		n: 25, i: "forestspider", name_en: "Forest Spider", name_de: "Waldspinne", name_es: "Araña de bosque", name_fr: "Araignée des bois",
+		n: 25, i: "forestspider", name_en: "Forest Spider", name_de: "Waldspinne", name_es: "Araña de bosque", name_fr: "Araignée des bois", name_zh: "森林蜘蛛",
 		a: {poison: [1, 12], recharge: 30, duration: 30},
 		c: [[28968,12451],[28923,12427],[29000,12510],[28883,12564],[28849,12527]]
 	},{
-		n: 26, i: "junglespider", name_en: "Jungle Spider", name_de: "Dschungelspinne", name_es: "Araña de la selva", name_fr: "Araignée de la jungle",
+		n: 26, i: "junglespider", name_en: "Jungle Spider", name_de: "Dschungelspinne", name_es: "Araña de la selva", name_fr: "Araignée de la jungle", name_zh: "丛林蜘蛛",
 		a: {immobilize: [1, 3], recharge: 45, duration: 30},
 		c: [[17540,24005],[17595,24057],[17645,24202],[17554,24158],[17494,24128],[10984,19182],[10966,19133],[10960,19118],[10965,19089],[10447,16568],[10462,16508],[10468,16481],[10469,16420],[7577,14815],[7584,14948],[7507,14988],[15942,19485],[15914,19452]]
 	},{// WYVERN
-		n: 27, i: "electricwyvern", name_en: "Electric Wyvern", name_de: "Elektro-Wyvern", name_es: "Guiverno eléctrico", name_fr: "Vouivre électrique",
+		n: 27, i: "electricwyvern", name_en: "Electric Wyvern", name_de: "Elektro-Wyvern", name_es: "Guiverno eléctrico", name_fr: "Vouivre électrique", name_zh: "电翼龙",
 		a: {launch: 0, recharge: 30, range: 480, combo: "Lightning", damage: 1129},
 		c: [[3351, 20758], [3295, 20762], [3349, 20809]]
 	},{
-		n: 28, i: "firewyvern", name_en: "Fire Wyvern", name_de: "Feuer-Wyvern", name_es: "Guiverno llameante", name_fr: "Vouivre de feu",
+		n: 28, i: "firewyvern", name_en: "Fire Wyvern", name_de: "Feuer-Wyvern", name_es: "Guiverno llameante", name_fr: "Vouivre de feu", name_zh: "火翼龙",
 		a: {burning: [1, 2], recharge: 35, duration: 12, radius: 450, combo: "Fire"},
 		c: [[2442,15660],[2544,15673],[2607,15646],[2567,15714]]
 	},{// AMPHIBIOUS // BEAR
-		n: 29, i: "arctodus", name_en: "Arctodus", name_de: "Arctodus", name_es: "Arctodus", name_fr: "Arctodus",
+		n: 29, i: "arctodus", name_en: "Arctodus", name_de: "Arctodus", name_es: "Arctodus", name_fr: "Arctodus", name_zh: "短面熊",
 		a: {bleeding: [2, 7], recharge: 15, range: 130, damage: 244},
 		c: [[20945,10022],[21016,9971],[20965,9930],[21007,9817],[20980,9765],[23464,13252],[23464,13261],[23474,13262],[21985,12807],[18086,14164],[18089,14231],[18012,14232],[18680,13730],[18643,13708],[18616,13605]]
 	},{
-		n: 30, i: "blackbear", name_en: "Black Bear", name_de: "Schwarzbär", name_es: "Oso negro", name_fr: "Ours noir",
+		n: 30, i: "blackbear", name_en: "Black Bear", name_de: "Schwarzbär", name_es: "Oso negro", name_fr: "Ours noir", name_zh: "黑熊",
 		a: {weakness: [1, 10], recharge: 40, targets: 5, range: 600, damage: 381},
 		c: [[30974,12706],[31002,12692]]
 	},{
-		n: 31, i: "brownbear", name_en: "Brown Bear", name_de: "Braunbär", name_es: "Oso pardo", name_fr: "Ours brun",
+		n: 31, i: "brownbear", name_en: "Brown Bear", name_de: "Braunbär", name_es: "Oso pardo", name_fr: "Ours brun", name_zh: "棕熊",
 		a: {removal: 2, recharge: 25, targets: 5, range: 600},
 		c: [[13893,13580],[13925,13636],[13901,13633],[13977,13609],[15688,11025],[15588,11017],[15673,10951],[30920,18744]]
 	},{
-		n: 32, i: "murellow", name_en: "Murellow", name_de: "Rattenbär", name_es: "Múrgolo", name_fr: "Murello",
+		n: 32, i: "murellow", name_en: "Murellow", name_de: "Rattenbär", name_es: "Múrgolo", name_fr: "Murello", name_zh: "瘟疫熊",
 		a: {poison: [1, 4], recharge: 35, targets: 5, duration: 7, combo: "Poison", range: 180, damage: 24},
 		c: [[7568,15508],[7579,15525],[7563,15436],[7607,15464],[18747,21528],[18756,21532],[18757,21553],[19621,17411],[19644,17394],[19653,17413],[19638,17436]]
 	},{
-		n: 33, i: "polarbear", name_en: "Polar Bear", name_de: "Eisbär", name_es: "Oso polar", name_fr: "Ours polaire",
+		n: 33, i: "polarbear", name_en: "Polar Bear", name_de: "Eisbär", name_es: "Oso polar", name_fr: "Ours polaire", name_zh: "极地熊",
 		a: {chilled: [1, 3], recharge: 45, range: 130, damage: 122},
 		c: [[19921,14036],[19939,14089],[19859,14043],[21622,10402],[21505,10432],[21544,10566],[21448,10518]]
 	},{// DEVOURER
-		n: 34, i: "carriondevourer", name_en: "Carrion Devourer", name_de: "Aas-Verschlinger", name_es: "Devorador carroñero", name_fr: "Dévoreur de charogne",
+		n: 34, i: "carriondevourer", name_en: "Carrion Devourer", name_de: "Aas-Verschlinger", name_es: "Devorador carroñero", name_fr: "Dévoreur de charogne", name_zh: "腐肉噬蝎",
 		a: {poison: [1, 4], recharge: 30, targets: 5, duration: 5, combo: "Poison", range: 900, damage: 49},
 		c: [[25063,8677],[25161,8620],[25165,8642],[27842,12734],[27864,12698],[27781,12676],[27740,12602],[25644,9422],[25656,9347],[25693,9358]]
 	},{
-		n: 35, i: "lashtaildevourer", name_en: "Lashtail Devourer", name_de: "Geißelschwanz-Verschlinger", name_es: "Devorador cola de fusta", name_fr: "Dévoreur queue-cinglante",
+		n: 35, i: "lashtaildevourer", name_en: "Lashtail Devourer", name_de: "Geißelschwanz-Verschlinger", name_es: "Devorador cola de fusta", name_fr: "Dévoreur queue-cinglante", name_zh: "刺尾噬蝎",
 		a: {bleeding: [6, 5], recharge: 30, range: 900, damage: 343},
 		c: [[25457,13663],[25500,13712],[25513,13747],[30087,16712],[30080,16733],[30102,16770],[30125,16758],[30151,16742],[17560,24016],[17628,24070],[17677,24204],[17598,24155],[17562,24108],[23831,15102],[23793,15099],[23819,15129],[23796,13109],[23771,13008],[23816,12920],[26168,12324],[26258,12430],[26164,12464],[26224,12532],[25949,12576],[31011,13866],[30890,13921]]
 	},{
-		n: 36, i: "whiptaildevourer", name_en: "Whiptail Devourer", name_de: "Peitschenschwanz-Verschlinger", name_es: "Devorador cola de látigo", name_fr: "Dévoreur fouette-queue",
+		n: 36, i: "whiptaildevourer", name_en: "Whiptail Devourer", name_de: "Peitschenschwanz-Verschlinger", name_es: "Devorador cola de látigo", name_fr: "Dévoreur fouette-queue", name_zh: "鞭尾噬蝎",
 		a: {poison: [1, 2], recharge: 30, combo: "Projectile", range: 900, damage: 244},
 		c: [[30770,18336],[23786,14730],[23810,14695],[23805,14664]]
 	},{// DRAKE
-		n: 37, i: "icedrake", name_en: "Ice Drake", name_de: "Eislindwurm", name_es: "Draco de hielo", name_fr: "Drake des glaces",
+		n: 37, i: "icedrake", name_en: "Ice Drake", name_de: "Eislindwurm", name_es: "Draco de hielo", name_fr: "Drake des glaces", name_zh: "寒冰龙蜥",
 		a: {chilled: [1, 1], recharge: 25, targets: 5, range: 250, damage: 305},
 		c: [[22683,8463],[22677,8408],[22609,8385],[22481,8390],[22451,8340],[23078,14191],[23092,14164],[23052,14124],[23181,14016],[19839,12887],[19846,12808],[19869,12783],[19902,12806],[19967,12786],[19415,20179],[19396,20112],[19492,19996],[18216,17094],[18226,17168],[18147,17193],[19603,15695],[19572,15726],[22267,9660],[22278,9568],[22223,9445],[22079,9606]]
 	},{
-		n: 38, i: "marshdrake", name_en: "Marsh Drake", name_de: "Sumpflindwurm", name_es: "Draco de pantano", name_fr: "Drake des marais",
+		n: 38, i: "marshdrake", name_en: "Marsh Drake", name_de: "Sumpflindwurm", name_es: "Draco de pantano", name_fr: "Drake des marais", name_zh: "湿地龙蜥",
 		a: {poison: [5, 3], recharge: 30, targets: 3, range: 900, damage: 305},
 		c: [[17152, 21798],[9485,16826],[9447,16727],[9479,16698],[9547,16657],[16966,19878],[16998,19790],[16936,19770],[16875,19705],[15365,21213],[15309,21265]]
 	},{
-		n: 39, i: "reefdrake", name_en: "Reef Drake", name_de: "Rifflindwurm", name_es: "Draco de arrecife", name_fr: "Drake des récifs",
+		n: 39, i: "reefdrake", name_en: "Reef Drake", name_de: "Rifflindwurm", name_es: "Draco de arrecife", name_fr: "Drake des récifs", name_zh: "礁石龙蜥",
 		a: {confusion: [5, 5], recharge: 25, targets: 5, range: 250, damage: 305},
 		c: [[13387,20145],[13409,20131],[13378,20111],[13311,20090],[13327,20056]]
 	},{
-		n: 40, i: "riverdrake", name_en: "River Drake", name_de: "Flusslindwurm", name_es: "Draco de río", name_fr: "Drake de rivière",
+		n: 40, i: "riverdrake", name_en: "River Drake", name_de: "Flusslindwurm", name_es: "Draco de río", name_fr: "Drake de rivière", name_zh: "河流龙蜥",
 		a: {damage: 80, recharge: 30, targets: 10, range: 600},
 		c: [[16552,17542],[16727,17579],[16764,17599],[16701,13798],[16618,13786],[16546,13760],[16596,13855],[16678,13923],[12707,15400],[12733,15460],[12811,15027],[12769,15085],[12795,14588],[12813,14461],[26993,13123]]
 	},{
-		n: 41, i: "salamanderdrake", name_en: "Salamander Drake", name_de: "Salamanderlindwurm", name_es: "Draco salamandra", name_fr: "Drake salamandre",
+		n: 41, i: "salamanderdrake", name_en: "Salamander Drake", name_de: "Salamanderlindwurm", name_es: "Draco salamandra", name_fr: "Drake salamandre", name_zh: "火龙蜥",
 		a: {burning: [5, 1], recharge: 30, targets: 5, range: 250, damage: 305},
 		c: [[27043,10586],[27048,10572],[27085,10529],[27094,10516],[27088,10486],[30292, 16188],[29799,15999],[29676,13899],[29526,13926],[29379,13878],[27616,10804],[27582,10846],[27544,10864],[27477,10815],[27663,10877]]
 	},{// FELINE
-		n: 42, i: "jaguar", name_en: "Jaguar", name_de: "Jaguar", name_es: "Jaguar", name_fr: "Jaguar",
+		n: 42, i: "jaguar", name_en: "Jaguar", name_de: "Jaguar", name_es: "Jaguar", name_fr: "Jaguar", name_zh: "猎豹",
 		a: {pet: "Stealth", recharge: 30, duration: 6},
 		c: [[6904,16519],[6897,16508],[6913,16483]]
 	},{
-		n: 43, i: "junglestalker", name_en: "Jungle Stalker", name_de: "Dschungelpirscher", name_es: "Acechador de la selva", name_fr: "Félin de la jungle",
+		n: 43, i: "junglestalker", name_en: "Jungle Stalker", name_de: "Dschungelpirscher", name_es: "Acechador de la selva", name_fr: "Félin de la jungle", name_zh: "丛林山猫",
 		a: {might: [5, 15], recharge: 25, targets: 5, radius: 600},
 		c: [[9763,18866],[9654,18885],[9619,18713],[9715,18750],[20630,23564],[20649,23615],[20598,23691],[20663,23524]]
 	},{
-		n: 44, i: "snowleopard", name_en: "Snow Leopard", name_de: "Schneeleopard", name_es: "Pantera de las Nieves", name_fr: "Panthère des neiges",
+		n: 44, i: "snowleopard", name_en: "Snow Leopard", name_de: "Schneeleopard", name_es: "Pantera de las Nieves", name_fr: "Panthère des neiges", name_zh: "雪豹",
 		a: {chilled: [1, 2], recharge: 30, combo: "Leap", range: 600, damage: 244},
 		c: [[20633,14123],[20653,14083],[20677,14036],[18237,14025],[18255,15730],[18230,15745],[18257,15798],[18283,13881],[18337,13863],[18384,13785],[22195,10332],[21907,10395],[21973,10114]]
 	},{
-		n: 45, i: "tiger", name_en: "Tiger", name_de: "Tiger", name_es: "Tigre", name_fr: "Tigre",
+		n: 45, i: "tiger", name_en: "Tiger", name_de: "Tiger", name_es: "Tigre", name_fr: "Tigre", name_zh: "猛虎",
 		a: {fury: [1, 10], recharge: 10, targets: 5, radius: 240, range: 400, damage: 1689},
 		c: [[2528,20988],[2575,20955],[2487,20933],[2526,20905]]
 	},{// AQUATIC // ARMOR FISH
-		n: 46, i: "armorfish", name_en: "Armor Fish", name_de: "Panzerfisch", name_es: "Pez armadura", name_fr: "Poisson cuirassé",
+		n: 46, i: "armorfish", name_en: "Armor Fish", name_de: "Panzerfisch", name_es: "Pez armadura", name_fr: "Poisson cuirassé", name_zh: "装甲鱼",
 		a: {stun: [1, 2], recharge: 40, combo: "Leap", range: 200, damage: 195},
 		c: [[15974,15395],[15912,15392],[15899,15287],[15912,15431],[15493,18043],[15502,18085],[15425,18155],[31191,15100],[31147,15091],[21547,22604]]
 	},{// JELLYFISH
-		n: 47, i: "bluejellyfish", name_en: "Blue Jellyfish", name_de: "Blaue Qualle", name_es: "Medusa azul", name_fr: "Méduse bleue",
+		n: 47, i: "bluejellyfish", name_en: "Blue Jellyfish", name_de: "Blaue Qualle", name_es: "Medusa azul", name_fr: "Méduse bleue", name_zh: "蓝色水母",
 		a: {chilled: [1, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 194},
 		c: [[15782,15410],[15729,15338],[15844,15347],[15759,15260],[15824,15295],[22263,8456],[22152,8566],[22637,8651],[22796,8812],[22365,8753],[20925,22509],[21342,9470],[21178,9389],[21198,9252]]
 	},{
-		n: 48, i: "rainbowjellyfish", name_en: "Rainbow Jellyfish", name_de: "Regenbogen-Qualle", name_es: "Medusa arcoíris", name_fr: "Méduse arc-en-ciel",
+		n: 48, i: "rainbowjellyfish", name_en: "Rainbow Jellyfish", name_de: "Regenbogen-Qualle", name_es: "Medusa arcoíris", name_fr: "Méduse arc-en-ciel", name_zh: "彩虹水母",
 		a: {chilled: [1, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 194},
 		c: [[25050,5418]]
 	},{
-		n: 49, i: "redjellyfish", name_en: "Red Jellyfish", name_de: "Rote Qualle", name_es: "Medusa roja", name_fr: "Méduse rouge",
+		n: 49, i: "redjellyfish", name_en: "Red Jellyfish", name_de: "Rote Qualle", name_es: "Medusa roja", name_fr: "Méduse rouge", name_zh: "红色水母",
 		a: {immobilize: [4, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 388},
 		c: [[5593,22016],[5699,21935],[5596,21769],[20027,23220],[20093,23187],[20055,23254],[20014,23275],[15910,17714],[15821,17742],[15796,17656],[15865,17564],[15898,16434],[15874,16473],[15853,16358],[15815,16510]]
 	},{// SHARK
-		n: 50, i: "shark", name_en: "Shark", name_de: "Hai", name_es: "Tiburón", name_fr: "Requin",
+		n: 50, i: "shark", name_en: "Shark", name_de: "Hai", name_es: "Tiburón", name_fr: "Requin", name_zh: "鲨鱼",
 		a: {bleeding: [1, 5], recharge: 45, quickness: 10, range: 1200},
 		c: [[17451,15796],[16292,19248],[11702,15577],[10675,15138],[16595,16952],[16725,16895],[16829,16910],[16120,17549],[15587,17395],[16428,20815],[21224,23362],[20253,20715]]}
 	]

@@ -2752,7 +2752,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "3", loot: "3"},
 	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 30},
-	flags: {isExpansion: true},
+	flags: {minuteDelay: -5, isExpansion: true},
 	events: [
 	{
 		primacy: 1,
@@ -2942,7 +2942,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "3", loot: "3"},
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 45},
-	flags: {isExpansion: true},
+	flags: {minuteDelay: -5, isExpansion: true},
 	events: [
 	{
 		primacy: 1,

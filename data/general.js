@@ -62,7 +62,6 @@ var GW2T_ZONE_ASSOCIATION = {
 	"218": "citadel",
 	"326": "hoelbrak",
 	"873": "southsun",
-	"1185": "doric",
 	"988": "dry",
 	"1015": "silverwastes",
 	"1041": "dragon",
@@ -72,6 +71,7 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1165": "bloodstone",
 	"1175": "ember",
 	"1178": "bitterfrost",
+	"1185": "doric",
 	// Instances
 	"1069": "precipice",
 	"1071": "precipice",
@@ -1697,6 +1697,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Frost Wasp Logging Tool",
+		id: "48825",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Zodiac Light Armor Skin",
 		id: "43018",
 		price: 800,
@@ -1756,6 +1763,13 @@ Sale: {
 		name: "Mask of the Queen",
 		id: "44608",
 		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Top Hat",
+		id: "64750",
+		price: 200,
 		discount: null,
 		col: 1
 	},
