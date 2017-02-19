@@ -178,6 +178,7 @@ O = {
 		bol_showDashboard: true,
 		bol_showTimeline: true,
 		bol_opaqueTimeline: false,
+		bol_condenseTimelineLine: true,
 		bol_condenseTimelineHeader: true,
 		bol_hideHUD: true,
 		// Map
@@ -1507,6 +1508,14 @@ O = {
 		bol_opaqueTimeline: function()
 		{
 			I.toggleHUDOpacity("#itemTimeline", "tml", O.Options.bol_opaqueTimeline);
+		},
+		bol_condenseTimelineLine: function(pIsInitial)
+		{
+			if (pIsInitial === undefined || (pIsInitial && O.Options.bol_condenseTimelineLine === false))
+			{
+				$(".tmlLineWB").show();
+				I.toggleElement(".tmlLineStandard", O.Options.bol_condenseTimelineLine);
+			}
 		},
 		bol_condenseTimelineHeader: function(pIsInitial)
 		{
@@ -20432,7 +20441,7 @@ C = {
 	{
 		var i;
 		var ithchain;
-		var countdown;
+		var countdown, countdownsec, symbol = "";
 		var time;
 		var delayseconds;
 		
@@ -20465,11 +20474,17 @@ C = {
 			// Update inactive chains' displayed time
 			if (C.isChainCurrent(ithchain) === false)
 			{
+				countdownsec = T.getSecondsUntilChainStarts(ithchain) + delayseconds;
+				if (countdownsec < 0)
+				{
+					symbol = I.Symbol.StateActive + " ";
+					countdownsec -= delayseconds;
+				}
 				countdown = T.getTimeFormatted(
 				{
 					aWantLetters: true,
 					aWantSeconds: false,
-					aCustomTimeInSeconds: Math.abs(T.getSecondsUntilChainStarts(ithchain) + delayseconds)
+					aCustomTimeInSeconds: countdownsec
 				});
 				time = T.getTimeFormatted(
 				{
@@ -20479,7 +20494,7 @@ C = {
 				});
 
 				$("#chnTime_" + ithchain.nexus).html(
-					countdown + "<br />" + "<sup>" + time + "</sup>"
+					symbol + countdown + "<br />" + "<sup>" + time + "</sup>"
 				);
 			}
 		}
@@ -30041,7 +30056,6 @@ T = {
 		if (O.Options.bol_showTimeline)
 		{
 			H.updateTimelineSegments(true);
-			H.updateTimelineIndicator();
 		}
 	},
 	
@@ -32103,7 +32117,6 @@ H = {
 		// Container for all the timelines
 		$("#itemTimeline").show();
 		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlHeader'></div>");
-		O.Enact.bol_condenseTimelineHeader(true);
 		$("#tmlHeader").click(function()
 		{
 			$("#opt_bol_condenseTimelineHeader").trigger("click");
@@ -32115,11 +32128,8 @@ H = {
 			var name = U.escapeHTML((chain.zone === undefined) ? D.getObjectName(chain) : M.getZoneName(chain.zone));
 			// Container for segments of a timeline (chain)
 			var linetitle = (chain.isWB) ? "" : ("title='<dfn>" + name + "</dfn>'");
-			var line = $("<div class='tmlLine' " + linetitle + "></div>").appendTo(container);
-			if (chain.isWB)
-			{
-				line.addClass("tmlLineWB");
-			}
+			var lineclass = (chain.isWB) ? "tmlLineWB" : "tmlLineStandard";
+			var line = $("<div class='tmlLine " + lineclass + "' " + linetitle + "></div>").appendTo(container);
 			for (var ii = 0; ii < chain.Segments.length; ii++)
 			{
 				// Segments of a timeline (event)
@@ -32147,6 +32157,13 @@ H = {
 					+ "</div>"
 				+ "</div>");
 			}
+			(function(iLine)
+			{
+				$("<kbd class='tmlLineCollapse' title='" + D.getWordCapital("collapse") + " <dfn>" + name + "</dfn>'></kbd>").appendTo(iLine).click(function()
+				{
+					iLine.hide("fast");
+				});
+			})(line);
 		}
 		// Bind window buttons
 		$("#tmlToggle").click(function()
@@ -32159,11 +32176,17 @@ H = {
 			H.toggleTimeline(false);
 			H.isTimelineEnabled = false;
 		});
+		$("#tmlCondense").click(function()
+		{
+			$("#opt_bol_condenseTimelineLine").trigger("click");
+		});
 		$("#tmlOpaque").click(function()
 		{
 			$("#opt_bol_opaqueTimeline").trigger("click");
 		});
 		// Initialize
+		O.Enact.bol_condenseTimelineHeader(true);
+		O.Enact.bol_condenseTimelineLine(true);
 		I.qTip.init(".tmlLine");
 	},
 	
@@ -32200,7 +32223,7 @@ H = {
 			}
 		});
 		// Update current timestamp minute
-		$(".tmlTimestampActive").find(".tmlSegmentTimestamp").text(T.getTimeFormatted({aWantSeconds: false}));
+		$(".tmlTimestampActive").find(".tmlSegmentTimestamp").text(K.currentDaytimeString);
 	},
 	
 	/*
@@ -32384,6 +32407,7 @@ K = {
 	currentFrameOffsetMinutes: 0,
 	currentPredictionColor: "",
 	currentDaytimeSymbol: "",
+	currentDaytimeString: "",
 	oldQuadrantAngle: 0,
 	paneSizePrevious: 0,
 	
@@ -32910,7 +32934,6 @@ K = {
 			 */
 			K.refreshFestival();
 			K.updateDigitalClockMinutely();
-			H.updateTimelineIndicator();
 			// Refresh the chain time countdown opted
 			C.updateChainsTimeHTML();
 			K.updateWaypointsClipboard();
@@ -33432,10 +33455,10 @@ K = {
 		// Daytime clock updates time remaining
 		var daytime = T.getDayPeriodRemaining();
 		K.timeDaytime.innerHTML = daytime;
-		var maptime = T.getTimeFormatted({aWantSeconds: false}) + " " + K.currentDaytimeSymbol + daytime;
+		K.currentDaytimeString = T.getTimeFormatted({aWantSeconds: false}) + " " + K.currentDaytimeSymbol + daytime;
 		// Clock on the map shown in overlay mode
-		K.timeMap.innerHTML = maptime;
-		K.timeWvW.innerHTML = maptime;
+		K.timeMap.innerHTML = K.currentDaytimeString;
+		K.timeWvW.innerHTML = K.currentDaytimeString;
 		// Local clock updates additional times in tooltip
 		K.timeLocal.title =
 			(new Date()).toLocaleString() + "<br />" +
@@ -33453,6 +33476,8 @@ K = {
 			"<dfn>Daily:</dfn> " + T.formatTimeLetter(T.SECONDS_TILL_DAILY, false) + "<br />" +
 			"<dfn>Weekly:</dfn> " + T.formatTimeLetter(T.SECONDS_TILL_WEEKLY, false);
 		I.qTip.init(K.timeLocal);
+		// Also update timeline
+		H.updateTimelineIndicator();
 	},
 	
 	/*
@@ -34639,6 +34664,25 @@ I = {
 		{
 			var r = pRequests[i];
 			$(r.s).animate(r.p, {duration: pSpeed, queue: false});
+		}
+	},
+	
+	/*
+	 * Toggles an HTML element.
+	 * @param jqobject or string pElement
+	 * @param boolean pBoolean
+	 * @param string pSpeed
+	 */
+	toggleElement: function(pElement, pBoolean, pSpeed)
+	{
+		var elm = $(pElement);
+		if (pBoolean)
+		{
+			elm.show(pSpeed);
+		}
+		else
+		{
+			elm.hide(pSpeed);
 		}
 	},
 	

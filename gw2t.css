@@ -987,12 +987,16 @@ textarea.jsCopyCode {
 	width: calc(100% - 48px);
 	white-space: nowrap;
 }
-#tmlDelete {
-	left: 48px;
-	display: none;
+#tmlCondense {
+	left: 16px;
 }
 #tmlOpaque {
-	left: 16px;
+	left: 48px;
+}
+#tmlDelete {
+	left: auto;
+	right: 0;
+	display: none;
 }
 #tmlIndicator, #tmlBisector {
 	display: block;
@@ -1060,6 +1064,19 @@ textarea.jsCopyCode {
 	display: table;
 	height: 100%;
 	margin-left: 4px;
+}
+.tmlLineCollapse {
+	position: absolute; z-index: 11;
+	left: 0;
+	margin-top: 2px;
+	width: 16px; height: 16px;
+	transition: opacity 0.1s;
+	background: url("img/ui/close.png");
+	background-size: 16px 16px;
+	opacity: 0.4;
+}
+.tmlLineCollapse:hover {
+	opacity: 0.8;
 }
 .tmlLineName {
 	position: absolute; z-index: 2;
