@@ -26974,7 +26974,7 @@ G = {
 					{
 						pathline = L.polyline(M.convertGCtoLCDual([ithneedle.p[ii], ithneedle.p[ii+1]]),
 						{
-							color: "lime",
+							color: "magenta",
 							dashArray: "5,15",
 							opacity: 0.5
 						});
