@@ -102,9 +102,13 @@
 	top: 0;
 	left: 0;
 }
-#tmlOpaque {
+#tmlCondense {
 	top: 0px;
 	left: 32px;
+}
+#tmlOpaque {
+	top: 0px;
+	left: 64px;
 }
 #itemTimeline {
 	z-index: 3; /* Let the timeline cover the dashboard if the window is short */

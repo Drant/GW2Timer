@@ -32159,7 +32159,7 @@ H = {
 			}
 			(function(iLine)
 			{
-				$("<kbd class='tmlLineCollapse' title='" + D.getWordCapital("collapse") + " <dfn>" + name + "</dfn>'></kbd>").appendTo(iLine).click(function()
+				$("<kbd class='tmlLineCollapse jsSleepable' title='" + D.getWordCapital("collapse") + " <dfn>" + name + "</dfn>'></kbd>").appendTo(iLine).click(function()
 				{
 					iLine.hide("fast");
 				});
@@ -35966,11 +35966,14 @@ I = {
 		// Projection mode is overlay mode but tailored for full view over the game
 		if (I.ModeCurrent === I.ModeEnum.Projection)
 		{
+			var gamebuttonsheight = 32;
 			I.ModeCurrent = I.ModeEnum.Overlay;
 			I.isProjectionEnabled = true;
 			$("#panelMap, #windowMain").css({background: "transparent"});
 			$("#itemVignette").remove();
 			$("#itemProjector, #prjController").show();
+			// Move the timeline lower so it doesn't block the game buttons on top left
+			$("#itemTimeline").css({top: gamebuttonsheight + "px"});
 			// Bind special buttons
 			$("#prjController").contextmenu(function(pEvent)
 			{
@@ -36119,14 +36122,13 @@ I = {
 		if (I.isSleeping)
 		{
 			I.isSleeping = false;
-			$(".hudButton, .btnWindow").removeClass("jsSleeped");
+			$(".jsSleepable, .hudButton, .btnWindow").removeClass("jsSleeped");
 		}
 		window.clearTimeout(I.SleepTimeout);
 		I.SleepTimeout = setTimeout(function()
 		{
 			I.isSleeping = true;
-			var filter = (I.isProjectionEnabled) ? ".mapExpandButton" : "";
-			$(".hudButton, .btnWindow").not(filter).addClass("jsSleeped");
+			$(".jsSleepable, .hudButton, .btnWindow").addClass("jsSleeped");
 		}, I.cMSECONDS_SLEEP);
 	},
 	
