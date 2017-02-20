@@ -1515,6 +1515,10 @@ O = {
 			{
 				$(".tmlLineWB").show();
 				I.toggleElement(".tmlLineStandard", O.Options.bol_condenseTimelineLine);
+				if (O.Options.bol_condenseTimelineLine === false)
+				{
+					X.clearChecklist(X.Checklists.Timeline);
+				}
 			}
 		},
 		bol_condenseTimelineHeader: function(pIsInitial)
@@ -1604,6 +1608,7 @@ X = {
 		// localStorage key-value pairs (key is required)
 		Chain: { key: "str_chlChain" },
 		ChainSubscription: { key: "str_chlChainSubscription" },
+		Timeline: { key: "str_chlTimeline" },
 		JP: { key: "str_chlJP" },
 		Chest: { key: "str_chlChest" },
 		ResourceRich: { key: "str_chlResourceRich" },
@@ -32112,8 +32117,10 @@ H = {
 		{
 			$("#opt_bol_condenseTimelineHeader").trigger("click");
 		});
+		// Initialize "checklist" so collapsed lines are remembered as so
+		X.initializeChecklist(X.Checklists.Timeline, H.Timeline.length);
 		// Create timings header
-		for (var i in H.Timeline)
+		for (var i = 0; i < H.Timeline.length; i++)
 		{
 			var chain = H.Timeline[i];
 			var name = U.escapeHTML((chain.zone === undefined) ? D.getObjectName(chain) : M.getZoneName(chain.zone));
@@ -32148,13 +32155,19 @@ H = {
 					+ "</div>"
 				+ "</div>");
 			}
-			(function(iLine)
+			// Line collapse behavior
+			(function(iLine, iIndex)
 			{
 				$("<kbd class='tmlLineCollapse jsSleepable' title='" + D.getWordCapital("collapse") + " <dfn>" + name + "</dfn>'></kbd>").appendTo(iLine).click(function()
 				{
 					iLine.hide("fast");
+					X.setChecklistItem(X.Checklists.Timeline, iIndex, X.ChecklistEnum.Disabled);
 				});
-			})(line);
+			})(line, i);
+			if (X.getChecklistItem(X.Checklists.Timeline, i) === X.ChecklistEnum.Disabled)
+			{
+				line.hide();
+			}
 		}
 		// Bind window buttons
 		$("#tmlToggle").click(function()

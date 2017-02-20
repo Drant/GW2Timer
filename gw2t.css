@@ -1043,6 +1043,9 @@ textarea.jsCopyCode {
 .tmlLine:hover .tmlLineName {
 	opacity: 1;
 }
+.tmlLine:hover .tmlLineCollapse {
+	opacity: 1;
+}
 .tmlSegment { /* A division of a line representing an event */
 	display: inline-block;
 	height: 100%;
@@ -1074,9 +1077,6 @@ textarea.jsCopyCode {
 	background: url("img/ui/close.png");
 	background-size: 16px 16px;
 	opacity: 0.4;
-}
-.tmlLineCollapse:hover {
-	opacity: 0.8;
 }
 .tmlLineName {
 	position: absolute; z-index: 2;

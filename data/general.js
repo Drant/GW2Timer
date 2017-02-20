@@ -1690,6 +1690,20 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Top Hat",
+		id: "64750",
+		price: 200,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Ringmaster's Hat",
+		id: "64745",
+		price: 200,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Wintersday Earmuffs",
 		id: "65200",
 		price: 25,
@@ -1699,6 +1713,27 @@ Sale: {
 	{
 		name: "Frost Wasp Logging Tool",
 		id: "48825",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Fused Molten Sickle",
+		id: "67032",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Fused Molten Logging Axe",
+		id: "67030",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Molten Alliance Mining Pick",
+		id: "48933",
 		price: 1000,
 		discount: null,
 		col: 1
@@ -1763,20 +1798,6 @@ Sale: {
 		name: "Mask of the Queen",
 		id: "44608",
 		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Top Hat",
-		id: "64750",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Ringmaster's Hat",
-		id: "64745",
-		price: 200,
 		discount: null,
 		col: 1
 	},
