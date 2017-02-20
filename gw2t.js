@@ -20443,7 +20443,7 @@ C = {
 	{
 		var i;
 		var ithchain;
-		var countdown, countdownsec, symbol = "";
+		var countdown, symbol = "";
 		var time;
 		var delayseconds;
 		
@@ -20476,17 +20476,11 @@ C = {
 			// Update inactive chains' displayed time
 			if (C.isChainCurrent(ithchain) === false)
 			{
-				countdownsec = T.getSecondsUntilChainStarts(ithchain) + delayseconds;
-				if (countdownsec < 0)
-				{
-					symbol = I.Symbol.StateActive + " ";
-					countdownsec -= delayseconds;
-				}
 				countdown = T.getTimeFormatted(
 				{
 					aWantLetters: true,
 					aWantSeconds: false,
-					aCustomTimeInSeconds: countdownsec
+					aCustomTimeInSeconds: T.getSecondsUntilChainStarts(ithchain)
 				});
 				time = T.getTimeFormatted(
 				{
@@ -30542,7 +30536,6 @@ T = {
 	 * @objparam boolean aWantSeconds to include the seconds.
 	 * @objparam boolean aWantHours to include the hours.
 	 * @objparam boolean aWantLetters to format #h #m #s instead of colons. Overrides want24.
-	 * @objparam boolean aWantNegative allow negative time.
 	 * @objparam Date aCustomTimeInDate to convert to time string.
 	 * @objparam int aCustomTimeInSeconds to convert to a time string, will use
 	 * current time if undefined.
@@ -30587,15 +30580,11 @@ T = {
 		}
 		else
 		{
-			// Regard negative input
-			if (Settings.aWantNegative !== true)
-			{
-				Settings.aCustomTimeInSeconds = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
-			}
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
 			 */
+			Settings.aCustomTimeInSeconds = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
 			sec = Settings.aCustomTimeInSeconds % T.cSECONDS_IN_MINUTE;
 			min = ~~(Settings.aCustomTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
 			hour = ~~(Settings.aCustomTimeInSeconds / T.cSECONDS_IN_HOUR);
