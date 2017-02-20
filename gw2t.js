@@ -1671,6 +1671,7 @@ X = {
 		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes"},
 		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight"},
 		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge"},
+		ImportantWaypoints: { key: "str_chlImportantWaypoints", urlkey: "importantwaypoints"},
 		RangerPets: { key: "str_chlRangerPets", urlkey: "pets"}
 	},
 	ChecklistEnum:
@@ -3442,6 +3443,7 @@ U = {
 				}
 				else if (page === "draw")
 				{
+					localStorage["bol_showWorldCompletion"] = "true";
 					U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
 					U.Args[U.KeyEnum.Draw] = U.Args[U.KeyEnum.Section];
 				}
@@ -26973,7 +26975,7 @@ G = {
 					{
 						pathline = L.polyline(M.convertGCtoLCDual([ithneedle.p[ii], ithneedle.p[ii+1]]),
 						{
-							color: "white",
+							color: "lime",
 							dashArray: "5,15",
 							opacity: 0.5
 						});
