@@ -1488,11 +1488,19 @@ Announcement:
  *	url_de: "",
  *	url_es: "",
  *	url_fr: "",
+ *	isIndefinite: true, // Whether the Finish time is unknown (optional)
  *	Start: new Date("2015-07-10T19:00:00Z"),
  *	Finish: new Date("2015-07-13T19:00:00Z")
  */
 Countdown: {
 	Events: [
+	{
+		name: "ArenaNet API Offline",
+		url: "https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-API-temporarily-disabled",
+		isIndefinite: true,
+		Start: new Date("2017-02-21T7:00:00Z"),
+		Finish: new Date("2017-02-22T17:00:00Z")
+	},
 	{
 		name: "Balance Patch",
 		url: "https://forum-en.guildwars2.com/forum/game/gw2/Skill-Balance-Coming",

@@ -24431,7 +24431,7 @@ P = {
 				"Guild Wars 2 API server is unreachable.<br />"
 				+ "Reasons could be:<br />"
 				+ "- The ArenaNet server is down for maintenance.<br />"
-				+ "- Your browser is too old (if IE then need 11+).<br />"
+				+ "- Your browser is unsupported.<br />"
 				+ "- Your computer's time is out of sync.<br />"
 				+ "- This website's code encountered a bug.<br />"
 				+ "Map features will be limited.<br />", 20);
@@ -30585,11 +30585,12 @@ T = {
 		}
 		else
 		{
+			// Regard negative input
+			Settings.aCustomTimeInSeconds = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
 			 */
-			Settings.aCustomTimeInSeconds = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
 			sec = Settings.aCustomTimeInSeconds % T.cSECONDS_IN_MINUTE;
 			min = ~~(Settings.aCustomTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
 			hour = ~~(Settings.aCustomTimeInSeconds / T.cSECONDS_IN_HOUR);
@@ -31887,7 +31888,7 @@ H = {
 					}).fail(function()
 					{
 						table.empty();
-						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid)) + ">"
+						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid.toString())) + ">"
 							+ offerid + "</a>. " + I.cErrorAPI);
 					});
 				})(i);
@@ -32004,7 +32005,7 @@ H = {
 			var ctd = H.Countdown.Events[i];
 			if (ctd.isTimely)
 			{
-				var ithtime = T.formatTimeLetter(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMSECONDS_IN_SECOND), true);
+				var ithtime = (ctd.isIndefinite) ? I.Symbol.Infinity : T.formatTimeLetter(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMSECONDS_IN_SECOND), true);
 				document.getElementById("dsbCountdownTime_" + i).innerHTML = ithtime;
 			}
 		}
@@ -32049,6 +32050,10 @@ H = {
 				{
 					ctd.isTimely = false;
 					countdownhtml.remove();
+				}
+				if (ctd.isIndefinite)
+				{
+					stamp = I.Symbol.Infinity;
 				}
 
 				if (ctd.isTimely)
@@ -33764,6 +33769,7 @@ I = {
 		Block: "■",
 		Star: "☆",
 		Wait: "⏳",
+		Infinity: "∞",
 		Approx: "≈",
 		Negative: "−",
 		Quantity: "×",
