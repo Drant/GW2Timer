@@ -81,7 +81,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170209},
+		programVersion: {key: "int_utlProgramVersion", value: 170221},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -2829,6 +2829,7 @@ U = {
 	
 	URL_DATA:
 	{
+		Map: "cache/map.json",
 		Account: "data/account.js",
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
@@ -5209,7 +5210,7 @@ Z = {
 				iterateData(pData);
 			}).fail(function()
 			{
-				I.print("Unable to retrieve API at: " + U.escapeHTML(url));
+				I.warn(U.escapeHTML(url), true);
 			});
 		}
 	},
@@ -5362,7 +5363,7 @@ Z = {
 				Z.printItemsAPI(pSmartIndex);
 			}).fail(function()
 			{
-				I.write("Unable to retrieve API items database.");
+				I.warn("items database");
 			});
 		}
 		else
@@ -5378,7 +5379,7 @@ Z = {
 					I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
 				}).fail(function()
 				{
-					I.write("Unable to retrieve item: " + index);
+					I.warn("item: " + index);
 				});
 			}
 			else
@@ -5393,7 +5394,7 @@ Z = {
 						I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
 					}).fail(function()
 					{
-						I.write("Unable to retrieve item: " + index);
+						I.warn("item: " + index);
 					});
 				}
 			}
@@ -24111,6 +24112,40 @@ P = {
 				}
 			} break;
 		}
+		
+		// Execute after successful population
+		var finalizePopulate = function()
+		{
+			that.isAPIRetrieved_MAPFLOOR = true;
+			
+			/*
+			 * AJAX takes a while so can use this to advantage to delay graphics
+			 * that seem out of place without a map loaded.
+			 */
+			if (that.MapEnum === P.MapEnum.Tyria && O.Options.bol_displayEvents === false)
+			{
+				P.donePopulation();
+			}
+			
+			switch (that.MapEnum)
+			{
+				case P.MapEnum.Tyria: {
+					if (O.Options.bol_displayEvents === true)
+					{
+						P.populateEvents();
+					}
+					else
+					{
+						P.finishPopulation();
+					}
+				} break;
+
+				case P.MapEnum.Mists: {
+					W.finishPopulation();
+				} break;
+			}
+		};
+		
 		/*
 		 * map_floor.json sample structure of desired data
 		 * Code based on API documentation.
@@ -24139,8 +24174,8 @@ P = {
 					}
 				}
 			}
-		}*/		
-		$.getJSON(url, function(pData)
+		}*/	
+		var doPopulate = function(pData)
 		{
 			var i;
 			var numofpois;
@@ -24411,18 +24446,15 @@ P = {
 					}
 				}
 			}
-		}).done(function() // Map is populated by AJAX
+			finalizePopulate();
+		};
+		
+		/*
+		 * Retrieve map data from API.
+		 */
+		$.getJSON(url, function(pData)
 		{
-			that.isAPIRetrieved_MAPFLOOR = true;
-			
-			/*
-			 * AJAX takes a while so can use this to advantage to delay graphics
-			 * that seem out of place without a map loaded.
-			 */
-			if (that.MapEnum === P.MapEnum.Tyria && O.Options.bol_displayEvents === false)
-			{
-				P.donePopulation();
-			}
+			doPopulate(pData);
 		}).fail(function()
 		{
 			if (I.ModeCurrent === I.ModeEnum.Website)
@@ -24436,27 +24468,14 @@ P = {
 				+ "- This website's code encountered a bug.<br />"
 				+ "Map features will be limited.<br />", 20);
 			}
-		}).always(function() // Do after AJAX regardless of success/failure
-		{
-			switch (that.MapEnum)
+			
+			// If failed to get from API then use backup cache
+			$.getJSON(U.URL_DATA.Map, function(pBackup)
 			{
-				case P.MapEnum.Tyria: {
-					if (O.Options.bol_displayEvents === true)
-					{
-						P.populateEvents();
-					}
-					else
-					{
-						P.finishPopulation();
-					}
-				} break;
-
-				case P.MapEnum.Mists: {
-					W.finishPopulation();
-				} break;
-			}
+				doPopulate(pBackup);
+			});
 		});
-	}, // End of populateMap
+	},
 	
 	/*
 	 * Generates icons and rings for all dynamic events.
@@ -24658,7 +24677,7 @@ P = {
 				P.finishPopulation();
 			});
 		}
-	}, // end of populateEvents
+	},
 	
 	/*
 	 * Does final touches to the map after the icons have been generated.
@@ -25593,7 +25612,7 @@ P = {
 			(subzones[pID])[namekey] = pData.name;
 		}).fail(function()
 		{
-			I.write("Unable to retrieve zone ID: " + pID + ". " + I.cErrorAPI);
+			I.warn("zone ID: " + pID);
 		});
 	},
 	
@@ -25831,7 +25850,7 @@ G = {
 			});
 		}).fail(function()
 		{
-			I.write("Unable to retrieve daily API. " + I.cErrorAPI);
+			I.warn("daily achievements");
 			I.removeThrobber(calendar.parent());
 		});
 	},
@@ -26029,7 +26048,7 @@ G = {
 				Q.bindAchievement(".chl_fractal");
 			}).fail(function()
 			{
-				I.write("Unable to retrieve daily fractal API.");
+				I.warn("daily fractal set");
 			});
 		}
 		else
@@ -31621,6 +31640,7 @@ H = {
 			table.append(I.cThrobber);
 			E.updateExchangeRatios(function()
 			{
+				var isonline = (E.Exchange.CoinInGem !== 0);
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
 				table.empty();
 				if (H.Sale.note.length > 0)
@@ -31628,66 +31648,66 @@ H = {
 					table.append("<div class='dsbNote'>Note: " + U.convertExternalString(H.Sale.note) + "</div>");
 				}
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
-				if (E.Exchange.CoinInGem !== 0)
+				
+				var gemstr = "<ins class='s16 s16_gem'></ins>";
+				for (var i = 0; i < H.Sale.Items.length; i++)
 				{
-					var gemstr = "<ins class='s16 s16_gem'></ins>";
-					for (var i = 0; i < H.Sale.Items.length; i++)
+					// Initialize variables
+					var item = H.Sale.Items[i];
+					var url = item.url || U.getWikiSearchDefault(item.name);
+					var video = U.getYouTubeLink(item.name);
+					var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
+
+					var oldprice = null;
+					// Old price also includes percent off by dividing the new with the old
+					oldprice = (U.isInteger(item.discount)) ? item.discount : oldprice;
+					oldprice = (Array.isArray(item.discount) && item.discount[0].length > 2) ? ((item.discount[0])[2]) : oldprice;
+					var oldpricestr = (oldprice !== null) ? getOldPriceString(item.price, oldprice) : "";
+					// Write bulk discount hover information if available
+					var discountstr = "";
+					if (item.discount && Array.isArray(item.discount))
 					{
-						// Initialize variables
-						var item = H.Sale.Items[i];
-						var url = item.url || U.getWikiSearchDefault(item.name);
-						var video = U.getYouTubeLink(item.name);
-						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
-						
-						var oldprice = null;
-						// Old price also includes percent off by dividing the new with the old
-						oldprice = (U.isInteger(item.discount)) ? item.discount : oldprice;
-						oldprice = (Array.isArray(item.discount) && item.discount[0].length > 2) ? ((item.discount[0])[2]) : oldprice;
-						var oldpricestr = (oldprice !== null) ? getOldPriceString(item.price, oldprice) : "";
-						// Write bulk discount hover information if available
-						var discountstr = "";
-						if (item.discount && Array.isArray(item.discount))
+						discountstr += "<span class='dsbDiscount'>";
+						for (var ii = 0; ii < item.discount.length; ii++)
 						{
-							discountstr += "<span class='dsbDiscount'>";
-							for (var ii = 0; ii < item.discount.length; ii++)
-							{
-								var disc = item.discount[ii];
-								var priceper = Math.ceil(disc[1] / disc[0]);
-								// Percent off for bulk discount comes from the price per item in the bulk--divided by the old price for a single (non-bulk) item
-								var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
-								var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
-								discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
-									+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(disc[1]) + "<br />";
-							}
-							discountstr += "</span>";
+							var disc = item.discount[ii];
+							var priceper = Math.ceil(disc[1] / disc[0]);
+							// Percent off for bulk discount comes from the price per item in the bulk--divided by the old price for a single (non-bulk) item
+							var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
+							var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
+							discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
+								+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(disc[1]) + "<br />";
 						}
-						// Price display
-						var pricestr = "";
-						if (item.name === "Coin")
-						{
-							pricestr = "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(item.price) + " " + I.Symbol.ArrowLeft + " " + "</span>"
-								+ "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(item.price)) + "</span>"
-								+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(item.price)) + "</span>";
-						}
-						else
-						{
-							pricestr = "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
-								+ "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(item.price) + "</span>"
-								+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
-						}
-						// Format the presentation of this item
-						var idisimg = isNaN(item.id);
-						var dataprop = (idisimg) ? "" : ("data-sale='" + item.id + "'");
-						var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
-						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-							+"<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
-							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
-							+ oldpricestr
-							+ pricestr
-							+ discountstr
-						+ "</div>");
+						discountstr += "</span>";
 					}
+					// Price display
+					var pricestr = "";
+					if (item.name === "Coin")
+					{
+						pricestr = "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(item.price) + " " + I.Symbol.ArrowLeft + " " + "</span>"
+							+ "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(item.price)) + "</span>"
+							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(item.price)) + "</span>";
+					}
+					else
+					{
+						pricestr = "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
+							+ ((isonline) ? "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(item.price) + "</span>" :
+								" <a" + U.convertExternalAnchor(url) + ">" + item.name + "</a> ")
+							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
+					}
+					// Format the presentation of this item
+					var idisimg = isNaN(item.id);
+					var dataprop = (idisimg) ? "" : ("data-sale='" + item.id + "'");
+					var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
+					$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
+						+ ((isonline) ? "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> " : "")
+						+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
+						+ oldpricestr
+						+ pricestr
+						+ discountstr
+					+ "</div>");
 				}
+				
 				var height = table.height();
 				table.css({height: 0}).animate({height: height}, animationspeed, function()
 				{
@@ -31888,8 +31908,7 @@ H = {
 					}).fail(function()
 					{
 						table.empty();
-						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid.toString())) + ">"
-							+ offerid + "</a>. " + I.cErrorAPI);
+						I.warn("item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid.toString())) + ">" + offerid + "</a>", true);
 					});
 				})(i);
 			}
@@ -32053,6 +32072,7 @@ H = {
 				}
 				if (ctd.isIndefinite)
 				{
+					bulletclass = "cssStateWaiting";
 					stamp = I.Symbol.Infinity;
 				}
 
@@ -34489,6 +34509,24 @@ I = {
 	{
 		I.print("<div class='cslModal cntComposition'>" + pString + "</div>", true);
 		U.convertExternalLink("#cslContent a");
+	},
+	
+	/*
+	 * Prints a warning message of API retrieval failure.
+	 * @param string pFeature that was failed to be retrieved.
+	 * @param boolean pWantPrint so the message stays on.
+	 */
+	warn: function(pFeature, pWantPrint)
+	{
+		var msg = "Unable to retrieve " + pFeature + ". " + I.cErrorAPI;
+		if (pWantPrint)
+		{
+			I.print(msg);
+		}
+		else
+		{
+			I.write(msg);
+		}
 	},
 	
 	/*

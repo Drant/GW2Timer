@@ -1495,13 +1495,6 @@ Announcement:
 Countdown: {
 	Events: [
 	{
-		name: "ArenaNet API Offline",
-		url: "https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-API-temporarily-disabled",
-		isIndefinite: true,
-		Start: new Date("2017-02-21T7:00:00Z"),
-		Finish: new Date("2017-02-22T17:00:00Z")
-	},
-	{
 		name: "Balance Patch",
 		url: "https://forum-en.guildwars2.com/forum/game/gw2/Skill-Balance-Coming",
 		Start: new Date("2017-02-22T17:00:00Z"),
@@ -1599,8 +1592,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-02-14T16:00:00Z"),
-	Finish: new Date("2017-02-21T16:00:00Z"),
+	Start: new Date("2017-02-21T16:00:00Z"),
+	Finish: new Date("2017-02-28T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1620,55 +1613,6 @@ Sale: {
 		}
 	],
 	Items: [
-	{
-		name: "Gwen's Attire",
-		id: "78008",
-		price: 525,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Mini Demmi Beetlestone",
-		id: "80371",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Wedding Preparation Package",
-		id: "http://i.imgur.com/WIycepj.png",
-		price: 1560,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Wings of Love Glider",
-		id: "77804",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Necrotic Glider",
-		id: "80484",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Bouquet of Roses",
-		id: "49933",
-		price: 250,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Box of Chocolate",
-		id: "43528",
-		price: 250,
-		discount: null,
-		col: 0
-	},
 	{
 		name: "Warrior Quaggan Backpack Cover",
 		id: "39519",
@@ -1700,13 +1644,6 @@ Sale: {
 	{
 		name: "Top Hat",
 		id: "64750",
-		price: 200,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Ringmaster's Hat",
-		id: "64745",
 		price: 200,
 		discount: null,
 		col: 0
@@ -1768,51 +1705,9 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Profane Light Armor Skin",
-		id: "20274",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Krytan Medium Armor Skin",
-		id: "20273",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Primeval Heavy Armor Skin",
-		id: "20272",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Glowing Crimson Mask",
 		id: "63891",
 		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mask of the Jubilee",
-		id: "44607",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mask of the Queen",
-		id: "44608",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mini Bloodstone Rock",
-		id: "79693",
-		price: 350,
 		discount: null,
 		col: 1
 	}
