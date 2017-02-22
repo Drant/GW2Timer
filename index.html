@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170221A"></script>
+	<script type="text/javascript" src="data/general.js?v=20170221"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -250,11 +250,15 @@
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
 								<label><img data-src="img/map/landmark.png" /><input id="opt_bol_displayPOIs" type="checkbox" /> POIs</label>
 								<label><img data-src="img/map/vista.png" /><input id="opt_bol_displayVistas" type="checkbox" /> Vistas</label>
+								<label><img data-src="img/map/mastery.png" /><input id="opt_bol_displayMasteries" type="checkbox" /> Mastery Insights</label>
 								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallenges" type="checkbox" /> Hero Challenges</label>
 								<label><img data-src="img/map/heart.png" /><input id="opt_bol_displayHearts" type="checkbox" /> Renown Hearts</label>
+								<div class="mapOptionsCompletionSub">
+									<label><img data-src="img/map/heart_area.png" /><input id="opt_bol_displayHeartsArea" class="jsIgnore" type="checkbox" /> Heart Areas</label>
+									<label><img data-src="img/map/scope_area.png" /><input id="opt_bol_displaySectorsArea" class="jsIgnore" type="checkbox" /> Sector Areas</label>
+								</div>
 							</div>
 							<label title="Show/Hide possible zone events.<br />Will increase initial site load time if enabled.<br />Most in-game events have a cooldown of 15 minutes.<br />They can become active by simply being near them.<br />Click on the map then type /events to see all the moused zone's event names."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
-							<label title="Set initial zoom level for Tyria map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoom" class="optSlider" type="range" min="0" max="7" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
 							<label class="cssHidden"><input id="opt_bol_showFloor" type="checkbox" /></label>
@@ -271,6 +275,7 @@
 							<br />
 							<label title="Show/Hide the side app panel."><img data-src="img/map/panel.png" /><input id="opt_bol_showPanel" type="checkbox" /> Show app panel</label>
 							<label title="App panel on the right or left side of the map?"><img data-src="img/ui/adjust_move.png" /><input id="opt_bol_alignPanelRight" type="checkbox" /> Align panel to the right</label>
+							<label title="Set initial zoom level for Tyria map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoom" class="optSlider" type="range" min="0" max="7" step="1" /></label>
 						</div>
 					</div>
 				</div>

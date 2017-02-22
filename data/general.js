@@ -71,20 +71,7 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1165": "bloodstone",
 	"1175": "ember",
 	"1178": "bitterfrost",
-	"1185": "doric",
-	// Instances
-	"1069": "precipice",
-	"1071": "precipice",
-	"1076": "precipice",
-	"1104": "precipice",
-	"1124": "precipice",
-	"1144": "precipice",
-	"1068": "gilded",
-	"1101": "gilded",
-	"1107": "gilded",
-	"1108": "gilded",
-	"1121": "gilded",
-	"1125": "gilded"
+	"1185": "doric"
 };
 var GW2T_LAND_ASSOCIATION = {
 	"38": "eternal",
@@ -922,30 +909,6 @@ var GW2T_ZONE_DATA = {
 	map_rect: [[-36864, -30720], [36864, 33792]],
 	continent_rect: [[1280, 19712], [4352, 22400]]
 },
-"precipice":
-{
-	id: "1069",
-	name_en: "Lost Precipice",
-	name_de: "Verlorener Abgrund",
-	name_es: "Precipicio Perdido",
-	name_fr: "Précipice perdu",
-	name_zh: "失落悬崖",
-	region: "heart",
-	map_rect: [[-15360, -15360], [15360, 15360]],
-	continent_rect: [[768, 13312], [2048, 14592]]
-},
-"gilded":
-{
-	id: "1068",
-	name_en: "Gilded Hollow",
-	name_de: "Vergoldete Senke",
-	name_es: "Cueva Dorada",
-	name_fr: "Caverne dorée",
-	name_zh: "镀金山洞",
-	region: "heart",
-	map_rect: [[-15360, -15360], [15360, 15360]],
-	continent_rect: [[2560, 16128], [3840, 17408]]
-},
 "silverwastes":
 {
 	id: "1015",
@@ -1614,6 +1577,13 @@ Sale: {
 	],
 	Items: [
 	{
+		name: "Glowing Crimson Mask",
+		id: "63891",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Warrior Quaggan Backpack Cover",
 		id: "39519",
 		price: 300,
@@ -1701,13 +1671,6 @@ Sale: {
 		name: "Zodiac Heavy Armor Skin",
 		id: "43016",
 		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Glowing Crimson Mask",
-		id: "63891",
-		price: 500,
 		discount: null,
 		col: 1
 	}

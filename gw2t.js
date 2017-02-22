@@ -199,7 +199,10 @@ O = {
 		bol_displayPOIs: true,
 		bol_displayVistas: true,
 		bol_displayChallenges: true,
+		bol_displayMasteries: true,
 		bol_displayHearts: true,
+		bol_displayHeartsArea: false,
+		bol_displaySectorsArea: false,
 		bol_displayEvents: false,
 		bol_showWorldCompletionWvW: false,
 		bol_showZoneOverviewWvW: true,
@@ -1003,7 +1006,7 @@ O = {
 				document.location.reload();
 			}
 			
-			$("#mapOptionsCompletion label input").each(function()
+			$("#mapOptionsCompletion label input").not(".jsIgnore").each(function()
 			{
 				X.setCheckboxEnumState($(this), X.boolToChecklistEnum(O.Options.bol_showWorldCompletion));
 			});
@@ -2823,6 +2826,7 @@ U = {
 		Landmark: "img/map/landmark.png",
 		LandmarkOver: "img/map/landmark_h.png",
 		Vista: "img/map/vista.png",
+		Mastery: "img/map/mastery.png",
 		Challenge: "img/map/challenge.png",
 		Heart: "img/map/heart.png"
 	},
@@ -18854,6 +18858,7 @@ D = {
 		s_Waypoint: {de: "Wegmarke", es: "Punto de ruta", fr: "Point de passage", zh: "传送点"},
 		s_Point_of_Interest: {de: "Sehenswürdigkeit", es: "Punto de interés", fr: "Site remarquable", zh: "鸟瞰点"},
 		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鸟瞰点"},
+		s_Mastery_Insight: {de: "Einsicht", es: "Reflexión de dominio", fr: "Source de connaissance de maîtrise", zh: "专精揭秘点"},
 		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "英雄挑战"},
 		s_Heart: {de: "Herzchen-Quest", es: "Corazón de prestigio", fr: "Cœur de renommé", zh: "爱心任务"},
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
@@ -21419,9 +21424,12 @@ M = {
 				Waypoint: new L.layerGroup(),
 				Landmark: new L.layerGroup(),
 				Vista: new L.layerGroup(),
+				Mastery: new L.layerGroup(),
 				Challenge: new L.layerGroup(),
 				Heart: new L.layerGroup(),
 				Sector: new L.layerGroup(),
+				HeartArea: new L.layerGroup(),
+				SectorArea: new L.layerGroup(),
 				EventIcon: new L.layerGroup(),
 				EventRing: new L.layerGroup(),
 				EventLabel: new L.layerGroup()
@@ -21437,7 +21445,7 @@ M = {
 		switch (this.MapEnum)
 		{
 			case P.MapEnum.Tyria: {
-				this.createPins();
+				this.createStandardPins();
 				P.populateMap(M);
 				P.drawZoneBorders();
 				P.drawZoneGateways();
@@ -21445,7 +21453,7 @@ M = {
 			} break;
 			
 			case P.MapEnum.Mists: {
-				this.createPins();
+				this.createStandardPins();
 				P.populateMap(W);
 			} break;
 		}
@@ -21515,7 +21523,7 @@ M = {
 	/*
 	 * Create pin markers that can be moved by user or program.
 	 */
-	createPins: function()
+	createStandardPins: function()
 	{
 		if ( ! I.isMapEnabled)
 		{
@@ -21589,6 +21597,7 @@ M = {
 		/*
 		 * Shows or hides coordinates bar.
 		 */
+		I.preventMapPropagation(htmlidprefix + "CoordinatesBar");
 		this.toggleCoordinatesBar(); // Apply initial appearance
 		$(htmlidprefix + "CoordinatesToggle").click(function()
 		{
@@ -22031,9 +22040,12 @@ M = {
 					if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
 					if (O.Options.bol_displayPOIs) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
 					if (O.Options.bol_displayVistas) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
+					if (O.Options.bol_displayMasteries) { this.ZoneCurrent.Layers.Mastery.addTo(this.Map); }
 					if (O.Options.bol_displayChallenges) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
 					if (O.Options.bol_displayHearts) { this.ZoneCurrent.Layers.Heart.addTo(this.Map); }
 					if (O.Options.bol_displaySectors) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
+					if (O.Options.bol_displayHeartsArea) { this.ZoneCurrent.Layers.HeartArea.addTo(this.Map); }
+					if (O.Options.bol_displaySectorsArea) { this.ZoneCurrent.Layers.SectorArea.addTo(this.Map); }
 					if (O.Options.bol_displayEvents) {
 						this.ZoneCurrent.Layers.EventIcon.addTo(this.Map);
 						this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
@@ -24136,18 +24148,21 @@ P = {
 			} break;
 		}
 		
-		// Execute after successful population
-		var finalizePopulate = function()
+		// Switches and functions to execute after population
+		var finalizePopulate = function(pIsSuccess)
 		{
-			that.isAPIRetrieved_MAPFLOOR = true;
-			
-			/*
-			 * AJAX takes a while so can use this to advantage to delay graphics
-			 * that seem out of place without a map loaded.
-			 */
-			if (that.MapEnum === P.MapEnum.Tyria && O.Options.bol_displayEvents === false)
+			if (pIsSuccess)
 			{
-				P.donePopulation();
+				that.isAPIRetrieved_MAPFLOOR = true;
+
+				/*
+				 * AJAX takes a while so can use this to advantage to delay graphics
+				 * that seem out of place without a map loaded.
+				 */
+				if (that.MapEnum === P.MapEnum.Tyria && O.Options.bol_displayEvents === false)
+				{
+					P.donePopulation();
+				}
 			}
 			
 			switch (that.MapEnum)
@@ -24203,10 +24218,11 @@ P = {
 			var i;
 			var numofpois;
 			var regionid, region, zoneid, apizone, poi, zoneobj;
-			var marker, icon, cssclass, tooltip;
+			var marker, icon, area, cssclass, tooltip;
 			var translationsector = D.getTranslation("Sector");
 			var translationpoi = D.getTranslation("Point of Interest");
 			var translationvista = D.getTranslation("Vista");
+			var translationmastery = D.getTranslation("Mastery Insight");
 			var translationchallenge = D.getTranslation("Hero Challenge");
 			var translationheart = D.getTranslation("Heart");
 
@@ -24229,9 +24245,9 @@ P = {
 					var numheart = 0;
 					var numwaypoint = 0;
 					var numlandmark = 0;
-					var numchallenge = 0;
 					var numvista = 0;
-					var counterchallenge = 0;
+					var nummastery = 0;
+					var numchallenge = 0;
 					
 					/* 
 					 * For waypoints, points of interest, and vistas.
@@ -24277,7 +24293,7 @@ P = {
 								icon = U.URL_IMG.Vista;
 								cssclass = "mapPoi";
 								tooltip = translationvista;
-								P.addMapLocation(poi.coord, zonename + " " + translationvista + " " + numvista, icon, zonename + " " + translationvista);
+								P.addMapLocation(poi.coord, zonename + " " + translationvista + " " + poi.poi_id, icon, zonename + " " + translationvista);
 							} break;
 							
 							default: continue; // Don't create marker if not desired type
@@ -24365,13 +24381,35 @@ P = {
 					 */
 					if (completionboolean)
 					{
+						// Mastery Insights
+						numofpois = apizone.training_points.length;
+						nummastery = numofpois;
+						icon = U.URL_IMG.Mastery;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = apizone.training_points[i];
+							marker = L.marker(that.convertGCtoLC(poi.coord),
+							{
+								title: "<span class='" + "mapPoi" + "'>" + translationmastery + "</span>",
+								icon: L.icon(
+								{
+									iconUrl: icon,
+									iconSize: [16, 16],
+									iconAnchor: [8, 8]
+								})
+							});
+							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
+							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+							zoneobj.Layers.Challenge.addLayer(marker);
+							P.addMapLocation(poi.coord, zonename + " " + translationmastery + " " + poi.id, icon, zonename + " " + translationmastery);
+						}
+						
 						// Hero Challenges
 						numofpois = apizone.skill_challenges.length;
 						numchallenge = numofpois;
 						icon = U.URL_IMG.Challenge;
 						for (i = 0; i < numofpois; i++)
 						{
-							counterchallenge++;
 							poi = apizone.skill_challenges[i];
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
@@ -24386,7 +24424,7 @@ P = {
 							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
 							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 							zoneobj.Layers.Challenge.addLayer(marker);
-							P.addMapLocation(poi.coord, zonename + " " + translationchallenge + " " + counterchallenge, icon, zonename + " " + translationchallenge);
+							P.addMapLocation(poi.coord, zonename + " " + translationchallenge + " " + poi.idx, icon, zonename + " " + translationchallenge);
 						}
 						
 						// Renown Hearts
@@ -24411,6 +24449,16 @@ P = {
 							M.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 							zoneobj.Layers.Heart.addLayer(marker);
 							P.addMapLocation(poi.coord, poi.objective, icon, zonename + " " + translationheart);
+							
+							// Heart Area
+							area = L.polygon(that.convertGCtoLCMulti(poi.bounds), {
+								clickable: false,
+								color: "#ffc321",
+								weight: 2,
+								opacity: 0.8,
+								fillOpacity: 0.1
+							});
+							zoneobj.Layers.HeartArea.addLayer(area);
 						}
 						
 						// Sector Names
@@ -24432,6 +24480,15 @@ P = {
 							});
 							zoneobj.Layers.Sector.addLayer(marker);
 							P.addMapLocation(poi.coord, poi.name, icon, zonename + " " + translationsector);
+							
+							// Sector Area
+							area = L.polyline(that.convertGCtoLCMulti(poi.bounds), {
+								clickable: false,
+								color: "white",
+								weight: 2,
+								opacity: 0.8
+							});
+							zoneobj.Layers.SectorArea.addLayer(area);
 						}
 						
 						that.isMappingIconsGenerated = true;
@@ -24457,6 +24514,7 @@ P = {
 									+ ((numlandmark > 0) ? ("<img src='img/map/landmark.png' />" + numlandmark + " ") : "")
 									+ ((numchallenge > 0) ? ("<img src='img/map/challenge.png' />" + numchallenge + " ") : "")
 									+ ((numvista > 0) ? ("<img src='img/map/vista.png' />" + numvista) : "")
+									+ ((nummastery > 0) ? ("<img src='img/map/mastery.png' />" + nummastery + " ") : "")
 								+ "</span>",
 								iconSize: [256, 64],
 								iconAnchor: [128, 32]
@@ -24469,7 +24527,6 @@ P = {
 					}
 				}
 			}
-			finalizePopulate();
 		};
 		
 		/*
@@ -24478,6 +24535,7 @@ P = {
 		$.getJSON(url, function(pData)
 		{
 			doPopulate(pData);
+			finalizePopulate(true);
 		}).fail(function()
 		{
 			if (I.ModeCurrent === I.ModeEnum.Website)
@@ -24489,14 +24547,22 @@ P = {
 				+ "- Your browser is unsupported.<br />"
 				+ "- Your computer's time is out of sync.<br />"
 				+ "- This website's code encountered a bug.<br />"
-				+ "Map features will be limited.<br />", 20);
+				+ "Map will use backup cache and features will be limited.<br />", 20);
 			}
 			
 			// If failed to get from API then use backup cache
-			$.getJSON(U.URL_DATA.Map, function(pBackup)
+			if (that.MapEnum === P.MapEnum.Tyria)
 			{
-				doPopulate(pBackup);
-			});
+				$.getJSON(U.URL_DATA.Map, function(pBackup)
+				{
+					doPopulate(pBackup);
+					finalizePopulate(false);
+				});
+			}
+			else
+			{
+				finalizePopulate(false);
+			}
 		});
 	},
 	

@@ -1634,6 +1634,11 @@ input.mapCoordinatesName {
 	margin: 0;
 	padding: 0;
 }
+.mapOptionsCompletionSub {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border-top: 1px solid gray;
+}
 
 /* Map zones list */
 .mapZones:hover .mapZonesPopup {
