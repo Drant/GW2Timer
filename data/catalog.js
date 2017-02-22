@@ -331,6 +331,7 @@ Toy: [
 	{i: 67356, n: "Magic Carpet", p: {gem: 250}},
 	{i: 79666, n: "Hovering Mad Mirror", p: {gem: 250}},
 	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 250}},
+	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
 	{i: 49933, n: "Bouquet of Roses", p: {gem: 250}},
 	{i: 43528, n: "Box of Chocolates", p: {gem: 250}},
 	{i: 49930, n: "Boxing Gloves", p: {gem: 0}},
@@ -821,7 +822,8 @@ Glider: [
 	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}},
 	{i: 80018, n: "Infinirarium Glider", p: {gem: 0}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
-	{i: 80484, n: "Necrotic Glider", p: {gem: 500}}
+	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
+	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}}
 ],
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},

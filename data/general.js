@@ -1457,12 +1457,6 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
-		name: "Balance Patch",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Skill-Balance-Coming",
-		Start: new Date("2017-02-22T17:00:00Z"),
-		Finish: new Date("2017-02-23T17:00:00Z")
-	},
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
@@ -1577,6 +1571,69 @@ Sale: {
 	],
 	Items: [
 	{
+		name: "Shattered Bloondstone Ascender Combo",
+		id: "http://i.imgur.com/EZQtPxz.png",
+		price: 500,
+		discount: 650,
+		col: 0
+	},
+	{
+		name: "Shattered Bloodstone Glider",
+		id: "80795",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Bloodstone Ascender",
+		id: "80854",
+		price: 250,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Incarnate Light Armor Skin",
+		id: "63909",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Strider's Medium Armor Skin",
+		id: "63899",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Rampart Heavy Armor Skin",
+		id: "63929",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Elegant Fan Focus Skin",
+		id: "69664",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Emissary's Staff",
+		id: "79315",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Glowing Green Mask",
+		id: "67038",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Glowing Crimson Mask",
 		id: "63891",
 		price: 500,
@@ -1584,46 +1641,25 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Warrior Quaggan Backpack Cover",
-		id: "39519",
-		price: 300,
-		discount: null,
-		col: 0
+		name: "Bloodstone Dye Kit",
+		id: "79354",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 1
 	},
 	{
-		name: "Fuzzy Bear Hat",
-		id: "64755",
-		price: 200,
-		discount: null,
-		col: 0
+		name: "Blue Shift Dye Kit",
+		id: "78734",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 1
 	},
 	{
-		name: "Fuzzy Leopard Hat",
-		id: "64746",
-		price: 200,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Sailor's Beanie",
-		id: "64749",
-		price: 200,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Top Hat",
-		id: "64750",
-		price: 200,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Wintersday Earmuffs",
-		id: "65200",
-		price: 25,
-		discount: null,
-		col: 0
+		name: "Taimi's Dye Kit",
+		id: "67291",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 1
 	},
 	{
 		name: "Frost Wasp Logging Tool",
@@ -1633,44 +1669,44 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Fused Molten Sickle",
-		id: "67032",
-		price: 1000,
+		name: "Warrior Quaggan Backpack Cover",
+		id: "39519",
+		price: 300,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Fused Molten Logging Axe",
-		id: "67030",
-		price: 1000,
+		name: "Fuzzy Bear Hat",
+		id: "64755",
+		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Molten Alliance Mining Pick",
-		id: "48933",
-		price: 1000,
+		name: "Fuzzy Leopard Hat",
+		id: "64746",
+		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Zodiac Light Armor Skin",
-		id: "43018",
-		price: 800,
+		name: "Sailor's Beanie",
+		id: "64749",
+		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Zodiac Medium Armor Skin",
-		id: "43017",
-		price: 800,
+		name: "Top Hat",
+		id: "64750",
+		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Zodiac Heavy Armor Skin",
-		id: "43016",
-		price: 800,
+		name: "Wintersday Earmuffs",
+		id: "65200",
+		price: 25,
 		discount: null,
 		col: 1
 	}
