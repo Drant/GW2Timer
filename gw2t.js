@@ -646,11 +646,11 @@ O = {
 		}
 		
 		// Update reset Date objects
-		var secondstoday = O.Utilities.timestampDaily.value;
-		var secondstomorrow = T.getUNIXSeconds() + T.cSECONDS_IN_DAY - secondssincemidnight;
+		var secondstoday = T.getUNIXSeconds() - secondssincemidnight;
+		var secondstomorrow = secondstoday + T.cSECONDS_IN_DAY;
 		T.ResetToday = new Date(secondstoday * T.cMSECONDS_IN_SECOND);
 		T.ResetTomorrow = new Date(secondstomorrow * T.cMSECONDS_IN_SECOND);
-		$("#optTimestampLocalReset").text(secondstoday);
+		$("#optTimestampLocalReset").text(O.Utilities.timestampDaily.value);
 		$("#optTimestampServerReset").text(secondstomorrow);
 	},
 	
@@ -7108,6 +7108,29 @@ Z = {
 				record[timestamp] = pSortedIDs;
 				Z.printUnlockables(record, true, true);
 			});
+		});
+	},
+	
+	/*
+	 * Gets and compressed the current map floor details.
+	 */
+	collateMaps: function()
+	{
+		$.getJSON(U.URL_API.MapFloorTyria, function(pData)
+		{
+			// Trim unused zones
+			for (var i in pData.regions)
+			{
+				var region = pData.regions[i];
+				for (var ii in region.maps)
+				{
+					if (M.isZoneValid(ii) === false)
+					{
+						delete region.maps[ii];
+					}
+				}
+			}
+			Z.createFile(U.lineJSON(pData), "map.json");
 		});
 	},
 	
@@ -31829,10 +31852,7 @@ H = {
 				var updatetime = new Date(pUpdateTime);
 				var now = new Date();
 				timestamp = T.formatWeektime(pUpdateTime, true) + " (" + T.formatMilliseconds(now - updatetime) + " " + D.getWord("ago") + ")";
-				expiredstr = (T.isTimely({
-					Start: T.ResetToday,
-					Finish: T.ResetTomorrow
-				}, updatetime)) ? "" : D.getWordCapital("expired") + ". ";
+				expiredstr = (updatetime > T.ResetToday && updatetime < T.ResetTomorrow) ? "" : D.getWordCapital("expired") + ". ";
 			}
 			table.append("<div id='dsbVendorNote'>This daily list is user contributed. "
 				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.official) + ">Update</a> link."
@@ -36175,8 +36195,9 @@ I = {
 		window.clearTimeout(I.SleepTimeout);
 		I.SleepTimeout = setTimeout(function()
 		{
+			var filterclass = (I.isProjectionEnabled) ? ".mapExpandButton" : "";
 			I.isSleeping = true;
-			$(".jsSleepable, .hudButton, .btnWindow").addClass("jsSleeped");
+			$(".jsSleepable, .hudButton, .btnWindow").not(filterclass).addClass("jsSleeped");
 		}, I.cMSECONDS_SLEEP);
 	},
 	

@@ -1559,7 +1559,8 @@ MediumBoots: [
 	{i: 77377, n: "Healer's Guardian Striders", p: {coin: 1000000}},
 	{i: 78796, n: "Experimental Envoy Boots", p: {coin: 1000000}},
 	{i: 67128, n: "Ardent Glorious Shinplates", p: {coin: 1000000}},
-	{i: 80000, n: "Ardent Glorious Shinplates", p: {coin: 1000000}}
+	{i: 80000, n: "Ardent Glorious Shinplates", p: {coin: 1000000}},
+	{i: 80300, n: "Thackeray's Boots", p: {coin: 1000000}}
 ],
 HeavyHelm: [
 	{i: 48093, n: "Ahamid's Visor", p: {coin: 900000}},
@@ -1599,7 +1600,8 @@ HeavyHelm: [
 	{i: 78940, n: "Experimental Envoy Helmet", p: {coin: 900000}},
 	{i: 67145, n: "Ardent Glorious Plate Helm", p: {coin: 900000}},
 	{i: 80010, n: "Ardent Glorious Plate Helm", p: {coin: 900000}},
-	{i: 80451, n: "Thackeray's Barbute", p: {coin: 900000}}
+	{i: 80451, n: "Thackeray's Barbute", p: {coin: 900000}},
+	{i: 80387, n: "Refined Envoy Helmet", p: {coin: 900000}}
 ],
 HeavyShoulders: [
 	{i: 48095, n: "Ahamid's Pauldrons", p: {coin: 900000}},
@@ -1640,7 +1642,8 @@ HeavyShoulders: [
 	{i: 78977, n: "Experimental Envoy Pauldrons", p: {coin: 900000}},
 	{i: 67147, n: "Ardent Glorious Pauldrons", p: {coin: 900000}},
 	{i: 79987, n: "Ardent Glorious Pauldrons", p: {coin: 900000}},
-	{i: 80616, n: "Thackeray's Pauldrons", p: {coin: 900000}}
+	{i: 80616, n: "Thackeray's Pauldrons", p: {coin: 900000}},
+	{i: 80236, n: "Refined Envoy Pauldrons", p: {coin: 900000}}
 ],
 HeavyCoat: [
 	{i: 48091, n: "Ahamid's Breastplate", p: {coin: 1200000}},
@@ -1679,7 +1682,8 @@ HeavyCoat: [
 	{i: 78923, n: "Experimental Envoy Breastplate", p: {coin: 1200000}},
 	{i: 67143, n: "Ardent Glorious Breastplate", p: {coin: 1200000}},
 	{i: 80016, n: "Ardent Glorious Breastplate", p: {coin: 1200000}},
-	{i: 80361, n: "Thackeray's Breastplate", p: {coin: 1200000}}
+	{i: 80361, n: "Thackeray's Breastplate", p: {coin: 1200000}},
+	{i: 80648, n: "Refined Envoy Breastplate", p: {coin: 1200000}}
 ],
 HeavyGloves: [
 	{i: 48092, n: "Ahamid's Warfists", p: {coin: 900000}},
@@ -1722,7 +1726,8 @@ HeavyGloves: [
 	{i: 80335, n: "Assaulter's Gauntlets of the Obedient", p: {magnetite: 600}},
 	{i: 80572, n: "Malicious Gauntlets of the Obedient", p: {magnetite: 600}},
 	{i: 80639, n: "Healer's Gauntlets of the Obedient", p: {magnetite: 600}},
-	{i: 80227, n: "Thackeray's Gauntlets", p: {coin: 900000}}
+	{i: 80227, n: "Thackeray's Gauntlets", p: {coin: 900000}},
+	{i: 80673, n: "Refined Envoy Gauntlets", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -1761,7 +1766,8 @@ HeavyLeggings: [
 	{i: 78858, n: "Experimental Envoy Tassets", p: {coin: 1100000}},
 	{i: 67146, n: "Ardent Glorious Legplates", p: {coin: 1100000}},
 	{i: 79974, n: "Ardent Glorious Legplates", p: {coin: 1100000}},
-	{i: 80274, n: "Thackeray's Tassets", p: {coin: 1100000}}
+	{i: 80274, n: "Thackeray's Tassets", p: {coin: 1100000}},
+	{i: 80427, n: "Refined Envoy Tassets", p: {coin: 1100000}}
 ],
 HeavyBoots: [
 	{i: 48090, n: "Ahamid's Greaves", p: {coin: 900000}},
@@ -1800,7 +1806,8 @@ HeavyBoots: [
 	{i: 78934, n: "Experimental Envoy Greaves", p: {coin: 900000}},
 	{i: 67142, n: "Ardent Glorious Wargreaves", p: {coin: 900000}},
 	{i: 80045, n: "Ardent Glorious Wargreaves", p: {coin: 900000}},
-	{i: 80132, n: "Thackeray's Greaves", p: {coin: 900000}}
+	{i: 80132, n: "Thackeray's Greaves", p: {coin: 900000}},
+	{i: 80127, n: "Refined Envoy Greaves", p: {coin: 900000}}
 ],
 LightHelmAquatic: [
 	{i: 73723, n: "Ahamid's Cloth Breather", p: {coin: 900000}},
@@ -2412,7 +2419,8 @@ Hammer: [
 	{i: 80331, n: "Malicious Demon Gavel", p: {magnetite: 600}},
 	{i: 80341, n: "Assaulter's Demon Gavel", p: {magnetite: 600}},
 	{i: 80606, n: "Healer's Demon Gavel", p: {magnetite: 600}},
-	{i: 80099, n: "Defender's Demon Gavel", p: {magnetite: 600}}
+	{i: 80099, n: "Defender's Demon Gavel", p: {magnetite: 600}},
+	{i: 80522, n: "Thackeray's Crusher", p: {coin: 1100000}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},

@@ -1402,7 +1402,7 @@ var GW2T_TIMELINE = [
 	{
 		zone: "doric",
 		Segments: [
-			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Lumberyard", name_de: "Holzlager", name_es: "Aserradero", name_fr: "Scierie", name_zh: "伐木场" },
+			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Spirits", name_de: "Geister", name_es: "Espíritus", name_fr: "Esprits", name_zh: "灵魂" },
 			{ time: "00:25", duration: "00:35", primacy: 3, name_en: "Noran: Immelhoof", name_de: "Noran: Immelhuf", name_es: "Noran: Immelhoof", name_fr: "Noran: Immelsabot", name_zh: "诺兰：伊梅尔霍夫" },
 			{ time: "01:00", duration: "00:40", primacy: 3, name_en: "Saidra: Agatha", name_de: "Saidra: Agatha", name_es: "Saidra: Agatha", name_fr: "Saidra: Agatha", name_zh: "塞德拉：阿加莎" },
 			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Loamhurst: Cairn", name_de: "Neulehmwald: Cairn", name_es: "Loamhurst: Cairn", name_fr: "Sylveglèbe: Cairn", name_zh: "新沃土之森：凯恩" }
