@@ -2559,7 +2559,8 @@ Weapon_Sword: [
 	{u: 7049, i: 80062, n: "Frostforged Sword", t: [80062]},
 	{u: 7037, i: 80040, n: "Wrapped Sword", p: {achievement: 0}},
 	{u: 7125, i: 80647, n: "Indomitable Gladius", p: {magnetite: 600}},
-	{u: 7140, i: 80629, n: "Devoted Sword", t: [80629]}
+	{u: 7140, i: 80629, n: "Devoted Sword", t: [80629]},
+	{u: 7164, i: 80710, n: "Caladbolg Rosa", p: {achievement: 0}}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2706,7 +2707,8 @@ Weapon_Dagger: [
 	{u: 7016, i: 79724, n: "Nightmare Anelace", p: {achievement: 0}},
 	{u: 7009, i: 79920, n: "Caustic Nightmare Anelace", p: {matrix: 200}},
 	{u: 7044, i: 80061, n: "Frostforged Dagger", t: [80061]},
-	{u: 7096, i: 80617, n: "Devoted Dagger", t: [80617]}
+	{u: 7096, i: 80617, n: "Devoted Dagger", t: [80617]},
+	{u: 7161, i: 80732, n: "Caladbolg Solana", p: {achievement: 0}}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},
@@ -2991,7 +2993,8 @@ Weapon_Scepter: [
 	{u: 6993, i: 79682, n: "Gargoyle Scepter", t: [79682]},
 	{u: 7053, i: 79976, n: "Frostforged Scepter", t: [79976]},
 	{u: 7063, i: 80057, n: "Wrapped Scepter", p: {achievement: 0}},
-	{u: 7148, i: 80365, n: "Devoted Scepter", t: [80365]}
+	{u: 7148, i: 80365, n: "Devoted Scepter", t: [80365]},
+	{u: 7163, i: 80741, n: "Caladbolg Iridi", p: {achievement: 0}}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -3315,7 +3318,8 @@ Weapon_Shield: [
 	{u: 7048, i: 79979, n: "Frostforged Shield", t: [79979]},
 	{u: 7061, i: 79985, n: "Wrapped Shield", p: {achievement: 0}},
 	{u: 7111, i: 80242, n: "Devoted Shield", t: [80242]},
-	{u: 7135, i: 80526, n: "Seraph Protector", p: {karma: 210000}}
+	{u: 7135, i: 80526, n: "Seraph Protector", p: {karma: 210000}},
+	{u: 7162, i: 80786, n: "Caladbolg Astera", p: {achievement: 0}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3739,7 +3743,9 @@ Weapon_Greatsword: [
 	{u: 6979, i: 79655, n: "Gargoyle Greatsword", t: [79655]},
 	{u: 7050, i: 80041, n: "Frostforged Greatsword", t: [80041]},
 	{u: 7058, i: 80037, n: "Wrapped Greatsword", p: {achievement: 0}},
-	{u: 7090, i: 80179, n: "Devoted Greatsword", t: [80179]}
+	{u: 7090, i: 80179, n: "Devoted Greatsword", t: [80179]},
+	{u: 6403, i: 80707, n: "Caladbolg Origin", p: {achievement: 0}},
+	{u: 7160, i: 80824, n: "Caladbolg Orchida", p: {achievement: 0}}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
