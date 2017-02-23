@@ -20478,9 +20478,8 @@ C = {
 	{
 		var i;
 		var ithchain;
-		var countdown, symbol = "";
-		var time;
-		var delayseconds;
+		var countdownstr, timestr, symbol;
+		var delayseconds, countdownsec;
 		
 		var subscribetext = "<dfn>" + D.getPhraseTitle("click to <br/> subscribe") + "</dfn><br />";
 		
@@ -20511,13 +20510,20 @@ C = {
 			// Update inactive chains' displayed time
 			if (C.isChainCurrent(ithchain) === false)
 			{
-				countdown = T.getTimeFormatted(
+				symbol = "";
+				countdownsec = T.getSecondsUntilChainStarts(ithchain) + delayseconds;
+				if (countdownsec < 0 && ithchain.flags.minuteDelay !== undefined)
+				{
+					symbol = I.Symbol.StateActive + " ";
+					countdownsec = 0;
+				}
+				countdownstr = T.getTimeFormatted(
 				{
 					aWantLetters: true,
 					aWantSeconds: false,
-					aCustomTimeInSeconds: T.getSecondsUntilChainStarts(ithchain)
+					aCustomTimeInSeconds: countdownsec
 				});
-				time = T.getTimeFormatted(
+				timestr = T.getTimeFormatted(
 				{
 					aWantLetters: false,
 					aWantSeconds: false,
@@ -20525,7 +20531,7 @@ C = {
 				});
 
 				$("#chnTime_" + ithchain.nexus).html(
-					symbol + countdown + "<br />" + "<sup>" + time + "</sup>"
+					symbol + countdownstr + "<br />" + "<sup>" + timestr + "</sup>"
 				);
 			}
 		}
@@ -29459,7 +29465,7 @@ W = {
 					W.isFallbackEnabled = true;
 					W.updateObjectives();
 					I.print("<br />Too many failed API retrievals. Switched to backup API server.<br />"
-						+ "If problem persists, please consult <a" + U.convertExternalAnchor(U.URL_API.Support) + ">ArenaNet API forums</a> for status updates.");
+						+ "If problem persists, please consult <a" + U.convertExternalAnchor(U.URL_API.Support) + ">ArenaNet API forum</a> for status updates.");
 				}
 				else
 				{
