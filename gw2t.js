@@ -137,7 +137,7 @@ O = {
 					var message = "New game build available";
 					I.print("<a" + U.convertExternalAnchor(U.URL_META.BuildNotes) + ">" + message + "!</a> "
 						+ "GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + " Diff: " + (valA - parseInt(valB)) + "<br />"
-						+ T.formatWeektime(new Date(), true) + " - <a href='./?bol_alertBuild=false'>Turn off this alert?</a>");
+						+ T.formatWeektime(new Date(), true) + " - <a href='./?bol_alertBuild=false'>Turn off patch alarm?</a>");
 					D.speak("Alert! " + message);
 					localStorage[key] = valA;
 				}
@@ -2805,6 +2805,7 @@ U = {
 		MatchesFallback: "https://api.guildwars2.com/v1/wvw/matches.json",
 		
 		// Other
+		Support: "https://forum-en.guildwars2.com/forum/community/api",
 		Build: "https://api.guildwars2.com/v2/build",
 		Worlds: "https://api.guildwars2.com/v2/worlds",
 		Prefix: "https://api.guildwars2.com/v2/",
@@ -29457,7 +29458,8 @@ W = {
 				{
 					W.isFallbackEnabled = true;
 					W.updateObjectives();
-					I.print("Too many failed API retrievals. Switched to backup API server.");
+					I.print("<br />Too many failed API retrievals. Switched to backup API server.<br />"
+						+ "If problem persists, please consult <a" + U.convertExternalAnchor(U.URL_API.Support) + ">ArenaNet API forums</a> for status updates.");
 				}
 				else
 				{

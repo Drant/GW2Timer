@@ -1669,9 +1669,16 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Warrior Quaggan Backpack Cover",
-		id: "39519",
+		name: "Covert Charr Backpack Cover",
+		id: "39516",
 		price: 300,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Fuzzy Panda Hat",
+		id: "64744",
+		price: 200,
 		discount: null,
 		col: 1
 	},
@@ -1700,13 +1707,6 @@ Sale: {
 		name: "Top Hat",
 		id: "64750",
 		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Wintersday Earmuffs",
-		id: "65200",
-		price: 25,
 		discount: null,
 		col: 1
 	}
