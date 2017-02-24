@@ -346,7 +346,8 @@ Special: [
 	{u: 444, i: 80371, n: "Mini Demmi Beetlestone", p: {gem: 400}},
 	{u: 450, i: 80804, n: "Mini Emperor Llama", p: {league: 10}},
 	{u: 449, i: 80833, n: "Mini Fancy Emperor Llama", p: {craft: true}},
-	{u: 453, i: 80738, n: "Mini Elegant Emperor Llama", p: {craft: true}}
+	{u: 453, i: 80738, n: "Mini Elegant Emperor Llama", p: {craft: true}},
+	{u: 451, i: 80709, n: "Mini Lavish Emperor Llama", p: {craft: true}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},

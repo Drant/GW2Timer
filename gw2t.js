@@ -20478,7 +20478,7 @@ C = {
 	{
 		var i;
 		var ithchain;
-		var countdownstr, timestr, symbol = "";
+		var countdownstr, timestr;
 		var delayseconds;
 		
 		var subscribetext = "<dfn>" + D.getPhraseTitle("click to <br/> subscribe") + "</dfn><br />";
@@ -20510,12 +20510,19 @@ C = {
 			// Update inactive chains' displayed time
 			if (C.isChainCurrent(ithchain) === false)
 			{
+				var symbol = "";
+				var wantneg = (ithchain.flags.minuteDelay < 0) ? true : false;
 				countdownstr = T.getTimeFormatted(
 				{
 					aWantLetters: true,
 					aWantSeconds: false,
+					aWantNegative: wantneg,
 					aCustomTimeInSeconds: T.getSecondsUntilChainStarts(ithchain) + delayseconds
 				});
+				if (wantneg && countdownstr.indexOf(I.Symbol.Negative) !== -1)
+				{
+					symbol = I.Symbol.StateActive + " ";
+				}
 				timestr = T.getTimeFormatted(
 				{
 					aWantLetters: false,
@@ -30630,6 +30637,7 @@ T = {
 	 * @objparam boolean aWantSeconds to include the seconds.
 	 * @objparam boolean aWantHours to include the hours.
 	 * @objparam boolean aWantLetters to format #h #m #s instead of colons. Overrides want24.
+	 * @objparam boolean aWantNegative allow negative time.
 	 * @objparam Date aCustomTimeInDate to convert to time string.
 	 * @objparam int aCustomTimeInSeconds to convert to a time string, will use
 	 * current time if undefined.
@@ -30646,6 +30654,7 @@ T = {
 		}, pSettings);
 		
 		var sec, min, hour;
+		var negsym = "";
 		var now = (Settings.aCustomTimeInDate === undefined) ? (new Date()) : Settings.aCustomTimeInDate;
 		if (Settings.aCustomTimeInSeconds === undefined)
 		{
@@ -30675,14 +30684,27 @@ T = {
 		else
 		{
 			// Regard negative input
-			Settings.aCustomTimeInSeconds = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
+			var cust = Settings.aCustomTimeInSeconds;
+			if (Settings.aWantNegative)
+			{
+				if (cust < 0)
+				{
+					cust = Math.abs(cust);
+					negsym = I.Symbol.Negative;
+				}
+			}
+			else
+			{
+				cust = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
+			}
+			
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
 			 */
-			sec = Settings.aCustomTimeInSeconds % T.cSECONDS_IN_MINUTE;
-			min = ~~(Settings.aCustomTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
-			hour = ~~(Settings.aCustomTimeInSeconds / T.cSECONDS_IN_HOUR);
+			sec = cust % T.cSECONDS_IN_MINUTE;
+			min = ~~(cust / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			hour = ~~(cust / T.cSECONDS_IN_HOUR);
 		}
 		
 		var minsec = "";
@@ -30726,9 +30748,9 @@ T = {
 		{
 			if (hour === 0 || Settings.aWantHours === false)
 			{
-				return minsec;
+				return negsym + minsec;
 			}
-			return hour + D.getWord("h") + " " + minsec;
+			return negsym + hour + D.getWord("h") + " " + minsec;
 		}
 		if (Settings.aWant24)
 		{
