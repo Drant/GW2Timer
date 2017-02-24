@@ -20478,8 +20478,8 @@ C = {
 	{
 		var i;
 		var ithchain;
-		var countdownstr, timestr, symbol;
-		var delayseconds, countdownsec;
+		var countdownstr, timestr, symbol = "";
+		var delayseconds;
 		
 		var subscribetext = "<dfn>" + D.getPhraseTitle("click to <br/> subscribe") + "</dfn><br />";
 		
@@ -20510,18 +20510,11 @@ C = {
 			// Update inactive chains' displayed time
 			if (C.isChainCurrent(ithchain) === false)
 			{
-				symbol = "";
-				countdownsec = T.getSecondsUntilChainStarts(ithchain) + delayseconds;
-				if (countdownsec < 0 && ithchain.flags.minuteDelay !== undefined)
-				{
-					symbol = I.Symbol.StateActive + " ";
-					countdownsec = 0;
-				}
 				countdownstr = T.getTimeFormatted(
 				{
 					aWantLetters: true,
 					aWantSeconds: false,
-					aCustomTimeInSeconds: countdownsec
+					aCustomTimeInSeconds: T.getSecondsUntilChainStarts(ithchain) + delayseconds
 				});
 				timestr = T.getTimeFormatted(
 				{
@@ -25938,10 +25931,10 @@ G = {
 		calendar.after(I.cThrobber);
 		T.getDaily().done(function()
 		{
-			G.insertDailyDay(calendar, T.DailyToday, pDate, true, pIsDashboard); // Today's dailies
+			G.insertDailyDay(calendar, T.DailyToday, pDate, pIsDashboard); // Today's dailies
 			T.getDaily({aWantGetTomorrow: true}).done(function() // Tomorrow's dailies
 			{
-				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), false, pIsDashboard);
+				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), pIsDashboard);
 				finalizeDailies(calendar);
 			});
 		}).fail(function()
@@ -25981,13 +25974,14 @@ G = {
 	 * @param object pDaily daily object from general.js
 	 * @param object pDate of the day.
 	 */
-	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsToday, pIsDashboard)
+	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsDashboard)
 	{
 		var calendar = $(pContainer);
 		// Daily category rows (game modes)
 		var pve = pDailyObj["pve"];
 		var pvp = pDailyObj["pvp"];
 		var wvw = pDailyObj["wvw"];
+		var fractals = pDailyObj["fractals"];
 		var dayclass = "";
 		var bosshtml = "";
 		var dailynicks, d0, d1, d2, d3, d4;
@@ -26110,50 +26104,29 @@ G = {
 			I.qTip.init(dailybox.find("ins"));
 			I.qTip.init(".dlyFractalScales");
 		};
-		if (pIsToday)
+		
+		// Daily fractal scale numbers
+		var fractalmeta = T.Daily.Fractal;
+		var scaleA = T.DailyAssociation[(fractals[0])]; // The daily scales are located in these API array indexes
+		var scaleB = T.DailyAssociation[(fractals[1])];
+		var scaleC = T.DailyAssociation[(fractals[fractals.length - 1])];
+		var scalestr = "";
+		if (scaleA && scaleB && scaleC)
 		{
-			// Get today's fractals from API
-			$.getJSON(U.URL_API.Fractal, function(pData)
-			{
-				var ach = pData.achievements;
-				if ( ! ach)
-				{
-					return;
-				}
-				// Daily fractal scale numbers
-				var fractal = T.Daily.Fractal;
-				var scaleA = T.DailyAssociation[(ach[0])]; // The daily scales are located in these API array indexes
-				var scaleB = T.DailyAssociation[(ach[1])];
-				var scaleC = T.DailyAssociation[(ach[ach.length - 1])];
-				var scalestr = "";
-				if (scaleA && scaleB && scaleC)
-				{
-					scalestr = "<a class='dlyFractalScales' title='" + D.getObjectName(fractal.Scale) + "' "
-						+ U.convertExternalAnchor(D.getObjectURL(fractal)) + ">" + scaleA + " " + scaleB + " " + scaleC + "</a>";
-				}
-				
-				// Daily fractal islands
-				var islandids = [ach[3], ach[7], ach[11]]; // The daily islands are located in these API array indexes
-				var islandA = T.DailyAssociation[islandids[0]];
-				var islandB = T.DailyAssociation[islandids[1]];
-				var islandC = T.DailyAssociation[islandids[2]];
-				if (islandA && islandB && islandC)
-				{
-					insertFractal([islandA, islandB, islandC], islandids, scalestr);
-				}
-				Q.bindAchievement(".chl_fractal");
-			}).fail(function()
-			{
-				I.warn("daily fractal set");
-			});
+			scalestr = "<a class='dlyFractalScales' title='" + D.getObjectName(fractalmeta.Scale) + "' "
+				+ U.convertExternalAnchor(D.getObjectURL(fractalmeta)) + ">" + scaleA + " " + scaleB + " " + scaleC + "</a>";
 		}
-		else
+
+		// Daily fractal islands
+		var islandids = [fractals[5], fractals[9], fractals[13]]; // The daily islands of the highest scale are located in these API array indexes
+		var islandA = T.DailyAssociation[islandids[0]];
+		var islandB = T.DailyAssociation[islandids[1]];
+		var islandC = T.DailyAssociation[islandids[2]];
+		if (islandA && islandB && islandC)
 		{
-			// If getting future fractals then use prewritten schedule
-			var sched = T.Daily.Fractal.Schedule;
-			var fractalday = T.getDaysSince(pDate, T.Daily.Fractal.Epoch) % sched.length;
-			insertFractal(sched[fractalday]);
+			insertFractal([islandA, islandB, islandC], islandids, scalestr);
 		}
+		Q.bindAchievement(".chl_fractal");
 	},
 	
 	/*
@@ -31302,7 +31275,8 @@ T = {
 		var dailyobj = {
 			pve: [],
 			pvp: [],
-			wvw: []
+			wvw: [],
+			fractals: []
 		};
 		var a = T.DailyAssociation;
 		var newpve = [];
@@ -31345,6 +31319,14 @@ T = {
 				}
 			}
 		}
+		
+		// Flatten API's fractal array of objects into an array of IDs
+		for (var i in pObj.fractals)
+		{
+			var id = pObj.fractals[i].id;
+			dailyobj.fractals.push(id);
+		}
+		
 		return dailyobj;
 	},
 	

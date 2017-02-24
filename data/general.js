@@ -475,25 +475,7 @@ Fractal:
 		name_de: "Empfohlenes Fraktal Schwierigkeitsgrad",
 		name_es: "Fractal recomendado escala",
 		name_fr: "Fractale recommandée de niveau"
-	},
-	Epoch: new Date("2017-02-14T00:00:00Z"),
-	Schedule: [
-		["Aquatic", "Furnace", "Molten"],
-		["Volcanic", "Snowblind", "Nightmare"],
-		["Aetherblade", "Uncategorized", "Thaumanova"],
-		["Chaos", "Cliffside", "Urban"],
-		["Maitrin", "Underground", "Volcanic"],
-		["Nightmare", "Snowblind", "Ocean"],
-		["Chaos", "Uncategorized", "Urban"],
-		["Swamp", "Cliffside", "Furnace"],
-		["Thaumanova", "Underground", "Molten"],
-		["Swamp", "Aetherblade", "Volcanic"],
-		["Snowblind", "Thaumanova", "Aquatic"],
-		["Underground", "Ocean", "Urban"],
-		["Chaos", "Aetherblade", "Nightmare"],
-		["Maitrin", "Cliffside", "Molten"],
-		["Swamp", "Uncategorized", "Ocean"]
-	]
+	}
 },
 Bookmark:
 {
@@ -1424,7 +1406,8 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>.",
+	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>."
+		+ "<br />The <a href='http://gw2timer.com/?page=Daily'>daily fractals</a> for tomorrow are now via ArenaNet API and should always be correct.<br />",
 	wvw: "",
 	Start: new Date("2016-02-14T16:00:00Z"),
 	Finish: new Date("2017-02-28T16:00:00Z"),
@@ -1592,23 +1575,23 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Incarnate Light Armor Skin",
-		id: "63909",
-		price: 800,
+		name: "Frost Wasp Logging Tool",
+		id: "48825",
+		price: 1000,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Strider's Medium Armor Skin",
-		id: "63899",
-		price: 800,
+		name: "Lava Lounge Pass",
+		id: "79500",
+		price: 1000,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Rampart Heavy Armor Skin",
-		id: "63929",
-		price: 800,
+		name: "Noble's Folly Pass",
+		id: "79140",
+		price: 1000,
 		discount: null,
 		col: 0
 	},
@@ -1641,6 +1624,55 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Covert Charr Backpack Cover",
+		id: "39516",
+		price: 300,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Aetherblade Light Armor Skin",
+		id: "42870",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Aetherblade Medium Armor Skin",
+		id: "42869",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Aetherblade Heavy Armor Skin",
+		id: "42868",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Incarnate Light Armor Skin",
+		id: "63909",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Strider's Medium Armor Skin",
+		id: "63899",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Rampart Heavy Armor Skin",
+		id: "63929",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Bloodstone Dye Kit",
 		id: "79354",
 		price: 125,
@@ -1662,36 +1694,8 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Frost Wasp Logging Tool",
-		id: "48825",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Covert Charr Backpack Cover",
-		id: "39516",
-		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Fuzzy Panda Hat",
 		id: "64744",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Bear Hat",
-		id: "64755",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Leopard Hat",
-		id: "64746",
 		price: 200,
 		discount: null,
 		col: 1
