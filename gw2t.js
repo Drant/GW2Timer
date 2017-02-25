@@ -29429,7 +29429,7 @@ W = {
 				D.stopSpeech();
 				W.reinitializeServerChange(false);
 				W.addLogEntry("Restarted due to API error.");
-				I.write("Too many objectives updated. " + I.cErrorAPI);
+				I.write("Too many objectives updated. ArenaNet API server may be having problems.");
 			}
 			if (W.isAPIFailed)
 			{

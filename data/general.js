@@ -1617,18 +1617,74 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Glowing Crimson Mask",
-		id: "63891",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Covert Charr Backpack Cover",
 		id: "39516",
 		price: 300,
 		discount: null,
 		col: 0
+	},
+	{
+		name: "Bloodstone Dye Kit",
+		id: "79354",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 0
+	},
+	{
+		name: "Blue Shift Dye Kit",
+		id: "78734",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 0
+	},
+	{
+		name: "Taimi's Dye Kit",
+		id: "67291",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 0
+	},
+	{
+		name: "Mask of the Wanderer Skin",
+		id: "48944",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mask of the Queen",
+		id: "44608",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Aviator Cap",
+		id: "64742",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Fuzzy Panda Hat",
+		id: "64744",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Top Hat",
+		id: "64750",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Inventor's Sunglasses",
+		id: "64747",
+		price: 150,
+		discount: null,
+		col: 1
 	},
 	{
 		name: "Aetherblade Light Armor Skin",
@@ -1669,48 +1725,6 @@ Sale: {
 		name: "Rampart Heavy Armor Skin",
 		id: "63929",
 		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Bloodstone Dye Kit",
-		id: "79354",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 1
-	},
-	{
-		name: "Blue Shift Dye Kit",
-		id: "78734",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 1
-	},
-	{
-		name: "Taimi's Dye Kit",
-		id: "67291",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 1
-	},
-	{
-		name: "Fuzzy Panda Hat",
-		id: "64744",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Sailor's Beanie",
-		id: "64749",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Top Hat",
-		id: "64750",
-		price: 200,
 		discount: null,
 		col: 1
 	}
