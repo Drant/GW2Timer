@@ -1575,27 +1575,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Frost Wasp Logging Tool",
-		id: "48825",
-		price: 1000,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Lava Lounge Pass",
-		id: "79500",
-		price: 1000,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Noble's Folly Pass",
-		id: "79140",
-		price: 1000,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Elegant Fan Focus Skin",
 		id: "69664",
 		price: 600,
@@ -1647,6 +1626,13 @@ Sale: {
 	{
 		name: "Mask of the Wanderer Skin",
 		id: "48944",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mask of the Silent Skin",
+		id: "49157",
 		price: 500,
 		discount: null,
 		col: 1

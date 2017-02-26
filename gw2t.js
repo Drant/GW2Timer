@@ -4983,7 +4983,7 @@ Z = {
 				}
 				else
 				{
-					I.print("<a" + U.convertExternalAnchor("https://api.guildwars2.com/v2") + ">https://api.guildwars2.com/v2</a> for full list of API endpoints.");
+					U.openExternalURL("https://api.guildwars2.com/v2");
 				}
 			}},
 			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
