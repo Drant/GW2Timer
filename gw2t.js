@@ -2781,7 +2781,6 @@ U = {
 		Achievements: "https://api.guildwars2.com/v2/achievements",
 		Daily: "https://api.guildwars2.com/v2/achievements/daily",
 		Tomorrow: "https://api.guildwars2.com/v2/achievements/daily/tomorrow",
-		Fractal: "https://api.guildwars2.com/v2/achievements/categories/88",
 		
 		// Map
 		LangKey: "",
