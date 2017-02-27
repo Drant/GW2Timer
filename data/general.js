@@ -1406,8 +1406,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>."
-		+ "<br />The <a href='http://gw2timer.com/?page=Daily'>daily fractals</a> for tomorrow are now via ArenaNet API and should always be correct.<br />",
+	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>.",
 	wvw: "",
 	Start: new Date("2016-02-14T16:00:00Z"),
 	Finish: new Date("2017-02-28T16:00:00Z"),
@@ -1575,9 +1574,9 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Elegant Fan Focus Skin",
-		id: "69664",
-		price: 600,
+		name: "Ceremonial Plated Outfit",
+		id: "67040",
+		price: 700,
 		discount: null,
 		col: 0
 	},
@@ -1603,20 +1602,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Bloodstone Dye Kit",
-		id: "79354",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 0
-	},
-	{
-		name: "Blue Shift Dye Kit",
-		id: "78734",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 0
-	},
-	{
 		name: "Taimi's Dye Kit",
 		id: "67291",
 		price: 125,
@@ -1638,9 +1623,23 @@ Sale: {
 		col: 1
 	},
 	{
+		name: "Wreath of Cooperation",
+		id: "66309",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Mask of the Queen",
 		id: "44608",
 		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Ringmaster's Hat",
+		id: "64745",
+		price: 200,
 		discount: null,
 		col: 1
 	},
@@ -1654,13 +1653,6 @@ Sale: {
 	{
 		name: "Fuzzy Panda Hat",
 		id: "64744",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Top Hat",
-		id: "64750",
 		price: 200,
 		discount: null,
 		col: 1
