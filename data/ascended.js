@@ -714,7 +714,8 @@ Back: [
 	{i: 80289, n: "Assaulter's Burden", p: {magnetite: 600}},
 	{i: 80434, n: "Malicious Burden", p: {magnetite: 600}},
 	{i: 80184, n: "Defender's Burden", p: {magnetite: 600}},
-	{i: 80541, n: "Healer's Burden", p: {magnetite: 600}}
+	{i: 80541, n: "Healer's Burden", p: {magnetite: 600}},
+	{i: 80437, n: "Assaulter's Burden (Infused)", p: {magnetite: 600}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1502,7 +1503,8 @@ MediumGloves: [
 	{i: 80283, n: "Malicious Gloves of the Obedient", p: {magnetite: 600}},
 	{i: 80481, n: "Defender's Gloves of the Obedient", p: {magnetite: 600}},
 	{i: 80610, n: "Healer's Gloves of the Obedient", p: {magnetite: 600}},
-	{i: 80779, n: "Illustrious Grips", p: {coin: 900000}}
+	{i: 80779, n: "Illustrious Grips", p: {coin: 900000}},
+	{i: 80689, n: "Illustrious Grips", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -1583,7 +1585,8 @@ MediumBoots: [
 	{i: 67128, n: "Ardent Glorious Shinplates", p: {coin: 1000000}},
 	{i: 80000, n: "Ardent Glorious Shinplates", p: {coin: 1000000}},
 	{i: 80300, n: "Thackeray's Boots", p: {coin: 1000000}},
-	{i: 80836, n: "Illustrious Striders", p: {coin: 1000000}}
+	{i: 80836, n: "Illustrious Striders", p: {coin: 1000000}},
+	{i: 80694, n: "Illustrious Striders", p: {coin: 1000000}}
 ],
 HeavyHelm: [
 	{i: 48093, n: "Ahamid's Visor", p: {coin: 900000}},
@@ -1754,6 +1757,7 @@ HeavyGloves: [
 	{i: 79965, n: "Ardent Glorious Gauntlets", p: {coin: 900000}},
 	{i: 80335, n: "Assaulter's Gauntlets of the Obedient", p: {magnetite: 600}},
 	{i: 80572, n: "Malicious Gauntlets of the Obedient", p: {magnetite: 600}},
+	{i: 80306, n: "Defender's Gauntlets of the Obedient", p: {magnetite: 600}},
 	{i: 80639, n: "Healer's Gauntlets of the Obedient", p: {magnetite: 600}},
 	{i: 80227, n: "Thackeray's Gauntlets", p: {coin: 900000}},
 	{i: 80673, n: "Refined Envoy Gauntlets", p: {coin: 900000}},
@@ -1841,7 +1845,8 @@ HeavyBoots: [
 	{i: 80045, n: "Ardent Glorious Wargreaves", p: {coin: 900000}},
 	{i: 80132, n: "Thackeray's Greaves", p: {coin: 900000}},
 	{i: 80127, n: "Refined Envoy Greaves", p: {coin: 900000}},
-	{i: 80803, n: "Illustrious Greaves", p: {coin: 900000}}
+	{i: 80803, n: "Illustrious Greaves", p: {coin: 900000}},
+	{i: 80808, n: "Illustrious Greaves", p: {coin: 900000}}
 ],
 LightHelmAquatic: [
 	{i: 73723, n: "Ahamid's Cloth Breather", p: {coin: 900000}},
