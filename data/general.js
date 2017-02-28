@@ -1409,7 +1409,7 @@ Announcement:
 	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>.",
 	wvw: "",
 	Start: new Date("2016-02-14T16:00:00Z"),
-	Finish: new Date("2017-02-28T16:00:00Z"),
+	Finish: new Date("2017-03-14T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
@@ -1531,8 +1531,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-02-21T16:00:00Z"),
-	Finish: new Date("2017-02-28T16:00:00Z"),
+	Start: new Date("2017-02-28T16:00:00Z"),
+	Finish: new Date("2017-03-07T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1553,10 +1553,59 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Shattered Bloondstone Ascender Combo",
-		id: "http://i.imgur.com/EZQtPxz.png",
-		price: 500,
-		discount: 650,
+		name: "Braham's Bitterfrost Frontier Pack",
+		id: "http://i66.tinypic.com/2gu9w6c.png",
+		price: 2000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Braham's Heavy Armor Skin",
+		id: "43157",
+		price: 640,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Braham's Mace Skin",
+		id: "42653",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Braham's Shield Skin",
+		id: "42656",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Braham's Wolfblood Pauldrons",
+		id: "80082",
+		price: 300,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Braham Eirsson",
+		id: "68572",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Permanent Llama Finisher",
+		id: "49952",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Permanent Unicorn Finisher",
+		id: "69616",
+		price: 700,
+		discount: null,
 		col: 0
 	},
 	{
@@ -1581,13 +1630,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Emissary's Staff",
-		id: "79315",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Glowing Green Mask",
 		id: "67038",
 		price: 500,
@@ -1599,13 +1641,6 @@ Sale: {
 		id: "39516",
 		price: 300,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Taimi's Dye Kit",
-		id: "67291",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 0
 	},
 	{
