@@ -1609,20 +1609,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Shattered Bloodstone Glider",
-		id: "80795",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Bloodstone Ascender",
-		id: "80854",
-		price: 250,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Ceremonial Plated Outfit",
 		id: "67040",
 		price: 700,
@@ -1640,6 +1626,20 @@ Sale: {
 		name: "Covert Charr Backpack Cover",
 		id: "39516",
 		price: 300,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Shattered Bloodstone Glider",
+		id: "80795",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Bloodstone Ascender",
+		id: "80854",
+		price: 250,
 		discount: null,
 		col: 0
 	},

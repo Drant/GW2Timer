@@ -10211,7 +10211,8 @@ Weaponsmith_Greatsword: [
 	{u: 11546, i: 75009, n: "Ossa's Claymore", r: [[74632, 1], [45847, 1], [45855, 1], [46746, 1]], s: 70871},
 	{u: 11580, i: 71040, n: "Berserker's Auric Greatsword", r: [[70792, 1], [19920, 1], [71352, 1], [76084, 1]]},
 	{u: 11715, i: 73999, n: "Minstrel's Pearl Broadsword", r: [[72875, 1], [71352, 1], [76084, 1]], s: 76107, t: 76107},
-	{u: 11961, i: 80226, n: "Thackeray's Crusader", r: [[80595, 1], [45847, 1], [45855, 1], [46746, 1]], s: 80563}
+	{u: 11961, i: 80226, n: "Thackeray's Crusader", r: [[80595, 1], [45847, 1], [45855, 1], [46746, 1]], s: 80563},
+	{u: 12007, i: 80088, n: "Seraph Pearl Broadsword", r: [[80454, 1], [71352, 1], [76084, 1]], s: 80440}
 ],
 Weaponsmith_Hammer: [
 	{u: 5418, i: 29991, n: "Charr Hammer", r: [[19767, 1], [19679, 6]], s: 9507},
@@ -11075,7 +11076,8 @@ Scribe_GuildDecoration: [
 	{u: 11863, i: 79491, n: "Spire of the Solid Ocean", r: [[71159, 1], [70489, 1], [68942, 2]]},
 	{u: 11911, i: 80347, n: "Gold Cairn the Indomitable Trophy", r: [[70933, 1]]},
 	{u: 11930, i: 80093, n: "Gold Mursaat Overseer Trophy", r: [[70933, 1]]},
-	{u: 11972, i: 80625, n: "Gold Samarog Trophy", r: [[70933, 1]]}
+	{u: 11972, i: 80625, n: "Gold Samarog Trophy", r: [[70933, 1]]},
+	{u: 11900, i: 80222, n: "Gold Deimos Trophy", r: [[70933, 1]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},

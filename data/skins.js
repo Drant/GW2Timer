@@ -722,7 +722,8 @@ Armor_Light_Shoulders: [
 	{u: 6722, i: 78579, n: "Triumphant Epaulets", p: {badge: 0}},
 	{u: 6824, i: 78874, n: "Experimental Envoy Mantle", p: {craft: true}},
 	{u: 6970, i: 79455, n: "Light Dragonscale Epaulets", p: {achievement: 0}},
-	{u: 5631, i: 79984, n: "Ardent Glorious Epaulets", p: {glory: 150}}
+	{u: 5631, i: 79984, n: "Ardent Glorious Epaulets", p: {glory: 150}},
+	{u: 7071, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", t: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -1253,7 +1254,8 @@ Armor_Medium_Shoulders: [
 	{u: 6733, i: 78269, n: "Triumphant Shoulderguards", p: {badge: 0}},
 	{u: 6794, i: 78971, n: "Experimental Envoy Shoulderpads", p: {craft: true}},
 	{u: 6964, i: 79481, n: "Medium Dragonscale Epaulets", p: {achievement: 0}},
-	{u: 5619, i: 80012, n: "Ardent Glorious Shoulderguards", p: {glory: 150}}
+	{u: 5619, i: 80012, n: "Ardent Glorious Shoulderguards", p: {glory: 150}},
+	{u: 7066, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}}
 ],
 Armor_Medium_Coat: [
 	{u: 6, i: 41169, n: "Rawhide Vest", p: {badge: 30}},
@@ -1785,7 +1787,8 @@ Armor_Heavy_Shoulders: [
 	{u: 6796, i: 78977, n: "Experimental Envoy Pauldrons", p: {craft: true}},
 	{u: 6951, i: 79468, n: "Heavy Dragonscale Epaulets", p: {achievement: 0}},
 	{u: 5626, i: 79987, n: "Ardent Glorious Pauldrons", p: {glory: 150}},
-	{u: 7088, i: 80236, n: "Refined Envoy Pauldrons", p: {craft: true}}
+	{u: 7088, i: 80236, n: "Refined Envoy Pauldrons", p: {craft: true}},
+	{u: 7064, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}}
 ],
 Armor_Heavy_Coat: [
 	{u: 2, i: 3168, n: "Chainmail Chestpiece", t: [2868, 2870, 2869, 2858, 2856, 2857, 2859, 2861, 2860, 2862, 2865, 2864, 2863, 2867, 2866, 2871, 3114, 3132, 3150, 3168, 3207, 3205, 3206, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3208, 3224, 3209, 3210, 3211, 5018, 5045, 5063, 5081, 5099, 5030, 5135, 5117, 5153, 5171, 5189, 5207, 5225, 5243, 5261, 5279]},

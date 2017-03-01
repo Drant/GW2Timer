@@ -14,7 +14,7 @@
 /* Overlay exclusive elements */
 #prjController {
 	position: fixed; z-index: 100;
-	top: calc(50% - 48px); /* Total height of all the buttons divided by two*/
+	top: calc(50%); /* Buttons should be below the half-division line of the screen */
 }
 .prjToggle {
 	display: block;
