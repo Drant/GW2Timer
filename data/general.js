@@ -1568,6 +1568,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Mursaat Backpack and Glider Combo",
+		id: "79523",
+		price: 560,
+		discount: 700,
+		col: 0
+	},
+	{
 		name: "Braham's Mace Skin",
 		id: "42653",
 		price: 600,
