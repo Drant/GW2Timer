@@ -29289,7 +29289,7 @@ W = {
 			}
 			var map, obj, apiobj;
 			var numobjflipped = 0;
-			var maxobjflipped = 12;
+			var maxobjflipped = 16;
 			var istoomanyflips = false;
 			
 			// Initialize stagnant variables once
@@ -29769,7 +29769,7 @@ W = {
 		var obj = pObjective;
 		var icon = $("#objIcon_" + obj.id);
 		var claim = "";
-		if (obj.claimed_by !== null)
+		if (obj.claimed_by)
 		{
 			claim = "<aside><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString() + "</aside>"
 				+ "<aside><dfn>Guild:</dfn> " + U.escapeHTML(obj.guild_name + " [" + obj.tag + "]") + "</aside>"
