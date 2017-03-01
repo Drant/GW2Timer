@@ -1406,7 +1406,8 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>.",
+	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>."
+		+ "<br /><a href='http://forum.renaka.com/topic/5546166/'>GW2Navi 2017</a> overlay app released. <a href='https://github.com/Drant/GW2Navi'>GitHub</a> repository for viewing source code.",
 	wvw: "",
 	Start: new Date("2016-02-14T16:00:00Z"),
 	Finish: new Date("2017-03-14T16:00:00Z"),
