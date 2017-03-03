@@ -6297,11 +6297,11 @@ Z = {
 			if (Q.isTradeable(pItem))
 			{
 				// IDs of items that unlock the skin
-				if (pEntry.t === undefined)
+				if (pEntry.b === undefined)
 				{
-					pEntry.t = [];
+					pEntry.b = [];
 				}
-				pEntry.t.push(pItem.id);
+				pEntry.b.push(pItem.id);
 			}
 			else
 			{
@@ -6894,7 +6894,7 @@ Z = {
 						}
 						if (sheetstradeable[recipe.id])
 						{
-							entry.t = sheetstradeable[recipe.id];
+							entry.b = sheetstradeable[recipe.id];
 						}
 						record[catname].push(entry);
 						newitems.push(db[itemid]);
@@ -8807,7 +8807,7 @@ A = {
 				// Initialize the recipes unlocks array
 				unlocksdata.Recipes = [];
 				unlockedids = {};
-				itemkey = "t"; // The item ID of tradeable recipes is stored in the recipes record under this object key
+				itemkey = "b"; // The item ID of tradeable recipes is stored in the recipes record under this object key
 				A.Data.Characters.forEach(function(iChar)
 				{
 					if (iChar.recipes)
@@ -11440,11 +11440,11 @@ V = {
 					var entry = (record[i])[ii];
 					if (itemlookup[entry.i])
 					{
-						entry.oComment = "<var class='itmColor_reminder'>" + craftstr + (itemlookup[entry.i]).join(", ") + "</var>";
+						entry.t = "<var class='itmColor_reminder'>" + craftstr + (itemlookup[entry.i]).join(", ") + "</var>";
 					}
 					else
 					{
-						delete entry.oComment;
+						delete entry.t;
 					}
 				}
 			}
@@ -13362,7 +13362,7 @@ B = {
 				B.fillSlot(slot, unlockobj.i || unlockobj, {
 					aUnlockAssoc: Settings.aUnlockAssoc,
 					aUnlockObj: unlockobj,
-					aComment: unlockobj.oComment,
+					aComment: unlockobj.t,
 					aIsCatalog: Settings.aIsCatalog,
 					aIsCustomCatalog: Settings.aIsCustomCatalog,
 					aCallback: function()
