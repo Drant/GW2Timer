@@ -81,7 +81,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170221},
+		programVersion: {key: "int_utlProgramVersion", value: 170303},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -265,6 +265,7 @@ O = {
 		bol_auditTransactions: true,
 		bol_auditVault: true,
 		bol_auditAccountOnReset: false,
+		bol_auditHistoryConverted: false,
 		int_numAuditReports: 1024,
 		// Trading
 		bol_refreshPrices: true,
@@ -1676,6 +1677,7 @@ X = {
 		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup"},
 		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff"},
 		// Unlocks
+		HungryCats: { key: "str_chlHungryCats", urlkey: "hungrycats"},
 		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes"},
 		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight"},
 		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge"},
@@ -2843,6 +2845,10 @@ U = {
 		Dyes: "data/dyes.js",
 		Minis: "data/minis.js",
 		Finishers: "data/finishers.js",
+		Nodes: "data/nodes.js",
+		Cats: "data/cats.js",
+		Dungeons: "data/dungeons.js",
+		Raids: "data/raids.js",
 		Catalog: "data/catalog.js",
 		Cleanup: "data/cleanup.js",
 		Ascended: "data/ascended.js",
@@ -5865,13 +5871,13 @@ Z = {
 			{
 				Z.freeFiles();
 				var data = U.getRecordData(pType);
-				var itemids = [];
+				var itemids = {};
 				for (var i in data)
 				{
 					var catarr = data[i];
 					for (var ii = 0; ii < catarr.length; ii++)
 					{
-						itemids.push(catarr[ii].i);
+						itemids[(catarr[ii].i)] = true;
 					}
 				}
 				
@@ -5881,10 +5887,9 @@ Z = {
 					Z.APICacheArrayOfObjects = null;
 					Z.APICacheArrayOfObjects = [];
 					var db = pDatabase[i];
-					for (var ii = 0; ii < itemids.length; ii++)
+					for (var ii in itemids)
 					{
-						var itemid = itemids[ii];
-						Z.APICacheArrayOfObjects.push(db[itemid]);
+						Z.APICacheArrayOfObjects.push(db[ii]);
 					}
 					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
 					var filename = pType.toLowerCase() + "_" + i + I.cJSON;
@@ -6926,9 +6931,8 @@ Z = {
 	 */
 	collatePrices: function()
 	{
-		
 		// Should only include records that have tradeable items
-		var recordnames = ["materials", "skins", "dyes", "minis", "finishers", "recipes"];
+		var recordnames = ["materials", "skins", "dyes", "minis", "finishers", "nodes", "recipes"];
 		var recordnamescounter = 0;
 		var db, record, catarr;
 		var idstocache = {};
@@ -7077,6 +7081,13 @@ Z = {
 					idstocache[iEntry.i] = true;
 				}
 			});
+			iterateRecord(function(iEntry) // Nodes
+			{
+				if (Q.isTradeable(db[iEntry.i]))
+				{
+					idstocache[iEntry.i] = true;
+				}
+			});
 			iterateRecord(function(iEntry) // Recipes
 			{
 				if (iEntry.t)
@@ -7194,12 +7205,16 @@ A = {
 		Bank: "account/bank",
 		Dyes: "account/dyes",
 		Finishers: "account/finishers",
+		Nodes: "account/home/nodes",
+		Cats: "account/home/cats",
 		Materials: "account/materials",
 		Minis: "account/minis",
 		Outfits: "account/outfits",
 		Skins: "account/skins",
 		Wallet: "account/wallet",
 		Recipes: "account/recipes",
+		Dungeons: "account/dungeons",
+		Raids: "account/raids",
 		Characters: "characters",
 		Transactions: "commerce/transactions",
 		CurrentBuys: "commerce/transactions/current/buys",
@@ -8472,7 +8487,7 @@ A = {
 	flattenUnlocks: function(pUnlocks)
 	{
 		var arr = [];
-		if (pUnlocks.length && isNaN(pUnlocks[0]))
+		if (pUnlocks.length && pUnlocks[0].id !== undefined)
 		{
 			pUnlocks.forEach(function(iUnlock)
 			{
@@ -8587,6 +8602,7 @@ A = {
 			Dyes: {},
 			Minis: {},
 			Finishers: {},
+			Nodes: {},
 			Recipes: {}
 		};
 		var unlocksdata = { // Account's unlocked IDs retrieved from API
@@ -8594,7 +8610,8 @@ A = {
 			Outfits: {},
 			Dyes: {},
 			Minis: {},
-			Finishers: {}
+			Finishers: {},
+			Nodes: {}
 		};
 		
 		// Resets the auditing process in case it failed to let the user restart it
@@ -9253,6 +9270,23 @@ A = {
 				totalappraisedbuy += upggemstocoin;
 				totalappraisedsell += upggemstocoin;
 				
+				// For each audit category, convert their payments to coin and remember their sum
+				var convertcat = {};
+				for (var i in auditcats)
+				{
+					convertcat[i] = 0;
+					for (var ii in auditcats[i])
+					{
+						// The desired coin payment is "coin_appraisedsell", so avoid these duplicates
+						if (ii !== "coin_liquidbuy"
+							&& ii !== "coin_liquidsell"
+							&& ii !== "coin_appraisedbuy")
+						{
+							convertcat[i] += convertCurrencyToCoin(ii, (auditcats[i])[ii], "oPriceSell");
+						}
+					}
+				}
+				
 				var summarycontainer = $("<div id='audSummaryContainer'></div>").prependTo(container);
 				var summary = $("<div id='audSummary'></div>").appendTo(summarycontainer).hide();
 				var historycontainer = $("<div id='audHistoryContainer'></div>").appendTo(summarycontainer).hide();
@@ -9374,9 +9408,21 @@ A = {
 				hist["TotalGems"].push(totalgems);
 				hist["TotalAppraisedSellNoGems"].push(totalappraisedsellnogems);
 				hist["TotalLiquidSellNoGems"].push(totalliquidsellnogems);
-				for (var i in auditcats)
+				
+				// Record only the coin currency of audit categories, or their converted sum if opted
+				if (O.Options.bol_auditHistoryConverted)
 				{
-					hist[i].push((auditcats[i])["coin_appraisedsell"]);
+					for (var i in auditcats)
+					{
+						hist[i].push(convertcat[i]);
+					}
+				}
+				else
+				{
+					for (var i in auditcats)
+					{
+						hist[i].push((auditcats[i])["coin_appraisedsell"]);
+					}
 				}
 				// Save the audit history object
 				histbook[accname] = hist;
@@ -9531,6 +9577,7 @@ A = {
 			auditUnlocks("Dyes");
 			auditUnlocks("Minis");
 			auditUnlocks("Finishers");
+			auditUnlocks("Nodes");
 			auditUnlocks("Recipes");
 			auditTransactions();
 			generateResults();
@@ -9698,6 +9745,8 @@ A = {
 				insertPaymentsFromRecord("Minis");
 				// Insert finisher item payments
 				insertPaymentsFromRecord("Finishers");
+				// Insert home instance node item payments
+				insertPaymentsFromRecord("Nodes");
 				// Begin auditing
 				executeAudit();
 			});
@@ -9897,11 +9946,13 @@ V = {
 		$("#accAuditTop").append(
 			"<label><input id='audWantTransactions' type='checkbox' />" + D.getPhraseOriginal("Include current trading transactions") + ".</label><br />"
 			+ "<label><input id='audWantVaults' type='checkbox' />" + D.getPhraseOriginal("Include guilds vault") + ".</label><br />"
-			+ "<label><input id='audWantAutomatic' type='checkbox' />" + D.getPhraseOriginal("Automatic daily audit") + ".</label>"
+			+ "<label><input id='audWantAutomatic' type='checkbox' />" + D.getPhraseOriginal("Automatic daily audit") + ".</label><br />"
+			+ "<label><input id='audWantConverted' type='checkbox' />" + D.getPhraseOriginal("Convert and sum currencies in categories history") + ".</label>"
 		);
 		O.mimicInput("#audWantTransactions", "bol_auditTransactions");
 		O.mimicInput("#audWantVaults", "bol_auditVault");
 		O.mimicInput("#audWantAutomatic", "bol_auditAccountOnReset");
+		O.mimicInput("#audWantConverted", "bol_auditHistoryConverted");
 		// Audit buttons
 		var buttoncontainer = $("#accAuditCenter");
 		var executebtn = $("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
@@ -11830,13 +11881,16 @@ V = {
 		
 		var container = B.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var helpmsg = $("#accHelp" + section);
+		var helpstr = (helpmsg.length) ? helpmsg.html() : "";
 		var generateUnlockables = function(pUnlockeds)
 		{
 			B.generateUnlockables(bank, {
 				aHeaders: U.getRecordHeader(section),
 				aRecord: U.getRecordData(section),
 				aUnlockeds: pUnlockeds,
-				aWantPrices: (pWantPrices !== false) ? true : false
+				aWantPrices: (pWantPrices !== false) ? true : false,
+				aHelpMessage: helpstr
 			});
 		};
 		
@@ -11866,6 +11920,22 @@ V = {
 	serveFinishers: function()
 	{
 		V.serveUnlockables("Finishers");
+	},
+	serveNodes: function()
+	{
+		V.serveUnlockables("Nodes");
+	},
+	serveCats: function()
+	{
+		V.serveUnlockables("Cats");
+	},
+	serveDungeons: function()
+	{
+		V.serveUnlockables("Dungeons");
+	},
+	serveRaids: function()
+	{
+		V.serveUnlockables("Raids");
 	},
 	
 	/*
@@ -13563,21 +13633,24 @@ B = {
 			{
 				if (Array.isArray(Settings.aUnlockeds))
 				{
-					if (isNaN(Settings.aUnlockeds[0]))
+					if (Settings.aUnlockeds.length)
 					{
-						for (var i = 0; i < Settings.aUnlockeds.length; i++)
+						if (Settings.aUnlockeds[0].id !== undefined)
 						{
-							if (Settings.aUnlockeds[i].permanent !== false)
+							for (var i = 0; i < Settings.aUnlockeds.length; i++)
 							{
-								unlocksassoc[(Settings.aUnlockeds[i].id)] = true;
+								if (Settings.aUnlockeds[i].permanent !== false)
+								{
+									unlocksassoc[(Settings.aUnlockeds[i].id)] = true;
+								}
 							}
 						}
-					}
-					else
-					{
-						for (var i = 0; i < Settings.aUnlockeds.length; i++)
+						else
 						{
-							unlocksassoc[(Settings.aUnlockeds[i])] = true;
+							for (var i = 0; i < Settings.aUnlockeds.length; i++)
+							{
+								unlocksassoc[(Settings.aUnlockeds[i])] = true;
+							}
 						}
 					}
 				}
@@ -18796,6 +18869,8 @@ D = {
 			cs: "dostat", it: "ottenere", pl: "dostawać", pt: "obter", ru: "достава́ть", zh: "获得"},
 		s_update: {de: "aktualisieren", es: "actualizar", fr: "mettre à jour",
 			cs: "aktualizovat", it: "aggiornare", pl: "aktualizować", pt: "atualizar", ru: "обновить", zh: "更新"},
+		s_convert: {de: "konvertieren", es: "convertir", fr: "convertir",
+			cs: "konvertovat", it: "convertire", pl: "converter", pt: "", ru: "конвертировать", zh: "兑换"},
 		
 		// Adjectives, Adverbs, Participles
 		s_no: {de: "kein", es: "no", fr: "pas de",
@@ -21507,11 +21582,7 @@ M = {
 		});
 		$(htmlidprefix + "DisplayButton").click(function()
 		{
-			// Replicate display button
-			if (I.isTouchEnabled === false)
-			{
-				$("#opt_bol_showPanel").trigger("click");
-			}
+			$("#opt_bol_showHUD" + P.MapSwitchSuffix).trigger("click");
 		});
 		// Translate and bind map zones list
 		$(htmlidprefix + "CompassButton").one("mouseenter", that.bindZoneList(that)).click(function()
@@ -34006,7 +34077,7 @@ I = {
 			Schedules: "Schedules",
 			Legacies: "Legacies",
 			Temples: "Temples",
-			Dungeons: "Dungeons"
+			Contested: "Contested"
 		},
 		Account:
 		{
@@ -34019,6 +34090,9 @@ I = {
 			Dyes: "Dyes",
 			Minis: "Minis",
 			Finishers: "Finishers",
+			Nodes: "Nodes",
+			Cats: "Cats",
+			
 			Characters: "Characters",
 			Hero: "Hero",
 			Possessions: "Possessions",
@@ -34028,6 +34102,10 @@ I = {
 			Cleanup: "Cleanup",
 			Recipes: "Recipes",
 			Crafting: "Crafting",
+			
+			Dungeons: "Dungeons",
+			Raids: "Raids",
+			
 			Trading: "Trading",
 			Buying: "Buying",
 			Selling: "Selling",
@@ -34035,6 +34113,7 @@ I = {
 			Sold: "Sold",
 			Museum: "Museum",
 			Pact: "Pact",
+			
 			PVP: "PVP",
 			Guilds: "Guilds",
 			Achievements: "Achievements"

@@ -29,13 +29,13 @@
 	opacity: 0.6;
 }
 #prjToggleTerrain {
-	background: url("../img/ui/pages/map.png"), radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+	background: url("../img/ui/pages/map.png"), radial-gradient(ellipse at center, rgba(236, 121, 37, 0.6) 0%, transparent 100%);
 }
 #prjToggleHUD {
-	background: url("../img/ui/switch.png"), radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+	background: url("../img/ui/switch.png"), radial-gradient(ellipse at center, rgba(236, 121, 37, 0.6) 0%, transparent 100%);
 }
 #prjTogglePanel {
-	background: url("../img/ui/switch.png"), radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+	background: url("../img/ui/switch.png"), radial-gradient(ellipse at center, rgba(236, 121, 37, 0.6) 0%, transparent 100%);
 	transform: rotate(90deg);
 }
 #itemProjector {
