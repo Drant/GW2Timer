@@ -1489,6 +1489,16 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-03-02T20:00:00Z"),
 		Finish: new Date("2017-03-09T20:00:00Z")
+	},
+	{
+		name_en: "March Gem Store Sale",
+		name_de: "März Edelsteinshop Angebote",
+		name_es: "Tienda rebajas de marzo",
+		name_fr: "Boutique promotions mars",
+		name_zh: "宝石店三月促销",
+		official: "news/sales-in-the-gem-store-throughout-march/",
+		Start: new Date("2017-03-03T16:00:00Z"),
+		Finish: new Date("2017-03-31T16:00:00Z")
 	}
 	/*{
 		name_en: "LS3: Episode V",

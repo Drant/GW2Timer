@@ -25,8 +25,7 @@ var GW2T_CATALOG_HEADERS = {
 	Aura: {name_en: "Cosmetic Auras", name_de: "Kosmetik-Auren", name_es: "Auras cosméticos", name_fr: "Auras cosmétiques", iscollapsed: true},
 	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", iscollapsed: true},
 	Carrier: {name_en: "Mail Carriers", name_de: "Briefboten", name_es: "Carteros", name_fr: "Messagers", iscollapsed: true},
-	Glider: {name_en: "Gliders", name_de: "Gleitschirm", name_es: "Planeador", name_fr: "Deltaplane", iscollapsed: true},
-	Node: {name_en: "Gathering Nodes", name_de: "Knoten", name_es: "Nodos", name_fr: "Zones", iscollapsed: true}
+	Glider: {name_en: "Gliders", name_de: "Gleitschirm", name_es: "Planeador", name_fr: "Deltaplane", iscollapsed: true}
 };
 
 /*
@@ -824,41 +823,5 @@ Glider: [
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
 	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
 	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}}
-],
-Node: [
-	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},
-	{i: 48804, n: "Gift of Candy Corn", p: {laurel: 25}},
-	{i: 79646, n: "Greater Gift of Candy Corn", p: {cob: 5}},
-	{i: 48875, n: "Krait Obelisk Shard", p: {laurel: 25}},
-	{i: 49825, n: "Gift of Sprockets", p: {laurel: 25}},
-	{i: 67234, n: "Enchanted Treasure Chest", p: {achievement: 0}},
-	{i: 68367, n: "Gift of Magnanimity", p: {achievement: 0}},
-	{i: 68495, n: "Personal Bandit Chest", p: {achievement: 0}},
-	{i: 73798, n: "Aurillium Node", p: {achievement: 0}},
-	{i: 78468, n: "Personal Airship Cargo Voucher", p: {map_vb: 250}},
-	{i: 78582, n: "Personal Exalted Chest Voucher", p: {map_ab: 250}},
-	{i: 78549, n: "Personal Crystallized Supply Cache Voucher", p: {map_td: 250}},
-	{i: 79217, n: "Bloodstone Crystal Node", p: {coin: 500000}},
-	{i: 79898, n: "Petrified Wood Node", p: {coin: 500000}},
-	{i: 79903, n: "Winterberry Bush Node", p: {coin: 500000}},
-	{i: 80450, n: "Jade Fragment Node", p: {coin: 500000}},
-	{i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
-	{i: 66769, n: "Basic Lumber Node Pack", p: {gem: 800}},
-	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
-	{i: 67842, n: "Basic Cloth Rack", p: {gem: 800}},
-	{i: 78019, n: "Basic Leather Rack", p: {gem: 800}},
-	{i: 68096, n: "Lotus Harvesting Node"},
-	{i: 68089, n: "Omnomberry Harvesting Node"},
-	{i: 68092, n: "Snow Truffle Harvesting Node"},
-	{i: 68093, n: "Ghost Pepper Harvesting Node"},
-	{i: 68095, n: "Orrian Truffle Harvesting Node"},
-	{i: 79063, n: "Flaxseed Harvesting Node"},
-	{i: 79085, n: "Hard Wood Logging Node"},
-	{i: 68090, n: "Elder Wood Logging Node"},
-	{i: 68091, n: "Ancient Wood Logging Node"},
-	{i: 79260, n: "Iron Ore Mining Node"},
-	{i: 68097, n: "Platinum Mining Node"},
-	{i: 68098, n: "Mithril Mining Node"},
-	{i: 68094, n: "Orichalcum Mining Node"}
 ]
 };
