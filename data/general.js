@@ -1561,24 +1561,24 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Butterfly Harvesting Flute",
-		id: "70044",
-		price: 800,
-		discount: 1000,
+		name: "Jungle Explorer Outfit",
+		id: "67990",
+		price: 700,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Swarm Logging Flute",
-		id: "69921",
-		price: 800,
-		discount: 1000,
+		name: "Ironclad Outfit",
+		id: "78010",
+		price: 490,
+		discount: 700,
 		col: 0
 	},
 	{
-		name: "Firefly Mining Flute",
-		id: "69958",
-		price: 800,
-		discount: 1000,
+		name: "Ironclad Glider",
+		id: "78006",
+		price: 350,
+		discount: 500,
 		col: 0
 	},
 	{
