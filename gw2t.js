@@ -6519,13 +6519,6 @@ Z = {
 					return "Carrier";
 				}
 			}
-			if (pItem.type === Q.ItemEnum.Consumable)
-			{
-				if (desc.indexOf("home") !== -1)
-				{
-					return "Node";
-				}
-			}
 			return null;
 		};
 		
@@ -21582,6 +21575,15 @@ M = {
 		});
 		$(htmlidprefix + "DisplayButton").click(function()
 		{
+			// Toggle side panel
+			if (I.isTouchEnabled === false)
+			{
+				$("#opt_bol_showPanel").trigger("click");
+			}
+		});
+		$(htmlidprefix + "ViewButton").click(function()
+		{
+			// Toggle HUD
 			$("#opt_bol_showHUD" + P.MapSwitchSuffix).trigger("click");
 		});
 		// Translate and bind map zones list
