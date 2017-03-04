@@ -22,26 +22,26 @@ var GW2T_RAIDS_HEADERS = {
  */
 var GW2T_RAIDS_DATA = {
 SpiritVale: [
-	{u: "vale_guardian", i: 77334, n: "Vale Guardian"},
-	{u: "spirit_woods", i: 79490, n: "Spirit Woods"},
-	{u: "gorseval", i: 77296, n: "Gorseval"},
-	{u: "sabetha", i: 77339, n: "Sabetha"}
+	{u: "vale_guardian", i: 77334, n: "Spirit Vale", l: "Guardian"},
+	{u: "spirit_woods", i: 79490, n: "Spirit Vale", l: "Spirit"},
+	{u: "gorseval", i: 77296, n: "Spirit Vale", l: "Gorseval"},
+	{u: "sabetha", i: 77339, n: "Spirit Vale", l: "Sabetha"}
 ],
 SalvationPass: [
-	{u: "slothasor", i: 77870, n: "Slothasor"},
-	{u: "bandit_trio", i: 78003, n: "Bandit Trio"},
-	{u: "matthias", i: 77911, n: "Matthias"}
+	{u: "slothasor", i: 77870, n: "Salvation Pass", l: "Slothasor"},
+	{u: "bandit_trio", i: 78003, n: "Salvation Pass", l: "Bandit"},
+	{u: "matthias", i: 77911, n: "Salvation Pass", l: "Matthias"}
 ],
 StrongholdOfTheFaithful: [
-	{u: "escort", i: 78828, n: "McLeod"},
-	{u: "keep_construct", i: 78890, n: "Keep Construct"},
-	{u: "twisted_castle", i: 78902, n: "Twisted Castle"},
-	{u: "xera", i: 78815, n: "Xera"}
+	{u: "escort", i: 78828, n: "Stronghold of the Faithful", l: "McLeod"},
+	{u: "keep_construct", i: 78890, n: "Stronghold of the Faithful", l: "Construct"},
+	{u: "twisted_castle", i: 78902, n: "Stronghold of the Faithful", l: "Castle"},
+	{u: "xera", i: 78815, n: "Stronghold of the Faithful", l: "Xera"}
 ],
 BastionOfThePenitent: [
-	{u: "cairn", i: 80562, n: "Cairn the Indomitable"},
-	{u: "mursaat_overseer", i: 80224, n: "Mursaat Overseer"},
-	{u: "samarog", i: 80218, n: "Samarog"},
-	{u: "deimos", i: 80222, n: "Deimos"}
+	{u: "cairn", i: 80562, n: "Bastion of the Penitent", l: "Cairn"},
+	{u: "mursaat_overseer", i: 80224, n: "Bastion of the Penitent", l: "Overseer"},
+	{u: "samarog", i: 80218, n: "Bastion of the Penitent", l: "Samarog"},
+	{u: "deimos", i: 80222, n: "Bastion of the Penitent", l: "Deimos"}
 ]
 };

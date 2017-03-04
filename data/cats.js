@@ -27,7 +27,7 @@ Black: [
 	{u: 7, i: 38213, n: "Bowl of Ginger-Lime Ice Cream", l: "#7", t: "Black cat with snowball."},
 	{u: 8, i: 38210, n: "Bowl of Saffron-Mango Ice Cream", l: "#8", t: "Black cat with snowball."},
 	{u: 9, i: 38211, n: "Bowl of Peach Raspberry Swirl Ice Cream", l: "#9", t: "Black cat with snowball."},
-	{u: 10, i: 24360, n: "Slab of Poultry Meat", l: "#10", t: "Black kitten at day."},
+	{u: 10, i: 24360, n: "Slab of Poultry Meat", l: "#10 ☀", t: "Black kitten at day."},
 	{u: 12, i: 12213, n: "Cheeseburger", l: "#12", t: "Warrior black cat fights cat."},
 	{u: 13, i: 20318, n: "Mystery Tonic (beast)", l: "#13", t: "Mesmer black cat fights cat.", p: {craft: true}},
 	{u: 14, i: 8752, n: "Healing Seed Pod", l: "#14", t: "Ranger black cat with frog.", p: {coin: 40}},
@@ -52,14 +52,14 @@ Orange: [
 White: [
 	{u: 1, i: 24360, n: "Slab of Poultry Meat", l: "#1", t: "Gray cat by entrance."},
 	{u: 2, i: 12209, n: "Grilled Poultry", l: "#2", t: "Gray cat by entrance."},
-	{u: 11, i: 24360, n: "Slab of Poultry Meat", l: "#11", t: "White kitten at night."}
+	{u: 11, i: 24360, n: "Slab of Poultry Meat", l: "#11 ☽", t: "White kitten at night."}
 ],
 Special: [
 	{u: 23, i: 23763, n: "Frog in a Jar", l: "#23", t: "Feline familiar near Raw Candy Corn node.", p: {karma: 721}},
 	{u: 24, i: 79842, n: "Koda's Breath", l: "#24", t: "Snow leopard cub following.", p: {achievement: 0}},
 	{u: 29, i: 68409, n: "Bowl of Bloodstone Goulash", l: "#29", t: "Lady Wisteria Whiskington near Bloodstone Crystals.", p: {coin: 8}},
-	{u: 30, i: 8055, n: "Unknown", l: "#30", t: "Bundle."},
-	{u: 31, i: 8055, n: "Unknown", l: "#31", t: "Unused."},
+	{u: 30, i: 8055, n: "Template:Unimplemented_content", l: "#30", t: "Bundle."},
+	{u: 31, i: 8055, n: "Template:Unimplemented_content", l: "#31", t: "Unused."},
 	{u: 32, i: 36076, n: "Strawberry Ghost", l: "#32", t: "Ghost cat."}
 ]
 };

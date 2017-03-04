@@ -26,44 +26,44 @@ var GW2T_DUNGEONS_HEADERS = {
  */
 var GW2T_DUNGEONS_DATA = {
 AC: [
-	{u: "hodgins", i: 16982, n: "Hodgins", p: {coin: 7600}},
-	{u: "detha", i: 16982, n: "Detha", p: {coin: 7600}},
-	{u: "tzark", i: 16982, n: "Tzark", p: {coin: 7600}}
+	{u: "hodgins", i: 16982, n: "Ascalonian Catacombs", l: "Hodgins", p: {coin: 7600}},
+	{u: "detha", i: 16982, n: "Ascalonian Catacombs", l: "Detha", p: {coin: 7600}},
+	{u: "tzark", i: 16982, n: "Ascalonian Catacombs", l: "Tzark", p: {coin: 7600}}
 ],
 CM: [
-	{u: "asura", i: 17274, n: "Asura", p: {coin: 6100}},
-	{u: "seraph", i: 17274, n: "Seraph", p: {coin: 6100}},
-	{u: "butler", i: 17274, n: "Butler", p: {coin: 6100}}
+	{u: "asura", i: 17274, n: "Caudecus's Manor", l: "Asura", p: {coin: 6100}},
+	{u: "seraph", i: 17274, n: "Caudecus's Manor", l: "Seraph", p: {coin: 6100}},
+	{u: "butler", i: 17274, n: "Caudecus's Manor", l: "Butler", p: {coin: 6100}}
 ],
 TA: [
-	{u: "leurent", i: 17273, n: "Leurent", p: {coin: 6100}},
-	{u: "vevina", i: 17273, n: "Vevina", p: {coin: 6100}},
-	{u: "aetherpath", i: 17273, n: "Aetherpath", p: {coin: 9200}}
+	{u: "leurent", i: 17273, n: "Twilight Arbor", l: "Leurent", p: {coin: 6100}},
+	{u: "vevina", i: 17273, n: "Twilight Arbor", l: "Vevina", p: {coin: 6100}},
+	{u: "aetherpath", i: 17273, n: "Twilight Arbor", l: "Aetherpath", p: {coin: 9200}}
 ],
 SE: [
-	{u: "fergg", i: 17270, n: "Fergg", p: {coin: 6100}},
-	{u: "rasalov", i: 17270, n: "Rasalov", p: {coin: 6100}},
-	{u: "koptev", i: 17270, n: "Koptev", p: {coin: 6100}}
+	{u: "fergg", i: 17270, n: "Sorrow's Embrace", l: "Fergg", p: {coin: 6100}},
+	{u: "rasalov", i: 17270, n: "Sorrow's Embrace", l: "Rasalov", p: {coin: 6100}},
+	{u: "koptev", i: 17270, n: "Sorrow's Embrace", l: "Koptev", p: {coin: 6100}}
 ],
 COF: [
-	{u: "ferrah", i: 17275, n: "Ferrah", p: {coin: 6100}},
-	{u: "magg", i: 17275, n: "Magg", p: {coin: 6100}},
-	{u: "rhiannon", i: 17275, n: "Rhiannon", p: {coin: 6100}}
+	{u: "ferrah", i: 17275, n: "Citadel of Flame", l: "Ferrah", p: {coin: 6100}},
+	{u: "magg", i: 17275, n: "Citadel of Flame", l: "Magg", p: {coin: 6100}},
+	{u: "rhiannon", i: 17275, n: "Citadel of Flame", l: "Rhiannon", p: {coin: 6100}}
 ],
 HOTW: [
-	{u: "butcher", i: 17277, n: "Butcher", p: {coin: 6100}},
-	{u: "plunderer", i: 17277, n: "Plunderer", p: {coin: 6100}},
-	{u: "zealot", i: 17277, n: "Zealot", p: {coin: 6100}}
+	{u: "butcher", i: 17277, n: "Honor of the Waves", l: "Butcher", p: {coin: 6100}},
+	{u: "plunderer", i: 17277, n: "Honor of the Waves", l: "Plunderer", p: {coin: 6100}},
+	{u: "zealot", i: 17277, n: "Honor of the Waves", l: "Zealot", p: {coin: 6100}}
 ],
 COE: [
-	{u: "submarine", i: 17276, n: "Submarine", p: {coin: 6100}},
-	{u: "teleporter", i: 17276, n: "Teleporter", p: {coin: 6100}},
-	{u: "front_door", i: 17276, n: "Front Door", p: {coin: 6100}}
+	{u: "submarine", i: 17276, n: "Crucible of Eternity", l: "Submarine", p: {coin: 6100}},
+	{u: "teleporter", i: 17276, n: "Crucible of Eternity", l: "Teleport", p: {coin: 6100}},
+	{u: "front_door", i: 17276, n: "Crucible of Eternity", l: "Front", p: {coin: 6100}}
 ],
 Arah: [
-	{u: "jotun", i: 17272, n: "Jotun", p: {coin: 12600}},
-	{u: "mursaat", i: 17272, n: "Mursaat", p: {coin: 13100}},
-	{u: "forgotten", i: 17272, n: "Forgotten", p: {coin: 18100}},
-	{u: "seer", i: 17272, n: "Seer", p: {coin: 12600}}
+	{u: "jotun", i: 17272, n: "Ruined City of Arah", l: "Jotun", p: {coin: 12600}},
+	{u: "mursaat", i: 17272, n: "Ruined City of Arah", l: "Mursaat", p: {coin: 13100}},
+	{u: "forgotten", i: 17272, n: "Ruined City of Arah", l: "Forgotten", p: {coin: 18100}},
+	{u: "seer", i: 17272, n: "Ruined City of Arah", l: "Seer", p: {coin: 12600}}
 ]
 };

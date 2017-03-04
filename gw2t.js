@@ -8052,9 +8052,13 @@ A = {
 	 */
 	embedFrame: function(pContainer, pURL)
 	{
-		var container = $(pContainer).addClass("accEmbedContainer");
-		var frame = $("<iframe class='accEmbedFrame'></iframe>").appendTo(container);
-		frame[0].src = pURL;
+		var container = $(pContainer);
+		if (!container.find(".accEmbedContainer").length)
+		{
+			var frameouter = $("<div class='accEmbedContainer'></div>").appendTo(container);
+			var frame = $("<iframe class='accEmbedFrame'></iframe>").appendTo(frameouter);
+			frame[0].src = pURL;
+		}
 	},
 	
 	/*
@@ -11934,8 +11938,7 @@ V = {
 	serveCats: function()
 	{
 		V.serveUnlockables("Cats");
-		var mapframe = $("<div></div>").appendTo("#accDish_Cats");
-		A.embedFrame(mapframe, "http://gw2timer.com/?page=HungryCats&bol_showPanel=false");
+		A.embedFrame("#accDish_Cats", "http://gw2timer.com/?page=HungryCats&bol_showPanel=false");
 	},
 	serveDungeons: function()
 	{
