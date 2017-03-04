@@ -8045,6 +8045,19 @@ A = {
 	},
 	
 	/*
+	 * Embeds a website into an account section. Because the account page occupies
+	 * the map container, embedding the site itself allows the map to be displayed.
+	 * @param jqobject pContainer to insert iframe.
+	 * @param string pURL source.
+	 */
+	embedFrame: function(pContainer, pURL)
+	{
+		var container = $(pContainer).addClass("accEmbedContainer");
+		var frame = $("<iframe class='accEmbedFrame'></iframe>").appendTo(container);
+		frame[0].src = pURL;
+	},
+	
+	/*
 	 * Assigns a gem store account upgrade.
 	 * @param string pUpgrade key name.
 	 * @param int pOwned for example the total number of tabs in a bank tab.
@@ -11921,6 +11934,8 @@ V = {
 	serveCats: function()
 	{
 		V.serveUnlockables("Cats");
+		var mapframe = $("<div></div>").appendTo("#accDish_Cats");
+		A.embedFrame(mapframe, "http://gw2timer.com/?page=HungryCats&bol_showPanel=false");
 	},
 	serveDungeons: function()
 	{
@@ -12672,6 +12687,7 @@ B = {
 	 * @objparam int aPrice custom coin price for untradeable items, optional.
 	 * @objparam int aGem custom gem price for untradeable items, optional.
 	 * @objparam string aComment to append to tooltip, optional.
+	 * @objparam string aLabel to append to slot label, optional.
 	 * @objparam string aWiki name of wiki article to open when double clicked, optional.
 	 * @objparam function aCallback to execute after styling.
 	 * @objparam function aPriceCallback to execute after fetching the item price, optional.
@@ -12745,6 +12761,11 @@ B = {
 					aTradeableID: Settings.aTradeableID,
 					aSearch: wikisearch
 				});
+				// Custom label over the slot icon, if available
+				if (Settings.aLabel)
+				{
+					pSlot.append("<var class='bnkSlotLabel'>" + Settings.aLabel + "</var>");
+				}
 				// Numeric label over the slot icon indicating stack size or charges remaining
 				if (count > 1)
 				{
@@ -13356,6 +13377,7 @@ B = {
 					aUnlockAssoc: Settings.aUnlockAssoc,
 					aUnlockObj: unlockobj,
 					aComment: unlockobj.t,
+					aLabel: unlockobj.l,
 					aIsCatalog: Settings.aIsCatalog,
 					aIsCustomCatalog: Settings.aIsCustomCatalog,
 					aCallback: function()
@@ -13499,6 +13521,7 @@ B = {
 	 * @objparam object aUnlockAssoc to find the association.
 	 * @objparam object aUnlockObj for slot info.
 	 * @objparam string aComment HTML to append to the item tooltip, optional.
+	 * @objparam string aLabel to append to slot label, optional.
 	 * @objparam boolean aIsCatalog whether to use the user's possessions rather
 	 * than unlockeds, optional.
 	 */
@@ -13543,6 +13566,7 @@ B = {
 			var count = (entry) ? ((entry.oCount !== undefined) ? entry.oCount : 1) : 0;
 			// Optional comment appended at the bottom of item tooltip
 			var comment = Settings.aComment;
+			var label = Settings.aLabel;
 			// Catalog includes custom count
 			entry = unlocksassoc[pItemID];
 			if (Settings.aIsCatalog && entry)
@@ -13558,6 +13582,7 @@ B = {
 				aGem: slotgemvalue,
 				aSlotMeta: {count: count},
 				aComment: comment,
+				aLabel: label,
 				aWiki: wiki,
 				aIsCustomCatalog: Settings.aIsCustomCatalog,
 				aCallback: function()
@@ -27072,7 +27097,7 @@ G = {
 			ithneedle = collectible.needles[i];
 			stateinstring = X.getChecklistItem(X.Collectibles[pType], i);
 
-			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + number
+			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + (ithneedle.l || number)
 				+ ((collectible.iscushion) ? "<br />" + D.getObjectName(ithneedle) : "");
 			if (ithneedle.s)
 			{
