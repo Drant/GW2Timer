@@ -56,7 +56,7 @@ White: [
 ],
 Special: [
 	{u: 23, i: 23763, n: "Frog in a Jar", l: "#23", t: "Feline familiar near Raw Candy Corn node.", p: {karma: 721}},
-	{u: 24, i: 79842, n: "Warmth (Koda's Flame)", l: "#24", t: "Snow leopard cub following player.", p: {achievement: 0}},
+	{u: 24, i: 79842, n: "Koda's Flame", l: "#24", t: "Snow leopard cub following player.", p: {achievement: 0}},
 	{u: 29, i: 68409, n: "Bowl of Bloodstone Goulash", l: "#29", t: "Lady Wisteria Whiskington near Bloodstone Crystals.", p: {coin: 8}},
 	{u: 30, i: 8055, n: "Template:Future_content", l: "#30", t: "Bundle."},
 	{u: 31, i: 8055, n: "Template:Future_content", l: "#31", t: "Unused."},

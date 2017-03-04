@@ -1564,10 +1564,31 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Braham's Bitterfrost Frontier Pack",
-		id: "http://i66.tinypic.com/2gu9w6c.png",
-		price: 2000,
-		discount: null,
+		name: "Replica Job-o-Tron Backpack",
+		id: "67421",
+		price: 250,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Dread Quiver Backpack",
+		id: "74219",
+		price: 175,
+		discount: 350,
+		col: 0
+	},
+	{
+		name: "Plush Quaggan Backpack Cover",
+		id: "39131",
+		price: 150,
+		discount: 300,
+		col: 0
+	},
+	{
+		name: "Braham's Heavy Armor Skin",
+		id: "43157",
+		price: 640,
+		discount: 800,
 		col: 0
 	},
 	{
@@ -1578,24 +1599,10 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Ironclad Outfit",
-		id: "78010",
-		price: 490,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Ironclad Glider",
-		id: "78006",
-		price: 350,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Braham's Heavy Armor Skin",
-		id: "43157",
-		price: 640,
-		discount: 800,
+		name: "Braham's Bitterfrost Frontier Pack",
+		id: "http://i66.tinypic.com/2gu9w6c.png",
+		price: 2000,
+		discount: null,
 		col: 0
 	},
 	{

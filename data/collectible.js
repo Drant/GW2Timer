@@ -2263,7 +2263,7 @@ HungryCats: {
 	{c: [25300, 14214], l: "19", t: "Harpy Feathers (consumable)<br />Requires Profession <img src='img/account/professions/thief.png' />"},
 	{c: [25381, 14226], l: "17", t: "Flask of Pumpkin Oil<br />Requires Profession <img src='img/account/professions/engineer.png' />"},
 	{c: [29253, 18504], l: "4", t: "Spicier Flank Steak"},
-	{c: [23588, 6868], l: "24", t: "Koda's Flame<br />Thaw the frozen Snow Leopard Cub"},
+	{c: [23588, 6868], l: "24", t: "Koda's Flame<br />Thaw the frozen Snow Leopard Cub using the Koda torch.", p: [[23137, 7509], [23481, 6951], [23588, 6868]]},
 	{c: [13211, 11988], l: "1", t: "Slab of Poultry Meat."},
 	{c: [10985, 12139], l: "12", t: "Cheeseburger<br />Requires Profession <img src='img/account/professions/warrior.png' />"},
 	{c: [10967, 12064], l: "13", t: "Crafted Mystery Tonic (beast)<br />Requires Profession <img src='img/account/professions/mesmer.png' />"},
