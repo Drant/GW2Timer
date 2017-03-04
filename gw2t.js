@@ -11879,8 +11879,11 @@ V = {
 	
 	/*
 	 * Generates a standard unlockables collection window without extra features.
+	 * @param string pSection
+	 * @objparam boolean aWantPrices to prefetch TP prices for all items, optional.
+	 * @objparam boolean aWantGem whether to display the gem tally, optional.
 	 */
-	serveUnlockables: function(pSection, pWantPrices)
+	serveUnlockables: function(pSection, pSettings)
 	{
 		var section = pSection;
 		var dish = $("#accDish_" + section);
@@ -11888,8 +11891,12 @@ V = {
 		{
 			return;
 		}
+		var Settings = pSettings || {};
 		
-		var container = B.createBank(dish, {aIsCollection: true});
+		var container = B.createBank(dish, {
+			aIsCollection: true,
+			aWantGem: Settings.aWantGem
+		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var helpmsg = $("#accHelp" + section);
 		var helpstr = (helpmsg.length) ? helpmsg.html() : "";
@@ -11899,7 +11906,7 @@ V = {
 				aHeaders: U.getRecordHeader(section),
 				aRecord: U.getRecordData(section),
 				aUnlockeds: pUnlockeds,
-				aWantPrices: (pWantPrices !== false) ? true : false,
+				aWantPrices: (Settings.aWantPrices !== false) ? true : false,
 				aHelpMessage: helpstr
 			});
 		};
@@ -11921,7 +11928,7 @@ V = {
 	},
 	serveOutfits: function()
 	{
-		V.serveUnlockables("Outfits", false);
+		V.serveUnlockables("Outfits", {aWantPrices: false});
 	},
 	serveMinis: function()
 	{
@@ -11937,16 +11944,16 @@ V = {
 	},
 	serveCats: function()
 	{
-		V.serveUnlockables("Cats");
+		V.serveUnlockables("Cats", {aWantGem: false});
 		A.embedFrame("#accDish_Cats", "http://gw2timer.com/?page=HungryCats&bol_showPanel=false");
 	},
 	serveDungeons: function()
 	{
-		V.serveUnlockables("Dungeons");
+		V.serveUnlockables("Dungeons", {aWantPrices: false, aWantGem: false});
 	},
 	serveRaids: function()
 	{
-		V.serveUnlockables("Raids");
+		V.serveUnlockables("Raids", {aWantPrices: false, aWantGem: false});
 	},
 	
 	/*
@@ -36338,7 +36345,7 @@ I = {
 		// Also streamline other UI elements if website is embedded in another website
 		if (I.isProgramEmbedded)
 		{
-			$("#itemWarning").remove();
+			$("#itemWarning, .hudTitle").remove();
 			$(".hudLinks").hide();
 		}
 		

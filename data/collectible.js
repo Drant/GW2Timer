@@ -1463,7 +1463,7 @@ MursaatTablets: {
 	name_zh: "无形之碑",
 	category: "achievements",
 	color: "tomato",
-	view: "ember",
+	view: "[5196, 29163]",
 	wiki: "https://wiki.guildwars2.com/wiki/Tablets_of_the_Unseen",
 	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
 	needles: [

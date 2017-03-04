@@ -35,7 +35,7 @@ Black: [
 	{u: 16, i: 8517, n: "Slice of Rainbow Cake", l: "#16", t: "Elementalist black cat fights cat.", p: {coin: 40}},
 	{u: 17, i: 67371, n: "Flask of Pumpkin Oil", l: "#17", t: "Engineer black cat fights cat."},
 	{u: 18, i: 12134, n: "Carrot", l: "#18", t: "Revenant black cat fights cat."},
-	{u: 19, i: 8764, n: "Harpy Feathers", l: "#19", t: "Thief black cat fights cat.", p: {coin: 40}},
+	{u: 19, i: 8764, n: "Harpy Feathers (consumable)", l: "#19", t: "Thief black cat fights cat.", p: {coin: 40}},
 	{u: 20, i: 8535, n: "Grumble Cake", l: "#20", t: "Necromancer black cat fights cat."}
 ],
 Orange: [
@@ -56,10 +56,10 @@ White: [
 ],
 Special: [
 	{u: 23, i: 23763, n: "Frog in a Jar", l: "#23", t: "Feline familiar near Raw Candy Corn node.", p: {karma: 721}},
-	{u: 24, i: 79842, n: "Koda's Breath", l: "#24", t: "Snow leopard cub following.", p: {achievement: 0}},
+	{u: 24, i: 79842, n: "Warmth (Koda's Flame)", l: "#24", t: "Snow leopard cub following player.", p: {achievement: 0}},
 	{u: 29, i: 68409, n: "Bowl of Bloodstone Goulash", l: "#29", t: "Lady Wisteria Whiskington near Bloodstone Crystals.", p: {coin: 8}},
-	{u: 30, i: 8055, n: "Template:Unimplemented_content", l: "#30", t: "Bundle."},
-	{u: 31, i: 8055, n: "Template:Unimplemented_content", l: "#31", t: "Unused."},
+	{u: 30, i: 8055, n: "Template:Future_content", l: "#30", t: "Bundle."},
+	{u: 31, i: 8055, n: "Template:Future_content", l: "#31", t: "Unused."},
 	{u: 32, i: 36076, n: "Strawberry Ghost", l: "#32", t: "Ghost cat."}
 ]
 };
