@@ -7,10 +7,10 @@
  * Category translations.
  */
 var GW2T_CATS_HEADERS = {
-	Black: {name_en: "Black", name_de: "Schwarze", name_es: "Negro", name_fr: "Noir", name_zh: "黑色"},
-	Orange: {name_en: "Orange", name_de: "Orange", name_es: "Naranja", name_fr: "Orange", name_zh: "橙色"},
-	White: {name_en: "White", name_de: "Weiße", name_es: "Blanco", name_fr: "Blanc", name_zh: "白色"},
-	Special: {name_en: "Special", name_de: "Spezial", name_es: "Especial", name_fr: "Spéciales", name_zh: "特殊"}
+	Black: {name_en: "Black Cats", name_de: "Schwarze", name_es: "Negro", name_fr: "Noir", name_zh: "黑色"},
+	Orange: {name_en: "Orange Cats", name_de: "Orange", name_es: "Naranja", name_fr: "Orange", name_zh: "橙色"},
+	White: {name_en: "White Cats", name_de: "Weiße", name_es: "Blanco", name_fr: "Blanc", name_zh: "白色"},
+	Special: {name_en: "Special Cats", name_de: "Spezial", name_es: "Especial", name_fr: "Spéciales", name_zh: "特殊"}
 };
 
 /*

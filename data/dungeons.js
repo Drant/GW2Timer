@@ -61,9 +61,9 @@ COE: [
 	{u: "front_door", i: 17276, n: "Front Door", p: {coin: 6100}}
 ],
 Arah: [
-	{u: "jotun", i: 17272, n: "Jotun", p: {coin: 10000}},
-	{u: "mursaat", i: 17272, n: "Mursaat", p: {coin: 10500}},
-	{u: "forgotten", i: 17272, n: "Forgotten", p: {coin: 15500}},
-	{u: "seer", i: 17272, n: "Seer", p: {coin: 10000}}
+	{u: "jotun", i: 17272, n: "Jotun", p: {coin: 12600}},
+	{u: "mursaat", i: 17272, n: "Mursaat", p: {coin: 13100}},
+	{u: "forgotten", i: 17272, n: "Forgotten", p: {coin: 18100}},
+	{u: "seer", i: 17272, n: "Seer", p: {coin: 12600}}
 ]
 };

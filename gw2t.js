@@ -1414,7 +1414,7 @@ O = {
 			if (O.Options.bol_showMap && I.isMapEnabled) // Only hide panel if map is visible
 			{
 				$("#panelApp").toggle(O.Options.bol_showPanel);
-				$("#mapExpandButton, #wvwExpandButton, #accExpandButton").toggle(!O.Options.bol_showPanel);
+				$("#mapDisplayButton, #wvwDisplayButton, #accDisplayButton").toggle(!O.Options.bol_showPanel);
 				M.refreshMap();
 				if (W.isMapInitialized)
 				{
@@ -1442,8 +1442,8 @@ O = {
 							borderRight: "none",
 							boxShadow: "-5px 0px 5px #223"
 						});
-						$(".mapExpandButton").css({right: 0, left: "auto"});
-						$("#itemExpandButton").css({right: "auto", left: "auto", "margin-left": "-16px"});
+						$(".mapDisplayButton").css({right: 0, left: "auto"});
+						$("#itemDisplayButton").css({right: "auto", left: "auto", "margin-left": "-16px"});
 						$("#prjController").css({right: "auto"});
 					}
 				}
@@ -1456,8 +1456,8 @@ O = {
 						borderRight: "1px solid #444",
 						boxShadow: "5px 0px 5px #223"
 					});
-					$(".mapExpandButton").css({right: "auto", left: 0});
-					$("#itemExpandButton").css({right: "auto", left: "auto", "margin-left": (I.cPANEL_WIDTH - 16) + "px"});
+					$(".mapDisplayButton").css({right: "auto", left: 0});
+					$("#itemDisplayButton").css({right: "auto", left: "auto", "margin-left": (I.cPANEL_WIDTH - 16) + "px"});
 					$("#prjController").css({right: 0});
 				}
 			}
@@ -7083,9 +7083,9 @@ Z = {
 			});
 			iterateRecord(function(iEntry) // Recipes
 			{
-				if (iEntry.t)
+				if (iEntry.b)
 				{
-					idstocache[iEntry.t] = true;
+					idstocache[iEntry.b] = true;
 				}
 			});
 		});
@@ -7365,7 +7365,7 @@ A = {
 		{
 			$("#mapAccountButton").trigger("click");
 		});
-		$("#accExpandButton").toggle(!O.Options.bol_showPanel).click(function()
+		$("#accDisplayButton").toggle(!O.Options.bol_showPanel).click(function()
 		{
 			$("#opt_bol_showPanel").trigger("click");
 		});
@@ -21573,14 +21573,6 @@ M = {
 				that.Map.setZoom(that.ZoomEnum.Default);
 			}
 		});
-		$(htmlidprefix + "DisplayButton").click(function()
-		{
-			// Toggle side panel
-			if (I.isTouchEnabled === false)
-			{
-				$("#opt_bol_showPanel").trigger("click");
-			}
-		});
 		$(htmlidprefix + "ViewButton").click(function()
 		{
 			// Toggle HUD
@@ -34285,7 +34277,7 @@ I = {
 		{
 			I.switchMap();
 		});
-		$(".mapExpandButton").click(function()
+		$(".mapDisplayButton").click(function()
 		{
 			$("#opt_bol_showPanel").trigger("click");
 		});
@@ -36353,7 +36345,7 @@ I = {
 		window.clearTimeout(I.SleepTimeout);
 		I.SleepTimeout = setTimeout(function()
 		{
-			var filterclass = (I.isProjectionEnabled) ? ".mapExpandButton" : "";
+			var filterclass = (I.isProjectionEnabled) ? ".mapDisplayButton" : "";
 			I.isSleeping = true;
 			$(".jsSleepable, .hudButton, .btnWindow").not(filterclass).addClass("jsSleeped");
 		}, I.cMSECONDS_SLEEP);

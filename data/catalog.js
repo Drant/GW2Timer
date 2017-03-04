@@ -355,7 +355,6 @@ Toy: [
 	{i: 66961, n: "Birthday Blaster", p: {starting: true}}
 ],
 Music: [
-	{i: 38128, n: "Choir Bell"},
 	{i: 38129, n: "Unbreakable Choir Bell"},
 	{u: 68362, i: 68361, n: "Magnanimous Choir Bell"},
 	{i: 42888, n: "Marriner's Horn", p: {gem: 800}},
