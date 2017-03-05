@@ -1496,7 +1496,7 @@ Countdown: {
 		name_es: "Tienda rebajas de marzo",
 		name_fr: "Boutique promotions mars",
 		name_zh: "宝石店三月促销",
-		official: "news/sales-in-the-gem-store-throughout-march/",
+		url: "https://wiki.guildwars2.com/wiki/Gem_Store/March_Sale#March_Sale.2C_2017",
 		Start: new Date("2017-03-03T16:00:00Z"),
 		Finish: new Date("2017-03-31T16:00:00Z")
 	}
