@@ -1564,24 +1564,10 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Replica Job-o-Tron Backpack",
-		id: "67421",
-		price: 250,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Dread Quiver Backpack",
-		id: "74219",
-		price: 175,
-		discount: 350,
-		col: 0
-	},
-	{
-		name: "Plush Quaggan Backpack Cover",
-		id: "39131",
-		price: 150,
-		discount: 300,
+		name: "Copper-Fed Salvage-o-Matic",
+		id: "44602",
+		price: 600,
+		discount: 800,
 		col: 0
 	},
 	{
