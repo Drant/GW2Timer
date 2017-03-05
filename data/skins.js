@@ -633,7 +633,7 @@ Armor_Light_Helm: [
 	{u: 6955, i: 79457, n: "Light Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6914, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6975, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
-	{u: 5620, i: 67141, n: "Ardent Glorious Crown", p: {glory: 175}},
+	{u: 5620, i: 80848, n: "Ardent Glorious Crown", p: {glory: 150}},
 	{u: 7045, i: 80026, n: "Ice Crown", p: {gem: 400}},
 	{u: 7139, i: 80360, n: "Confessor Caudecus's Mask", p: {achievement: 0}},
 	{u: 7073, i: 80267, n: "White Mantle Elite Guard Mask", p: {achievement: 0}}
@@ -722,7 +722,7 @@ Armor_Light_Shoulders: [
 	{u: 6722, i: 78579, n: "Triumphant Epaulets", p: {badge: 0}},
 	{u: 6824, i: 78874, n: "Experimental Envoy Mantle", p: {craft: true}},
 	{u: 6970, i: 79455, n: "Light Dragonscale Epaulets", p: {achievement: 0}},
-	{u: 5631, i: 79984, n: "Ardent Glorious Epaulets", p: {glory: 150}},
+	{u: 5631, i: 80772, n: "Ardent Glorious Epaulets", p: {glory: 150}},
 	{u: 7071, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}}
 ],
 Armor_Light_Coat: [
@@ -792,7 +792,7 @@ Armor_Light_Coat: [
 	{u: 6254, i: 71738, n: "Bladed Vestments", p: {achievement: 0}},
 	{u: 6288, i: 76112, n: "Ornate Guild Vestments", p: {craft: true}},
 	{u: 6433, i: 76101, n: "Leystone Vestments", p: {achievement: 0}},
-	{u: 5628, i: 67118, n: "Ardent Glorious Raiment"},
+	{u: 5628, i: 80717, n: "Ardent Glorious Raiment", p: {glory: 400}},
 	{u: 6716, i: 78336, n: "Triumphant Raiment", p: {badge: 0}},
 	{u: 6833, i: 78876, n: "Experimental Envoy Vestments", p: {craft: true}}
 ],
@@ -877,7 +877,7 @@ Armor_Light_Gloves: [
 	{u: 6818, i: 78969, n: "Experimental Envoy Gloves", p: {craft: true}},
 	{u: 6910, i: 79391, n: "Pirate Hook", p: {gem: 300}},
 	{u: 7028, i: 79874, n: "Light Glacial Gauntlets", p: {achievement: 0}},
-	{u: 5629, i: 79953, n: "Ardent Glorious Armguards", p: {glory: 150}},
+	{u: 5629, i: 80840, n: "Ardent Glorious Armguards", p: {glory: 150}},
 	{u: 7077, i: 80668, n: "Gages of the Obedient", p: {magnetite: 600}}
 ],
 Armor_Light_Leggings: [
@@ -949,7 +949,7 @@ Armor_Light_Leggings: [
 	{u: 6436, i: 76484, n: "Leystone Pants", p: {coin: 0}},
 	{u: 6728, i: 78143, n: "Triumphant Leggings", p: {badge: 0}},
 	{u: 6834, i: 78862, n: "Experimental Envoy Pants", p: {craft: true}},
-	{u: 5630, i: 67151, n: "Ardent Glorious Leggings", p: {glory: 275}}
+	{u: 5630, i: 80776, n: "Ardent Glorious Leggings", p: {glory: 200}}
 ],
 Armor_Light_Boots: [
 	{u: 16, i: 3173, n: "Apprentice Shoes", b: [2932, 2933, 2938, 2936, 2937, 2935, 2941, 2940, 2942, 2945, 2944, 2931, 2946, 2934, 2939, 2943, 3119, 3137, 3155, 3173, 3300, 3317, 3301, 3302, 3303, 3304, 3306, 3308, 3307, 3313, 3312, 3309, 3311, 3299, 3316, 3318, 3305, 3310, 3314, 3315, 5068, 5050, 5122, 5021, 5034, 5104, 5140, 5158, 5086, 5194, 5176, 5230, 5212, 5248, 5266, 5284]},
@@ -1023,7 +1023,7 @@ Armor_Light_Boots: [
 	{u: 6705, i: 78179, n: "Triumphant Footgear", p: {badge: 0}},
 	{u: 6791, i: 78974, n: "Experimental Envoy Shoes", p: {craft: true}},
 	{u: 6905, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
-	{u: 5602, i: 80017, n: "Ardent Glorious Footgear", p: {glory: 150}}
+	{u: 5602, i: 80739, n: "Ardent Glorious Footgear", p: {glory: 150}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1166,7 +1166,7 @@ Armor_Medium_Helm: [
 	{u: 6969, i: 79471, n: "Medium Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6915, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6974, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
-	{u: 5635, i: 79947, n: "Ardent Glorious Cap", p: {glory: 175}},
+	{u: 5635, i: 80850, n: "Ardent Glorious Cap", p: {glory: 150}},
 	{u: 7040, i: 80026, n: "Ice Crown", p: {gem: 400}},
 	{u: 7074, i: 80477, n: "Confessor Caudecus's Mask", p: {achievement: 0}},
 	{u: 7106, i: 80519, n: "White Mantle Elite Guard Mask", p: {achievement: 0}}
@@ -1254,7 +1254,7 @@ Armor_Medium_Shoulders: [
 	{u: 6733, i: 78269, n: "Triumphant Shoulderguards", p: {badge: 0}},
 	{u: 6794, i: 78971, n: "Experimental Envoy Shoulderpads", p: {craft: true}},
 	{u: 6964, i: 79481, n: "Medium Dragonscale Epaulets", p: {achievement: 0}},
-	{u: 5619, i: 80012, n: "Ardent Glorious Shoulderguards", p: {glory: 150}},
+	{u: 5619, i: 80744, n: "Ardent Glorious Shoulderguards", p: {glory: 150}},
 	{u: 7066, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}}
 ],
 Armor_Medium_Coat: [
@@ -1325,7 +1325,7 @@ Armor_Medium_Coat: [
 	{u: 6381, i: 74543, n: "Bladed Jerkin", p: {achievement: 0}},
 	{u: 6685, i: 78178, n: "Triumphant Brigandine", p: {badge: 0}},
 	{u: 6838, i: 78800, n: "Experimental Envoy Jerkin", p: {craft: true}},
-	{u: 5633, i: 67115, n: "Ardent Glorious Brigandine", p: {glory: 400}}
+	{u: 5633, i: 80823, n: "Ardent Glorious Brigandine", p: {glory: 400}}
 ],
 Armor_Medium_Gloves: [
 	{u: 32, i: 41170, n: "Rawhide Bracers", p: {badge: 10}},
@@ -1407,7 +1407,7 @@ Armor_Medium_Gloves: [
 	{u: 6839, i: 78892, n: "Experimental Envoy Vambraces", p: {craft: true}},
 	{u: 6903, i: 79391, n: "Pirate Hook", p: {gem: 300}},
 	{u: 7032, i: 79937, n: "Medium Glacial Gauntlets", p: {achievement: 0}},
-	{u: 5634, i: 79955, n: "Ardent Glorious Wristplates", p: {glory: 150}},
+	{u: 5634, i: 80718, n: "Ardent Glorious Wristplates", p: {glory: 150}},
 	{u: 7115, i: 80142, n: "Gloves of the Obedient", p: {magnetite: 600}}
 ],
 Armor_Medium_Leggings: [
@@ -1478,7 +1478,7 @@ Armor_Medium_Leggings: [
 	{u: 6260, i: 71349, n: "Ornate Guild Leggings", p: {craft: true}},
 	{u: 6687, i: 78471, n: "Triumphant Legguards", p: {badge: 0}},
 	{u: 6829, i: 78896, n: "Experimental Envoy Mask", p: {craft: true}},
-	{u: 5636, i: 79968, n: "Ardent Glorious Legguards", p: {glory: 275}}
+	{u: 5636, i: 80809, n: "Ardent Glorious Legguards", p: {glory: 200}}
 ],
 Armor_Medium_Boots: [
 	{u: 19, i: 41168, n: "Rawhide Boots", p: {badge: 10}},
@@ -1551,7 +1551,7 @@ Armor_Medium_Boots: [
 	{u: 6688, i: 78211, n: "Triumphant Shinplates", p: {badge: 0}},
 	{u: 6792, i: 78796, n: "Experimental Envoy Boots", p: {craft: true}},
 	{u: 6916, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
-	{u: 5632, i: 80000, n: "Ardent Glorious Shinplates", p: {glory: 150}}
+	{u: 5632, i: 80851, n: "Ardent Glorious Shinplates", p: {glory: 150}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", b: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1693,7 +1693,7 @@ Armor_Heavy_Helm: [
 	{u: 6968, i: 79508, n: "Heavy Dragonscale Headdress", p: {achievement: 0}},
 	{u: 6931, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
 	{u: 6972, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}},
-	{u: 5624, i: 80010, n: "Ardent Glorious Plate Helm", p: {glory: 175}},
+	{u: 5624, i: 80777, n: "Ardent Glorious Plate Helm", p: {glory: 150}},
 	{u: 7038, i: 80026, n: "Ice Crown", p: {gem: 400}},
 	{u: 7119, i: 80147, n: "Confessor Caudecus's Mask", p: {achievement: 0}},
 	{u: 7102, i: 80096, n: "White Mantle Elite Guard Mask", p: {achievement: 0}},
@@ -1786,7 +1786,7 @@ Armor_Heavy_Shoulders: [
 	{u: 6719, i: 78326, n: "Triumphant Pauldrons", p: {badge: 0}},
 	{u: 6796, i: 78977, n: "Experimental Envoy Pauldrons", p: {craft: true}},
 	{u: 6951, i: 79468, n: "Heavy Dragonscale Epaulets", p: {achievement: 0}},
-	{u: 5626, i: 79987, n: "Ardent Glorious Pauldrons", p: {glory: 150}},
+	{u: 5626, i: 80778, n: "Ardent Glorious Pauldrons", p: {glory: 150}},
 	{u: 7088, i: 80236, n: "Refined Envoy Pauldrons", p: {craft: true}},
 	{u: 7064, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}}
 ],
@@ -1860,7 +1860,7 @@ Armor_Heavy_Coat: [
 	{u: 6523, i: 74079, n: "Mistward Plate", p: {achievement: 0}},
 	{u: 6740, i: 78608, n: "Triumphant Breastplate", p: {badge: 0}},
 	{u: 6820, i: 78923, n: "Experimental Envoy Breastplate", p: {craft: true}},
-	{u: 5622, i: 67143, n: "Ardent Glorious Breastplate", p: {glory: 400}},
+	{u: 5622, i: 80735, n: "Ardent Glorious Breastplate", p: {glory: 400}},
 	{u: 7075, i: 80648, n: "Refined Envoy Breastplate", p: {craft: true}}
 ],
 Armor_Heavy_Gloves: [
@@ -1945,7 +1945,7 @@ Armor_Heavy_Gloves: [
 	{u: 6811, i: 78799, n: "Experimental Envoy Gauntlets", p: {craft: true}},
 	{u: 6943, i: 79391, n: "Pirate Hook", p: {gem: 300}},
 	{u: 7006, i: 79818, n: "Heavy Glacial Gauntlets", p: {achievement: 0}},
-	{u: 5623, i: 79965, n: "Ardent Glorious Gauntlets", p: {glory: 150}},
+	{u: 5623, i: 80788, n: "Ardent Glorious Gauntlets", p: {glory: 150}},
 	{u: 7121, i: 80335, n: "Gauntlets of the Obedient", p: {magnetite: 600}},
 	{u: 7153, i: 80673, n: "Refined Envoy Gauntlets", p: {craft: true}}
 ],
@@ -2019,7 +2019,7 @@ Armor_Heavy_Leggings: [
 	{u: 6511, i: 70598, n: "Mistward Legguards", p: {achievement: 0}},
 	{u: 6726, i: 78198, n: "Triumphant Legplates", p: {badge: 0}},
 	{u: 6840, i: 78858, n: "Experimental Envoy Tassets", p: {craft: true}},
-	{u: 5625, i: 67146, n: "Ardent Glorious Legplates", p: {glory: 275}},
+	{u: 5625, i: 80757, n: "Ardent Glorious Legplates", p: {glory: 200}},
 	{u: 7110, i: 80427, n: "Refined Envoy Tassets", p: {craft: true}}
 ],
 Armor_Heavy_Boots: [
@@ -2094,7 +2094,7 @@ Armor_Heavy_Boots: [
 	{u: 6682, i: 78288, n: "Triumphant Wargreaves", p: {badge: 0}},
 	{u: 6828, i: 78934, n: "Experimental Envoy Greaves", p: {craft: true}},
 	{u: 6909, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
-	{u: 5621, i: 80045, n: "Ardent Glorious Wargreaves", p: {glory: 150}},
+	{u: 5621, i: 80801, n: "Ardent Glorious Wargreaves", p: {glory: 150}},
 	{u: 7109, i: 80127, n: "Refined Envoy Greaves", p: {craft: true}}
 ],
 Armor_Light_HelmAquatic: [

@@ -683,6 +683,9 @@ dt.jpzListNameHover {
 .trdButtons button {
 	width: 24px; height: 24px;
 }
+.trdEntry {
+	white-space: nowrap;
+}
 .trdEntry input[type="text"] {
 	width: 103px;
 	margin: 2px;

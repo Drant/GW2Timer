@@ -265,7 +265,7 @@ var GW2T_CURRENCY_DATA = {
 		//cob: {color: "#e99213", conversion: [1, 47909], isappraised: true}, // Candy Corn Cob
 		badge: {id: 15, color: "#8c7047", conversion: [30, 71473], isliquid: true}, // Badge of Tribute
 		proof: {id: 31, color: "#ffff53", conversion: [6, 21262], isliquid: true, ishidden: true}, // Superior Catapult Blueprints
-		glory: {id: 33, color: "#d675ef", conversion: [400, 48079], isappraised: true}, // Zojja Doublet
+		glory: {id: 33, color: "#d675ef", conversion: 0},
 		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true}, // Sentinel's Orichalcum Imbued Inscription
 		provisioner: {id: 29, color: "#2c9c4b", conversion: [1, 15350], isappraised: true, ishidden: true}, // Rampager's Krait Morning Star
 		dungeon_ac: {id: 5, color: "#73c7ee", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm

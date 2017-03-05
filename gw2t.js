@@ -6814,8 +6814,8 @@ Z = {
 							n: item.name,
 							p: {coin: -1}
 						});
+						newitems.push(item);
 					}
-					newitems.push(item);
 				}
 				Z.printUnlockables(pReturn.oRecord, null, true);
 				Z.printRecordEntry(newitems, {
@@ -9957,7 +9957,7 @@ V = {
 			"<label><input id='audWantTransactions' type='checkbox' />" + D.getPhraseOriginal("Include current trading transactions") + ".</label><br />"
 			+ "<label><input id='audWantVaults' type='checkbox' />" + D.getPhraseOriginal("Include guilds vault") + ".</label><br />"
 			+ "<label><input id='audWantAutomatic' type='checkbox' />" + D.getPhraseOriginal("Automatic daily audit") + ".</label><br />"
-			+ "<label><input id='audWantConverted' type='checkbox' />" + D.getPhraseOriginal("Convert and sum currencies in categories history") + ".</label>"
+			+ "<label><input id='audWantConverted' type='checkbox' />" + D.getPhraseOriginal("Convert currencies in history") + ".</label>"
 		);
 		O.mimicInput("#audWantTransactions", "bol_auditTransactions");
 		O.mimicInput("#audWantVaults", "bol_auditVault");

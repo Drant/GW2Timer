@@ -945,9 +945,10 @@ Ring: [
 	{i: 79460, n: "Rurik's Engagement Ring", p: {craft: true}},
 	{i: 79477, n: "Rurik's Engagement Ring", p: {craft: true}},
 	{i: 79587, n: "Rurik's Engagement Ring", p: {craft: true}},
-	{i: 79982, n: "Mist Band (Infused)", p: {craft: true}},
-	{i: 80058, n: "Mist Band (Infused)", p: {craft: true}},
-	{i: 80793, n: "Attuned Mist Band (Infused)", p: {craft: true}}
+	{i: 79982, n: "Mist Band (Infused)", p: {glory: 200}},
+	{i: 80058, n: "Mist Band (Infused)", p: {glory: 200}},
+	{i: 80793, n: "Attuned Mist Band (Infused)", p: {craft: true}},
+	{i: 80783, n: "Attuned Mist Band (Infused)", p: {craft: true}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1010,8 +1011,8 @@ Accessory: [
 	{i: 78915, n: "Hardened Keep Fragment", p: {magnetite: 250}},
 	{i: 79444, n: "Sparking Petrified Wood", p: {map_eb: 150}},
 	{i: 79745, n: "Black Ice Earring", p: {map_bf: 300}},
-	{i: 80002, n: "Mist Talisman", p: {pvp: true}},
-	{i: 80028, n: "Mist Talisman", p: {pvp: true}}
+	{i: 80002, n: "Mist Talisman", p: {glory: 175}},
+	{i: 80028, n: "Mist Talisman", p: {glory: 175}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1077,8 +1078,8 @@ Amulet: [
 	{i: 74695, n: "Whisper's Secret", p: {achievement: 0}},
 	{i: 67898, n: "Wynne's Locket", p: {laurel: 20}},
 	{i: 79269, n: "Blood Ruby Pendant", p: {map_bs: 125}},
-	{i: 79980, n: "Mist Pendant", p: {pvp: true}},
-	{i: 79993, n: "Mist Pendant", p: {pvp: true}},
+	{i: 79980, n: "Mist Pendant", p: {glory: 175}},
+	{i: 79993, n: "Mist Pendant", p: {glory: 175}},
 	{i: 80241, n: "Jade Pendant", p: {map_ld: 125}}
 ],
 LightHelm: [
@@ -1204,7 +1205,8 @@ LightCoat: [
 	{i: 80027, n: "Ardent Glorious Raiment", p: {coin: 1200000}},
 	{i: 80244, n: "Thackeray's Doublet", p: {coin: 1200000}},
 	{i: 80811, n: "Illustrious Doublet", p: {coin: 1200000}},
-	{i: 80716, n: "Illustrious Doublet", p: {coin: 1200000}}
+	{i: 80716, n: "Illustrious Doublet", p: {coin: 1200000}},
+	{i: 67118, n: "Ardent Glorious Raiment", p: {coin: 1200000}}
 ],
 LightGloves: [
 	{i: 48098, n: "Ahamid's Wristguards", p: {coin: 900000}},

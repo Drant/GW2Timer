@@ -2260,7 +2260,7 @@ HungryCats: {
 	{c: [17019, 14540], l: "2", t: "Grilled Poultry"},
 	{c: [16636, 16030], l: "23", t: "Masterwork Frog in a Jar<br />Buy the jar then use Feline Communication skill near a Feline Familiar NPC (summoned by Enchanted Broom witch outfit bundle)."},
 	{c: [20781, 13939], l: "26", t: "Super-Hot Poultry and Winter Vegetable Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [20781, 13939]]},
-	{c: [22374, 14562], l: "20", t: "Grumble Cake<br /><img src='img/account/professions/necromancer.png' />"},
+	{c: [22374, 14562], l: "20", t: "Grumble Cake<br />Requires Profession <img src='img/account/professions/necromancer.png' />"},
 	{c: [24627, 14616], l: "25", t: "Super-Hot Poultry and Leek Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [24627, 14616]]},
 	{c: [25300, 14214], l: "19", t: "Harpy Feathers (consumable)<br />Requires Profession <img src='img/account/professions/thief.png' />"},
 	{c: [25381, 14226], l: "17", t: "Flask of Pumpkin Oil<br />Requires Profession <img src='img/account/professions/engineer.png' />"},
