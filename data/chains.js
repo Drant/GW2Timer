@@ -774,9 +774,9 @@ var GW2T_CHAIN_DATA = [
 		sInterim: ["*"],
 		fInterim: "*",
 		lim: "15:00",
-		avg: "4:30",
-		min: "3:00",
-		max: "6:00"
+		avg: "6:00",
+		min: "4:00",
+		max: "10:00"
 	}
 	]
 },
@@ -962,7 +962,7 @@ var GW2T_CHAIN_DATA = [
 	name_fr: "Ulgoth le Modniir",
 	name_zh: "莫迪尔沃尔格斯",
 	zone: "harathi",
-	waypoint: "[&BLAAAAA=]",
+	waypoint: "[&BLEAAAA=]",
 	level: "43",
 	reward: {ecto: "1", loot: "5", dragonite: "3-5"},
 	timing: ["01:30", "04:30", "07:30", "10:30", "13:30", "16:30", "19:30", "22:30"],

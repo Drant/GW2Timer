@@ -17,6 +17,7 @@
  * s: screenshot image URL
  * t: tooltip text
  * l: label text (optional, used instead of number over the map marker)
+ * u: unlock ID associated in the API (optional, numbers or all letters, no spaces)
  * a: attributes in an object format
  * p: path for a node (optional)
  * e: extreme enum (optional, whether it is the start (0), substart (1), subfinish (2), or finish (3) point)
@@ -2256,35 +2257,35 @@ HungryCats: {
 	wiki: "https://wiki.guildwars2.com/wiki/Hungry_cat_scavenger_hunt",
 	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
 	needles: [
-	{c: [16029, 14648], l: "3", t: "Spicy Flank Steak"},
-	{c: [17019, 14540], l: "2", t: "Grilled Poultry"},
-	{c: [16636, 16030], l: "23", t: "Masterwork Frog in a Jar<br />Buy the jar then use Feline Communication skill near a Feline Familiar NPC (summoned by Enchanted Broom witch outfit bundle)."},
-	{c: [20781, 13939], l: "26", t: "Super-Hot Poultry and Winter Vegetable Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [20781, 13939]]},
-	{c: [22374, 14562], l: "20", t: "Grumble Cake<br />Requires Profession <img src='img/account/professions/necromancer.png' />"},
-	{c: [24627, 14616], l: "25", t: "Super-Hot Poultry and Leek Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [24627, 14616]]},
-	{c: [25300, 14214], l: "19", t: "Harpy Feathers (consumable)<br />Requires Profession <img src='img/account/professions/thief.png' />"},
-	{c: [25381, 14226], l: "17", t: "Flask of Pumpkin Oil<br />Requires Profession <img src='img/account/professions/engineer.png' />"},
-	{c: [29253, 18504], l: "4", t: "Spicier Flank Steak"},
-	{c: [23588, 6868], l: "24", t: "Koda's Flame<br />Thaw the frozen Snow Leopard Cub using the Koda torch.", p: [[23137, 7509], [23481, 6951], [23588, 6868]]},
-	{c: [13211, 11988], l: "1", t: "Slab of Poultry Meat."},
-	{c: [10985, 12139], l: "12", t: "Cheeseburger<br />Requires Profession <img src='img/account/professions/warrior.png' />"},
-	{c: [10967, 12064], l: "13", t: "Crafted Mystery Tonic (beast)<br />Requires Profession <img src='img/account/professions/mesmer.png' />"},
-	{c: [11058, 11046], l: "5", t: "Plate of Fire Flank Steak"},
-	{c: [12562, 9627], l: "32", t: "Strawberry Ghost<br />At night, eat enough strawberries until you have a ghostly aura then feed the cat."},
-	{c: [5679, 7381], l: "18", t: "39 Carrot<br />Requires Profession <img src='img/account/professions/revenant.png' /> in PvP Lobby (Heart of the Mists)"},
-	{c: [5763, 15226], l: "8", t: "Bowl of Saffron-Mango Ice Cream"},
-	{c: [4183, 15100], l: "9", t: "Bowl of Peach Raspberry Swirl Ice Cream"},
-	{c: [5257, 16422], l: "7", t: "Ginger-Lime Ice Cream"},
-	{c: [5547, 16703], l: "6", t: "Crafted Prickly Pear Sorbet"},
-	{c: [5864, 20632], l: "27", t: "Super-Hot Lemongrass Poultry Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [5864, 20632]]},
-	{c: [7339, 20027], l: "15", t: "Crafted Bowl of Curry Mussel Soup<br />Requires Profession <img src='img/account/professions/guardian.png' />"},
-	{c: [9902, 19791], l: "14", t: "Healing Seed Pod<br />Requires Profession <img src='img/account/professions/ranger.png' />"},
-	{c: [9960, 19815], l: "16", t: "Rainbow Cake<br />Requires Profession <img src='img/account/professions/elementalist.png' />"},
-	{c: [10457, 21037], l: "10", t: "Slab of Poultry Meat<br />At day, bottom floor of The Groove."},
-	{c: [10493, 21142], l: "28", t: "Super-Hot Saffron-Scented Poultry Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [10493, 21142]]},
-	{c: [10268, 21189], l: "11", t: "Slab of Poultry Meat<br />At night, bottom floor of The Groove."},
-	{c: [7307, 29797], l: "21", t: "Plate of Fire Flank Steak<br />Carry a Stranded Skritt then feed the cat."},
-	{c: [5567, 29868], l: "22", t: "3 Ghost Pepper"}
+	{c: [16029, 14648], u: 3, t: "Spicy Flank Steak"},
+	{c: [17019, 14540], u: 2, t: "Grilled Poultry"},
+	{c: [16636, 16030], u: 23, t: "Masterwork Frog in a Jar<br />Buy the jar then use Feline Communication skill near a Feline Familiar NPC (summoned by Enchanted Broom witch outfit bundle)."},
+	{c: [20781, 13939], u: 26, t: "Super-Hot Poultry and Winter Vegetable Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [20781, 13939]]},
+	{c: [22374, 14562], u: 20, t: "Grumble Cake<br />Requires Profession <img src='img/account/professions/necromancer.png' />"},
+	{c: [24627, 14616], u: 25, t: "Super-Hot Poultry and Leek Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [24627, 14616]]},
+	{c: [25300, 14214], u: 19, t: "Harpy Feathers (consumable)<br />Requires Profession <img src='img/account/professions/thief.png' />"},
+	{c: [25381, 14226], u: 17, t: "Flask of Pumpkin Oil<br />Requires Profession <img src='img/account/professions/engineer.png' />"},
+	{c: [29253, 18504], u: 4, t: "Spicier Flank Steak"},
+	{c: [23588, 6868], u: 24, t: "Koda's Flame<br />Thaw the frozen Snow Leopard Cub using the Koda torch.", p: [[23137, 7509], [23481, 6951], [23588, 6868]]},
+	{c: [13211, 11988], u: 1, t: "Slab of Poultry Meat."},
+	{c: [10985, 12139], u: 12, t: "Cheeseburger<br />Requires Profession <img src='img/account/professions/warrior.png' />"},
+	{c: [10967, 12064], u: 13, t: "Crafted Mystery Tonic (beast)<br />Requires Profession <img src='img/account/professions/mesmer.png' />"},
+	{c: [11058, 11046], u: 5, t: "Plate of Fire Flank Steak"},
+	{c: [12562, 9627], u: 32, t: "Strawberry Ghost<br />At night, eat enough strawberries until you have a ghostly aura then feed the cat."},
+	{c: [5679, 7381], u: 18, t: "39 Carrot<br />Requires Profession <img src='img/account/professions/revenant.png' /> in PvP Lobby (Heart of the Mists)"},
+	{c: [5763, 15226], u: 8, t: "Bowl of Saffron-Mango Ice Cream"},
+	{c: [4183, 15100], u: 9, t: "Bowl of Peach Raspberry Swirl Ice Cream"},
+	{c: [5257, 16422], u: 7, t: "Ginger-Lime Ice Cream"},
+	{c: [5547, 16703], u: 6, t: "Crafted Prickly Pear Sorbet"},
+	{c: [5864, 20632], u: 27, t: "Super-Hot Lemongrass Poultry Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [5864, 20632]]},
+	{c: [7339, 20027], u: 15, t: "Crafted Bowl of Curry Mussel Soup<br />Requires Profession <img src='img/account/professions/guardian.png' />"},
+	{c: [9902, 19791], u: 14, t: "Healing Seed Pod<br />Requires Profession <img src='img/account/professions/ranger.png' />"},
+	{c: [9960, 19815], u: 16, t: "Rainbow Cake<br />Requires Profession <img src='img/account/professions/elementalist.png' />"},
+	{c: [10457, 21037], u: 10, t: "Slab of Poultry Meat<br />At day, bottom floor of The Groove."},
+	{c: [10493, 21142], u: 28, t: "Super-Hot Saffron-Scented Poultry Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [10493, 21142]]},
+	{c: [10268, 21189], u: 11, t: "Slab of Poultry Meat<br />At night, bottom floor of The Groove."},
+	{c: [7307, 29797], u: 21, t: "Plate of Fire Flank Steak<br />Carry a Stranded Skritt then feed the cat."},
+	{c: [5567, 29868], u: 22, t: "3 Ghost Pepper"}
 	]
 },
 Strongboxes: {

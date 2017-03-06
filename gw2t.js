@@ -1750,9 +1750,11 @@ X = {
 	 * @param object pChecklist to initialize.
 	 * @param int pLength of the checklist string to construct.
 	 * @param string pCustomList comma separated list of indexes (1-indexed) to be set as checked.
+	 * @param enum pJob for clear function, optional.
+	 * @param object pAssoc for custom named indexes, optional.
 	 * @returns string new checklist to be assigned to a checklist variable.
 	 */
-	initializeChecklist: function(pChecklist, pLength, pCustomList, pJob)
+	initializeChecklist: function(pChecklist, pLength, pCustomList, pJob, pAssoc)
 	{
 		var i;
 		var indexes;
@@ -1765,6 +1767,13 @@ X = {
 		{
 			X.clearChecklist(pChecklist);
 			indexes = pCustomList.split(",");
+			if (pAssoc)
+			{
+				for (var i = 0; i < indexes.length; i++)
+				{
+					indexes[i] = pAssoc[(indexes[i])];
+				}
+			}
 
 			for (i in indexes)
 			{
@@ -1892,9 +1901,10 @@ X = {
 	/*
 	 * Gets indexes in a checklist that has its value as "checked".
 	 * @param object pChecklist to extract.
+	 * @param object pAssoc for custom named indexes, optional.
 	 * @returns string comma separated string of index numbers (1-indexed).
 	 */
-	getCheckedIndexes: function(pChecklist)
+	getCheckedIndexes: function(pChecklist, pAssoc)
 	{
 		var i;
 		var indexes = "";
@@ -1903,7 +1913,14 @@ X = {
 		{
 			if (list[i] === X.ChecklistEnum.Checked)
 			{
-				indexes += (i+1) + ",";
+				if (pAssoc)
+				{
+					indexes += pAssoc[i] + ",";
+				}
+				else
+				{
+					indexes += (i+1) + ",";
+				}
 			}
 		}
 		indexes = indexes.slice(0, -1); // Trim last extra comma
@@ -11882,6 +11899,7 @@ V = {
 	 * @param string pSection
 	 * @objparam boolean aWantPrices to prefetch TP prices for all items, optional.
 	 * @objparam boolean aWantGem whether to display the gem tally, optional.
+	 * @objparam function aCallback to execute after generate.
 	 */
 	serveUnlockables: function(pSection, pSettings)
 	{
@@ -11907,7 +11925,8 @@ V = {
 				aRecord: U.getRecordData(section),
 				aUnlockeds: pUnlockeds,
 				aWantPrices: (Settings.aWantPrices !== false) ? true : false,
-				aHelpMessage: helpstr
+				aHelpMessage: helpstr,
+				aCallback: Settings.aCallback
 			});
 		};
 		
@@ -11944,8 +11963,10 @@ V = {
 	},
 	serveCats: function()
 	{
-		V.serveUnlockables("Cats", {aWantGem: false});
-		A.embedFrame("#accDish_Cats", "http://gw2timer.com/?page=HungryCats&bol_showPanel=false");
+		V.serveUnlockables("Cats", {aWantGem: false, aCallback: function(pReturn)
+		{
+			A.embedFrame("#accDish_Cats", G.getCollectibleURL(X.Collectibles.HungryCats, pReturn.aUnlockAssoc));
+		}});
 	},
 	serveDungeons: function()
 	{
@@ -13625,13 +13646,14 @@ B = {
 	 * @objparam boolean aWantSearchHighlight to use search highlight, optional.
 	 * @objparam boolean aWantDefaultHelp to append the unlockables help message, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
+	 * @objparam function aCallback to execute after generation.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
 	 * @objparam string aIsCustomCatalog if is the default catalog with custom tabs.
 	 * An unlockables record has arrays that hold entries with these properties:
 	 * u: Unlockable ID (such as a skin ID, or mini ID)
 	 * i: Item ID associated with that unlock
 	 * n: Name of the unlockable.
-	 * t: Tradeable array of item IDs, optional.
+	 * b: Tradeable array of item IDs, optional.
 	 * p: Payment to acquire the associated item if the item is not tradeable.
 	 */
 	generateUnlockables: function(pBank, pSettings)
@@ -13827,6 +13849,13 @@ B = {
 				aIsCustomCatalog: Settings.aIsCustomCatalog
 			});
 			B.updateBankTally(container, numsunlockedtotal, numintabstotal, numacquiredtotal);
+			
+			if (Settings.aCallback)
+			{
+				Settings.aCallback({
+					aUnlockAssoc: unlocksassoc
+				});
+			}
 		};
 		
 		/*
@@ -25908,10 +25937,11 @@ P = {
 		var iscoordchanged = false;
 		var iszonechanged = false;
 		// Character has moved
-		if (that.GPSPreviousCoord[0] !== coord[0] && that.GPSPreviousCoord[1] !== coord[1])
+		if (that.GPSPreviousCoord[0] !== coord[0] || that.GPSPreviousCoord[1] !== coord[1])
 		{
 			iscoordchanged = true;
 			that.GPSPreviousCoord = coord;
+			document.getElementById(P.MapSwitchWebsite + "CoordinatesMouse").value = coord[0] + ", " + coord[1];
 		}
 		// Zone has changed
 		if (that.GPSPreviousZoneID !== zoneid)
@@ -26270,7 +26300,7 @@ G = {
 		var bindNodeBehavior = function(pMarker)
 		{
 			M.bindMarkerZoomBehavior(pMarker, "contextmenu");
-			M.bindMarkerCoordBehavior(pMarker, "dblclick");
+			M.bindMarkerCoordBehavior(pMarker, "click");
 			pMarker.on("click", function(pEvent)
 			{
 				if (pEvent.originalEvent.which === 2)
@@ -27005,14 +27035,30 @@ G = {
 	generateCollectibles: function(pType)
 	{
 		var i, ii, number, extreme;
-		var customlist = U.Args[X.Collectibles[pType].urlkey];
+		var pingsimport = U.Args[X.Collectibles[pType].urlkey];
 		var collectible = P.Collectibles[pType];
 		var ithneedle, markeroptions;
+		var unlocktoindex, indextounlock;
 		var stateinstring;
 		var pathline, pathstyle;
 		var markertitle;
 		var translatedname = D.getObjectName(collectible);
 		var directory = "img/collectible/" + pType.toLowerCase() + "/";
+		/*
+		 * If the collectible's indexes are associated with special unlock IDs,
+		 * then use those IDs instead of the needle's index number.
+		 */
+		if (collectible.needles[0].u)
+		{
+			unlocktoindex = {};
+			indextounlock = {};
+			for (i = 0; i < collectible.needles.length; i++)
+			{
+				ithneedle = collectible.needles[i];
+				unlocktoindex[ithneedle.u] = i + 1;
+				indextounlock[i] = ithneedle.u;
+			}
+		}
 		
 		var styleCollectibleMarker = function(pMarker, pState)
 		{
@@ -27077,16 +27123,17 @@ G = {
 				}
 
 				// Update URL bar with list of numbers of checked markers
-				var pings = X.getCheckedIndexes(X.Collectibles[this.options.needleType]);
-				if (pings.length === 0)
+				var pingsexport = X.getCheckedIndexes(X.Collectibles[this.options.needleType], indextounlock);
+				if (pingsexport.length)
 				{
-					U.updateQueryString();
+					U.updateAddressBar("?" + this.options.needleKey + "=" + pingsexport);
 				}
 				else
 				{
-					U.updateAddressBar("?" + this.options.needleKey + "=" + pings);
+					U.updateQueryString();
 				}
 			});
+			M.bindMarkerCoordBehavior(marker, "click");
 			M.bindMarkerZoomBehavior(marker, "contextmenu");
 
 			// Add to array
@@ -27095,7 +27142,7 @@ G = {
 		
 		// Initialize checklist
 		X.Collectibles[pType].length = P.Collectibles[pType].needles.length;
-		X.initializeChecklist(X.Collectibles[pType], X.Collectibles[pType].length, customlist);
+		X.initializeChecklist(X.Collectibles[pType], X.Collectibles[pType].length, pingsimport, null, unlocktoindex);
 		
 		P.LayerArray[pType] = []; // Holds markers (needles)
 		P.Layer[pType] = new L.layerGroup(); // Holds path connecting the markers
@@ -27106,6 +27153,10 @@ G = {
 			number = i + 1;
 			ithneedle = collectible.needles[i];
 			stateinstring = X.getChecklistItem(X.Collectibles[pType], i);
+			if (ithneedle.u && ithneedle.l === undefined)
+			{
+				ithneedle.l = ithneedle.u.toString();
+			}
 
 			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + (ithneedle.l || number)
 				+ ((collectible.iscushion) ? "<br />" + D.getObjectName(ithneedle) : "");
@@ -27237,6 +27288,18 @@ G = {
 				M.redrawPersonalPath(coords);
 			}
 		});
+	},
+	
+	/*
+	 * Gets a pings URL containing collectible unlock indexes.
+	 * @param object pCollectible checklist.
+	 * @param object pUnlockAssoc derived from API.
+	 * @returns string URL
+	 */
+	getCollectibleURL: function(pCollectible, pUnlockAssoc)
+	{
+		var ids = U.convertAssocToArray(pUnlockAssoc).join(",");
+		return I.cSiteURL + "?" + pCollectible.urlkey + "=" + ids + "&bol_showPanel=false";
 	},
 	
 	/*
@@ -36547,6 +36610,8 @@ I = {
 			}
 			var tipwidth = $("#qTip").width();
 			var tipheight = $("#qTip").height();
+			var tipwidthplus = tipwidth + I.cTOOLTIP_OVERFLOW_ADD_X;
+			var tipheightplus = tipheight + I.cTOOLTIP_OVERFLOW_ADD_Y;
 			var winwidth = $(window).width();
 			var winheight = $(window).height();
 			
@@ -36565,7 +36630,7 @@ I = {
 			// Tooltip overflows top edge
 			if (I.posY + this.offsetY < 0)
 			{
-				if (I.posY + tipheight + I.cTOOLTIP_OVERFLOW_ADD_Y < winheight)
+				if (I.posY + tipheightplus < winheight)
 				{
 					this.offsetY = I.cTOOLTIP_OVERFLOW_ADD_Y;
 				}
@@ -36575,9 +36640,17 @@ I = {
 				}
 			}
 			// Tooltip overflows right edge threshold
-			if (I.posX + tipwidth > winwidth || I.posX + I.cPANEL_WIDTH > winwidth)
+			if ((I.posX + tipwidthplus > winwidth) || (I.posX + I.cPANEL_WIDTH > winwidth))
 			{
-				this.offsetX = -(tipwidth + I.cTOOLTIP_OVERFLOW_ADD_X);
+				// For case when window is too small and tooltip overflows left edge
+				if (I.posX - tipwidthplus < 0)
+				{
+					this.offsetX = -I.posX;
+				}
+				else
+				{
+					this.offsetX = -tipwidthplus;
+				}
 			}
 			
 			this.TipElm.style.left = I.posX + this.offsetX + "px";
