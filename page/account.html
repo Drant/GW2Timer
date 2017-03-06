@@ -251,7 +251,7 @@
 	<p>Every time you do an audit, your total appraised coin and gems, and the appraised sell value for each audit category will be <a href="http://pieroxy.net/blog/pages/lz-string/index.html">compressed</a> and <a href="https://en.wikipedia.org/wiki/Web_storage">saved</a> in your browser. By default only the coin currency is recorded for each audit category, so for example the Outfits category (which consist of mostly gems) may appear as zero; turn on the <em>convert and sum</em> option and the history will consider all currencies, although the values will fluctuate more due to more variables such as gem price.</p>
 	<p>Older audit history will be overwritten if over the limit, which you can set in the Options page, Account section. You may also set the option to have the website automatically load an invisible iframe to this page at daily reset, so your daily audit history progresses.</p>
 	<h2>Audit View</h2>
-	<p>You can see every item that was audited by clicking the header cell on top of each audit category column. For example, click the &quot;Bank&quot; header cell in the &quot;Audit Categories&quot; table, which will create a virtual bank of the contents, showing the currency-converted appraised sell coin value of each item. If an item is not shown or does not have a coin value then it was not audited (its account bound payment was not pre-recorded or is unappraisable).</p>
+	<p>You can see every item that was audited by clicking the header cell on top of each audit category column. For example, click the &quot;Bank&quot; header cell in the &quot;Audit Categories&quot; table, which will create a virtual bank of the contents, showing the currency-converted appraised sell (untaxed) coin value of each item. If an item is not shown or does not have a coin value then it was not audited (its account bound payment was not pre-recorded or is unappraisable).</p>
 	<h2>Auditing Details</h2>
 	<ul class="cssBullet">
 		<li>Characters audit includes all items in equipment, slotted runes/sigils/infusions, inventory, and inventory bags (which themselves are items).</li>
@@ -269,7 +269,7 @@
 	<br />
 	<h2>Auditing Limitations</h2>
 	<ul class="cssBullet">
-		<li>There is no ArenaNet API for retrieving mail carriers, glider unlocks, and home instance nodes, so they are not audited.</li>
+		<li>There is no ArenaNet API for retrieving mail carriers and glider unlocks, so they are not audited.</li>
 		<li>Only a few and most common untradeable items have a recorded currency, for example Infinite Mist Offensive Potion has Fractal Relics currency amount recorded (audited), but Gift of Ascension does not (not audited).</li>
 		<li>Untradeable items are appraised by one currency only, so if a raid vendor item cost 500 tokens and 20 gold, only the 500 tokens will be considered.</li>
 		<li>Account bound unopened bags and chest keys are not audited.</li>

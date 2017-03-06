@@ -27299,6 +27299,7 @@ G = {
 	getCollectibleURL: function(pCollectible, pUnlockAssoc)
 	{
 		var ids = U.convertAssocToArray(pUnlockAssoc).join(",");
+		ids = (ids.length) ? ids : "null";
 		return I.cSiteURL + "?" + pCollectible.urlkey + "=" + ids + "&bol_showPanel=false";
 	},
 	

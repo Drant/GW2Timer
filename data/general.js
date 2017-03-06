@@ -1564,10 +1564,24 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Copper-Fed Salvage-o-Matic",
-		id: "44602",
-		price: 600,
-		discount: 800,
+		name: "Glint's Winter Dye Kit",
+		id: "68005",
+		price: 100,
+		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		col: 0
+	},
+	{
+		name: "Mad King Dye Kit",
+		id: "70367",
+		price: 100,
+		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		col: 0
+	},
+	{
+		name: "Vibrant Dye Kit",
+		id: "79695",
+		price: 100,
+		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
 		col: 0
 	},
 	{
