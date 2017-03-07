@@ -2271,7 +2271,7 @@ HungryCats: {
 	{c: [10985, 12139], u: 12, t: "Cheeseburger<br />Requires Profession <img src='img/account/professions/warrior.png' />"},
 	{c: [10967, 12064], u: 13, t: "Crafted Mystery Tonic (beast)<br />Requires Profession <img src='img/account/professions/mesmer.png' />"},
 	{c: [11058, 11046], u: 5, t: "Plate of Fire Flank Steak"},
-	{c: [12562, 9627], u: 32, t: "Strawberry Ghost<br />At night, eat enough strawberries until you have a ghostly aura then feed the cat."},
+	{c: [12562, 9627], u: 32, t: "Strawberry Ghost<br />At night, eat enough strawberries until you have a ghostly aura then feed the cat (within Harvest Cascades area)."},
 	{c: [5679, 7381], u: 18, t: "39 Carrot<br />Requires Profession <img src='img/account/professions/revenant.png' /> in PvP Lobby (Heart of the Mists)"},
 	{c: [5763, 15226], u: 8, t: "Bowl of Saffron-Mango Ice Cream"},
 	{c: [4183, 15100], u: 9, t: "Bowl of Peach Raspberry Swirl Ice Cream"},

@@ -60,6 +60,6 @@ Special: [
 	{u: 29, i: 68409, n: "Bowl of Bloodstone Goulash", l: "#29", t: "Lady Wisteria Whiskington near Bloodstone Crystals.", p: {coin: 8}},
 	{u: 30, i: 8055, n: "Template:Future_content", l: "#30", t: "Bundle."},
 	{u: 31, i: 8055, n: "Template:Future_content", l: "#31", t: "Unused."},
-	{u: 32, i: 36076, n: "Strawberry Ghost", l: "#32", t: "Ghost cat."}
+	{u: 32, i: 36076, n: "Strawberry Ghost", l: "#32 ☽", t: "Ghost cat."}
 ]
 };

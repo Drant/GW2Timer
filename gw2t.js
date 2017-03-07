@@ -4940,6 +4940,10 @@ Z = {
 			{
 				I.prettyJSON(GPSIdentityJSON);
 			}},
+			trace: {usage: "Prints GPS information continuously by toggle (overlay only).", f: function()
+			{
+				P.isGPSPrinting = !P.isGPSPrinting;
+			}},
 			agent: {usage: "Prints browser's navigator object.", f: function()
 			{
 				var str = "", obj, desc;
@@ -23868,7 +23872,7 @@ M = {
 		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
 		return [
 			~~(cr[0][0]+(cr[1][0]-cr[0][0])*(pPos[0]-mr[0][0])/(mr[1][0]-mr[0][0])),
-			~~(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(pPos[1]-mr [0][1])/(mr[1][1]-mr[0][1])))
+			~~(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(pPos[1]-mr[0][1])/(mr[1][1]-mr[0][1])))
 		];
 	},
 	
@@ -24174,7 +24178,7 @@ M = {
 };
 P = {
 /* =============================================================================
- * @@Populate shared and independent map properties and functions
+ * @@Populate GPS shared and independent map properties and functions
  * ========================================================================== */
 
 	MapSwitchObject: M, // Reference to the map superobject
@@ -24225,6 +24229,7 @@ P = {
 	Collectibles: {},
 	Guild: {},
 	GPSTimeout: {},
+	isGPSPrinting: false,
 	
 	/*
 	 * Initializes the map only if the boolean set by specific modes is on.
@@ -24517,113 +24522,125 @@ P = {
 					if (completionboolean)
 					{
 						// Mastery Insights
-						numofpois = apizone.training_points.length;
-						nummastery = numofpois;
-						icon = U.URL_IMG.Mastery;
-						for (i = 0; i < numofpois; i++)
+						if (apizone.training_points)
 						{
-							poi = apizone.training_points[i];
-							marker = L.marker(that.convertGCtoLC(poi.coord),
+							numofpois = apizone.training_points.length;
+							nummastery = numofpois;
+							icon = U.URL_IMG.Mastery;
+							for (i = 0; i < numofpois; i++)
 							{
-								title: "<span class='" + "mapPoi" + "'>" + translationmastery + "</span>",
-								icon: L.icon(
+								poi = apizone.training_points[i];
+								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
-									iconUrl: icon,
-									iconSize: [16, 16],
-									iconAnchor: [8, 8]
-								})
-							});
-							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
-							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-							zoneobj.Layers.Challenge.addLayer(marker);
-							P.addMapLocation(poi.coord, zonename + " " + translationmastery + " " + poi.id, icon, zonename + " " + translationmastery);
+									title: "<span class='" + "mapPoi" + "'>" + translationmastery + "</span>",
+									icon: L.icon(
+									{
+										iconUrl: icon,
+										iconSize: [16, 16],
+										iconAnchor: [8, 8]
+									})
+								});
+								that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
+								that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+								zoneobj.Layers.Challenge.addLayer(marker);
+								P.addMapLocation(poi.coord, zonename + " " + translationmastery + " " + poi.id, icon, zonename + " " + translationmastery);
+							}
 						}
 						
 						// Hero Challenges
-						numofpois = apizone.skill_challenges.length;
-						numchallenge = numofpois;
-						icon = U.URL_IMG.Challenge;
-						for (i = 0; i < numofpois; i++)
+						if (apizone.skill_challenges)
 						{
-							poi = apizone.skill_challenges[i];
-							marker = L.marker(that.convertGCtoLC(poi.coord),
+							numofpois = apizone.skill_challenges.length;
+							numchallenge = numofpois;
+							icon = U.URL_IMG.Challenge;
+							for (i = 0; i < numofpois; i++)
 							{
-								title: "<span class='" + "mapPoi" + "'>" + translationchallenge + "</span>",
-								icon: L.icon(
+								poi = apizone.skill_challenges[i];
+								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
-									iconUrl: icon,
-									iconSize: [16, 16],
-									iconAnchor: [8, 8]
-								})
-							});
-							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
-							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-							zoneobj.Layers.Challenge.addLayer(marker);
-							P.addMapLocation(poi.coord, zonename + " " + translationchallenge + " " + poi.idx, icon, zonename + " " + translationchallenge);
+									title: "<span class='" + "mapPoi" + "'>" + translationchallenge + "</span>",
+									icon: L.icon(
+									{
+										iconUrl: icon,
+										iconSize: [16, 16],
+										iconAnchor: [8, 8]
+									})
+								});
+								that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
+								that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+								zoneobj.Layers.Challenge.addLayer(marker);
+								P.addMapLocation(poi.coord, zonename + " " + translationchallenge + " " + poi.idx, icon, zonename + " " + translationchallenge);
+							}
 						}
 						
 						// Renown Hearts
-						numofpois = apizone.tasks.length;
-						numheart = numofpois;
-						icon = U.URL_IMG.Heart;
-						for (i = 0; i < numofpois; i++)
+						if (apizone.tasks)
 						{
-							poi = apizone.tasks[i];
-							marker = L.marker(that.convertGCtoLC(poi.coord),
+							numofpois = apizone.tasks.length;
+							numheart = numofpois;
+							icon = U.URL_IMG.Heart;
+							for (i = 0; i < numofpois; i++)
 							{
-								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
-								wiki: poi.objective,
-								icon: L.icon(
+								poi = apizone.tasks[i];
+								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
-									iconUrl: icon,
-									iconSize: [16, 16],
-									iconAnchor: [8, 8]
-								})
-							});
-							M.bindMarkerWikiBehavior(marker, "click");
-							M.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-							zoneobj.Layers.Heart.addLayer(marker);
-							P.addMapLocation(poi.coord, poi.objective, icon, zonename + " " + translationheart);
-							
-							// Heart Area
-							area = L.polygon(that.convertGCtoLCMulti(poi.bounds), {
-								clickable: false,
-								color: "#ffc321",
-								weight: 2,
-								opacity: 0.8,
-								fillOpacity: 0.1
-							});
-							zoneobj.Layers.HeartArea.addLayer(area);
+									title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
+									wiki: poi.objective,
+									icon: L.icon(
+									{
+										iconUrl: icon,
+										iconSize: [16, 16],
+										iconAnchor: [8, 8]
+									})
+								});
+								M.bindMarkerWikiBehavior(marker, "click");
+								M.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+								zoneobj.Layers.Heart.addLayer(marker);
+								P.addMapLocation(poi.coord, poi.objective, icon, zonename + " " + translationheart);
+
+								// Heart Area
+								area = L.polygon(that.convertGCtoLCMulti(poi.bounds), {
+									clickable: false,
+									color: "#ffc321",
+									weight: 2,
+									opacity: 0.8,
+									fillOpacity: 0.1
+								});
+								zoneobj.Layers.HeartArea.addLayer(area);
+							}
 						}
 						
 						// Sector Names
-						numofpois = apizone.sectors.length;
-						icon = U.URL_IMG.Sector;
-						for (i = 0; i < numofpois; i++)
+						if (apizone.sectors)
 						{
-							poi = apizone.sectors[i];
-							marker = L.marker(that.convertGCtoLC(poi.coord),
+							numofpois = apizone.sectors.length;
+							icon = U.URL_IMG.Sector;
+							for (i = 0; i < numofpois; i++)
 							{
-								clickable: false,
-								icon: L.divIcon(
+								poi = apizone.sectors[i];
+								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
-									className: "mapSec",
-									html: "<span class='mapSecIn'>" + poi.name + "</span>",
-									iconSize: [512, 64],
-									iconAnchor: [256, 32]
-								})
-							});
-							zoneobj.Layers.Sector.addLayer(marker);
-							P.addMapLocation(poi.coord, poi.name, icon, zonename + " " + translationsector);
-							
-							// Sector Area
-							area = L.polyline(that.convertGCtoLCMulti(poi.bounds), {
-								clickable: false,
-								color: "white",
-								weight: 2,
-								opacity: 0.8
-							});
-							zoneobj.Layers.SectorArea.addLayer(area);
+									clickable: false,
+									icon: L.divIcon(
+									{
+										className: "mapSec",
+										html: "<span class='mapSecIn'>" + poi.name + "</span>",
+										iconSize: [512, 64],
+										iconAnchor: [256, 32]
+									})
+								});
+								zoneobj.Layers.Sector.addLayer(marker);
+								P.addMapLocation(poi.coord, poi.name, icon, zonename + " " + translationsector);
+
+								// Sector Area
+								area = L.polyline(that.convertGCtoLCMulti(poi.bounds), {
+									clickable: false,
+									color: "white",
+									weight: 2,
+									opacity: 0.8
+								});
+								zoneobj.Layers.SectorArea.addLayer(area);
+							}
 						}
 						
 						that.isMappingIconsGenerated = true;
@@ -25977,7 +25994,7 @@ P = {
 				|| that.GPSPreviousAngleCamera !== anglecamera
 				|| pForceCode <= 0)
 			{
-				if (J.isProjectionInitialized)
+				if (P.isGPSPrinting)
 				{
 					I.clear();
 					I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />"
@@ -25986,7 +26003,10 @@ P = {
 						+ "Camera: " + U.formatJSON(GPSCameraArray)
 					);
 					I.prettyJSON(GPSIdentityJSON);
-					J.Camera.lookAt(new THREE.Vector3(GPSCameraArray[0], GPSCameraArray[1], GPSCameraArray[2]));
+					if (J.isProjectionInitialized)
+					{
+						J.Camera.lookAt(new THREE.Vector3(GPSCameraArray[0], GPSCameraArray[1], GPSCameraArray[2]));
+					}
 				}
 				that.movePin(that.Pin.Character, coord);
 				that.movePin(that.Pin.Camera, coord);

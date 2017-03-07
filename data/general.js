@@ -1542,8 +1542,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-02-28T16:00:00Z"),
-	Finish: new Date("2017-03-07T16:00:00Z"),
+	Start: new Date("2017-03-07T16:00:00Z"),
+	Finish: new Date("2017-04-04T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1564,58 +1564,51 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Glint's Winter Dye Kit",
-		id: "68005",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		name: "Verdant Executor Outfit",
+		id: "79220",
+		price: 560,
+		discount: 700,
 		col: 0
 	},
 	{
-		name: "Mad King Dye Kit",
-		id: "70367",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		name: "Raven's Spirit Glider",
+		id: "http://i.imgur.com/v7JFiJE.png",
+		price: 500,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Vibrant Dye Kit",
-		id: "79695",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		name: "Storm Bow",
+		id: "79310",
+		price: 600,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Braham's Heavy Armor Skin",
-		id: "43157",
-		price: 640,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Jungle Explorer Outfit",
-		id: "67990",
+		name: "Shadow Assassin Outfit",
+		id: "66658",
 		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Braham's Bitterfrost Frontier Pack",
-		id: "http://i66.tinypic.com/2gu9w6c.png",
-		price: 2000,
+		name: "Harbinger of Mordremoth Outfit",
+		id: "70071",
+		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Braham's Mace Skin",
-		id: "42653",
-		price: 600,
+		name: "Ceremonial Plated Outfit",
+		id: "67040",
+		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Braham's Shield Skin",
-		id: "42656",
-		price: 600,
+		name: "Mini Chieftain Utahein and Mini Svanir",
+		id: "67281",
+		price: 700,
 		discount: null,
 		col: 0
 	},
@@ -1623,13 +1616,6 @@ Sale: {
 		name: "Braham's Wolfblood Pauldrons",
 		id: "80082",
 		price: 300,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mini Braham Eirsson",
-		id: "68572",
-		price: 350,
 		discount: null,
 		col: 0
 	},
@@ -1648,13 +1634,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Ceremonial Plated Outfit",
-		id: "67040",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Glowing Green Mask",
 		id: "67038",
 		price: 500,
@@ -1665,20 +1644,6 @@ Sale: {
 		name: "Covert Charr Backpack Cover",
 		id: "39516",
 		price: 300,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Shattered Bloodstone Glider",
-		id: "80795",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Bloodstone Ascender",
-		id: "80854",
-		price: 250,
 		discount: null,
 		col: 0
 	},
@@ -1755,27 +1720,6 @@ Sale: {
 	{
 		name: "Aetherblade Heavy Armor Skin",
 		id: "42868",
-		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Incarnate Light Armor Skin",
-		id: "63909",
-		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Strider's Medium Armor Skin",
-		id: "63899",
-		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Rampart Heavy Armor Skin",
-		id: "63929",
 		price: 800,
 		discount: null,
 		col: 1
