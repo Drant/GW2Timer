@@ -1564,8 +1564,8 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Marjory's Dagger",
-		id: "49016",
+		name: "Marjory's Dagger Skin",
+		id: "49018",
 		price: 480,
 		discount: 600,
 		col: 0
