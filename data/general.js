@@ -1542,8 +1542,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-03-07T16:00:00Z"),
-	Finish: new Date("2017-04-04T16:00:00Z"),
+	Start: new Date("2017-03-07T15:00:00Z"),
+	Finish: new Date("2017-04-04T15:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1564,15 +1564,22 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Verdant Executor Outfit",
-		id: "79220",
-		price: 560,
-		discount: 700,
+		name: "Marjory's Dagger",
+		id: "49016",
+		price: 480,
+		discount: 600,
+		col: 0
+	},
+	{
+		name: "Marjory's Axe Skin",
+		id: "49015",
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
 		name: "Raven's Spirit Glider",
-		id: "http://i.imgur.com/v7JFiJE.png",
+		id: "80725",
 		price: 500,
 		discount: null,
 		col: 0
@@ -1630,13 +1637,6 @@ Sale: {
 		name: "Permanent Unicorn Finisher",
 		id: "69616",
 		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Glowing Green Mask",
-		id: "67038",
-		price: 500,
 		discount: null,
 		col: 0
 	},

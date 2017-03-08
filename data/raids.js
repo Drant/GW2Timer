@@ -22,26 +22,26 @@ var GW2T_RAIDS_HEADERS = {
  */
 var GW2T_RAIDS_DATA = {
 SpiritVale: [
-	{u: "vale_guardian", i: 77334, n: "Spirit Vale", l: "Guardian"},
-	{u: "spirit_woods", i: 79490, n: "Spirit Vale", l: "Spirit"},
-	{u: "gorseval", i: 77296, n: "Spirit Vale", l: "Gorseval"},
-	{u: "sabetha", i: 77339, n: "Spirit Vale", l: "Sabetha"}
+	{u: "vale_guardian", i: 77334, n: "Spirit_Vale#Vale_Guardian", l: "Guardian"},
+	{u: "spirit_woods", i: 79490, n: "Spirit_Vale#Spirit_Woods", l: "Spirit"},
+	{u: "gorseval", i: 77296, n: "Spirit_Vale#Gorseval_the_Multifarious", l: "Gorseval"},
+	{u: "sabetha", i: 77339, n: "Spirit_Vale#Sabetha_the_Saboteur", l: "Sabetha"}
 ],
 SalvationPass: [
-	{u: "slothasor", i: 77870, n: "Salvation Pass", l: "Slothasor"},
-	{u: "bandit_trio", i: 78003, n: "Salvation Pass", l: "Bandit"},
-	{u: "matthias", i: 77911, n: "Salvation Pass", l: "Matthias"}
+	{u: "slothasor", i: 77870, n: "Salvation_Pass#Slothasor", l: "Slothasor"},
+	{u: "bandit_trio", i: 78003, n: "Salvation_Pass#Prison_Camp_encounter", l: "Bandit"},
+	{u: "matthias", i: 77911, n: "Salvation_Pass#Matthias_Gabrel", l: "Matthias"}
 ],
 StrongholdOfTheFaithful: [
-	{u: "escort", i: 78828, n: "Stronghold of the Faithful", l: "McLeod"},
-	{u: "keep_construct", i: 78890, n: "Stronghold of the Faithful", l: "Construct"},
-	{u: "twisted_castle", i: 78902, n: "Stronghold of the Faithful", l: "Castle"},
-	{u: "xera", i: 78815, n: "Stronghold of the Faithful", l: "Xera"}
+	{u: "escort", i: 78828, n: "Stronghold_of_the_Faithful#Siege_the_Stronghold", l: "McLeod"},
+	{u: "keep_construct", i: 78890, n: "Stronghold_of_the_Faithful#Keep_Construct", l: "Construct"},
+	{u: "twisted_castle", i: 78902, n: "Stronghold_of_the_Faithful#Twisted_Castle", l: "Castle"},
+	{u: "xera", i: 78815, n: "Stronghold_of_the_Faithful#Xera", l: "Xera"}
 ],
 BastionOfThePenitent: [
-	{u: "cairn", i: 80562, n: "Bastion of the Penitent", l: "Cairn"},
-	{u: "mursaat_overseer", i: 80224, n: "Bastion of the Penitent", l: "Overseer"},
-	{u: "samarog", i: 80218, n: "Bastion of the Penitent", l: "Samarog"},
-	{u: "deimos", i: 80222, n: "Bastion of the Penitent", l: "Deimos"}
+	{u: "cairn", i: 80562, n: "Bastion_of_the_Penitent#Cairn_the_Indomitable", l: "Cairn"},
+	{u: "mursaat_overseer", i: 80224, n: "Bastion_of_the_Penitent#Mursaat_Overseer", l: "Overseer"},
+	{u: "samarog", i: 80218, n: "Bastion_of_the_Penitent#Samarog", l: "Samarog"},
+	{u: "deimos", i: 80222, n: "Bastion_of_the_Penitent#Deimos", l: "Deimos"}
 ]
 };
