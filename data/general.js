@@ -1530,6 +1530,26 @@ Story:
 },
 
 /*
+ * Faux items that do not exist in the game's database, such as character slot upgrade.
+ */
+Faux: [
+	{
+		name_en: "Character Slot Expansion",
+		name_de: "Charakterplatz-Erweiterung",
+		name_es: "Ampliación de casilla de personaje",
+		name_fr: "Emplacement de personnage supplémentaire",
+		name_zh: "人物栏位扩展",
+		desc_en: "Add an additional character slot to your account",
+		desc_de: "Fügt Eurem Account einen weiteren Charakterplatz hinzu.",
+		desc_es: "Añade una casilla de personaje más a tu cuenta.",
+		desc_fr: "Ajouter un emplacement de personnage supplémentaire à votre compte.",
+		desc_zh: "启一个人物栏位。",
+		type: "Consumable",
+		rarity: "Masterwork"
+	}
+],
+
+/*
  * GW2 gem store sale items.
  * Format:
  *	name: "", // Item name to point to English wiki
@@ -1564,17 +1584,10 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Marjory's Dagger Skin",
-		id: "49018",
-		price: 480,
-		discount: 600,
-		col: 0
-	},
-	{
-		name: "Marjory's Axe Skin",
-		id: "49015",
-		price: 480,
-		discount: 600,
+		name: "Transmutation Charge",
+		id: "64736",
+		price: 120,
+		discount: [[5, 120, 150], [10, 216, 270], [25, 480, 600]],
 		col: 0
 	},
 	{
