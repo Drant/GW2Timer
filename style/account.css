@@ -73,6 +73,11 @@
 	color: #aaff55;
 }
 
+.accButton {
+	margin-right: 8px;
+	padding: 4px 6px 4px 6px;
+	font-size: 14px;
+}
 .accEmbedContainer {
 	text-align: center;
 }
@@ -466,12 +471,6 @@ input[type="text"].accTokenHovered {
 }
 #audDebug {
 	margin-top: 16px;
-}
-.audButton {
-	margin-right: 8px;
-	padding: 4px 6px 4px 6px;
-	font-family: Trebuchet MS, Menomonia;
-	font-size: 14px;
 }
 
 #audHistoryContainer {
@@ -1953,7 +1952,7 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .bnkSlot:hover .bnkSlotForeground {
 	opacity: 0;
 }
-.bnkSlotMatch, .bnkSlotMatchAlternate {
+.bnkSlotMatch, .bnkSlotMatchAlternate, .bnkSlotAvailable, .bnkSlotDiscount {
 	background-size: 400% 400%;
 	animation: aniPulsate 2s ease infinite;
 	border-radius: 4px;
@@ -1965,6 +1964,14 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .bnkSlotMatchAlternate {
 	background-image: linear-gradient(270deg, lime, rgba(255,255,255,0.9));
 	box-shadow: 0px 0px 24px lime;
+}
+.bnkSlotAvailable {
+	background-image: linear-gradient(270deg, #66aaff, rgba(255,255,255,0.9));
+	box-shadow: 0px 0px 24px #66aaff;
+}
+.bnkSlotDiscount {
+	background-image: linear-gradient(270deg, #fdc84e, rgba(255,255,255,0.9));
+	box-shadow: 0px 0px 24px #fdc84e;
 }
 .bnkSlotIcon {
 	display: block;
@@ -1989,6 +1996,30 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .bnkRarity .bnkSlotRarity_Exotic { border-image: linear-gradient(to bottom, #ffaa00 0%, rgba(255, 170, 0, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
 .bnkRarity .bnkSlotRarity_Ascended { border-image: linear-gradient(to bottom, #ff4488 0%, rgba(255, 68, 136, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
 .bnkRarity .bnkSlotRarity_Legendary { border-image: linear-gradient(to bottom, #9933ff 0%, rgba(153, 51, 255, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
+.bnkSlotSymbol {
+	display: block;
+	position: absolute;
+	top: -4px;
+	left: -4px;
+	width: 24px; height: 24px;
+	border-radius: 50%;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+.bnkSlot:hover .bnkSlotSymbol {
+	opacity: 0.8;
+}
+.bnkSlot:hover .bnkSlotSymbol:active {
+	opacity: 0.4;
+	transition: opacity 0s;
+}
+.bnkSlotSymbol:hover {
+	animation: aniFlicker 1s ease infinite;
+}
+.bnkSlotSymbolActive {
+	box-shadow: 0px 0px 16px #e7e3bd;
+	opacity: 1;
+}
 .bnkSlotLabel {
 	display: block;
 	position: absolute;

@@ -288,7 +288,7 @@ var GW2T_CURRENCY_DATA = {
 		magic: {id: 32, color: "#ffff32", conversion: [12400, 37000], isappraised: true, isbound: true} // Quiver of a Thousand Arrows
 	},
 	AuditUpgrades: { // Account upgrades from the gem store
-		CharacterSlot: {starting: 5, purchased: 0, gem: 800, id: 20125},
+		CharacterSlot: {starting: 5, purchased: 0, gem: 800, id: "character_slot_expansion"},
 		CraftingLicense: {starting: 2, purchased: 0, gem: 800, id: 42970},
 		BankTab: {starting: 1, purchased: 0, gem: 600, id: 19995},
 		StorageExpander: {starting: 1, purchased: 0, gem: 800, id: 42932},

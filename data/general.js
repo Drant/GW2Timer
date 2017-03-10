@@ -1406,8 +1406,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<dfn data-coord='[[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]'>Jade Shards</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Doric'>nodes</a>. <a href='http://gw2timer.com/?page=CinsGoods'>Cin Business</a>, <a href='http://gw2timer.com/?page=LettersFromE'>Letters from E</a>, <a href='http://gw2timer.com/?page=CaudecusLetters'>Caudecus Letters</a>. <a href='http://gw2timer.com/?page=HarathiStrongboxes'>Leather Farm</a>."
-		+ "<br />Account unlocks: <a href='http://gw2timer.com/?page=Nodes'>home nodes</a>, <a href='http://gw2timer.com/?page=Cats'>hungry cats</a>, <a href='http://gw2timer.com/?page=Dungeons'>dungeons</a>, <a href='http://gw2timer.com/?page=Raids'>raids</a>. <a href='http://forum.renaka.com/topic/5546166/4#post603314'>GW2Navi 2017</a> overlay app.",
+	pve: "Account unlocks: <a href='http://gw2timer.com/?page=Nodes'>home nodes</a>, <a href='http://gw2timer.com/?page=Cats'>hungry cats</a>, <a href='http://gw2timer.com/?page=Dungeons'>dungeons</a>, <a href='http://gw2timer.com/?page=Raids'>raids</a>. <a href='http://forum.renaka.com/topic/5546166/4#post603314'>GW2Navi 2017</a> overlay app.",
 	wvw: "",
 	Start: new Date("2016-02-14T16:00:00Z"),
 	Finish: new Date("2017-03-14T16:00:00Z"),
@@ -1480,21 +1479,21 @@ Countdown: {
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
 	}*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
 		name_fr: "Bonus de carte Gorges glacées",
 		name_zh: "霜谷之音地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-03-02T20:00:00Z"),
-		Finish: new Date("2017-03-09T20:00:00Z")
-	},
+		Start: new Date("2017-04-27T20:00:00Z"),
+		Finish: new Date("2017-05-04T20:00:00Z")
+	},*/
 	{
 		name_en: "March Gem Store Sale",
 		name_de: "März Edelsteinshop Angebote",
-		name_es: "Tienda rebajas de marzo",
-		name_fr: "Boutique promotions mars",
+		name_es: "Marzo tienda rebajas",
+		name_fr: "Mars boutique promotions",
 		name_zh: "宝石店三月促销",
 		url: "https://wiki.guildwars2.com/wiki/Gem_Store/March_Sale#March_Sale.2C_2017",
 		Start: new Date("2017-03-03T16:00:00Z"),
@@ -1568,7 +1567,7 @@ Sale: {
 		{
 			name: "Gem", // Gem exchange rate sample
 			id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
-			url: "http://gw2timer.com/?page=Trading",
+			url: "http://gw2timer.com/?page=Gem",
 			price: 100,
 			discount: null,
 			col: 0
@@ -1582,12 +1581,48 @@ Sale: {
 			col: 1
 		}
 	],
+	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
-		name: "Transmutation Charge",
-		id: "64736",
-		price: 120,
-		discount: [[5, 120, 150], [10, 216, 270], [25, 480, 600]],
+		name: "Marriner's Horn",
+		id: "42888",
+		price: 480,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Flute",
+		id: "42973",
+		price: 480,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Musical Bass Guitar",
+		id: "36174",
+		price: 480,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Musical Frame Drum",
+		id: "43526",
+		price: 480,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Musical Harp",
+		id: "44883",
+		price: 480,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Musical Lute",
+		id: "66323",
+		price: 480,
+		discount: 800,
 		col: 0
 	},
 	{
@@ -1605,37 +1640,9 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Shadow Assassin Outfit",
-		id: "66658",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Harbinger of Mordremoth Outfit",
-		id: "70071",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Ceremonial Plated Outfit",
-		id: "67040",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Mini Chieftain Utahein and Mini Svanir",
 		id: "67281",
 		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Braham's Wolfblood Pauldrons",
-		id: "80082",
-		price: 300,
 		discount: null,
 		col: 0
 	},
@@ -1654,11 +1661,32 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Covert Charr Backpack Cover",
-		id: "39516",
+		name: "Shadow Assassin Outfit",
+		id: "66658",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Harbinger of Mordremoth Outfit",
+		id: "70071",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Ceremonial Plated Outfit",
+		id: "67040",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Braham's Wolfblood Pauldrons",
+		id: "80082",
 		price: 300,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Mask of the Wanderer Skin",
@@ -1703,37 +1731,9 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Fuzzy Panda Hat",
-		id: "64744",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Inventor's Sunglasses",
 		id: "64747",
 		price: 150,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Aetherblade Light Armor Skin",
-		id: "42870",
-		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Aetherblade Medium Armor Skin",
-		id: "42869",
-		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Aetherblade Heavy Armor Skin",
-		id: "42868",
-		price: 800,
 		discount: null,
 		col: 1
 	}

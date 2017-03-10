@@ -28,7 +28,7 @@
 				<aside>
 					<h1>API Key Instructions</h1>
 					<p><a href="http://i.imgur.com/pN01f47.png">Create an API key</a> at <b><a href="https://account.arena.net/applications">https://account.arena.net/applications</a></b> with all permissions checked and paste it in the &quot;API Key&quot; input box above in order to view your GW2 account's data. You may have multiple accounts or API keys, so give them a name to help you remember. <button id="accManagerPrint">Print Tokens</button></p>
-					<p>Use the <a href="http://forum.renaka.com/forum/368355/">forum</a> to report bugs and give suggestions, or learn about the latest features in the <a href="http://forum.renaka.com/topic/5500046/">update notes</a>.</p>
+					<p>Use the <a href="http://forum.renaka.com/forum/368355/">forum</a> to report bugs and give suggestions, or learn about the latest features in the <a href="http://forum.renaka.com/topic/5500046/">update notes</a>. Each account section may have a <img src="img/ui/question.png" /> button to show its specific help message.</p>
 				</aside>
 			</div>
 			<div id="accCommand">
@@ -62,6 +62,7 @@
 							<li><a href="./?page=Nodes"><img src="img/account/menu/nodes.png" /><var>Nodes</var></a> - visit home instance nodes.</li>
 							<li><a href="./?page=Cats"><img src="img/account/menu/cats.png" /><var>Cats</var></a> - visit home instance cats.</li>
 							<li><a href="./?page=Recipes"><img src="img/account/menu/recipes.png" /><var>Recipes</var></a> - see what my characters can craft.</li>
+							<li><a href="./?page=Pact"><img src="img/account/menu/pact.png" /><var>Pact</var></a> - see Pact Supply Network Agent recipes.</li>
 						</ul>
 						<!--<h2>Account Overview</h2>
 						<ul>
@@ -81,14 +82,15 @@
 							<li><a href="./?page=Characters"><img src="img/account/menu/characters.png" /><var>Characters</var></a> - analyze my characters and wallet.</li>
 							<li><a href="./?page=Hero"><img src="img/account/menu/hero.png" /><var>Hero</var></a> - inspect my characters' build.</li>
 						</ul>
-						<h2>Activity Checklist</h2>
+						<h2>Watchlists and Checklists</h2>
 						<ul>
+							<li><a href="./?page=Catalog"><img src="img/account/menu/catalog.png" /><var>Catalog</var></a> <a href="./?page=TP"><img src="img/ui/tp.png" /><var>Tracker</var></a> - make an item watchlist.</li>
+							<li><a href="./?page=Gem"><img src="img/account/menu/gem.png" /><var>Gem</var></a> - subscribe to gem store items for alerts.</li>
 							<li><a href="./?page=Dungeons"><img src="img/account/menu/dungeons.png" /><var>Dungeons</var></a> - check dungeons I've done today.</li>
 							<li><a href="./?page=Raids"><img src="img/account/menu/raids.png" /><var>Raids</var></a> - check raids I've done this week.</li>
 						</ul>
 						<h2>Trading Post and Money</h2>
 						<ul>
-							<li><a href="./?page=Catalog"><img src="img/account/menu/catalog.png" /><var>Catalog</var></a> <a href="./?page=TP"><img src="img/ui/tp.png" /><var>Tracker</var></a> - make a watchlist.</li>
 							<li><a href="./?page=Trading"><img src="img/account/menu/trading.png" /><var>Trading</var></a> - exchange gems and gold.</li>
 							<li><a href="./?page=Trading"><img src="img/account/menu/trading.png" /><var>Trading</var></a> - see my recent sales and purchases.</li>
 							<li><a href="./?page=Buying"><img src="img/account/menu/buying.png" /><var>Buying</var></a> <a href="./?page=Selling"><img src="img/account/menu/selling.png" /><var>Selling</var></a> - check items I'm buying or selling.</li>
@@ -201,10 +203,7 @@
 			</div>
 		</div>
 	</article>
-	<article data-section="Buying"></article>
-	<article data-section="Selling"></article>
-	<article data-section="Bought"></article>
-	<article data-section="Sold"></article>
+	<article data-section="Gem"></article>
 	<article data-section="Museum"></article>
 	<article data-section="Pact">
 		<div id="pctBank"></div>
@@ -213,6 +212,10 @@
 			<table id="pctStatTable"></table>
 		</div>
 	</article>
+	<article data-section="Buying" data-islead="true"></article>
+	<article data-section="Selling"></article>
+	<article data-section="Bought"></article>
+	<article data-section="Sold"></article>
 </section>
 
 <!--<section id="accPlatterPVP">
@@ -380,6 +383,21 @@
 	<h2>Recipes Gallery Usage</h2>
 	<p>The bank tabs contain craftable items for every discipline. A filled slot is the item associated with the recipe that you have learned on any character (although if you unlocked Light of Dwayna recipe on Tailor, it will show for Leatherworker and Armorsmith too because of the ArenaNet's API limitation). To find which of your characters know a recipe, use the bank search bar to search for the item produced from that recipe.</p>
 </div>
+<div id="accHelpGem">
+	<h2>Gem Store Gallery and Watchlist</h2>
+	<p>Hover over an item and click on <img src="img/ui/alarm.png" /> to subscribe to it. Faded slots are items not yet available on the gem store, and subscribing will alert when they return. Bright slots are items for sale, so if you subscribe to it, the alerts will be when they are discounted in price. Slot highlight colors: Blue—promoted items (or recently added), Gold—discounted items.</p>
+	<p>By the top search bar is the <img src="img/ui/bag.png" /> button to filter what items are: available, subscribed, and unavailable (1st, 2nd, 3rd click).</p>
+	<h2>Gem Store Alerts</h2>
+	<p>The alert is a spoken voice; you may enable/disable and set the volume from the side panel under the <img src="img/ui/alarm.png" /> icon on the Chains page. The checks for available or discounted items happen when you first load this website, and every quarter hour as long as you have the website in a browser tab.</p>
+</div>
+<div id="accHelpMuseum">
+	<h2>Item Museum</h2>
+	<p>A chronological bank of items released in ArenaNet's API. This allows you to see most new items from the game's patches and releases.</p>
+</div>
+<div id="accHelpPact">
+	<h2>Pact Supply</h2>
+	<p>Gallery of the recipe sheets offered by <a href="https://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent">Pact Supply Network Agents</a> throughout one year (366 days, starting from December 2015 to December 2016). The stack count is the number of times the recipe was offered. The offers are random, and they do not necessarily repeat on the same day of the year. View the history in <a href="http://gw2timer.com/data/pact.js">raw format</a>. Use the dashboard on the <a href="http://gw2timer.com">main page</a> labeled &quot;Pact Supply&quot; to view the current NPC vendor map locations to purchase these items.</p>
+</div>
 <div id="accHelpTransactions">
 	<h2>Trading Post Transactions Usage</h2>
 	<p>Transactions are items you are buying, selling, have bought, or have sold on the Trading Post. The info button next to each tab header will print out a chronological list of items transacted for that month.</p>
@@ -389,14 +407,6 @@
 	<p>For &quot;Buying&quot; and &quot;Bought&quot; transactions, prices on the slots are the sum of all transactions for that item for that month, without tax. For &quot;Selling&quot; and &quot;Sold&quot; transactions, it is the same but with tax included, and the faded prices over tabs are the pre-taxed value. You may hover over the slots or use the tradeable filter to see the item's current Buy (top) and Sell (bottom) prices.</p>
 	<h2>Transactions Outbid/Outprice</h2>
 	<p>For the &quot;Buying&quot; section, if no one has placed a higher bid on an item than you (not outbidden), then that item will be highlighted <strong>green</strong>. For the &quot;Selling&quot; section, if no one is selling an item lower than you (not outpriced), then that item will be highlighted <strong>green</strong>.</p>
-</div>
-<div id="accHelpMuseum">
-	<h2>Item Museum</h2>
-	<p>A chronological bank of items released in ArenaNet's API. This allows you to see most new items from the game's patches and releases.</p>
-</div>
-<div id="accHelpPact">
-	<h2>Pact Supply</h2>
-	<p>Gallery of the recipe sheets offered by <a href="https://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent">Pact Supply Network Agents</a> throughout one year (366 days, starting from December 2015 to December 2016). The stack count is the number of times the recipe was offered. The offers are random, and they do not necessarily repeat on the same day of the year. View the history in <a href="http://gw2timer.com/data/pact.js">raw format</a>. Use the dashboard on the <a href="http://gw2timer.com">main page</a> labeled &quot;Pact Supply&quot; to view the current NPC vendor map locations to purchase these items.</p>
 </div>
 </div>
 

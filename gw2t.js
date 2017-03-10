@@ -89,6 +89,7 @@ O = {
 		APICache: {key: "obj_utlAPICache", value: {}},
 		AuditHistory: {key: "obj_utlAuditHistory", value: {}},
 		CustomCatalog: {key: "obj_utlCustomCatalog", value: []},
+		GemSubscription: {key: "obj_utlGemSubscription", value: {}},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
 		StoredPins: {key: "obj_utlStoredPins", value: []},
@@ -259,6 +260,7 @@ O = {
 		bol_alertBuild: false,
 		bol_alertDaylight: false,
 		bol_alertMystic: false,
+		bol_alertGem: false,
 		// Account
 		bol_showRarity: false,
 		bol_condenseBank: false,
@@ -1236,12 +1238,10 @@ O = {
 			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Off)
 			{
 				D.stopSpeech();
-				$("#optAlarmSpeaker").attr("src", "img/ui/mute.png");
 			}
 			else
 			{
 				D.verifyNativeTTS();
-				$("#optAlarmSpeaker").attr("src", "img/ui/speaker.png");
 			}
 			$("#optAlarmIcon").attr("src", icon);
 		},
@@ -2256,7 +2256,7 @@ X = {
 	
 	/*
 	 * Loads chain checklist state as recorded in localStorage, and binds
-	 * clicking behavior to the div faux checkboxes.
+	 * clicking behavior to the div simulated checkboxes.
 	 * @param object pChain to initialize.
 	 * @pre Chains HTML have been initialized.
 	 */
@@ -2871,6 +2871,7 @@ U = {
 		Ascended: "data/ascended.js",
 		Recipes: "data/recipes.js",
 		Prices: "cache/prices.json",
+		Gem:  "data/gem.js",
 		Museum:  "data/museum.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
@@ -3738,7 +3739,23 @@ U = {
 		}
 		return arr;
 	},
-	getExistAssoc: function(pArray)
+	convertAssocToInts: function(pAssoc)
+	{
+		var arr = [];
+		for (var i in pAssoc)
+		{
+			arr.push(parseInt(i));
+		}
+		return arr;
+	},
+	
+	/*
+	 * Converts an array of keys into an existence associative array.
+	 * @param array pArray
+	 * @param object pFilterAssoc to filter in matching keys, optional
+	 * @returns object
+	 */
+	getExistAssoc: function(pArray, pFilterAssoc)
 	{
 		// Element itself is the key
 		var assoc = {};
@@ -3746,7 +3763,10 @@ U = {
 		for (var i = 0; i < pArray.length; i++)
 		{
 			entry = pArray[i];
-			assoc[entry] = true;
+			if (pFilterAssoc === undefined || (pFilterAssoc && pFilterAssoc[entry]))
+			{
+				assoc[entry] = true;
+			}
 		}
 		return assoc;
 	},
@@ -5898,7 +5918,10 @@ Z = {
 					var catarr = data[i];
 					for (var ii = 0; ii < catarr.length; ii++)
 					{
-						itemids[(catarr[ii].i)] = true;
+						if (catarr[ii].i)
+						{
+							itemids[(catarr[ii].i)] = true;
+						}
 					}
 				}
 				
@@ -5910,7 +5933,14 @@ Z = {
 					var db = pDatabase[i];
 					for (var ii in itemids)
 					{
-						Z.APICacheArrayOfObjects.push(db[ii]);
+						if (db[ii])
+						{
+							Z.APICacheArrayOfObjects.push(db[ii]);
+						}
+						else if (isNaN(ii) === false)
+						{
+							I.print("Error looking up item: " + ii);
+						}
 					}
 					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
 					var filename = pType.toLowerCase() + "_" + i + I.cJSON;
@@ -7345,6 +7375,8 @@ A = {
 		A.Currency = GW2T_CURRENCY_DATA;
 		A.Equipment = GW2T_EQUIPMENT_DATA;
 		A.Attribute = GW2T_ATTRIBUTE_DATA;
+		// Add faux items
+		Q.initializeFaux();
 		
 		// Initialize scaffolding HTML
 		var scaffold = $("#accContent");
@@ -8047,7 +8079,7 @@ A = {
 	},
 	wipeDish: function(pDish)
 	{
-		$("#accDish_" + pDish).empty();
+		$("#accDish_" + pDish).empty().data("isloaded", false);
 		$("#accDishMenu_" + pDish).empty();
 	},
 	
@@ -9244,7 +9276,7 @@ A = {
 			createTitle("View Audit").attr("id", "audViewTitle").appendTo(container);
 			$("<div id='audView'></div>").appendTo(container);
 			
-			// UNLOCKS
+			// GEM STORE UPGRADES
 			var summaryupgrades = $("<div id='audUpgrades'></div>").appendTo(container);
 			var upggems = A.getAccountUpgradesGem();
 			var upgcontainer = B.createBank(summaryupgrades);
@@ -9496,12 +9528,12 @@ A = {
 					});
 					var historybuttons = $("<div id='audHistoryButtons'></div>").appendTo(historycontainer);
 					// Button to print this account's history
-					$("<button class='audButton'>Print History</button>").appendTo(historybuttons).click(function()
+					$("<button class='accButton'>Print History</button>").appendTo(historybuttons).click(function()
 					{
 						I.prettyJSON(hist);
 					});
 					// Button to print the entire history object
-					$("<button class='audButton'>Print Storage</button>").appendTo(historybuttons).click(function()
+					$("<button class='accButton'>Print Storage</button>").appendTo(historybuttons).click(function()
 					{
 						var history = O.loadCompressedObject(O.Utilities.AuditHistory.key);
 						if (history)
@@ -9514,7 +9546,7 @@ A = {
 						}
 					});
 					// Button to reformat the history to have unique dates only
-					$("<button class='audButton'>Trim History</button>").appendTo(historybuttons).click(function()
+					$("<button class='accButton'>Trim History</button>").appendTo(historybuttons).click(function()
 					{
 						var audstamps = hist["Timestamps"];
 						var historylength = audstamps.length;
@@ -9576,15 +9608,15 @@ A = {
 			
 			// Debug buttons at the bottom
 			var debug = $("<div id='audDebug'></div>").appendTo(container);
-			$("<button class='audButton'>Print Possessions</button>").appendTo(debug).click(function()
+			$("<button class='accButton'>Print Possessions</button>").appendTo(debug).click(function()
 			{
 				I.prettyJSON(A.Possessions);
 			});
-			$("<button class='audButton'>Print Paylist</button>").appendTo(debug).click(function()
+			$("<button class='accButton'>Print Paylist</button>").appendTo(debug).click(function()
 			{
 				I.prettyJSON(E.Paylist);
 			});
-			$("<button class='audButton'>Print View</button>").appendTo(debug).click(function()
+			$("<button class='accButton'>Print View</button>").appendTo(debug).click(function()
 			{
 				I.prettyJSON(categoriesview);
 			});
@@ -10831,7 +10863,7 @@ V = {
 								{
 									Q.sumAttributeObject(attrobj, iBox.oAttr);
 								}
-								// Add faux checkboxes for toggleable armor slots
+								// Add simulated checkboxes for toggleable armor slots
 								if (equiptoggle[iEquipment.slot])
 								{
 									subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
@@ -12254,44 +12286,336 @@ V = {
 	 */
 	serveTrading: function()
 	{
-		var container = $("#accTrading");
-		if ( ! container.data("isloaded"))
+		var dish = $("#accDish_Trading");
+		if ( ! dish.data("isloaded"))
 		{
 			V.generateExchange();
 			V.generateRecent();
-			var inputs = container.find("input").click(function()
+			var inputs = dish.find("input").click(function()
 			{
 				$(this).select();
 			});
 			I.qTip.init(inputs);
-			container.data("isloaded", true);
+			dish.data("isloaded", true);
 		}
-		else if (container.data("token") !== A.TokenCurrent)
+		else if (dish.data("token") !== A.TokenCurrent)
 		{
 			// If already loaded but changed account, then reload the recent transactions
-			container.data("token", A.TokenCurrent);
+			dish.data("token", A.TokenCurrent);
 			$("#trsRecentReload").trigger("click");
 		}
 	},
 	
 	/*
-	 * Generates the Trading Post transactions page.
+	 * Generates gem store gallery displayed as bank tabs. Does not require account information.
 	 */
-	serveBuying: function()
+	serveGem: function()
 	{
-		B.generateTransactions("Buying", A.URL.CurrentBuys);
+		var dish = $("#accDish_Gem");
+		if (dish.data("isloaded"))
+		{
+			return;
+		}
+		else
+		{
+			dish.data("isloaded", true);
+		}
+		
+		var section = "Gem";
+		var container = B.createBank(dish, {
+			aIsCollection: true,
+			aWantCoin: false
+		});
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		
+		// Initialize the stored subscription object
+		var key = O.Utilities.GemSubscription.key;
+		var validids = {}, unlockeds = {}, values = {};
+		var availableassoc, discountedassoc;
+		
+		// Sets the memory of a slot
+		var toggleSlotAlarm = function(pSlot, pItem)
+		{
+			var id = pItem.id;
+			var issubscribed = (pSlot.find(".bnkSlotSymbol").hasClass("bnkSlotSymbolActive"));
+			if (issubscribed)
+			{
+				// If subscribed then unsubscribe the slot
+				toggleSlotSymbol(pSlot, false);
+				delete availableassoc[id];
+				delete discountedassoc[id];
+			}
+			else
+			{
+				X.setCheckboxEnumState($("#opt_bol_alertGem"), X.ChecklistEnum.Checked); // Turn on voice alert
+				if (unlockeds[id])
+				{
+					// Subscribing to an available item will alert for discounted condition
+					discountedassoc[id] = true;
+					I.write(U.escapeHTML(pItem.name) + D.getPhraseOriginal(" is available - Alarm when item is discount"));
+				}
+				else
+				{
+					// Subscribing to an unavailable item will alert for available condition
+					availableassoc[id] = true;
+					I.write(U.escapeHTML(pItem.name) + D.getPhraseOriginal(" is not available - Alarm when item is available"));
+				}
+				toggleSlotSymbol(pSlot, true);
+			}
+			
+			// Save to storage
+			H.GemSubscription.Available = U.convertAssocToArray(availableassoc);
+			H.GemSubscription.Discounted = U.convertAssocToArray(discountedassoc);
+			localStorage[key] = JSON.stringify(H.GemSubscription);
+		};
+		
+		// Sets the appearance of a slot
+		var toggleSlotSymbol = function(pSlot, pState, pItem)
+		{
+			if (pSlot)
+			{
+				var symbol = pSlot.find(".bnkSlotSymbol");
+				symbol.removeClass("bnkSlotSymbolActive");
+				if (pState)
+				{
+					symbol.addClass("bnkSlotSymbolActive");
+					pSlot.data("ismarked", true);
+				}
+				else
+				{
+					pSlot.data("ismarked", false);
+				}
+			}
+			else
+			{
+				// If did not provide a slot then consider as a wipe all command
+				bank.find(".bnkSlotSymbol").removeClass("bnkSlotSymbolActive");
+				bank.find(".bnkSlot").data("ismarked", false);
+			}
+			if (pItem)
+			{
+				var value = values[pItem.id];
+				var salevalue = H.Sale.Values[pItem.id];
+				if (value !== undefined && salevalue !== undefined)
+				{
+					pSlot.data("ismarked", true);
+					if (salevalue < value)
+					{
+						pSlot.addClass("bnkSlotDiscount");
+					}
+					else if (salevalue)
+					{
+						pSlot.addClass("bnkSlotAvailable");
+					}
+				}
+			}
+		};
+		
+		var generateUnlockables = function()
+		{
+			// An item is "unlocked" if it is available on the gem store, which is a positive-number gem payment
+			var record = U.getRecordData(section);
+			A.iterateRecord(record, function(pEntry)
+			{
+				var id = pEntry.i;
+				validids[id] = true; // Subscribed IDs that do not exist in record will be erased
+				pEntry.u = id; // The item's ID is its unlock ID
+				var payment = pEntry.p;
+				if (payment)
+				{
+					for (var i in payment)
+					{
+						values[id] = payment[i];
+						if (H.Sale.Values[id] < payment[i])
+						{
+							payment[i] = H.Sale.Values[id];
+						}
+						if (payment[i] <= 0)
+						{
+							// Negative price signifies it is unavailable, restore the positive price after iterating
+							payment[i] = -1 * payment[i];
+						}
+						else
+						{
+							// Positive price signifies it is available
+							unlockeds[id] = true;
+						}
+						break; // Consider only the first payment type
+					}
+				}
+			});
+			// Initialize subscription assoc
+			availableassoc = U.getExistAssoc(H.GemSubscription.Available, validids);
+			discountedassoc = U.getExistAssoc(H.GemSubscription.Discounted, validids);
+			
+			// Fill the "bank"
+			B.generateUnlockables(bank, {
+				aHeaders: U.getRecordHeader(section),
+				aRecord: record,
+				aUnlockeds: unlockeds,
+				aWantGemConvert: true,
+				aWantDefaultHelp: false,
+				aWantSearchHighlight: false,
+				aHelpMessage: $("#accHelpGem").html(),
+				aBind: function(pSlot, pItem)
+				{
+					var id = pItem.id;
+					var issubscribed = (availableassoc[id] || discountedassoc[id]);
+					var symbol = $("<img class='bnkSlotSymbol curToggle' src='img/ui/alarm.png' />").appendTo(pSlot);
+					toggleSlotSymbol(pSlot, issubscribed, pItem);
+					symbol.click(function(pEvent)
+					{
+						pEvent.stopPropagation();
+						toggleSlotAlarm(pSlot, pItem);
+					});
+				}
+			});
+			
+			// Button to clear all subscriptions
+			var controller = $("<div class='cssCenter'></div>").prependTo(dish);
+			var dishmenu = $("#accDishMenu_Gem");
+			$("<button class='accButton'>" + D.getPhraseOriginal("Help") + "</button>").appendTo(controller).click(function()
+			{
+				dishmenu.find(".bnkButtonHelp").trigger("click");
+			});
+			$("<button class='accButton'>" + D.getPhraseOriginal("View Subscription") + "</button>").appendTo(controller).click(function()
+			{
+				dishmenu.find(".bnkButtonEmpty").trigger("click").trigger("click"); // Cycle to the tier that shows marked slots
+			});
+			$("<button class='accButton'>" + D.getPhraseOriginal("Clear Subscription") + "</button>").appendTo(controller).click(function()
+			{
+				if (confirm("Delete all gem store subscriptions?"))
+				{
+					I.write(D.getPhraseOriginal("Gem alarm and subscription off"));
+					V.initializeGemSubscription(true);
+					X.setCheckboxEnumState($("#opt_bol_alertGem"), X.ChecklistEnum.Unchecked); // Turn off voice alert
+					toggleSlotSymbol();
+				}
+			});
+		};
+		
+		V.updateGemSubscription(function()
+		{
+			Q.loadItemsSubdatabase(section.toLowerCase(), function()
+			{
+				E.updateExchangeRatios(function()
+				{
+					generateUnlockables();
+				});
+			});
+		});
 	},
-	serveSelling: function()
+	
+	/*
+	 * Initializes the gem store subscription object.
+	 * @param boolean pWantClear whether to wipe all subscriptions.
+	 * @returns object
+	 */
+	initializeGemSubscription: function(pWantClear)
 	{
-		B.generateTransactions("Selling", A.URL.CurrentSells);
+		var key = O.Utilities.GemSubscription.key;
+		H.GemSubscription = { Available: [], Discounted: [] };
+		if (localStorage[key] === undefined || pWantClear)
+		{
+			localStorage[key] = JSON.stringify(H.GemSubscription);
+		}
+		try
+		{
+			if (pWantClear !== true)
+			{
+				var tempsubs = JSON.parse(localStorage[key]);
+				if (Array.isArray(tempsubs.Available) && Array.isArray(tempsubs.Discounted))
+				{
+					H.GemSubscription = tempsubs;
+				}
+			}
+		}
+		catch (e) {}
 	},
-	serveBought: function()
+	
+	/*
+	 * Downloads the gem record and checks against subscription for alerts.
+	 * @param function pCallback if and for generating the gem store gallery.
+	 */
+	updateGemSubscription: function(pCallback)
 	{
-		B.generateTransactions("Bought", A.URL.HistoryBuys);
-	},
-	serveSold: function()
-	{
-		B.generateTransactions("Sold", A.URL.HistorySells);
+		var section = "Gem";
+		U.getScript(U.URL_DATA.Gem, function()
+		{
+			if (H.GemSubscription === null)
+			{
+				V.initializeGemSubscription();
+			}
+			// Initialize price assoc
+			for (var i = 0; i < GW2T_SALE_DATA.length; i++)
+			{
+				var item = GW2T_SALE_DATA[i];
+				if (isNaN(item.id) === false)
+				{
+					H.Sale.Values[item.id] = item.price;
+				}
+			}
+			var availableassoc = U.getExistAssoc(H.GemSubscription.Available);
+			var discountedassoc = U.getExistAssoc(H.GemSubscription.Discounted);
+			
+			var record = U.getRecordData(section);
+			var isavailable = false;
+			var isdiscounted = false;
+			var alertstr = D.getWord("alarm");
+			var availablestr = D.getPhraseOriginal(" gem item is available");
+			var discountstr = D.getPhraseOriginal(" gem item discount");
+			A.iterateRecord(record, function(pEntry)
+			{
+				var id = pEntry.i;
+				var value;
+				for (var i in pEntry.p)
+				{
+					value = pEntry.p[i];
+					break; // Consider only the first payment type
+				}
+				// Check for available
+				if (availableassoc[id] && value > 0) // Positive payment value in the record means the item is available
+				{
+					I.print(pEntry.n + availablestr + "!");
+					isavailable = true;
+				}
+				// Check for discount
+				if (discountedassoc[id])
+				{
+					var salevalue = H.Sale.Values[id];
+					if (salevalue && value && salevalue < value)
+					{
+						I.print(pEntry.n + discountstr + "! " + E.formatGemString(value) + " − "
+							+ E.formatGemString(salevalue) + " = " + E.formatGemString(value - salevalue));
+						isdiscounted = true;
+					}
+				}
+			});
+			
+			// Speak the alert
+			if (O.Options.bol_alertGem)
+			{
+				if (isavailable)
+				{
+					D.speak(alertstr + "! " + availablestr);
+				}
+				if (isdiscounted)
+				{
+					D.speak(alertstr + "! " + discountstr);
+				}
+			}
+			if (isavailable || isdiscounted)
+			{
+				I.print("<a href='http://gw2timer.com/?page=Gem'>Go to Gem Store Gallery</a> - "
+					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>Turn off Gem Alert</a>");
+			}
+			
+			// Finally execute callback
+			if (pCallback)
+			{
+				pCallback();
+			}
+		}, false);
 	},
 	
 	/*
@@ -12455,6 +12779,26 @@ V = {
 				generateStatistics();
 			});
 		});
+	},
+	
+	/*
+	 * Generates the Trading Post transactions page.
+	 */
+	serveBuying: function()
+	{
+		B.generateTransactions("Buying", A.URL.CurrentBuys);
+	},
+	serveSelling: function()
+	{
+		B.generateTransactions("Selling", A.URL.CurrentSells);
+	},
+	serveBought: function()
+	{
+		B.generateTransactions("Bought", A.URL.HistoryBuys);
+	},
+	serveSold: function()
+	{
+		B.generateTransactions("Sold", A.URL.HistorySells);
 	}
 };
 B = {
@@ -12467,7 +12811,8 @@ B = {
 	 * @param jqobject pDestination to append bank.
 	 * @objparam string aTitle of the bank, optional.
 	 * @objparam string aClass CSS style class for bank element, optional.
-	 * @objparam boolean aIsCollection whether the bank is an unlock collection, which will show untaxed prices, optional.
+	 * @objparam boolean aIsCollection whether the bank is an unlock collection, which will show untaxed prices, optional
+	 * @objparam boolean aWantCoin whether to display the coin tally, optional.
 	 * @objparam boolean aWantGem whether to display the gem tally, optional.
 	 * @objparam int aSlotsPerRow to resize the bank beforehand, optional.
 	 * @returns jqobject bank.
@@ -12480,11 +12825,11 @@ B = {
 			+ "<div class='bnkTop'>"
 				+ ((Settings.aTitle) ? "<aside class='bnkTitle'>" + Settings.aTitle + "</aside>" : "")
 				+ "<aside class='bnkBankTally'></aside>"
-				+ "<aside class='bnkPrice'>"
+				+ ((Settings.aWantCoin !== false) ? ("<aside class='bnkPrice'>"
 					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Coin'></var>"
 					+ " &nbsp; "
 					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Coin'></var>"
-				+ "</aside>"
+				+ "</aside>") : "")
 				+ ((Settings.aIsCollection && Settings.aWantGem !== false) ? ("<aside class='bnkGem'>"
 					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Gem'></var>"
 					+ " &nbsp; "
@@ -12721,12 +13066,14 @@ B = {
 	 * @objparam int aTradeableID ID of item to get TP price, such as the tradeable container of the bound item, optional.
 	 * @objparam int aPrice custom coin price for untradeable items, optional.
 	 * @objparam int aGem custom gem price for untradeable items, optional.
+	 * @objparam boolean aWantGemConvert whether to convert gem to coin for hover price display, optional.
 	 * @objparam string aComment to append to tooltip, optional.
 	 * @objparam string aLabel to append to slot label, optional.
 	 * @objparam string aWiki name of wiki article to open when double clicked, optional.
 	 * @objparam function aCallback to execute after styling.
 	 * @objparam function aPriceCallback to execute after fetching the item price, optional.
-	 * @objparam function aBind for custom slot behavior binding.
+	 * @objparam function aBind for custom slot behavior binding, must manually
+	 * unbind click event, can be used a slot iterator, optional.
 	 */
 	styleBankSlot: function(pSlot, pSettings)
 	{
@@ -12772,6 +13119,14 @@ B = {
 				pSlot.data("keywords", keywords);
 				// Bind slot click behavior
 				var wikisearch = Settings.aWiki || Settings.aItem.name;
+				var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
+				pSlot.click(function(pEvent)
+				{
+					if (pEvent.which === I.ClickEnum.Left)
+					{
+						U.openExternalURL(searchurl);
+					}
+				});
 				if (Settings.aBind)
 				{
 					Settings.aBind(pSlot, Settings.aItem);
@@ -12779,17 +13134,6 @@ B = {
 				else if (Settings.aIsCustomCatalog)
 				{
 					B.bindCatalogSlot(pSlot);
-				}
-				else
-				{
-					pSlot.click(function(pEvent)
-					{
-						if (pEvent.which === I.ClickEnum.Left)
-						{
-							var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
-							U.openExternalURL(searchurl);
-						}
-					});
 				}
 				Q.bindItemSlotBehavior(pSlot, {
 					aItem: Settings.aItem,
@@ -12804,12 +13148,13 @@ B = {
 				// Numeric label over the slot icon indicating stack size or charges remaining
 				if (count > 1)
 				{
+					// Stack size
 					var countmaxclass = (count % Q.ItemLimit.StackSize === 0) ? "bnkSlotCountMax" : "";
 					pSlot.append("<var class='bnkSlotCount " + countmaxclass + "'>" + count + "</var>");
 				}
 				else if ((Settings.aItem.type === "Tool" || Settings.aItem.type === "Gathering") && Settings.aSlotMeta && Settings.aSlotMeta.charges)
 				{
-					// Salvage Kits gets a faux count number representing their remaining charges
+					// Remaining charges
 					pSlot.append("<var class='bnkSlotCount'>" + Settings.aSlotMeta.charges + "</var>");
 				}
 				// Fade the slots that act as collections
@@ -12837,7 +13182,8 @@ B = {
 					B.updateSlotPrice(pSlot, {
 						aPrice: Settings.aGem,
 						aCount: pricecount,
-						aPaymentEnum: E.PaymentEnum.Gem
+						aPaymentEnum: E.PaymentEnum.Gem,
+						aWantGemConvert: Settings.aWantGemConvert
 					});
 				}
 				else if (pBox.oIsTradeable || Settings.aTradeableID)
@@ -12883,6 +13229,7 @@ B = {
 	 * @objparam int aTransactionSell of a transaction, optional.
 	 * @objparam int aCount of items.
 	 * @objparam enum aPaymentEnum such as coin or gem.
+	 * @objparam boolean aWantGemConvert whether to convert gem to coin for hover price display, optional.
 	 */
 	updateSlotPrice: function(pSlot, pSettings)
 	{
@@ -12948,6 +13295,10 @@ B = {
 				{
 					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(Settings.aPrice, true) + "</var>");
 				}
+				if (Settings.aWantGemConvert)
+				{
+					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatGemToCoin(pricetorecord) + "</var>");
+				}
 			}; break;
 		}
 
@@ -13000,6 +13351,13 @@ B = {
 			pSlot.data("pricebuy", prices.oPriceBuy);
 			pSlot.data("pricesell", prices.oPriceSell);
 		}
+		else if (Settings.aPaymentEnum === E.PaymentEnum.Gem)
+		{
+			var gemadjusted = pricetorecord * E.Exchange.COPPER_IN_SILVER; // Integers are in silver, so gem was considered copper
+			pSlot.data("price", gemadjusted);
+			pSlot.data("pricebuy", gemadjusted);
+			pSlot.data("pricesell", gemadjusted);
+		}
 	},
 	
 	/*
@@ -13024,6 +13382,7 @@ B = {
 			pSlot.append("<var class='" + (pSlotClass || "bnkSlotPrice") + " " + priceclass + "'>"
 				+ E.PaymentFormat[paymentkey](paymentvalue * (pCount || 1))
 			+ "</var>");
+			break;
 		}
 	},
 	
@@ -13197,7 +13556,7 @@ B = {
 		// Empty slot filter: first click show filled slots only, second click show empty slots only, third show full stacks, fourth click show all slots, cycle
 		var emptyfilterstate = 0;
 		$("<div class='bnkButtonEmpty bnkButton curToggle' title='"
-			+ "Filter:<br />1st click: non-empty/unlocked <dfn>slots</dfn><br />2nd click: "
+			+ "Filter:<br />1st click: non-empty/unlocked <dfn>slots</dfn><br />2nd click: marked or "
 			+ Q.ItemLimit.StackSize + " stack slots<br />3rd click: empty/locked slots<br />4th click: any slot (reset)'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
@@ -13224,7 +13583,7 @@ B = {
 			{
 				slots.each(function()
 				{
-					if ($(this).data("count") >= Q.ItemLimit.StackSize)
+					if ($(this).data("count") >= Q.ItemLimit.StackSize || $(this).data("ismarked"))
 					{
 						$(this).show();
 					}
@@ -13415,6 +13774,8 @@ B = {
 					aLabel: unlockobj.l,
 					aIsCatalog: Settings.aIsCatalog,
 					aIsCustomCatalog: Settings.aIsCustomCatalog,
+					aWantGemConvert: Settings.aWantGemConvert,
+					aBind: Settings.aBind,
 					aCallback: function()
 					{
 						numfetched++;
@@ -13620,6 +13981,8 @@ B = {
 				aLabel: label,
 				aWiki: wiki,
 				aIsCustomCatalog: Settings.aIsCustomCatalog,
+				aWantGemConvert: Settings.aWantGemConvert,
+				aBind: Settings.aBind,
 				aCallback: function()
 				{
 					// Include payment if the item cannot be obtained on the Trading Post
@@ -13689,6 +14052,7 @@ B = {
 				{
 					if (Settings.aUnlockeds.length)
 					{
+						// If unlockeds data is an array or assoc of object containing item IDs and additional info
 						if (Settings.aUnlockeds[0].id !== undefined)
 						{
 							for (var i = 0; i < Settings.aUnlockeds.length; i++)
@@ -13699,6 +14063,7 @@ B = {
 								}
 							}
 						}
+						// If unlockeds data is an array of item IDs
 						else
 						{
 							for (var i = 0; i < Settings.aUnlockeds.length; i++)
@@ -13805,7 +14170,9 @@ B = {
 								B.fillTab(iTab, iCatArr, {
 									aUnlockAssoc: unlocksassoc,
 									aIsCatalog: Settings.aIsCatalog,
-									aIsCollapsed: Settings.aIsCollapsed
+									aIsCollapsed: Settings.aIsCollapsed,
+									aWantGemConvert: Settings.aWantGemConvert,
+									aBind: Settings.aBind
 								});
 							});
 						}
@@ -13814,7 +14181,9 @@ B = {
 							B.fillTab(iTab, iCatArr, {
 								aUnlockAssoc: unlocksassoc,
 								aIsCatalog: Settings.aIsCatalog,
-								aIsCustomCatalog: iCatObj.iscustomtab
+								aIsCustomCatalog: iCatObj.iscustomtab,
+								aWantGemConvert: Settings.aWantGemConvert,
+								aBind: Settings.aBind
 							});
 						}
 					}
@@ -14078,7 +14447,7 @@ B = {
 	 */
 	bindCatalogSlot: function(pSlot)
 	{
-		pSlot.click(function()
+		pSlot.unbind("click").click(function()
 		{
 			// Set the clicked slot as the current and highlight it
 			var bank = $(this).parents(".bnkBank");
@@ -14493,7 +14862,7 @@ B = {
 							},
 							aBind: function(pSlot, pItem)
 							{
-								pSlot.click(function(pEvent)
+								pSlot.unbind("click").click(function(pEvent)
 								{
 									if (pEvent.which === I.ClickEnum.Left)
 									{
@@ -14795,6 +15164,7 @@ Q = {
 		ItemID: null,
 		ItemSearch: null
 	},
+	isFauxInitialized: false,
 	
 	/*
 	 * Loads a database file containing item details objects precached from API.
@@ -15366,6 +15736,48 @@ Q = {
 				pCallback();
 			});
 		});
+	},
+	
+	/*
+	 * Adds a faux item to the cache using simplified data.
+	 * @param object pData containing multilingual name and description, type, rarity, and icon.
+	 */
+	createFaux: function(pData)
+	{
+		var id = U.stripToVariable(D.getObjectDefaultName(pData)).toLowerCase(); // Use the encoded default name as the item ID
+		if (Q.Box[id] === undefined)
+		{
+			var item = $.extend({
+				"name": D.getObjectName(pData) || "Unnamed Item",
+				"description": D.getObjectDesc(pData) || "",
+				"type": pData.type || "Consumable",
+				"level": (pData.level) ? pData.level : 0,
+				"rarity": pData.rarity || "Basic",
+				"vendor_value": 0,
+				"game_types": ["Pvp", "PvpLobby", "Wvw", "Dungeon", "Pve"],
+				"flags": ["AccountBound", "NoSell", "DeleteWarning", "AccountBindOnUse"],
+				"restrictions": [],
+				"id": id,
+				"chat_link": "[&AgF3HwAA]",
+				"icon": (pData.icon) ? pData.icon : "img/faux/" + id + I.cPNG,
+				"details": {}
+			}, pData);
+			// Enter into cache
+			Q.Box[id] = {};
+			Q.Box[id].oItem = item;
+		}
+	},
+	initializeFaux: function()
+	{
+		// Initialize the standard set of faux items
+		if (Q.isFauxInitialized)
+		{
+			return;
+		}
+		for (var i in H.Faux)
+		{
+			Q.createFaux(H.Faux[i]);
+		}
 	},
 	
 	/*
@@ -18830,6 +19242,8 @@ D = {
 			cs: "soumrak", it: "crepuscolo", pl: "zmierzch", pt: "crepúsculo", ru: "сумрак", zh: "黄昏"},
 		s_approaching: {de: "nähert", es: "acerca", fr: "approchant",
 			cs: "blíží", it: "avvicina", pl: "zbliża", pt: "aproximava", ru: "приближается", zh: "来临"},
+		s_when: {de: "wann", es: "cuando", fr: "quand",
+			cs: "když", it: "quando", pl: "gdy", pt: "quando", ru: "когда", zh: "什么时候"},
 		
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
@@ -19054,6 +19468,8 @@ D = {
 			cs: "nabídka", it: "offerta", pl: "podaż", pt: "suprimento", ru: "предложение", zh: "供应"},
 		s_demand: {de: "nachfrage", es: "demanda", fr: "demande",
 			cs: "poptávka", it: "domanda", pl: "popyt", pt: "demanda", ru: "спрос", zh: "需求"},
+		s_discount: {de: "rabatt", es: "rebaja", fr: "rabais",
+			cs: "sleva", it: "sconto", pl: "rabat", pt: "desconto", ru: "rabat", zh: "折扣"},
 		s_price: {de: "preis", es: "precio", fr: "prix",
 			cs: "cena", it: "prezzo", pl: "cena", pt: "preço", ru: "цена", zh: "价格"},
 		s_buy: {de: "kaufen", es: "comprar", fr: "acheter",
@@ -19601,6 +20017,10 @@ D = {
 	getObjectNick: function(pObject)
 	{
 		return D.getObjectString(pObject, "nick_");
+	},
+	getObjectDesc: function(pObject)
+	{
+		return D.getObjectString(pObject, "desc_");
 	},
 	getObjectDefaultName: function(pObject)
 	{
@@ -31702,8 +32122,10 @@ H = {
 	Announcement: GW2T_DASHBOARD_DATA.Announcement,
 	Countdown: GW2T_DASHBOARD_DATA.Countdown,
 	Story: GW2T_DASHBOARD_DATA.Story,
+	Faux: GW2T_DASHBOARD_DATA.Faux,
 	Sale: GW2T_DASHBOARD_DATA.Sale,
 	Vendor: GW2T_DASHBOARD_DATA.Vendor,
+	GemSubscription: null,
 	isDashboardEnabled: true,
 	isAnnouncementEnabled: false,
 	isCountdownEnabled: false,
@@ -31922,6 +32344,7 @@ H = {
 			$("#dsbSale").show();
 			$("#dsbMenuSale").addClass("dsbMenuItemActive");
 			table.append(I.cThrobber);
+			Q.initializeFaux();
 			E.updateExchangeRatios(function()
 			{
 				var isonline = (E.Exchange.CoinInGem !== 0);
@@ -33203,6 +33626,11 @@ K = {
 			$(K.timeProgress0).css({width: "0%"}).animate({width: "100%"}, 800);
 			$(K.timeProgress1).css({width: "100%"}).animate({width: "0%"}, 800);
 			K.updateTimeFrame(pDate);
+			// Check gem store alerts if opted
+			if (O.Options.bol_alertGem)
+			{
+				V.updateGemSubscription();
+			}
 		}
 		else // If crossing a 1 second mark and hasn't crossed the 15 minute mark
 		{
@@ -34220,12 +34648,13 @@ I = {
 			Raids: "Raids",
 			
 			Trading: "Trading",
+			Gem: "Gem",
+			Museum: "Museum",
+			Pact: "Pact",
 			Buying: "Buying",
 			Selling: "Selling",
 			Bought: "Bought",
 			Sold: "Sold",
-			Museum: "Museum",
-			Pact: "Pact",
 			
 			PVP: "PVP",
 			Guilds: "Guilds",
@@ -34556,6 +34985,12 @@ I = {
 				}
 				M.toggleFloor(true);
 			}
+		}
+		
+		// Check gem store alerts if opted
+		if (O.Options.bol_alertGem)
+		{
+			V.updateGemSubscription();
 		}
 		
 		// Finally

@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170309"></script>
+	<script type="text/javascript" src="data/general.js?v=20170310"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -178,6 +178,7 @@
 								<li><a class="jsTranslate" href="./?page=Catalog">Catalog</a> - Keychain and item watchlist</li>
 								<li><a class="jsTranslate" href="./?page=Cleanup">Cleanup</a> - Unused inventory items</li>
 								<li><a class="jsTranslate" href="./?page=Possessions">Possessions</a> - Account search</li>
+								<li><a class="jsTranslate" href="./?page=Gem">Gem</a> - Gem store alerts gallery</li>
 							</ul>
 							<h2>Contact</h2>
 							<ul>
@@ -753,7 +754,7 @@
 			<article id="plateChains" class="jsScrollable"><!-- This plate will be populated by JS -->
 				<div id="chnProgressBar"><div id="chnProgress0"></div><div id="chnProgress1"></div></div>
 				<div id="chnOptions">
-					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/speaker.png" alt="Alarm"/>
+					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/alarm.png" alt="Alarm"/>
 					<img id="optChainsIcon" src="img/ui/toggle.png" alt="Toggle" />
 					<div id="chnOptionsPopup" class="cntComposition cntPopup">
 						<div id="chnOptionsStopwatchUp">
@@ -793,6 +794,7 @@
 							<label title="Checks https://api.guildwars2.com/v2/build<br />every minute to see if build ID changed."><input id="opt_bol_alertBuild" type="checkbox" /> Alert new game build version</label>
 							<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
 							<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>
+							<label title="Go to <dfn>gw2timer.com/gem</dfn> to subscribe to specific gem store items."><input id="opt_bol_alertGem" type="checkbox" /> Alert Gem Store item sales</label>
 						</div>
 					</div>
 				</div>

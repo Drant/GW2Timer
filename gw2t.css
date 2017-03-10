@@ -763,6 +763,7 @@ button, .cssButton {
 	border-radius: 4px;
 	background: #333;
 	background: linear-gradient(to bottom, #444 0%, #333 100%);
+	font-family: Trebuchet MS, Menomonia;
 	color: white;
 	text-decoration: none;
 	text-shadow:
