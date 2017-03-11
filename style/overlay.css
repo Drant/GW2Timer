@@ -64,6 +64,7 @@
 }
 
 .hudDirectory {
+	max-height: 320px;
 	font-size: 13px;
 }
 .hudDirectory a {

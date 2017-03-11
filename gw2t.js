@@ -4029,7 +4029,7 @@ U = {
 		var str = "failedstringify";
 		try
 		{
-			str = JSON.stringify(pObject, null, "\t");;
+			str = JSON.stringify(pObject, null, "\t");
 		}
 		catch (e) {}
 		return str;
@@ -15783,10 +15783,11 @@ Q = {
 	/*
 	 * Sorts an array of item IDs by item type, subtype, and other properties.
 	 * @param intarray pItemIDs
-	 * @param function pCallback with sorted items and IDs.
+	 * @param function pCallback with sorted items and IDs, or the items database for return.
 	 */
 	sortItems: function(pItemIDs, pCallback)
 	{
+		var isasync = false;
 		var categorizeItem = function(pItem)
 		{
 			var itemrank = Q.ItemRank[pItem.type] || "0";
@@ -15821,16 +15822,16 @@ Q = {
 			return itemrank + "_" + midstr + "_" + rarityrank + "_" + U.stripToAlphanumeric(name);
 		};
 		
-		Q.getItems(pItemIDs, function()
+		var startSort = function()
 		{
 			var items = [], id, item, retitems = [], retids = [];
 			// Create an array of objects for the sort function
 			for (var i = 0; i < pItemIDs.length; i++)
 			{
 				id = pItemIDs[i];
-				if (Q.Box[id])
+				item = (isasync) ? ((Q.Box[id]) ? Q.Box[id].oItem : null) : pCallback[id];
+				if (item)
 				{
-					item = Q.Box[id].oItem;
 					items.push({
 						oItem: item,
 						oType: categorizeItem(item)
@@ -15844,8 +15845,33 @@ Q = {
 				retitems.push(iObject.oItem);
 				retids.push(iObject.oItem.id);
 			});
-			pCallback(retitems, retids);
-		});
+			if (isasync)
+			{
+				pCallback(retitems, retids);
+			}
+			else
+			{
+				return {
+					oItems: retitems,
+					oIDs: retids
+				};
+			}
+		};
+		
+		// Asynchronous if database is not provided
+		if (typeof pCallback === "function")
+		{
+			isasync = true;
+			Q.getItems(pItemIDs, function()
+			{
+				startSort();
+			});
+		}
+		else
+		{
+			// If callback parameter is an items database
+			return startSort();
+		}
 	},
 	
 	/*
@@ -26521,7 +26547,7 @@ G = {
 	},
 	createDailyBookmarks: function(pContainer)
 	{
-		if (I.ModeCurrent === I.ModeEnum.Mobile)
+		if (I.isMapEnabled === false)
 		{
 			return;
 		}
@@ -32178,7 +32204,6 @@ H = {
 				&& H.isSaleEnabled === false
 				&& H.isVendorEnabled === false)
 			|| H.isDashboardEnabled === false
-			|| I.isMapEnabled === false
 			|| O.Options.bol_showDashboard === false)
 		{
 			H.isDashboardEnabled = false;
@@ -32463,7 +32488,7 @@ H = {
 		$("#dsbVendor").empty().append("<div id='dsbVendorMenu'>"
 			+ "<img data-src='img/ui/copy.png' /><input id='dsbVendorCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
-			+ "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u> "
+			+ ((I.isMapEnabled) ? "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u> " : "")
 			+ "<img data-src='img/ui/info.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
 			+ "<img data-src='img/ui/tradingpost.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
@@ -32480,7 +32505,7 @@ H = {
 		{
 			$(this).select();
 		});
-		$("#dsbMenuVendor").unbind("click").click(function()
+		$("#dsbMenuVendor").click(function()
 		{
 			H.generateDashboardVendor();
 		});
@@ -36716,7 +36741,7 @@ I = {
 	{
 		U.convertModeLink(".hudDirectoryColumn a");
 		U.convertExternalLink(".hudDirectoryColumn a");
-		I.bindScrollbar("#hudDirectoryGuides");
+		I.bindScrollbar(".hudDirectory");
 		$(".hudPeripheral").css({visibility: "visible"});
 	},
 	
@@ -36846,6 +36871,18 @@ I = {
 							$("#chnProgressBar").css("margin-top", timelinemargintop);
 						}
 					});
+					// Dashboard
+					var dashboard = $("#itemDashboard");
+					var dashboardcontainer = $("<div id='dsbContainerOuter'></div>").appendTo("#plateChains");
+					dashboard.appendTo(dashboardcontainer);
+					$(".dsbMenuItem").click(function()
+					{
+						setTimeout(function()
+						{
+							I.updateScrollbar("#windowMain");
+							I.scrollToElement(dashboard);
+						}, 400);
+					});
 				}
 				I.bindScrollbar("#windowMain");
 			} break;
@@ -36869,7 +36906,7 @@ I = {
 		}
 		
 		// Disable dashboard for non-using modes
-		if (I.ModeCurrent !== I.ModeEnum.Website)
+		if (I.ModeCurrent === I.ModeEnum.Mobile || I.ModeCurrent === I.ModeEnum.Simple)
 		{
 			if (I.ModeCurrent !== I.ModeEnum.Overlay)
 			{

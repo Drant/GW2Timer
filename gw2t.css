@@ -1564,8 +1564,8 @@ input.mapCoordinatesName {
 	vertical-align: top;
 	text-align: left;
 }
-#hudDirectoryGuides {
-	max-height: 240px;
+.hudDirectory {
+	max-height: 360px;
 }
 .hudDirectoryMode {
 	position: relative;
