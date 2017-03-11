@@ -1406,7 +1406,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "Account unlocks: <a href='http://gw2timer.com/?page=Nodes'>home nodes</a>, <a href='http://gw2timer.com/?page=Cats'>hungry cats</a>, <a href='http://gw2timer.com/?page=Dungeons'>dungeons</a>, <a href='http://gw2timer.com/?page=Raids'>raids</a>. <a href='http://forum.renaka.com/topic/5546166/4#post603314'>GW2Navi 2017</a> overlay app.",
+	pve: "<a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. Account: <a href='http://gw2timer.com/?page=Nodes'>home nodes</a>, <a href='http://gw2timer.com/?page=Cats'>hungry cats</a>, <a href='http://gw2timer.com/?page=Dungeons'>dungeons</a>, <a href='http://gw2timer.com/?page=Raids'>raids</a>. <a href='http://forum.renaka.com/topic/5546166/4#post603314'>GW2Navi 2017</a>.",
 	wvw: "",
 	Start: new Date("2016-02-14T16:00:00Z"),
 	Finish: new Date("2017-03-14T16:00:00Z"),
@@ -1584,45 +1584,10 @@ Sale: {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
-		name: "Marriner's Horn",
-		id: "42888",
-		price: 480,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Flute",
-		id: "42973",
-		price: 480,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Musical Bass Guitar",
-		id: "36174",
-		price: 480,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Musical Frame Drum",
-		id: "43526",
-		price: 480,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Musical Harp",
-		id: "44883",
-		price: 480,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Musical Lute",
-		id: "66323",
-		price: 480,
-		discount: 800,
+		name: "Black Lion Chest Key",
+		id: "19980",
+		price: 100,
+		discount: [[1, 100, 125], [5, 359, 450], [25, 1680, 2100]],
 		col: 0
 	},
 	{
@@ -1647,16 +1612,16 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Permanent Llama Finisher",
-		id: "49952",
-		price: 800,
+		name: "Permanent Unicorn Finisher",
+		id: "69616",
+		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Permanent Unicorn Finisher",
-		id: "69616",
-		price: 700,
+		name: "Permanent Llama Finisher",
+		id: "49952",
+		price: 800,
 		discount: null,
 		col: 0
 	},
@@ -1689,13 +1654,6 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Mask of the Wanderer Skin",
-		id: "48944",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Mask of the Silent Skin",
 		id: "49157",
 		price: 500,
@@ -1710,30 +1668,9 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Mask of the Queen",
-		id: "44608",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Ringmaster's Hat",
 		id: "64745",
 		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Aviator Cap",
-		id: "64742",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Inventor's Sunglasses",
-		id: "64747",
-		price: 150,
 		discount: null,
 		col: 1
 	}
