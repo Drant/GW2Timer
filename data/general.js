@@ -1406,7 +1406,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. Account: <a href='http://gw2timer.com/?page=Nodes'>home nodes</a>, <a href='http://gw2timer.com/?page=Cats'>hungry cats</a>, <a href='http://gw2timer.com/?page=Dungeons'>dungeons</a>, <a href='http://gw2timer.com/?page=Raids'>raids</a>. <a href='http://forum.renaka.com/topic/5546166/4#post603314'>GW2Navi 2017</a>.",
+	pve: "<a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. Account <a href='http://gw2timer.com/?page=Nodes'>home nodes</a>, <a href='http://gw2timer.com/?page=Cats'>hungry cats</a>, <a href='http://gw2timer.com/?page=Dungeons'>dungeons</a>, <a href='http://gw2timer.com/?page=Raids'>raids</a>. <a href='http://forum.renaka.com/topic/5546166/4#post603314'>GW2Navi 2017</a>.",
 	wvw: "",
 	Start: new Date("2016-02-14T16:00:00Z"),
 	Finish: new Date("2017-03-14T16:00:00Z"),
@@ -1561,8 +1561,8 @@ Faux: [
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-03-07T15:00:00Z"),
-	Finish: new Date("2017-04-04T15:00:00Z"),
+	Start: new Date("2017-03-07T16:00:00Z"),
+	Finish: new Date("2017-04-04T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
