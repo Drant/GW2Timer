@@ -118,7 +118,8 @@ Glider: [
 	{i: 80018, n: "Infinirarium Glider", p: {gem: 0}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
 	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
-	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}}
+	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}},
+	{i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
