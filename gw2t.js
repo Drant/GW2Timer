@@ -9528,12 +9528,12 @@ A = {
 					});
 					var historybuttons = $("<div id='audHistoryButtons'></div>").appendTo(historycontainer);
 					// Button to print this account's history
-					$("<button class='accButton'>Print History</button>").appendTo(historybuttons).click(function()
+					$("<button class='accButton'>" + D.getPhraseOriginal("Print History") + "</button>").appendTo(historybuttons).click(function()
 					{
 						I.prettyJSON(hist);
 					});
 					// Button to print the entire history object
-					$("<button class='accButton'>Print Storage</button>").appendTo(historybuttons).click(function()
+					$("<button class='accButton'>" + D.getPhraseOriginal("Print Storage") + "</button>").appendTo(historybuttons).click(function()
 					{
 						var history = O.loadCompressedObject(O.Utilities.AuditHistory.key);
 						if (history)
@@ -9546,7 +9546,7 @@ A = {
 						}
 					});
 					// Button to reformat the history to have unique dates only
-					$("<button class='accButton'>Trim History</button>").appendTo(historybuttons).click(function()
+					$("<button class='accButton'>" + D.getPhraseOriginal("Trim History") + "</button>").appendTo(historybuttons).click(function()
 					{
 						var audstamps = hist["Timestamps"];
 						var historylength = audstamps.length;
@@ -9575,7 +9575,7 @@ A = {
 						}
 					});
 					// Selection to delete an account in the history
-					var historydelete = $("<select id='audHistoryDelete'><option>Delete Storage:</option></select>").appendTo(historybuttons);
+					var historydelete = $("<select id='audHistoryDelete'><option>" + D.getPhraseOriginal("Clear Storage") + ":</option></select>").appendTo(historybuttons);
 					for (var i in histbook)
 					{
 						historydelete.append("<option value='" + U.escapeHTML(i) + "'>" + U.escapeHTML(i) + "</option>");
@@ -11935,6 +11935,7 @@ V = {
 	 * @param string pSection
 	 * @objparam boolean aWantPrices to prefetch TP prices for all items, optional.
 	 * @objparam boolean aWantGem whether to display the gem tally, optional.
+	 * @objparam enum aPermission required for those unlockables, optional.
 	 * @objparam function aCallback to execute after generate.
 	 */
 	serveUnlockables: function(pSection, pSettings)
@@ -11976,7 +11977,7 @@ V = {
 				});
 			}).fail(function(pRequest, pStatus)
 			{
-				A.printError(A.PermissionEnum.Unlocks, pStatus);
+				A.printError(Settings.aPermission || A.PermissionEnum.Unlocks, pStatus);
 				dish.empty();
 			});
 		});
@@ -11999,18 +12000,18 @@ V = {
 	},
 	serveCats: function()
 	{
-		V.serveUnlockables("Cats", {aWantGem: false, aCallback: function(pReturn)
+		V.serveUnlockables("Cats", {aPermission: A.PermissionEnum.Progression, aWantGem: false, aCallback: function(pReturn)
 		{
 			A.embedFrame("#accDish_Cats", G.getCollectibleURL(X.Collectibles.HungryCats, pReturn.aUnlockAssoc));
 		}});
 	},
 	serveDungeons: function()
 	{
-		V.serveUnlockables("Dungeons", {aWantPrices: false, aWantGem: false});
+		V.serveUnlockables("Dungeons", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false});
 	},
 	serveRaids: function()
 	{
-		V.serveUnlockables("Raids", {aWantPrices: false, aWantGem: false});
+		V.serveUnlockables("Raids", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false});
 	},
 	
 	/*
@@ -12421,14 +12422,15 @@ V = {
 				validids[id] = true; // Subscribed IDs that do not exist in record will be erased
 				pEntry.u = id; // The item's ID is its unlock ID
 				var payment = pEntry.p;
+				var salevalue = H.Sale.Values[id];
 				if (payment)
 				{
 					for (var i in payment)
 					{
 						values[id] = payment[i];
-						if (H.Sale.Values[id] < payment[i])
+						if (salevalue && salevalue <= Math.abs(payment[i])) // Items being promoted overrides the payment value of the record's
 						{
-							payment[i] = H.Sale.Values[id];
+							payment[i] = salevalue;
 						}
 						if (payment[i] <= 0)
 						{
@@ -12478,7 +12480,7 @@ V = {
 			{
 				dishmenu.find(".bnkButtonHelp").trigger("click");
 			});
-			$("<button class='accButton'>" + D.getPhraseOriginal("View Subscription") + "</button>").appendTo(controller).click(function()
+			$("<button class='accButton curToggle'>" + D.getPhraseOriginal("View Subscription") + "</button>").appendTo(controller).click(function()
 			{
 				dishmenu.find(".bnkButtonEmpty").trigger("click").trigger("click"); // Cycle to the tier that shows marked slots
 			});
@@ -12536,6 +12538,7 @@ V = {
 	/*
 	 * Downloads the gem record and checks against subscription for alerts.
 	 * @param function pCallback if and for generating the gem store gallery.
+	 * If no callback is provided then assume it is a checkup call.
 	 */
 	updateGemSubscription: function(pCallback)
 	{
@@ -12555,6 +12558,15 @@ V = {
 					H.Sale.Values[item.id] = item.price;
 				}
 			}
+			
+			// Execute gem store gallery callback
+			if (pCallback)
+			{
+				pCallback();
+				return;
+			}
+			
+			// Do the subscription alerts if gallery callback not provided
 			var availableassoc = U.getExistAssoc(H.GemSubscription.Available);
 			var discountedassoc = U.getExistAssoc(H.GemSubscription.Discounted);
 			
@@ -12568,25 +12580,26 @@ V = {
 			{
 				var id = pEntry.i;
 				var value;
+				var salevalue = H.Sale.Values[id];
 				for (var i in pEntry.p)
 				{
 					value = pEntry.p[i];
 					break; // Consider only the first payment type
 				}
 				// Check for available
-				if (availableassoc[id] && value > 0) // Positive payment value in the record means the item is available
+				if (availableassoc[id] && (salevalue || value > 0))
 				{
+					// Positive payment value in the record or existing in the promotions means the item is available
 					I.print(pEntry.n + availablestr + "!");
 					isavailable = true;
 				}
 				// Check for discount
 				if (discountedassoc[id])
 				{
-					var salevalue = H.Sale.Values[id];
 					if (salevalue && value && salevalue < value)
 					{
 						I.print(pEntry.n + discountstr + "! " + E.formatGemString(value) + " − "
-							+ E.formatGemString(salevalue) + " = " + E.formatGemString(value - salevalue));
+							+ E.formatGemString(value - salevalue) + " = " + E.formatGemString(salevalue));
 						isdiscounted = true;
 					}
 				}
@@ -12608,12 +12621,6 @@ V = {
 			{
 				I.print("<a href='http://gw2timer.com/?page=Gem'>Go to Gem Store Gallery</a> - "
 					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>Turn off Gem Alert</a>");
-			}
-			
-			// Finally execute callback
-			if (pCallback)
-			{
-				pCallback();
 			}
 		}, false);
 	},
@@ -19352,6 +19359,8 @@ D = {
 			cs: "uložit", it: "salvare", pl: "zapisać", pt: "salvar", ru: "сохранить", zh: "储存"},
 		s_clear: {de: "löschen", es: "borrar", fr: "effacer",
 			cs: "vymazat", it: "cancella", pl: "wyczyść", pt: "limpar", ru: "очистить", zh: "清除"},
+		s_trim: {de: "trimmen", es: "recortar", fr: "découper",
+			cs: "stříhat", it: "tagliare", pl: "odetnij", pt: "cortar", ru: "обрезать", zh: "剪裁"},
 		s_toggle: {de: "umschalten", es: "alternar", fr: "basculer",
 			cs: "přepnout", it: "alterna", pl: "przełączanie", pt: "alternar", ru: "переключить", zh: "切换"},
 		s_expand: {de: "erweiter", es: "expandir", fr: "développer",
@@ -19372,6 +19381,8 @@ D = {
 			cs: "aktualizovat", it: "aggiornare", pl: "aktualizować", pt: "atualizar", ru: "обновить", zh: "更新"},
 		s_convert: {de: "konvertieren", es: "convertir", fr: "convertir",
 			cs: "konvertovat", it: "convertire", pl: "converter", pt: "", ru: "конвертировать", zh: "兑换"},
+		s_print: {de: "ausgeben", es: "imprimir", fr: "imprimer",
+			cs: "tisk", it: "stampa", pl: "drukuj", pt: "imprimir", ru: "печать", zh: "打印"},
 		
 		// Adjectives, Adverbs, Participles
 		s_no: {de: "kein", es: "no", fr: "pas de",
@@ -20634,7 +20645,7 @@ C = {
 			chainextrastr = "<div class='chnDetailsExtra'>"
 				+ chainextra
 				+ "<kbd id='chnDelete_" + pChain.nexus + "' class='chnDelete' "
-					+ "title='Permanently hide this event chain (can undo in <img src=img/ui/speaker.png /> menu above).'></kbd>"
+					+ "title='Permanently hide this event chain (can undo in <img src=img/ui/alarm.png /> menu above).'></kbd>"
 			+ "</div>";
 		}
 		
@@ -36881,11 +36892,15 @@ I = {
 						{
 							I.updateScrollbar("#windowMain");
 							I.scrollToElement(dashboard);
-						}, 400);
+						}, 600); // Time for the dashboard section to animate toggle
 					});
 				}
 				I.bindScrollbar("#windowMain");
 			} break;
+		}
+		if (I.isMapEnabled === false)
+		{
+			$("#itemDisplayButton").remove();
 		}
 		
 		// Change CSS for overlay specific

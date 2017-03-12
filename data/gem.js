@@ -7,9 +7,9 @@
  * Category translations.
  */
 var GW2T_GEM_HEADERS = {
-	Outfit: {name_en: "Outfits", name_de: "kleidungssets", name_es: "atuendos", name_fr: "tenues", name_zh: "服装"},
+	Outfit: {name_en: "Outfits", name_de: "Kleidungssets", name_es: "Atuendos", name_fr: "Tenues", name_zh: "服装"},
 	Back: {name_en: "Backpacks", name_de: "Rücken", name_es: "Espalda", name_fr: "Pièce de dos", name_zh: "背部物品皮肤"},
-	Head: {name_en: "Headpieces", name_de: "Kopfbedeckung", name_es: "Cabeza", name_fr: "Couvre-chef", name_zh: "帽甲"},
+	Head: {name_en: "Head", name_de: "Kopfbedeckung", name_es: "Cabeza", name_fr: "Couvre-chef", name_zh: "帽甲"},
 	Shoulder: {name_en: "Shoulders", name_de: "Schultern", name_es: "Hombros", name_fr: "Epaulières", name_zh: "护肩"},
 	Gloves: {name_en: "Gloves", name_de: "Handschuhe", name_es: "Guantes", name_fr: "Gants", name_zh: "手套"},
 	Boots: {name_en: "Gloves", name_de: "Stiefel", name_es: "Botas", name_fr: "Bottes", name_zh: "长靴"},
