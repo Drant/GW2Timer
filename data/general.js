@@ -1584,10 +1584,10 @@ Sale: {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
-		name: "Black Lion Chest Key",
-		id: "19980",
-		price: 100,
-		discount: [[1, 100, 125], [5, 359, 450], [25, 1680, 2100]],
+		name: "Additional Crafting License",
+		id: "42970",
+		price: 400,
+		discount: 800,
 		col: 0
 	},
 	{
@@ -1654,23 +1654,9 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Mask of the Silent Skin",
-		id: "49157",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Wreath of Cooperation",
 		id: "66309",
 		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Ringmaster's Hat",
-		id: "64745",
-		price: 200,
 		discount: null,
 		col: 1
 	}

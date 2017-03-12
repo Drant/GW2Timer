@@ -7695,6 +7695,7 @@ A = {
 		});
 		
 		// Bind button to add another token/row
+		$("#accTokenNew").attr("title", "<dfn>" + D.getWordCapital("add") + "</dfn> " + D.getPhrase("key slot") + ".");
 		$("#accTokenNew").click(function()
 		{
 			if (O.Utilities.APITokens.value.length < tokenslimit)
@@ -7877,8 +7878,10 @@ A = {
 		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
-		var use = $("<button class='accTokenUse' title='<dfn>Use</dfn> this key.'><img src='img/ui/check.png' /></button>").appendTo(buttons);
-		var del = $("<button class='accTokenDelete' title='<dfn>Delete</dfn> this key.'><img src='img/ui/default.png' /></button>").appendTo(buttons);
+		var use = $("<button class='accTokenUse' title='<dfn>" + D.getWordCapital("use") + "</dfn> "
+			+ D.getPhrase("this key") + ".'><img src='img/ui/check.png' /></button>").appendTo(buttons);
+		var del = $("<button class='accTokenDelete' title='<dfn>" + D.getWordCapital("delete") + "</dfn> "
+			+ D.getPhrase("this key") + ".'><img src='img/ui/default.png' /></button>").appendTo(buttons);
 		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
 		var swapup = $("<button class='btnSwapUp'></button>").appendTo(swap);
 		var swapdown = $("<button class='btnSwapDown'></button>").appendTo(swap);
@@ -19357,6 +19360,12 @@ D = {
 			cs: "načíst", it: "caricare", pl: "załaduj", pt: "carregar", ru: "загрузить", zh: "载入"},
 		s_save: {de: "speichern", es: "guardar", fr: "enregistrer",
 			cs: "uložit", it: "salvare", pl: "zapisać", pt: "salvar", ru: "сохранить", zh: "储存"},
+		s_use: {de: "benutzen", es: "usar", fr: "utiliser",
+			cs: "použít", it: "usare", pl: "używać", pt: "usar", ru: "использовать", zh: "用"},
+		s_add: {de: "hinzufügen", es: "añadir", fr: "ajouter",
+			cs: "přidat", it: "aggiungere", pl: "dodać", pt: "adicionar", ru: "добавлять", zh: "加"},
+		s_delete: {de: "löschen", es: "eliminar", fr: "supprimer",
+			cs: "odstranit", it: "eliminare", pl: "usunąć", pt: "excluir", ru: "удалять", zh: "删除"},
 		s_clear: {de: "löschen", es: "borrar", fr: "effacer",
 			cs: "vymazat", it: "cancella", pl: "wyczyść", pt: "limpar", ru: "очистить", zh: "清除"},
 		s_trim: {de: "trimmen", es: "recortar", fr: "découper",
@@ -32480,7 +32489,7 @@ H = {
 	/*
 	 * Generates the header for the vendor feature.
 	 */
-	generateDashboardVendorHeader: function()
+	generateDashboardVendorHeader: function(pIsReset)
 	{
 		var weekdaylocation = H.getDashboardVendorWeekday();
 		var vendorname = D.getObjectName(H.Vendor);
@@ -32491,7 +32500,8 @@ H = {
 		}
 		vendorcodes += "- " + vendorname;
 		var expirestr = (H.Vendor.Offers.length) ? ("<br />Expires: " + T.formatWeektime(H.Vendor.Finish, true)) : "";
-		$("#dsbMenuVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle jsTitle' "
+		var menubutton = $("#dsbMenuVendor");
+		menubutton.empty().append("<div><kbd id='dsbVendorHeader' class='curToggle jsTitle' "
 			+  "title='<dfn>Pact Supply Network Agent</dfn>" + expirestr
 				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + vendorname + "</var></kbd>"
@@ -32516,7 +32526,11 @@ H = {
 		{
 			$(this).select();
 		});
-		$("#dsbMenuVendor").click(function()
+		if (pIsReset)
+		{
+			menubutton.unbind("click");
+		}
+		menubutton.click(function()
 		{
 			H.generateDashboardVendor();
 		});
@@ -32842,7 +32856,7 @@ H = {
 		// Refresh vendor header at its specific time
 		if (hour === H.Vendor.resetHour && minute === 0)
 		{
-			H.generateDashboardVendorHeader();
+			H.generateDashboardVendorHeader(true);
 		}
 	},
 	

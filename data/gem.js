@@ -419,12 +419,12 @@ Mini: [
 	{i: 36169, n: "Mini Avian 3 Pack", p: {gem: -500}},
 	{i: 36320, n: "Miniature Spooky Trio", p: {gem: -500}},
 	{i: 41907, n: "Miniature Super Trio", p: {gem: -500}},
+	{i: 46498, n: "Miniature Super Trio—World 2", p: {gem: -500}},
 	{i: 42897, n: "Dragon Bash Mini Pack", p: {gem: -500}},
 	{i: 42978, n: "Wintersday Minis 3-Pack", p: {gem: -500}},
 	{i: 42981, n: "Bazaar Quaggan Mini Pack", p: {gem: -500}},
 	{i: 43933, n: "Tequatl Rising Mini Pack", p: {gem: -500}},
 	{i: 44779, n: "Costumed Mini 3-Pack", p: {gem: -500}},
-	{i: 46498, n: "Miniature Super Trio—World 2", p: {gem: -500}},
 	{i: 47907, n: "Scarlet's Champions Mini 3-Pack", p: {gem: -500}},
 	{i: 48936, n: "Great Jungle Wurm 3 Pack", p: {gem: -300}},
 	{i: 50090, n: "Creepy Mini 3-Pack", p: {gem: -500}},
@@ -602,10 +602,10 @@ Upgrade: [
  */
 var GW2T_SALE_DATA = [
 	{
-		name: "Black Lion Chest Key",
-		id: "19980",
-		price: 100,
-		discount: [[1, 100, 125], [5, 359, 450], [25, 1680, 2100]],
+		name: "Additional Crafting License",
+		id: "42970",
+		price: 400,
+		discount: 800,
 		col: 0
 	},
 	{
@@ -672,23 +672,9 @@ var GW2T_SALE_DATA = [
 		col: 1
 	},
 	{
-		name: "Mask of the Silent Skin",
-		id: "49157",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Wreath of Cooperation",
 		id: "66309",
 		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Ringmaster's Hat",
-		id: "64745",
-		price: 200,
 		discount: null,
 		col: 1
 	}
