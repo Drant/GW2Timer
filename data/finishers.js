@@ -86,6 +86,7 @@ General: [
 	{u: 46, i: 67033, n: "Permanent Guild Flag Finisher"},
 	{u: 51, i: 67862, n: "Chickenado Finisher"},
 	{u: 57, i: 68573, n: "Permanent Pact Fleet Finisher"},
+	{u: 59, i: 69786, n: "Permanent Honor Guard Finisher"},
 	{u: 62, i: 70243, n: "Permanent Birthday Finisher", p: {starting: true}}
 ],
 Gem: [
@@ -96,7 +97,6 @@ Gem: [
 	{u: 42, i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
 	{u: 40, i: 63941, n: "Permanent Minstrel Finisher", p: {gem: 800}},
 	{u: 60, i: 68107, n: "Revenant Finisher", p: {gem: 0}},
-	{u: 58, i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}},
-	{u: 59, i: 69786, n: "Permanent Honor Guard Finisher", p: {gem: 700}}
+	{u: 58, i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}}
 ]
 };

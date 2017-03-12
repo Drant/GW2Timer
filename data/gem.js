@@ -86,7 +86,6 @@ Outfit: [
 	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}}
 ],
 Glider: [
-	{i: 67054, n: "Heart of Thorns Glider", p: {gem: 0}},
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
 	{i: 70048, n: "Black Feather Wings Glider", p: {gem: -700}},
 	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: -500}},
@@ -585,9 +584,7 @@ Finisher: [
 	{i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: -800}},
 	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
 	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: -800}},
-	{i: 68107, n: "Revenant Finisher", p: {gem: 0}},
-	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}},
-	{i: 69786, n: "Permanent Honor Guard Finisher", p: {gem: -700}}
+	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}}
 ],
 Upgrade: [
 	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 800}},
