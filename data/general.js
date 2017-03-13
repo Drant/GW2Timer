@@ -1594,30 +1594,23 @@ Sale: {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
-		name: "Additional Crafting License",
-		id: "42970",
+		name: "Bubble Glider",
+		id: "78007",
 		price: 400,
-		discount: 800,
+		discount: 500,
 		col: 0
 	},
 	{
-		name: "Raven's Spirit Glider",
-		id: "80725",
-		price: 500,
-		discount: null,
+		name: "Floral Glider",
+		id: "78790",
+		price: 320,
+		discount: 400,
 		col: 0
 	},
 	{
 		name: "Storm Bow",
 		id: "79310",
 		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mini Chieftain Utahein and Mini Svanir",
-		id: "67281",
-		price: 700,
 		discount: null,
 		col: 0
 	},
@@ -1636,6 +1629,20 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Raven's Spirit Glider",
+		id: "80725",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Chieftain Utahein and Mini Svanir",
+		id: "67281",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Shadow Assassin Outfit",
 		id: "66658",
 		price: 700,
@@ -1650,23 +1657,9 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Ceremonial Plated Outfit",
-		id: "67040",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Braham's Wolfblood Pauldrons",
 		id: "80082",
 		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Wreath of Cooperation",
-		id: "66309",
-		price: 400,
 		discount: null,
 		col: 1
 	}

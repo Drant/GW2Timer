@@ -32637,9 +32637,9 @@ H = {
 							"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offerid] || H.Vendor.PriceDefault) + "</span>"
 							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
-							+ "<span class='dsbVendorName'>" + iIndex + "</span>");
+							+ "<span class='dsbVendorName'>" + iIndex + "</span>"
+							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offerid] || H.Vendor.PriceDefault) + "</span>");
 						// Get TP prices also
 						$.getJSON(U.getAPIPrice(offerid), function(pData)
 						{
