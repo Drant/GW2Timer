@@ -19319,7 +19319,7 @@ D = {
 		s_completion: {de: "abschluss", es: "finalización", fr: "progression",
 			cs: "dokončení", it: "completamento", pl: "ukończenie", pt: "progressão", ru: "завершение", zh: "完成"},
 		s_route: {de: "route", es: "ruta", fr: "route",
-			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршру́т", zh: "路线"},
+			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршрут", zh: "路线"},
 		s_pins: {de: "stecknadel", es: "alfileres", fr: "épingles",
 			cs: "špendlík", it: "spilli", pl: "szpilka", pt: "alfinetes", ru: "була́вка", zh: "大头针"},
 		s_range: {de: "reichweite", es: "alcance", fr: "portée",
@@ -19434,18 +19434,20 @@ D = {
 			cs: "automatický", it: "automatico", pl: "automatyczny", pt: "automático", ru: "автоматический", zh: "自动的"},
 		
 		// Prepositions and Conjunctions
-		s_at: {de: "um", es: "a", fr: "à",
-			cs: "v", it: "a", pl: "o", pt: "a", ru: "в", zh: "在"},
 		s_and: {de: "und", es: "y", fr: "et",
 			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", zh: "和"},
-		s_by: {de: "von", es: "por", fr: "de",
-			cs: "od", it: "da", pl: "przez", pt: "por", ru: "", zh: "由"},
-		s_of: {de: "von", es: "de", fr: "de",
-			cs: "z", it: "di", pl: "z", pt: "de", ru: "из", zh: "的"},
 		s_if: {de: "wenn", es: "si", fr: "si",
 			cs: "jestliže", it: "se", pl: "jeśli", pt: "se", ru: "если", zh: "如果"},
+		s_at: {de: "um", es: "a", fr: "à",
+			cs: "v", it: "a", pl: "o", pt: "a", ru: "в", zh: "在"},
+		s_by: {de: "von", es: "por", fr: "de",
+			cs: "od", it: "da", pl: "przez", pt: "por", ru: "", zh: "由"},
 		s_in: {de: "in", es: "en", fr: "en",
 			cs: "za", it: "in", pl: "w", pt: "em", ru: "в", zh: "在"},
+		s_of: {de: "von", es: "de", fr: "de",
+			cs: "z", it: "di", pl: "z", pt: "de", ru: "из", zh: "的"},
+		s_for: {de: "für", es: "para", fr: "pour",
+			cs: "pro", it: "per", pl: "dla", pt: "para", ru: "для", zh: "为了"},
 		s_to: {de: "zu", es: "a", fr: "contre",
 			cs: "ku", it: "a", pl: "na", pt: "a", ru: "до", zh: "比"},
 		
@@ -23418,7 +23420,7 @@ M = {
 		}
 		else
 		{
-			I.write("Path unavailable for this.");
+			I.write(D.getPhraseOriginal("Route not available for this") + ".");
 		}
 	},
 	
@@ -32507,7 +32509,7 @@ H = {
 			+ "<var>" + vendorname + "</var></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled");
 		$("#dsbVendor").empty().append("<div id='dsbVendorMenu'>"
-			+ "<img data-src='img/ui/copy.png' /><input id='dsbVendorCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
+			+ "<img data-src='img/map/waypoint.png' style='width:32px;height:32px;' /><input id='dsbVendorCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
 			+ ((I.isMapEnabled) ? "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u> " : "")
 			+ "<img data-src='img/ui/info.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
@@ -32636,7 +32638,8 @@ H = {
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offerid] || H.Vendor.PriceDefault) + "</span>"
-							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>");
+							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
+							+ "<span class='dsbVendorName'>" + iIndex + "</span>");
 						// Get TP prices also
 						$.getJSON(U.getAPIPrice(offerid), function(pData)
 						{
@@ -36164,7 +36167,7 @@ I = {
 			var section = header.next().addClass("cntSection");
 			var headercontent = $(this).children("var").first();
 			// Translate header if available
-			var headertext = D.getDataAttribute(headercontent);
+			var headertext = D.getDataAttribute(headercontent) || header.text();
 			headercontent.text(headertext);
 			// Hide the entire collapsible div tag next to the header tag
 			section.hide();
