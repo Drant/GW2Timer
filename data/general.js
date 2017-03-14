@@ -1408,8 +1408,8 @@ Announcement:
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	pve: "<a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. Account <a href='http://gw2timer.com/?page=Nodes'>home nodes</a>, <a href='http://gw2timer.com/?page=Cats'>hungry cats</a>, <a href='http://gw2timer.com/?page=Dungeons'>dungeons</a>, <a href='http://gw2timer.com/?page=Raids'>raids</a>. <a href='http://forum.renaka.com/topic/5546166/4#post603314'>GW2Navi 2017</a>.",
 	wvw: "",
-	Start: new Date("2016-02-14T16:00:00Z"),
-	Finish: new Date("2017-03-14T16:00:00Z"),
+	Start: new Date("2016-03-14T16:00:00Z"),
+	Finish: new Date("2017-04-04T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
@@ -1561,6 +1561,7 @@ Faux: [
 /*
  * GW2 gem store sale items.
  * Format:
+ *  Finish: new Date("2017-01-01T16:00:00Z"), // Time the item or discount will be removed, optional
  *	name: "", // Item name to point to English wiki
  *	id: "", // Item ID to retrieve icon and tooltip details, or a URL to a hosted image
  *	url: "", // If not provided, will use name as a wiki link
@@ -1595,48 +1596,33 @@ Sale: {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
-		Finish: new Date("2017-03-14T16:00:00Z"),
-		name: "Bubble Glider",
-		id: "78007",
-		price: 400,
-		discount: 500,
+		Finish: new Date("2017-03-15T16:00:00Z"),
+		name: "Heroic Booster",
+		id: "20005",
+		price: 102,
+		discount: [[1, 102, 150], [5, 436, 637], [20, 1440, 2100]],
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-14T16:00:00Z"),
-		name: "Floral Glider",
-		id: "78790",
-		price: 320,
-		discount: 400,
+		name: "Lion's Arch Rebuild Dye Kit",
+		id: "69934",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 0
 	},
 	{
-		name: "Storm Bow",
-		id: "79310",
+		name: "Shield of the Goddess",
+		id: "80861",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Permanent Unicorn Finisher",
-		id: "69616",
-		price: 700,
+		name: "Mini Angry Chest",
+		id: "70234",
+		price: 400,
 		discount: null,
 		col: 0
-	},
-	{
-		name: "Permanent Llama Finisher",
-		id: "49952",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Raven's Spirit Glider",
-		id: "80725",
-		price: 500,
-		discount: null,
-		col: 1
 	},
 	{
 		name: "Mini Chieftain Utahein and Mini Svanir",
@@ -1653,9 +1639,16 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Harbinger of Mordremoth Outfit",
-		id: "70071",
-		price: 700,
+		name: "Raven's Spirit Glider",
+		id: "80725",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Shattered Bloodstone Glider",
+		id: "80795",
+		price: 400,
 		discount: null,
 		col: 1
 	},

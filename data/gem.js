@@ -260,7 +260,8 @@ Weapon: [
 	{i: 79365, n: "Peacock Scepter Skin", p: {gem: -600}},
 	{i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: -600}},
 	{i: 79386, n: "Dragon Kama Skin", p: {gem: -600}},
-	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: -600}}
+	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: -600}},
+	{i: 80861, n: "Shield of the Goddess", p: {gem: -600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins", p: {blticket: -2}},
@@ -603,46 +604,33 @@ Upgrade: [
  */
 var GW2T_SALE_DATA = [
 	{
-		name: "Bubble Glider",
-		id: "78007",
-		price: 400,
-		discount: 500,
+		Finish: new Date("2017-03-15T16:00:00Z"),
+		name: "Heroic Booster",
+		id: "20005",
+		price: 102,
+		discount: [[1, 102, 150], [5, 436, 637], [20, 1440, 2100]],
 		col: 0
 	},
 	{
-		name: "Floral Glider",
-		id: "78790",
-		price: 320,
-		discount: 400,
+		name: "Lion's Arch Rebuild Dye Kit",
+		id: "69934",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 0
 	},
 	{
-		name: "Storm Bow",
-		id: "79310",
+		name: "Shield of the Goddess",
+		id: "80861",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Permanent Unicorn Finisher",
-		id: "69616",
-		price: 700,
+		name: "Mini Angry Chest",
+		id: "70234",
+		price: 400,
 		discount: null,
 		col: 0
-	},
-	{
-		name: "Permanent Llama Finisher",
-		id: "49952",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Raven's Spirit Glider",
-		id: "80725",
-		price: 500,
-		discount: null,
-		col: 1
 	},
 	{
 		name: "Mini Chieftain Utahein and Mini Svanir",
@@ -659,9 +647,16 @@ var GW2T_SALE_DATA = [
 		col: 1
 	},
 	{
-		name: "Harbinger of Mordremoth Outfit",
-		id: "70071",
-		price: 700,
+		name: "Raven's Spirit Glider",
+		id: "80725",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Shattered Bloodstone Glider",
+		id: "80795",
+		price: 400,
 		discount: null,
 		col: 1
 	},
