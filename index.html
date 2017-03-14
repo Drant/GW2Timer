@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170313"></script>
+	<script type="text/javascript" src="data/general.js?v=20170313A"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -162,59 +162,62 @@
 						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu.png" alt="display" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Menu</var>
 					</span>
-					<div class="hudPopup cntComposition hudDirectory jsScrollable">
-						<table class="hudDirectoryMode">
-							<tr>
-								<td><var class="hudDirectoryModeName jsTranslate">Tile Mode</var><a href="./?mode=Tile" title="<dfn>gw2timer.com/t</dfn>"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/Q6O2lIx.png" /></a></td>
-								<td><var class="hudDirectoryModeName jsTranslate">Mobile Mode</var><a href="./?mode=Mobile" title="<dfn>gw2timer.com/m</dfn>"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/0QsaeY7.png" /></a></td>
-								<td><var class="hudDirectoryModeName jsTranslate">Simple Mode</var><a href="./?mode=Simple" title="<dfn>gw2timer.com/s</dfn>"><img id="hudDirectoryModePreviewLast" class="hudDirectoryModePreview" data-src="http://i.imgur.com/Nk42voP.png" /></a></td>
-							</tr>
-						</table>
-						<div class="cntDivider hudDirectoryDivider"></div>
-						<div class="hudDirectoryContent">
-							<div class="hudDirectoryColumn">
-								<h2>Quicklinks</h2>
-								<ul>
-									<li><a class="jsTranslate" href="./?page=Audit">Audit</a> - Account value estimate</li>
-									<li><a class="jsTranslate" href="./?page=Catalog">Catalog</a> - Keychain and item watchlist</li>
-									<li><a class="jsTranslate" href="./?page=Cleanup">Cleanup</a> - Unused inventory items</li>
-									<li><a class="jsTranslate" href="./?page=Possessions">Possessions</a> - Account search</li>
-									<li><a class="jsTranslate" href="./?page=Gem">Gem</a> - Gem store alerts gallery</li>
-								</ul>
-								<h2>Contact</h2>
-								<ul>
-									<li><strong><a class="jsTranslate" href="http://forum.renaka.com/forum/368355/">Forum</a></strong> - Comments and suggestions</li>
-									<li><a class="jsTranslate" href="http://forum.renaka.com/topic/5500046/">Changelog</a> - Site updates</li>
-									<li><a href="https://twitter.com/gw2timer">Twitter</a> - Follow GW2Timer.com</li>
-									<li><a href="http://forum.renaka.com/topic/5954229/"><ins class="s16 s16_wiki"></ins></a> - ArenaNet endorsements</li>
-								</ul>
-							</div>
-							<div class="hudDirectoryColumn">
-								<h2>Tutorials</h2>
-								<ul>
-									<li><a href="https://www.youtube.com/watch?v=uXqvTMGNIXo">How to use GW2Timer.com</a></li>
-									<li><a href="http://forum.renaka.com/topic/5602037/">Timer Features</a></li>
-									<li><a href="http://forum.renaka.com/topic/5888854/">Map Features</a></li>
-									<li><a href="http://forum.renaka.com/topic/5697040/">TP &amp; Gem Tracker</a></li>
-								</ul>
-								<h2>Guides</h2>
-								<ul>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/5tgubw/compilation_of_lake_doric_maps_and_resources/">Zone: Lake Doric</a></li>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/5epb0k/i_got_turned_into_a_snowcone_dozens_of_times_but/">Zone: Bitterfrost Frontier</a></li>
-									<li><a href="https://www.reddit.com/r/gw2timer/comments/5xfb09/compilation_of_ember_bay_maps_and_resources/">Zone: Ember Bay</a></li>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/4vic4c/bloodstone_fen_map_tools_resource_nodes_event_map/">Zone: Bloodstone Fen</a></li>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/346wom/120_silverwastes_lost_bandit_chests_map_locations/">Zone: Silverwastes</a></li>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/2df20y/drp2_dry_top_live_map_and_timer_updated_100/">Zone: Dry Top</a></li>
-									<li><a href="http://forum.renaka.com/topic/6209670/">LS3: Transfer Chaser</a></li>
-									<li><a href="http://forum.renaka.com/topic/6205181/">LS3: Bloodstone-Crazed Creatures</a></li>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/4urr23/leyline_anomaly_tldr_guide_v2/">LS3: Ley-Line Anomaly</a></li>
-									<li><a href="http://gw2timer.com/?page=Schedules">World Bosses &amp; Temples</a></li>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/5v6v37/altoholic_world_bosses_dead_because_you_didnt/">Important Waypoints</a></li>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/3p5lw3/i_spent_50_hours_running_through_tyria_with_a_gps/">GPS World Completion</a></li>
-									<li><a href="https://www.reddit.com/r/Guildwars2/comments/4bijoi/lets_catch_all_50_ranger_pets_a_map_and_pokedex/">Ranger Pets Map</a></li>
-								</ul>
+					<div class="hudPopup cntComposition hudDirectory">
+						<div class="hudDirectoryScroll jsScrollable">
+							<table class="hudDirectoryMode">
+								<tr>
+									<td><var class="hudDirectoryModeName jsTranslate">Tile Mode</var><a href="./?mode=Tile" title="<dfn>gw2timer.com/t</dfn>"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/Q6O2lIx.png" /></a></td>
+									<td><var class="hudDirectoryModeName jsTranslate">Mobile Mode</var><a href="./?mode=Mobile" title="<dfn>gw2timer.com/m</dfn>"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/0QsaeY7.png" /></a></td>
+									<td><var class="hudDirectoryModeName jsTranslate">Simple Mode</var><a href="./?mode=Simple" title="<dfn>gw2timer.com/s</dfn>"><img id="hudDirectoryModePreviewLast" class="hudDirectoryModePreview" data-src="http://i.imgur.com/Nk42voP.png" /></a></td>
+								</tr>
+							</table>
+							<div class="cntDivider hudDirectoryDivider"></div>
+							<div>
+								<div class="hudDirectoryColumn">
+									<h2>Quicklinks</h2>
+									<ul>
+										<li><a class="jsTranslate" href="./?page=Audit">Audit</a> - Account value estimate</li>
+										<li><a class="jsTranslate" href="./?page=Catalog">Catalog</a> - Keychain and item watchlist</li>
+										<li><a class="jsTranslate" href="./?page=Cleanup">Cleanup</a> - Unused inventory items</li>
+										<li><a class="jsTranslate" href="./?page=Possessions">Possessions</a> - Account search</li>
+										<li><a class="jsTranslate" href="./?page=Gem">Gem</a> - Gem store wishlist alerts</li>
+									</ul>
+									<h2>Contact</h2>
+									<ul>
+										<li><strong><a class="jsTranslate" href="http://forum.renaka.com/forum/368355/">Forum</a></strong> - Comments and suggestions</li>
+										<li><a class="jsTranslate" href="http://forum.renaka.com/topic/5500046/">Changelog</a> - Site updates</li>
+										<li><a href="https://twitter.com/gw2timer">Twitter</a> - Follow GW2Timer.com</li>
+										<li><a href="http://forum.renaka.com/topic/5954229/"><ins class="s16 s16_wiki"></ins></a> - ArenaNet endorsements</li>
+									</ul>
+								</div>
+								<div class="hudDirectoryColumn">
+									<h2>Tutorials</h2>
+									<ul>
+										<li><a href="https://www.youtube.com/watch?v=uXqvTMGNIXo">How to use GW2Timer.com</a></li>
+										<li><a href="http://forum.renaka.com/topic/5602037/">Timer Features</a></li>
+										<li><a href="http://forum.renaka.com/topic/5888854/">Map Features</a></li>
+										<li><a href="http://forum.renaka.com/topic/5697040/">TP &amp; Gem Tracker</a></li>
+									</ul>
+									<h2>Guides</h2>
+									<ul>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/5tgubw/compilation_of_lake_doric_maps_and_resources/">Zone: Lake Doric</a></li>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/5epb0k/i_got_turned_into_a_snowcone_dozens_of_times_but/">Zone: Bitterfrost Frontier</a></li>
+										<li><a href="https://www.reddit.com/r/gw2timer/comments/5xfb09/compilation_of_ember_bay_maps_and_resources/">Zone: Ember Bay</a></li>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/4vic4c/bloodstone_fen_map_tools_resource_nodes_event_map/">Zone: Bloodstone Fen</a></li>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/346wom/120_silverwastes_lost_bandit_chests_map_locations/">Zone: Silverwastes</a></li>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/2df20y/drp2_dry_top_live_map_and_timer_updated_100/">Zone: Dry Top</a></li>
+										<li><a href="http://forum.renaka.com/topic/6209670/">LS3: Transfer Chaser</a></li>
+										<li><a href="http://forum.renaka.com/topic/6205181/">LS3: Bloodstone-Crazed Creatures</a></li>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/4urr23/leyline_anomaly_tldr_guide_v2/">LS3: Ley-Line Anomaly</a></li>
+										<li><a href="http://gw2timer.com/?page=Schedules">World Bosses &amp; Temples</a></li>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/5v6v37/altoholic_world_bosses_dead_because_you_didnt/">Important Waypoints</a></li>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/3p5lw3/i_spent_50_hours_running_through_tyria_with_a_gps/">GPS World Completion</a></li>
+										<li><a href="https://www.reddit.com/r/Guildwars2/comments/4bijoi/lets_catch_all_50_ranger_pets_a_map_and_pokedex/">Ranger Pets Map</a></li>
+									</ul>
+								</div>
 							</div>
 						</div>
+						<div class="hudDirectoryCarpet"></div>
 					</div>
 				</div>
 				<div class="hudItem">

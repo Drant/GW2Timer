@@ -12406,6 +12406,8 @@ V = {
 					if (salevalue < value)
 					{
 						pSlot.addClass("bnkSlotDiscount");
+						// Show pre-discounted gem price when hovered
+						pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(value, true) + "</var>");
 					}
 					else if (salevalue)
 					{
@@ -19320,10 +19322,14 @@ D = {
 			cs: "dokončení", it: "completamento", pl: "ukończenie", pt: "progressão", ru: "завершение", zh: "完成"},
 		s_route: {de: "route", es: "ruta", fr: "route",
 			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршрут", zh: "路线"},
-		s_pins: {de: "stecknadel", es: "alfileres", fr: "épingles",
-			cs: "špendlík", it: "spilli", pl: "szpilka", pt: "alfinetes", ru: "була́вка", zh: "大头针"},
+		s_pins: {de: "stecknadel", es: "chincheta", fr: "repère",
+			cs: "špendlík", it: "segnaposto", pl: "pinezka", pt: "marcador", ru: "маркер", zh: "大头针"},
+		s_path: {de: "pfad", es: "trazado", fr: "tracé",
+			cs: "cesta", it: "tracciato", pl: "ścieżka", pt: "demarcador", ru: "контур", zh: "路径"},
 		s_range: {de: "reichweite", es: "alcance", fr: "portée",
 			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", zh: "射程"},
+		s_compass: {de: "zirkel", es: "compás", fr: "compas",
+			cs: "kružítko", it: "compasso", pl: "cyrkiel", pt: "compasso", ru: "циркуль", zh: "圆规"},
 		s_slot: {de: "steckplatz", es: "ranura", fr: "emplacement",
 			cs: "slot", it: "slot", pl: "gniazdo", pt: "slot", ru: "слот", zh: "插槽"},
 		s_bookmarks: {de: "zeichen", es: "marcadores", fr: "signets",
@@ -23420,7 +23426,7 @@ M = {
 		}
 		else
 		{
-			I.write(D.getPhraseOriginal("Route not available for this") + ".");
+			I.write(D.getPhraseOriginal("Path not available for this") + ".");
 		}
 	},
 	
@@ -32182,6 +32188,7 @@ H = {
 	isStoryDashboard: true,
 	isDailyEnabled: true,
 	isSaleEnabled: false,
+	isSaleOpened: false,
 	isVendorEnabled: true,
 	
 	Timeline: GW2T_TIMELINE,
@@ -32348,6 +32355,10 @@ H = {
 					isdiscounted = true;
 				}
 			}
+			if (item.Finish)
+			{
+				H.Sale.Countdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
+			}
 		}
 		$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
 		// Bind buttons
@@ -32378,6 +32389,7 @@ H = {
 		var table = $("#dsbSaleTable");
 		if (table.is(":empty") === false)
 		{
+			H.isSaleOpened = false;
 			I.toggleToggleIcon("#dsbSaleToggleIcon", false);
 			table.animate({height: 0}, animationspeed, function()
 			{
@@ -32388,6 +32400,7 @@ H = {
 		}
 		else
 		{
+			H.isSaleOpened = true;
 			$("#dsbSale").show();
 			$("#dsbMenuSale").addClass("dsbMenuItemActive");
 			table.append(I.cThrobber);
@@ -32455,10 +32468,13 @@ H = {
 					var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
 					$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
 						+ ((isonline) ? "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> " : "")
-						+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
-						+ oldpricestr
-						+ pricestr
-						+ discountstr
+						+ "<div class='dsbSaleText'>"
+							+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
+							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
+							+ oldpricestr
+							+ pricestr
+							+ discountstr
+						+ "</div>"
 					+ "</div>");
 				}
 				
@@ -32485,6 +32501,13 @@ H = {
 					}
 				});
 			});
+		}
+	},
+	updateDashboardSaleCountdown: function()
+	{
+		for (var i in H.Sale.Countdowns)
+		{
+			$("#dsbSaleCountdown_" + i).html(T.formatTimeLetter(H.Sale.Countdowns[i] - T.TIMESTAMP_UNIX_SECONDS, true));
 		}
 	},
 	
@@ -33797,6 +33820,10 @@ K = {
 		if (H.isCountdownTickEnabled)
 		{
 			H.updateDashboardCountdown(pDate);
+		}
+		if (H.isSaleOpened)
+		{
+			H.updateDashboardSaleCountdown();
 		}
 		if (K.StopwatchTimerStart !== 0)
 		{
@@ -36769,7 +36796,7 @@ I = {
 	{
 		U.convertModeLink(".hudDirectoryColumn a");
 		U.convertExternalLink(".hudDirectoryColumn a");
-		I.bindScrollbar(".hudDirectory");
+		I.bindScrollbar(".hudDirectoryScroll");
 		$(".hudPeripheral").css({visibility: "visible"});
 	},
 	

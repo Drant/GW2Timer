@@ -1573,6 +1573,7 @@ Sale: {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2017-03-07T16:00:00Z"),
 	Finish: new Date("2017-04-04T16:00:00Z"),
+	Countdowns: {}, // Will contain expiration date in UNIX seconds, accessed by Items array index number
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1594,6 +1595,7 @@ Sale: {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
+		Finish: new Date("2017-03-14T16:00:00Z"),
 		name: "Bubble Glider",
 		id: "78007",
 		price: 400,
@@ -1601,6 +1603,7 @@ Sale: {
 		col: 0
 	},
 	{
+		Finish: new Date("2017-03-14T16:00:00Z"),
 		name: "Floral Glider",
 		id: "78790",
 		price: 320,

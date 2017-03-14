@@ -64,8 +64,10 @@
 }
 
 .hudDirectory {
-	max-height: 320px;
 	font-size: 13px;
+}
+.hudDirectoryScroll {
+	max-height: 320px;
 }
 .hudDirectory a {
 	font-size: 14px;
