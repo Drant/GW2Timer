@@ -1324,6 +1324,8 @@ textarea.jsCopyCode {
 
 #dsbVendorMenu {
 	width: 100%;
+	margin-bottom: 4px;
+	border-bottom: 2px solid black;
 	text-align: center;
 	font-family: Trebuchet MS, Menomonia;
 }

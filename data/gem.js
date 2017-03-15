@@ -604,18 +604,27 @@ Upgrade: [
  */
 var GW2T_SALE_DATA = [
 	{
-		Finish: new Date("2017-03-15T16:00:00Z"),
-		name: "Heroic Booster",
-		id: "20005",
-		price: 102,
-		discount: [[1, 102, 150], [5, 436, 637], [20, 1440, 2100]],
+		Finish: new Date("2017-03-16T16:00:00Z"),
+		name: "Fused Molten Sickle",
+		id: "67032",
+		price: 500,
+		discount: 1000,
 		col: 0
 	},
 	{
-		name: "Lion's Arch Rebuild Dye Kit",
-		id: "69934",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
+		Finish: new Date("2017-03-16T16:00:00Z"),
+		name: "Fused Molten Logging Axe",
+		id: "67030",
+		price: 500,
+		discount: 1000,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-16T16:00:00Z"),
+		name: "Molten Alliance Mining Pick",
+		id: "48933",
+		price: 500,
+		discount: 1000,
 		col: 0
 	},
 	{
@@ -630,6 +639,13 @@ var GW2T_SALE_DATA = [
 		id: "70234",
 		price: 400,
 		discount: null,
+		col: 0
+	},
+	{
+		name: "Lion's Arch Rebuild Dye Kit",
+		id: "69934",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 0
 	},
 	{

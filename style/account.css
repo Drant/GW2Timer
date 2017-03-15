@@ -91,6 +91,13 @@
 	border-radius: 8px;
 	box-shadow: 0px 0px 32px #0b0d0e;
 }
+.accCountdown {
+	width: 100%;
+	text-align: center;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 32px;
+	color: #bbcc77;
+}
 
 /* Menu
 ----------------------------------------------------------------------------- */

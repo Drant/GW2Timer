@@ -12010,11 +12010,19 @@ V = {
 	},
 	serveDungeons: function()
 	{
-		V.serveUnlockables("Dungeons", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false});
+		V.serveUnlockables("Dungeons", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false, aCallback: function()
+		{
+			T.isChecklistCountdownsStarted = true;
+			$("#accDish_Dungeons").prepend("<div class='accCountdown jsCountdownToDaily'></div>");
+		}});
 	},
 	serveRaids: function()
 	{
-		V.serveUnlockables("Raids", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false});
+		V.serveUnlockables("Raids", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false, aCallback: function()
+		{
+			T.isChecklistCountdownsStarted = true;
+			$("#accDish_Raids").prepend("<div class='accCountdown jsCountdownToWeekly'></div>");
+		}});
 	},
 	
 	/*
@@ -31940,8 +31948,10 @@ T = {
 	 */
 	updateChecklistCountdowns: function()
 	{
-		$("#chlCountdownToDaily").text(T.formatTimeLetter(T.SECONDS_TILL_DAILY, true));
-		$("#chlCountdownToWeekly").text(T.formatTimeLetter(T.SECONDS_TILL_WEEKLY, true));
+		var dstr = T.formatTimeLetter(T.SECONDS_TILL_DAILY, true);
+		var wstr = T.formatTimeLetter(T.SECONDS_TILL_WEEKLY, true);
+		$(".jsCountdownToDaily").text(dstr);
+		$(".jsCountdownToWeekly").text(wstr);
 	},
 	
 	/*

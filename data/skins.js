@@ -3322,7 +3322,8 @@ Weapon_Shield: [
 	{u: 7061, i: 79985, n: "Wrapped Shield", p: {achievement: 0}},
 	{u: 7111, i: 80242, n: "Devoted Shield", b: [80242]},
 	{u: 7135, i: 80526, n: "Seraph Protector", p: {karma: 210000}},
-	{u: 7162, i: 80786, n: "Caladbolg Astera", p: {achievement: 0}}
+	{u: 7162, i: 80786, n: "Caladbolg Astera", p: {achievement: 0}},
+	{u: 7165, i: 80861, n: "Shield of the Goddess", p: {gem: 600}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", b: [49356]},
