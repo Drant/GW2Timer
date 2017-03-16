@@ -663,22 +663,22 @@ html, body,
 	max-height: 180px;
 }
 
-/* Range Placer */
-.mapContextRangeList img {
+/* Compass Placer */
+.mapContextCompassList img {
 	width: 32px; height: 32px;
 	border: 1px solid transparent;
 }
-.mapContextRangeList img:hover {
+.mapContextCompassList img:hover {
 	border: 1px solid gold;
 }
-.mapContextRangeList img:active {
+.mapContextCompassList img:active {
 	opacity: 0.6;
 }
-.mapRangeCustom {
+.mapCompassCustom {
 	display: block;
 	margin-top: 4px;
 }
-.mapWeapon {
+.mapCompass {
 	border: 1px solid orange;
 	border-radius: 4px;
 }
@@ -3207,7 +3207,7 @@ laurelunit {
 	color: #eebb44; /* Gold WvW subtitle */
 	color: #ffbb44; /* Gold guild chat name */
 	color: #ffcc77; /* Gold highlight/notice/waypoint */
-	color: #fdc84e; /* Gold gem store */
+	color: #fdc84e; /* Gold gem store note */
 	color: #ffeebb; /* Cream window and UI title */
 	color: #ffeeaa; /* Cream guild chat and item count */
 	color: #ddccaa; /* Cream WvW server name */
@@ -3228,7 +3228,8 @@ laurelunit {
 	color: #66ccff; /* Blue WvW team */
 	color: #44bbff; /* Blue chat party name */
 	color: #bbddff; /* Blue chat party */
-	color: #66aaff; /* Blue gem */
+	color: #66aaff; /* Blue gem price */
+	color: #6a9bfd; /* Blue gem store note */
 	color: #99eedd; /* Blue light tooltip */
 	color: #cc77ff; /* Purple daily */
 	color: #bbbbbb; /* Gray in labels and descriptions */

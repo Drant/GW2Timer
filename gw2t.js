@@ -94,8 +94,8 @@ O = {
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
 		StoredPins: {key: "obj_utlStoredPins", value: []},
 		StoredPinsWvW: {key: "obj_utlStoredPinsWvW", value: []},
-		StoredWeapons: {key: "obj_utlStoredWeapons", value: []},
-		StoredWeaponsWvW: {key: "obj_utlStoredWeaponsWvW", value: []}
+		StoredCompasses: {key: "obj_utlStoredCompasses", value: []},
+		StoredCompassesWvW: {key: "obj_utlStoredCompassesWvW", value: []}
 	},
 	
 	/*
@@ -1712,8 +1712,8 @@ X = {
 	{
 		SlotPins: { key: "str_txlSlotPins"},
 		SlotPinsWvW: { key: "str_txlSlotPinsWvW"},
-		SlotWeapons: { key: "str_txlSlotWeapons"},
-		SlotWeaponsWvW: { key: "str_txlSlotWeaponsWvW"},
+		SlotCompasses: { key: "str_txlSlotCompasses"},
+		SlotCompassesWvW: { key: "str_txlSlotCompassesWvW"},
 		CustomTextDaily: { key: "str_txlCustomTextDaily", valueDefault: [] },
 		CustomTextWeekly: { key: "str_txlCustomTextWeekly", valueDefault: [] },
 		NotepadText: { key: "str_txlNotepadText", valueDefault: [] },
@@ -3074,7 +3074,15 @@ U = {
 			// Compile IDs that the API did not return
 			if (itemids.length !== retarr.length)
 			{
-				failarr = U.getDifference(itemids, retarr);
+				var retids = [];
+				for (var i in retarr)
+				{
+					if (retarr[i].id)
+					{
+						retids.push(retarr[i].id);
+					}
+				}
+				failarr = U.getDifference(itemids, retids);
 			}
 			
 			A.fillProgressBar();
@@ -7022,10 +7030,10 @@ Z = {
 			E.getPrices(arr, function(pData, pUntradeableIDs)
 			{
 				// Add to the untradeable list any items that got past the tradeable check
-				pUntradeableIDs.forEach(function(iID)
+				/*for (var i in pUntradeableIDs)
 				{
-					blacklist[iID] = 1;
-				});
+					blacklist[(pUntradeableIDs[i])] = 1;
+				}*/
 				// Extract retrieved prices and create database of prices
 				var pricecache = {};
 				var priceobj;
@@ -9578,7 +9586,7 @@ A = {
 						}
 					});
 					// Selection to delete an account in the history
-					var historydelete = $("<select id='audHistoryDelete'><option>" + D.getPhraseOriginal("Clear Storage") + ":</option></select>").appendTo(historybuttons);
+					var historydelete = $("<select id='audHistoryDelete'><option>" + D.getPhraseOriginal("Delete Storage") + ":</option></select>").appendTo(historybuttons);
 					for (var i in histbook)
 					{
 						historydelete.append("<option value='" + U.escapeHTML(i) + "'>" + U.escapeHTML(i) + "</option>");
@@ -12597,12 +12605,15 @@ V = {
 				for (var i in pEntry.p)
 				{
 					value = pEntry.p[i];
+					if (salevalue)
+					{
+						value = Math.abs(value); // If exists in promotions then consider as available in the record
+					}
 					break; // Consider only the first payment type
 				}
 				// Check for available
 				if (availableassoc[id] && (salevalue || value > 0))
 				{
-					// Positive payment value in the record or existing in the promotions means the item is available
 					I.print(pEntry.n + availablestr + "!");
 					isavailable = true;
 				}
@@ -21915,14 +21926,14 @@ M = {
 	Subzones: {},
 	Regions: GW2T_REGION_DATA,
 	Submaps: GW2T_SUBMAP_DATA,
-	Weapons: GW2T_RANGE_DATA,
+	Compasses: GW2T_COMPASS_DATA,
 	cInitialZone: "lion",
 	Map: {},
 	FloorCurrent: {},
 	ZoneCurrent: {},
 	numPins: 0,
 	numPinsSlots: 32,
-	numWeaponsSlots: 32,
+	numCompassesSlots: 32,
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
@@ -21974,8 +21985,8 @@ M = {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(), // Path drawn from connecting player-laid pins
-		WeaponIcon: new L.layerGroup(), // A weapon icon with its radius circle
-		WeaponCircle: new L.layerGroup()
+		CompassIcon: new L.layerGroup(), // A compass icon with its radius circle
+		CompassCircle: new L.layerGroup()
 	},
 	Pin: {
 		Program: {},
@@ -22129,7 +22140,7 @@ M = {
 			$("#opt_bol_showHUD" + P.MapSwitchSuffix).trigger("click");
 		});
 		// Translate and bind map zones list
-		$(htmlidprefix + "CompassButton").one("mouseenter", that.bindZoneList(that)).click(function()
+		$(htmlidprefix + "ZoneButton").one("mouseenter", that.bindZoneList(that)).click(function()
 		{
 			that.goToDefault();
 		}).dblclick(function()
@@ -22269,9 +22280,9 @@ M = {
 		{
 			$("#opt_bol_showHUD" + that.OptionSuffix).trigger("click");
 		});
-		$(htmlidprefix + "ContextRange").one("mouseenter", function()
+		$(htmlidprefix + "ContextCompass").one("mouseenter", function()
 		{
-			that.initializeWeaponPlacer(that);
+			that.initializeCompassPlacer(that);
 		});
 		$(htmlidprefix + "ContextPins").one("mouseenter", function()
 		{
@@ -22907,8 +22918,8 @@ M = {
 			} break;
 		}
 		
-		// Adjust range circles
-		this.Layer.WeaponCircle.eachLayer(function(iLayer)
+		// Adjust compass circles
+		this.Layer.CompassCircle.eachLayer(function(iLayer)
 		{
 			iLayer.setRadius(that.getZoomedDistance(iLayer.options.trueradius));
 		});
@@ -23361,7 +23372,7 @@ M = {
 					path.on("click", function()
 					{
 						that.outputCoordinatesCopy(that.getPersonalString());
-						that.outputPinsRange();
+						that.outputPinsDistance();
 					});
 					// Double click path: insert a pin between the two pins that connect the path
 					path.on("dblclick", function(pEvent)
@@ -23372,7 +23383,7 @@ M = {
 					this.Layer.PersonalPath.addLayer(path);
 				}
 				this.toggleLayer(this.Layer.PersonalPath, true);
-				that.outputPinsRange();
+				that.outputPinsDistance();
 			}
 			else
 			{
@@ -23439,9 +23450,9 @@ M = {
 	},
 	
 	/*
-	 * Outputs the total game "unit" range distance for the pins.
+	 * Outputs the total game "unit" distance for the pins.
 	 */
-	outputPinsRange: function()
+	outputPinsDistance: function()
 	{
 		var distance = 0;
 		var markers = this.Layer.PersonalPin.getLayers();
@@ -23553,9 +23564,9 @@ M = {
 	},
 	
 	/*
-	 * Writes context menu elements for placing weapons with range circles on the map.
+	 * Writes context menu elements for placing compasses with compass circles on the map.
 	 */
-	initializeWeaponPlacer: function(pMapObject)
+	initializeCompassPlacer: function(pMapObject)
 	{
 		var that = pMapObject;
 		var htmlidprefix = "#" + that.MapEnum;
@@ -23564,251 +23575,251 @@ M = {
 		var colormaxlength = 32;
 		var importmaxlength = 8192;
 		
-		var weaponsmenu = $(htmlidprefix + "ContextRangeList");
-		I.preventMapPropagation(weaponsmenu);
+		var compassmenu = $(htmlidprefix + "ContextCompassList");
+		I.preventMapPropagation(compassmenu);
 		var counter = 0;
-		for (var i in that.Weapons)
+		for (var i in that.Compasses)
 		{
-			var weapon = that.Weapons[i];
-			if (weapon.isPlaceable === false)
+			var compass = that.Compasses[i];
+			compass.id = i;
+			if (compass.isPlaceable === false)
 			{
 				continue;
 			}
 			counter++;
-			var weaponbutton = $("<img src='img/wvw/range/" + weapon.image + I.cPNG + "' />");
+			var compassbutton = $("<img src='img/compass/" + compass.id + I.cPNG + "' />");
 			
 			// Tooltip
-			var title = (weapon.tooltip !== undefined) ? weapon.tooltip : D.getWordCapital("range") + " " + weapon.range;
-			weaponbutton.attr("title", title);
+			var title = (compass.tooltip !== undefined) ? compass.tooltip : D.getWordCapital("range") + " " + compass.range;
+			compassbutton.attr("title", title);
 			
-			// Add weapon
-			weaponsmenu.append(weaponbutton);
+			// Add compass
+			compassmenu.append(compassbutton);
 			if (counter % iconsperline === 0)
 			{
-				weaponsmenu.append("<br />");
+				compassmenu.append("<br />");
 			}
-			(function(iWeapon)
+			(function(iCompass)
 			{
-				weaponbutton.click(function()
+				compassbutton.click(function()
 				{
-					that.createWeapon(iWeapon, that.ContextLatLng);
+					that.createCompass(iCompass, that.ContextLatLng);
 				});
-			})(weapon);
+			})(compass);
 		}
 		
-		// Button: lay a custom range weapon
-		var custombutton = $("<img src='img/wvw/range/custom.png' "
-			+ "title='<dfn>Lay a custom weapon on the map</dfn><br />using the range and color specified below.<br /><br />"
-			+ "After laying a weapon on the map:<br />"
+		// Button: lay a custom compass
+		var custombutton = $("<img src='img/compass/custom.png' "
+			+ "title='<dfn>Lay a custom compass on the map</dfn><br />using the range and color specified below.<br /><br />"
+			+ "After laying a compass on the map:<br />"
 			+ "Drag it to move it.<br />Right click to center it.<br />Double click to delete it.' />")
 			.click(function()
 			{
 				var cw = {
 					id: "custom",
-					image: "custom",
-					range: parseInt($(htmlidprefix + "RangeCustomRange").val()),
-					color: U.stripToColorString($(htmlidprefix + "RangeCustomColor").val())
+					range: parseInt($(htmlidprefix + "CompassCustomRange").val()),
+					color: U.stripToColorString($(htmlidprefix + "CompassCustomColor").val())
 				};
-				that.createWeapon(cw, that.ContextLatLng);
+				that.createCompass(cw, that.ContextLatLng);
 			});
-		weaponsmenu.append(custombutton);
+		compassmenu.append(custombutton);
 		
-		// Context item: clear all weapons
-		$(htmlidprefix + "ContextClearWeapons").click(function()
+		// Context item: clear all compasses
+		$(htmlidprefix + "ContextClearCompasses").click(function()
 		{
-			that.clearWeapons();
+			that.clearCompasses();
 		});
 		
-		// Inputs: attributes for the custom range weapon
-		weaponsmenu.append("<br /><span id='" + that.MapEnum + "RangeCustom' class='mapRangeCustom'>"
-			+ "<input id='" + that.MapEnum + "RangeCustomRange' type='number' value='1200' min='0' max='"
+		// Inputs: attributes for the custom compass
+		compassmenu.append("<br /><span id='" + that.MapEnum + "CompassCustom' class='mapCompassCustom'>"
+			+ "<input id='" + that.MapEnum + "CompassCustomRange' type='number' value='1200' min='0' max='"
 				+ rangemaxvalue + "' step='100' style='width:64px' class='cssInputText' />"
-			+ "<input id='" + that.MapEnum + "RangeCustomColor' type='text' value='#ffffff' maxlength='"
+			+ "<input id='" + that.MapEnum + "CompassCustomColor' type='text' value='#ffffff' maxlength='"
 				+ colormaxlength + "' style='width:96px' class='cssInputText' />"
 			+ "</span>");
 		
-		// Custom range input press enter
-		$(htmlidprefix + "RangeCustomRange, " + htmlidprefix + "RangeCustomColor").onEnterKey(function()
+		// Custom compass input press enter
+		$(htmlidprefix + "CompassCustomRange, " + htmlidprefix + "CompassCustomColor").onEnterKey(function()
 		{
 			custombutton.trigger("click");
 		});
 		
-		// Buttons and inputs to import and export weapon placement
+		// Buttons and inputs to import and export compass placement
 		var exportbutton  = $("<img src='img/ui/export.png' "
-			+ "title='<dfn>(Export) Prints in data format the weapons</dfn> currently placed on the map.<br />"
-			+ "The outputted text can be copied to share your weapons placement.' />")
+			+ "title='<dfn>(Export) Prints in data format the compasses</dfn> currently placed on the map.<br />"
+			+ "The outputted text can be copied to share your compasses placement.' />")
 			.click(function()
 			{
-				if (that.isWeaponsLaid())
+				if (that.isCompassesLaid())
 				{
-					I.print(U.escapeHTML(JSON.stringify(that.serializeWeapons())), true);
+					I.print(U.escapeHTML(JSON.stringify(that.serializeCompasses())), true);
 				}
 			});
-		var importbutton = $("<img src='img/ui/import.png' id='" + that.MapEnum + "RangeImportButton' "
+		var importbutton = $("<img src='img/ui/import.png' id='" + that.MapEnum + "CompassImportButton' "
 			+ "title='<dfn>(Import) Reads data from the text input box</dfn> on the right.<br />"
-			+ "Weapons will be reconstructed from these pasted text data.' />")
+			+ "Compasses will be reconstructed from these pasted text data.' />")
 			.click(function()
 			{
-				var str = $(htmlidprefix + "RangeImportText").val();
+				var str = $(htmlidprefix + "CompassImportText").val();
 				try {
 					var arsenal = JSON.parse(str);
 					if (Array.isArray(arsenal))
 					{
-						that.redrawWeapons(arsenal);
+						that.redrawCompasses(arsenal);
 					}
 				}
 				catch (e) {
-					I.write("Invalid data string for importing weapons.");
+					I.write("Invalid data string for importing Compasses.");
 				};
 			});
-		var importtext = $("<input id='" + that.MapEnum + "RangeImportText' type='text' value='' maxlength='"
+		var importtext = $("<input id='" + that.MapEnum + "CompassImportText' type='text' value='' maxlength='"
 			+ importmaxlength + "' style='width:96px' class='cssInputText' />")
 			.onEnterKey(function()
 			{
-				$(htmlidprefix + "RangeImportButton").trigger("click");
+				$(htmlidprefix + "CompassImportButton").trigger("click");
 			});
-		weaponsmenu.append(exportbutton).append(importbutton).append(importtext);
+		compassmenu.append(exportbutton).append(importbutton).append(importtext);
 		
 		// Allow interaction with the inputs within the context menu
-		weaponsmenu.find("input").click(function(pEvent)
+		compassmenu.find("input").click(function(pEvent)
 		{
 			pEvent.stopPropagation();
 			$(this).select();
 		});
 		
 		// The menu entry to draw standard siege placement
-		$("#wvwContextDrawWeapons").click(function()
+		$("#wvwContextDrawCompasses").click(function()
 		{
-			W.redrawDefaultWeapons();
+			W.redrawDefaultCompasses();
 		});
 		
 		// Finally
-		I.qTip.init(".mapContextRangeList img");
-		that.initializeWeaponStorage();
+		I.qTip.init(".mapContextCompassList img");
+		that.initializeCompassStorage();
 	},
 	
 	/*
-	 * Initializes the weapon range storage system.
+	 * Initializes the compass storage system.
 	 */
-	initializeWeaponStorage: function()
+	initializeCompassStorage: function()
 	{
 		var that = this;
-		var initializeStoredWeapons = function(pQuantity)
+		var initializeStoredCompasses = function(pQuantity)
 		{
-			var obj = O.Utilities["StoredWeapons" + that.OptionSuffix];
+			var obj = O.Utilities["StoredCompasses" + that.OptionSuffix];
 			// First make a new array with desired length
 			obj.value = new Array(pQuantity);
 			// Try to overwrite it with the stored arrays, if this fails then the value property is unchanged (a blank array)
 			obj.value = O.loadCompressedObject(obj.key) || new Array(pQuantity);
 		};
-		var saveStoredWeapons = function(pIndex)
+		var saveStoredCompasses = function(pIndex)
 		{
-			var obj = O.Utilities["StoredWeapons" + that.OptionSuffix];
-			var weapons = that.serializeWeapons();
-			if (weapons.length > 0)
+			var obj = O.Utilities["StoredCompasses" + that.OptionSuffix];
+			var compasses = that.serializeCompasses();
+			if (compasses.length > 0)
 			{
-				obj.value[pIndex] = weapons;
+				obj.value[pIndex] = compasses;
 				O.saveCompressedObject(obj.key, obj.value);
 			}
 			else
 			{
-				that.isWeaponsLaid();
+				that.isCompassesLaid();
 			}
 		};
-		var loadStoredWeapons = function(pIndex)
+		var loadStoredCompasses = function(pIndex)
 		{
-			var obj = O.Utilities["StoredWeapons" + that.OptionSuffix];
-			that.redrawWeapons(obj.value[pIndex]);
+			var obj = O.Utilities["StoredCompasses" + that.OptionSuffix];
+			that.redrawCompasses(obj.value[pIndex]);
 		};
 		
-		var numslots = that.numWeaponsSlots;
-		initializeStoredWeapons(numslots);
-		that.initializeContextSlots("Weapons", numslots, that, saveStoredWeapons, loadStoredWeapons);
+		var numslots = that.numCompassesSlots;
+		initializeStoredCompasses(numslots);
+		that.initializeContextSlots("Compasses", numslots, that, saveStoredCompasses, loadStoredCompasses);
 	},
 	
 	/*
-	 * Gets an array of objects with properties needed to reconstruct the weapons on the map.
+	 * Gets an array of objects with properties needed to reconstruct the compasses on the map.
 	 * @returns array of objects.
 	 */
-	serializeWeapons: function()
+	serializeCompasses: function()
 	{
 		var that = this;
-		var weapons = [];
-		that.Layer.WeaponCircle.eachLayer(function(iLayer)
+		var compasses = [];
+		that.Layer.CompassCircle.eachLayer(function(iLayer)
 		{
-			// Store only the weapon ID and location
-			var weapon = {
-				id: iLayer.options.weaponid,
+			// Store only the compass ID and location
+			var compass = {
+				id: iLayer.options.compassid,
 				coord: that.convertLCtoGC(iLayer.getLatLng())
 			};
-			// If it is a custom weapon, then also store the custom color and range
-			if (iLayer.options.weaponid === "custom")
+			// If it is a custom compass, then also store the custom color and range
+			if (iLayer.options.compassid === "custom")
 			{
-				weapon.color = (iLayer.options.color).toLowerCase();
-				weapon.range = parseInt(iLayer.options.weaponrange);
+				compass.color = (iLayer.options.color).toLowerCase();
+				compass.range = parseInt(iLayer.options.compassrange);
 			}
-			weapons.push(weapon);
+			compasses.push(compass);
 		});
-		U.sortObjects(weapons, {aKeyName: "id"});
-		return weapons;
+		U.sortObjects(compasses, {aKeyName: "id"});
+		return compasses;
 	},
 	
 	/*
-	 * Reconstructs a placement of weapons on the map.
-	 * @param array pArsenal of weapons and their location.
+	 * Reconstructs a placement of compasses on the map.
+	 * @param array pArsenal of compasses and their location.
 	 * @param array pOffset x and y coordinates offset, optional.
-	 * @pre Weapons' placement was stored as game coordinates, not LatLng.
+	 * @pre Compasses' placement was stored as game coordinates, not LatLng.
 	 */
-	redrawWeapons: function(pArsenal, pOffset)
+	redrawCompasses: function(pArsenal, pOffset)
 	{
 		if (pArsenal !== undefined && pArsenal !== null && pArsenal.length > 0)
 		{
-			this.clearWeapons();
+			this.clearCompasses();
 			for (var i in pArsenal)
 			{
-				var weapon = pArsenal[i];
-				var coord = (pOffset !== undefined) ? [weapon.coord[0] + pOffset[0], weapon.coord[1] + pOffset[1]] : weapon.coord;
-				// If it is not a custom weapon, then use the default properties via that weapon ID
-				var weapontomake = null;
-				if (weapon.id === "custom"
-					&& weapon.range !== undefined
-					&& weapon.color !== undefined
-					&& weapon.coord !== undefined)
+				var compass = pArsenal[i];
+				var coord = (pOffset !== undefined) ? [compass.coord[0] + pOffset[0], compass.coord[1] + pOffset[1]] : compass.coord;
+				// If it is not a custom compass, then use the default properties via that compass ID
+				var compasstomake = null;
+				if (compass.id === "custom"
+					&& compass.range !== undefined
+					&& compass.color !== undefined
+					&& compass.coord !== undefined)
 				{
-					weapontomake = {
-						id: weapon.id,
+					compasstomake = {
+						id: compass.id,
 						image: "custom",
 						coord: coord,
-						range: parseInt(weapon.range),
-						color: U.stripToColorString(weapon.color)
+						range: parseInt(compass.range),
+						color: U.stripToColorString(compass.color)
 					};
 				}
-				else if (this.Weapons[weapon.id] !== undefined)
+				else if (this.Compasses[compass.id] !== undefined)
 				{
-					weapontomake = this.Weapons[weapon.id];
+					compasstomake = this.Compasses[compass.id];
 				}
 				
-				// Only draw if it is a valid weapon object
-				if (weapontomake !== null)
+				// Only draw if it is a valid compass object
+				if (compasstomake !== null)
 				{
-					this.createWeapon(weapontomake, this.convertGCtoLC(coord));
+					this.createCompass(compasstomake, this.convertGCtoLC(coord));
 				}
 				else
 				{
-					I.write("Failed parsing a weapon.");
+					I.write("Failed parsing a compass.");
 				}
 			}
 		}
 		else
 		{
-			I.write("Arsenal unavailable for this.");
+			I.write(D.getPhraseOriginal("Compass not available for this" + "."));
 		}
 	},
 	
 	/*
 	 * Draws the standard siege placement for the current zone.
 	 */
-	redrawDefaultWeapons: function()
+	redrawDefaultCompasses: function()
 	{
 		var placementname = W.Metadata.PlacementAssociation[W.ZoneCurrent.nick];
 		var placement = W.Placement[placementname];
@@ -23816,7 +23827,7 @@ M = {
 		if (offset !== undefined && placement)
 		{
 			var arsenal = placement.Siege;
-			W.redrawWeapons(arsenal, offset);
+			W.redrawCompasses(arsenal, offset);
 		}
 	},
 	
@@ -23824,11 +23835,11 @@ M = {
 	 * Tells if there is at least one personal pin laid on the map.
 	 * @returns boolean.
 	 */
-	isWeaponsLaid: function()
+	isCompassesLaid: function()
 	{
-		if (this.Layer.WeaponIcon.getLayers().length === 0)
+		if (this.Layer.CompassIcon.getLayers().length === 0)
 		{
-			I.write("No weapons to work with. Lay weapons from the map's &quot;Range&quot; context menu.");
+			I.write("No compasses to work with. Lay compasses from the map's &quot;Compass&quot; context menu.");
 			return false;
 		}
 		return true;
@@ -23836,56 +23847,56 @@ M = {
 	
 	/*
 	 * Places a range marker icon and circle circumference on the map.
-	 * @param object pWeapon.
-	 * @param object pLatLng location of the weapon.
+	 * @param object pCompass.
+	 * @param object pLatLng location of the compass.
 	 * @pre LatLng variable was assigned when the user right clicked on the map.
 	 */
-	createWeapon: function(pWeapon, pLatLng)
+	createCompass: function(pCompass, pLatLng)
 	{
 		var that = this;
-		// The circle indcating the range
-		var trueradius = pWeapon.range * T.cUNITS_TO_POINTS;
+		// The circle indicating the range
+		var trueradius = pCompass.range * T.cUNITS_TO_POINTS;
 		var radius = this.getZoomedDistance(trueradius);
 		var circle = L.circleMarker(pLatLng, {
 			clickable: false,
-			weaponid: pWeapon.id,
-			weaponrange: pWeapon.range,
+			compassid: pCompass.id,
+			compassrange: pCompass.range,
 			trueradius: trueradius,
 			radius: radius,
-			color: pWeapon.color,
+			color: pCompass.color,
 			weight: 2,
-			opacity: pWeapon.opacity || 0.8,
-			fillOpacity: pWeapon.fillOpacity || 0.1
+			opacity: pCompass.opacity || 0.8,
+			fillOpacity: pCompass.fillOpacity || 0.1
 		});
-		this.Layer.WeaponCircle.addLayer(circle);
+		this.Layer.CompassCircle.addLayer(circle);
 		this.toggleLayer(circle);
 		
 		// The interactive icon allowing the user to relocate the circle
-		var weapon = L.marker(pLatLng,
+		var compass = L.marker(pLatLng,
 		{
 			circle: circle,
 			icon: L.icon(
 			{
-				className: "mapWeapon",
-				iconUrl: "img/wvw/range/" + pWeapon.image + I.cPNG,
+				className: "mapCompass",
+				iconUrl: "img/compass/" + pCompass.id + I.cPNG,
 				iconSize: [24, 24],
 				iconAnchor: [12, 12]
 			}),
 			draggable: true,
 			opacity: 0.9
 		});
-		that.bindMarkerCoordBehavior(weapon, "click");
+		that.bindMarkerCoordBehavior(compass, "click");
 		
-		// Bind placed range icon behavior
-		weapon.on("drag", function()
+		// Bind placed marker behavior
+		compass.on("drag", function()
 		{
 			this.options.circle.setLatLng(this.getLatLng());
 		});
-		weapon.on("dblclick", function()
+		compass.on("dblclick", function()
 		{
-			that.removeWeapon(this);
+			that.removeCompass(this);
 		});
-		weapon.on("contextmenu", function()
+		compass.on("contextmenu", function()
 		{
 			if (that.GPSPreviousCoord.length > 0)
 			{
@@ -23897,36 +23908,36 @@ M = {
 			}
 			this.options.circle.setLatLng(this.getLatLng());
 		});
-		this.Layer.WeaponIcon.addLayer(weapon);
-		this.toggleLayer(weapon);
+		this.Layer.CompassIcon.addLayer(compass);
+		this.toggleLayer(compass);
 	},
 	
 	/*
-	 * Removes a placed weapon from the map and associated container objects.
+	 * Removes a placed compass from the map and associated container objects.
 	 * @param object pMarker.
 	 */
-	removeWeapon: function(pMarker)
+	removeCompass: function(pMarker)
 	{
-		// Remove its range circle before removing the weapon
+		// Remove its range circle before removing the compass
 		this.toggleLayer(pMarker.options.circle, false);
-		this.Layer.WeaponCircle.removeLayer(pMarker.options.circle);
-		// Remove the weapon itself
+		this.Layer.CompassCircle.removeLayer(pMarker.options.circle);
+		// Remove the compass itself
 		this.toggleLayer(pMarker, false);
-		this.Layer.WeaponIcon.removeLayer(pMarker);
+		this.Layer.CompassIcon.removeLayer(pMarker);
 	},
 	
 	/*
-	 * Removes all weapons from the map.
+	 * Removes all compasses from the map.
 	 */
-	clearWeapons: function()
+	clearCompasses: function()
 	{
 		var that = this;
-		this.Layer.WeaponIcon.eachLayer(function(iLayer)
+		this.Layer.CompassIcon.eachLayer(function(iLayer)
 		{
-			that.removeWeapon(iLayer);
+			that.removeCompass(iLayer);
 		});
-		this.Layer.WeaponCircle.clearLayers();
-		this.Layer.WeaponIcon.clearLayers();
+		this.Layer.CompassCircle.clearLayers();
+		this.Layer.CompassIcon.clearLayers();
 	},
 	
 	/*
@@ -25431,7 +25442,7 @@ P = {
 	 */
 	initializeMapSearch: function()
 	{
-		$("#mapCompassButton").one("mouseenter", function()
+		$("#mapZoneButton").one("mouseenter", function()
 		{
 			I.preventMapPropagation("#mapSearch");
 			Q.bindItemSearch("#mapSearch", {
@@ -26587,7 +26598,8 @@ G = {
 		{
 			return;
 		}
-		var selection = $("<select class='dlyBookmarks cssInputSelect'><option>" + D.getModifiedWord("bookmarks", "map", U.CaseEnum.Every) + ":</option></select>").appendTo(pContainer);
+		var container = $(pContainer);
+		var selection = $("<select class='dlyBookmarks cssInputSelect'><option>" + D.getModifiedWord("bookmarks", "map", U.CaseEnum.Every) + ":</option></select>").appendTo(container);
 		I.preventMapPropagation(selection);
 		for (var i in T.Daily.Bookmark)
 		{
@@ -27089,6 +27101,9 @@ G = {
 				refreshResourcePrices();
 				I.write("Prices refreshed.");
 			});
+			
+			// Map bookmarks
+			G.createDailyBookmarks("#nodBookmarks");
 			
 			// Finally
 			refreshResourcePrices();
@@ -28257,8 +28272,8 @@ W = {
 		Pin: new L.layerGroup(),
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(),
-		WeaponIcon: new L.layerGroup(), // weapon icon
-		WeaponCircle: new L.layerGroup(), // weapon radius circle
+		CompassIcon: new L.layerGroup(), // compass icon
+		CompassCircle: new L.layerGroup(), // compass radius circle
 		Destructible: new L.layerGroup(), // destructibles walls and gates
 		Secondaries: new L.layerGroup(), // sentries, shrines, ruins, supply depots
 		Objective: new L.layerGroup(), // camps, towers, keeps
@@ -28311,7 +28326,7 @@ W = {
 	Objectives: {},
 	ObjectiveTimeout: {},
 	ObjectiveTimestampIgnore: null,
-	Weapons: {},
+	Compasses: {},
 	Placement: {},
 	MapType: {}, // Corresponds to "worlds" object from match API
 	LandEnum: {}, // Corresponds to "map_type" property of objectives, example: "GreenHome"
@@ -28370,7 +28385,7 @@ W = {
 		W.Regions = GW2T_REALM_DATA;
 		W.Zones = GW2T_LAND_DATA;
 		W.Servers = GW2T_SERVER_DATA;
-		W.Weapons = GW2T_WEAPON_DATA;
+		W.Compasses = GW2T_WEAPON_DATA;
 		W.Metadata = GW2T_WVW_METADATA;
 		W.Placement = GW2T_PLACEMENT_DATA;
 		W.MapType = W.Metadata.MapType;
@@ -29796,13 +29811,13 @@ W = {
 		I.preventMapPropagation("#wvwSupply");
 		for (var i in W.Metadata.Blueprints)
 		{
-			for (var ii in W.Weapons)
+			for (var ii in W.Compasses)
 			{
-				if (W.Weapons[ii].type === "field")
+				if (W.Compasses[ii].type === "field")
 				{
 					var bp = W.Metadata.Blueprints[i];
 					var blueprint = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + ii + "'></ins>");
-					var supply = W.Weapons[ii].supply[i];
+					var supply = W.Compasses[ii].supply[i];
 					$("#splBlueprints" + bp).append(blueprint);
 					(function(iSupply)
 					{
@@ -34890,6 +34905,16 @@ I = {
 		
 		// Default content plate
 		I.PageCurrent = I.PageEnum.Chains;
+		
+		// Temporary transfer of old named compasses
+		if (localStorage["obj_utlStoredWeapons"])
+		{
+			localStorage["obj_utlStoredCompasses"] = localStorage["obj_utlStoredWeapons"];
+		}
+		if (localStorage["obj_utlStoredWeaponsWvW"])
+		{
+			localStorage["obj_utlStoredCompassesWvW"] = localStorage["obj_utlStoredWeaponsWvW"];
+		}
 	},
 	
 	/*

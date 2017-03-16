@@ -677,15 +677,13 @@ var GW2T_GATEWAY_CONNECTION = {
 /*
  * Target range for game skills to be laid on the map for measuring.
  */
-var GW2T_RANGE_DATA = {
+var GW2T_COMPASS_DATA = {
 portal: {
-	id: "portal",
 	color: "pink",
 	image: "portal",
 	range: 5000
 },
 shadowtrap: {
-	id: "shadowtrap",
 	color: "black",
 	image: "shadowtrap",
 	range: 10000
@@ -1347,9 +1345,10 @@ var GW2T_TIMELINE = [
 	{
 		zone: "doric",
 		Segments: [
-			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Spirits", name_de: "Geister", name_es: "Espíritus", name_fr: "Esprits", name_zh: "灵魂" },
+			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Lumber", name_de: "Holzlager", name_es: "Aserradero", name_fr: "Scierie", name_zh: "伐木场" },
 			{ time: "00:25", duration: "00:35", primacy: 3, name_en: "Noran: Immelhoof", name_de: "Noran: Immelhuf", name_es: "Noran: Immelhoof", name_fr: "Noran: Immelsabot", name_zh: "诺兰：伊梅尔霍夫" },
-			{ time: "01:00", duration: "00:40", primacy: 3, name_en: "Saidra: Agatha", name_de: "Saidra: Agatha", name_es: "Saidra: Agatha", name_fr: "Saidra: Agatha", name_zh: "塞德拉：阿加莎" },
+			{ time: "01:00", duration: "00:30", primacy: 3, name_en: "Saidra: Agatha", name_de: "Saidra: Agatha", name_es: "Saidra: Agatha", name_fr: "Saidra: Agatha", name_zh: "塞德拉：阿加莎" },
+			{ time: "01:30", duration: "00:10", primacy: 2, name_en: "Lumber", name_de: "Holzlager", name_es: "Aserradero", name_fr: "Scierie", name_zh: "伐木场" },
 			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Loamhurst: Queenslayer", name_de: "Neulehmwald: Königinnentöter", name_es: "Loamhurst: Matarreinas", name_fr: "Sylveglèbe: Régicide", name_zh: "新沃土之森：女王杀手" }
 		]
 	},
@@ -1596,26 +1595,18 @@ Sale: {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
-		Finish: new Date("2017-03-16T16:00:00Z"),
-		name: "Fused Molten Sickle",
-		id: "67032",
-		price: 500,
+		Finish: new Date("2017-03-17T16:00:00Z"),
+		name: "Royal Terrace Pass",
+		id: "49149",
+		price: 700,
 		discount: 1000,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-16T16:00:00Z"),
-		name: "Fused Molten Logging Axe",
-		id: "67030",
-		price: 500,
-		discount: 1000,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-16T16:00:00Z"),
-		name: "Molten Alliance Mining Pick",
-		id: "48933",
-		price: 500,
+		Finish: new Date("2017-03-17T16:00:00Z"),
+		name: "Captain's Airship Pass",
+		id: "50104",
+		price: 700,
 		discount: 1000,
 		col: 0
 	},

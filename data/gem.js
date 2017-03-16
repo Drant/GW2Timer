@@ -604,26 +604,18 @@ Upgrade: [
  */
 var GW2T_SALE_DATA = [
 	{
-		Finish: new Date("2017-03-16T16:00:00Z"),
-		name: "Fused Molten Sickle",
-		id: "67032",
-		price: 500,
+		Finish: new Date("2017-03-17T16:00:00Z"),
+		name: "Royal Terrace Pass",
+		id: "49149",
+		price: 700,
 		discount: 1000,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-16T16:00:00Z"),
-		name: "Fused Molten Logging Axe",
-		id: "67030",
-		price: 500,
-		discount: 1000,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-16T16:00:00Z"),
-		name: "Molten Alliance Mining Pick",
-		id: "48933",
-		price: 500,
+		Finish: new Date("2017-03-17T16:00:00Z"),
+		name: "Captain's Airship Pass",
+		id: "50104",
+		price: 700,
 		discount: 1000,
 		col: 0
 	},

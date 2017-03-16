@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170315"></script>
+	<script type="text/javascript" src="data/general.js?v=20170316"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -78,20 +78,19 @@
 				<ul>
 					<li id="mapContextCenter">Center map</li>
 					<li id="mapContextToggleHUD">Toggle HUD</li>
-					<li id="mapContextToggleFloor">Toggle terrain</li>
-					<li id="mapContextRange" class="itemContextSubmenu"><span>Range</span>
+					<li id="mapContextCompass" class="itemContextSubmenu"><span>Compass</span>
 						<ul>
-							<li id="mapContextRangeList" class="mapContextRangeList jsIgnore"></li>
+							<li id="mapContextCompassList" class="mapContextCompassList jsIgnore"></li>
+							<li id="mapContextClearCompasses">Clear</li>
 							<li class="itemContextSubmenu"><span>Load</span>
-								<ul id="mapContextLoadWeapons" class="mapContextSlots"></ul>
+								<ul id="mapContextLoadCompasses" class="mapContextSlots"></ul>
 							</li>
 							<li class="itemContextSubmenu"><span>Save</span>
-								<ul id="mapContextSaveWeapons" class="mapContextSlots"></ul>
+								<ul id="mapContextSaveCompasses" class="mapContextSlots"></ul>
 							</li>
-							<li id="mapContextClearWeapons">Clear</li>
 						</ul>
 					</li>
-					<li class="itemContextSubmenu" id="mapContextPins"><span>Pins</span>
+					<li class="itemContextSubmenu" id="mapContextPins"><span>Path</span>
 						<ul>
 							<li id="mapContextClearPins">Clear</li>
 							<li class="itemContextSubmenu"><span>Load</span>
@@ -112,6 +111,7 @@
 							<li id="mapContextDrawCompletion">Draw completion route</li>
 							<li id="mapContextToggleCompletion">Toggle world completion</li>
 							<li id="mapContextToggleLock">Toggle zone lock</li>
+							<li id="mapContextToggleFloor">Toggle terrain</li>
 						</ul>
 					</li>
 				</ul>
@@ -290,7 +290,7 @@
 					</div>
 				</div>
 				<div class="mapZones hudItem">
-					<span id="mapCompassButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
+					<span id="mapZoneButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
 						<span class="hudButtonContainer"><img class="hudButton" src="img/map/compass.png" alt="compass" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>
@@ -385,21 +385,20 @@
 				<ul>
 					<li id="wvwContextCenter">Center map</li>
 					<li id="wvwContextToggleHUD">Toggle HUD</li>
-					<li id="wvwContextToggleFloor">Toggle terrain</li>
-					<li id="wvwContextRange" class="itemContextSubmenu"><span>Range</span>
+					<li id="wvwContextCompass" class="itemContextSubmenu"><span>Compass Pins</span>
 						<ul>
-							<li id="wvwContextRangeList" class="mapContextRangeList jsIgnore"></li>
+							<li id="wvwContextCompassList" class="mapContextCompassList jsIgnore"></li>
+							<li id="wvwContextClearCompasses">Clear</li>
 							<li class="itemContextSubmenu"><span>Load</span>
-								<ul id="wvwContextLoadWeapons" class="mapContextSlots"></ul>
+								<ul id="wvwContextLoadCompasses" class="mapContextSlots"></ul>
 							</li>
 							<li class="itemContextSubmenu"><span>Save</span>
-								<ul id="wvwContextSaveWeapons" class="mapContextSlots"></ul>
+								<ul id="wvwContextSaveCompasses" class="mapContextSlots"></ul>
 							</li>
-							<li id="wvwContextDrawWeapons">Draw</li>
-							<li id="wvwContextClearWeapons">Clear</li>
+							<li id="wvwContextDrawCompasses">Draw</li>
 						</ul>
 					</li>
-					<li class="itemContextSubmenu" id="wvwContextPins"><span>Pins</span>
+					<li class="itemContextSubmenu" id="wvwContextPins"><span>Path Pins</span>
 						<ul>
 							<li id="wvwContextClearPins">Clear</li>
 							<li class="itemContextSubmenu"><span>Load</span>
@@ -418,6 +417,7 @@
 						<ul>
 							<li id="wvwContextToggleCompletion">Toggle world completion</li>
 							<li id="wvwContextToggleLock">Toggle zone lock</li>
+							<li id="wvwContextToggleFloor">Toggle terrain</li>
 						</ul>
 					</li>
 				</ul>
@@ -571,7 +571,7 @@
 					</div>
 				</div>
 				<div class="mapZones hudItem">
-					<span id="wvwCompassButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
+					<span id="wvwZoneButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
 						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/compass.png" alt="compass" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>

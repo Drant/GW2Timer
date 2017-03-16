@@ -2506,16 +2506,12 @@ var GW2T_OBJECTIVE_DATA = {
  */
 var GW2T_WEAPON_DATA = {
 portal: {
-	id: "portal",
-	image: "portal",
 	type: "skill",
 	color: "pink",
 	isPlaceable: true,
 	range: 5000
 },
 flameram: {
-	id: "flameram",
-	image: "flameram",
 	type: "field",
 	color: "orange",
 	isPlaceable: false,
@@ -2523,8 +2519,6 @@ flameram: {
 	supply: [40, 50, 40]
 },
 arrowcart: {
-	id: "arrowcart",
-	image: "arrowcart",
 	type: "field",
 	color: "orange",
 	isPlaceable: true,
@@ -2532,8 +2526,6 @@ arrowcart: {
 	supply: [40, 50, 40]
 },
 ballista: {
-	id: "ballista",
-	image: "ballista",
 	type: "field",
 	color: "orange",
 	isPlaceable: true,
@@ -2541,8 +2533,6 @@ ballista: {
 	supply: [30, 40, 30]
 },
 catapult: {
-	id: "catapult",
-	image: "catapult",
 	type: "field",
 	color: "orange",
 	isPlaceable: true,
@@ -2551,8 +2541,6 @@ catapult: {
 	supply: [40, 50, 40]
 },
 trebuchet: {
-	id: "trebuchet",
-	image: "trebuchet",
 	type: "field",
 	color: "orange",
 	isPlaceable: true,
@@ -2561,8 +2549,6 @@ trebuchet: {
 	supply: [100, 120, 100]
 },
 golem: {
-	id: "golem",
-	image: "golem",
 	type: "field",
 	color: "orange",
 	isPlaceable: false,
@@ -2570,8 +2556,6 @@ golem: {
 	supply: [100, 150, 50]
 },
 shieldgenerator: {
-	id: "shieldgenerator",
-	image: "shieldgenerator",
 	type: "field",
 	color: "orange",
 	isPlaceable: true,
@@ -2579,8 +2563,6 @@ shieldgenerator: {
 	supply: [40, 50, 40]
 },
 burningoil: {
-	id: "burningoil",
-	image: "burningoil",
 	type: "base",
 	color: "yellow",
 	opacity: 0.1,
@@ -2589,8 +2571,6 @@ burningoil: {
 	range: 600
 },
 cannon: {
-	id: "cannon",
-	image: "cannon",
 	type: "base",
 	color: "yellow",
 	opacity: 0.1,
@@ -2599,8 +2579,6 @@ cannon: {
 	range: 3750
 },
 mortar: {
-	id: "mortar",
-	image: "mortar",
 	type: "base",
 	color: "yellow",
 	opacity: 0.1,
@@ -2609,8 +2587,6 @@ mortar: {
 	range: 9400
 },
 burningoildesert: {
-	id: "burningoildesert",
-	image: "burningoil",
 	type: "base",
 	color: "gold",
 	opacity: 0.1,
