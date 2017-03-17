@@ -9,7 +9,7 @@
 // Units of resources that a node typically yields (10 copper ore from a rich copper vein)
 var GW2T_RESOURCE_METADATA = {
 Yield: {
-	Metal: {
+	Ore: {
 		Rich: 10,
 		Permanent: 3,
 		Regular: 3,
@@ -32,7 +32,7 @@ Yield: {
 
 var GW2T_RESOURCE_DATA = {
 /* =============================================================================
- * @@METAL
+ * @@ORE
  * ========================================================================== */
 Copper: {
 	name_en: "Copper",
@@ -40,7 +40,7 @@ Copper: {
 	name_es: "Cobre",
 	name_fr: "Cuivre",
 	name_zh: "铜",
-	type: "Metal",
+	type: "Ore",
 	item: "19697",
 	Rich: [
 	{c: [9865, 16183]}, // caledon
@@ -62,7 +62,7 @@ Iron: {
 	name_es: "Hierro",
 	name_fr: "Fer",
 	name_zh: "铁",
-	type: "Metal",
+	type: "Ore",
 	item: "19699",
 	Rich: [
 	{c: [6327, 15041]}, // brisban
@@ -95,7 +95,7 @@ Silver: {
 	name_es: "Plata",
 	name_fr: "Argent",
 	name_zh: "银",
-	type: "Metal",
+	type: "Ore",
 	item: "19703",
 	Rich: [
 	{c: [6949, 14732]}, // brisban
@@ -118,7 +118,7 @@ Gold: {
 	name_es: "Oro",
 	name_fr: "Or",
 	name_zh: "金",
-	type: "Metal",
+	type: "Ore",
 	item: "19698",
 	Rich: [
 	{c: [16534, 9911], p: [[15254,10003],[15237,9952],[15346,9850],[15517,9845],[15729,9888],[15872,10012],[15993,9930],[16094,9826],[16177,9789],[16423,9909],[16505,9913]]}, // harathi
@@ -137,7 +137,7 @@ Platinum: {
 	name_es: "Platino",
 	name_fr: "Platine",
 	name_zh: "白金",
-	type: "Metal",
+	type: "Ore",
 	item: "19702",
 	Rich: [
 	{c: [16429, 18201], p: [[16248,18368],[16494,18533],[16801,18424],[16800,18355],[16665,18214],[16455,18294],[16363,18188],[16412,18167],[16420,18181]]}, // bloodtide
@@ -165,7 +165,7 @@ Mithril: {
 	name_es: "Mithril",
 	name_fr: "Mithril",
 	name_zh: "秘银",
-	type: "Metal",
+	type: "Ore",
 	item: "19700",
 	Rich: [
 	{c: [2276, 14430]}, // bloodstone
@@ -208,7 +208,7 @@ Orichalcum: {
 	name_es: "Oricalco",
 	name_fr: "Orichalque",
 	name_zh: "星陨",
-	type: "Metal",
+	type: "Ore",
 	item: "19701",
 	Permanent: [
 	{c: [12424, 19478], p: [[11939,20507],[12004,20476],[12080,20379],[12117,20249],[12114,20145],[12343,19727],[12328,19542],[12455,19512],[12484,19575],[12379,19618],[12286,19576],[12291,19518],[12400,19488]]}, // southsun
@@ -293,7 +293,7 @@ Quartz: {
 	name_es: "Cuarzo",
 	name_fr: "Quartz",
 	name_zh: "石英",
-	type: "Metal",
+	type: "Ore",
 	item: "43773",
 	Rich: [
 	{c: [11519, 10456]}, // divinity
@@ -311,7 +311,7 @@ Sprocket: {
 	name_es: "Engranaje",
 	name_fr: "Pignon",
 	name_zh: "扣链齿轮",
-	type: "Metal",
+	type: "Ore",
 	item: "44941",
 	Rich: [
 	{c: [11518, 10483]} // divinity
@@ -323,7 +323,7 @@ Magic: {
 	name_es: "Magia",
 	name_fr: "Magie",
 	name_zh: "魔法",
-	type: "Metal",
+	type: "Ore",
 	item: null,
 	Rich: [
 	
@@ -345,7 +345,7 @@ Bloodstone: {
 	name_es: "Hematite",
 	name_fr: "Pierresang",
 	name_zh: "血石",
-	type: "Metal",
+	type: "Ore",
 	item: null,
 	Rich: [
 	
@@ -393,7 +393,7 @@ Petrified: {
 	name_es: "Petrificado",
 	name_fr: "Pétrifiée",
 	name_zh: "木化石",
-	type: "Metal",
+	type: "Ore",
 	item: null,
 	Rich: [
 	
@@ -420,7 +420,7 @@ Winterberry: {
 	name_es: "Baya",
 	name_fr: "Houx",
 	name_zh: "新鲜的冬浆果",
-	type: "Metal",
+	type: "Ore",
 	item: null,
 	Rich: [
 	
@@ -455,7 +455,7 @@ Jade: {
 	name_es: "Jade",
 	name_fr: "Jade",
 	name_zh: "翠玉碎片",
-	type: "Metal",
+	type: "Ore",
 	item: null,
 	Rich: [
 	

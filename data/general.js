@@ -678,16 +678,78 @@ var GW2T_GATEWAY_CONNECTION = {
  * Target range for game skills to be laid on the map for measuring.
  */
 var GW2T_COMPASS_DATA = {
-portal: {
+skill_portal: {
 	color: "pink",
 	image: "portal",
 	range: 5000
 },
-shadowtrap: {
+skill_shadowtrap: {
 	color: "black",
 	image: "shadowtrap",
 	range: 10000
-}
+},
+ping_alert: {},
+ping_check: {},
+ping_cross: {},
+ping_warn: {},
+ping_x: {},
+personal_arrow: {},
+personal_shield: {},
+personal_waypoint: {},
+personal_x: {},
+asuragate: {},
+book: {},
+chest: {},
+comment: {},
+dolyak: {},
+event_boss: {},
+event_cog: {},
+event_collect: {},
+event_cross: {},
+event_flag: {},
+event_release: {},
+event_shield: {},
+event_star: {},
+event_swords: {},
+event_wrench: {},
+favorite: {},
+gate: {},
+guild: {},
+hand: {},
+jump: {},
+kill: {},
+launch: {},
+loot: {},
+mine: {},
+node_ore: {},
+node_plant: {},
+node_wood: {},
+npc_craft: {},
+npc_dead: {},
+npc_downedally: {},
+npc_downedenemy: {},
+npc_repair: {},
+npc_vendor: {},
+npc_tp: {},
+npc_bank: {},
+npc_vault: {},
+reward_coin: {},
+reward_karma: {},
+reward_xp: {},
+squad_arrow: {},
+squad_circle: {},
+squad_heart: {},
+squad_rectangle: {},
+squad_spiral: {},
+squad_star: {},
+squad_triangle: {},
+squad_x: {},
+supply: {},
+travel_down: {},
+travel_up: {},
+tunnel: {},
+updraft: {},
+wait: {}
 };
 
 
@@ -1448,7 +1510,17 @@ Countdown: {
 		Start: new Date("2018-02-06T17:00:00Z"),
 		Finish: new Date("2018-02-20T17:00:00Z")
 	},*/
-	/*{
+	{
+		name_en: "March Gem Store Sale",
+		name_de: "März Edelsteinshop Angebote",
+		name_es: "Marzo tienda rebajas",
+		name_fr: "Mars boutique promotions",
+		name_zh: "宝石店三月促销",
+		url: "https://wiki.guildwars2.com/wiki/Gem_Store/March_Sale#March_Sale.2C_2017",
+		Start: new Date("2017-03-03T16:00:00Z"),
+		Finish: new Date("2017-03-31T16:00:00Z")
+	},
+	{
 		name_en: "Super Adventure Festival",
 		name_de: "Super Adventure Festival",
 		name_es: "Festival Super Adventure",
@@ -1457,7 +1529,7 @@ Countdown: {
 		official: "the-game/releases/april-01-2016/",
 		Start: new Date("2017-04-01T16:00:00Z"),
 		Finish: new Date("2017-04-18T16:00:00Z")
-	},*/
+	}
 	/*{
 		name_en: "Halloween 2017",
 		name_de: "Halloween 2017",
@@ -1498,16 +1570,6 @@ Countdown: {
 		Start: new Date("2017-04-27T20:00:00Z"),
 		Finish: new Date("2017-05-04T20:00:00Z")
 	},*/
-	{
-		name_en: "March Gem Store Sale",
-		name_de: "März Edelsteinshop Angebote",
-		name_es: "Marzo tienda rebajas",
-		name_fr: "Mars boutique promotions",
-		name_zh: "宝石店三月促销",
-		url: "https://wiki.guildwars2.com/wiki/Gem_Store/March_Sale#March_Sale.2C_2017",
-		Start: new Date("2017-03-03T16:00:00Z"),
-		Finish: new Date("2017-03-31T16:00:00Z")
-	}
 	/*{
 		name_en: "LS3: Episode V",
 		name_de: "LG3: Episode V",
@@ -1595,19 +1657,24 @@ Sale: {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
-		Finish: new Date("2017-03-17T16:00:00Z"),
-		name: "Royal Terrace Pass",
-		id: "49149",
-		price: 700,
-		discount: 1000,
+		name: "Flamekissed Light Armor Skin",
+		id: "43576",
+		price: 480,
+		discount: 800,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-17T16:00:00Z"),
-		name: "Captain's Airship Pass",
-		id: "50104",
-		price: 700,
-		discount: 1000,
+		name: "Flamewalker Medium Armor Skin",
+		id: "43575",
+		price: 480,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Flamewrath Heavy Armor Skin",
+		id: "43574",
+		price: 480,
+		discount: 800,
 		col: 0
 	},
 	{

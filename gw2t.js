@@ -19347,10 +19347,16 @@ D = {
 			cs: "cesta", it: "tracciato", pl: "ścieżka", pt: "demarcador", ru: "контур", zh: "路径"},
 		s_range: {de: "reichweite", es: "alcance", fr: "portée",
 			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", zh: "射程"},
+		s_color: {de: "farbe", es: "color", fr: "couleur",
+			cs: "barva", it: "colore", pl: "kolor", pt: "cor", ru: "цвет", zh: "色"},
+		s_comment: {de: "kommentar", es: "comentario", fr: "commentaire",
+			cs: "komentář", it: "commento", pl: "komentarz", pt: "comentário", ru: "примечание", zh: "注释"},
 		s_compass: {de: "zirkel", es: "compás", fr: "compas",
 			cs: "kružítko", it: "compasso", pl: "cyrkiel", pt: "compasso", ru: "циркуль", zh: "圆规"},
 		s_slot: {de: "steckplatz", es: "ranura", fr: "emplacement",
 			cs: "slot", it: "slot", pl: "gniazdo", pt: "slot", ru: "слот", zh: "插槽"},
+		s_nodes: {de: "knoten", es: "nodos", fr: "zones",
+			cs: "uzly", it: "nodi", pl: "węzły", pt: "nós", ru: "узлы", zh: "节点"},
 		s_bookmarks: {de: "zeichen", es: "marcadores", fr: "signets",
 			cs: "záložky", it: "segnalibri", pl: "zakładki", pt: "favoritos", ru: "закладки", zh: "书签"},
 		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
@@ -19385,6 +19391,10 @@ D = {
 			cs: "načíst", it: "caricare", pl: "załaduj", pt: "carregar", ru: "загрузить", zh: "载入"},
 		s_save: {de: "speichern", es: "guardar", fr: "enregistrer",
 			cs: "uložit", it: "salvare", pl: "zapisać", pt: "salvar", ru: "сохранить", zh: "储存"},
+		s_import: {de: "importieren", es: "importar", fr: "importer",
+			cs: "importovat", it: "importować", pl: "", pt: "importar", ru: "импортировать", zh: "导入"},
+		s_export: {de: "exportieren", es: "exportar", fr: "exporter",
+			cs: "exportovat", it: "esportare", pl: "eksportować", pt: "exportar", ru: "экспортировать", zh: "导出"},
 		s_use: {de: "benutzen", es: "usar", fr: "utiliser",
 			cs: "použít", it: "usare", pl: "używać", pt: "usar", ru: "использовать", zh: "用"},
 		s_add: {de: "hinzufügen", es: "añadir", fr: "ajouter",
@@ -19397,6 +19407,10 @@ D = {
 			cs: "stříhat", it: "tagliare", pl: "odetnij", pt: "cortar", ru: "обрезать", zh: "剪裁"},
 		s_toggle: {de: "umschalten", es: "alternar", fr: "basculer",
 			cs: "přepnout", it: "alterna", pl: "przełączanie", pt: "alternar", ru: "переключить", zh: "切换"},
+		s_enable: {de: "aktivieren", es: "habilitar", fr: "activer",
+			cs: "povolit", it: "abilitare", pl: "włączyć", pt: "habilitar", ru: "разрешить", zh: "启用"},
+		s_disable: {de: "deaktivieren", es: "deshabilitar", fr: "désactiver",
+			cs: "zakázat", it: "disabilitare", pl: "wyłączyć", pt: "desabilitar", ru: "отключить", zh: "禁用"},
 		s_expand: {de: "erweiter", es: "expandir", fr: "développer",
 			cs: "rozbalit", it: "espandere", pl: "rozwinąć", pt: "expandir", ru: "развернуть", zh: "展开"},
 		s_collapse: {de: "verkleiner", es: "contraer", fr: "réduire",
@@ -22282,7 +22296,10 @@ M = {
 		});
 		$(htmlidprefix + "ContextCompass").one("mouseenter", function()
 		{
-			that.initializeCompassPlacer(that);
+			U.getScript(U.URL_DATA.Resource, function()
+			{
+				that.initializeCompassPlacer(that);
+			});
 		});
 		$(htmlidprefix + "ContextPins").one("mouseenter", function()
 		{
@@ -23173,7 +23190,7 @@ M = {
 	 */
 	printPinHelp: function()
 	{
-		var str = "<h2>Map Pins Usage</h2>"
+		var str = "<h2>Path Pins Usage</h2>"
 			+ "<ul>"
 			+ "<li><b>Create a pin:</b> double click an empty area on the map (multiple pins creates a path).</li>"
 			+ "<li><b>Insert a pin between a path:</b> double click a part of the path.</li>"
@@ -23186,6 +23203,22 @@ M = {
 			+ "<li><b>Get coordinates of a path:</b> single click on the path.</li>"
 			+ "<li><b>Generate a path:</b> paste the path coordinates into the coordinates bar and press Enter.</li>"
 			+ "<li><b>Optimize a path:</b> middle click that pin, it will become the starting pin.</li>"
+			+ "</ul>";
+		I.help(str);
+	},
+	printCompassHelp: function()
+	{
+		var str = "<h2>Compass Pins Usage</h2>"
+			+ "<ul>"
+			+ "<li><b>Create a pin:</b> select a compass from the context menu gallery.</li>"
+			+ "<li><b>Create a custom pin:</b> checkmark the checkbox by the custom input boxes and enter your own range, color, and comment.</li>"
+			+ "<li><b>Delete a pin:</b> double click that pin.</li>"
+			+ "<li><b>Delete all pins:</b> right click the map for the clear pins function.</li>"
+			+ "<li><b>Move a pin:</b> hold click and drag that pin.</li>"
+			+ "<li><b>Move a pin to center:</b> right click that pin.</li>"
+			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
+			+ "<li><b>Export pins for sharing:</b> use the compass export function and copy and output text.</li>"
+			+ "<li><b>Import pins from text:</b> use the compass import function, then paste the compass data text into the adjacent input box.</li>"
 			+ "</ul>";
 		I.help(str);
 	},
@@ -23570,14 +23603,60 @@ M = {
 	{
 		var that = pMapObject;
 		var htmlidprefix = "#" + that.MapEnum;
-		var iconsperline = 5;
+		var iconsperline = 8;
+		var nodeiconsperline = 4;
 		var rangemaxvalue = 20000;
 		var colormaxlength = 32;
+		var commentmaxlength = 256;
 		var importmaxlength = 8192;
+		var sizeranged = 24;
+		var sizestandard = 32;
 		
-		var compassmenu = $(htmlidprefix + "ContextCompassList");
-		I.preventMapPropagation(compassmenu);
+		var compasscontext = $(htmlidprefix + "ContextCompass");
+		var compassgallery = $(htmlidprefix + "ContextCompassList");
+		I.preventMapPropagation(compassgallery);
 		var counter = 0;
+		var nodecounter = 0;
+		var nodetypeprev = null;
+		var compassprev = null;
+		
+		// Entry: lay another of the previously laid compass
+		var additem = $(htmlidprefix + "ContextAddCompass");
+		additem.click(function()
+		{
+			if (compassprev)
+			{
+				that.createCompass(compassprev, that.ContextLatLng);
+			}
+			else
+			{
+				I.write("Please select a compass pin first.");
+			}
+		});
+		
+		// Inputs: custom compass properties
+		var customcheck = $("<input type='checkbox' title='" + D.getPhraseOriginal("Enable range and comment") + ".' />");
+		var customrange = $("<input type='number' value='1200' min='0' max='" + rangemaxvalue
+			+ "' step='100' style='width:48px' class='cssInputText' title='" + D.getWordCapital("range") + "' />");
+		var customcolor = $("<input type='text' value='#ffffff' maxlength='" + colormaxlength
+			+ "' style='width:48px' class='cssInputText' title='" + D.getWordCapital("color") + "' />");
+		var customcomment = $("<input type='text' value='" + D.getWordCapital("comment") + "...' maxlength='" + commentmaxlength
+				+ "' style='width:128px; margin-left:4px;' class='cssInputText' title='" + D.getWordCapital("comment") + "' />");
+		
+		// Add resource node compasses if is this map
+		if (that.MapEnum === P.MapEnum.Tyria)
+		{
+			var nodes = GW2T_RESOURCE_DATA;
+			for (var i in nodes)
+			{
+				var nodename = i.toLowerCase();
+				that.Compasses["node_" + nodename] = {
+					nodetype: nodes[i].type,
+					icon: "img/node/" + nodename + I.cPNG
+				};
+			}
+		}
+		// Add compass buttons into the gallery
 		for (var i in that.Compasses)
 		{
 			var compass = that.Compasses[i];
@@ -23587,114 +23666,135 @@ M = {
 				continue;
 			}
 			counter++;
-			var compassbutton = $("<img src='img/compass/" + compass.id + I.cPNG + "' />");
 			
-			// Tooltip
-			var title = (compass.tooltip !== undefined) ? compass.tooltip : D.getWordCapital("range") + " " + compass.range;
-			compassbutton.attr("title", title);
-			
-			// Add compass
-			compassmenu.append(compassbutton);
-			if (counter % iconsperline === 0)
+			// Icon
+			compass.icon = compass.icon || "img/compass/" + compass.id + I.cPNG;
+			var compassbutton = $("<img src='" + compass.icon + "' />");
+			// Size
+			if (compass.size === undefined)
 			{
-				compassmenu.append("<br />");
+				compass.size = (compass.range) ? [sizeranged, sizeranged] : [sizestandard, sizestandard];
+			}
+			// Button tooltip
+			var title = (compass.tooltip !== undefined) ? compass.tooltip : ((compass.range) ? D.getWordCapital("range") + " " + compass.range : "");
+			if (title.length)
+			{
+				compassbutton.attr("title", title);
+			}
+			
+			if (compass.nodetype)
+			{
+				// Add resource node compass button to its specific menu
+				if (nodetypeprev !== compass.nodetype)
+				{
+					nodetypeprev = compass.nodetype;
+					nodecounter = 0;
+				}
+				nodecounter++;
+				var nodecompassgallery = $("#mapContextNodeList_" + compass.nodetype);
+				nodecompassgallery.append(compassbutton);
+				if (nodecounter % nodeiconsperline === 0)
+				{
+					nodecompassgallery.append("<br />");
+				}
+			}
+			else
+			{
+				// Add standard compass button to regular menu
+				compassgallery.append(compassbutton);
+				if (counter % iconsperline === 0)
+				{
+					compassgallery.append("<br />");
+				}
 			}
 			(function(iCompass)
 			{
 				compassbutton.click(function()
 				{
+					if (customcheck.is(":checked"))
+					{
+						// Custom range
+						iCompass.range = parseInt(customrange.val()),
+						// Custom color
+						iCompass.color = U.stripToColorString(customcolor.val());
+						// Custom comment
+						iCompass.comment = U.escapeHTML(customcomment.val());
+					}
+					compassprev = iCompass;
 					that.createCompass(iCompass, that.ContextLatLng);
 				});
 			})(compass);
 		}
 		
-		// Button: lay a custom compass
-		var custombutton = $("<img src='img/compass/custom.png' "
-			+ "title='<dfn>Lay a custom compass on the map</dfn><br />using the range and color specified below.<br /><br />"
-			+ "After laying a compass on the map:<br />"
-			+ "Drag it to move it.<br />Right click to center it.<br />Double click to delete it.' />")
-			.click(function()
-			{
-				var cw = {
-					id: "custom",
-					range: parseInt($(htmlidprefix + "CompassCustomRange").val()),
-					color: U.stripToColorString($(htmlidprefix + "CompassCustomColor").val())
-				};
-				that.createCompass(cw, that.ContextLatLng);
-			});
-		compassmenu.append(custombutton);
+		// Insert the custom inputs at the bottom of the gallery
+		$("<span id='" + that.MapEnum + "CompassCustom' style='display:block;' class='mapCompassCustom'></span>")
+			.appendTo(compassgallery).append([customcheck, customrange, customcolor, customcomment]).find("input").onEnterKey(function()
+		{
+			additem.trigger("click");
+		});
+		customcheck.wrap("<label></label>");
 		
-		// Context item: clear all compasses
+		// Entry: clear all compasses
 		$(htmlidprefix + "ContextClearCompasses").click(function()
 		{
 			that.clearCompasses();
 		});
 		
-		// Inputs: attributes for the custom compass
-		compassmenu.append("<br /><span id='" + that.MapEnum + "CompassCustom' class='mapCompassCustom'>"
-			+ "<input id='" + that.MapEnum + "CompassCustomRange' type='number' value='1200' min='0' max='"
-				+ rangemaxvalue + "' step='100' style='width:64px' class='cssInputText' />"
-			+ "<input id='" + that.MapEnum + "CompassCustomColor' type='text' value='#ffffff' maxlength='"
-				+ colormaxlength + "' style='width:96px' class='cssInputText' />"
-			+ "</span>");
-		
-		// Custom compass input press enter
-		$(htmlidprefix + "CompassCustomRange, " + htmlidprefix + "CompassCustomColor").onEnterKey(function()
+		// Entry: Import compass data
+		var importbutton = $(htmlidprefix + "ContextImportCompasses");
+		importbutton.click(function()
 		{
-			custombutton.trigger("click");
-		});
-		
-		// Buttons and inputs to import and export compass placement
-		var exportbutton  = $("<img src='img/ui/export.png' "
-			+ "title='<dfn>(Export) Prints in data format the compasses</dfn> currently placed on the map.<br />"
-			+ "The outputted text can be copied to share your compasses placement.' />")
-			.click(function()
-			{
-				if (that.isCompassesLaid())
+			var str = $(htmlidprefix + "CompassImportText").val();
+			try {
+				var formation = JSON.parse(str);
+				if (Array.isArray(formation))
 				{
-					I.print(U.escapeHTML(JSON.stringify(that.serializeCompasses())), true);
+					that.redrawCompasses(formation);
 				}
-			});
-		var importbutton = $("<img src='img/ui/import.png' id='" + that.MapEnum + "CompassImportButton' "
-			+ "title='<dfn>(Import) Reads data from the text input box</dfn> on the right.<br />"
-			+ "Compasses will be reconstructed from these pasted text data.' />")
-			.click(function()
-			{
-				var str = $(htmlidprefix + "CompassImportText").val();
-				try {
-					var arsenal = JSON.parse(str);
-					if (Array.isArray(arsenal))
-					{
-						that.redrawCompasses(arsenal);
-					}
-				}
-				catch (e) {
-					I.write("Invalid data string for importing Compasses.");
-				};
-			});
-		var importtext = $("<input id='" + that.MapEnum + "CompassImportText' type='text' value='' maxlength='"
-			+ importmaxlength + "' style='width:96px' class='cssInputText' />")
-			.onEnterKey(function()
-			{
-				$(htmlidprefix + "CompassImportButton").trigger("click");
-			});
-		compassmenu.append(exportbutton).append(importbutton).append(importtext);
-		
-		// Allow interaction with the inputs within the context menu
-		compassmenu.find("input").click(function(pEvent)
-		{
-			pEvent.stopPropagation();
-			$(this).select();
+			}
+			catch (e) {
+				I.write("Invalid data string for importing Compasses.");
+			};
 		});
+		// Entry: Export current compasses
+		$(htmlidprefix + "ContextExportCompasses").click(function()
+		{
+			if (that.isCompassesLaid())
+			{
+				I.printFile(JSON.stringify(that.serializeCompasses()));
+			}
+		});
+		// Input: Compass data input box for importing
+		$("<input id='" + that.MapEnum + "CompassImportText' type='text' value='' maxlength='"
+			+ importmaxlength + "' style='width:96px; margin-left:4px;' class='cssInputText' title='"
+			+ "<dfn>Export</dfn> to get the textual copy of laid compasses.<br />"
+			+ "Paste that text in this box and <dfn>Import</dfn> to reconstruct the compasses.' />")
+		.onEnterKey(function()
+		{
+			importbutton.trigger("click");
+		}).appendTo(importbutton);
 		
-		// The menu entry to draw standard siege placement
+		// Entry: Draw standard siege placement for WvW
 		$("#wvwContextDrawCompasses").click(function()
 		{
 			W.redrawDefaultCompasses();
 		});
 		
+		// Entry: Compass help
+		$(htmlidprefix + "ContextHelpCompasses").click(function()
+		{
+			that.printCompassHelp();
+		});
+		
+		// Allow interaction with the inputs within the context menu
+		compasscontext.find("input").click(function(pEvent)
+		{
+			pEvent.stopPropagation();
+			$(this).select();
+		});
+		
 		// Finally
-		I.qTip.init(".mapContextCompassList img");
+		I.qTip.init(compasscontext.find("img, input"));
 		that.initializeCompassStorage();
 	},
 	
@@ -23747,16 +23847,24 @@ M = {
 		var compasses = [];
 		that.Layer.CompassCircle.eachLayer(function(iLayer)
 		{
+			var opt = iLayer.options;
 			// Store only the compass ID and location
 			var compass = {
-				id: iLayer.options.compassid,
+				id: opt.compassid,
 				coord: that.convertLCtoGC(iLayer.getLatLng())
 			};
-			// If it is a custom compass, then also store the custom color and range
-			if (iLayer.options.compassid === "custom")
+			// If compass has custom properties then save them too
+			if (opt.color)
 			{
-				compass.color = (iLayer.options.color).toLowerCase();
-				compass.range = parseInt(iLayer.options.compassrange);
+				compass.color = (opt.color).toLowerCase();
+			}
+			if (opt.compassrange)
+			{
+				compass.range = parseInt(opt.compassrange);
+			}
+			if (opt.compasscomment)
+			{
+				compass.comment = opt.compasscomment;
 			}
 			compasses.push(compass);
 		});
@@ -23766,37 +23874,35 @@ M = {
 	
 	/*
 	 * Reconstructs a placement of compasses on the map.
-	 * @param array pArsenal of compasses and their location.
+	 * @param array pCompany of compasses and their location.
 	 * @param array pOffset x and y coordinates offset, optional.
 	 * @pre Compasses' placement was stored as game coordinates, not LatLng.
 	 */
-	redrawCompasses: function(pArsenal, pOffset)
+	redrawCompasses: function(pCompany, pOffset)
 	{
-		if (pArsenal !== undefined && pArsenal !== null && pArsenal.length > 0)
+		if (pCompany !== undefined && pCompany !== null && pCompany.length > 0)
 		{
 			this.clearCompasses();
-			for (var i in pArsenal)
+			for (var i in pCompany)
 			{
-				var compass = pArsenal[i];
+				var compass = pCompany[i];
 				var coord = (pOffset !== undefined) ? [compass.coord[0] + pOffset[0], compass.coord[1] + pOffset[1]] : compass.coord;
 				// If it is not a custom compass, then use the default properties via that compass ID
 				var compasstomake = null;
-				if (compass.id === "custom"
-					&& compass.range !== undefined
-					&& compass.color !== undefined
-					&& compass.coord !== undefined)
-				{
-					compasstomake = {
-						id: compass.id,
-						image: "custom",
-						coord: coord,
-						range: parseInt(compass.range),
-						color: U.stripToColorString(compass.color)
-					};
-				}
-				else if (this.Compasses[compass.id] !== undefined)
+				if (this.Compasses[compass.id])
 				{
 					compasstomake = this.Compasses[compass.id];
+				}
+				else if (compass.coord && coord)
+				{
+					// For unrecognized compasses (deprecated compass IDs, but still have a valid properties)
+					compasstomake = {
+						id: "custom",
+						icon: "img/compass/custom.png",
+						size: [32, 32],
+						range: compass.range,
+						color: compass.color
+					};
 				}
 				
 				// Only draw if it is a valid compass object
@@ -23826,7 +23932,7 @@ M = {
 		var offset = W.Metadata.Offsets[W.ZoneCurrent.nick];
 		if (offset !== undefined && placement)
 		{
-			var arsenal = placement.Siege;
+			var arsenal = placement.Company;
 			W.redrawCompasses(arsenal, offset);
 		}
 	},
@@ -23861,6 +23967,7 @@ M = {
 			clickable: false,
 			compassid: pCompass.id,
 			compassrange: pCompass.range,
+			compasscomment: pCompass.comment,
 			trueradius: trueradius,
 			radius: radius,
 			color: pCompass.color,
@@ -23872,16 +23979,19 @@ M = {
 		this.toggleLayer(circle);
 		
 		// The interactive icon allowing the user to relocate the circle
+		var width = pCompass.size[0];
+		var height = pCompass.size[1];
 		var compass = L.marker(pLatLng,
 		{
 			circle: circle,
 			icon: L.icon(
 			{
 				className: "mapCompass",
-				iconUrl: "img/compass/" + pCompass.id + I.cPNG,
-				iconSize: [24, 24],
-				iconAnchor: [12, 12]
+				iconUrl: pCompass.icon,
+				iconSize: [width, height],
+				iconAnchor: [width / 2, height / 2]
 			}),
+			title: pCompass.comment,
 			draggable: true,
 			opacity: 0.9
 		});
@@ -23895,21 +24005,35 @@ M = {
 		compass.on("dblclick", function()
 		{
 			that.removeCompass(this);
+			I.qTip.hide();
 		});
 		compass.on("contextmenu", function()
 		{
-			if (that.GPSPreviousCoord.length > 0)
+			if (that.Map.getZoom() !== that.ZoomEnum.Ground)
 			{
-				that.movePin(this, that.GPSPreviousCoord);
+				that.Map.setView(this.getLatLng(), that.ZoomEnum.Ground);
 			}
 			else
 			{
-				that.movePin(this, that.Map.getCenter());
+				if (that.GPSPreviousCoord.length > 0)
+				{
+					that.movePin(this, that.GPSPreviousCoord);
+				}
+				else
+				{
+					that.movePin(this, that.Map.getCenter());
+				}
+				this.options.circle.setLatLng(this.getLatLng());
 			}
-			this.options.circle.setLatLng(this.getLatLng());
 		});
 		this.Layer.CompassIcon.addLayer(compass);
 		this.toggleLayer(compass);
+		
+		// Bind tooltip if compass is commented
+		if (pCompass.comment)
+		{
+			I.qTip.init(".mapCompass");
+		}
 	},
 	
 	/*
@@ -27034,9 +27158,9 @@ G = {
 			});
 			
 			// Bind buttons to toggle all checkboxes of that resource category
-			$("#nodToggle_ResourceMetal").click(function()
+			$("#nodToggle_ResourceOre").click(function()
 			{
-				$("#nodResource_Metal input").trigger("click");
+				$("#nodResource_Ore input").trigger("click");
 			});
 			$("#nodToggle_ResourcePlant").click(function()
 			{
@@ -29809,31 +29933,28 @@ W = {
 		};
 		
 		I.preventMapPropagation("#wvwSupply");
-		for (var i in W.Metadata.Blueprints)
+		for (var i in W.Metadata.BlueprintGrade)
 		{
-			for (var ii in W.Compasses)
+			for (var ii in W.Metadata.BlueprintType)
 			{
-				if (W.Compasses[ii].type === "field")
+				var grade = W.Metadata.BlueprintGrade[i];
+				var blueprint = $("<ins class='spl spl_" + grade.toLowerCase() + "_" + ii + "'></ins>");
+				var supply = (W.Metadata.BlueprintType[ii])[i];
+				$("#splBlueprints" + grade).append(blueprint);
+				(function(iSupply)
 				{
-					var bp = W.Metadata.Blueprints[i];
-					var blueprint = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + ii + "'></ins>");
-					var supply = W.Compasses[ii].supply[i];
-					$("#splBlueprints" + bp).append(blueprint);
-					(function(iSupply)
+					blueprint.click(function()
 					{
-						blueprint.click(function()
-						{
-							addSupply($(this), iSupply);
-							$("#splHave").trigger("input");
-						});
-						blueprint.contextmenu(function()
-						{
-							addSupply($(this), -1 * iSupply);
-							$("#splHave").trigger("input");
-							return false; // Prevents context menu popping up
-						});
-					})(supply);
-				}
+						addSupply($(this), iSupply);
+						$("#splHave").trigger("input");
+					});
+					blueprint.contextmenu(function()
+					{
+						addSupply($(this), -1 * iSupply);
+						$("#splHave").trigger("input");
+						return false; // Prevents context menu popping up
+					});
+				})(supply);
 			}
 		}
 		

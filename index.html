@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170316"></script>
+	<script type="text/javascript" src="data/general.js?v=20170317"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -80,14 +80,29 @@
 					<li id="mapContextToggleHUD">Toggle HUD</li>
 					<li id="mapContextCompass" class="itemContextSubmenu"><span>Compass</span>
 						<ul>
+							<li id="mapContextAddCompass">Add</li>
+							<li class="itemContextSubmenu"><span>Options</span>
+								<ul>
+									<li id="mapContextClearCompasses">Clear</li>
+									<li class="itemContextSubmenu"><span>Load</span>
+										<ul id="mapContextLoadCompasses" class="mapContextSlots"></ul>
+									</li>
+									<li class="itemContextSubmenu"><span>Save</span>
+										<ul id="mapContextSaveCompasses" class="mapContextSlots"></ul>
+									</li>
+									<li id="mapContextImportCompasses">Import</li>
+									<li id="mapContextExportCompasses">Export</li>
+									<li id="mapContextHelpCompasses">Help</li>
+								</ul>
+							</li>
+							<li class="itemContextSubmenu"><span>Nodes</span>
+								<ul>
+									<li id="mapContextNodeList_Ore" class="mapContextCompassList jsIgnore"></li>
+									<li id="mapContextNodeList_Wood" class="mapContextCompassList jsIgnore"></li>
+									<li id="mapContextNodeList_Plant" class="mapContextCompassList jsIgnore"></li>
+								</ul>
+							</li>
 							<li id="mapContextCompassList" class="mapContextCompassList jsIgnore"></li>
-							<li id="mapContextClearCompasses">Clear</li>
-							<li class="itemContextSubmenu"><span>Load</span>
-								<ul id="mapContextLoadCompasses" class="mapContextSlots"></ul>
-							</li>
-							<li class="itemContextSubmenu"><span>Save</span>
-								<ul id="mapContextSaveCompasses" class="mapContextSlots"></ul>
-							</li>
 						</ul>
 					</li>
 					<li class="itemContextSubmenu" id="mapContextPins"><span>Path</span>
@@ -385,20 +400,28 @@
 				<ul>
 					<li id="wvwContextCenter">Center map</li>
 					<li id="wvwContextToggleHUD">Toggle HUD</li>
-					<li id="wvwContextCompass" class="itemContextSubmenu"><span>Compass Pins</span>
+					<li id="wvwContextCompass" class="itemContextSubmenu"><span>Compass</span>
 						<ul>
+							<li id="wvwContextAddCompass">Add</li>
+							<li class="itemContextSubmenu"><span>Options</span>
+								<ul>
+									<li id="wvwContextClearCompasses">Clear</li>
+									<li class="itemContextSubmenu"><span>Load</span>
+										<ul id="wvwContextLoadCompasses" class="mapContextSlots"></ul>
+									</li>
+									<li class="itemContextSubmenu"><span>Save</span>
+										<ul id="wvwContextSaveCompasses" class="mapContextSlots"></ul>
+									</li>
+									<li id="wvwContextImportCompasses">Import</li>
+									<li id="wvwContextExportCompasses">Export</li>
+									<li id="wvwContextHelpCompasses">Help</li>
+									<li id="wvwContextDrawCompasses">Draw</li>
+								</ul>
+							</li>
 							<li id="wvwContextCompassList" class="mapContextCompassList jsIgnore"></li>
-							<li id="wvwContextClearCompasses">Clear</li>
-							<li class="itemContextSubmenu"><span>Load</span>
-								<ul id="wvwContextLoadCompasses" class="mapContextSlots"></ul>
-							</li>
-							<li class="itemContextSubmenu"><span>Save</span>
-								<ul id="wvwContextSaveCompasses" class="mapContextSlots"></ul>
-							</li>
-							<li id="wvwContextDrawCompasses">Draw</li>
 						</ul>
 					</li>
-					<li class="itemContextSubmenu" id="wvwContextPins"><span>Path Pins</span>
+					<li class="itemContextSubmenu" id="wvwContextPins"><span>Path</span>
 						<ul>
 							<li id="wvwContextClearPins">Clear</li>
 							<li class="itemContextSubmenu"><span>Load</span>

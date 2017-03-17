@@ -34,8 +34,6 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "kurýři", it: "corrieri", pl: "kurierzy", pt: "correios", ru: "курьеры", zh: "快递"},
 	s_gliders: {de: "gleitschirm", es: "planeador", fr: "deltaplanes",
 		cs: "kluzáky", it: "alianti", pl: "szybowce", pt: "planadores", ru: "планеры", zh: "滑翔机"},
-	s_nodes: {de: "knoten", es: "nodos", fr: "zones",
-		cs: "uzly", it: "nodi", pl: "węzły", pt: "nós", ru: "узлы", zh: "节点"},
 	s_cats: {de: "katzen", es: "gatos", fr: "chats",
 		cs: "kočky", it: "gatti", pl: "koty", pt: "gatos", ru: "коты", zh: "猫"},
 	s_characters: {de: "charaktere", es: "personajes", fr: "personnages",

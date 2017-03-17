@@ -254,7 +254,7 @@ Weapon: [
 	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: -600}},
 	{i: 79089, n: "Lord Caudecus's Sword Skin", p: {gem: -600}},
 	{i: 79179, n: "Lord Caudecus's Pistol Skin", p: {gem: -600}},
-	{i: 79310, n: "Storm Bow", p: {gem: 600}},
+	{i: 79310, n: "Storm Bow", p: {gem: -600}},
 	{i: 79315, n: "Emissary's Staff", p: {gem: -600}},
 	{i: 79360, n: "Amethyst Aegis", p: {gem: -600}},
 	{i: 79365, n: "Peacock Scepter Skin", p: {gem: -600}},
@@ -584,9 +584,9 @@ Finisher: [
 	{i: 44069, n: "Permanent Scarecrow Finisher", p: {gem: -500}},
 	{i: 44724, n: "Permanent Super Explosive Finisher", p: {gem: -600}},
 	{i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: -800}},
-	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
+	{i: 49952, n: "Permanent Llama Finisher", p: {gem: -800}},
 	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: -800}},
-	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}}
+	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: -700}}
 ],
 Upgrade: [
 	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 800}},
@@ -604,19 +604,24 @@ Upgrade: [
  */
 var GW2T_SALE_DATA = [
 	{
-		Finish: new Date("2017-03-17T16:00:00Z"),
-		name: "Royal Terrace Pass",
-		id: "49149",
-		price: 700,
-		discount: 1000,
+		name: "Flamekissed Light Armor Skin",
+		id: "43576",
+		price: 480,
+		discount: 800,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-17T16:00:00Z"),
-		name: "Captain's Airship Pass",
-		id: "50104",
-		price: 700,
-		discount: 1000,
+		name: "Flamewalker Medium Armor Skin",
+		id: "43575",
+		price: 480,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Flamewrath Heavy Armor Skin",
+		id: "43574",
+		price: 480,
+		discount: 800,
 		col: 0
 	},
 	{

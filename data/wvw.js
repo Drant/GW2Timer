@@ -2505,94 +2505,67 @@ var GW2T_OBJECTIVE_DATA = {
  * Siege weapons and blueprint supply. [Basic, Superior, Guild]
  */
 var GW2T_WEAPON_DATA = {
-portal: {
-	type: "skill",
+skill_portal: {
 	color: "pink",
-	isPlaceable: true,
 	range: 5000
 },
-flameram: {
-	type: "field",
+siege_flameram: {
 	color: "orange",
-	isPlaceable: false,
 	range: 360,
-	supply: [40, 50, 40]
+	isPlaceable: false
 },
-arrowcart: {
-	type: "field",
+siege_arrowcart: {
 	color: "orange",
-	isPlaceable: true,
-	range: 2500,
-	supply: [40, 50, 40]
+	range: 2500
 },
-ballista: {
-	type: "field",
+siege_ballista: {
 	color: "orange",
-	isPlaceable: true,
-	range: 3000,
-	supply: [30, 40, 30]
+	range: 3000
 },
-catapult: {
-	type: "field",
+siege_catapult: {
 	color: "orange",
-	isPlaceable: true,
 	range: 4000,
-	tooltip: "<dfn>Power</dfn> = Range<br /><dfn>0%</dfn> = 1500<br /><dfn>25%</dfn> = 2100<br /><dfn>50%</dfn> = 2700<br /><dfn>75%</dfn> = 3300<br /><dfn>100%</dfn> = 3800<br />Radius 432",
-	supply: [40, 50, 40]
+	tooltip: "<dfn>Power</dfn> = Range<br /><dfn>0%</dfn> = 1500<br /><dfn>25%</dfn> = 2100<br /><dfn>50%</dfn> = 2700<br /><dfn>75%</dfn> = 3300<br /><dfn>100%</dfn> = 3800<br />Radius 432"
 },
-trebuchet: {
-	type: "field",
+siege_trebuchet: {
 	color: "orange",
-	isPlaceable: true,
 	range: 10000,
-	tooltip: "<dfn>Power</dfn> = Range<br /><dfn>0%</dfn> = 2200<br /><dfn>25%</dfn> = 3700<br /><dfn>50%</dfn> = 5300<br /><dfn>75%</dfn> = 7000<br /><dfn>100%</dfn> = 8500<br />Radius 420",
-	supply: [100, 120, 100]
+	tooltip: "<dfn>Power</dfn> = Range<br /><dfn>0%</dfn> = 2200<br /><dfn>25%</dfn> = 3700<br /><dfn>50%</dfn> = 5300<br /><dfn>75%</dfn> = 7000<br /><dfn>100%</dfn> = 8500<br />Radius 420"
 },
-golem: {
-	type: "field",
+siege_golem: {
 	color: "orange",
-	isPlaceable: false,
 	range: 1500,
-	supply: [100, 150, 50]
+	isPlaceable: false
 },
-shieldgenerator: {
-	type: "field",
+siege_shieldgenerator: {
 	color: "orange",
-	isPlaceable: true,
-	range: 3300,
-	supply: [40, 50, 40]
+	range: 3300
 },
-burningoil: {
-	type: "base",
+siege_burningoil: {
 	color: "yellow",
 	opacity: 0.1,
 	fillOpacity: 0.01,
-	isPlaceable: false,
-	range: 600
+	range: 600,
+	isPlaceable: false
 },
-cannon: {
-	type: "base",
+siege_cannon: {
 	color: "yellow",
 	opacity: 0.1,
 	fillOpacity: 0.01,
-	isPlaceable: true,
 	range: 3750
 },
-mortar: {
-	type: "base",
+siege_mortar: {
 	color: "yellow",
 	opacity: 0.1,
 	fillOpacity: 0.01,
-	isPlaceable: true,
 	range: 9400
 },
-burningoildesert: {
-	type: "base",
+siege_burningoildesert: {
 	color: "gold",
 	opacity: 0.1,
 	fillOpacity: 0.01,
-	isPlaceable: false,
-	range: 850
+	range: 850,
+	isPlaceable: false
 }
 };
 
@@ -2755,7 +2728,7 @@ Eternal: {
 	],
 	Sentry: [[9736,15290],[10197,14912],[10119,14706],[9511,14708],[10363,14081],[10816,14080],[11097,13640],[10496,13540],[11145,14667],[10935,15038],[11226,15447],[11630,14699]],
 	Depot: [[9843,15405],[10209,15396],[10301,15063],[9948,14539],[9564,14399],[9388,14884],[9642,14928],[9781,15123],[9600,15206],[10222,14046],[9835,13584],[10291,13381],[11022,13471],[11296,13725],[10989,13906],[10703,13677],[10548,13788],[11202,14555],[11584,14491],[11721,14785],[11411,15484],[11010,15574],[10889,15255],[11595,15165],[11515,15053],[11435,15151],[10403,14784],[10326,14591],[10486,14283],[10754,14307],[10890,14608],[10772,14810],[10484,14528],[10724,14515],[10676,14696],[10571,14643]],
-	Siege: [{"id":"catapult","coord":[11005,13670]},{"id":"cannon","coord":[10578,14345]},{"id":"cannon","coord":[10374,14535]},{"id":"cannon","coord":[10822,14480]},{"id":"cannon","coord":[10746,14754]},{"id":"cannon","coord":[10492,14787]},{"id":"catapult","coord":[10883,13651]},{"id":"catapult","coord":[10503,13771]},{"id":"catapult","coord":[10532,13845]},{"id":"catapult","coord":[10474,13927]},{"id":"mortar","coord":[11411,15506]},{"id":"trebuchet","coord":[11152,14495]},{"id":"trebuchet","coord":[10424,13954]},{"id":"catapult","coord":[10015,13999]},{"id":"catapult","coord":[11072,13704]},{"id":"catapult","coord":[11114,13529]},{"id":"ballista","coord":[11119,13987]},{"id":"mortar","coord":[11736,14825]},{"id":"catapult","coord":[11833,14906]},{"id":"trebuchet","coord":[11679,14564]},{"id":"cannon","coord":[11372,15099]},{"id":"catapult","coord":[11114,15188]},{"id":"trebuchet","coord":[9914,15277]},{"id":"catapult","coord":[9923,15250]},{"id":"catapult","coord":[9368,14936]},{"id":"catapult","coord":[9595,14898]},{"id":"catapult","coord":[9857,14451]},{"id":"catapult","coord":[10376,15118]},{"id":"mortar","coord":[10726,14616]},{"id":"catapult","coord":[10757,13731]},{"id":"ballista","coord":[10153,13261]},{"id":"catapult","coord":[10121,13255]},{"id":"catapult","coord":[11359,15521]},{"id":"catapult","coord":[11440,15326]},{"id":"catapult","coord":[11676,15040]},{"id":"catapult","coord":[9894,15139]},{"id":"catapult","coord":[10257,14642]},{"id":"trebuchet","coord":[10634,13848]},{"id":"catapult","coord":[10948,14019]},{"id":"catapult","coord":[10832,14316]},{"id":"catapult","coord":[10569,14939]},{"id":"ballista","coord":[11289,15364]},{"id":"catapult","coord":[9979,15345]},{"id":"catapult","coord":[9787,15367]},{"id":"catapult","coord":[9774,15292]},{"id":"trebuchet","coord":[9615,14444]},{"id":"catapult","coord":[10158,15178]},{"id":"catapult","coord":[10121,14044]},{"id":"ballista","coord":[10361,13962]},{"id":"catapult","coord":[10373,13980]},{"id":"trebuchet","coord":[11075,14154]},{"id":"catapult","coord":[11400,14689]},{"id":"catapult","coord":[11373,14483]},{"id":"catapult","coord":[11210,14490]},{"id":"trebuchet","coord":[10965,13420]},{"id":"catapult","coord":[11341,15165]},{"id":"catapult","coord":[11325,15584]},{"id":"catapult","coord":[11133,15296]},{"id":"catapult","coord":[11422,14973]},{"id":"catapult","coord":[10839,15184]},{"id":"catapult","coord":[10707,14894]},{"id":"trebuchet","coord":[9929,13357]},{"id":"trebuchet","coord":[11143,15177]},{"id":"catapult","coord":[10361,14415]},{"id":"cannon","coord":[10337,14783]},{"id":"mortar","coord":[10492,14624]},{"id":"cannon","coord":[10283,14637]},{"id":"mortar","coord":[10313,14563]},{"id":"cannon","coord":[10358,14450]},{"id":"mortar","coord":[10392,14369]},{"id":"mortar","coord":[10465,14261]},{"id":"cannon","coord":[10523,14203]},{"id":"mortar","coord":[10613,14700]},{"id":"mortar","coord":[10529,14485]},{"id":"mortar","coord":[10674,14477]},{"id":"mortar","coord":[10677,14910]},{"id":"cannon","coord":[10617,14939]},{"id":"mortar","coord":[10520,14880]},{"id":"mortar","coord":[10375,14725]},{"id":"mortar","coord":[10735,14257]},{"id":"cannon","coord":[10686,14198]},{"id":"cannon","coord":[10795,14299]},{"id":"cannon","coord":[10887,14427]},{"id":"mortar","coord":[10915,14600]},{"id":"cannon","coord":[10935,14675]},{"id":"cannon","coord":[10855,14812]},{"id":"mortar","coord":[10779,14834]},{"id":"cannon","coord":[10413,14310]},{"id":"cannon","coord":[9705,15154]},{"id":"cannon","coord":[9642,15055]},{"id":"mortar","coord":[9521,15137]},{"id":"cannon","coord":[9477,15186]},{"id":"cannon","coord":[9522,15243]},{"id":"mortar","coord":[9653,15199]},{"id":"cannon","coord":[9905,15103]},{"id":"cannon","coord":[9922,14873]},{"id":"cannon","coord":[9899,14849]},{"id":"cannon","coord":[9687,14843]},{"id":"mortar","coord":[9711,14878]},{"id":"mortar","coord":[9872,15062]},{"id":"mortar","coord":[9450,14818]},{"id":"cannon","coord":[10961,13503]},{"id":"cannon","coord":[10814,13559]},{"id":"cannon","coord":[10737,13559]},{"id":"cannon","coord":[10671,13586]},{"id":"cannon","coord":[10650,13644]},{"id":"cannon","coord":[10830,13725]},{"id":"cannon","coord":[10743,13785]},{"id":"cannon","coord":[10648,13854]},{"id":"cannon","coord":[11658,14845]},{"id":"cannon","coord":[11583,14990]},{"id":"cannon","coord":[11562,15063]},{"id":"cannon","coord":[11408,15017]},{"id":"cannon","coord":[11448,15194]},{"id":"cannon","coord":[11644,15209]},{"id":"cannon","coord":[11389,15249]},{"id":"cannon","coord":[11329,15445]},{"id":"mortar","coord":[10843,15252]},{"id":"mortar","coord":[9763,15380]},{"id":"mortar","coord":[10855,13652]},{"id":"mortar","coord":[10728,13588]},{"id":"mortar","coord":[10676,13702]},{"id":"mortar","coord":[10797,13707]},{"id":"mortar","coord":[10525,13799]},{"id":"mortar","coord":[10573,13847]},{"id":"mortar","coord":[11514,15335]},{"id":"mortar","coord":[11393,15213]},{"id":"mortar","coord":[11535,14997]},{"id":"mortar","coord":[11694,15096]},{"id":"mortar","coord":[11642,15163]},{"id":"mortar","coord":[11556,15260]},{"id":"mortar","coord":[9895,14665]},{"id":"cannon","coord":[9919,14580]},{"id":"cannon","coord":[9834,15319]},{"id":"mortar","coord":[10122,15082]},{"id":"cannon","coord":[10221,15024]},{"id":"cannon","coord":[11000,15245]},{"id":"cannon","coord":[11214,14608]},{"id":"mortar","coord":[11150,14576]},{"id":"cannon","coord":[11600,15259]},{"id":"cannon","coord":[11446,15303]},{"id":"cannon","coord":[9457,14926]},{"id":"cannon","coord":[10604,13659]},{"id":"cannon","coord":[11090,13918]}]
+	Company: [{"id":"siege_catapult","coord":[11005,13670]},{"id":"siege_cannon","coord":[10578,14345]},{"id":"siege_cannon","coord":[10374,14535]},{"id":"siege_cannon","coord":[10822,14480]},{"id":"siege_cannon","coord":[10746,14754]},{"id":"siege_cannon","coord":[10492,14787]},{"id":"siege_catapult","coord":[10883,13651]},{"id":"siege_catapult","coord":[10503,13771]},{"id":"siege_catapult","coord":[10532,13845]},{"id":"siege_catapult","coord":[10474,13927]},{"id":"siege_mortar","coord":[11411,15506]},{"id":"siege_trebuchet","coord":[11152,14495]},{"id":"siege_trebuchet","coord":[10424,13954]},{"id":"siege_catapult","coord":[10015,13999]},{"id":"siege_catapult","coord":[11072,13704]},{"id":"siege_catapult","coord":[11114,13529]},{"id":"siege_ballista","coord":[11119,13987]},{"id":"siege_mortar","coord":[11736,14825]},{"id":"siege_catapult","coord":[11833,14906]},{"id":"siege_trebuchet","coord":[11679,14564]},{"id":"siege_cannon","coord":[11372,15099]},{"id":"siege_catapult","coord":[11114,15188]},{"id":"siege_trebuchet","coord":[9914,15277]},{"id":"siege_catapult","coord":[9923,15250]},{"id":"siege_catapult","coord":[9368,14936]},{"id":"siege_catapult","coord":[9595,14898]},{"id":"siege_catapult","coord":[9857,14451]},{"id":"siege_catapult","coord":[10376,15118]},{"id":"siege_mortar","coord":[10726,14616]},{"id":"siege_catapult","coord":[10757,13731]},{"id":"siege_ballista","coord":[10153,13261]},{"id":"siege_catapult","coord":[10121,13255]},{"id":"siege_catapult","coord":[11359,15521]},{"id":"siege_catapult","coord":[11440,15326]},{"id":"siege_catapult","coord":[11676,15040]},{"id":"siege_catapult","coord":[9894,15139]},{"id":"siege_catapult","coord":[10257,14642]},{"id":"siege_trebuchet","coord":[10634,13848]},{"id":"siege_catapult","coord":[10948,14019]},{"id":"siege_catapult","coord":[10832,14316]},{"id":"siege_catapult","coord":[10569,14939]},{"id":"siege_ballista","coord":[11289,15364]},{"id":"siege_catapult","coord":[9979,15345]},{"id":"siege_catapult","coord":[9787,15367]},{"id":"siege_catapult","coord":[9774,15292]},{"id":"siege_trebuchet","coord":[9615,14444]},{"id":"siege_catapult","coord":[10158,15178]},{"id":"siege_catapult","coord":[10121,14044]},{"id":"siege_ballista","coord":[10361,13962]},{"id":"siege_catapult","coord":[10373,13980]},{"id":"siege_trebuchet","coord":[11075,14154]},{"id":"siege_catapult","coord":[11400,14689]},{"id":"siege_catapult","coord":[11373,14483]},{"id":"siege_catapult","coord":[11210,14490]},{"id":"siege_trebuchet","coord":[10965,13420]},{"id":"siege_catapult","coord":[11341,15165]},{"id":"siege_catapult","coord":[11325,15584]},{"id":"siege_catapult","coord":[11133,15296]},{"id":"siege_catapult","coord":[11422,14973]},{"id":"siege_catapult","coord":[10839,15184]},{"id":"siege_catapult","coord":[10707,14894]},{"id":"siege_trebuchet","coord":[9929,13357]},{"id":"siege_trebuchet","coord":[11143,15177]},{"id":"siege_catapult","coord":[10361,14415]},{"id":"siege_cannon","coord":[10337,14783]},{"id":"siege_mortar","coord":[10492,14624]},{"id":"siege_cannon","coord":[10283,14637]},{"id":"siege_mortar","coord":[10313,14563]},{"id":"siege_cannon","coord":[10358,14450]},{"id":"siege_mortar","coord":[10392,14369]},{"id":"siege_mortar","coord":[10465,14261]},{"id":"siege_cannon","coord":[10523,14203]},{"id":"siege_mortar","coord":[10613,14700]},{"id":"siege_mortar","coord":[10529,14485]},{"id":"siege_mortar","coord":[10674,14477]},{"id":"siege_mortar","coord":[10677,14910]},{"id":"siege_cannon","coord":[10617,14939]},{"id":"siege_mortar","coord":[10520,14880]},{"id":"siege_mortar","coord":[10375,14725]},{"id":"siege_mortar","coord":[10735,14257]},{"id":"siege_cannon","coord":[10686,14198]},{"id":"siege_cannon","coord":[10795,14299]},{"id":"siege_cannon","coord":[10887,14427]},{"id":"siege_mortar","coord":[10915,14600]},{"id":"siege_cannon","coord":[10935,14675]},{"id":"siege_cannon","coord":[10855,14812]},{"id":"siege_mortar","coord":[10779,14834]},{"id":"siege_cannon","coord":[10413,14310]},{"id":"siege_cannon","coord":[9705,15154]},{"id":"siege_cannon","coord":[9642,15055]},{"id":"siege_mortar","coord":[9521,15137]},{"id":"siege_cannon","coord":[9477,15186]},{"id":"siege_cannon","coord":[9522,15243]},{"id":"siege_mortar","coord":[9653,15199]},{"id":"siege_cannon","coord":[9905,15103]},{"id":"siege_cannon","coord":[9922,14873]},{"id":"siege_cannon","coord":[9899,14849]},{"id":"siege_cannon","coord":[9687,14843]},{"id":"siege_mortar","coord":[9711,14878]},{"id":"siege_mortar","coord":[9872,15062]},{"id":"siege_mortar","coord":[9450,14818]},{"id":"siege_cannon","coord":[10961,13503]},{"id":"siege_cannon","coord":[10814,13559]},{"id":"siege_cannon","coord":[10737,13559]},{"id":"siege_cannon","coord":[10671,13586]},{"id":"siege_cannon","coord":[10650,13644]},{"id":"siege_cannon","coord":[10830,13725]},{"id":"siege_cannon","coord":[10743,13785]},{"id":"siege_cannon","coord":[10648,13854]},{"id":"siege_cannon","coord":[11658,14845]},{"id":"siege_cannon","coord":[11583,14990]},{"id":"siege_cannon","coord":[11562,15063]},{"id":"siege_cannon","coord":[11408,15017]},{"id":"siege_cannon","coord":[11448,15194]},{"id":"siege_cannon","coord":[11644,15209]},{"id":"siege_cannon","coord":[11389,15249]},{"id":"siege_cannon","coord":[11329,15445]},{"id":"siege_mortar","coord":[10843,15252]},{"id":"siege_mortar","coord":[9763,15380]},{"id":"siege_mortar","coord":[10855,13652]},{"id":"siege_mortar","coord":[10728,13588]},{"id":"siege_mortar","coord":[10676,13702]},{"id":"siege_mortar","coord":[10797,13707]},{"id":"siege_mortar","coord":[10525,13799]},{"id":"siege_mortar","coord":[10573,13847]},{"id":"siege_mortar","coord":[11514,15335]},{"id":"siege_mortar","coord":[11393,15213]},{"id":"siege_mortar","coord":[11535,14997]},{"id":"siege_mortar","coord":[11694,15096]},{"id":"siege_mortar","coord":[11642,15163]},{"id":"siege_mortar","coord":[11556,15260]},{"id":"siege_mortar","coord":[9895,14665]},{"id":"siege_cannon","coord":[9919,14580]},{"id":"siege_cannon","coord":[9834,15319]},{"id":"siege_mortar","coord":[10122,15082]},{"id":"siege_cannon","coord":[10221,15024]},{"id":"siege_cannon","coord":[11000,15245]},{"id":"siege_cannon","coord":[11214,14608]},{"id":"siege_mortar","coord":[11150,14576]},{"id":"siege_cannon","coord":[11600,15259]},{"id":"siege_cannon","coord":[11446,15303]},{"id":"siege_cannon","coord":[9457,14926]},{"id":"siege_cannon","coord":[10604,13659]},{"id":"siege_cannon","coord":[11090,13918]}]
 },
 Alpine: {
 	Gate: [
@@ -2833,7 +2806,7 @@ Alpine: {
 	],
 	Sentry: [[6564,13233],[6304,12461],[6250,13969],[6902,14233],[7580,14009],[7491,13043],[7590,12361]],
 	Depot: [[6811,12804],[6917,12976],[7066,13001],[6115,13344],[6208,13694],[5916,13658],[8080,13410],[7854,13439],[7876,13667],[6320,12729],[7497,12730],[7397,13999],[6602,14058],[6942,11822],[6029,12854],[7845,12824],[7868,14126],[6889,14678],[6105,14120]],
-	Siege: [{"id":"cannon","coord":[7869,13785]},{"id":"cannon","coord":[7830,13573]},{"id":"cannon","coord":[6383,12624]},{"id":"cannon","coord":[7330,14082]},{"id":"cannon","coord":[6597,14138]},{"id":"cannon","coord":[6101,13837]},{"id":"cannon","coord":[6151,13807]},{"id":"cannon","coord":[6268,13713]},{"id":"cannon","coord":[6285,13625]},{"id":"cannon","coord":[6296,13543]},{"id":"cannon","coord":[6291,13370]},{"id":"cannon","coord":[6243,13321]},{"id":"cannon","coord":[5943,13202]},{"id":"cannon","coord":[6872,12902]},{"id":"cannon","coord":[6941,12922]},{"id":"cannon","coord":[7038,12883]},{"id":"cannon","coord":[7101,13008]},{"id":"cannon","coord":[7135,13096]},{"id":"cannon","coord":[6982,13200]},{"id":"cannon","coord":[6922,13169]},{"id":"cannon","coord":[6679,13035]},{"id":"cannon","coord":[6725,13047]},{"id":"cannon","coord":[6702,12884]},{"id":"cannon","coord":[5893,13237]},{"id":"cannon","coord":[7780,13786]},{"id":"cannon","coord":[7698,13388]},{"id":"cannon","coord":[7764,13350]},{"id":"cannon","coord":[8007,13373]},{"id":"cannon","coord":[8079,13352]},{"id":"cannon","coord":[7812,13499]},{"id":"cannon","coord":[5868,13741]},{"id":"cannon","coord":[5981,13628]},{"id":"cannon","coord":[5982,13566]},{"id":"cannon","coord":[5848,13482]},{"id":"cannon","coord":[7350,12740]},{"id":"catapult","coord":[6067,13846]},{"id":"catapult","coord":[6930,12837]},{"id":"catapult","coord":[7463,12672]},{"id":"catapult","coord":[7330,12785]},{"id":"catapult","coord":[7718,13507]},{"id":"catapult","coord":[6252,12538]},{"id":"catapult","coord":[6805,14101]},{"id":"catapult","coord":[6549,13979]},{"id":"catapult","coord":[6314,13554]},{"id":"catapult","coord":[5883,13106]},{"id":"catapult","coord":[6069,13774]},{"id":"catapult","coord":[7452,14065]},{"id":"mortar","coord":[6317,12759]},{"id":"mortar","coord":[7733,13474]},{"id":"mortar","coord":[7811,13358]},{"id":"mortar","coord":[6207,13327]},{"id":"mortar","coord":[6295,13473]},{"id":"mortar","coord":[7434,12627]},{"id":"mortar","coord":[5957,13673]},{"id":"mortar","coord":[8085,13380]},{"id":"mortar","coord":[6273,13668]},{"id":"mortar","coord":[5958,13470]},{"id":"mortar","coord":[6214,13735]},{"id":"mortar","coord":[7861,13688]},{"id":"mortar","coord":[7737,13686]},{"id":"mortar","coord":[6632,13023]},{"id":"mortar","coord":[6680,12952]},{"id":"mortar","coord":[6823,13109]},{"id":"mortar","coord":[6969,13101]},{"id":"mortar","coord":[6966,12881]},{"id":"mortar","coord":[7089,12940]},{"id":"mortar","coord":[7106,13115]},{"id":"mortar","coord":[7842,13471]},{"id":"mortar","coord":[7841,13574]},{"id":"portal","coord":[6921,12731]},{"id":"trebuchet","coord":[5965,14024]},{"id":"trebuchet","coord":[6178,12301]},{"id":"trebuchet","coord":[6321,12724]},{"id":"trebuchet","coord":[6601,12641]},{"id":"trebuchet","coord":[7065,13001]},{"id":"trebuchet","coord":[7555,13512]},{"id":"trebuchet","coord":[7402,12783]},{"id":"trebuchet","coord":[7858,12981]},{"id":"trebuchet","coord":[7738,13761]},{"id":"trebuchet","coord":[6451,13978]},{"id":"trebuchet","coord":[6072,13251]},{"id":"trebuchet","coord":[5914,14107]}]
+	Company: [{"id":"siege_cannon","coord":[7869,13785]},{"id":"siege_cannon","coord":[7830,13573]},{"id":"siege_cannon","coord":[6383,12624]},{"id":"siege_cannon","coord":[7330,14082]},{"id":"siege_cannon","coord":[6597,14138]},{"id":"siege_cannon","coord":[6101,13837]},{"id":"siege_cannon","coord":[6151,13807]},{"id":"siege_cannon","coord":[6268,13713]},{"id":"siege_cannon","coord":[6285,13625]},{"id":"siege_cannon","coord":[6296,13543]},{"id":"siege_cannon","coord":[6291,13370]},{"id":"siege_cannon","coord":[6243,13321]},{"id":"siege_cannon","coord":[5943,13202]},{"id":"siege_cannon","coord":[6872,12902]},{"id":"siege_cannon","coord":[6941,12922]},{"id":"siege_cannon","coord":[7038,12883]},{"id":"siege_cannon","coord":[7101,13008]},{"id":"siege_cannon","coord":[7135,13096]},{"id":"siege_cannon","coord":[6982,13200]},{"id":"siege_cannon","coord":[6922,13169]},{"id":"siege_cannon","coord":[6679,13035]},{"id":"siege_cannon","coord":[6725,13047]},{"id":"siege_cannon","coord":[6702,12884]},{"id":"siege_cannon","coord":[5893,13237]},{"id":"siege_cannon","coord":[7780,13786]},{"id":"siege_cannon","coord":[7698,13388]},{"id":"siege_cannon","coord":[7764,13350]},{"id":"siege_cannon","coord":[8007,13373]},{"id":"siege_cannon","coord":[8079,13352]},{"id":"siege_cannon","coord":[7812,13499]},{"id":"siege_cannon","coord":[5868,13741]},{"id":"siege_cannon","coord":[5981,13628]},{"id":"siege_cannon","coord":[5982,13566]},{"id":"siege_cannon","coord":[5848,13482]},{"id":"siege_cannon","coord":[7350,12740]},{"id":"siege_catapult","coord":[6067,13846]},{"id":"siege_catapult","coord":[6930,12837]},{"id":"siege_catapult","coord":[7463,12672]},{"id":"siege_catapult","coord":[7330,12785]},{"id":"siege_catapult","coord":[7718,13507]},{"id":"siege_catapult","coord":[6252,12538]},{"id":"siege_catapult","coord":[6805,14101]},{"id":"siege_catapult","coord":[6549,13979]},{"id":"siege_catapult","coord":[6314,13554]},{"id":"siege_catapult","coord":[5883,13106]},{"id":"siege_catapult","coord":[6069,13774]},{"id":"siege_catapult","coord":[7452,14065]},{"id":"siege_mortar","coord":[6317,12759]},{"id":"siege_mortar","coord":[7733,13474]},{"id":"siege_mortar","coord":[7811,13358]},{"id":"siege_mortar","coord":[6207,13327]},{"id":"siege_mortar","coord":[6295,13473]},{"id":"siege_mortar","coord":[7434,12627]},{"id":"siege_mortar","coord":[5957,13673]},{"id":"siege_mortar","coord":[8085,13380]},{"id":"siege_mortar","coord":[6273,13668]},{"id":"siege_mortar","coord":[5958,13470]},{"id":"siege_mortar","coord":[6214,13735]},{"id":"siege_mortar","coord":[7861,13688]},{"id":"siege_mortar","coord":[7737,13686]},{"id":"siege_mortar","coord":[6632,13023]},{"id":"siege_mortar","coord":[6680,12952]},{"id":"siege_mortar","coord":[6823,13109]},{"id":"siege_mortar","coord":[6969,13101]},{"id":"siege_mortar","coord":[6966,12881]},{"id":"siege_mortar","coord":[7089,12940]},{"id":"siege_mortar","coord":[7106,13115]},{"id":"siege_mortar","coord":[7842,13471]},{"id":"siege_mortar","coord":[7841,13574]},{"id":"skill_portal","coord":[6921,12731]},{"id":"siege_trebuchet","coord":[5965,14024]},{"id":"siege_trebuchet","coord":[6178,12301]},{"id":"siege_trebuchet","coord":[6321,12724]},{"id":"siege_trebuchet","coord":[6601,12641]},{"id":"siege_trebuchet","coord":[7065,13001]},{"id":"siege_trebuchet","coord":[7555,13512]},{"id":"siege_trebuchet","coord":[7402,12783]},{"id":"siege_trebuchet","coord":[7858,12981]},{"id":"siege_trebuchet","coord":[7738,13761]},{"id":"siege_trebuchet","coord":[6451,13978]},{"id":"siege_trebuchet","coord":[6072,13251]},{"id":"siege_trebuchet","coord":[5914,14107]}]
 },
 Desert: {
 	Gate: [
@@ -2941,7 +2914,7 @@ Desert: {
 	ShrineAir: [[8624, 12840], [7976, 13437], [8559, 13723]],
 	Sentry: [[6649,12216],[6157,12477],[6066,12634],[5912,13640],[6302,13924],[7120,14112],[8078,14070],[8062,13805],[8184,12735],[8149,12524],[7905,11960]],
 	Depot: [[7158,12101],[6275,12150],[5763,12557],[6031,13037],[5883,13191],[5925,13191],[6143,13193],[6105,13324],[5972,13889],[6775,14000],[7177,14475],[7770,14116],[8335,13823],[8231,13426],[8459,13371],[8203,13243],[8522,13133],[8221,13081],[8547,12599],[8320,12157],[7463,12719],[7340,12560],[7147,12781],[7069,12550],[6862,12495]],
-	Siege: [{"id":"cannon","coord":[8057,13294]},{"id":"cannon","coord":[8057,13239]},{"id":"mortar","coord":[8013,13193]},{"id":"mortar","coord":[8484,13462]},{"id":"cannon","coord":[8453,13483]},{"id":"cannon","coord":[8395,13445]},{"id":"cannon","coord":[8478,13056]},{"id":"cannon","coord":[8423,13091]},{"id":"mortar","coord":[8504,13073]},{"id":"mortar","coord":[8228,13478]},{"id":"cannon","coord":[8243,13506]},{"id":"cannon","coord":[8195,13485]},{"id":"mortar","coord":[8265,12292]},{"id":"cannon","coord":[8104,12420]},{"id":"cannon","coord":[8156,12416]},{"id":"mortar","coord":[7453,12625]},{"id":"mortar","coord":[7738,14113]},{"id":"cannon","coord":[7329,12461]},{"id":"cannon","coord":[7370,12506]},{"id":"cannon","coord":[7542,12579]},{"id":"cannon","coord":[7541,12664]},{"id":"cannon","coord":[7144,12835]},{"id":"cannon","coord":[7230,12839]},{"id":"mortar","coord":[7187,12876]},{"id":"cannon","coord":[6803,12563]},{"id":"cannon","coord":[6803,12646]},{"id":"mortar","coord":[6871,12604]},{"id":"cannon","coord":[7015,12528]},{"id":"cannon","coord":[6978,12578]},{"id":"mortar","coord":[7026,12575]},{"id":"cannon","coord":[6274,12351]},{"id":"cannon","coord":[6221,12351]},{"id":"cannon","coord":[6021,12921]},{"id":"cannon","coord":[6098,12920]},{"id":"mortar","coord":[6150,13392]},{"id":"mortar","coord":[6167,13184]},{"id":"cannon","coord":[5962,13110]},{"id":"mortar","coord":[5995,13115]},{"id":"cannon","coord":[5962,13270]},{"id":"mortar","coord":[5995,13267]},{"id":"mortar","coord":[5969,12952]},{"id":"mortar","coord":[6006,13411]},{"id":"cannon","coord":[6044,13433]},{"id":"cannon","coord":[6117,13435]},{"id":"mortar","coord":[6398,12273]},{"id":"cannon","coord":[5963,13335]},{"id":"cannon","coord":[5964,13048]},{"id":"cannon","coord":[6558,14121]},{"id":"cannon","coord":[6625,14136]},{"id":"cannon","coord":[7736,14329]},{"id":"cannon","coord":[7780,14302]},{"id":"mortar","coord":[6751,14065]},{"id":"mortar","coord":[7323,12509]},{"id":"cannon","coord":[8175,12962]},{"id":"cannon","coord":[8227,12964]},{"id":"mortar","coord":[8082,12947]}]
+	Company: [{"id":"siege_cannon","coord":[8057,13294]},{"id":"siege_cannon","coord":[8057,13239]},{"id":"siege_mortar","coord":[8013,13193]},{"id":"siege_mortar","coord":[8484,13462]},{"id":"siege_cannon","coord":[8453,13483]},{"id":"siege_cannon","coord":[8395,13445]},{"id":"siege_cannon","coord":[8478,13056]},{"id":"siege_cannon","coord":[8423,13091]},{"id":"siege_mortar","coord":[8504,13073]},{"id":"siege_mortar","coord":[8228,13478]},{"id":"siege_cannon","coord":[8243,13506]},{"id":"siege_cannon","coord":[8195,13485]},{"id":"siege_mortar","coord":[8265,12292]},{"id":"siege_cannon","coord":[8104,12420]},{"id":"siege_cannon","coord":[8156,12416]},{"id":"siege_mortar","coord":[7453,12625]},{"id":"siege_mortar","coord":[7738,14113]},{"id":"siege_cannon","coord":[7329,12461]},{"id":"siege_cannon","coord":[7370,12506]},{"id":"siege_cannon","coord":[7542,12579]},{"id":"siege_cannon","coord":[7541,12664]},{"id":"siege_cannon","coord":[7144,12835]},{"id":"siege_cannon","coord":[7230,12839]},{"id":"siege_mortar","coord":[7187,12876]},{"id":"siege_cannon","coord":[6803,12563]},{"id":"siege_cannon","coord":[6803,12646]},{"id":"siege_mortar","coord":[6871,12604]},{"id":"siege_cannon","coord":[7015,12528]},{"id":"siege_cannon","coord":[6978,12578]},{"id":"siege_mortar","coord":[7026,12575]},{"id":"siege_cannon","coord":[6274,12351]},{"id":"siege_cannon","coord":[6221,12351]},{"id":"siege_cannon","coord":[6021,12921]},{"id":"siege_cannon","coord":[6098,12920]},{"id":"siege_mortar","coord":[6150,13392]},{"id":"siege_mortar","coord":[6167,13184]},{"id":"siege_cannon","coord":[5962,13110]},{"id":"siege_mortar","coord":[5995,13115]},{"id":"siege_cannon","coord":[5962,13270]},{"id":"siege_mortar","coord":[5995,13267]},{"id":"siege_mortar","coord":[5969,12952]},{"id":"siege_mortar","coord":[6006,13411]},{"id":"siege_cannon","coord":[6044,13433]},{"id":"siege_cannon","coord":[6117,13435]},{"id":"siege_mortar","coord":[6398,12273]},{"id":"siege_cannon","coord":[5963,13335]},{"id":"siege_cannon","coord":[5964,13048]},{"id":"siege_cannon","coord":[6558,14121]},{"id":"siege_cannon","coord":[6625,14136]},{"id":"siege_cannon","coord":[7736,14329]},{"id":"siege_cannon","coord":[7780,14302]},{"id":"siege_mortar","coord":[6751,14065]},{"id":"siege_mortar","coord":[7323,12509]},{"id":"siege_cannon","coord":[8175,12962]},{"id":"siege_cannon","coord":[8227,12964]},{"id":"siege_mortar","coord":[8082,12947]}]
 }
 };
 
@@ -2973,7 +2946,16 @@ var GW2T_WVW_METADATA = {
 		alpineblue: [7168, -640],
 		alpinegreen: [0, 0]
 	},
-	Blueprints: ["Basic", "Superior", "Guild"], // Blueprint grades
+	BlueprintGrade: ["Basic", "Superior", "Guild"], // Blueprint grades
+	BlueprintType: {
+		flameram: [40, 50, 40],
+		arrowcart: [40, 50, 40],
+		ballista: [30, 40, 30],
+		catapult: [40, 50, 40],
+		trebuchet: [100, 120, 100],
+		golem: [100, 150, 50],
+		shieldgenerator: [40, 50, 40]
+	},
 	MatchIDs: {
 		Americas: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"],
 		Europe:   ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9"]
