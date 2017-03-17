@@ -1657,6 +1657,7 @@ Sale: {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	Items: [
 	{
+		Finish: new Date("2017-03-18T16:00:00Z"),
 		name: "Flamekissed Light Armor Skin",
 		id: "43576",
 		price: 480,
@@ -1664,6 +1665,7 @@ Sale: {
 		col: 0
 	},
 	{
+		Finish: new Date("2017-03-18T16:00:00Z"),
 		name: "Flamewalker Medium Armor Skin",
 		id: "43575",
 		price: 480,
@@ -1671,6 +1673,7 @@ Sale: {
 		col: 0
 	},
 	{
+		Finish: new Date("2017-03-18T16:00:00Z"),
 		name: "Flamewrath Heavy Armor Skin",
 		id: "43574",
 		price: 480,
