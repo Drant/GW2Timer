@@ -7806,7 +7806,7 @@ A = {
 			}
 		}).fail(function(pRequest, pStatus)
 		{
-			A.printError(A.PermissionEnum.Account, pStatus);
+			A.printError(A.PermissionEnum.Account, pStatus, false);
 		});
 	},
 	
@@ -7814,8 +7814,9 @@ A = {
 	 * Prints standard API key error message to the console.
 	 * @param string pRequestType the permission requested.
 	 * @param string pStatus from AJAX.
+	 * @param boolean pWantRedirect to return user to the manager section.
 	 */
-	printError: function(pPermission, pStatus)
+	printError: function(pPermission, pStatus, pWantRedirect)
 	{
 		if (A.TokenCurrent === null)
 		{
@@ -7837,7 +7838,10 @@ A = {
 		{
 			// If missing permission then go to the Manager section for the user to update their key
 			I.write("Requested permission: " + pPermission, 10);
-			$("#accMenu_Manager").trigger("click");
+			if (pWantRedirect || pWantRedirect === undefined)
+			{
+				$("#accMenu_Manager").trigger("click");
+			}
 		}
 		I.ArticleCurrent = null;
 	},
