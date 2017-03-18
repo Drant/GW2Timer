@@ -39,27 +39,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-18T16:00:00Z"),
-		name: "Flamekissed Light Armor Skin",
-		id: "43576",
-		price: 480,
-		discount: 800,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-18T16:00:00Z"),
-		name: "Flamewalker Medium Armor Skin",
-		id: "43575",
-		price: 480,
-		discount: 800,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-18T16:00:00Z"),
-		name: "Flamewrath Heavy Armor Skin",
-		id: "43574",
-		price: 480,
-		discount: 800,
+		Finish: new Date("2017-03-19T16:00:00Z"),
+		name: "Shared Inventory Slot",
+		id: "67071",
+		price: 525,
+		discount: [[1, 525, 700], [3, 1417, 1890], [5, 2100, 2800]],
 		col: 0
 	},
 	{
