@@ -81,7 +81,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170303},
+		programVersion: {key: "int_utlProgramVersion", value: 170317},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -1173,45 +1173,35 @@ O = {
 		/*
 		 * Imports the new-line separated options.
 		 */
-		$("#optImportLocalStorage").change(function()
+		Z.bindFileInput("#optImportLocalStorage", function(pString)
 		{
-			try
+			var counter = 0;
+			var arr = pString.split(/\r\n/);
+			var line, key, value, datatype;
+			for (var i in arr)
 			{
-				Z.openTextFile($(this)[0].files[0], function(pString)
+				line = U.toHalf(arr[i], I.cOptionsDelimiter);
+				key = line[0];
+				value = line[1];
+				if (O.legalLocalStorageKeys[key]) // Make sure key exists
 				{
-					var counter = 0;
-					var arr = pString.split(/\r\n/);
-					var line, key, value, datatype;
-					for (var i in arr)
+					datatype = key.substring(0, O.cLengthOfPrefixes);
+					if (datatype === U.TypeEnum.isString)
 					{
-						line = U.toHalf(arr[i], I.cOptionsDelimiter);
-						key = line[0];
-						value = line[1];
-						if (O.legalLocalStorageKeys[key]) // Make sure key exists
-						{
-							datatype = key.substring(0, O.cLengthOfPrefixes);
-							if (datatype === U.TypeEnum.isString)
-							{
-								// Convert newline substitute to actual newline
-								value = value.replace(/\\r\\n/g, "\r\n");
-							}
-							localStorage[key] = value;
-							counter++;
-						}
+						// Convert newline substitute to actual newline
+						value = value.replace(/\\r\\n/g, "\r\n");
 					}
-					if (counter > 0)
-					{
-						I.print(counter + " options loaded. Please refresh your browser.");
-					}
-					else
-					{
-						I.print("No options loaded. Please make sure the file is properly formatted.");
-					}
-				});
+					localStorage[key] = value;
+					counter++;
+				}
 			}
-			catch (e)
+			if (counter > 0)
 			{
-				I.write("Error loading file.");
+				I.print(counter + " options loaded. Please refresh your browser.");
+			}
+			else
+			{
+				I.print("No options loaded. Please make sure the file is properly formatted.");
 			}
 		});
 	},
@@ -2872,6 +2862,7 @@ U = {
 		Recipes: "data/recipes.js",
 		Prices: "cache/prices.json",
 		Gem:  "data/gem.js",
+		Sale:  "data/sale.js",
 		Museum:  "data/museum.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
@@ -4856,7 +4847,7 @@ U = {
 };
 Z = {
 /* =============================================================================
- * @@Z Console commands and server-like maintenance functions
+ * @@Z Console commands and server-like maintenance and file functions
  * ========================================================================== */
 
 	cCommandPrefix: "/",
@@ -5172,6 +5163,30 @@ Z = {
 		{
 			pCallback(reader.result);
 		};
+	},
+	
+	/*
+	 * Binds a file input button for returning string.
+	 * @param jqobject pInput
+	 * @param function pCallback with the string if successful.
+	 */
+	bindFileInput: function(pInput, pCallback)
+	{
+		var input = $(pInput);
+		input.change(function()
+		{
+			try
+			{
+				Z.openTextFile($(this)[0].files[0], function(pString)
+				{
+					pCallback(pString);
+				});
+			}
+			catch (e)
+			{
+				I.write("Error loading file.");
+			}
+		});
 	},
 	
 	/*
@@ -12521,10 +12536,7 @@ V = {
 		{
 			Q.loadItemsSubdatabase(section.toLowerCase(), function()
 			{
-				E.updateExchangeRatios(function()
-				{
-					generateUnlockables();
-				});
+				generateUnlockables();
 			});
 		});
 	},
@@ -12564,18 +12576,21 @@ V = {
 	updateGemSubscription: function(pCallback)
 	{
 		var section = "Gem";
-		U.getScript(U.URL_DATA.Gem, function()
+		var checkSubscriptions = function()
 		{
 			if (H.GemSubscription === null)
 			{
 				V.initializeGemSubscription();
 			}
 			// Initialize price assoc
-			for (var i = 0; i < GW2T_SALE_DATA.length; i++)
+			var issalecurrent = T.isTimely(H.Sale);
+			for (var i = 0; i < H.Sale.Items.length; i++)
 			{
-				var item = GW2T_SALE_DATA[i];
-				if (isNaN(item.id) === false)
+				var item = H.Sale.Items[i];
+				if (isNaN(item.id) === false &&
+					(T.isTimely(item) || (item.Finish === undefined && issalecurrent)))
 				{
+					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
 					H.Sale.Values[item.id] = item.price;
 				}
 			}
@@ -12646,6 +12661,15 @@ V = {
 				I.print("<a href='http://gw2timer.com/?page=Gem'>Go to Gem Store Gallery</a> - "
 					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>Turn off Gem Alert</a>");
 			}
+		};
+		
+		// Retrieve data first
+		U.getScript(U.URL_DATA.Gem, function()
+		{
+			H.updateSaleData(function()
+			{
+				checkSubscriptions();
+			});
 		}, false);
 	},
 	
@@ -19471,6 +19495,8 @@ D = {
 			cs: "načítání", it: "caricamento", pl: "ładowanie", pt: "carregando", ru: "загрузка", zh: "正在载入"},
 		s_automatic: {de: "automatisch", es: "automático", fr: "automatique",
 			cs: "automatický", it: "automatico", pl: "automatyczny", pt: "automático", ru: "автоматический", zh: "自动的"},
+		s_custom: {de: "benutzerdefinierte", es: "personalizado", fr: "personnalisée",
+			cs: "vlastní", it: "personalizzata", pl: "niestandardowy", pt: "personalizado", ru: "настраиваемая", zh: "自定义"},
 		
 		// Prepositions and Conjunctions
 		s_and: {de: "und", es: "y", fr: "et",
@@ -23513,7 +23539,7 @@ M = {
 		{
 			if (pWantMessage)
 			{
-				I.write("No personal pins to work with. Double click on the map to lay pins.");
+				I.write("No path pins to work with. Double click on the map to lay pins.");
 			}
 			return false;
 		}
@@ -23609,8 +23635,6 @@ M = {
 		var colormaxlength = 32;
 		var commentmaxlength = 256;
 		var importmaxlength = 8192;
-		var sizeranged = 24;
-		var sizestandard = 32;
 		
 		var compasscontext = $(htmlidprefix + "ContextCompass");
 		var compassgallery = $(htmlidprefix + "ContextCompassList");
@@ -23620,9 +23644,9 @@ M = {
 		var nodetypeprev = null;
 		var compassprev = null;
 		
-		// Entry: lay another of the previously laid compass
-		var additem = $(htmlidprefix + "ContextAddCompass");
-		additem.click(function()
+		// Entry: Lay another of the previously laid compass
+		var addbutton = $(htmlidprefix + "ContextAddCompass");
+		addbutton.click(function()
 		{
 			if (compassprev)
 			{
@@ -23634,14 +23658,16 @@ M = {
 			}
 		});
 		
-		// Inputs: custom compass properties
-		var customcheck = $("<input type='checkbox' title='" + D.getPhraseOriginal("Enable range and comment") + ".' />");
+		// Inputs: Custom compass properties
+		var customcheck = $("<input type='checkbox' />");
+		var customchecklabel = $("<label title='" + D.getPhraseOriginal("Enable custom range and comment") + ".'></label>").append(customcheck);
 		var customrange = $("<input type='number' value='1200' min='0' max='" + rangemaxvalue
 			+ "' step='100' style='width:48px' class='cssInputText' title='" + D.getWordCapital("range") + "' />");
 		var customcolor = $("<input type='text' value='#ffffff' maxlength='" + colormaxlength
 			+ "' style='width:48px' class='cssInputText' title='" + D.getWordCapital("color") + "' />");
 		var customcomment = $("<input type='text' value='" + D.getWordCapital("comment") + "...' maxlength='" + commentmaxlength
-				+ "' style='width:128px; margin-left:4px;' class='cssInputText' title='" + D.getWordCapital("comment") + "' />");
+				+ "' style='width:" + ((I.ModeCurrent === I.ModeEnum.Overlay) ? 64 : 128)
+				+ "px; margin-left:4px;' class='cssInputText' title='" + D.getWordCapital("comment") + "' />");
 		
 		// Add resource node compasses if is this map
 		if (that.MapEnum === P.MapEnum.Tyria)
@@ -23670,11 +23696,6 @@ M = {
 			// Icon
 			compass.icon = compass.icon || "img/compass/" + compass.id + I.cPNG;
 			var compassbutton = $("<img src='" + compass.icon + "' />");
-			// Size
-			if (compass.size === undefined)
-			{
-				compass.size = (compass.range) ? [sizeranged, sizeranged] : [sizestandard, sizestandard];
-			}
 			// Button tooltip
 			var title = (compass.tooltip !== undefined) ? compass.tooltip : ((compass.range) ? D.getWordCapital("range") + " " + compass.range : "");
 			if (title.length)
@@ -23711,30 +23732,25 @@ M = {
 			{
 				compassbutton.click(function()
 				{
-					if (customcheck.is(":checked"))
-					{
-						// Custom range
-						iCompass.range = parseInt(customrange.val()),
-						// Custom color
-						iCompass.color = U.stripToColorString(customcolor.val());
-						// Custom comment
-						iCompass.comment = U.escapeHTML(customcomment.val());
-					}
-					compassprev = iCompass;
-					that.createCompass(iCompass, that.ContextLatLng);
+					var outputcompass = (customcheck.is(":checked")) ? $.extend({}, iCompass, {
+						range: parseInt(customrange.val()),
+						color: U.stripToColorString(customcolor.val()),
+						comment: U.escapeHTML(customcomment.val())
+					}) : iCompass;
+					compassprev = outputcompass;
+					that.createCompass(outputcompass, that.ContextLatLng);
 				});
 			})(compass);
 		}
 		
 		// Insert the custom inputs at the bottom of the gallery
 		$("<span id='" + that.MapEnum + "CompassCustom' style='display:block;' class='mapCompassCustom'></span>")
-			.appendTo(compassgallery).append([customcheck, customrange, customcolor, customcomment]).find("input").onEnterKey(function()
+			.prependTo(compassgallery).append([customchecklabel, customrange, customcolor, customcomment]).find("input").onEnterKey(function()
 		{
-			additem.trigger("click");
+			addbutton.trigger("click");
 		});
-		customcheck.wrap("<label></label>");
 		
-		// Entry: clear all compasses
+		// Entry: Clear all compasses
 		$(htmlidprefix + "ContextClearCompasses").click(function()
 		{
 			that.clearCompasses();
@@ -23745,23 +23761,21 @@ M = {
 		importbutton.click(function()
 		{
 			var str = $(htmlidprefix + "CompassImportText").val();
-			try {
-				var formation = JSON.parse(str);
-				if (Array.isArray(formation))
-				{
-					that.redrawCompasses(formation);
-				}
-			}
-			catch (e) {
-				I.write("Invalid data string for importing Compasses.");
-			};
+			that.parseCompasses(str);
+		});
+		var importfile = $("<input type='file' style='width:128px' />").insertBefore(importbutton);
+		Z.bindFileInput(importfile, function(pString)
+		{
+			that.parseCompasses(pString);
 		});
 		// Entry: Export current compasses
 		$(htmlidprefix + "ContextExportCompasses").click(function()
 		{
 			if (that.isCompassesLaid())
 			{
-				I.printFile(JSON.stringify(that.serializeCompasses()));
+				var outputstr = JSON.stringify(that.serializeCompasses());
+				Z.createFile(outputstr, "gw2t_compasses.json");
+				I.printFile(outputstr);
 			}
 		});
 		// Input: Compass data input box for importing
@@ -23792,9 +23806,13 @@ M = {
 			pEvent.stopPropagation();
 			$(this).select();
 		});
+		customchecklabel.click(function(pEvent)
+		{
+			pEvent.stopPropagation();
+		});
 		
 		// Finally
-		I.qTip.init(compasscontext.find("img, input"));
+		I.qTip.init(compasscontext.find("label, input, img"));
 		that.initializeCompassStorage();
 	},
 	
@@ -23883,6 +23901,8 @@ M = {
 		if (pCompany !== undefined && pCompany !== null && pCompany.length > 0)
 		{
 			this.clearCompasses();
+			var counter = 0;
+			var coords = [];
 			for (var i in pCompany)
 			{
 				var compass = pCompany[i];
@@ -23891,7 +23911,7 @@ M = {
 				var compasstomake = null;
 				if (this.Compasses[compass.id])
 				{
-					compasstomake = this.Compasses[compass.id];
+					compasstomake = $.extend({}, this.Compasses[compass.id], compass);
 				}
 				else if (compass.coord && coord)
 				{
@@ -23899,27 +23919,50 @@ M = {
 					compasstomake = {
 						id: "custom",
 						icon: "img/compass/custom.png",
-						size: [32, 32],
 						range: compass.range,
-						color: compass.color
+						color: compass.color,
+						comment: compass.comment
 					};
 				}
 				
 				// Only draw if it is a valid compass object
 				if (compasstomake !== null)
 				{
+					counter++;
+					coords.push(coord);
 					this.createCompass(compasstomake, this.convertGCtoLC(coord));
 				}
 				else
 				{
-					I.write("Failed parsing a compass.");
+					I.write("Failed parsing a compass: " + compass.id);
 				}
+			}
+			// After success
+			if (counter > 0)
+			{
+				this.goToView(T.getRandomElement(coords));
+				I.write(counter + " compasses reconstructed.");
 			}
 		}
 		else
 		{
 			I.write(D.getPhraseOriginal("Compass not available for this" + "."));
 		}
+	},
+	parseCompasses: function(pString)
+	{
+		try
+		{
+			var company = JSON.parse(pString);
+			if (Array.isArray(company))
+			{
+				this.redrawCompasses(company);
+			}
+		}
+		catch (e)
+		{
+			I.write("Invalid data string for importing Compasses.");
+		};
 	},
 	
 	/*
@@ -23945,7 +23988,7 @@ M = {
 	{
 		if (this.Layer.CompassIcon.getLayers().length === 0)
 		{
-			I.write("No compasses to work with. Lay compasses from the map's &quot;Compass&quot; context menu.");
+			I.write("No compass pins to work with. Lay compasses from the map's &quot;Compass&quot; context menu.");
 			return false;
 		}
 		return true;
@@ -23979,8 +24022,8 @@ M = {
 		this.toggleLayer(circle);
 		
 		// The interactive icon allowing the user to relocate the circle
-		var width = pCompass.size[0];
-		var height = pCompass.size[1];
+		var width = (pCompass.range) ? 24 : 32;
+		var height = (pCompass.range) ? 24 : 32;
 		var compass = L.marker(pLatLng,
 		{
 			circle: circle,
@@ -24911,15 +24954,14 @@ P = {
 			if (pIsSuccess)
 			{
 				that.isAPIRetrieved_MAPFLOOR = true;
-
-				/*
-				 * AJAX takes a while so can use this to advantage to delay graphics
-				 * that seem out of place without a map loaded.
-				 */
-				if (that.MapEnum === P.MapEnum.Tyria && O.Options.bol_displayEvents === false)
-				{
-					P.donePopulation();
-				}
+			}
+			/*
+			 * AJAX takes a while so can use this to advantage to delay graphics
+			 * that seem out of place without a map loaded.
+			 */
+			if (that.MapEnum === P.MapEnum.Tyria && O.Options.bol_displayEvents === false)
+			{
+				P.donePopulation();
 			}
 			
 			switch (that.MapEnum)
@@ -31209,6 +31251,15 @@ T = {
 	{
 		return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
 	},
+	getRandomElement: function(pArray)
+	{
+		if (pArray.length)
+		{
+			var randind = T.getRandomIntRange(0, pArray.length - 1);
+			return pArray[randind];
+		}
+		return null;
+	},
 	
 	/*
 	 * Gets the lowest and highest value inside an array.
@@ -31817,17 +31868,19 @@ T = {
 	},
 	
 	/*
-	 * Checks a time sensitive object if its Start and Finish date objects are
-	 * within the current time.
+	 * Checks a time sensitive object if its Start and Finish date objects fits
+	 * the provided time instant.
 	 * @param object pObject to check.
-	 * @param Date pDate time to compare with.
+	 * @param Date pDate time to compare with, such as now.
 	 * @param int pGracePeriod seconds to add to the finish time, optional.
 	 */
 	isTimely: function(pObject, pDate, pGracePeriod)
 	{
+		var comparedate = pDate || new Date(); // If comparison and start time is not provided then use now time
+		var start = pObject.Start || comparedate;
 		var finish = (pGracePeriod === undefined)
 			? pObject.Finish : (new Date(pObject.Finish.getTime() + pGracePeriod * T.cMSECONDS_IN_SECOND));
-		if (pDate >= pObject.Start && pDate <= finish)
+		if (comparedate >= start && comparedate <= finish)
 		{
 			return true;
 		}
@@ -32323,7 +32376,7 @@ H = {
 	Countdown: GW2T_DASHBOARD_DATA.Countdown,
 	Story: GW2T_DASHBOARD_DATA.Story,
 	Faux: GW2T_DASHBOARD_DATA.Faux,
-	Sale: GW2T_DASHBOARD_DATA.Sale,
+	Sale: GW2T_SALE_DATA,
 	Vendor: GW2T_DASHBOARD_DATA.Vendor,
 	GemSubscription: null,
 	isDashboardEnabled: true,
@@ -32485,8 +32538,6 @@ H = {
 			+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled");
 		$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
-		// Include the exchange rate "items" after determining range
-		H.Sale.Items = H.Sale.Padding.concat(H.Sale.Items);
 		// Determine if the current sale has price reduction
 		var isdiscounted = false;
 		var item;
@@ -32500,10 +32551,6 @@ H = {
 				{
 					isdiscounted = true;
 				}
-			}
-			if (item.Finish)
-			{
-				H.Sale.Countdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
 			}
 		}
 		$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
@@ -32551,7 +32598,7 @@ H = {
 			$("#dsbMenuSale").addClass("dsbMenuItemActive");
 			table.append(I.cThrobber);
 			Q.initializeFaux();
-			E.updateExchangeRatios(function()
+			H.updateSaleData(function()
 			{
 				var isonline = (E.Exchange.CoinInGem !== 0);
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
@@ -32563,6 +32610,8 @@ H = {
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				
 				var gemstr = "<ins class='s16 s16_gem'></ins>";
+				// Include the exchange rate "items" after determining range
+				H.Sale.Items = H.Sale.Padding.concat(H.Sale.Items);
 				for (var i = 0; i < H.Sale.Items.length; i++)
 				{
 					// Initialize variables
@@ -32570,6 +32619,10 @@ H = {
 					var url = item.url || U.getWikiSearchDefault(item.name);
 					var video = U.getYouTubeLink(item.name);
 					var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
+					if (item.Finish)
+					{
+						H.Sale.Countdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
+					}
 
 					var oldprice = null;
 					// Old price also includes percent off by dividing the new with the old
@@ -32655,6 +32708,22 @@ H = {
 		{
 			$("#dsbSaleCountdown_" + i).html(T.formatTimeLetter(H.Sale.Countdowns[i] - T.TIMESTAMP_UNIX_SECONDS, true));
 		}
+	},
+	
+	/*
+	 * Macro function for redownloading the sale data and exchange rates.
+	 * @param function pCallback
+	 */
+	updateSaleData: function(pCallback)
+	{
+		U.getScript(U.URL_DATA.Sale, function()
+		{
+			H.Sale = GW2T_SALE_DATA;
+			E.updateExchangeRatios(function()
+			{
+				pCallback();
+			});
+		}, false);
 	},
 	
 	/*
@@ -35891,26 +35960,80 @@ I = {
 	{
 		$(pMenu).addClass("jsHidable").find("li").each(function()
 		{
-			if ($(this).hasClass("jsIgnore") === false)
+			if ($(this).hasClass("jsIgnore"))
 			{
-				// If it is a menu item
-				if ($(this).hasClass("itemContextSubmenu") === false)
-				{
-					if (D.isLanguageDefault() === false)
-					{
-						$(this).text(D.getPhraseOriginal($(this).text()));
-					}
-				}
-				// If it is a label for a submenu
-				else
-				{
-					var label = $(this).find("> span");
-					label.html(D.getPhraseOriginal(label.text())).append(" <kbd>" + I.Symbol.TriRight + "</kbd>");
-				}
-				// Add bullet point decoration
-				$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
+				return;
 			}
+			// If it is a menu item
+			if ($(this).hasClass("itemContextSubmenu") === false)
+			{
+				if (D.isLanguageDefault() === false)
+				{
+					$(this).text(D.getPhraseOriginal($(this).text()));
+				}
+			}
+			// If it is a label for a submenu
+			else
+			{
+				var label = $(this).find("> span");
+				label.html(D.getPhraseOriginal(label.text())).append(" <kbd>" + I.Symbol.TriRight + "</kbd>");
+			}
+			// Add bullet point decoration
+			$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
 		});
+		
+		// Moves the submenus when they appear outside of screen
+		$(pMenu).find(".itemContextSubmenu").each(function()
+		{
+			$(this).mouseenter(function()
+			{
+				var parent = $(this);
+				var submenu = $(this).find("ul").first();
+				var offset = parent.offset();
+				var addX = (parent.width() / 2);
+				var addY = 6;
+				var posX = offset.left + addX;
+				var posY = offset.top;
+				var width = submenu.width();
+				var height = submenu.height();
+				var winwidth = $(window).width();
+				var winheight = $(window).height();
+				var adjustX = (posX + width > winwidth) ? -(width - addX) + "px" : "50%";
+				var adjustY = (posY + height > winheight) ? (winheight - (posY + height + addY)) + "px" : "auto";
+				submenu.css({left: adjustX});
+				submenu.css({marginTop: adjustY});
+			});
+		});
+	},
+	
+	/*
+	 * Shows a context menu element while respecting screen edges.
+	 * @param string pID of context menu.
+	 */
+	showContextMenu: function(pID)
+	{
+		var elm = $(pID);
+		var menuwidth = elm.width();
+		var menuheight = elm.height();
+		var winwidth = $(window).width();
+		var winheight = $(window).height();
+		var offsetX = 0;
+		var offsetY = 0;
+		var padding = 4;
+		
+		if (I.posX + menuwidth > winwidth)
+		{
+			offsetX = (I.posX + menuwidth + padding) - winwidth;
+		}
+		if (I.posY + menuheight > winheight)
+		{
+			offsetY = (I.posY + menuheight + padding) - winheight;
+		}
+		
+		elm.css({
+			top: I.posY - offsetY,
+			left: I.posX - offsetX
+		}).show();
 	},
 	
 	/*
@@ -37209,36 +37332,6 @@ I = {
 		}
 		var result = T.stepFunction($(window).width(), 200, 14, 22, 1);
 		$(".chnTitle h1, .chnTitle time").css({fontSize: result + "px"});
-	},
-	
-	/*
-	 * Shows a context menu element while respecting screen edges.
-	 * @param string pID of context menu.
-	 */
-	showContextMenu: function(pID)
-	{
-		var elm = $(pID);
-		var menuwidth = elm.width();
-		var menuheight = elm.height();
-		var winwidth = $(window).width();
-		var winheight = $(window).height();
-		var offsetX = 0;
-		var offsetY = 0;
-		var padding = 4;
-		
-		if (I.posX + menuwidth > winwidth)
-		{
-			offsetX = (I.posX + menuwidth + padding) - winwidth;
-		}
-		if (I.posY + menuheight > winheight)
-		{
-			offsetY = (I.posY + menuheight + padding) - winheight;
-		}
-		
-		elm.css({
-			top: I.posY - offsetY,
-			left: I.posX - offsetX
-		}).show();
 	},
 	
 	/*
