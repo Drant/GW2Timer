@@ -25412,7 +25412,7 @@ P = {
 				$.getJSON(U.URL_DATA.Map, function(pBackup)
 				{
 					doPopulate(pBackup);
-					finalizePopulate(false);
+					finalizePopulate(true);
 				});
 			}
 			else

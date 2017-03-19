@@ -39,11 +39,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-19T16:00:00Z"),
-		name: "Shared Inventory Slot",
-		id: "67071",
-		price: 525,
-		discount: [[1, 525, 700], [3, 1417, 1890], [5, 2100, 2800]],
+		Finish: new Date("2017-03-20T16:00:00Z"),
+		name: "Tradesman's Package",
+		id: "20760",
+		price: 50,
+		discount: [[1, 50, 100], [10, 400, 800]],
 		col: 0
 	},
 	{
