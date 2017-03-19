@@ -2866,6 +2866,7 @@ U = {
 		Gem:  "data/gem.js",
 		Sale:  "data/sale.js",
 		Museum:  "data/museum.js",
+		Pact:  "data/pact.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -11841,7 +11842,7 @@ V = {
 			aWantGem: false
 		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var generateMaterials = function(pUnlockeds)
+		var doGenerate = function(pUnlockeds)
 		{
 			var entry;
 			var unlockeds = {};
@@ -11871,7 +11872,7 @@ V = {
 			{
 				Q.loadItemsSubdatabase(section.toLowerCase(), function()
 				{
-					generateMaterials(pData);
+					doGenerate(pData);
 				});
 			}).fail(function(pRequest, pStatus)
 			{
@@ -12731,6 +12732,7 @@ V = {
 			return;
 		}
 		
+		var section = "Pact";
 		var container = B.createBank($("#pctBank"));
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var tab, slotscontainer, slot;
@@ -12766,7 +12768,7 @@ V = {
 			I.bindSortableTable(stat, {aPresortColumn: 4});
 		};
 		
-		$.getScript("data/pact.js", function()
+		var doGenerate = function()
 		{
 			history = GW2T_PACT_DATA;
 			// Count occurences
@@ -12845,6 +12847,14 @@ V = {
 					aHelpMessage: $("#accHelpPact").html()
 				});
 				generateStatistics();
+			});
+		};
+		
+		U.getScript(U.URL_DATA.Pact, function()
+		{
+			Q.loadItemsSubdatabase(section.toLowerCase(), function()
+			{
+				doGenerate();
 			});
 		});
 	},
@@ -19496,6 +19506,8 @@ D = {
 			cs: "příští", it: "seguente", pl: "następny", pt: "próximo", ru: "следующий", zh: "下一"},
 		s_off: {de: "aus", es: "desactivado", fr: "désactivé",
 			cs: "vypnuto", it: "disattivato", pl: "wyłączany", pt: "desativado", ru: "выключено", zh: "关"},
+		s_offline: {de: "offline", es: "sin conexión", fr: "hors connexion",
+			cs: "offline", it: "offline", pl: "offline", pt: "", ru: "автономный", zh: "脱机"},
 		s_predicted: {de: "vorhergesagt", es: "previsto", fr: "prédit",
 			cs: "předpovídal", it: "previsto", pl: "przewiduje", pt: "predito", ru: "предсказанный", zh: "预测"},
 		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit",
@@ -25399,7 +25411,8 @@ P = {
 				I.write(
 				"Guild Wars 2 API server is unreachable.<br />"
 				+ "Reasons could be:<br />"
-				+ "- The ArenaNet server is down for maintenance.<br />"
+				+ "- The ArenaNet server is down for maintenance. <a"
+					+ U.convertExternalAnchor(U.URL_API.Support) + ">Check status</a>.<br />"
 				+ "- Your browser is unsupported.<br />"
 				+ "- Your computer's time is out of sync.<br />"
 				+ "- This website's code encountered a bug.<br />"
@@ -32602,7 +32615,10 @@ H = {
 		// Bind buttons
 		$("#dsbMenuSale").click(function()
 		{
-			H.generateDashboardSale();
+			Q.loadItemsSubdatabase("gem", function()
+			{
+				H.generateDashboardSale();
+			});
 		});
 		// Automatically generate the items on sale if the boolean is true
 		I.toggleToggleIcon("#dsbSaleToggleIcon", H.Sale.isPreshown);
@@ -32645,7 +32661,6 @@ H = {
 			Q.initializeFaux();
 			H.updateSaleData(function()
 			{
-				var isonline = (E.Exchange.CoinInGem !== 0);
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
 				table.empty();
 				if (H.Sale.note.length > 0)
@@ -32702,8 +32717,7 @@ H = {
 					else
 					{
 						pricestr = "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
-							+ ((isonline) ? "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(item.price) + "</span>" :
-								" <a" + U.convertExternalAnchor(url) + ">" + item.name + "</a> ")
+							+ "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(item.price) + "</span>"
 							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
 					}
 					// Format the presentation of this item
@@ -32711,7 +32725,7 @@ H = {
 					var dataprop = (idisimg) ? "" : ("data-sale='" + item.id + "'");
 					var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
 					$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-						+ ((isonline) ? "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> " : "")
+						+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
 						+ "<div class='dsbSaleText'>"
 							+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
@@ -32817,7 +32831,10 @@ H = {
 		}
 		menubutton.click(function()
 		{
-			H.generateDashboardVendor();
+			Q.loadItemsSubdatabase("pact", function()
+			{
+				H.generateDashboardVendor();
+			});
 		});
 		$("#dsbVendorDraw").click(function()
 		{
