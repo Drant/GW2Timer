@@ -1502,10 +1502,10 @@ Countdown: {
 	Events: [
 	{
 		name: "ArenaNet API Offline",
-		url: "https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-API-temporarily-down",
+		url: "https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-rate-limiting-is-coming",
 		isIndefinite: true,
 		Start: new Date("2017-03-18T7:00:00Z"),
-		Finish: new Date("2017-03-19T23:00:00Z")
+		Finish: new Date("2017-03-20T00:00:00Z")
 	},
 	/*{
 		name_en: "Lunar Festival",
