@@ -1,6 +1,6 @@
 /*
  * This file is used by http://gw2timer.com
- * GW2 gem store sale items.
+ * GW2 gem store promotions and sale items.
  */
 GW2T_SALE_DATA = {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle

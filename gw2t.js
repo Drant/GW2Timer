@@ -92,6 +92,8 @@ O = {
 		GemSubscription: {key: "obj_utlGemSubscription", value: {}},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
+		BackupCompasses: {key: "obj_utlBackupCompasses", value: []},
+		BackupCompassesWvW: {key: "obj_utlBackupCompassesWvW", value: []},
 		StoredPins: {key: "obj_utlStoredPins", value: []},
 		StoredPinsWvW: {key: "obj_utlStoredPinsWvW", value: []},
 		StoredCompasses: {key: "obj_utlStoredCompasses", value: []},
@@ -8707,11 +8709,21 @@ A = {
 			Nodes: {}
 		};
 		
+		var finalizeAutoAudit = function()
+		{
+			// If ran from an embed then assume this was automated, so close the webpage after the audit finishes
+			if (I.isProgramEmbedded && U.Args["isAutoAudit"])
+			{
+				window.location.href = "about:blank";
+			}
+		};
+		
 		// Resets the auditing process in case it failed to let the user restart it
 		var dealError = function()
 		{
 			I.suspendElement(button, false);
 			buttonalt.show();
+			finalizeAutoAudit();
 		};
 		
 		// Creates a standard object of payments to be displayed for an audit category
@@ -9628,11 +9640,8 @@ A = {
 							historydelete.find("option:first").attr("selected", "selected");
 						}
 					});
-					// If ran from an embed then assume this was automated, so close the webpage after the audit finishes
-					if (I.isProgramEmbedded && U.Args["isAutoAudit"])
-					{
-						window.location.href = "about:blank";
-					}
+					
+					finalizeAutoAudit();
 				});
 			});
 			
@@ -23196,7 +23205,7 @@ M = {
 	},
 	
 	/*
-	 * Saves the current personal pins as backup. This is to be called when the
+	 * Saves the current personal pins as backup. This is to be called before the
 	 * user manually adds and inserts a pin.
 	 */
 	saveBackupPins: function()
@@ -23228,6 +23237,7 @@ M = {
 			+ "<li><b>Delete all pins:</b> right click the map for the clear pins function.</li>"
 			+ "<li><b>Move a pin:</b> hold click and drag that pin.</li>"
 			+ "<li><b>Move a pin to center:</b> right click that pin.</li>"
+			+ "<li><b>Zoom to a pin:</b> right click that pin when not in max zoom.</li>"
 			+ "<li><b>Check off a pin:</b> single click that pin.</li>"
 			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
 			+ "<li><b>Get coordinates of a path:</b> single click on the path.</li>"
@@ -23241,11 +23251,12 @@ M = {
 		var str = "<h2>Compass Pins Usage</h2>"
 			+ "<ul>"
 			+ "<li><b>Create a pin:</b> select a compass from the context menu gallery.</li>"
-			+ "<li><b>Create a custom pin:</b> checkmark the checkbox by the custom input boxes and enter your own range, color, and comment.</li>"
+			+ "<li><b>Create a custom pin:</b> checkmark the checkbox by the custom input boxes then enter your own range, color, and comment.</li>"
 			+ "<li><b>Delete a pin:</b> double click that pin.</li>"
 			+ "<li><b>Delete all pins:</b> right click the map for the clear pins function.</li>"
 			+ "<li><b>Move a pin:</b> hold click and drag that pin.</li>"
 			+ "<li><b>Move a pin to center:</b> right click that pin.</li>"
+			+ "<li><b>Zoom to a pin:</b> right click that pin when not in max zoom.</li>"
 			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
 			+ "<li><b>Export pins for sharing:</b> use the compass export function and copy and output text.</li>"
 			+ "<li><b>Import pins from text:</b> use the compass import function, then paste the compass data text into the adjacent input box.</li>"
@@ -23635,10 +23646,10 @@ M = {
 		var htmlidprefix = "#" + that.MapEnum;
 		var iconsperline = 8;
 		var nodeiconsperline = 4;
-		var rangemaxvalue = 20000;
+		var rangemaxvalue = 1000000;
 		var colormaxlength = 32;
 		var commentmaxlength = 256;
-		var importmaxlength = 8192;
+		var importmaxlength = 65536;
 		
 		var compasscontext = $(htmlidprefix + "ContextCompass");
 		var compassgallery = $(htmlidprefix + "ContextCompassList");
@@ -23654,6 +23665,7 @@ M = {
 		{
 			if (compassprev)
 			{
+				that.saveBackupCompasses();
 				that.createCompass(compassprev, that.ContextLatLng);
 			}
 			else
@@ -23742,6 +23754,7 @@ M = {
 						comment: U.escapeHTML(customcomment.val())
 					}) : iCompass;
 					compassprev = outputcompass;
+					that.saveBackupCompasses();
 					that.createCompass(outputcompass, that.ContextLatLng);
 				});
 			})(compass);
@@ -23772,17 +23785,7 @@ M = {
 		{
 			that.parseCompasses(pString);
 		});
-		// Entry: Export current compasses
-		$(htmlidprefix + "ContextExportCompasses").click(function()
-		{
-			if (that.isCompassesLaid())
-			{
-				var outputstr = JSON.stringify(that.serializeCompasses());
-				Z.createFile(outputstr, "gw2t_compasses.json");
-				I.printFile(outputstr);
-			}
-		});
-		// Input: Compass data input box for importing
+		// Input: Import input box
 		$("<input id='" + that.MapEnum + "CompassImportText' type='text' value='' maxlength='"
 			+ importmaxlength + "' style='width:96px; margin-left:4px;' class='cssInputText' title='"
 			+ "<dfn>Export</dfn> to get the textual copy of laid compasses.<br />"
@@ -23791,6 +23794,18 @@ M = {
 		{
 			importbutton.trigger("click");
 		}).appendTo(importbutton);
+		// Entry: Export current compasses
+		$(htmlidprefix + "ContextExportCompasses").click(function()
+		{
+			if (that.isCompassesLaid())
+			{
+				var outputstr = JSON.stringify(that.serializeCompasses());
+				I.print("Saveable File:");
+				Z.createFile(outputstr, "gw2t_compasses.json");
+				I.print("<br />Copyable Text:");
+				I.printFile(outputstr);
+			}
+		});
 		
 		// Entry: Draw standard siege placement for WvW
 		$("#wvwContextDrawCompasses").click(function()
@@ -23798,10 +23813,16 @@ M = {
 			W.redrawDefaultCompasses();
 		});
 		
-		// Entry: Compass help
+		// Entry: Help message
 		$(htmlidprefix + "ContextHelpCompasses").click(function()
 		{
 			that.printCompassHelp();
+		});
+		
+		// Entry: Undo by loading backup
+		$(htmlidprefix + "ContextUndoCompasses").click(function()
+		{
+			that.loadBackupCompasses();
 		});
 		
 		// Allow interaction with the inputs within the context menu
@@ -23860,13 +23881,33 @@ M = {
 	},
 	
 	/*
+	 * Saves the current compass pins as backup. This is to be called before the
+	 * user manually adds a compass.
+	 */
+	saveBackupCompasses: function()
+	{
+		var obj = O.Utilities["BackupCompasses" + this.OptionSuffix];
+		localStorage[obj.key] = JSON.stringify(this.serializeCompasses());
+	},
+	loadBackupCompasses: function()
+	{
+		var obj = O.Utilities["BackupCompasses" + this.OptionSuffix];
+		try
+		{
+			obj.value = JSON.parse(localStorage[obj.key]);
+		}
+		catch (e) {}
+		this.redrawCompasses(obj.value);
+	},
+	
+	/*
 	 * Gets an array of objects with properties needed to reconstruct the compasses on the map.
 	 * @returns array of objects.
 	 */
 	serializeCompasses: function()
 	{
 		var that = this;
-		var compasses = [];
+		var company = [];
 		that.Layer.CompassCircle.eachLayer(function(iLayer)
 		{
 			var opt = iLayer.options;
@@ -23888,10 +23929,10 @@ M = {
 			{
 				compass.comment = opt.compasscomment;
 			}
-			compasses.push(compass);
+			company.push(compass);
 		});
-		U.sortObjects(compasses, {aKeyName: "id"});
-		return compasses;
+		U.sortObjects(company, {aKeyName: "id"});
+		return company;
 	},
 	
 	/*
@@ -35528,7 +35569,6 @@ I = {
 	},
 	printFile: function(pString)
 	{
-		I.print("");
 		$("<textarea class='cssText cslText'></textarea>").appendTo(I.getConsole()).val(pString);
 		I.print("");
 		I.bindConsoleInput();
