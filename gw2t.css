@@ -1319,7 +1319,7 @@ textarea.jsCopyCode {
 }
 .dsbSaleCountdown {
 	position: absolute;
-	top: -14px;
+	top: 10px;
 	left: 0;
 	font-size: 12px;
 	font-family: monospace;

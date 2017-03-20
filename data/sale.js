@@ -39,11 +39,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-20T16:00:00Z"),
-		name: "Tradesman's Package",
-		id: "20760",
-		price: 50,
-		discount: [[1, 50, 100], [10, 400, 800]],
+		Finish: new Date("2017-03-21T16:00:00Z"),
+		name: "Storage Expander",
+		id: "42932",
+		price: 680,
+		discount: 800,
 		col: 0
 	},
 	{
@@ -54,6 +54,7 @@ GW2T_SALE_DATA = {
 		col: 0
 	},
 	{
+		Finish: new Date("2017-03-21T16:00:00Z"),
 		name: "Mini Angry Chest",
 		id: "70234",
 		price: 400,
@@ -61,6 +62,7 @@ GW2T_SALE_DATA = {
 		col: 0
 	},
 	{
+		Finish: new Date("2017-03-21T16:00:00Z"),
 		name: "Lion's Arch Rebuild Dye Kit",
 		id: "69934",
 		price: 125,
@@ -68,6 +70,7 @@ GW2T_SALE_DATA = {
 		col: 0
 	},
 	{
+		Finish: new Date("2017-03-21T16:00:00Z"),
 		name: "Mini Chieftain Utahein and Mini Svanir",
 		id: "67281",
 		price: 700,
@@ -75,6 +78,7 @@ GW2T_SALE_DATA = {
 		col: 1
 	},
 	{
+		Finish: new Date("2017-03-21T16:00:00Z"),
 		name: "Shadow Assassin Outfit",
 		id: "66658",
 		price: 700,
@@ -82,6 +86,7 @@ GW2T_SALE_DATA = {
 		col: 1
 	},
 	{
+		Finish: new Date("2017-03-21T16:00:00Z"),
 		name: "Raven's Spirit Glider",
 		id: "80725",
 		price: 500,
@@ -89,6 +94,7 @@ GW2T_SALE_DATA = {
 		col: 1
 	},
 	{
+		Finish: new Date("2017-03-21T16:00:00Z"),
 		name: "Shattered Bloodstone Glider",
 		id: "80795",
 		price: 400,
@@ -96,6 +102,7 @@ GW2T_SALE_DATA = {
 		col: 1
 	},
 	{
+		Finish: new Date("2017-03-21T16:00:00Z"),
 		name: "Braham's Wolfblood Pauldrons",
 		id: "80082",
 		price: 300,

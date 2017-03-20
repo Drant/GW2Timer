@@ -23241,37 +23241,45 @@ M = {
 	 */
 	printPinHelp: function()
 	{
-		var str = "<h2>Path Pins Usage</h2>"
+		var str = "<h2>Path Pins Interactions</h2>"
 			+ "<ul>"
 			+ "<li><b>Create a pin:</b> double click an empty area on the map (multiple pins creates a path).</li>"
 			+ "<li><b>Insert a pin between a path:</b> double click a part of the path.</li>"
 			+ "<li><b>Delete a pin:</b> double click that pin.</li>"
-			+ "<li><b>Delete all pins:</b> right click the map for the clear pins function.</li>"
+			+ "<li><b>Delete all pins:</b> choose Clear from the Path context menu.</li>"
 			+ "<li><b>Move a pin:</b> hold click and drag that pin.</li>"
 			+ "<li><b>Move a pin to center:</b> right click that pin.</li>"
 			+ "<li><b>Zoom to a pin:</b> right click that pin when not in max zoom.</li>"
+			+ "</ul>"
+			+ "<h2>Path Pins Features</h2>"
+			+ "<ul>"
 			+ "<li><b>Check off a pin:</b> single click that pin.</li>"
 			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
 			+ "<li><b>Get coordinates of a path:</b> single click on the path.</li>"
 			+ "<li><b>Generate a path:</b> paste the path coordinates into the coordinates bar and press Enter.</li>"
 			+ "<li><b>Optimize a path:</b> middle click that pin, it will become the starting pin.</li>"
+			+ "<li><b>Save/Load pins:</b> the save slots can be named, which can be filtered by the search bar.</li>"
 			+ "</ul>";
 		I.help(str);
 	},
 	printCompassHelp: function()
 	{
-		var str = "<h2>Compass Pins Usage</h2>"
+		var str = "<h2>Compass Pins Interactions</h2>"
 			+ "<ul>"
-			+ "<li><b>Create a pin:</b> select a compass from the context menu gallery.</li>"
+			+ "<li><b>Create a pin:</b> select an icon from the context menu gallery.</li>"
 			+ "<li><b>Create a custom pin:</b> checkmark the checkbox by the custom input boxes then enter your own range, color, and comment.</li>"
 			+ "<li><b>Delete a pin:</b> double click that pin.</li>"
-			+ "<li><b>Delete all pins:</b> right click the map for the clear pins function.</li>"
+			+ "<li><b>Delete all pins:</b> choose Clear from the Compass context menu.</li>"
 			+ "<li><b>Move a pin:</b> hold click and drag that pin.</li>"
 			+ "<li><b>Move a pin to center:</b> right click that pin.</li>"
 			+ "<li><b>Zoom to a pin:</b> right click that pin when not in max zoom.</li>"
+			+ "</ul>"
+			+ "<h2>Compass Pins Features</h2>"
+			+ "<ul>"
 			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
 			+ "<li><b>Export pins for sharing:</b> use the compass export function and copy and output text.</li>"
 			+ "<li><b>Import pins from text:</b> use the compass import function, then paste the compass data text into the adjacent input box.</li>"
+			+ "<li><b>Save/Load pins:</b> the save slots can be named, which can be filtered by the search bar.</li>"
 			+ "</ul>";
 		I.help(str);
 	},
@@ -23842,7 +23850,7 @@ M = {
 		{
 			pEvent.stopPropagation();
 			$(this).select();
-		});
+		}).trigger("mouseenter"); // Trigger the context menu positioning function after generating the menu
 		customchecklabel.click(function(pEvent)
 		{
 			pEvent.stopPropagation();
@@ -24982,7 +24990,7 @@ P = {
 	 */
 	populateMap: function(pMapObject)
 	{
-		if ( ! I.isMapEnabled)
+		if (I.isMapEnabled === false)
 		{
 			return;
 		}
@@ -25406,7 +25414,8 @@ P = {
 			finalizePopulate(true);
 		}).fail(function()
 		{
-			if (I.ModeCurrent === I.ModeEnum.Website)
+			// If failed to get from API then use backup cache
+			if (that.MapEnum === P.MapEnum.Tyria)
 			{
 				I.write(
 				"Guild Wars 2 API server is unreachable.<br />"
@@ -25417,11 +25426,7 @@ P = {
 				+ "- Your computer's time is out of sync.<br />"
 				+ "- This website's code encountered a bug.<br />"
 				+ "Map will use backup cache and features will be limited.<br />", 20);
-			}
-			
-			// If failed to get from API then use backup cache
-			if (that.MapEnum === P.MapEnum.Tyria)
-			{
+				
 				$.getJSON(U.URL_DATA.Map, function(pBackup)
 				{
 					doPopulate(pBackup);
@@ -36043,7 +36048,7 @@ I = {
 			$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
 		});
 		
-		// Moves the submenus when they appear outside of screen
+		// Repositions the submenus when they appear outside of screen
 		$(pMenu).find(".itemContextSubmenu").each(function()
 		{
 			$(this).mouseenter(function()

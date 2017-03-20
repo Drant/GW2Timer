@@ -1467,7 +1467,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. <a href='http://i.imgur.com/E2MbCvA.png'>Right click on the map</a> for &quot;Compass&quot; map markers via <a href='http://forum.renaka.com/topic/5546166/4#post603314'>overlay app</a>.",
+	pve: "<a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. <a href='https://twitter.com/GW2Timer/status/843197087533555712'>Right click on the map</a> for &quot;Compass&quot; map markers via <a href='http://forum.renaka.com/topic/5546166/4#post603314'>overlay app</a>.",
 	wvw: "<a href='https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-API-temporarily-down'>ArenaNet API is offline for maintenance.</a>",
 	Start: new Date("2016-03-14T16:00:00Z"),
 	Finish: new Date("2017-04-04T16:00:00Z"),
@@ -1505,7 +1505,7 @@ Countdown: {
 		url: "https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-rate-limiting-is-coming",
 		isIndefinite: true,
 		Start: new Date("2017-03-18T7:00:00Z"),
-		Finish: new Date("2017-03-20T17:00:00Z")
+		Finish: new Date("2017-03-21T17:00:00Z")
 	},
 	/*{
 		name_en: "Lunar Festival",
