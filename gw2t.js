@@ -12672,7 +12672,7 @@ V = {
 			}
 			if (isavailable || isdiscounted)
 			{
-				I.print("<a href='http://gw2timer.com/?page=Gem'>Go to Gem Store Gallery</a> - "
+				I.print("<a href='http://gw2timer.com/?page=Gem'>Go to Gem Store Wishlist</a> - "
 					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>Turn off Gem Alert</a>");
 			}
 		};
@@ -25417,15 +25417,18 @@ P = {
 			// If failed to get from API then use backup cache
 			if (that.MapEnum === P.MapEnum.Tyria)
 			{
-				I.write(
-				"Guild Wars 2 API server is unreachable.<br />"
-				+ "Reasons could be:<br />"
-				+ "- The ArenaNet server is down for maintenance. <a"
-					+ U.convertExternalAnchor(U.URL_API.Support) + ">Check status</a>.<br />"
-				+ "- Your browser is unsupported.<br />"
-				+ "- Your computer's time is out of sync.<br />"
-				+ "- This website's code encountered a bug.<br />"
-				+ "Map will use backup cache and features will be limited.<br />", 20);
+				if (I.ModeCurrent === I.ModeEnum.Website)
+				{
+					I.write(
+					"Guild Wars 2 API server is unreachable.<br />"
+					+ "Reasons could be:<br />"
+					+ "- The ArenaNet server is down for maintenance. <a"
+						+ U.convertExternalAnchor(U.URL_API.Support) + ">Check status</a>.<br />"
+					+ "- Your browser is unsupported.<br />"
+					+ "- Your computer's time is out of sync.<br />"
+					+ "- This website's code encountered a bug.<br />"
+					+ "Map will use backup cache and features will be limited.<br />", 20);
+				}
 				
 				$.getJSON(U.URL_DATA.Map, function(pBackup)
 				{
@@ -26783,6 +26786,9 @@ G = {
 		var activityname = D.getObjectName(activity.Activities[activityalias]);
 		$("#dlyActivity").html("<h2><img src='img/daily/activities/" + activityalias + I.cPNG + "' />"
 			+ " <a" + U.convertExternalAnchor(U.getWikiLinkLanguage(activityname)) + ">" + activityname + "</a> <ins class='dly dly_pve_activity'></ins></h2>");
+	
+		// Daily countdown
+		T.isChecklistCountdownsStarted = true;
 		
 		// Generate daily achievement boxes
 		G.fillDailyCalendar(calendar, now);
