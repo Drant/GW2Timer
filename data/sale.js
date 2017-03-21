@@ -39,11 +39,18 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-21T16:00:00Z"),
-		name: "Storage Expander",
-		id: "42932",
-		price: 680,
-		discount: 800,
+		Finish: new Date("2017-03-22T16:00:00Z"),
+		name: "Black Lion Salvage Kit",
+		id: "19986",
+		price: 195,
+		discount: 300,
+		col: 0
+	},
+	{
+		name: "Mini Krytan Floppy Fish",
+		id: "http://i.imgur.com/865isvF.png",
+		price: 350,
+		discount: null,
 		col: 0
 	},
 	{
@@ -54,58 +61,34 @@ GW2T_SALE_DATA = {
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-21T16:00:00Z"),
-		name: "Mini Angry Chest",
-		id: "70234",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-21T16:00:00Z"),
-		name: "Lion's Arch Rebuild Dye Kit",
-		id: "69934",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-21T16:00:00Z"),
-		name: "Mini Chieftain Utahein and Mini Svanir",
-		id: "67281",
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Black Feather Wings Glider",
+		id: "70048",
 		price: 700,
 		discount: null,
 		col: 1
 	},
 	{
-		Finish: new Date("2017-03-21T16:00:00Z"),
-		name: "Shadow Assassin Outfit",
-		id: "66658",
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Black Feather Wings Backpack",
+		id: "68686",
 		price: 700,
 		discount: null,
 		col: 1
 	},
 	{
-		Finish: new Date("2017-03-21T16:00:00Z"),
-		name: "Raven's Spirit Glider",
-		id: "80725",
-		price: 500,
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Mad King's Outfit",
+		id: "65196",
+		price: 700,
 		discount: null,
 		col: 1
 	},
 	{
-		Finish: new Date("2017-03-21T16:00:00Z"),
-		name: "Shattered Bloodstone Glider",
-		id: "80795",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		Finish: new Date("2017-03-21T16:00:00Z"),
-		name: "Braham's Wolfblood Pauldrons",
-		id: "80082",
-		price: 300,
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Haunted Gramophone",
+		id: "67391",
+		price: 600,
 		discount: null,
 		col: 1
 	}

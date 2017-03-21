@@ -50,7 +50,7 @@ Outfit: [
 	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}},
 	{i: 64756, n: "Cook's Outfit", p: {gem: 700}},
 	{i: 66279, n: "Ancestral Outfit", p: {gem: 700}},
-	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}},
+	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: -700}},
 	{i: 67040, n: "Ceremonial Plated Outfit", p: {gem: 700}},
 	{i: 67398, n: "Noble Count Outfit", p: {gem: 700}},
 	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: -700}},
@@ -118,8 +118,8 @@ Glider: [
 	{i: 80018, n: "Infinirarium Glider", p: {gem: 0}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
 	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
-	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}},
-	{i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}}
+	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: -400}},
+	{i: 80725, n: "Raven's Spirit Glider", p: {gem: -500}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
@@ -203,7 +203,7 @@ Shoulder: [
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: 400}},
-	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}}
+	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}},
@@ -431,7 +431,7 @@ Mini: [
 	{i: 48936, n: "Great Jungle Wurm 3 Pack", p: {gem: -300}},
 	{i: 50090, n: "Creepy Mini 3-Pack", p: {gem: -500}},
 	{i: 64192, n: "Baby Minis Series 1 Pack", p: {gem: -1600}},
-	{i: 67281, n: "Mini Chieftain Utahein and Mini Svanir", p: {gem: 700}},
+	{i: 67281, n: "Mini Chieftain Utahein and Mini Svanir", p: {gem: -700}},
 	{i: 36317, n: "Mini Spooky Ghost", p: {gem: -166}},
 	{i: 36321, n: "Mini Spooky Skeleton", p: {gem: -166}},
 	{i: 36319, n: "Mini Spooky Spider", p: {gem: -166}},

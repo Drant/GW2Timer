@@ -1505,7 +1505,7 @@ Countdown: {
 		url: "https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-rate-limiting-is-coming",
 		isIndefinite: true,
 		Start: new Date("2017-03-18T7:00:00Z"),
-		Finish: new Date("2017-03-21T17:00:00Z")
+		Finish: new Date("2017-03-22T17:00:00Z")
 	},
 	/*{
 		name_en: "Lunar Festival",
