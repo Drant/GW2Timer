@@ -31,7 +31,7 @@ Dyeable: [
 	{u: 27, i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
 	{u: 31, i: 79631, n: "Spectral Glider", p: {gem: 500}},
 	{u: 37, i: 80484, n: "Necrotic Glider", p: {gem: 500}},
-	{u: 39, i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}}
+	{u: 38, i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}}
 ],
 Colored: [
 	{u: 5, i: 67054, n: "Heart of Thorns Glider", p: {gem: 0}},
@@ -47,7 +47,7 @@ Colored: [
 	{u: 32, i: 79660, n: "Grasping Phantom Glider", p: {gem: 0}},
 	{u: 35, i: 80018, n: "Infinirarium Glider", p: {gem: 0}},
 	{u: 36, i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
-	{u: 38, i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}}
+	{u: 39, i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}}
 ],
 Combo: [ // The audit function depends on this named category for ignoring duplicate backpack-glider skin
 	{u: 11, i: 77474, n: "The Ascension Glider", p: {craft: true}},
