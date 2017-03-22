@@ -39,25 +39,66 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-22T16:00:00Z"),
-		name: "Black Lion Salvage Kit",
-		id: "19986",
-		price: 195,
-		discount: 300,
+		Finish: new Date("2017-03-23T16:00:00Z"),
+		name: "Aetherblade Light Armor Skin",
+		id: "42870",
+		price: 400,
+		discount: 800,
 		col: 0
 	},
 	{
-		name: "Mini Krytan Floppy Fish",
-		id: "80860",
+		Finish: new Date("2017-03-23T16:00:00Z"),
+		name: "Aetherblade Medium Armor Skin",
+		id: "42869",
+		price: 400,
+		discount: 800,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-23T16:00:00Z"),
+		name: "Aetherblade Heavy Armor Skin",
+		id: "42868",
+		price: 400,
+		discount: 800,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Mad King's Outfit",
+		id: "65196",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Haunted Gramophone",
+		id: "67391",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-25T16:00:00Z"),
+		name: "Grenth Hood Skin",
+		id: "47890",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-25T16:00:00Z"),
+		name: "Mini Feline Familiar",
+		id: "79651",
 		price: 350,
 		discount: null,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-28T16:00:00Z"),
-		name: "Shield of the Goddess",
-		id: "80861",
-		price: 600,
+		Finish: new Date("2017-03-25T16:00:00Z"),
+		name: "Phantom's Hood",
+		id: "65203",
+		price: 200,
 		discount: null,
 		col: 0
 	},
@@ -78,18 +119,17 @@ GW2T_SALE_DATA = {
 		col: 1
 	},
 	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Mad King's Outfit",
-		id: "65196",
-		price: 700,
+		Finish: new Date("2017-03-28T16:00:00Z"),
+		name: "Shield of the Goddess",
+		id: "80861",
+		price: 600,
 		discount: null,
 		col: 1
 	},
 	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Haunted Gramophone",
-		id: "67391",
-		price: 600,
+		name: "Mini Krytan Floppy Fish",
+		id: "80860",
+		price: 350,
 		discount: null,
 		col: 1
 	}

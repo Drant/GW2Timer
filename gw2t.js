@@ -17160,15 +17160,18 @@ Q = {
 								var resultentry = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(item.rarity) + "' data-id='" + itemid + "'>"
 									+ "<img src='" + item.icon + "'>"
 									+ U.highlightSubstring(item.name, pQuery) + "</dfn>").appendTo(resultslist.find(".itmSearchResultLine_" + itemid));
-								resultentry.click(function()
+								(function(iItem)
 								{
-									if (Settings.aCallback)
+									resultentry.click(function()
 									{
-										Settings.aCallback(item);
-										toggleResults(false);
-									}
-									resultslist.removeData("selectedresult");
-								});
+										if (Settings.aCallback)
+										{
+											Settings.aCallback(iItem);
+											toggleResults(false);
+										}
+										resultslist.removeData("selectedresult");
+									});
+								})(item)
 								I.updateScrollbar(resultsscroll);
 								// Tooltip for the listed item
 								Q.scanItem(item, {aElement: resultentry});
