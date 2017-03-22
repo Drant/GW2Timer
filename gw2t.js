@@ -7981,7 +7981,7 @@ A = {
 				// Ask for confirmation if key is not empty
 				if (str.length > 0)
 				{
-					if (confirm("Delete this API token?\nNote: Audit history must be manually deleted at http://gw2timer.com/audit"))
+					if (confirm("Delete this API token?\nNote: Audit history must be manually deleted at gw2timer.com/audit"))
 					{
 						token.remove();
 						A.saveTokens();

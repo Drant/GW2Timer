@@ -526,7 +526,8 @@ Mini: [
 	{i: 79651, n: "Mini Feline Familiar", p: {gem: -350}},
 	{i: 79693, n: "Mini Bloodstone Rock", p: {gem: 350}},
 	{i: 80044, n: "Mini Festive Aurene", p: {gem: -400}},
-	{i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}}
+	{i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}},
+	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: -350}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},

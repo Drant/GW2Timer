@@ -48,7 +48,7 @@ GW2T_SALE_DATA = {
 	},
 	{
 		name: "Mini Krytan Floppy Fish",
-		id: "http://i.imgur.com/865isvF.png",
+		id: "80860",
 		price: 350,
 		discount: null,
 		col: 0
