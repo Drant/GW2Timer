@@ -333,9 +333,17 @@ a.lboLink {
 }
 .lboScore {
 	width: auto;
-	text-align: right;
+	text-align: left;
 }
 .lboScore var {
+	width: 64px;
+	margin-left: 4px;
+}
+.lboScoreLegacy {
+	width: auto;
+	text-align: right;
+}
+.lboScoreLegacy var {
 	width: 64px;
 	margin-right: 4px;
 }
@@ -376,15 +384,43 @@ a.lboLink {
 	background: rgba(0, 0, 0, 0.2);
 }
 .lboScore samp s {
+	float: left;
+}
+.lboScoreLegacy samp s {
 	float: right;
 }
 .lboPPT {
 	width: auto;
-	text-align: left;
+	text-align: right;
 }
 .lboPPT var {
 	width: 32px;
+	margin-right: 4px;
+}
+.lboPPTLegacy {
+	width: auto;
+	text-align: left;
+}
+.lboPPTLegacy var {
+	width: 32px;
 	margin-left: 4px;
+}
+.lboVictory {
+	width: auto;
+	text-align: right;
+}
+.lboVictory var {
+	position: relative;
+	width: 48px;
+	margin-right: 4px;
+}
+.lboVictory samp s {
+	float: right;
+}
+.lboVictoryIcon {
+	position: absolute;
+	left: 0;
+	width: 24px; height: 24px;
 }
 .lboLand {
 	margin-left: 8px;

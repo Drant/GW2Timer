@@ -2844,7 +2844,8 @@ U = {
 	
 	URL_DATA:
 	{
-		Map: "cache/map.json",
+		Maps: "cache/maps_{0}.json",
+		Events: "cache/events_{0}.json",
 		Account: "data/account.js",
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
@@ -2884,10 +2885,11 @@ U = {
 		U.URL_API.LangKey = "lang=" + lang;
 		var langsuffix = "&lang=" + lang;
 		
-		U.URL_META.BuildNotes = U.URL_META.BuildNotes.replace("{0}", lang);
+		var replacekey = "{0}";
+		U.URL_META.BuildNotes = U.URL_META.BuildNotes.replace(replacekey, lang);
+		U.URL_DATA.Maps = U.URL_DATA.Maps.replace(replacekey, lang);
+		U.URL_DATA.Events = U.URL_DATA.Events.replace(replacekey, lang);
 		U.URL_API.Worlds += "?" + U.URL_API.LangKey + "&ids=";
-		U.URL_API.MapFloorTyria += langsuffix;
-		U.URL_API.MapFloorMists += langsuffix;
 		U.URL_API.TextToSpeech += lang + "&sv=&vn=&pitch=0.5&rate=0.4";
 	},
 	
@@ -7202,25 +7204,32 @@ Z = {
 	},
 	
 	/*
-	 * Gets and compressed the current map floor details.
+	 * Gets and trims the current map floor details.
 	 */
 	collateMaps: function()
 	{
-		$.getJSON(U.URL_API.MapFloorTyria, function(pData)
+		var printFile = function(pData, pLanguage)
 		{
-			// Trim unused zones
 			for (var i in pData.regions)
 			{
 				var region = pData.regions[i];
 				for (var ii in region.maps)
 				{
+					// Only keep the prelisted zones
 					if (M.isZoneValid(ii) === false)
 					{
 						delete region.maps[ii];
 					}
 				}
 			}
-			Z.createFile(U.lineJSON(pData), "map.json");
+			Z.createFile(U.lineJSON(pData), "maps_" + pLanguage + I.cJSON);
+		};
+		Z.fetchAPIMultilingual(U.URL_API.MapFloorTyria, function(pData)
+		{
+			for (var i in pData)
+			{
+				printFile(pData[i], i);
+			}
 		});
 	},
 	
@@ -7229,11 +7238,12 @@ Z = {
 	 */
 	collateEvents: function()
 	{
-		var printEventFile = function(pData, pLanguage)
+		var printFile = function(pData, pLanguage)
 		{
 			var formatteddata = [];
 			for (var i in pData.events)
 			{
+				// Make the events accessible with its ID
 				pData.events[i].id = i;
 				formatteddata.push(pData.events[i]);
 			}
@@ -7243,7 +7253,7 @@ Z = {
 		{
 			for (var i in pData)
 			{
-				printEventFile(pData[i], i);
+				printFile(pData[i], i);
 			}
 		});
 	}
@@ -15788,6 +15798,15 @@ Q = {
 			return jqxhr;
 		}
 	},
+	getCachedItem: function(pItemID)
+	{
+		var box = Q.Box[pItemID];
+		if (box)
+		{
+			return box.oItem;
+		}
+		return null;
+	},
 	getItems: function(pItemIDs, pCallback)
 	{
 		// Check for items already cached
@@ -15819,7 +15838,7 @@ Q = {
 			pCallback();
 		}});
 	},
-	getPricedItems: function(pItemIDs, pCallback)
+	getPricedItems: function(pItemIDs, pCallback, pWantCache)
 	{
 		// Combine item details and TP price retrieval in one call
 		Q.getItems(pItemIDs, function()
@@ -15827,7 +15846,7 @@ Q = {
 			E.getPrices(pItemIDs, function()
 			{
 				pCallback();
-			});
+			}, pWantCache);
 		});
 	},
 	
@@ -17106,50 +17125,55 @@ Q = {
 				// A new search updates the timestamp, only the earliest results are allowed to be shown
 				searchtimestamp = (new Date()).getTime();
 				// Create an ordered list that acts as containers for each result entry
+				resultslist.append(I.cThrobber);
 				for (var i = 0; i < pResults.length; i++)
 				{
 					resultslist.append("<span class='itmSearchResultLine itmSearchResultLine_" + pResults[i] + "'></span>");
 				}
-				// Fill the list as API items are retrieved
-				for (var i = 0; i < pResults.length; i++)
+				(function(iTimestamp)
 				{
-					(function(iItemID, iTimestamp)
+					Q.getPricedItems(pResults, function()
 					{
-						Q.getItem(iItemID, function(pItem)
+						// Prevent older searches from entering the results because of API retrieval lag
+						if (iTimestamp === searchtimestamp)
 						{
-							// Prevent older searches from entering the results because of API retrieval lag
-							if (iTimestamp === searchtimestamp)
+							I.removeThrobber(resultslist);
+							for (var i = 0; i < pResults.length; i++)
 							{
-								var resultentry = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
-									+ "<img src='" + pItem.icon + "'>"
-									+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(resultslist.find(".itmSearchResultLine_" + iItemID));
+								var itemid = pResults[i];
+								var item = Q.getCachedItem(itemid);
+								if (item === null)
+								{
+									continue;
+								}
+								var resultentry = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(item.rarity) + "' data-id='" + itemid + "'>"
+									+ "<img src='" + item.icon + "'>"
+									+ U.highlightSubstring(item.name, pQuery) + "</dfn>").appendTo(resultslist.find(".itmSearchResultLine_" + itemid));
 								resultentry.click(function()
 								{
 									if (Settings.aCallback)
 									{
-										Settings.aCallback(pItem);
+										Settings.aCallback(item);
 										toggleResults(false);
 									}
 									resultslist.removeData("selectedresult");
 								});
 								I.updateScrollbar(resultsscroll);
 								// Tooltip for the listed item
-								Q.scanItem(pItem, {aElement: resultentry});
-								Q.bindItemSlotBehavior(resultentry, {aItem: pItem});
+								Q.scanItem(item, {aElement: resultentry});
+								Q.bindItemSlotBehavior(resultentry, {aItem: item});
 								// Also include price next to tradeable items
-								E.getPrice(iItemID, function(pPriceObj)
+								var priceobj = E.getCachedPrice(itemid);
+								if (priceobj)
 								{
-									if (iTimestamp === searchtimestamp)
-									{
-										var pricestr = "<span class='itmSearchResultPrice'>" + E.formatCoinStringSlot(pPriceObj.oPriceSell)
-											+ " <var class='cssFaded'>" + E.formatCoinStringSlot(pPriceObj.oPriceBuy) + "</var></span>";
-										resultentry.append(pricestr);
-									}
-								}, true);
+									var pricestr = "<span class='itmSearchResultPrice'>" + E.formatCoinStringSlot(priceobj.oPriceSell)
+										+ " <var class='cssFaded'>" + E.formatCoinStringSlot(priceobj.oPriceBuy) + "</var></span>";
+									resultentry.append(pricestr);
+								}
 							}
-						});
-					})(pResults[i], searchtimestamp);
-				}
+						}
+					}, true);
+				})(searchtimestamp);
 			}
 			else
 			{
@@ -18057,6 +18081,15 @@ E = {
 				}
 			});
 		}
+	},
+	getCachedPrice: function(pItemID)
+	{
+		var priceobj = E.Pricelist[pItemID];
+		if (priceobj)
+		{
+			return priceobj;
+		}
+		return null;
 	},
 	getPrices: function(pItemIDs, pCallback, pWantCache)
 	{
@@ -25015,11 +25048,11 @@ P = {
 		switch (that.MapEnum)
 		{
 			case P.MapEnum.Tyria: {
-				url = U.URL_API.MapFloorTyria;
+				url = U.getLangURL(U.URL_API.MapFloorTyria);
 			} break;
 			
 			case P.MapEnum.Mists: {
-				url = U.URL_API.MapFloorMists;
+				url = U.getLangURL(U.URL_API.MapFloorMists);
 				// Exit this entire function if using the Mists map but have completion option off
 				if (completionboolean === false)
 				{
@@ -25439,7 +25472,7 @@ P = {
 						+ "Map will use backup cache and features will be limited.<br />");
 				}
 				
-				$.getJSON(U.URL_DATA.Map, function(pBackup)
+				$.getJSON(U.URL_DATA.Maps, function(pBackup)
 				{
 					doPopulate(pBackup);
 					finalizePopulate(true);
@@ -29396,6 +29429,7 @@ W = {
 		var numowners = W.Metadata.Owners.length;
 		var tier = W.getMatchupTier(pData);
 		var scores = convertScores(pData.scores);
+		var victoryscores = pData.victory_points;
 		var PPT = {};
 		var wantserver = true;
 		// Initialize variables for the temp object
@@ -29472,9 +29506,13 @@ W = {
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
 				+ "<aside class='lboName'>&nbsp;" + matchupdata[ownerkey].oNameLinksStr + "</aside>" : "";
+			var scorestr = "";
 			var score = scores[ownerkey];
 			var scorehighest = (T.getMinMax(scores)).oMax;
 			var scorepercent = (scores[ownerkey] / scorehighest) * T.cPERCENT_100;
+			var victoryscore = victoryscores[ownerkey];
+			var victoryscorehighest = (T.getMinMax(victoryscores)).oMax;
+			var victoryscorepercent = (victoryscores[ownerkey] / victoryscorehighest) * T.cPERCENT_100;
 			var ppttotal = (PPT[owner]).Total;
 			var pptpercent = (ppttotal / W.cTOTAL_PPT_POSSIBLE) * T.cPERCENT_100;
 			// Kills and Deaths
@@ -29506,6 +29544,7 @@ W = {
 			 */
 			var focuses = [];
 			var scoredifferences = [];
+			var victoryscoredifferences = [];
 			var otherservers = [];
 			for (var ii = 0; ii < numowners; ii++)
 			{
@@ -29515,8 +29554,8 @@ W = {
 				{
 					var focus = (PPT[owner])[otherowner + "Home"] + (PPT[owner])[W.LandEnum.Center + otherowner];
 					focuses.push(focus);
-					var difference = score - scores[otherownerkey];
-					scoredifferences.push(difference);
+					scoredifferences.push(score - scores[otherownerkey]);
+					victoryscoredifferences.push(victoryscore - victoryscores[otherownerkey]);
 					var otherserver = W.Servers[(matchupdata.worlds[otherownerkey])];
 					otherservers.push(U.escapeHTML(D.getObjectName(otherserver)));
 				}
@@ -29566,19 +29605,39 @@ W = {
 			}
 			
 			/*
-			 * Write the HTML.
+			 * Format the bar graph differently for v1 and v2 matches data.
 			 */
-			html += "<article class='lboServer lboServer" + owner + "'>"
-				+ serverstr
-				+ "<aside class='lboScore' title='<dfn>" + scoredifferences[0] + " points</dfn> away from " + otherservers[0]
+			if (W.isFallbackEnabled)
+			{
+				scorestr = "<aside class='lboScoreLegacy' title='<dfn>" + scoredifferences[0] + " points</dfn> away from " + otherservers[0]
 				+ "<br /><dfn>" + scoredifferences[1] + " points</dfn> away from " + otherservers[1] + "'>"
 					+ "<var>" + score.toLocaleString() + "</var>"
 					+ "<samp><s style='width:" + scorepercent + "%'></s></samp>"
 				+ "</aside>"
+				+ "<aside class='lboPPTLegacy' title='<dfn>Points-Per-Tick (PPT)</dfn>'>"
+					+ "<samp><s style='width:" + pptpercent + "%'></s></samp>"
+					+ "<var>+" + ppttotal + "</var>"
+				+ "</aside>";
+			}
+			else
+			{
+				scorestr = "<aside class='lboVictory' title='<dfn>" + victoryscoredifferences[0] + " points</dfn> away from " + otherservers[0]
+				+ "<br /><dfn>" + victoryscoredifferences[1] + " points</dfn> away from " + otherservers[1] + "'>"
+					+ "<var><img class='lboVictoryIcon' src='img/wvw/victorypoint.png' />" + victoryscore.toLocaleString() + "</var>"
+					+ "<samp><s style='width:" + victoryscorepercent + "%'></s></samp>"
+				+ "</aside>"
 				+ "<aside class='lboPPT' title='<dfn>Points-Per-Tick (PPT)</dfn>'>"
 					+ "<samp><s style='width:" + pptpercent + "%'></s></samp>"
 					+ "<var>+" + ppttotal + "</var>"
-				+ "</aside>"
+				+ "</aside>";
+			}
+			
+			/*
+			 * Write the HTML.
+			 */
+			html += "<article class='lboServer lboServer" + owner + "'>"
+				+ serverstr
+				+ scorestr
 				+ "<aside class='lboLand' title='<dfn>PPT per borderlands</dfn>'>"
 					+ "<var class='lboPPTGreen'>+" + (PPT[owner])[W.LandEnum.GreenHome] + "</var>"
 					+ "<var class='lboPPTBlue'>+" + (PPT[owner])[W.LandEnum.BlueHome] + "</var>"
@@ -32644,10 +32703,7 @@ H = {
 		// Bind buttons
 		$("#dsbMenuSale").click(function()
 		{
-			Q.loadItemsSubdatabase("gem", function()
-			{
-				H.generateDashboardSale();
-			});
+			H.generateDashboardSale();
 		});
 		// Automatically generate the items on sale if the boolean is true
 		I.toggleToggleIcon("#dsbSaleToggleIcon", H.Sale.isPreshown);
@@ -32667,9 +32723,111 @@ H = {
 			var oldpricestr = (pPriceOldBulk === undefined) ? pPriceOld : pPriceOldBulk;
 			return getPercentOffString(pPriceNew, pPriceOld) + "<span class='dsbSalePriceOld'>" + oldpricestr + "</span> ";
 		};
-		
 		var animationspeed = 200;
 		var table = $("#dsbSaleTable");
+		
+		var doGenerate = function()
+		{
+			I.toggleToggleIcon("#dsbSaleToggleIcon", true);
+			table.empty();
+			if (H.Sale.note.length > 0)
+			{
+				table.append("<div class='dsbNote'>Note: " + U.convertExternalString(H.Sale.note) + "</div>");
+			}
+			table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
+
+			var gemstr = "<ins class='s16 s16_gem'></ins>";
+			// Include the exchange rate "items" after determining range
+			H.Sale.Items = H.Sale.Padding.concat(H.Sale.Items);
+			for (var i = 0; i < H.Sale.Items.length; i++)
+			{
+				// Initialize variables
+				var item = H.Sale.Items[i];
+				var url = item.url || U.getWikiSearchDefault(item.name);
+				var video = U.getYouTubeLink(item.name);
+				var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
+				if (item.Finish)
+				{
+					H.Sale.Countdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
+				}
+
+				var oldprice = null;
+				// Old price also includes percent off by dividing the new with the old
+				oldprice = (U.isInteger(item.discount)) ? item.discount : oldprice;
+				oldprice = (Array.isArray(item.discount) && item.discount[0].length > 2) ? ((item.discount[0])[2]) : oldprice;
+				var oldpricestr = (oldprice !== null) ? getOldPriceString(item.price, oldprice) : "";
+				// Write bulk discount hover information if available
+				var discountstr = "";
+				if (item.discount && Array.isArray(item.discount))
+				{
+					discountstr += "<span class='dsbDiscount'>";
+					for (var ii = 0; ii < item.discount.length; ii++)
+					{
+						var disc = item.discount[ii];
+						var priceper = Math.ceil(disc[1] / disc[0]);
+						// Percent off for bulk discount comes from the price per item in the bulk--divided by the old price for a single (non-bulk) item
+						var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
+						var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
+						discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
+							+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(disc[1]) + "<br />";
+					}
+					discountstr += "</span>";
+				}
+				// Price display
+				var pricestr = "";
+				if (item.name === "Coin")
+				{
+					pricestr = "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(item.price) + " " + I.Symbol.ArrowLeft + " " + "</span>"
+						+ "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(item.price)) + "</span>"
+						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(item.price)) + "</span>";
+				}
+				else
+				{
+					pricestr = "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
+						+ "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(item.price) + "</span>"
+						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
+				}
+				// Format the presentation of this item
+				var idisimg = isNaN(item.id);
+				var dataprop = (idisimg) ? "" : ("data-sale='" + item.id + "'");
+				var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
+				$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
+					+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
+					+ "<div class='dsbSaleText'>"
+						+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
+						+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
+						+ oldpricestr
+						+ pricestr
+						+ discountstr
+					+ "</div>"
+				+ "</div>");
+			}
+
+			var height = table.height();
+			table.css({height: 0}).animate({height: height}, animationspeed, function()
+			{
+				$(this).css({height: "auto"});
+				I.bindScrollbar("#dsbSaleTable");
+				I.updateScrollbar("#dsbSaleTable");
+			});
+			// Retrieve item info
+			$(".dsbSaleIcon").each(function()
+			{
+				if ($(this).attr("data-sale"))
+				{
+					(function(iElement)
+					{
+						Q.getItem(iElement.attr("data-sale"), function(iData)
+						{
+							iElement.attr("src", iData.icon);
+							Q.scanItem(iData, {aElement: iElement});
+						});
+					})($(this));
+				}
+			});
+		};
+		
+		// Dashboard tab functionality
 		if (table.is(":empty") === false)
 		{
 			H.isSaleOpened = false;
@@ -32688,104 +32846,11 @@ H = {
 			$("#dsbMenuSale").addClass("dsbMenuItemActive");
 			table.append(I.cThrobber);
 			Q.initializeFaux();
-			H.updateSaleData(function()
+			Q.loadItemsSubdatabase("gem", function()
 			{
-				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
-				table.empty();
-				if (H.Sale.note.length > 0)
+				H.updateSaleData(function()
 				{
-					table.append("<div class='dsbNote'>Note: " + U.convertExternalString(H.Sale.note) + "</div>");
-				}
-				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
-				
-				var gemstr = "<ins class='s16 s16_gem'></ins>";
-				// Include the exchange rate "items" after determining range
-				H.Sale.Items = H.Sale.Padding.concat(H.Sale.Items);
-				for (var i = 0; i < H.Sale.Items.length; i++)
-				{
-					// Initialize variables
-					var item = H.Sale.Items[i];
-					var url = item.url || U.getWikiSearchDefault(item.name);
-					var video = U.getYouTubeLink(item.name);
-					var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
-					if (item.Finish)
-					{
-						H.Sale.Countdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
-					}
-
-					var oldprice = null;
-					// Old price also includes percent off by dividing the new with the old
-					oldprice = (U.isInteger(item.discount)) ? item.discount : oldprice;
-					oldprice = (Array.isArray(item.discount) && item.discount[0].length > 2) ? ((item.discount[0])[2]) : oldprice;
-					var oldpricestr = (oldprice !== null) ? getOldPriceString(item.price, oldprice) : "";
-					// Write bulk discount hover information if available
-					var discountstr = "";
-					if (item.discount && Array.isArray(item.discount))
-					{
-						discountstr += "<span class='dsbDiscount'>";
-						for (var ii = 0; ii < item.discount.length; ii++)
-						{
-							var disc = item.discount[ii];
-							var priceper = Math.ceil(disc[1] / disc[0]);
-							// Percent off for bulk discount comes from the price per item in the bulk--divided by the old price for a single (non-bulk) item
-							var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
-							var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
-							discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
-								+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(disc[1]) + "<br />";
-						}
-						discountstr += "</span>";
-					}
-					// Price display
-					var pricestr = "";
-					if (item.name === "Coin")
-					{
-						pricestr = "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(item.price) + " " + I.Symbol.ArrowLeft + " " + "</span>"
-							+ "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(item.price)) + "</span>"
-							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(item.price)) + "</span>";
-					}
-					else
-					{
-						pricestr = "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
-							+ "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(item.price) + "</span>"
-							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
-					}
-					// Format the presentation of this item
-					var idisimg = isNaN(item.id);
-					var dataprop = (idisimg) ? "" : ("data-sale='" + item.id + "'");
-					var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
-					$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-						+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
-						+ "<div class='dsbSaleText'>"
-							+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
-							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
-							+ oldpricestr
-							+ pricestr
-							+ discountstr
-						+ "</div>"
-					+ "</div>");
-				}
-				
-				var height = table.height();
-				table.css({height: 0}).animate({height: height}, animationspeed, function()
-				{
-					$(this).css({height: "auto"});
-					I.bindScrollbar("#dsbSaleTable");
-					I.updateScrollbar("#dsbSaleTable");
-				});
-				// Retrieve item info
-				$(".dsbSaleIcon").each(function()
-				{
-					if ($(this).attr("data-sale"))
-					{
-						(function(iElement)
-						{
-							Q.getItem(iElement.attr("data-sale"), function(iData)
-							{
-								iElement.attr("src", iData.icon);
-								Q.scanItem(iData, {aElement: iElement});
-							});
-						})($(this));
-					}
+					doGenerate();
 				});
 			});
 		}
@@ -32869,10 +32934,7 @@ H = {
 		}
 		menubutton.click(function()
 		{
-			Q.loadItemsSubdatabase("pact", function()
-			{
-				H.generateDashboardVendor();
-			});
+			H.generateDashboardVendor();
 		});
 		$("#dsbVendorDraw").click(function()
 		{
@@ -32933,7 +32995,7 @@ H = {
 				+ "<br />" + expiredstr + "<time id='dsbVendorTime'>" + timestamp + "</time></div>");
 		};
 		
-		var listOffers = function(pData)
+		var doGenerate = function(pData)
 		{
 			var updatetime;
 			var list = [];
@@ -33031,14 +33093,17 @@ H = {
 			if (H.Vendor.isEnabled)
 			{
 				table.append(I.cThrobber);
-				$.ajax({
-					dataType: "json",
-					url: H.Vendor.url,
-					cache: false,
-					success: function(pData)
-					{
-						listOffers(pData);
-					}
+				Q.loadItemsSubdatabase("pact", function()
+				{
+					$.ajax({
+						dataType: "json",
+						url: H.Vendor.url,
+						cache: false,
+						success: function(pData)
+						{
+							doGenerate(pData);
+						}
+					});
 				});
 			}
 			else

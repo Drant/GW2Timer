@@ -3320,7 +3320,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	zone: "doric",
 	waypoint: "[&BLMJAAA=]",
 	level: "80",
-	reward: {ecto: "2", loot: "1"},
+	reward: {ecto: "1", loot: "1", dragonite: "20"},
 	flags: {},
 	events: [
 	{
