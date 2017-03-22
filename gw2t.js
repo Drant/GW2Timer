@@ -2851,6 +2851,7 @@ U = {
 		Materials: "data/materials.js",
 		Skins: "data/skins.js",
 		Outfits: "data/outfits.js",
+		Gliders: "data/gliders.js",
 		Dyes: "data/dyes.js",
 		Minis: "data/minis.js",
 		Finishers: "data/finishers.js",
@@ -6510,6 +6511,10 @@ Z = {
 	{
 		Z.collateUnlockables("Outfits");
 	},
+	collateGliders: function()
+	{
+		Z.collateUnlockables("Gliders");
+	},
 	collateMinis: function()
 	{
 		Z.collateUnlockables("Minis");
@@ -7280,6 +7285,7 @@ A = {
 		Materials: "account/materials",
 		Minis: "account/minis",
 		Outfits: "account/outfits",
+		Gliders: "account/gliders",
 		Skins: "account/skins",
 		Wallet: "account/wallet",
 		Recipes: "account/recipes",
@@ -8695,6 +8701,7 @@ A = {
 			Catalog: {},
 			Skins: {},
 			Outfits: {},
+			Gliders: {},
 			Dyes: {},
 			Minis: {},
 			Finishers: {},
@@ -8704,6 +8711,7 @@ A = {
 		var unlocksdata = { // Account's unlocked IDs retrieved from API
 			Skins: {},
 			Outfits: {},
+			Gliders: {},
 			Dyes: {},
 			Minis: {},
 			Finishers: {},
@@ -9677,6 +9685,7 @@ A = {
 			auditPossessions();
 			auditUnlocks("Skins", false);
 			auditUnlocks("Outfits");
+			auditUnlocks("Gliders");
 			auditUnlocks("Dyes");
 			auditUnlocks("Minis");
 			auditUnlocks("Finishers");
@@ -9844,6 +9853,8 @@ A = {
 				insertPaymentsFromRecord("Skins");
 				// Insert outfits item payments
 				insertPaymentsFromRecord("Outfits");
+				// Insert gliders item payments
+				insertPaymentsFromRecord("Gliders");
 				// Insert minis item payments
 				insertPaymentsFromRecord("Minis");
 				// Insert finisher item payments
@@ -12025,6 +12036,10 @@ V = {
 	serveOutfits: function()
 	{
 		V.serveUnlockables("Outfits", {aWantPrices: false});
+	},
+	serveGliders: function()
+	{
+		V.serveUnlockables("Gliders", {aWantPrices: false});
 	},
 	serveMinis: function()
 	{
@@ -35008,6 +35023,7 @@ I = {
 			Vault: "Vault",
 			Wardrobe: "Wardrobe",
 			Outfits: "Outfits",
+			Gliders: "Gliders",
 			Dyes: "Dyes",
 			Minis: "Minis",
 			Finishers: "Finishers",

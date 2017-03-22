@@ -24,8 +24,7 @@ var GW2T_CATALOG_HEADERS = {
 	Bundle: {name_en: "Bundles", name_de: "Umgebungswaffen", name_es: "Arma ambiental", name_fr: "Arme environnementale", iscollapsed: true},
 	Aura: {name_en: "Cosmetic Auras", name_de: "Kosmetik-Auren", name_es: "Auras cosméticos", name_fr: "Auras cosmétiques", iscollapsed: true},
 	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", iscollapsed: true},
-	Carrier: {name_en: "Mail Carriers", name_de: "Briefboten", name_es: "Carteros", name_fr: "Messagers", iscollapsed: true},
-	Glider: {name_en: "Gliders", name_de: "Gleitschirm", name_es: "Planeador", name_fr: "Deltaplane", iscollapsed: true}
+	Carrier: {name_en: "Mail Carriers", name_de: "Briefboten", name_es: "Carteros", name_fr: "Messagers", iscollapsed: true}
 };
 
 /*
@@ -786,42 +785,5 @@ Carrier: [
 	{i: 69774, n: "Parrot Mail Carrier"},
 	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 600}},
 	{i: 79341, n: "Anniversary Mail Carrier", p: {starting: true}}
-],
-Glider: [
-	{i: 67054, n: "Heart of Thorns Glider", p: {gem: 0}},
-	{i: 70009, n: "White Feather Wings Glider", p: {gem: 700}},
-	{i: 70048, n: "Black Feather Wings Glider", p: {gem: 700}},
-	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 2000}},
-	{i: 74684, n: "Bat Wings Glider", p: {gem: 700}},
-	{i: 76236, n: "Exalted Glider", p: {gem: 400}},
-	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 700}},
-	{i: 77291, n: "Soul River Glider", p: {gem: 2000}},
-	{i: 77528, n: "Snowflake Glider", p: {gem: 500}},
-	{i: 77646, n: "Ugly Wool Glider", p: {gem: 0}},
-	{i: 77678, n: "Hawk Wings Glider", p: {gem: 700}},
-	{i: 77738, n: "Phoenix Kite Glider", p: {gem: 400}},
-	{i: 77804, n: "Wings of Love Glider", p: {gem: 400}},
-	{i: 77811, n: "Electromagnetic-Descender Glider", p: {gem: 400}},
-	{i: 77821, n: "Classical Glider", p: {gem: 400}},
-	{i: 78006, n: "Ironclad Glider", p: {gem: 500}},
-	{i: 78007, n: "Bubble Glider", p: {gem: 500}},
-	{i: 78009, n: "Super Adventure Glider", p: {gem: 400}},
-	{i: 78025, n: "Phoenix Glider", p: {gem: 400}},
-	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}},
-	{i: 78768, n: "Moth Wings Glider", p: {gem: 700}},
-	{i: 78790, n: "Floral Glider", p: {gem: 400}},
-	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
-	{i: 79016, n: "White Mantle Glider", p: {gem: 400}},
-	{i: 79084, n: "Shining Blade Glider", p: {gem: 700}},
-	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}},
-	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
-	{i: 79663, n: "Bloodstone Glider", p: {gem: 500}},
-	{i: 79660, n: "Grasping Phantom Glider", p: {gem: 0}},
-	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}},
-	{i: 80018, n: "Infinirarium Glider", p: {gem: 0}},
-	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
-	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
-	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}},
-	{i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}}
 ]
 };
