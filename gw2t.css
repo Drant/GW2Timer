@@ -1325,6 +1325,9 @@ textarea.jsCopyCode {
 	font-family: monospace;
 	color: #ff4800;
 }
+.dsbSaleCountdownFar {
+	color: #6a9bfd;
+}
 
 #dsbVendorMenu {
 	width: 100%;

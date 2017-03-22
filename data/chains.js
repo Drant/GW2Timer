@@ -1,5 +1,5 @@
 /* This file is used by gw2t.js */
-var GW2T_CHAIN_ADD_LENGTH = 18;
+var GW2T_CHAIN_ADD_LENGTH = 19;
 var GW2T_CHAIN_DATA = [
 {
 	series: 2,

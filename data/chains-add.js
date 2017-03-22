@@ -3307,6 +3307,42 @@ var GW2T_CHAIN_UNSCHEDULED = [
 		max: "10:00"
 	}
 	]
+},
+{
+	series: 1,
+	alias: "Highsage",
+	title: "Harathi High Sage",
+	name_en: "High Sage",
+	name_de: "Hohen Weisen",
+	name_es: "Sumo Sabio",
+	name_fr: "Grand Sage",
+	name_zh: "高阶圣者",
+	zone: "doric",
+	waypoint: "[&BLMJAAA=]",
+	level: "80",
+	reward: {ecto: "2", loot: "1"},
+	flags: {},
+	events: [
+	{
+		primacy: 3,
+		path: [[13267, 9252]],
+		name_en: "Defeat the massive earth elemental and stop the Harathi High Sage.",
+		name_de: "Besiegt den gewaltigen Erd-Elementar und den Hohen Weisen der Harathi.",
+		name_es: "Derrota al elemental de tierra gigante y detén al sumo sabio harathi.",
+		name_fr: "Vaincre l'élémentaire de terre gigantesque et arrêter le Grand sage harathi.",
+		name_zh: "击败巨型大地元素，阻止哈拉希高阶圣者。",
+		icon: "boss",
+		num: "1",
+		sGotoNum: ["1"],
+		fGotoNum: "0",
+		sInterim: ["1:00:00"],
+		fInterim: "0",
+		lim: "0",
+		avg: "5:00",
+		min: "4:00",
+		max: "7:00"
+	}
+	]
 }
 
 ];

@@ -1500,13 +1500,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
+	/*{
 		name: "ArenaNet API Offline",
 		url: "https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-rate-limiting-is-coming",
 		isIndefinite: true,
 		Start: new Date("2017-03-18T7:00:00Z"),
 		Finish: new Date("2017-03-22T17:00:00Z")
-	},
+	},*/
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
@@ -1526,8 +1526,8 @@ Countdown: {
 		url: "https://wiki.guildwars2.com/wiki/Gem_Store/March_Sale#March_Sale.2C_2017",
 		Start: new Date("2017-03-03T16:00:00Z"),
 		Finish: new Date("2017-03-31T16:00:00Z")
-	}
-	/*{
+	},
+	{
 		name_en: "Super Adventure Festival",
 		name_de: "Super Adventure Festival",
 		name_es: "Festival Super Adventure",
@@ -1536,7 +1536,7 @@ Countdown: {
 		official: "the-game/releases/april-01-2016/",
 		Start: new Date("2017-04-01T16:00:00Z"),
 		Finish: new Date("2017-04-18T16:00:00Z")
-	}*/
+	}
 	/*{
 		name_en: "Halloween 2017",
 		name_de: "Halloween 2017",

@@ -25420,14 +25420,8 @@ P = {
 				if (I.ModeCurrent === I.ModeEnum.Website)
 				{
 					I.write(
-					"Guild Wars 2 API server is unreachable.<br />"
-					+ "Reasons could be:<br />"
-					+ "- The ArenaNet server is down for maintenance. <a"
-						+ U.convertExternalAnchor(U.URL_API.Support) + ">Check status</a>.<br />"
-					+ "- Your browser is unsupported.<br />"
-					+ "- Your computer's time is out of sync.<br />"
-					+ "- This website's code encountered a bug.<br />"
-					+ "Map will use backup cache and features will be limited.<br />", 20);
+						"ArenaNet API server is unreachable. <a" + U.convertExternalAnchor(U.URL_API.Support) + ">Check status</a>.<br />"
+						+ "Map will use backup cache and features will be limited.<br />");
 				}
 				
 				$.getJSON(U.URL_DATA.Map, function(pBackup)
@@ -27077,12 +27071,17 @@ G = {
 			{
 				for (var i in P.Resources)
 				{
-					var id = P.Resources[i].item;
-					if (id && pPriceDB[id])
+					var resource = P.Resources[i];
+					var itemid = resource.item;
+					if (itemid && pPriceDB[itemid])
 					{
-						var priceobj = pPriceDB[id];
+						var priceobj = pPriceDB[itemid];
 						$("#nodPrice_" + i).html(E.formatCoinStringColored(priceobj.oPriceSell));
 						P.Resources[i].price = priceobj.oPriceSellTaxed;
+					}
+					else
+					{
+						$("#nodPrice_" + i).html(D.getObjectName(resource));
 					}
 				}
 			}, false);
@@ -31794,7 +31793,7 @@ T = {
 	 * @param int pSeconds of time.
 	 * @returns string formatted time.
 	 */
-	formatTimeLetter: function(pSeconds, pWantSeconds)
+	formatTimeLetter: function(pSeconds, pWantSeconds, pWantShort)
 	{
 		var seconds = pSeconds;
 		var year, month, week, day, hour, min, sec;
@@ -31849,6 +31848,10 @@ T = {
 		{
 			day = ~~(seconds / T.cSECONDS_IN_DAY) % daydivisor;
 			daystr = day + D.getWord("d") + ((seconds < T.cSECONDS_IN_YEAR) ? " " : "");
+			if (pWantShort)
+			{
+				return daystr;
+			}
 		}
 		// Include hms only if duration is less than a year
 		if (seconds < T.cSECONDS_IN_YEAR)
@@ -32776,7 +32779,16 @@ H = {
 	{
 		for (var i in H.Sale.Countdowns)
 		{
-			$("#dsbSaleCountdown_" + i).html(T.formatTimeLetter(H.Sale.Countdowns[i] - T.TIMESTAMP_UNIX_SECONDS, true));
+			var sec = H.Sale.Countdowns[i] - T.TIMESTAMP_UNIX_SECONDS;
+			if (sec > T.cSECONDS_IN_DAY)
+			{
+				$("#dsbSaleCountdown_" + i).html("<span class='dsbSaleCountdownFar'>" + T.formatTimeLetter(sec, true, true) + "</span>");
+				delete H.Sale.Countdowns[i]; // These will be restored when the gem dashboard is reopened
+			}
+			else
+			{
+				$("#dsbSaleCountdown_" + i).html(T.formatTimeLetter(sec, true));
+			}
 		}
 	},
 	

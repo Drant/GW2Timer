@@ -54,6 +54,7 @@ GW2T_SALE_DATA = {
 		col: 0
 	},
 	{
+		Finish: new Date("2017-03-28T16:00:00Z"),
 		name: "Shield of the Goddess",
 		id: "80861",
 		price: 600,
