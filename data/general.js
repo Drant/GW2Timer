@@ -1467,7 +1467,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. <a href='https://twitter.com/GW2Timer/status/843197087533555712'>Right click on the map</a> for &quot;Compass&quot; map markers via <a href='http://forum.renaka.com/topic/5546166/4#post603314'>overlay app</a>.",
+	pve: "API is back online: <a href='http://gw2timer.com/?page=Gliders'>Account Gliders</a>, <a href='http://gw2timer.com/?page=Audit'>Audit</a>, <a href='http://gw2timer.com/?page=Cleanup'>Cleanup</a>. <a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. <a href='https://twitter.com/GW2Timer/status/843197087533555712'>Custom map icons</a>.",
 	wvw: "",
 	Start: new Date("2016-03-14T16:00:00Z"),
 	Finish: new Date("2017-04-04T16:00:00Z"),
