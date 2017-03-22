@@ -8980,6 +8980,15 @@ A = {
 						unlockedids[i] = false;
 					}
 				}
+				// Consider the backpack skin and ignore the glider, for those from gem store combo
+				if (pName === "Gliders")
+				{
+					var gliderscombo = GW2T_GLIDERS_DATA["Combo"];
+					for (var i in gliderscombo)
+					{
+						unlockedids[(gliderscombo[i].u)] = false;
+					}
+				}
 			}
 			var associtems = {};
 			var associtemid;
@@ -8994,7 +9003,9 @@ A = {
 					 * Audit if payment exists, the unlock is unlocked, and the associated
 					 * item has not been audited for this record and is not in possession.
 					 */
-					if (payment && unlockedids[pEntry.u] && unlockedids[pEntry.u] !== 1 && associtems[associtemid] === undefined
+					if (payment
+						&& unlockedids[pEntry.u] && unlockedids[pEntry.u] !== 1
+						&& associtems[associtemid] === undefined
 						&& ((pWantPossessions === false && A.Possessions[associtemid] === undefined) || (pWantPossessions !== false)))
 					{
 						unlockedids[pEntry.u] = 1; // Only audit the unlock once
