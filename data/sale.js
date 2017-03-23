@@ -39,33 +39,33 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-23T16:00:00Z"),
-		name: "Aetherblade Light Armor Skin",
-		id: "42870",
-		price: 400,
-		discount: 800,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-23T16:00:00Z"),
-		name: "Aetherblade Medium Armor Skin",
-		id: "42869",
-		price: 400,
-		discount: 800,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-23T16:00:00Z"),
-		name: "Aetherblade Heavy Armor Skin",
-		id: "42868",
-		price: 400,
-		discount: 800,
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Dye Pack",
+		id: "19998",
+		price: 120,
+		discount: [[1, 120, 200], [5, 480, 800], [25, 2400, 4000]],
 		col: 0
 	},
 	{
 		Finish: new Date("2017-03-24T16:00:00Z"),
 		name: "Mad King's Outfit",
 		id: "65196",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Black Feather Wings Glider",
+		id: "70048",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-24T16:00:00Z"),
+		name: "Black Feather Wings Backpack",
+		id: "68686",
 		price: 700,
 		discount: null,
 		col: 0
@@ -103,17 +103,17 @@ GW2T_SALE_DATA = {
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Black Feather Wings Glider",
-		id: "70048",
-		price: 700,
+		Finish: new Date("2017-03-26T16:00:00Z"),
+		name: "Jack-in-the-Box Scythe",
+		id: "48934",
+		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Black Feather Wings Backpack",
-		id: "68686",
+		Finish: new Date("2017-03-26T16:00:00Z"),
+		name: "Ghostly Outfit",
+		id: "79671",
 		price: 700,
 		discount: null,
 		col: 1

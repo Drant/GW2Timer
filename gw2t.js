@@ -10512,11 +10512,17 @@ V = {
 				for (var i in guildids)
 				{
 					var guild = A.Data.Guilds[(guildids[i])];
-					var banner = U.getGuildBannerURL(guild.guild_name);
-					var guildrow = "<li class='chrGuild'><span class='chrGuildHover'><img class='chrGuildBanner' src='" + banner + "' />"
-							+ "<img class='chrGuildBanner chrGuildBannerLarge' src='" + banner + "' /></span>"
-						+ "<var class='chrGuildName'>" + guild.guild_name + " [" + guild.tag + "]</var></li>";
-					$("#chrGuilds").append(guildrow);
+					(function(iGuild)
+					{
+						var banner = U.getGuildBannerURL(iGuild.guild_name);
+						var guildrow = $("<li class='chrGuild'><span class='chrGuildHover'><img class='chrGuildBanner' src='" + banner + "' />"
+								+ "<img class='chrGuildBanner chrGuildBannerLarge' src='" + banner + "' /></span>"
+							+ "<var class='chrGuildName'>" + iGuild.guild_name + " [" + iGuild.tag + "]</var></li>").click(function()
+							{
+								I.prettyJSON(iGuild);
+							});
+						$("#chrGuilds").append(guildrow);
+					})(guild);
 				}
 			});
 			V.initializeWallet();
@@ -29927,12 +29933,12 @@ W = {
 			W.isWvWPaused = !W.isWvWPaused;
 			if (W.isWvWPaused)
 			{
-				I.write("WvW updating paused.");
+				W.addLogEntry("WvW updating paused.");
 				D.stopSpeech();
 			}
 			else
 			{
-				I.write("WvW updating resumed.");
+				W.addLogEntry("WvW updating resumed.");
 				W.updateObjectives();
 			}
 		});
