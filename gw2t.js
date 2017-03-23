@@ -3799,6 +3799,15 @@ U = {
 	{
 		return U.getUnique(pArrayA.concat(pArrayB));
 	},
+	getRandomElement: function(pArray)
+	{
+		if (pArray.length)
+		{
+			var randind = T.getRandomIntRange(0, pArray.length - 1);
+			return pArray[randind];
+		}
+		return null;
+	},
 	
 	/*
 	 * Gets the length of a uniform associative array object.
@@ -12637,7 +12646,8 @@ V = {
 			for (var i = 0; i < H.Sale.Items.length; i++)
 			{
 				var item = H.Sale.Items[i];
-				if (isNaN(item.id) === false &&
+				// Allow integer IDs or faux IDs and ignore expired
+				if ((isNaN(item.id) === false || Q.Box[item.id]) &&
 					(T.isTimely(item) || (item.Finish === undefined && issalecurrent)))
 				{
 					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
@@ -18326,6 +18336,25 @@ E = {
 	},
 	
 	/*
+	 * Gets an array of all item IDs in the calculators, for use in bulk fetching.
+	 * @returns array
+	 * @pre Used Textlist is initialized.
+	 */
+	getTradingIDs: function()
+	{
+		var idstofetch = [];
+		X.Textlists.TradingItem.value.forEach(function(iID)
+		{
+			var id = parseInt(iID);
+			if (isFinite(parseInt(id)))
+			{
+				idstofetch.push(id);
+			}
+		});
+		return idstofetch;
+	},
+	
+	/*
 	 * Retrieves non-price information about the item and updates those boxes.
 	 * @param jqobject pEntry trading calculator HTML parent.
 	 */
@@ -18359,8 +18388,9 @@ E = {
 	/*
 	 * Retrieves prices from API and updates those boxes.
 	 * @param jqobject pEntry trading calculator HTML parent.
+	 * @param boolean pWantCache whether to use prefetched prices.
 	 */
-	updateTradingPrices: function(pEntry)
+	updateTradingPrices: function(pEntry, pWantCache)
 	{
 		var name = pEntry.find(".trdName").val();
 		var id = pEntry.find(".trdItem").val();
@@ -18382,6 +18412,7 @@ E = {
 		var buyhigh = E.parseCoinString(buyhighelm.val());
 		var selllow = E.parseCoinString(selllowelm.val());
 		var sellhigh = E.parseCoinString(sellhighelm.val());
+		var wantcache = (pWantCache !== false) ? true : false;
 		
 		if (pEntry.data("istradeable") === false)
 		{
@@ -18395,37 +18426,29 @@ E = {
 			}
 			return;
 		}
-
-		$.ajax({
-			dataType: "json",
-			url: U.getAPIPrice(id),
-			cache: false,
-			success: function(pData)
+		
+		var updatePrice = function(pPriceObj)
 		{
+			if (!pPriceObj)
+			{
+				buyelm.val(I.Symbol.Ellipsis);
+				sellelm.val(I.Symbol.Ellipsis);
+				return;
+			}
 			previousbuy = E.parseCoinString(pEntry.find(".trdCurrentBuy").first().val());
 			previoussell = E.parseCoinString(pEntry.find(".trdCurrentSell").first().val());
-			if (pData.buys !== undefined)
-			{
-				// Get highest buy order
-				currentbuy = parseInt(pData.buys.unit_price);
-			}
-			if (pData.sells !== undefined)
-			{
-				// Get lowest sell listing
-				currentsell = parseInt(pData.sells.unit_price);
-			}
+			currentbuy = pPriceObj.oPriceBuy;
+			currentsell = pPriceObj.oPriceSell;
 			buyelm.val(E.formatCoinString(currentbuy));
 			sellelm.val(E.formatCoinString(currentsell));
 			
 			// Overwrite calculator buy and sell prices if opted
-			if (X.getChecklistItem(X.Checklists.TradingOverwrite, U.getSubintegerFromHTMLID(pEntry))
-					=== X.ChecklistEnum.Checked)
+			if (X.getChecklistItem(X.Checklists.TradingOverwrite, U.getSubintegerFromHTMLID(pEntry)) === X.ChecklistEnum.Checked)
 			{
 				pEntry.find(".trdBuy").val(buyelm.val()).trigger("input");
 				pEntry.find(".trdSell").val(sellelm.val()).trigger("input");
 			}
-		}}).done(function()
-		{
+			
 			// Animate prices that have changed
 			E.animateValue(buyelm, previousbuy, currentbuy);
 			E.animateValue(sellelm, previoussell, currentsell);
@@ -18479,19 +18502,33 @@ E = {
 					sellhighelm.removeClass("trdMatched");
 				}
 			}
-		}).fail(function()
+		};
+		
+		if (wantcache)
 		{
-			buyelm.val(I.Symbol.Ellipsis);
-			sellelm.val(I.Symbol.Ellipsis);
-		});
+			updatePrice(E.getCachedPrice(id));
+		}
+		else
+		{
+			E.getPrice(id, function(pPriceObj)
+			{
+				updatePrice(pPriceObj);
+			});
+		}
 	},
 	updateAllTradingDetails: function()
 	{
-		$("#trdList .trdEntry").each(function(){ E.updateTradingDetails($(this)); });
+		Q.getItems(E.getTradingIDs(), function()
+		{
+			$("#trdList .trdEntry").each(function(){ E.updateTradingDetails($(this)); });
+		});
 	},
 	updateAllTradingPrices: function()
 	{
-		$("#trdList .trdEntry").each(function(){ E.updateTradingPrices($(this)); });
+		E.getPrices(E.getTradingIDs(), function()
+		{
+			$("#trdList .trdEntry").each(function(){ E.updateTradingPrices($(this)); });
+		});
 	},
 	
 	/*
@@ -18639,7 +18676,7 @@ E = {
 						// Assume the inputs are siblings
 						$(this).prev().val(E.formatCoinString(price + 1)).trigger("change");
 						$(this).next().val(E.formatCoinString(price - 1)).trigger("change");
-						E.updateTradingPrices($(this).parents(".trdEntry"));
+						E.updateTradingPrices($(this).parents(".trdEntry"), false);
 						D.stopSpeech();
 					}
 				});
@@ -18740,7 +18777,7 @@ E = {
 						iEntry.find(".trdItem").val(pItem.id).trigger("change");
 						iEntry.find(".trdName").val(pItem.name).trigger("change");
 						E.updateTradingDetails(iEntry);
-						E.updateTradingPrices(iEntry);
+						E.updateTradingPrices(iEntry, false);
 					}}
 				);
 			})($(entry));
@@ -18835,7 +18872,7 @@ E = {
 		
 		// Bind refresh button to re-download API data to refresh the calculators
 		D.verifyNativeTTS();
-		$("#trdRefresh").click($.throttle(E.cREFRESH_LIMIT, function()
+		$("#trdRefresh, #trdRefreshMirror").click($.throttle(E.cREFRESH_LIMIT, function()
 		{
 			E.loopRefresh(true);
 		}));
@@ -24067,7 +24104,7 @@ M = {
 			// After success
 			if (counter > 0)
 			{
-				this.goToView(T.getRandomElement(coords));
+				this.goToView(U.getRandomElement(coords));
 				I.write(counter + " compasses reconstructed.");
 			}
 		}
@@ -28614,6 +28651,7 @@ W = {
 	LandPrefix: {},
 	isWvWPrepped: false,
 	isWvWLoaded: false,
+	isWvWPaused: false,
 	Metadata: {},
 	Servers: {}, // Server names and translations
 	Matches: null, // For fallback API, array containing objects with same structure as "worlds" subobject in v2 API matches.json
@@ -28702,10 +28740,13 @@ W = {
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
 		$("#wvwHUDContainer").toggle(O.Options.bol_showHUDWvW);
+		
 		// Finally
 		W.isWvWLoaded = true;
+		
 		// Show leaderboard the first time if requested by URL
 		U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
+		
 		// Write announcement if available
 		var announcement = GW2T_DASHBOARD_DATA.Announcement;
 		if (announcement.wvw.length > 0 && T.isTimely(announcement, now))
@@ -29879,6 +29920,22 @@ W = {
 				$(this).html(timestr);
 			});
 		});
+		
+		// Pause button
+		$("#wvwPause").click(function()
+		{
+			W.isWvWPaused = !W.isWvWPaused;
+			if (W.isWvWPaused)
+			{
+				I.write("WvW updating paused.");
+				D.stopSpeech();
+			}
+			else
+			{
+				I.write("WvW updating resumed.");
+				W.updateObjectives();
+			}
+		});
 	},
 	
 	/*
@@ -30254,6 +30311,10 @@ W = {
 	 */
 	updateObjectives: function()
 	{
+		if (W.isWvWPaused)
+		{
+			return;
+		}
 		var timedb = {};
 		var fliptime;
 		var fliptimenumduplicate = 0;
@@ -31406,15 +31467,6 @@ T = {
 	getRandomIntRange: function(pMin, pMax)
 	{
 		return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
-	},
-	getRandomElement: function(pArray)
-	{
-		if (pArray.length)
-		{
-			var randind = T.getRandomIntRange(0, pArray.length - 1);
-			return pArray[randind];
-		}
-		return null;
 	},
 	
 	/*
@@ -32803,7 +32855,7 @@ H = {
 						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
 				}
 				// Format the presentation of this item
-				var idisimg = isNaN(item.id);
+				var idisimg = isNaN(item.id) && Q.Box[item.id] === undefined;
 				if (idisimg === false)
 				{
 					idstofetch.push(item.id);

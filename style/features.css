@@ -116,11 +116,11 @@
 	font-size: 60px;
 	opacity: 0.9;
 }
-var.dlySaturday {
-	color: #dd3322;
+.dlySaturday {
+	color: #dd3322 !important;
 }
-var.dlySunday {
-	color: #cc3322;
+.dlySunday {
+	color: #cc3322 !important;
 }
 .dlyActivityIcon {
 	width: 64px; height: 64px;
@@ -616,6 +616,10 @@ dt.jpzListNameHover {
 #trdRefresh {
 	width: 96px;
 }
+#trdRefreshMirror {
+	width: 96px;
+	vertical-align: bottom;
+}
 #trdPause {
 	width: 64px;
 }
@@ -623,7 +627,7 @@ dt.jpzListNameHover {
 	width: 64px;
 }
 #trdPrint {
-	width: 100%; height: 28px;
+	width: 224px; height: 28px;
 	margin-top: 8px;
 }
 .trdResultsFocus {
