@@ -1616,7 +1616,7 @@ Faux: [
 		name_es: "Ampliación de casilla de personaje",
 		name_fr: "Emplacement de personnage supplémentaire",
 		name_zh: "人物栏位扩展",
-		desc_en: "Add an additional character slot to your account",
+		desc_en: "Add an additional character slot to your account.",
 		desc_de: "Fügt Eurem Account einen weiteren Charakterplatz hinzu.",
 		desc_es: "Añade una casilla de personaje más a tu cuenta.",
 		desc_fr: "Ajouter un emplacement de personnage supplémentaire à votre compte.",
@@ -1633,8 +1633,8 @@ Faux: [
 Vendor:
 {
 	isEnabled: true,
-	official: "https://docs.google.com/spreadsheets/d/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/edit?usp=sharing",
-	url: "https://spreadsheets.google.com/feeds/list/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/od6/public/values?alt=json",
+	SpreadsheetEdit: "https://docs.google.com/spreadsheets/d/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/edit?usp=sharing",
+	SpreadsheetData: "https://spreadsheets.google.com/feeds/list/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/od6/public/values?alt=json",
 	resetHour: 8,
 	name_en: "Pact Supply",
 	name_de: "Pakt-Vorratsnetzwerk",

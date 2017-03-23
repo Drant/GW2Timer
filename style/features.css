@@ -15,10 +15,6 @@
 	margin-bottom: 8px;
 	text-align: center;
 }
-#dlyActivity {
-	text-align: center;
-	white-space: nowrap;
-}
 
 .dlyBookmarks {
 	display: block;
@@ -103,14 +99,17 @@
 	font-family: sans-serif;
 	line-height: 100%;
 	text-align: center;
-	color: #3b83f3;
 	background: #333;
 	border-top: 16px solid #3e75bc;
 	border-right: 4px solid #666;
 	border-bottom: 2px solid #555;
 	border-radius: 8px;
 }
-.dlyMonthdayNumber, .dlyBossIconContainer {
+.dlyMonthdayNumber {
+	color: #3b83f3 !important;
+	text-decoration: none;
+}
+.dlyMonthdayNumber, .dlyActivityIconContainer {
 	background: transparent;
 }
 .dlyMonthdayNumber {
@@ -123,19 +122,19 @@ var.dlySaturday {
 var.dlySunday {
 	color: #cc3322;
 }
-.dlyBossIcon {
+.dlyActivityIcon {
 	width: 64px; height: 64px;
 	margin: 0;
 	border: none;
 	opacity: 0.2;
 }
-.dlyBossIcon:hover {
+.dlyActivityIcon:hover {
 	border: none;
 }
 .dlyBox:hover .dlyMonthdayNumber {
 	opacity: 0.2;
 }
-.dlyBox:hover .dlyBossIcon {
+.dlyBox:hover .dlyActivityIcon {
 	opacity: 1;
 }
 

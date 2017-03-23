@@ -25476,6 +25476,7 @@ P = {
 			finalizePopulate(true);
 		}).fail(function()
 		{
+			I.isAPIEnabled = false;
 			// If failed to get from API then use backup cache
 			if (that.MapEnum === P.MapEnum.Tyria)
 			{
@@ -26835,13 +26836,6 @@ G = {
 		$("#dlyHeader, #dlyCalendar, #dlyActivity").empty();
 		I.removeThrobber("#dlyContainer");
 		$("#dlyHeader").html(T.formatWeektime(now));
-
-		// Get daily activity
-		var activity = T.Daily.Activity;
-		var activityalias = activity.Schedule[now.getUTCDay()];
-		var activityname = D.getObjectName(activity.Activities[activityalias]);
-		$("#dlyActivity").html("<h2><img src='img/daily/activities/" + activityalias + I.cPNG + "' />"
-			+ " <a" + U.convertExternalAnchor(U.getWikiLinkLanguage(activityname)) + ">" + activityname + "</a> <ins class='dly dly_pve_activity'></ins></h2>");
 	
 		// Daily countdown
 		T.isChecklistCountdownsStarted = true;
@@ -26924,7 +26918,7 @@ G = {
 		var wvw = pDailyObj["wvw"];
 		var fractals = pDailyObj["fractals"];
 		var dayclass = "";
-		var bosshtml = "";
+		var activityhtml = "";
 		var dailynicks, d0, d1, d2, d3, d4;
 		
 		// PVE daily nicknames may be suffixed by a region, or prefixed by its daily type
@@ -26962,7 +26956,6 @@ G = {
 			else if (d1 === "boss")
 			{
 				var bosschain = C.getChainByAlias(d2);
-				bosshtml = "<em class='dlyBossIconContainer dlyMonthday'><img class='dlyBossIcon' src='img/chain/" + d2 + I.cPNG + "' /></em>";
 				return "<ins class='dlyRegion dly_region_" + C.getChainRegion(bosschain) + "'>"
 					+ "<ins class='dly dly_pve_boss dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + bosschain.finalCoord + "'></ins>"
 				+ "</ins>";
@@ -27024,13 +27017,20 @@ G = {
 			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
 		}
 		var dsbclass = (pIsDashboard) ? "dlyBoxDashboard" : "";
+		// Get daily activity
+		var activity = T.Daily.Activity;
+		var activityalias = activity.Schedule[pDate.getUTCDay()];
+		var activityname = D.getObjectName(activity.Activities[activityalias]);
 		// Generate HTML
+		activityhtml = "<em class='dlyActivityIconContainer dlyMonthday' title='" + activityname + "'><img class='dlyActivityIcon' src='img/daily/activities/" + activityalias + I.cPNG + "' /></em>";
 		var dailybox = $("<div class='dlyBox " + dsbclass + "'>"
-			+ "<aside class='dlyMonthdayBackground dlyMonthday'></aside>" + bosshtml + "<var class='dlyMonthdayNumber dlyMonthday " + dayclass + "'>" + pDate.getUTCDate() + "</var>"
+			+ "<aside class='dlyMonthdayBackground dlyMonthday'></aside>" + activityhtml + "<a class='dlyMonthdayNumber dlyMonthday " + dayclass + "'"
+				+ U.convertExternalAnchor(U.getWikiLinkLanguage(activityname)) + "title='" + activityname + "'>" + pDate.getUTCDate() + "</a>"
 			+ "<span class='dlyMode'><ins class='dly dly_daily_pve'></ins>" + pvestr + "</span>"
 			+ "<span class='dlyMode'><ins class='dly dly_daily_pvp'></ins>" + pvpstr + "</span>"
 			+ "<span class='dlyMode'><ins class='dly dly_daily_wvw'></ins>" + wvwstr + "</span>"
 		+ "</div>").appendTo(calendar);
+		I.qTip.init(".dlyMonthdayNumber");
 
 		// Insert fractal row
 		var insertFractal = function(pIslands, pIDs, pScaleStr)
@@ -29425,13 +29425,13 @@ W = {
 		{
 			if (W.isFallbackEnabled)
 			{
-				return {
-					red: pScores[0],
-					blue: pScores[1],
-					green: pScores[2]
-				};
+				return { red: pScores[0], blue: pScores[1], green: pScores[2] };
 			}
 			return pScores;
+		};
+		var createScores = function()
+		{
+			return { red: 0, blue: 0, green: 0 };
 		};
 		
 		/*
@@ -29443,7 +29443,7 @@ W = {
 		var numowners = W.Metadata.Owners.length;
 		var tier = W.getMatchupTier(pData);
 		var scores = convertScores(pData.scores);
-		var victoryscores = pData.victory_points;
+		var victoryscores = pData.victory_points || createScores(); // Dummy score if using fallback
 		var PPT = {};
 		var wantserver = true;
 		// Initialize variables for the temp object
@@ -32753,6 +32753,7 @@ H = {
 			var gemstr = "<ins class='s16 s16_gem'></ins>";
 			// Include the exchange rate "items" after determining range
 			H.Sale.Items = H.Sale.Padding.concat(H.Sale.Items);
+			var idstofetch = [];
 			for (var i = 0; i < H.Sale.Items.length; i++)
 			{
 				// Initialize variables
@@ -32803,10 +32804,14 @@ H = {
 				}
 				// Format the presentation of this item
 				var idisimg = isNaN(item.id);
-				var dataprop = (idisimg) ? "" : ("data-sale='" + item.id + "'");
+				if (idisimg === false)
+				{
+					idstofetch.push(item.id);
+				}
+				var idprop = (idisimg) ? "" : ("id='dsbSaleItem_" + item.id + "'");
 				var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
 				$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-					+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
+					+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + idprop + " src='" + imgsrc + "' /></a> "
 					+ "<div class='dsbSaleText'>"
 						+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
 						+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
@@ -32825,18 +32830,15 @@ H = {
 				I.updateScrollbar("#dsbSaleTable");
 			});
 			// Retrieve item info
-			$(".dsbSaleIcon").each(function()
+			Q.getItems(idstofetch, function()
 			{
-				if ($(this).attr("data-sale"))
+				for (var i in idstofetch)
 				{
-					(function(iElement)
+					var item = Q.getCachedItem(idstofetch[i]);
+					if (item)
 					{
-						Q.getItem(iElement.attr("data-sale"), function(iData)
-						{
-							iElement.attr("src", iData.icon);
-							Q.scanItem(iData, {aElement: iElement});
-						});
-					})($(this));
+						Q.scanItem(item, {aElement: $("#dsbSaleItem_" + idstofetch[i]).attr("src", item.icon)});
+					}
 				}
 			});
 		};
@@ -32860,12 +32862,19 @@ H = {
 			$("#dsbMenuSale").addClass("dsbMenuItemActive");
 			table.append(I.cThrobber);
 			Q.initializeFaux();
-			Q.loadItemsSubdatabase("gem", function()
+			H.updateSaleData(function()
 			{
-				H.updateSaleData(function()
+				if (I.isAPIEnabled)
 				{
 					doGenerate();
-				});
+				}
+				else
+				{
+					Q.loadItemsSubdatabase("gem", function()
+					{
+						doGenerate();
+					});
+				}
 			});
 		}
 	},
@@ -32930,7 +32939,7 @@ H = {
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
 			+ "<img data-src='img/ui/tradingpost.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
 				+ "title='Previous recipes and frequency statistics.'>" + D.getWordCapital("history") + "</a> "
-			+ "<img data-src='img/ui/import.png' /><a class='jsTitle'" + U.convertExternalAnchor(H.Vendor.official)
+			+ "<img data-src='img/ui/import.png' /><a class='jsTitle'" + U.convertExternalAnchor(H.Vendor.SpreadsheetEdit)
 					+ "title='Update and verify the collaborative daily offers list.'>" + D.getWordCapital("update") + "</a>"
 			+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>").hide();
 		I.qTip.reinit();
@@ -33005,7 +33014,7 @@ H = {
 				expiredstr = (updatetime > T.ResetToday && updatetime < T.ResetTomorrow) ? "" : D.getWordCapital("expired") + ". ";
 			}
 			table.append("<div id='dsbVendorNote'>This daily list is user contributed. "
-				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.official) + ">Update</a> link."
+				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.SpreadsheetEdit) + ">Update</a> link."
 				+ "<br />" + expiredstr + "<time id='dsbVendorTime'>" + timestamp + "</time></div>");
 		};
 		
@@ -33038,51 +33047,47 @@ H = {
 				return;
 			}
 			
+			var idstofetch = [];
 			for (var i in H.Vendor.OffersAssoc)
 			{
-				table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
-				(function(iIndex)
-				{
-					var offerid = list[(H.Vendor.OffersAssoc[iIndex])];
-					Q.getItem(offerid, function(pData)
-					{
-						var wikiquery = (D.isLanguageDefault()) ? pData.name : offerid.toString();
-						$("#dsbVendorEntry_" + iIndex).html(
-							"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
-							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
-								+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
-							+ "<span class='dsbVendorName'>" + iIndex + "</span>"
-							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offerid] || H.Vendor.PriceDefault) + "</span>");
-						// Get TP prices also
-						$.getJSON(U.getAPIPrice(offerid), function(pData)
-						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" " + I.Symbol.Approx + " " + E.formatCoinStringColored(E.processPrice(pData).oPriceSellTaxed));
-						}).fail(function()
-						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
-						});
-						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
-						// Get the product that the recipe crafts
-						var product = H.Vendor.Products[offerid] || offerid;
-						Q.getItem(product, function(pProduct)
-						{
-							var icon = $("#dsbVendorIcon_" + iIndex);
-							icon.attr("src", pProduct.icon);
-							Q.scanItem(pProduct, {aElement: icon});
-						});
-						// Finalize the table after every offer has been added
-						if ($(".dsbVendorItem").length === H.Vendor.numOffers)
-						{
-							finalizeVendorTable(updatetime);
-						}
-					}).fail(function()
-					{
-						table.empty();
-						I.warn("item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offerid.toString())) + ">" + offerid + "</a>", true);
-					});
-				})(i);
+				var recipeid = list[(H.Vendor.OffersAssoc[i])];
+				var productid = H.Vendor.Products[recipeid] || recipeid;
+				idstofetch.push(recipeid);
+				idstofetch.push(productid);
 			}
+			Q.getPricedItems(idstofetch, function()
+			{
+				for (var i in H.Vendor.OffersAssoc)
+				{
+					table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
+					var recipeid = list[(H.Vendor.OffersAssoc[i])];
+					var recipe = Q.getCachedItem(recipeid);
+					var wikiquery = (D.isLanguageDefault()) ? recipe.name : recipeid.toString();
+					$("#dsbVendorEntry_" + i).html(
+						"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + i + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
+						+ "<span id='dsbVendorItem_" + i + "' class='dsbVendorItem curZoom " + Q.getRarityClass(recipe.rarity)
+							+ "' data-coord='" + (H.Vendor.Coords[i])[weekdaylocation] + "'>" + recipe.name + "</span> "
+						+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + i + "'></span>"
+						+ "<span class='dsbVendorName'>" + i + "</span>"
+						+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[recipeid] || H.Vendor.PriceDefault) + "</span>");
+					// Get TP prices also
+					var recipeprice = E.getCachedPrice(recipeid);
+					var recipepricestr = (recipeprice) ? (" = " + E.formatCoinStringColored(recipeprice.oPriceSell)) : " = " + E.formatCoinStringColored(0);
+					$("#dsbVendorPriceCoin_" + i).html(recipepricestr);
+					M.bindMapLinkBehavior($("#dsbVendorItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
+					// Get the product that the recipe crafts
+					var productid = H.Vendor.Products[recipeid] || recipeid;
+					var product = Q.getCachedItem(productid);
+					var icon = $("#dsbVendorIcon_" + i);
+					icon.attr("src", product.icon);
+					Q.scanItem(product, {aElement: icon});
+					// Finalize the table after every offer has been added
+					if ($(".dsbVendorItem").length === H.Vendor.numOffers)
+					{
+						finalizeVendorTable(updatetime);
+					}
+				}
+			});
 		};
 		
 		// Collapse and empty the table if currently expanded, else generate
@@ -33107,17 +33112,24 @@ H = {
 			if (H.Vendor.isEnabled)
 			{
 				table.append(I.cThrobber);
-				Q.loadItemsSubdatabase("pact", function()
-				{
-					$.ajax({
-						dataType: "json",
-						url: H.Vendor.url,
-						cache: false,
-						success: function(pData)
+				$.ajax({
+					dataType: "json",
+					url: H.Vendor.SpreadsheetData,
+					cache: false,
+					success: function(pData)
+					{
+						if (I.isAPIEnabled)
 						{
 							doGenerate(pData);
 						}
-					});
+						else
+						{
+							Q.loadItemsSubdatabase("pact", function()
+							{
+								doGenerate(pData);
+							});
+						}
+					}
 				});
 			}
 			else
@@ -35021,6 +35033,7 @@ I = {
 	// Content-Plate-Page and Section-Header
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
+	isAPIEnabled: true, // This will be changed asynchronously by the populate map function
 	isMapEnabled: true,
 	isTouchEnabled: false,
 	isCustomScrollEnabled: true,

@@ -5,17 +5,17 @@
 
 var GW2T_DYES_METADATA = {
 	Translations: {
-		Gray: {en: "Gray", de: "Grau", es: "Gris", fr: "Gris"},
-		Brown: {en: "Brown", de: "Braun", es: "Marrón", fr: "Marron"},
-		Red: {en: "Red", de: "Rot", es: "Rojo", fr: "Rouge"},
-		Orange: {en: "Orange", de: "Orange", es: "Naranja", fr: "Orange"},
-		Yellow: {en: "Yellow", de: "Gelb", es: "Amarillo", fr: "Jaune"},
-		Green: {en: "Green", de: "Grün", es: "Verde", fr: "Vert"},
-		Blue: {en: "Blue", de: "Blau", es: "Azul", fr: "Bleu"},
-		Purple: {en: "Purple", de: "Lila", es: "Morado", fr: "Violet"},
-		Vibrant: {en: "Cloth", de: "Lebendige", es: "Vibrante", fr: "Vibrante"},
-		Leather: {en: "Leather", de: "Leder", es: "Cuero", fr: "Cuir"},
-		Metal: {en: "Metallic", de: "Metallische", es: "Metálico", fr: "Métallique"}
+		Gray: {en: "Gray", de: "Grau", es: "Gris", fr: "Gris", zh: "灰色"},
+		Brown: {en: "Brown", de: "Braun", es: "Marrón", fr: "Marron", zh: "棕色"},
+		Red: {en: "Red", de: "Rot", es: "Rojo", fr: "Rouge", zh: "红"},
+		Orange: {en: "Orange", de: "Orange", es: "Naranja", fr: "Orange", zh: "橙子"},
+		Yellow: {en: "Yellow", de: "Gelb", es: "Amarillo", fr: "Jaune", zh: "黄色"},
+		Green: {en: "Green", de: "Grün", es: "Verde", fr: "Vert", zh: "绿色"},
+		Blue: {en: "Blue", de: "Blau", es: "Azul", fr: "Bleu", zh: "蓝色"},
+		Purple: {en: "Purple", de: "Lila", es: "Morado", fr: "Violet", zh: "紫色"},
+		Vibrant: {en: "Cloth", de: "Lebendige", es: "Vibrante", fr: "Vibrante", zh: "鲜明"},
+		Leather: {en: "Leather", de: "Leder", es: "Cuero", fr: "Cuir", zh: "皮革"},
+		Metal: {en: "Metallic", de: "Metallische", es: "Metálico", fr: "Métallique", zh: "金属"}
 	},
 	Rarities: {
 		Default: "Rare",
