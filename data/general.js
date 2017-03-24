@@ -1533,9 +1533,9 @@ Countdown: {
 		name_es: "Festival Super Adventure",
 		name_fr: "Festival de la Super Adventure",
 		name_zh: "超级冒险盒",
-		official: "the-game/releases/april-01-2016/",
-		Start: new Date("2017-04-01T16:00:00Z"),
-		Finish: new Date("2017-04-18T16:00:00Z")
+		official: "news/super-adventure-festival-is-coming-soon/",
+		Start: new Date("2017-03-30T16:00:00Z"),
+		Finish: new Date("2017-04-20T16:00:00Z")
 	}
 	/*{
 		name_en: "Halloween 2017",
