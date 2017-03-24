@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com
+ * This file is used by http://gw2timer.com and http://gw2timer.com/gem
  * GW2 gem store promotions and sale items.
  */
 GW2T_SALE_DATA = {
@@ -29,53 +29,45 @@ GW2T_SALE_DATA = {
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	/*
 	 * Format:
-	 *	Finish: new Date("2017-01-01T16:00:00Z"), // Time the item or discount will be removed, optional
-	 *	name: "", // Item name to point to English wiki
+	 *	Finish: new Date("2017-01-01T16:00:00Z"), // Time the item or discount expires, optional
+	 *	name: "", // Item name referencing an English wiki page
 	 *	id: "", // Item ID to retrieve icon and tooltip details, or a URL to a hosted image
-	 *	url: "", // If not provided, will use name as a wiki link
+	 *	url: "", // If not provided, will use name as a wiki link, optional
 	 *	price: 400, // Current gem price for one item
 	 *	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]] OR 200, // [[quantity, gempricecurrent, gempriceoldOptional], ...] OR gempriceoldOptional
 	 *	col: 0 // Display on left (0) or right (1) column
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Dye Pack",
-		id: "19998",
-		price: 120,
-		discount: [[1, 120, 200], [5, 480, 800], [25, 2400, 4000]],
+		Finish: new Date("2017-03-25T16:00:00Z"),
+		name: "Hallows Fortune Fireworks",
+		id: "48714",
+		price: 1,
+		discount: 200,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Mad King's Outfit",
-		id: "65196",
-		price: 700,
-		discount: null,
+		Finish: new Date("2017-03-25T16:00:00Z"),
+		name: "Lightning Kite",
+		id: "42967",
+		price: 250,
+		discount: 500,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Black Feather Wings Glider",
-		id: "70048",
-		price: 700,
-		discount: null,
+		Finish: new Date("2017-03-25T16:00:00Z"),
+		name: "Wind Kite",
+		id: "43076",
+		price: 250,
+		discount: 500,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Black Feather Wings Backpack",
-		id: "68686",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-24T16:00:00Z"),
-		name: "Haunted Gramophone",
-		id: "67391",
-		price: 600,
-		discount: null,
+		Finish: new Date("2017-03-25T16:00:00Z"),
+		name: "Sun Kite",
+		id: "43487",
+		price: 250,
+		discount: 500,
 		col: 0
 	},
 	{
@@ -115,6 +107,30 @@ GW2T_SALE_DATA = {
 		name: "Ghostly Outfit",
 		id: "79671",
 		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		Finish: new Date("2017-03-27T16:00:00Z"),
+		name: "Bloody Prince's Outfit",
+		id: "65195",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		Finish: new Date("2017-03-27T16:00:00Z"),
+		name: "Permanent Mad King Finisher",
+		id: "44068",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		Finish: new Date("2017-03-27T16:00:00Z"),
+		name: "Permanent Scarecrow Finisher",
+		id: "44069",
+		price: 500,
 		discount: null,
 		col: 1
 	},

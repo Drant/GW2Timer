@@ -52,6 +52,11 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	border-bottom-right-radius: 8px;
 }
 
+.menuBeamContainer {
+	position: absolute;
+	top: 0;
+}
+
 #paneContent {
 	position: relative;
 	border-top-right-radius: 8px;

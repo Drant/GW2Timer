@@ -13,7 +13,7 @@ var GW2T_DYES_METADATA = {
 		Green: {en: "Green", de: "Grün", es: "Verde", fr: "Vert", zh: "绿色"},
 		Blue: {en: "Blue", de: "Blau", es: "Azul", fr: "Bleu", zh: "蓝色"},
 		Purple: {en: "Purple", de: "Lila", es: "Morado", fr: "Violet", zh: "紫色"},
-		Vibrant: {en: "Cloth", de: "Lebendige", es: "Vibrante", fr: "Vibrante", zh: "鲜明"},
+		Vibrant: {en: "Cloth", de: "Stoff", es: "Tela", fr: "Tissu", zh: "布质"},
 		Leather: {en: "Leather", de: "Leder", es: "Cuero", fr: "Cuir", zh: "皮革"},
 		Metal: {en: "Metallic", de: "Metallische", es: "Metálico", fr: "Métallique", zh: "金属"}
 	},

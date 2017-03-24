@@ -2927,6 +2927,23 @@ U = {
 		// Dummy jqxhr return in case of already loaded
 		return {fail: function() {}};
 	},
+	getJSON: function(pURL, pCallback, pWantCache)
+	{
+		var wantcache = (pWantCache !== undefined) ? pWantCache : true;
+		var jqxhr = $.ajax({
+			dataType: "json",
+			url: pURL,
+			cache: wantcache,
+			success: function(pData)
+			{
+				if (pCallback)
+				{
+					pCallback(pData);
+				}
+			}
+		});
+		return jqxhr;
+	},
 	
 	/*
 	 * Fetches all the pages of an API endpoint and combines them into a single array.
@@ -4954,7 +4971,7 @@ Z = {
 		var command = args[0].toLowerCase();
 		
 		var Commands = {
-			clear: {usage: "Clears the console screen.", f: function()
+			clear: {usage: "Clears the console screen. Or just press the Esc key.", f: function()
 			{
 				I.clear();
 			}},
@@ -7276,6 +7293,7 @@ A = {
 	CharIndexCurrent: null,
 	isAccountInitialized: false,
 	isChartsInitialized: false,
+	isCharactersCached: false,
 	Metadata: {}, // Prewritten data loaded along with account page
 	Currency: {}, // Currency data
 	Equipment: {}, // Character equipment slots information
@@ -7347,14 +7365,20 @@ A = {
 	/*
 	 * Gets an authenticated API URL to retrieve account data.
 	 * @param enum pSuffix type of account data.
-	 * @param string pGuildID for retrieving guild endpoints, optional.
 	 * @returns string.
 	 * @pre Token for use (API key) variable was initialized.
 	 */
-	getURL: function(pSuffix, pGuildID)
+	getURL: function(pSuffix)
 	{
-		var suffix = (pGuildID) ? ("guild/" + pGuildID + "/" + pSuffix) : pSuffix;
-		return "https://api.guildwars2.com/v2/" + suffix + U.getDivider(suffix) + "access_token=" + A.TokenCurrent;
+		return "https://api.guildwars2.com/v2/" + pSuffix + U.getDivider(pSuffix) + "access_token=" + A.TokenCurrent;
+	},
+	getURLGuild: function(pSuffix, pGuildID)
+	{
+		return A.getURL("guild/" + pGuildID + "/" + pSuffix);
+	},
+	getURLAll: function(pSuffix)
+	{
+		return A.getURL(pSuffix + "?ids=all");
 	},
 	
 	/*
@@ -8277,7 +8301,7 @@ A = {
 
 			guilds.forEach(function(iGuildID)
 			{
-				$.getJSON(A.getURL(A.URL.GuildStash, iGuildID), function(pData)
+				$.getJSON(A.getURLGuild(A.URL.GuildStash, iGuildID), function(pData)
 				{
 					A.Data.Vaults[iGuildID] = pData;
 					numfetched++;
@@ -9666,7 +9690,7 @@ A = {
 						if ($(this)[0].selectedIndex !== 0) // First element is the title
 						{
 							var acctodelete = $(this).val();
-							if (confirm("Delete account " + acctodelete + " from the storage?"))
+							if (confirm("Delete account " + acctodelete + " from audit storage?"))
 							{
 								historydelete.find("option[value='" + acctodelete + "']").remove();
 								if (histbook[acctodelete])
@@ -10158,55 +10182,47 @@ V = {
 		+ "</div>");
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
-		// Retrieve characters data
 		I.suspendElement(menusubsection);
 		dish.prepend(I.cThrobber);
-		I.print(D.getPhraseOriginal("Loading characters name") + "...");
-		$.getJSON(A.getURL(A.URL.Characters), function(pData)
+		
+		// Retrieve characters data
+		I.print(D.getPhraseOriginal("Loading characters") + "...");
+		U.getJSON(A.getURLAll(A.URL.Characters), function(pData)
 		{
+			I.clear();
+			I.removeThrobber(dish);
 			A.adjustAccountScrollbar();
+			A.isCharactersCached = true;
+			
 			var numcharacters = pData.length;
 			A.initializeAccountUpgrades();
 			A.assignAccountUpgrades("CharacterSlot", numcharacters);
-			A.Data.CharacterNames = pData;
+			A.Data.CharacterNames = [];
 			A.CharIndexCurrent = null;
 			A.Data.Characters = null;
 			A.Data.Characters = new Array(numcharacters);
-			
-			var charnames = [];
-			A.Data.CharacterNames.forEach(function(iName)
+			var charindex = 0;
+			pData.forEach(function(iCharData)
 			{
-				charnames.push(U.encodeURL(iName));
+				A.Data.CharacterNames.push(iCharData.name);
+				$("#chrSelection").append("<li id='chrSelection_" + charindex + "' class='chrSelection curClick'></li>");
+				$("#chrUsage").append("<li id='chrUsage_" + charindex + "'></li>");
+				$("#chrSeniority").append("<li id='chrSeniority_" + charindex + "'></li>");
+				// Add extra or preformatted properties 
+				A.Data.Characters[charindex] = iCharData;
+				A.Data.Characters[charindex].oCharIndex = charindex;
+				A.Data.Characters[charindex].oCharName = U.escapeHTML(iCharData.name);
+				V.generateCharactersSelection(iCharData);
+				charindex++;
 			});
-			I.print(D.getWordCapital("loading") + " " + charnames.length + " " + D.getWord("characters") + "...");
-			U.fetchAPI(A.getURL(A.URL.Characters), charnames, {
-				aWantCache: true,
-				aCallback: function(pData)
+			I.suspendElement(menusubsection, false);
+			V.generateCharactersStatistics();
+			V.createHeroMenu();
+			if (pSection)
 			{
-				I.clear();
-				I.removeThrobber(dish);
-				var charindex = 0;
-				pData.forEach(function(iCharData)
-				{
-					$("#chrSelection").append("<li id='chrSelection_" + charindex + "' class='chrSelection curClick'></li>");
-					$("#chrUsage").append("<li id='chrUsage_" + charindex + "'></li>");
-					$("#chrSeniority").append("<li id='chrSeniority_" + charindex + "'></li>");
-					// Add extra or preformatted properties 
-					A.Data.Characters[charindex] = iCharData;
-					A.Data.Characters[charindex].oCharIndex = charindex;
-					A.Data.Characters[charindex].oCharName = U.escapeHTML(iCharData.name);
-					V.generateCharactersSelection(iCharData);
-					charindex++;
-				});
-				I.suspendElement(menusubsection, false);
-				V.generateCharactersStatistics();
-				V.createHeroMenu();
-				if (pSection)
-				{
-					$("#accMenu_" + pSection).trigger("click");
-				}
-			}});
-		}).fail(function(pRequest, pStatus)
+				$("#accMenu_" + pSection).trigger("click");
+			}
+		}, A.isCharactersCached).fail(function(pRequest, pStatus)
 		{
 			I.removeThrobber(dish);
 			A.printError(A.PermissionEnum.Characters, pStatus);
@@ -10478,6 +10494,7 @@ V = {
 			$("#chrAccountReload").click(function()
 			{
 				// Wipe previous sections that use characters data
+				A.isCharactersCached = false;
 				$(".accCharDependent").each(function()
 				{
 					A.wipeDish($(this).attr("data-section"));
@@ -30342,11 +30359,7 @@ W = {
 		}
 		
 		// Attempt to retrieve objectives data
-		$.ajax({
-			dataType: "json",
-			url: U.URL_API.Match + O.Options.enu_Server,
-			cache: false, // Prevents keeping stale data
-			success: function(pData)
+		U.getJSON(U.URL_API.Match + O.Options.enu_Server, function(pData)
 		{
 			if (W.isFallbackEnabled)
 			{
@@ -30501,7 +30514,7 @@ W = {
 			{
 				succeedReconnection();
 			}
-		}}).fail(function()
+		}, false).fail(function()
 		{
 			if (W.isFallbackEnabled === false)
 			{
@@ -30554,106 +30567,100 @@ W = {
 		// First find the matchup for the selected server
 		if (W.MatchupIDCurrent === null || W.Matches === null)
 		{
-			$.ajax({
-				dataType: "json",
-				url: U.URL_API.MatchesFallback,
-				cache: false,
-				success: function(pData)
+			U.getJSON(U.URL_API.MatchesFallback, function(pData)
+			{
+				if (W.isFallbackEnabled === false)
 				{
-					if (W.isFallbackEnabled === false)
+					return;
+				}
+				W.Matches = {};
+				for (var i in pData.wvw_matches)
+				{
+					var match = pData.wvw_matches[i];
+					var serverid = parseInt(O.Options.enu_Server);
+					W.Matches[match.wvw_match_id] = match;
+					// Execute this function again now that the match ID is found
+					if (match.red_world_id === serverid
+						|| match.blue_world_id === serverid
+						|| match.green_world_id === serverid)
 					{
-						return;
-					}
-					W.Matches = {};
-					for (var i in pData.wvw_matches)
-					{
-						var match = pData.wvw_matches[i];
-						var serverid = parseInt(O.Options.enu_Server);
-						W.Matches[match.wvw_match_id] = match;
-						// Execute this function again now that the match ID is found
-						if (match.red_world_id === serverid
-							|| match.blue_world_id === serverid
-							|| match.green_world_id === serverid)
-						{
-							W.MatchupIDCurrent = match.wvw_match_id;
-							W.MatchStartTimeMS = (new Date(pData.start_time)).getTime();
-							W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
-							W.secTillWvWReset = ~~((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
-							// Initialize matchup data
-							W.MatchupCurrent = W.formatMatchup(W.Matches[W.MatchupIDCurrent]);
-							W.updateParticipants();
-							W.updateObjectivesFallback();
-						}
+						W.MatchupIDCurrent = match.wvw_match_id;
+						W.MatchStartTimeMS = (new Date(pData.start_time)).getTime();
+						W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
+						W.secTillWvWReset = ~~((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
+						// Initialize matchup data
+						W.MatchupCurrent = W.formatMatchup(W.Matches[W.MatchupIDCurrent]);
+						W.updateParticipants();
+						W.updateObjectivesFallback();
 					}
 				}
-			});
+			}, false);
 		}
 		else
 		{
-			$.ajax({
-				dataType: "json",
-				url: U.URL_API.MatchFallback + W.MatchupIDCurrent,
-				cache: false,
-				success: function(pData)
+			U.getJSON(U.URL_API.MatchFallback + W.MatchupIDCurrent, function(pData)
+			{
+				if (W.isFallbackEnabled === false)
 				{
-					if (W.isFallbackEnabled === false)
+					return;
+				}
+				var map, obj, apiobj, landprefix;
+				var pastfar = new Date(nowmsec - W.cMSECONDS_IMMUNITY);
+				var pastnear = new Date(nowmsec - (O.Options.int_secWvWRefresh * T.cMSECONDS_IN_SECOND));
+				for (var i in pData.maps)
+				{
+					map = pData.maps[i];
+					landprefix = W.LandPrefix[map.type];
+					for (var ii in map.objectives)
 					{
-						return;
-					}
-					var map, obj, apiobj, landprefix;
-					var pastfar = new Date(nowmsec - W.cMSECONDS_IMMUNITY);
-					var pastnear = new Date(nowmsec - (O.Options.int_secWvWRefresh * T.cMSECONDS_IN_SECOND));
-					for (var i in pData.maps)
-					{
-						map = pData.maps[i];
-						landprefix = W.LandPrefix[map.type];
-						for (var ii in map.objectives)
+						apiobj = map.objectives[ii];
+						obj = W.Objectives[landprefix + apiobj.id];
+						if (obj === undefined) // Ignore unknown objectives
 						{
-							apiobj = map.objectives[ii];
-							obj = W.Objectives[landprefix + apiobj.id];
-							/*
-							 * Only update the objectives if they have changed server ownership.
-							 */
-							var past = (obj.owner === null) ? pastfar : pastnear;
-							if (obj.owner !== apiobj.owner)
-							{
-								// Reinitialize properties
-								obj.last_flipped = past.toISOString();
-								obj.last_flipped_msec = past.getTime();
-								obj.prevowner = obj.owner;
-								obj.owner = apiobj.owner;
-								W.updateObjectiveIcon(obj);
-								W.updateObjectiveAge(obj);
-								W.updateObjectiveTooltip(obj);
+							continue;
+						}
+						/*
+						 * Only update the objectives if they have changed server ownership.
+						 */
+						var past = (obj.owner === null) ? pastfar : pastnear;
+						if (obj.owner !== apiobj.owner)
+						{
+							// Reinitialize properties
+							obj.last_flipped = past.toISOString();
+							obj.last_flipped_msec = past.getTime();
+							obj.prevowner = obj.owner;
+							obj.owner = apiobj.owner;
+							W.updateObjectiveIcon(obj);
+							W.updateObjectiveAge(obj);
+							W.updateObjectiveTooltip(obj);
 
-								// Mark the objective as immune if it is recently captured
-								if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
-										&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
-								{
-									W.Objectives[obj.id].isImmune = true;
-									$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
-								}
-							}
-							/*
-							 * Only update guild tag labels if claiming has changed.
-							 */
-							if (obj.claimed_by !== apiobj.owner_guild)
+							// Mark the objective as immune if it is recently captured
+							if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
+									&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
 							{
-								obj.prevclaimed_by = obj.claimed_by;
-								obj.claimed_by = apiobj.owner_guild;
-								obj.claimed_at = nowiso;
-								W.updateObjectiveClaim(obj);
+								W.Objectives[obj.id].isImmune = true;
+								$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
 							}
 						}
-					}
-
-					// Update scoreboard
-					if (O.Options.bol_showLeaderboard)
-					{
-						W.insertScoreboard(pData);
+						/*
+						 * Only update guild tag labels if claiming has changed.
+						 */
+						if (obj.claimed_by !== apiobj.owner_guild)
+						{
+							obj.prevclaimed_by = obj.claimed_by;
+							obj.claimed_by = apiobj.owner_guild;
+							obj.claimed_at = nowiso;
+							W.updateObjectiveClaim(obj);
+						}
 					}
 				}
-			});
+
+				// Update scoreboard
+				if (O.Options.bol_showLeaderboard)
+				{
+					W.insertScoreboard(pData);
+				}
+			}, false);
 		}
 	},
 	
@@ -33170,25 +33177,20 @@ H = {
 			if (H.Vendor.isEnabled)
 			{
 				table.append(I.cThrobber);
-				$.ajax({
-					dataType: "json",
-					url: H.Vendor.SpreadsheetData,
-					cache: false,
-					success: function(pData)
+				U.getJSON(H.Vendor.SpreadsheetData, function(pData)
+				{
+					if (I.isAPIEnabled)
 					{
-						if (I.isAPIEnabled)
+						doGenerate(pData);
+					}
+					else
+					{
+						Q.loadItemsSubdatabase("pact", function()
 						{
 							doGenerate(pData);
-						}
-						else
-						{
-							Q.loadItemsSubdatabase("pact", function()
-							{
-								doGenerate(pData);
-							});
-						}
+						});
 					}
-				});
+				}, false);
 			}
 			else
 			{
