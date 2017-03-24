@@ -12513,14 +12513,14 @@ V = {
 			{
 				var value = values[pItem.id];
 				var salevalue = H.Sale.Values[pItem.id];
-				if (value !== undefined && salevalue !== undefined)
+				if (value !== undefined && salevalue >= 0)
 				{
 					pSlot.data("ismarked", true);
-					if (salevalue < value)
+					if (salevalue < value || salevalue === 0)
 					{
 						pSlot.addClass("bnkSlotDiscount");
 						// Show pre-discounted gem price when hovered
-						pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(value, true) + "</var>");
+						pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(Math.abs(value), true) + "</var>");
 					}
 					else if (salevalue)
 					{
@@ -12546,9 +12546,10 @@ V = {
 					for (var i in payment)
 					{
 						values[id] = payment[i];
-						if (salevalue && salevalue <= Math.abs(payment[i])) // Items being promoted overrides the payment value of the record's
+						if (salevalue >= 0 && salevalue <= Math.abs(payment[i])) // Items being promoted overrides the payment value of the record's
 						{
 							payment[i] = salevalue;
+							unlockeds[id] = true;
 						}
 						if (payment[i] <= 0)
 						{
@@ -12703,14 +12704,14 @@ V = {
 				for (var i in pEntry.p)
 				{
 					value = pEntry.p[i];
-					if (salevalue)
+					if (salevalue >= 0)
 					{
 						value = Math.abs(value); // If exists in promotions then consider as available in the record
 					}
 					break; // Consider only the first payment type
 				}
 				// Check for available
-				if (availableassoc[id] && (salevalue || value > 0))
+				if (availableassoc[id] && (salevalue >= 0 || value > 0))
 				{
 					I.print(pEntry.n + availablestr + "!");
 					isavailable = true;
@@ -12718,7 +12719,7 @@ V = {
 				// Check for discount
 				if (discountedassoc[id])
 				{
-					if (salevalue && value && salevalue < value)
+					if (salevalue >= 0 && value && (salevalue < value || salevalue === 0))
 					{
 						I.print(pEntry.n + discountstr + "! " + E.formatGemString(value) + " − "
 							+ E.formatGemString(value - salevalue) + " = " + E.formatGemString(salevalue));

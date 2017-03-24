@@ -42,7 +42,7 @@ GW2T_SALE_DATA = {
 		Finish: new Date("2017-03-25T16:00:00Z"),
 		name: "Hallows Fortune Fireworks",
 		id: "48714",
-		price: 1,
+		price: 0,
 		discount: 200,
 		col: 0
 	},
