@@ -956,7 +956,7 @@ O = {
 		// Load the audit page in a hidden iframe, which is set to close itself when the audit finishes
 		if (O.Options.bol_auditAccountOnReset)
 		{
-			document.getElementById("jsAuditFrame").src = "./?page=Audit&isAutoAudit=true";
+			document.getElementById("jsAuditFrame").src = "./?page=Audit&" + U.KeyEnum.AutoAudit + "=true";
 			I.greet("Automatic account audit started.", messagetime);
 		}
 		
@@ -3303,7 +3303,8 @@ U = {
 		Mode: "mode",
 		Go: "go",
 		Draw: "draw",
-		Fragment: "fragment"
+		Fragment: "fragment",
+		AutoAudit: "isAutoAudit"
 	},
 	
 	/*
@@ -8746,7 +8747,7 @@ A = {
 		var finalizeAutoAudit = function()
 		{
 			// If ran from an embed then assume this was automated, so close the webpage after the audit finishes
-			if (I.isProgramEmbedded && U.Args["isAutoAudit"])
+			if (I.isProgramEmbedded && U.Args[(U.KeyEnum.AutoAudit)])
 			{
 				window.location.href = "about:blank";
 			}
@@ -18801,14 +18802,14 @@ E = {
 	{
 		Q.getItems(E.getTradingIDs(), function()
 		{
-			$("#trdList .trdEntry").each(function(){ E.updateTradingDetails($(this)); });
+			$("#trdList .trdEntry").each(function() { E.updateTradingDetails($(this)); });
 		});
 	},
 	updateAllTradingPrices: function()
 	{
 		E.getPrices(E.getTradingIDs(), function()
 		{
-			$("#trdList .trdEntry").each(function(){ E.updateTradingPrices($(this)); });
+			$("#trdList .trdEntry").each(function() { E.updateTradingPrices($(this)); });
 		});
 	},
 	
@@ -22449,7 +22450,7 @@ M = {
 		Challenge: 4,
 		Heart: 5,
 		EventIcon: 6,
-		EventRing: 7,
+		EventCircle: 7,
 		EventLabel: 8
 	},
 	APIPOIEnum:
@@ -22511,7 +22512,8 @@ M = {
 				HeartArea: new L.layerGroup(),
 				SectorArea: new L.layerGroup(),
 				EventIcon: new L.layerGroup(),
-				EventRing: new L.layerGroup(),
+				EventCircle: new L.layerGroup(),
+				EventArea: new L.layerGroup(),
 				EventLabel: new L.layerGroup()
 			};
 			if (that.MapEnum === P.MapEnum.Tyria)
@@ -23128,7 +23130,8 @@ M = {
 					if (O.Options.bol_displaySectorsArea) { this.ZoneCurrent.Layers.SectorArea.addTo(this.Map); }
 					if (O.Options.bol_displayEvents) {
 						this.ZoneCurrent.Layers.EventIcon.addTo(this.Map);
-						this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
+						this.ZoneCurrent.Layers.EventCircle.addTo(this.Map);
+						this.ZoneCurrent.Layers.EventArea.addTo(this.Map);
 						this.ZoneCurrent.Layers.EventLabel.addTo(this.Map);
 					}
 				} break;
@@ -23257,7 +23260,6 @@ M = {
 			waypoint: [40, 32, 26, 20, 16, 12, 0, 0],
 			landmark: [32, 24, 16, 12, 0, 0, 0, 0],
 			eventicon: [32, 24, 16, 12, 0, 0, 0, 0],
-			eventring: [256, 128, 64, 32, 0, 0, 0, 0],
 			eventlabelfont: [14, 0, 0, 0, 0, 0, 0, 0],
 			sectorfont: [28, 20, 16, 0, 0, 0, 0, 0],
 			sectoropacity: [0.9, 0.6, 0.3, 0, 0, 0, 0, 0],
@@ -23276,7 +23278,6 @@ M = {
 		var waypointsize = getZoomValue("waypoint");
 		var landmarksize = getZoomValue("landmark");
 		var eventiconsize = getZoomValue("eventicon");
-		var eventringsize = getZoomValue("eventring");
 		var eventlabelfont = getZoomValue("eventlabelfont");
 		var sectorfont = getZoomValue("sectorfont");
 		var sectoropacity = getZoomValue("sectoropacity");
@@ -23296,9 +23297,9 @@ M = {
 		{
 			case P.MapEnum.Tyria:
 			{
-				// Event Icon
 				if (O.Options.bol_displayEvents)
 				{
+					// Event Icon
 					this.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer)
 					{
 						that.resizeMarkerIcon(iLayer, eventiconsize);
@@ -23307,15 +23308,11 @@ M = {
 							iLayer._icon.style.zIndex = M.cZIndexRaise;
 						}
 					});
-
-					// Event Ring
-					this.ZoneCurrent.Layers.EventRing.eachLayer(function(iLayer)
+					
+					// Event Circle
+					this.ZoneCurrent.Layers.EventCircle.eachLayer(function(iLayer)
 					{
-						that.resizeMarkerIcon(iLayer, eventringsize);
-						if (iLayer._icon)
-						{
-							iLayer._icon.style.zIndex = M.cZIndexBury;
-						}
+						iLayer.setRadius(that.getZoomedDistance(iLayer.options.trueradius));
 					});
 					
 					// Event Label
@@ -24980,6 +24977,15 @@ M = {
 			~~(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(pPos[1]-mr[0][1])/(mr[1][1]-mr[0][1])))
 		];
 	},
+	convertEventCoordMulti: function(pPosArray, pZone)
+	{
+		var coords = [];
+		for (var i = 0; i < pPosArray.length; i++)
+		{
+			coords.push(this.convertEventCoord(pPosArray[i], pZone));
+		}
+		return coords;
+	},
 	
 	/*
 	 * Converts a MumbleLink player coordinates to the map coordinates system.
@@ -25711,6 +25717,13 @@ P = {
 									fillOpacity: 0.1
 								});
 								zoneobj.Layers.HeartArea.addLayer(area);
+								
+								// Highlight the heart's area when hovered over its icon
+								(function(iArea)
+								{
+									marker.on("mouseover", function() { iArea.setStyle({ color: "lime" }); })
+										.on("mouseout", function() { iArea.setStyle({ color: "#ffc321" }); });
+								})(area);
 							}
 						}
 						
@@ -25871,29 +25884,6 @@ P = {
 			return "swords";
 		};
 		
-		// Function to approximate the event ring as viewed in the game's minimap
-		var determineEventRing = function(pEvent)
-		{
-			var r = pEvent.location.radius;
-			switch (pEvent.location.type)
-			{
-				case "sphere": {
-					if (r < 2000) return "img/ring/c_s.png";
-					return "img/ring/c_m.png";
-				}
-				
-				case "cylinder": {
-					return "img/ring/e_m_h.png";
-				}
-				
-				case "poly": {
-					return "img/ring/e_l_h.png";
-				}
-			}
-			
-			return "img/ring/c_m.png";
-		};
-		
 		// Function to store event names for filtering
 		var initializeEvents = function(pEventData)
 		{
@@ -25915,9 +25905,8 @@ P = {
 				var event;
 				var searchname;
 				var newname;
-				var marker;
-				var icon;
-				var coord, coordmarker;
+				var marker, area, icon;
+				var coord, coordmarker, areacoords, radius, trueradius;
 
 				var zoneobj, zonename;
 				initializeEvents(pData || pDataInner);
@@ -25940,18 +25929,34 @@ P = {
 					coord = M.getEventCenter(event);
 					coordmarker = M.convertGCtoLC(coord);
 
-					// Create event's ring
-					marker = L.marker(coordmarker,
+					// Create event's area if coordinates are available, otherwise create a circle
+					if (event.location.points)
 					{
-						clickable: false,
-						icon: L.icon(
-						{
-							iconUrl: determineEventRing(event),
-							iconSize: [256, 256],
-							iconAnchor: [128, 128]
-						})
-					});
-					zoneobj.Layers.EventRing.addLayer(marker);
+						areacoords = M.convertEventCoordMulti(event.location.points, zoneobj);
+						area = L.polygon(M.convertGCtoLCMulti(areacoords), {
+							clickable: false,
+							color: "#ff8844",
+							weight: 2,
+							opacity: 0.8,
+							fillOpacity: 0.1
+						});
+						zoneobj.Layers.EventArea.addLayer(area);
+					}
+					else
+					{
+						trueradius = (event.location.radius || 1) * T.cUNITS_TO_POINTS;
+						radius = M.getZoomedDistance(trueradius);
+						area = L.circleMarker(coordmarker, {
+							trueradius: trueradius,
+							radius: radius,
+							clickable: false,
+							color: "#ff8844",
+							weight: 2,
+							opacity: 0.8,
+							fillOpacity: 0.1
+						});
+						zoneobj.Layers.EventCircle.addLayer(area);
+					}
 					
 					// Create event's label
 					marker = L.marker(coordmarker,
@@ -25982,6 +25987,15 @@ P = {
 							iconAnchor: [24, 24]
 						})
 					});
+					
+					// Highlight the event's area when hovered over its icon
+					(function(iArea)
+					{
+						marker.on("mouseover", function() { iArea.setStyle({ color: "red" }); })
+							.on("mouseout", function() { iArea.setStyle({ color: "#ff8844" }); });
+					})(area);
+					
+					// Bind standard behaviors
 					M.bindMarkerWikiBehavior(marker, "click", true);
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
 					zoneobj.Layers.EventIcon.addLayer(marker);
@@ -26797,7 +26811,7 @@ P = {
 							clickable: false,
 							icon: L.icon(
 							{
-								iconUrl: "img/ring/" + event.ring + I.cPNG,
+								iconUrl: "img/event/ring/" + event.ring + I.cPNG,
 								iconSize: [32, 32],
 								iconAnchor: [16, 16]
 							})
@@ -26831,6 +26845,13 @@ P = {
 				I.qTip.init(".leaflet-marker-icon");
 			}
 			I.loadImg($("#sectionChains_Drytop"));
+			
+			// Clipboard
+			for (var i = 0; i < 2; i++)
+			{
+				I.bindClipboard("#chnDryTopWaypoint" + i);
+				I.bindClipboard("#mapDryTopClip" + i);
+			}
 			
 			// Finally
 			C.isDryTopGenerated = true;
@@ -34966,14 +34987,6 @@ K = {
 		{
 			I.bindClipboard("#clkWaypoint" + i);
 		}
-		
-		if (C.DryTopChains.length > 0)
-		{
-			for (var i = 0; i < 2; i++)
-			{
-				I.bindClipboard("#chnDryTopWaypoint" + i);
-			}
-		}
 	},
 	
 	/*
@@ -35079,11 +35092,15 @@ K = {
 			var s1 = T.getCurrentDryTopEvents(1);
 			I.updateClipboard("#chnDryTopWaypoint0", s0);
 			I.updateClipboard("#chnDryTopWaypoint1", s1);
+			var clip0 = $("#mapDryTopClip0");
+			var clip1 = $("#mapDryTopClip1");
 			if (C.isDryTopIconsShown)
 			{
-				$("#mapDryTopClip0").val(s0);
-				$("#mapDryTopClip1").val(s1);
+				clip0.val(s0);
+				clip1.val(s1);
 			}
+			I.updateClipboard(clip0, s0);
+			I.updateClipboard(clip1, s1);
 		}
 	},
 	
