@@ -7,7 +7,6 @@ GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2017-03-07T16:00:00Z"),
 	Finish: new Date("2017-04-04T16:00:00Z"),
-	Countdowns: {}, // Will contain expiration date in UNIX seconds, accessed by Items array index number
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -39,58 +38,66 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-25T16:00:00Z"),
-		name: "Hallows Fortune Fireworks",
-		id: "48714",
-		price: 0,
-		discount: 200,
+		Finish: new Date("2017-03-26T16:00:00Z"),
+		name: "Home Instance Node Pack",
+		id: "http://i.imgur.com/4h6p3sD.png",
+		price: 2800,
+		discount: 4000,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-25T16:00:00Z"),
-		name: "Lightning Kite",
-		id: "42967",
-		price: 250,
-		discount: 500,
+		Finish: new Date("2017-03-26T16:00:00Z"),
+		name: "Basic Harvesting Node Pack",
+		id: "67290",
+		price: 560,
+		discount: 800,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-25T16:00:00Z"),
-		name: "Wind Kite",
-		id: "43076",
-		price: 250,
-		discount: 500,
+		Finish: new Date("2017-03-26T16:00:00Z"),
+		name: "Basic Lumber Node Pack",
+		id: "66769",
+		price: 560,
+		discount: 800,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-25T16:00:00Z"),
-		name: "Sun Kite",
-		id: "43487",
-		price: 250,
-		discount: 500,
+		Finish: new Date("2017-03-26T16:00:00Z"),
+		name: "Basic Ore Node Pack",
+		id: "44884",
+		price: 560,
+		discount: 800,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-25T16:00:00Z"),
-		name: "Grenth Hood Skin",
-		id: "47890",
-		price: 500,
+		Finish: new Date("2017-03-26T16:00:00Z"),
+		name: "Basic Cloth Rack",
+		id: "67842",
+		price: 560,
+		discount: 800,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-26T16:00:00Z"),
+		name: "Basic Leather Rack",
+		id: "78019",
+		price: 560,
+		discount: 800,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-28T16:00:00Z"),
+		name: "Raiment of the Lich",
+		id: "67037",
+		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-25T16:00:00Z"),
-		name: "Mini Feline Familiar",
-		id: "79651",
-		price: 350,
-		discount: null,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-25T16:00:00Z"),
-		name: "Phantom's Hood",
-		id: "65203",
-		price: 200,
+		Finish: new Date("2017-03-28T16:00:00Z"),
+		name: "Furrocious Cat Ears",
+		id: "79619",
+		price: 400,
 		discount: null,
 		col: 0
 	},
@@ -107,6 +114,14 @@ GW2T_SALE_DATA = {
 		name: "Ghostly Outfit",
 		id: "79671",
 		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		Finish: new Date("2017-03-28T16:00:00Z"),
+		name: "Hallows Fortune Fireworks",
+		id: "48714",
+		price: 200,
 		discount: null,
 		col: 1
 	},

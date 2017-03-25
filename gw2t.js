@@ -2807,10 +2807,12 @@ U = {
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
 		
+		// Guild
+		Guild: "https://api.guildwars2.com/v2/guild/",
+		
 		// WvW
 		Match: "https://api.guildwars2.com/v2/wvw/matches?world=",
 		Matches: "https://api.guildwars2.com/v2/wvw/matches/",
-		GuildDetails: "https://api.guildwars2.com/v1/guild_details.json?guild_id=",
 		MatchFallback: "https://api.guildwars2.com/v1/wvw/match_details.json?match_id=",
 		MatchesFallback: "https://api.guildwars2.com/v1/wvw/matches.json",
 		
@@ -2957,8 +2959,8 @@ U = {
 	{
 		var Settings = pSettings || {};
 		var scrapethreshold = 50;
-		var numtofetch;
 		var numfetched = 0;
+		var numtofetch;
 		var url = pURL + "&page_size=" + U.PageLimit;
 		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : false;
 		var pages = [];
@@ -3080,8 +3082,8 @@ U = {
 		var itemids = [];
 		var retarr = [];
 		var failarr = [];
-		var numtofetch = 0;
 		var numfetched = 0;
+		var numtofetch = 0;
 		
 		var finishFetch = function()
 		{
@@ -3191,6 +3193,10 @@ U = {
 		var idstr = (pID === undefined) ? "" : "/" + pID;
 		var url = U.URL_API.Prefix + pAPI + idstr;
 		return U.getLangURL(url);
+	},
+	getAPIURL: function(pAPI)
+	{
+		return U.URL_API.Prefix + pAPI.toLowerCase();
 	},
 	getAPIMap: function(pID)
 	{
@@ -5536,8 +5542,8 @@ Z = {
 		var numretries = (Settings.aNumRetries || 3);
 		var reqlimit = 500;
 		var reqcooldownms = (Settings.aCooldown || 30) * T.cMSECONDS_IN_SECOND;
-		var numtofetch = 0;
 		var numfetched = 0;
+		var numtofetch = 0;
 		var cachearr = Settings.aCacheArray || new Array(pArray.length);
 		if (pArray.length === 0)
 		{
@@ -7293,7 +7299,8 @@ A = {
 	CharIndexCurrent: null,
 	isAccountInitialized: false,
 	isChartsInitialized: false,
-	isCharactersCached: false,
+	isCharactersCached: false, // For force redownloading of characters data rather than use cached
+	isHeroCached: false, // For fetching hero equipment, skills, etc. again
 	Metadata: {}, // Prewritten data loaded along with account page
 	Currency: {}, // Currency data
 	Equipment: {}, // Character equipment slots information
@@ -7302,11 +7309,9 @@ A = {
 		Account: {},
 		Characters: [],
 		CharacterNames: null,
-		Guilds: {}, // Guild details objects, accessed using a guild ID
 		Vaults: null,
-		Wallet: {},
-		Specializations: {},
-		Traits: {}
+		Wallet: null,
+		Titles: null
 	},
 	Possessions: null, // Associative array of actual items from the user's bank, inventory, equipment slots, shared slots, and bag slots
 	Tally: null, // Number of filled slots and capacity of banks and collections, used in auditing
@@ -7325,6 +7330,7 @@ A = {
 		Gliders: "account/gliders",
 		Skins: "account/skins",
 		Wallet: "account/wallet",
+		Titles: "account/titles",
 		Recipes: "account/recipes",
 		Dungeons: "account/dungeons",
 		Raids: "account/raids",
@@ -8242,34 +8248,10 @@ A = {
 			pCallback();
 			return;
 		}
-		
-		// Fetch the guild details from the array of guild IDs
-		var numfetched = 0;
-		for (var i = 0; i < guildids.length; i++)
+		Q.getGuilds(guildids, function()
 		{
-			// Only fetch if haven't cached it
-			if (A.Data.Guilds[(guildids[i])] === undefined)
-			{
-				$.getJSON(U.URL_API.GuildDetails + guildids[i], function(pData)
-				{
-					A.Data.Guilds[pData.guild_id] = pData;
-					A.Data.Guilds[pData.guild_id].oTag = "[" + pData.tag + "]";
-					numfetched++;
-					if (numfetched === guildids.length)
-					{
-						pCallback();
-					}
-				});
-			}
-			else
-			{
-				numfetched++;
-				if (numfetched === guildids.length)
-				{
-					pCallback();
-				}
-			}
-		}
+			pCallback();
+		});
 	},
 	
 	/*
@@ -9573,6 +9555,7 @@ A = {
 				hist["Timestamps"].push(T.formatISO(now));
 				hist["WalletCoin"].push(walletcat["coin_liquidsell"]);
 				hist["WalletKarma"].push(walletcat["karma"]);
+				hist["WalletGem"].push(walletcat["gem"]);
 				hist["TotalGems"].push(totalgems);
 				hist["TotalAppraisedSellNoGems"].push(totalappraisedsellnogems);
 				hist["TotalLiquidSellNoGems"].push(totalliquidsellnogems);
@@ -9680,27 +9663,28 @@ A = {
 						}
 					});
 					// Selection to delete an account in the history
-					var historydelete = $("<select id='audHistoryDelete'><option>" + D.getPhraseOriginal("Delete Storage") + ":</option></select>").appendTo(historybuttons);
-					for (var i in histbook)
-					{
-						historydelete.append("<option value='" + U.escapeHTML(i) + "'>" + U.escapeHTML(i) + "</option>");
-					}
-					historydelete.change(function()
-					{
-						if ($(this)[0].selectedIndex !== 0) // First element is the title
+					I.createDropdown(historybuttons, histbook, {
+						aFirst: D.getPhraseOriginal("Delete Storage") + ":",
+						aBind: function(pElm)
 						{
-							var acctodelete = $(this).val();
-							if (confirm("Delete account " + acctodelete + " from audit storage?"))
+							pElm.change(function()
 							{
-								historydelete.find("option[value='" + acctodelete + "']").remove();
-								if (histbook[acctodelete])
+								if ($(this)[0].selectedIndex !== 0) // First element is the title
 								{
-									delete histbook[acctodelete];
-									O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
-									I.write(acctodelete + " was deleted from the storage.");
+									var acctodelete = $(this).val();
+									if (confirm("Delete account " + acctodelete + " from audit storage?"))
+									{
+										pElm.find("option[value='" + acctodelete + "']").remove();
+										if (histbook[acctodelete])
+										{
+											delete histbook[acctodelete];
+											O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
+											I.write(acctodelete + " was deleted from the storage.");
+										}
+									}
+									pElm.find("option:first").attr("selected", "selected");
 								}
-							}
-							historydelete.find("option:first").attr("selected", "selected");
+							});
 						}
 					});
 					
@@ -10186,18 +10170,18 @@ V = {
 		dish.prepend(I.cThrobber);
 		
 		// Retrieve characters data
-		I.print(D.getPhraseOriginal("Loading characters") + "...");
 		U.getJSON(A.getURLAll(A.URL.Characters), function(pData)
 		{
-			I.clear();
 			I.removeThrobber(dish);
 			A.adjustAccountScrollbar();
 			A.isCharactersCached = true;
 			
+			// Reset variables
 			var numcharacters = pData.length;
 			A.initializeAccountUpgrades();
 			A.assignAccountUpgrades("CharacterSlot", numcharacters);
 			A.Data.CharacterNames = [];
+			A.isHeroCached = false;
 			A.CharIndexCurrent = null;
 			A.Data.Characters = null;
 			A.Data.Characters = new Array(numcharacters);
@@ -10284,7 +10268,7 @@ V = {
 		var charvalue = A.Metadata.Race[(pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase()] || 1;
 		var professionvalue = (A.Metadata.Profession[(pCharacter.profession).toLowerCase()]).weight;
 		var trivial = (pCharacter.oCharIsLowLevel) ? "accTrivial" : "";
-		// Store character portrait
+		// Remember character portrait
 		pCharacter.oCharPortrait = "img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG;
 		$("#chrSelection_" + pCharacter.oCharIndex).append(
 			"<img class='chrPortrait' src='" + pCharacter.oCharPortrait + "' />"
@@ -10487,7 +10471,8 @@ V = {
 						+ T.formatTimeLetter(totalage) + " / " + accountbirthdaysince + "'>" + totalagehour + hourstr + "</var> / "
 					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totaldeaths / totalagehour, 2) + "x / " + "1" + hourstr + "'>" + totaldeaths + "x</var> &nbsp; "
 					+ "<var id='chrAccountLifetime'>" + accountbirthdaysince +  "</var>"
-					+ " &nbsp; <button id='chrAccountReload' title='<dfn>Reload</dfn> characters data (statistics, equipment, inventory).'><img src='img/ui/refresh.png' /></button>";
+					+ " &nbsp; <span id='chrAccountTitles'></span> &nbsp; "
+					+ "<button id='chrAccountReload' title='<dfn>Reload</dfn> characters data (statistics, equipment, inventory).'><img src='img/ui/refresh.png' /></button>";
 			$("#chrSummary").append(summary);
 			I.qTip.init("#chrSummary var, #chrAccountReload");
 			// Account reload button
@@ -10519,8 +10504,11 @@ V = {
 				{
 					if (iChar.guild)
 					{
-						var guildtag = "<sup class='chrTag'>[" + (A.Data.Guilds[iChar.guild]).tag + "]" + "</sup>";
-						$("#chrName_" + iChar.oCharIndex).append(guildtag);
+						var guild = Q.getCachedGuild(iChar.guild);
+						if (guild)
+						{
+							$("#chrName_" + iChar.oCharIndex).append("<sup class='chrTag'>[" + guild.tag + "]" + "</sup>");
+						}
 					}
 				});
 
@@ -10528,22 +10516,27 @@ V = {
 				$("#chrGuilds").append(guildheader);
 				for (var i in guildids)
 				{
-					var guild = A.Data.Guilds[(guildids[i])];
-					(function(iGuild)
+					var guild = Q.getCachedGuild(guildids[i]);
+					if (guild)
 					{
-						var banner = U.getGuildBannerURL(iGuild.guild_name);
-						var guildrow = $("<li class='chrGuild'><span class='chrGuildHover'><img class='chrGuildBanner' src='" + banner + "' />"
-								+ "<img class='chrGuildBanner chrGuildBannerLarge' src='" + banner + "' /></span>"
-							+ "<var class='chrGuildName'>" + iGuild.guild_name + " [" + iGuild.tag + "]</var></li>").click(function()
-							{
-								I.prettyJSON(iGuild);
-							});
-						$("#chrGuilds").append(guildrow);
-					})(guild);
+						(function(iGuild)
+						{
+							var banner = U.getGuildBannerURL(iGuild.name);
+							var guildrow = $("<li class='chrGuild'><span class='chrGuildHover'><img class='chrGuildBanner' src='" + banner + "' />"
+									+ "<img class='chrGuildBanner chrGuildBannerLarge' src='" + banner + "' /></span>"
+								+ "<var class='chrGuildName'>" + iGuild.name + " " + iGuild.oTag + "</var></li>").click(function()
+								{
+									I.prettyJSON(iGuild);
+								});
+							$("#chrGuilds").append(guildrow);
+						})(guild);
+					}
 				}
 			});
 			V.initializeWallet();
-			// Finally for the summary
+			V.initializeTitles();
+			
+			// Finally show the summary
 			$("#chrSummary").show("fast");
 		});
 		
@@ -10644,6 +10637,61 @@ V = {
 	},
 	
 	/*
+	 * Retrieves account's acquired titles and assign them to each character.
+	 */
+	initializeTitles: function()
+	{
+		var generateTitles = function()
+		{
+			// Add a title as a tooltip for each character's selection line
+			var usedtitles = {};
+			A.Data.Characters.forEach(function(iChar)
+			{
+				var titleid = iChar.title;
+				if (titleid)
+				{
+					if (usedtitles[titleid] === undefined)
+					{
+						usedtitles[titleid] = 0;
+					}
+					usedtitles[titleid] += 1;
+					var title = Q.getBoxedTitle(titleid).oData;
+					I.qTip.init($("#chrSelection_" + iChar.oCharIndex).attr("title", "&quot;<dfn>" + title.name + "</dfn>&quot;"));
+				}
+			});
+			
+			// List all unlocked titles as a dropdown menu
+			var titles = [];
+			for (var i in A.Data.Titles)
+			{
+				var box = Q.getBoxedTitle(i);
+				if (box)
+				{
+					var title = box.oData;
+					// Also append a count next to used titles
+					var count = ((usedtitles[title.id]) ? "(" + usedtitles[title.id] + ") " : "");
+					titles.push(count + title.name);
+				}
+			}
+			I.createDropdown("#chrAccountTitles", titles, {
+				aFirst: titles.length + " " + D.getPhraseOriginal("Titles Unlocked")
+			});
+		};
+		
+		// Get account title unlocks
+		$.getJSON(A.getURL(A.URL.Titles), function(pData)
+		{
+			A.Data.Titles = null;
+			A.Data.Titles = U.getExistAssoc(pData);
+			// Get title data
+			Q.getTitles(pData, function()
+			{
+				generateTitles();
+			});
+		});
+	},
+	
+	/*
 	 * Requires characters data to be loaded first before loading other subsections.
 	 * @param string pSection to open after characters data are loaded.
 	 * @returns boolean true if characters data is required.
@@ -10687,11 +10735,50 @@ V = {
 		}
 		else
 		{
-			A.Data.Characters.forEach(function(iChar)
+			if (A.isHeroCached)
 			{
-				V.generateHero(iChar);
-			});
-			equipall.show();
+				equipall.show();
+			}
+			else
+			{
+				// Prefetch equipped items
+				var dish = $("#accDish_Hero").prepend(I.cThrobber);
+				var idstofetch = [];
+				A.Data.Characters.forEach(function(iChar)
+				{
+					iChar.equipment.forEach(function(iItem)
+					{
+						idstofetch.push(iItem.id);
+						var upgs = iItem.upgrades;
+						var infs = iItem.infusions;
+						if (upgs && upgs.length)
+						{
+							upgs.forEach(function(iUpg)
+							{
+								idstofetch.push(iUpg);
+							});
+						}
+						if (infs && infs.length)
+						{
+							infs.forEach(function(iInf)
+							{
+								idstofetch.push(iInf);
+							});
+						}
+					});
+				});
+				Q.getItems(idstofetch, function()
+				{
+					// Generate all characters
+					I.removeThrobber(dish);
+					A.Data.Characters.forEach(function(iChar)
+					{
+						V.generateHero(iChar);
+					});
+					equipall.show();
+					A.isHeroCached = true;
+				});
+			}
 		}
 	},
 	
@@ -10768,7 +10855,6 @@ V = {
 		var equipright = eqp.ColumnRight;
 		var equiprightbrief = eqp.BriefRight;
 		var equiptoggle = eqp.ToggleableSlots;
-		var equipgathering = eqp.GatheringCharges;
 		var attrwindow = $("<div class='eqpAttrWindow'><aside class='eqpAttrHeader'><span class='eqpAttrTitle'>"
 			+ D.getWordCapital("attributes") + "</span></aside><aside class='eqpAttrContent'></aside></div>").appendTo(subconbuild);
 		// Object containing attribute points to be added by the retrieved items
@@ -10797,8 +10883,8 @@ V = {
 		var formatItemBrief = function(pBox)
 		{
 			var str = "";
-			var levelstr = (pBox.oItem.level < A.Metadata.ProfLevel.Max) ? (" (" + pBox.oItem.level + ")") : "";
-			str = "<span class='eqpBriefName " + Q.getRarityClass(pBox.oItem.rarity) + "'>" + pBox.oItem.name + levelstr + "</span><br />";
+			var levelstr = (pBox.oData.level < A.Metadata.ProfLevel.Max) ? (" (" + pBox.oData.level + ")") : "";
+			str = "<span class='eqpBriefName " + Q.getRarityClass(pBox.oData.rarity) + "'>" + pBox.oData.name + levelstr + "</span><br />";
 			pBox.oInfusions.forEach(function(iInfusion)
 			{
 				str += "<span class='" + Q.getRarityClass(iInfusion.rarity) + "'><img src='" + iInfusion.icon + "' /> " + iInfusion.name + "</span><br />";
@@ -10878,11 +10964,8 @@ V = {
 					V.generateSkills(skills[buildmodelower], skillpanel);
 				});
 			});
-			// Automatically opens the PVE traits window if user mouses over respective hero window
-			container.one("mouseover", function()
-			{
-				traitwindow.find(".spzSwitch:first").trigger("click");
-			});
+			// Automatically opens the PVE traits window first
+			traitwindow.find(".spzSwitch:first").trigger("click");
 		};
 		
 		/*
@@ -10975,12 +11058,12 @@ V = {
 								// Add charges number over gathering tools
 								if (iItem.type === "Gathering" && iEquipment.charges)
 								{
-									sloticon.attr("src", iBox.oItem.icon);
+									sloticon.attr("src", iBox.oData.icon);
 									subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + iEquipment.charges + "</span>");
 								}
 								// Bind click behavior for the icon
 								Q.bindItemSlotBehavior(sloticon, {
-									aItem: iBox.oItem,
+									aItem: iBox.oData,
 									aSearch: skinname,
 									aWantClick: true
 								});
@@ -11031,6 +11114,7 @@ V = {
 			return;
 		}
 		
+		var traitassoc = {};
 		var insertSpecialization = function(pSpecID, pTraits)
 		{
 			var specline = $("<aside class='spzLine'>"
@@ -11070,7 +11154,7 @@ V = {
 			
 			var formatTraitIcon = function(pTraitID)
 			{
-				var trait = A.Data.Traits[pTraitID];
+				var trait = Q.getBoxedTrait(pTraitID).oData;
 				var traitelm = specline.find(".spz" + trait.slot + "_" + trait.tier + trait.order);
 				traitelm.css({backgroundImage: "url(" + trait.icon + ")"});
 				var traithighlight = "";
@@ -11088,11 +11172,11 @@ V = {
 				}
 				traitelm.append(traitname + "<mark class='" + traithighlight + "'>" + I.Symbol.Filler + "</mark>");
 				// Generate tooltip for trait
-				Q.analyzeSkillTrait(trait, {aElement: traitelm});
+				Q.analyzeTrait(trait, {aElement: traitelm});
 			};
 			var formatSpecLine = function()
 			{
-				var spec = A.Data.Specializations[pSpecID];
+				var spec = Q.getBoxedSpecialization(pSpecID).oData;
 				specline.css({backgroundImage: "url(" + spec.background + ")"});
 				specline.find(".spzSpecName").text(spec.name);
 				if (spec.elite)
@@ -11101,64 +11185,60 @@ V = {
 				}
 				
 				var traitids = spec.minor_traits.concat(spec.major_traits);
-				for (var i = 0; i < traitids.length; i++)
+				traitids.forEach(function(iTraitID)
 				{
-					var traitid = traitids[i];
-					// Use cached trait data if available, else retrieve
-					if (A.Data.Traits[traitid])
-					{
-						formatTraitIcon(traitid);
-					}
-					else
-					{
-						(function(iTraitID)
-						{
-							$.getJSON(U.getAPITrait(iTraitID), function(pData)
-							{
-								A.Data.Traits[iTraitID] = pData;
-								formatTraitIcon(iTraitID);
-							});
-						})(traitid);
-					}
-				}
+					formatTraitIcon(iTraitID);
+				});
 			};
 			
-			// Use cached specializations data if available, else retrieve
-			if (A.Data.Specializations[pSpecID])
-			{
-				formatSpecLine();
-			}
-			else
-			{
-				$.getJSON(U.getAPISpecialization(pSpecID), function(pData)
-				{
-					A.Data.Specializations[pSpecID] = pData;
-					formatSpecLine();
-				});
-			}
+			// Generate
+			formatSpecLine();
 		};
 		
-		var traitassoc = {};
-		// Insert specialization lines to the panel of specific game mode
+		// Prefetch all of this character's specializations and traits
+		var specstofetch = [];
+		var traitstofetch = [];
 		pTraitLines.forEach(function(iLine)
 		{
 			if (iLine)
 			{
-				// Convert the traits array into an associative array for highlighting active traits
+				specstofetch.push(iLine.id);
 				if (iLine.traits)
 				{
 					iLine.traits.forEach(function(iTrait)
 					{
 						if (iTrait)
 						{
+							traitstofetch.push(iTrait);
+							// Convert the traits array into an associative array for highlighting active traits
 							traitassoc[iTrait] = true;
 						}
 					});
 				}
-				// Insert that line of traits into the panel
-				insertSpecialization(iLine.id, iLine.traits);
 			}
 		});
+		Q.getSpecializations(specstofetch, function()
+		{
+			// API only shows IDs of active major, so also manually include all the IDs of a spec line
+			for (var i in specstofetch)
+			{
+				var spec = Q.getBoxedSpecialization(specstofetch[i]).oData;
+				traitstofetch = traitstofetch.concat(spec.minor_traits.concat(spec.major_traits));
+			}
+			Q.getTraits(traitstofetch, function()
+			{
+				// Insert specialization lines to the panel of specific game mode
+				pTraitLines.forEach(function(iLine)
+				{
+					if (iLine)
+					{
+						// Insert that line of traits into the panel
+						insertSpecialization(iLine.id, iLine.traits);
+					}
+				});
+			});
+		});
+		
 	},
 	
 	/*
@@ -11179,21 +11259,19 @@ V = {
 		{
 			if (pSkillID)
 			{
-				$.getJSON(U.getAPISkill(pSkillID), function(pData)
+				var skill = Q.getBoxedSkill(pSkillID).oData;
+				pSlot.find(".sklSlotIcon").css({backgroundImage: "url(" + skill.icon + ")"});
+				// Include ground targeting icon if skill is so
+				for (var i = 0; i < skill.flags.length; i++)
 				{
-					pSlot.find(".sklSlotIcon").css({backgroundImage: "url(" + pData.icon + ")"});
-					// Include ground targeting icon if skill is so
-					for (var i = 0; i < pData.flags.length; i++)
+					if (skill.flags[i] === "GroundTargeted")
 					{
-						if (pData.flags[i] === "GroundTargeted")
-						{
-							pSlot.append("<span class='sklSlotTarget'></span>");
-							break;
-						}
+						pSlot.append("<span class='sklSlotTarget'></span>");
+						break;
 					}
-					// Generate tooltip for trait
-					Q.analyzeSkillTrait(pData, {aElement: pSlot});
-				});
+				}
+				// Generate tooltip for trait
+				Q.analyzeSkill(skill, {aElement: pSlot});
 			}
 			else
 			{
@@ -11218,13 +11296,38 @@ V = {
 		createSlot("utilities1", "8");
 		createSlot("utilities2", "9");
 		var elite = createSlot("elite", "0");
-		// Fill the slots by additionally retrieving skill data
-		insertSkill(pSkills.heal, heal);
-		for (var i = 0; i < pSkills.utilities.length; i++)
+		
+		// Prefetch skills
+		var idstofetch = [];
+		for (var i in pSkills)
 		{
-			insertSkill(pSkills.utilities[i], bar.find(".sklSlot_utilities" + i));
+			var ithskill = pSkills[i];
+			if (ithskill)
+			{
+				if (isNaN(ithskill) === false)
+				{
+					idstofetch.push(ithskill);
+				}
+				else
+				{
+					for (var ii in ithskill)
+					{
+						idstofetch.push(ithskill[ii]);
+					}
+				}
+			}
 		}
-		insertSkill(pSkills.elite, elite);
+		
+		// Fill the slots by additionally retrieving skill data
+		Q.getSkills(idstofetch, function()
+		{
+			insertSkill(pSkills.heal, heal);
+			for (var i = 0; i < pSkills.utilities.length; i++)
+			{
+				insertSkill(pSkills.utilities[i], bar.find(".sklSlot_utilities" + i));
+			}
+			insertSkill(pSkills.elite, elite);
+		});
 	},
 	
 	/*
@@ -11359,8 +11462,8 @@ V = {
 		var fillInventory = function(pTab, pCharacter)
 		{
 			var itemids = [];
-			var numtofetch = 0;
 			var numfetched = 0;
+			var numtofetch = 0;
 			slotscontainer = pTab.append(I.cThrobber).find(".bnkTabSlots");
 			// First count items to fetch
 			for (var ii = 0; ii < pCharacter.bags.length; ii++)
@@ -11693,8 +11796,8 @@ V = {
 		var tab, slotscontainer, slot;
 		var nexti;
 		var numitems = 0;
-		var numtofetch = 0;
 		var numfetched = 0;
+		var numtofetch = 0;
 		
 		$.getJSON(A.getURL(A.URL.Bank), function(pData)
 		{
@@ -11787,8 +11890,8 @@ V = {
 		{
 			var itemids = [];
 			var numitems = 0;
-			var numtofetch = 0;
 			var numfetched = 0;
+			var numtofetch = 0;
 			// First order the vaults by the number of unique items they have
 			for (var i in A.Data.Vaults)
 			{
@@ -11824,7 +11927,11 @@ V = {
 				for (var i in sortedvaults)
 				{
 					vault = sortedvaults[i];
-					guild = A.Data.Guilds[vault.oGuildID];
+					guild = Q.getCachedGuild(vault.oGuildID);
+					if (!guild)
+					{
+						continue;
+					}
 					for (var ii = 0; ii < vault.length; ii++)
 					{
 						subvault = vault[ii];
@@ -12671,7 +12778,7 @@ V = {
 			{
 				var item = H.Sale.Items[i];
 				// Allow integer IDs or faux IDs and ignore expired
-				if ((isNaN(item.id) === false || Q.Box[item.id]) &&
+				if ((isNaN(item.id) === false || Q.Boxes.Items[item.id]) &&
 					(T.isTimely(item) || (item.Finish === undefined && issalecurrent)))
 				{
 					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
@@ -12806,8 +12913,8 @@ V = {
 		var container = B.createBank($("#pctBank"));
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var tab, slotscontainer, slot;
-		var numtofetch = 0;
 		var numfetched = 0;
+		var numtofetch = 0;
 		
 		var history, products = H.Vendor.Products;
 		var occurnums = {}, occurdates = {}, highestoccur = 0, highestprice = 0;
@@ -13900,8 +14007,8 @@ B = {
 	{
 		var Settings = pSettings || {};
 		var slot, unlockobj;
-		var numtofetch = U.getObjectLength(pCatArr);
 		var numfetched = 0;
+		var numtofetch = U.getObjectLength(pCatArr);
 		var slotscontainer = pTab.find(".bnkTabSlots");
 		if (Settings.aIsCollapsed)
 		{
@@ -15187,8 +15294,20 @@ Q = {
  * @@Quantify items, attributes, traits, and achievements
  * ========================================================================== */
 
-	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
-	Case: {}, // For achievements
+	Boxes: {
+	/*
+	 * Associative arrays for container objects of retrieved raw API data (oData),
+	 * analyzed data (oHTML), and other optional properties, accessed by the ID
+	 * number of the datum.
+	 */
+		Items: {},
+		Guilds: {},
+		Achievements: {},
+		Titles: {},
+		Specializations: {},
+		Traits: {},
+		Skills: {}
+	},
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	SearchDatabase: null,
 	ItemEnum: // Corresponds to item details type property
@@ -15335,11 +15454,11 @@ Q = {
 				Q.RetrievedDatabases[pName] = true;
 				for (var i in pData)
 				{
-					if (Q.Box[i] === undefined)
+					if (Q.Boxes.Items[i] === undefined)
 					{
-						Q.Box[i] = {};
+						Q.Boxes.Items[i] = {};
 					}
-					Q.Box[i].oItem = pData[i];
+					Q.Boxes.Items[i].oData = pData[i];
 				}
 			}).always(function()
 			{
@@ -15784,7 +15903,7 @@ Q = {
 		// If item is an ID
 		if (typeof pItem === "number")
 		{
-			var box = Q.Box[pItem];
+			var box = Q.getBoxedItem(pItem);
 			// Assume item is tradeable, unless it was analyzed not to be so
 			if (box)
 			{
@@ -15817,10 +15936,10 @@ Q = {
 	 */
 	getItem: function(pItemID, pCallback)
 	{
-		var box = Q.Box[pItemID];
+		var box = Q.getBoxedItem(pItemID);
 		if (box)
 		{
-			pCallback(box.oItem);
+			pCallback(box.oData);
 			// Dummy fail jqxhr function that never executes because the item was successfully cached
 			return {fail: function() {}};
 		}
@@ -15832,10 +15951,10 @@ Q = {
 				cache: true,
 				success: function(pItem)
 				{
-					if (Q.Box[pItem.id] === undefined)
+					if (Q.Boxes.Items[pItem.id] === undefined)
 					{
-						Q.Box[pItem.id] = {};
-						Q.Box[pItem.id].oItem = pItem;
+						Q.Boxes.Items[pItem.id] = {};
+						Q.Boxes.Items[pItem.id].oData = pItem;
 					}
 					pCallback(pItem);
 				}
@@ -15845,10 +15964,10 @@ Q = {
 	},
 	getCachedItem: function(pItemID)
 	{
-		var box = Q.Box[pItemID];
+		var box = Q.getBoxedItem(pItemID);
 		if (box)
 		{
-			return box.oItem;
+			return box.oData;
 		}
 		return null;
 	},
@@ -15858,7 +15977,7 @@ Q = {
 		var arr = [];
 		pItemIDs.forEach(function(iID)
 		{
-			if (Q.Box[iID] === undefined)
+			if (Q.Boxes.Items[iID] === undefined)
 			{
 				arr.push(iID);
 			}
@@ -15873,10 +15992,10 @@ Q = {
 			{
 				pData.forEach(function(iData)
 				{
-					if (Q.Box[iData.id] === undefined)
+					if (Q.Boxes.Items[iData.id] === undefined)
 					{
-						Q.Box[iData.id] = {};
-						Q.Box[iData.id].oItem = iData;
+						Q.Boxes.Items[iData.id] = {};
+						Q.Boxes.Items[iData.id].oData = iData;
 					}
 				});
 			}
@@ -15902,7 +16021,7 @@ Q = {
 	createFaux: function(pData)
 	{
 		var id = U.stripToVariable(D.getObjectDefaultName(pData)).toLowerCase(); // Use the encoded default name as the item ID
-		if (Q.Box[id] === undefined)
+		if (Q.Boxes.Items[id] === undefined)
 		{
 			var item = $.extend({
 				"name": D.getObjectName(pData) || "Unnamed Item",
@@ -15920,8 +16039,8 @@ Q = {
 				"details": {}
 			}, pData);
 			// Enter into cache
-			Q.Box[id] = {};
-			Q.Box[id].oItem = item;
+			Q.Boxes.Items[id] = {};
+			Q.Boxes.Items[id].oData = item;
 		}
 	},
 	initializeFaux: function()
@@ -15986,11 +16105,11 @@ Q = {
 			for (var i = 0; i < pItemIDs.length; i++)
 			{
 				id = pItemIDs[i];
-				item = (isasync) ? ((Q.Box[id]) ? Q.Box[id].oItem : null) : pCallback[id];
+				item = (isasync) ? ((Q.Boxes.Items[id]) ? Q.Boxes.Items[id].oData : null) : pCallback[id];
 				if (item)
 				{
 					items.push({
-						oItem: item,
+						oData: item,
 						oType: categorizeItem(item)
 					});
 				}
@@ -15999,8 +16118,8 @@ Q = {
 			U.sortObjects(items, {aKeyName: "oType"});
 			items.forEach(function(iObject)
 			{
-				retitems.push(iObject.oItem);
-				retids.push(iObject.oItem.id);
+				retitems.push(iObject.oData);
+				retids.push(iObject.oData.id);
 			});
 			if (isasync)
 			{
@@ -16042,7 +16161,7 @@ Q = {
 	{
 		var Settings = pSettings || {};
 		var itemmeta = Settings.aItemMeta || {};
-		var box = Q.Box[pItem.id];
+		var box = Q.getBoxedItem(pItem.id);
 		
 		if (box && box.oHTML)
 		{
@@ -16133,8 +16252,8 @@ Q = {
 		var isvendorable = true;
 		var isaccountbound = false;
 		var issoulbound = false;
-		var numtofetch = 0;
 		var numfetched = 0;
+		var numtofetch = 0;
 		if (det && det.type)
 		{
 			subtype = det.type;
@@ -16531,7 +16650,7 @@ Q = {
 			 * information and additionally retrieved slotted items.
 			 */
 			var box = {
-				oItem: item,
+				oData: item,
 				oInfusions: infusionobjs,
 				oUpgrades: upgradeobjs,
 				oSkin: skinobj,
@@ -16542,7 +16661,7 @@ Q = {
 			// Cache the item only if it's not custom (no upgrades or transmutations)
 			if (isitemmeta === false && Settings.aComment === undefined)
 			{
-				Q.Box[item.id] = box;
+				Q.Boxes.Items[item.id] = box;
 			}
 			// Execute callback if provided
 			if (Settings.aCallback)
@@ -16668,73 +16787,137 @@ Q = {
 	},
 	
 	/*
-	 * Retrieves achievements details from the API.
+	 * Macro function to retrieve and cache API data with IDs.
+	 * @param string pType name of the API endpoint.
 	 * @param intarray or int pIDs
 	 * @param function pCallback
 	 */
-	getAchievements: function(pIDs, pCallback)
+	getBoxes: function(pType, pIDs, pCallback)
 	{
 		var ids = pIDs;
 		var idstofetch = [];
 		if (isNaN(pIDs) === false)
 		{
+			// If provided a single ID
 			ids = [pIDs];
 		}
-		// Filter out cached achievements
+		else
+		{
+			// Filter out duplicates if provided an array
+			ids = U.getUnique(ids);
+		}
+		
+		// Filter out cached data
+		var cache = Q.Boxes[pType];
 		for (var i in ids)
 		{
-			if (Q.Case[ids[i]] === undefined)
+			if (cache[ids[i]] === undefined)
 			{
 				idstofetch.push(ids[i]);
 			}
 		}
 		// Fetch
-		U.fetchAPI(U.URL_API.Achievements, idstofetch, {
+		U.fetchAPI(U.getAPIURL(pType), idstofetch, {
 			aCallback: function(pData)
 			{
 				for (var i in pData)
 				{
-					var ithach = pData[i];
-					if (Q.Case[ithach.id] === undefined)
-					{
-						Q.Case[ithach.id] = {};
-						Q.Case[ithach.id].oAch = ithach;
-					}
+					var ithdata = pData[i];
+					cache[ithdata.id] = {};
+					cache[ithdata.id].oData = ithdata;
 				}
 				pCallback();
 			}
 		});
 	},
+	getAchievements: function(pIDs, pCallback)
+	{
+		Q.getBoxes("Achievements", pIDs, pCallback);
+	},
+	getTitles: function(pIDs, pCallback)
+	{
+		Q.getBoxes("Titles", pIDs, pCallback);
+	},
+	getSpecializations: function(pIDs, pCallback)
+	{
+		Q.getBoxes("Specializations", pIDs, pCallback);
+	},
+	getTraits: function(pIDs, pCallback)
+	{
+		Q.getBoxes("Traits", pIDs, pCallback);
+	},
+	getSkills: function(pIDs, pCallback)
+	{
+		Q.getBoxes("Skills", pIDs, pCallback);
+	},
+	getBoxedItem: function(pID)
+	{
+		return Q.Boxes.Items[pID];
+	},
+	getBoxedAchievement: function(pID)
+	{
+		return Q.Boxes.Achievements[pID];
+	},
+	getBoxedTitle: function(pID)
+	{
+		return Q.Boxes.Titles[pID];
+	},
+	getBoxedSpecialization: function(pID)
+	{
+		return Q.Boxes.Specializations[pID];
+	},
+	getBoxedTrait: function(pID)
+	{
+		return Q.Boxes.Traits[pID];
+	},
+	getBoxedSkill: function(pID)
+	{
+		return Q.Boxes.Skills[pID];
+	},
 	
 	/*
-	 * Lightweight preliminary function to check if the requested achievement.
-	 * @param object pAchievement details.
-	 * @param object pSettings.
+	 * Lightweight preliminary function to check if the requested data had been
+	 * analyzed, with HTML ready for showing.
+	 * @param object pBox
+	 * @param object pSettings
 	 */
-	scanAchievement: function(pAchievement, pSettings)
+	scanData: function(pType, pBox, pSettings)
 	{
 		var Settings = pSettings || {};
-		var id = pAchievement.id || pAchievement;
-		var box = Q.Case[id];
-		
-		if (box && box.oHTML)
+		if (pBox && pBox.oHTML)
 		{
 			if (Settings.aElement)
 			{
 				var elm = $(Settings.aElement);
-				elm.attr("title", box.oHTML);
+				elm.attr("title", pBox.oHTML);
 				I.qTip.init(elm);
 			}
 			// Execute callback if provided
 			if (Settings.aCallback)
 			{
-				Settings.aCallback(box);
+				Settings.aCallback(pBox);
 			}
 		}
 		else
 		{
-			Q.analyzeAchievement(box.oAch, pSettings);
+			(Q["analyze" + pType])(pBox.oData, pSettings);
 		}
+	},
+	scanAchievement: function(pID, pSettings)
+	{
+		Q.scanData("Achievement", Q.getBoxedAchievement(pID), pSettings);
+	},
+	scanSpecialization: function(pID, pSettings)
+	{
+		Q.scanData("Specialization", Q.getBoxedSpecialization(pID), pSettings);
+	},
+	scanTrait: function(pID, pSettings)
+	{
+		Q.scanData("Trait", Q.getBoxedTrait(pID), pSettings);
+	},
+	scanSkill: function(pID, pSettings)
+	{
+		Q.scanData("Skill", Q.getBoxedSkill(pID), pSettings);
 	},
 	
 	/*
@@ -16793,11 +16976,8 @@ Q = {
 			elm.attr("title", html);
 			I.qTip.init(elm);
 		}
-		var box = {
-			oAch: ach,
-			oHTML: html
-		};
-		Q.Case[ach.id] = box;
+		var box = Q.getBoxedAchievement(ach.id);
+		box.oHTML = html;
 		if (Settings.aCallback)
 		{
 			Settings.aCallback(box);
@@ -16937,13 +17117,14 @@ Q = {
 	
 	/*
 	 * Generates skill or trait tooltip HTML.
-	 * @param object pTrait details retrieved from API.
+	 * @param string pType cache as skill or trait.
+	 * @param object pData details retrieved from API.
 	 * @objparam jqobject aElement to bind tooltip.
 	 */
-	analyzeSkillTrait: function(pTrait, pSettings)
+	analyzeSkillTrait: function(pType, pData, pSettings)
 	{
 		var Settings = pSettings || {};
-		var content = Q.formatSkillTrait(pTrait);
+		var content = Q.formatSkillTrait(pData);
 		
 		// Calculate an extra tooltip's height by actually making it then measuring its height
 		var computeOffset = function(pContent)
@@ -16958,9 +17139,9 @@ Q = {
 		var skilltooltips = "";
 		var offsetcumulative = 6;
 		var offsetbetween = 20;
-		if (pTrait.skills)
+		if (pData.skills)
 		{
-			pTrait.skills.forEach(function(iSkill)
+			pData.skills.forEach(function(iSkill)
 			{
 				/*
 				 * A trait may contain skill tooltips above its own tooltip. To
@@ -16978,6 +17159,11 @@ Q = {
 		
 		var html = "<div class='trtTooltipBorder'>" + I.Symbol.Filler + "</div>"
 			+ skilltooltips + "<div class='trtTooltip'>" + content + "</div>";
+		var box = (Q.Boxes[pType])[pData.id];
+		if (box)
+		{
+			box.oHTML = html;
+		}
 		if (Settings.aElement)
 		{
 			var elm = $(Settings.aElement);
@@ -16985,9 +17171,80 @@ Q = {
 			I.qTip.init(elm);
 			elm.click(function()
 			{
-				I.prettyJSON(pTrait);
+				I.prettyJSON(pData);
 			});
 		}
+	},
+	analyzeTrait: function(pTrait, pSettings)
+	{
+		Q.analyzeSkillTrait("Traits", pTrait, pSettings);
+	},
+	analyzeSkill: function(pSkill, pSettings)
+	{
+		Q.analyzeSkillTrait("Skills", pSkill, pSettings);
+	},
+	
+	/*
+	 * Retrieves and caches guild details.
+	 * @param array pIDs of guilds
+	 * @param function pCallback
+	 * @param boolean pWantCache true if undefined.
+	 */
+	getGuilds: function(pIDs, pCallback, pWantCache)
+	{
+		var ids = (Array.isArray(pIDs)) ? pIDs : [pIDs];
+		var wantcache = (pWantCache !== undefined) ? pWantCache : true;
+		var idstofetch = [];
+		// Only fetch those not already cached
+		if (wantcache)
+		{
+			for (var i in ids)
+			{
+				var id = ids[i];
+				if (Q.Boxes.Guilds[id] === undefined)
+				{
+					idstofetch.push(id);
+				}
+			}
+			if (idstofetch.length === 0)
+			{
+				pCallback();
+				return;
+			}
+		}
+		else
+		{
+			idstofetch = ids;
+		}
+		
+		// Guild details cannot be bulk fetched, so retrieve them one by one
+		var numfetched = 0;
+		var numtofetch = ids.length;
+		for (var i in idstofetch)
+		{
+			U.getJSON(U.URL_API.Guild + idstofetch[i], function(pData)
+			{
+				pData.oTag = "[" + pData.tag + "]";
+				Q.Boxes.Guilds[pData.id] = pData;
+				numfetched++;
+				if (numfetched === numtofetch)
+				{
+					pCallback();
+				}
+			}, wantcache).fail(function()
+			{
+				numfetched--;
+			});
+		}
+	},
+	getCachedGuild: function(pID)
+	{
+		var guild = Q.Boxes.Guilds[pID];
+		if (guild)
+		{
+			return guild;
+		}
+		return null;
 	},
 	
 	/*
@@ -18149,8 +18406,8 @@ E = {
 			for (var i = 0; i < pItemIDs.length; i++)
 			{
 				itemid = pItemIDs[i];
-				if (Q.Box[itemid] === undefined ||
-					(Q.Box[itemid] && Q.isTradeable(Q.Box[itemid].oItem)))
+				if (Q.Boxes.Items[itemid] === undefined ||
+					(Q.Boxes.Items[itemid] && Q.isTradeable(Q.Boxes.Items[itemid].oData)))
 				{
 					tradeableids.push(itemid);
 				}
@@ -26944,23 +27201,25 @@ G = {
 		{
 			return;
 		}
-		var container = $(pContainer);
-		var selection = $("<select class='dlyBookmarks cssInputSelect'><option>" + D.getModifiedWord("bookmarks", "map", U.CaseEnum.Every) + ":</option></select>").appendTo(container);
-		I.preventMapPropagation(selection);
-		for (var i in T.Daily.Bookmark)
-		{
-			selection.append("<option value='" + i + "'>" + i + "</option>");
-		}
-		selection.change(function()
-		{
-			if ($(this)[0].selectedIndex === 0) // First element is the title
+		
+		I.createDropdown(pContainer, T.Daily.Bookmark, {
+			aClass: "dlyBookmarks",
+			aFirst: D.getModifiedWord("bookmarks", "map", U.CaseEnum.Every),
+			aBind: function(pElm)
 			{
-				M.clearPersonalPins();
-			}
-			else
-			{
-				var coords = T.Daily.Bookmark[$(this).val()];
-				M.redrawPersonalPath(coords);
+				pElm.change(function()
+				{
+					if ($(this)[0].selectedIndex === 0) // First element is the title
+					{
+						M.clearPersonalPins();
+					}
+					else
+					{
+						var coords = T.Daily.Bookmark[$(this).val()];
+						M.redrawPersonalPath(coords);
+					}
+				});
+				I.preventMapPropagation(pElm);
 			}
 		});
 	},
@@ -30084,7 +30343,7 @@ W = {
 		if (pIsClaim)
 		{
 			prevobjectiveicon = objectiveicon;
-			objectiveicon = "<cite>[" + pObjective.tag + "]</cite>";
+			objectiveicon = "<cite>" + pObjective.oTag + "</cite>";
 			isotime = pObjective.claimed_at;
 		}
 		else
@@ -30146,7 +30405,7 @@ W = {
 		var ownerstr;
 		if (pIsClaim)
 		{
-			ownerstr = D.getSpeechInitials(pObjective.tag);
+			ownerstr = D.getSpeechInitials(pObjective.oTagInitial);
 		}
 		else if (pObjective.owner === W.MatchupCurrent.oOwnerCurrent)
 		{
@@ -30791,13 +31050,14 @@ W = {
 		var guildid = pObjective.claimed_by;
 		var updateClaim = function()
 		{
-			var guild = W.Guilds[guildid];
-			pObjective.guild_name = guild.guild_name;
-			pObjective.tag = guild.tag;
+			var guild = Q.getCachedGuild(guildid);
+			pObjective.oGuildName = guild.name;
+			pObjective.oTagInitial = guild.tag;
+			pObjective.oTag = guild.oTag;
 			W.updateObjectiveTooltip(pObjective);
 			var label = $("#objClaim_" + pObjective.id);
 			var prevcolor = label.css("color");
-			label.html("[" + pObjective.tag + "]");
+			label.html(guild.oTag);
 			// Also animate if guild has changed from previous known claimer
 			if (pObjective.prevclaimed_by !== "none")
 			{
@@ -30810,26 +31070,18 @@ W = {
 		// If the objective was previously claimed but has become unclaimed
 		if (guildid === null || guildid === undefined)
 		{
-			pObjective.guild_name = null;
-			pObjective.tag = null;
+			pObjective.oGuildName = null;
+			pObjective.oTag = null;
 			W.updateObjectiveTooltip(pObjective);
 			$("#objClaim_" + pObjective.id).empty();
 		}
 		// If the objective changed claimers, update and use cached guild if available
 		else
 		{
-			if (W.Guilds[guildid] !== undefined)
+			Q.getGuilds(guildid, function()
 			{
 				updateClaim();
-			}
-			else
-			{
-				$.getJSON(U.URL_API.GuildDetails + guildid, function(pData)
-				{
-					W.Guilds[guildid] = pData;
-					updateClaim();
-				});
-			}
+			});
 		}
 	},
 	
@@ -30847,8 +31099,8 @@ W = {
 		if (obj.claimed_by)
 		{
 			claim = "<aside><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString() + "</aside>"
-				+ "<aside><dfn>Guild:</dfn> " + U.escapeHTML(obj.guild_name + " [" + obj.tag + "]") + "</aside>"
-				+ "<aside class='cssCenter'><img class='objTooltipBanner' src='" + U.getGuildBannerURL(obj.guild_name) + "' /></aside>";
+				+ "<aside><dfn>Guild:</dfn> " + U.escapeHTML(obj.oGuildName + " " + obj.oTag) + "</aside>"
+				+ "<aside class='cssCenter'><img class='objTooltipBanner' src='" + U.getGuildBannerURL(obj.oGuildName) + "' /></aside>";
 		}
 		
 		var title = "<div class='objTooltip'>"
@@ -32604,6 +32856,7 @@ H = {
 	Faux: GW2T_DASHBOARD_DATA.Faux,
 	Sale: GW2T_SALE_DATA,
 	Vendor: GW2T_DASHBOARD_DATA.Vendor,
+	SaleCountdowns: null, // Will contain expiration date in UNIX seconds, accessed by Items array index number
 	GemSubscription: null,
 	isDashboardEnabled: true,
 	isAnnouncementEnabled: false,
@@ -32819,6 +33072,7 @@ H = {
 			var gemstr = "<ins class='s16 s16_gem'></ins>";
 			// Include the exchange rate "items" after determining range
 			H.Sale.Items = H.Sale.Padding.concat(H.Sale.Items);
+			H.SaleCountdowns = {};
 			var idstofetch = [];
 			for (var i = 0; i < H.Sale.Items.length; i++)
 			{
@@ -32829,7 +33083,7 @@ H = {
 				var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
 				if (item.Finish)
 				{
-					H.Sale.Countdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
+					H.SaleCountdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
 				}
 
 				var oldprice = null;
@@ -32869,7 +33123,7 @@ H = {
 						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
 				}
 				// Format the presentation of this item
-				var idisimg = isNaN(item.id) && Q.Box[item.id] === undefined;
+				var idisimg = isNaN(item.id) && Q.Boxes.Items[item.id] === undefined;
 				if (idisimg === false)
 				{
 					idstofetch.push(item.id);
@@ -32946,13 +33200,13 @@ H = {
 	},
 	updateDashboardSaleCountdown: function()
 	{
-		for (var i in H.Sale.Countdowns)
+		for (var i in H.SaleCountdowns)
 		{
-			var sec = H.Sale.Countdowns[i] - T.TIMESTAMP_UNIX_SECONDS;
+			var sec = H.SaleCountdowns[i] - T.TIMESTAMP_UNIX_SECONDS;
 			if (sec > T.cSECONDS_IN_DAY)
 			{
 				$("#dsbSaleCountdown_" + i).html("<span class='dsbSaleCountdownFar'>" + T.formatTimeLetter(sec, true, true) + "</span>");
-				delete H.Sale.Countdowns[i]; // These will be restored when the gem dashboard is reopened
+				delete H.SaleCountdowns[i]; // These will be restored when the gem dashboard is reopened
 			}
 			else
 			{
@@ -36402,6 +36656,43 @@ I = {
 					.removeClass(onclass).addClass(offclass);
 			}
 		});
+	},
+	
+	/*
+	 * Creates and populates a dropdown menu list.
+	 * @param jqobject pContainer to insert the list.
+	 * @param array pElements containing strings, numbers; or an associative array with keys.
+	 * @objparam string aID CSS for the select element.
+	 * @objparam string aClass CSS for the select element.
+	 * @objparam string aFirst value for first option, optional.
+	 * @objparam function aBind for event handling.
+	 */
+	createDropdown: function(pContainer, pElements, pSettings)
+	{
+		var Settings = pSettings || {};
+		var container = $(pContainer);
+		var cssclass = Settings.aClass || "";
+		var cssid = Settings.aID || "";
+		var selection = $("<select id='" + cssid + "' class='cssInputSelect " + cssclass + "'></select>").appendTo(container);
+		var first = Settings.aFirst;
+		if (first)
+		{
+			$("<option>" + first + "</option>").val(first).appendTo(selection);
+		}
+		var elms = pElements;
+		if (Array.isArray(elms))
+		{
+			elms = U.getExistAssoc(elms);
+		}
+		for (var i in elms)
+		{
+			$("<option>" + i + "</option>").val(i).appendTo(selection);
+		}
+		// Custom binding such as a selection change event
+		if (Settings.aBind)
+		{
+			Settings.aBind(selection);
+		}
 	},
 	
 	/*

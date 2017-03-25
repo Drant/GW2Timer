@@ -80,6 +80,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "žalář", it: "segreta", pl: "loch", pt: "masmorra", ru: "подземелье", zh: "地牢"},
 	s_wallet: {de: "geldbörse", es: "cartera", fr: "portefeuille",
 		cs: "peněženka", it: "portafoglio", pl: "portfel", pt: "carteira", ru: "бума́жник", zh: "钱包"},
+	s_title: {de: "titel", es: "título", fr: "titre",
+		cs: "titul", it: "titolo", pl: "tytuł", pt: "título", ru: "заглавие", zh: "称号"},
 	s_skins: {de: "skins", es: "diseños", fr: "apparences",
 		cs: "vzhledy", it: "apparenze", pl: "karnacje", pt: "desenhos", ru: "конструкции", zh: "皮肤"},
 	s_currencies: {de: "währung", es: "monedas", fr: "monnaies",
@@ -221,6 +223,7 @@ var GW2T_CURRENCY_DATA = {
 		Timestamps: null, // Array of ISO timestamp strings
 		WalletCoin: null, // All other entries are integer arrays
 		WalletKarma: null,
+		WalletGem: null,
 		TotalGems: null,
 		TotalAppraisedSellNoGems: null,
 		TotalLiquidSellNoGems: null
@@ -228,6 +231,7 @@ var GW2T_CURRENCY_DATA = {
 	AuditColor: {
 		WalletCoin: {color: "#fdc84e"},
 		WalletKarma: {color: "#ee55cc", currency: "karma"},
+		WalletGem: {color: "#66aaff", currency: "gem"},
 		TotalGems: {color: "#71a3d8", currency: "gem"},
 		TotalAppraisedSellNoGems: {color: "gold"},
 		TotalLiquidSellNoGems: {color: "yellow"},
