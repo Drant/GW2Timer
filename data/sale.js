@@ -38,51 +38,43 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-26T16:00:00Z"),
-		name: "Home Instance Node Pack",
-		id: "http://i.imgur.com/4h6p3sD.png",
-		price: 2800,
-		discount: 4000,
+		Finish: new Date("2017-03-27T16:00:00Z"),
+		name: "Rox's Quiver Set",
+		id: "42661",
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-26T16:00:00Z"),
-		name: "Basic Harvesting Node Pack",
-		id: "67290",
-		price: 560,
-		discount: 800,
+		Finish: new Date("2017-03-27T16:00:00Z"),
+		name: "Rox's Short Bow Skin",
+		id: "42659",
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-26T16:00:00Z"),
-		name: "Basic Lumber Node Pack",
-		id: "66769",
-		price: 560,
-		discount: 800,
+		Finish: new Date("2017-03-27T16:00:00Z"),
+		name: "Bloody Prince's Outfit",
+		id: "65195",
+		price: 700,
+		discount: null,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-26T16:00:00Z"),
-		name: "Basic Ore Node Pack",
-		id: "44884",
-		price: 560,
-		discount: 800,
+		Finish: new Date("2017-03-27T16:00:00Z"),
+		name: "Permanent Mad King Finisher",
+		id: "44068",
+		price: 500,
+		discount: null,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-26T16:00:00Z"),
-		name: "Basic Cloth Rack",
-		id: "67842",
-		price: 560,
-		discount: 800,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-26T16:00:00Z"),
-		name: "Basic Leather Rack",
-		id: "78019",
-		price: 560,
-		discount: 800,
+		Finish: new Date("2017-03-27T16:00:00Z"),
+		name: "Permanent Scarecrow Finisher",
+		id: "44069",
+		price: 500,
+		discount: null,
 		col: 0
 	},
 	{
@@ -91,29 +83,13 @@ GW2T_SALE_DATA = {
 		id: "67037",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		Finish: new Date("2017-03-28T16:00:00Z"),
 		name: "Furrocious Cat Ears",
 		id: "79619",
 		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-26T16:00:00Z"),
-		name: "Jack-in-the-Box Scythe",
-		id: "48934",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		Finish: new Date("2017-03-26T16:00:00Z"),
-		name: "Ghostly Outfit",
-		id: "79671",
-		price: 700,
 		discount: null,
 		col: 1
 	},
@@ -122,30 +98,6 @@ GW2T_SALE_DATA = {
 		name: "Hallows Fortune Fireworks",
 		id: "48714",
 		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		Finish: new Date("2017-03-27T16:00:00Z"),
-		name: "Bloody Prince's Outfit",
-		id: "65195",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		Finish: new Date("2017-03-27T16:00:00Z"),
-		name: "Permanent Mad King Finisher",
-		id: "44068",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		Finish: new Date("2017-03-27T16:00:00Z"),
-		name: "Permanent Scarecrow Finisher",
-		id: "44069",
-		price: 500,
 		discount: null,
 		col: 1
 	},

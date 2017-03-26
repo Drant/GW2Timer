@@ -3396,6 +3396,7 @@ U = {
 	enforceURLArgumentsFirst: function()
 	{
 		U.Args = U.getURLArguments();
+		I.cSiteTitle = document.title;
 		// Store article value, if exists
 		I.ArticleCurrent = U.Args[U.KeyEnum.Article];
 		U.Args[U.KeyEnum.Article] = null;
@@ -4401,6 +4402,11 @@ U = {
 				sectionstring = "&" + U.KeyEnum.Section + "=" + section;
 				title = section;
 			}
+			else if (I.ModeCurrent === I.ModeEnum.Website && I.PageCurrent === I.PageEnum.Chains)
+			{
+				pagestring = "."; // Chains is the default and level top URL, so don't include it
+				title = null;
+			}
 			if (article)
 			{
 				articlestring = "&" + U.KeyEnum.Article + "=" + article;
@@ -4409,7 +4415,6 @@ U = {
 			{
 				gostring = "&" + U.KeyEnum.Go + "=" + go;
 			}
-			
 			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring + modestring + pParamOptions);
 			U.updateTitle(title);
 			U.updateLanguageLinks(pagestring + sectionstring + modestring);
@@ -4417,20 +4422,21 @@ U = {
 	},
 	updateTitle: function(pTitle)
 	{
-		document.title = I.cSiteName + "/" + pTitle;
+		document.title = (pTitle) ? I.cSiteName + "/" + pTitle : I.cSiteTitle;
 	},
 	
 	/*
 	 * Updates the href attribute of the language links for the user to change
 	 * language, while also keeping the current URL path.
+	 * @param string pString prefix query string.
 	 */
-	updateLanguageLinks: function(pQuery)
+	updateLanguageLinks: function(pString)
 	{
 		$(".linkLanguage").each(function()
 		{
 			var lang = $(this).attr("data-lang");
 			var suffixes = "";
-			if (pQuery === undefined)
+			if (pString === undefined || pString === ".")
 			{
 				// This should be assigned when the website loads for the first time
 				suffixes = (I.ModeCurrent === I.ModeEnum.Website) ? ("?enu_Language=" + lang) : ("?enu_Language=" + lang + "&mode=" + I.ModeCurrent);
@@ -4438,7 +4444,7 @@ U = {
 			else
 			{
 				// This should be assigned when the user changes to a different page
-				suffixes = pQuery + "&enu_Language=" + lang;
+				suffixes = pString + "&enu_Language=" + lang;
 			}
 			$(this).attr("href", "./" + suffixes);
 		});
@@ -5150,7 +5156,7 @@ Z = {
 			}},
 			updatedb: {usage: "Prints an updated database of items. <em>Parameters: bol_wantrebuild (optional).", f: function()
 			{
-				Z.updateItemsDatabase(args[1] === "true");
+				Z.collateItems(args[1] === "true");
 			}},
 			subdb: {usage: "Prints a subset database of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
 			{
@@ -6016,96 +6022,6 @@ Z = {
 	},
 	
 	/*
-	 * Downloads items that are missing from the current version of the items
-	 * database for every available API languages.
-	 */
-	updateItemsDatabase: function(pIsRebuild)
-	{
-		var wantrebuild = (pIsRebuild === true);
-		var counter = 0;
-		var newitemslist, newitems, newitemids;
-		var updateDBLang = function()
-		{
-			// Stopping condition for this recursive function
-			if (counter >= Z.DatabaseLanguages.length)
-			{
-				I.print("Items database of all languages updated.");
-				if (newitems && !wantrebuild)
-				{
-					Q.sortItems(newitemids, function(pSortedItems, pSortedIDs)
-					{
-						Z.printRecordEntry(pSortedItems, {
-							aItemIDsKey: "id"
-						});
-						Z.collateMuseum(pSortedIDs);
-					});
-				}
-				return;
-			}
-			var lang = Z.DatabaseLanguages[counter];
-			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
-			{
-				var dbarray = [];
-				var currentitemids = [];
-				// Convert the associative array into an array for later sorting
-				for (var ithitemid in pData)
-				{
-					if (!wantrebuild)
-					{
-						dbarray.push(pData[ithitemid]);
-					}
-					currentitemids.push(parseInt(ithitemid));
-				}
-				// Find what item IDs are missing by comparing the API's current list with the one here
-				newitemids = (wantrebuild) ? currentitemids : U.getDifference(newitemslist, currentitemids);
-				if (newitemids.length)
-				{
-					U.fetchAPI(U.URL_API.ItemDetail, newitemids, {
-						aLanguage: lang,
-						aCallback: function(pNewItems)
-					{
-						for (var i = 0; i < pNewItems.length; i++)
-						{
-							dbarray.push(pNewItems[i]);
-						}
-						if (lang === O.OptionEnum.Language.Default)
-						{
-							newitems = pNewItems;
-						}
-						U.sortObjects(dbarray, {aKeyName: "id"});
-						Z.APICacheArrayOfObjects = dbarray;
-						// Force unicode encoding on English
-						var firstitem = Z.APICacheArrayOfObjects[0];
-						if (lang === O.OptionEnum.Language.English && firstitem.name.indexOf(I.Symbol.Unicode) === -1)
-						{
-							firstitem.name += I.Symbol.Unicode;
-						}
-						Z.printAPICache(U.TypeEnum.isAssoc, {
-							aWantQuotes: true,
-							aFileName: "items_" + lang + I.cTXT
-						});
-						counter++;
-						updateDBLang();
-					}});
-				}
-				else
-				{
-					I.print("Items database is up-to-date. No difference found in IDs list.");
-				}
-			});
-		};
-		
-		// Initial call
-		I.print("Retrieving item indexes...");
-		$.getJSON(U.URL_API.ItemDetail, function(pData)
-		{
-			I.print("Looking for difference...");
-			newitemslist = pData;
-			updateDBLang();
-		});
-	},
-	
-	/*
 	 * Loads an unlockables record, downloads the current API array, compares
 	 * for new IDs, and retrieves the new entries.
 	 * @param string pSection name of account section and record.
@@ -6307,6 +6223,96 @@ Z = {
 		{
 			printFunctions();
 		}
+	},
+	
+	/*
+	 * Downloads items that are missing from the current version of the items
+	 * database for every available API languages.
+	 */
+	collateItems: function(pIsRebuild)
+	{
+		var wantrebuild = (pIsRebuild === true);
+		var counter = 0;
+		var newitemslist, newitems, newitemids;
+		var updateDBLang = function()
+		{
+			// Stopping condition for this recursive function
+			if (counter >= Z.DatabaseLanguages.length)
+			{
+				I.print("Items database of all languages updated.");
+				if (newitems && !wantrebuild)
+				{
+					Q.sortItems(newitemids, function(pSortedItems, pSortedIDs)
+					{
+						Z.printRecordEntry(pSortedItems, {
+							aItemIDsKey: "id"
+						});
+						Z.collateMuseum(pSortedIDs);
+					});
+				}
+				return;
+			}
+			var lang = Z.DatabaseLanguages[counter];
+			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
+			{
+				var dbarray = [];
+				var currentitemids = [];
+				// Convert the associative array into an array for later sorting
+				for (var ithitemid in pData)
+				{
+					if (!wantrebuild)
+					{
+						dbarray.push(pData[ithitemid]);
+					}
+					currentitemids.push(parseInt(ithitemid));
+				}
+				// Find what item IDs are missing by comparing the API's current list with the one here
+				newitemids = (wantrebuild) ? currentitemids : U.getDifference(newitemslist, currentitemids);
+				if (newitemids.length)
+				{
+					U.fetchAPI(U.URL_API.ItemDetail, newitemids, {
+						aLanguage: lang,
+						aCallback: function(pNewItems)
+					{
+						for (var i = 0; i < pNewItems.length; i++)
+						{
+							dbarray.push(pNewItems[i]);
+						}
+						if (lang === O.OptionEnum.Language.Default)
+						{
+							newitems = pNewItems;
+						}
+						U.sortObjects(dbarray, {aKeyName: "id"});
+						Z.APICacheArrayOfObjects = dbarray;
+						// Force unicode encoding on English
+						var firstitem = Z.APICacheArrayOfObjects[0];
+						if (lang === O.OptionEnum.Language.English && firstitem.name.indexOf(I.Symbol.Unicode) === -1)
+						{
+							firstitem.name += I.Symbol.Unicode;
+						}
+						Z.printAPICache(U.TypeEnum.isAssoc, {
+							aWantQuotes: true,
+							aFileName: "items_" + lang + I.cTXT
+						});
+						counter++;
+						updateDBLang();
+					}});
+				}
+				else
+				{
+					I.print("Items database is up-to-date. No difference found in IDs list.");
+				}
+			});
+		};
+		
+		// Initial call
+		I.print("Retrieving item indexes...");
+		$.getJSON(U.URL_API.ItemDetail, function(pData)
+		{
+			I.print("Looking for difference...");
+			newitemslist = pData;
+			updateDBLang();
+		});
 	},
 	
 	/*
@@ -6627,11 +6633,7 @@ Z = {
 			if (pItem.details && pItem.details.unlock_type)
 			{
 				var unlock = pItem.details.unlock_type;
-				if (unlock === "GliderSkin")
-				{
-					return "Glider";
-				}
-				else if (unlock === "Content" && name.indexOf("mail") !== -1)
+				if (unlock === "Content" && name.indexOf("mail") !== -1)
 				{
 					return "Carrier";
 				}
@@ -7034,6 +7036,14 @@ Z = {
 				doCollate(pReturn);
 			});
 		});
+	},
+	
+	/*
+	 * Updates the achievements database for all languages.
+	 */
+	collateAchievements: function()
+	{
+		
 	},
 	
 	/*
@@ -29107,6 +29117,17 @@ W = {
 					iconAnchor: [19, 19]
 				})
 			});
+			// Show objective's raw information when clicked
+			(function(iObj)
+			{
+				marker.on("click", function()
+				{
+					if (iObj.data)
+					{
+						I.prettyJSON(iObj.data);
+					}
+				});
+			})(obj);
 			W.bindMarkerZoomBehavior(marker, "contextmenu");
 			obj.Marker = marker;
 			W.Layer.Objective.addLayer(marker);
@@ -30724,6 +30745,7 @@ W = {
 						obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
 						obj.prevowner = obj.owner;
 						obj.owner = apiobj.owner;
+						obj.data = apiobj;
 						W.updateObjectiveIcon(obj);
 						W.updateObjectiveAge(obj);
 						W.updateObjectiveTooltip(obj);
@@ -35275,6 +35297,7 @@ I = {
 	cSiteLink: "gw2timer.com/",
 	cSiteURL: "http://gw2timer.com/",
 	cSiteExternal: "http://gw2timer.com/out/?u=",
+	cSiteTitle: "",
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",

@@ -732,10 +732,19 @@ html, body,
 	border: 1px solid red;
 }
 
-.cntComposition select, .cssInputSelect {
-	border: 1px solid #555;
-	background: #444;
-	color: #ffddcc;
+.cssInputSelect {
+	border: 1px solid #48423c;
+	background: rgba(0, 0, 0, 0.9);
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 15px;
+	color: #eeeeee;
+}
+.cssInputSelect:hover {
+	border: 1px solid #635a4d;
+}
+.cssInputSelect option:checked {
+	background: #2d2619;
+	color: #ffeebb;
 }
 
 .cntComposition fieldset {
