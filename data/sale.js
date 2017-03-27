@@ -38,43 +38,27 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-27T16:00:00Z"),
-		name: "Rox's Quiver Set",
-		id: "42661",
-		price: 480,
-		discount: 600,
+		Finish: new Date("2017-03-28T16:00:00Z"),
+		name: "Metabolic Primer",
+		id: "42877",
+		price: 75,
+		discount: [[1, 75, 150], [5, 275, 550], [25, 1312, 2625]],
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-27T16:00:00Z"),
-		name: "Rox's Short Bow Skin",
-		id: "42659",
-		price: 480,
-		discount: 600,
+		Finish: new Date("2017-03-28T16:00:00Z"),
+		name: "Revive Orb",
+		id: "19996",
+		price: 125,
+		discount: [[1, 125, 250], [5, 450, 900]],
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-27T16:00:00Z"),
-		name: "Bloody Prince's Outfit",
-		id: "65195",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-27T16:00:00Z"),
-		name: "Permanent Mad King Finisher",
-		id: "44068",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-27T16:00:00Z"),
-		name: "Permanent Scarecrow Finisher",
-		id: "44069",
-		price: 500,
-		discount: null,
+		Finish: new Date("2017-03-28T16:00:00Z"),
+		name: "Upgrade Extractor",
+		id: "20349",
+		price: 125,
+		discount: [[1, 125, 250], [5, 550, 1100], [25, 2500, 5000]],
 		col: 0
 	},
 	{
@@ -83,7 +67,7 @@ GW2T_SALE_DATA = {
 		id: "67037",
 		price: 700,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		Finish: new Date("2017-03-28T16:00:00Z"),

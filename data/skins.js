@@ -453,6 +453,7 @@ Back: [
 	{u: 6234, i: 72309, n: "Unbound", p: {craft: true}},
 	{u: 6344, i: 74155, n: "Ad Infinitum", p: {craft: true}},
 	{u: 6353, i: 71930, n: "Radiant Backguard", p: {achievement: 39000}},
+	{u: 6253, i: 73169, n: "Hellfire Backguard Skin", p: {achievement: 39000}},
 	{u: 6412, i: 73939, n: "Bat Wings Backpack", p: {gem: 700}},
 	{u: 6431, i: 71323, n: "Ghoul Backpack", p: {gem: 600}},
 	{u: 6449, i: 74219, n: "Dread Quiver Backpack", p: {gem: 350}},

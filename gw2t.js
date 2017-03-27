@@ -17360,6 +17360,7 @@ Q = {
 	 * @objparam string aFillerText to display over the input bar, optional.
 	 * @objparam string aResultsClass CSS class for results container element, optional.
 	 * @objparam int aResultsLimit max number of results to show, optional.
+	 * @objparam boolean aIsSelect whether to emulate the <select> functionality, optional.
 	 * @objparam boolean aWantEnter whether to bind the default Enter key event, optional.
 	 * @objparam objarray aDatabase custom search database to use instead of items search, optional.
 	 * @objparam function aCallback to execute after the user selects an item.
