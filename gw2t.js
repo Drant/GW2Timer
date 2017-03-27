@@ -7702,6 +7702,14 @@ A = {
 	 */
 	adjustAccountPanel: function()
 	{
+		// Workaround for Firefox positioning, if not compensated then the account page will be invisible with height 0
+		if (I.BrowserCurrent === I.BrowserEnum.Firefox)
+		{
+			$("#panelAccount").css({
+				position: (O.Options.bol_showPanel) ? "relative" : "static",
+				height: (O.Options.bol_showPanel) ? "100%" : $(window).height() + "px"
+			});
+		}
 		// Resize the width of the menu bar based on the size of the content window
 		var menualign = (O.Options.bol_alignPanelRight) ? {left: "0px", right: "auto"} : {left: "auto", right: "0px"};
 		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"}).css(menualign);
@@ -25916,7 +25924,7 @@ P = {
 				var event;
 				var searchname;
 				var newname;
-				var marker, area, icon;
+				var marker, label, area, icon;
 				var coord, coordmarker, areacoords, radius, trueradius;
 
 				var zoneobj, zonename;
@@ -25970,7 +25978,7 @@ P = {
 					}
 					
 					// Create event's label
-					marker = L.marker(coordmarker,
+					label = L.marker(coordmarker,
 					{
 						clickable: false,
 						icon: L.divIcon(
@@ -25981,13 +25989,13 @@ P = {
 							iconAnchor: [64, 64]
 						})
 					});
-					zoneobj.Layers.EventLabel.addLayer(marker);
+					zoneobj.Layers.EventLabel.addLayer(label);
 
 					// Create event's icon
 					icon = "img/event/" + determineEventIcon(searchname) + I.cPNG;
 					marker = L.marker(coordmarker,
 					{
-						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
+						title: "<span class='" + "mapPoi" + "'><dfn>" + newname + "</dfn> (" + event.level + ")<br /><cite>Drag to unstack. Double click for wiki." + "</cite></span>",
 						wiki: event.name,
 						coord: coord,
 						eventid: i,
@@ -25996,18 +26004,24 @@ P = {
 							iconUrl: icon,
 							iconSize: [48, 48],
 							iconAnchor: [24, 24]
-						})
+						}),
+						draggable: true
 					});
 					
 					// Highlight the event's area when hovered over its icon
-					(function(iArea)
+					(function(iLabel, iArea)
 					{
 						marker.on("mouseover", function() { iArea.setStyle({ color: "red" }); })
-							.on("mouseout", function() { iArea.setStyle({ color: "#ff8844" }); });
-					})(area);
+							.on("mouseout", function() { iArea.setStyle({ color: "#ff8844" }); })
+							.on("drag", function()
+						{
+							iLabel.setLatLng(this.getLatLng());
+						});
+					})(label, area);
 					
 					// Bind standard behaviors
-					M.bindMarkerWikiBehavior(marker, "click", true);
+					M.bindMarkerCoordBehavior(marker, "click", true);
+					M.bindMarkerWikiBehavior(marker, "dblclick", true);
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
 					zoneobj.Layers.EventIcon.addLayer(marker);
 					P.addMapLocation(coord, event.name, icon, zonename + " " + event.name);

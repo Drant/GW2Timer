@@ -275,6 +275,10 @@ img {
 	background: none;
 	color: #ffcc77;
 }
+#qTip cite { /* Instructional text */
+	font-family: Trebuchet MS, Menomonia;
+	font-weight: normal;
+}
 
 /*
  * Item details tooltip.
