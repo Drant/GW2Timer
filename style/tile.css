@@ -163,10 +163,6 @@ body, #paneContent article {
 	text-align: center;
 	cursor: url("../img/cursor/auto.cur"), auto;
 }
-.chnTitleMisc {
-	font-style: italic;
-	font-weight: normal;
-}
 
 .chnTitle time {
 	width: 100%;

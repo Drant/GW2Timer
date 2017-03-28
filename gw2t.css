@@ -2587,9 +2587,6 @@ header.jsSection sup {
 	border-radius: 2px;
 	vertical-align: top;
 }
-.chnTitleMisc {
-	font-weight: bold;
-}
 
 .chnCheck, .chnChecked {
 	display: inline-block;
@@ -2753,7 +2750,7 @@ header.jsSection sup {
 	opacity: 0.5;
 }
 .chnTitleFutureFar, .chnSlot h1 {
-	color: #999;
+	color: #aaa;
 	opacity: 1;
 }
 

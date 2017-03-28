@@ -38,60 +38,19 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-28T16:00:00Z"),
-		name: "Metabolic Primer",
-		id: "42877",
-		price: 75,
-		discount: [[1, 75, 150], [5, 275, 550], [25, 1312, 2625]],
+		Finish: new Date("2017-03-29T16:00:00Z"),
+		name: "Bank Tab Expansion",
+		id: "19995",
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-28T16:00:00Z"),
-		name: "Revive Orb",
-		id: "19996",
-		price: 125,
-		discount: [[1, 125, 250], [5, 450, 900]],
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-28T16:00:00Z"),
-		name: "Upgrade Extractor",
-		id: "20349",
-		price: 125,
-		discount: [[1, 125, 250], [5, 550, 1100], [25, 2500, 5000]],
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-28T16:00:00Z"),
-		name: "Raiment of the Lich",
-		id: "67037",
+		name: "Spring Promenade Outfit",
+		id: "80906",
 		price: 700,
 		discount: null,
 		col: 0
-	},
-	{
-		Finish: new Date("2017-03-28T16:00:00Z"),
-		name: "Furrocious Cat Ears",
-		id: "79619",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		Finish: new Date("2017-03-28T16:00:00Z"),
-		name: "Hallows Fortune Fireworks",
-		id: "48714",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		Finish: new Date("2017-03-28T16:00:00Z"),
-		name: "Shield of the Goddess",
-		id: "80861",
-		price: 600,
-		discount: null,
-		col: 1
 	},
 	{
 		name: "Mini Krytan Floppy Fish",

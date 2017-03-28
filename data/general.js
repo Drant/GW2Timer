@@ -1443,13 +1443,19 @@ var GW2T_TIMELINE = [
 		]
 	},
 	{
-		name_en: "Dragon's Stand & Dry Top", name_de: "Widerstand des Drachen & Trockenkuppe", name_es: "Defensa del Dragón & Cima Seca", name_fr: "Repli du Dragon & Cimesèche", name_zh: "巨龙阵地 和 干涸高地",
+		zone: "dragon",
 		Segments: [
-			{ time: "00:00", duration: "00:40", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "00:40", duration: "00:20", primacy: 2, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙尘暴！" },
-			{ time: "01:00", duration: "00:30", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "01:30", duration: "00:10", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突袭" },
-			{ time: "01:40", duration: "00:20", primacy: 2, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙尘暴！" }
+			{ time: "00:00", duration: "01:30", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突袭" }
+		]
+	},
+	{
+		zone: "dry",
+		Segments: [
+			{ time: "00:00", duration: "00:40", primacy: 2, name_en: "Crash Site", name_de: "Absturzstelle", name_es: "Lugar del Impacto", name_fr: "Site du crash", name_zh: "坠毁点" },
+			{ time: "00:40", duration: "00:20", primacy: 3, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙尘暴！" },
+			{ time: "01:00", duration: "00:40", primacy: 2, name_en: "Crash Site", name_de: "Absturzstelle", name_es: "Lugar del Impacto", name_fr: "Site du crash", name_zh: "坠毁点" },
+			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙尘暴！" }
 		]
 	}
 ];

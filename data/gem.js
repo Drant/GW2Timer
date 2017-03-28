@@ -83,7 +83,8 @@ Outfit: [
 	{i: 79705, n: "Marjory's Shrouded Outfit", p: {gem: 700}},
 	{i: 79703, n: "Braham's Wolfblood Outfit", p: {gem: 700}},
 	{i: 80049, n: "Ice Encasement Outfit", p: {gem: -700}},
-	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}}
+	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
+	{i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},

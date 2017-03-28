@@ -19831,7 +19831,13 @@ D = {
 		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera",
 			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "开始"},
 		s_click: {de: "klicken", es: "clic", fr: "cliquer",
-			cs: "kliknout", it: "clic", pl: "klikać", pt: "clicar", ru: "щелкнуть", zh: "按一下"},
+			cs: "kliknout", it: "clic", pl: "klikać", pt: "clicar", ru: "щелкнуть", zh: "单击"},
+		s_double: {de: "doppel", es: "doble", fr: "double",
+			cs: "dvojité", it: "doppio", pl: "dwukrotnie", pt: "duplo", ru: "двойной", zh: "双"},
+		s_drag: {de: "ziehen", es: "arrastrar", fr: "glisser",
+			cs: "přetáhnout", it: "trascinare", pl: "przeciągnąć", pt: "arrastar", ru: "перетащить", zh: "拖动"},
+		s_separate: {de: "trennen", es: "separar", fr: "séparer",
+			cs: "oddělit", it: "separare", pl: "oddzielić", pt: "separar", ru: "разделять", zh: "分开"},
 		s_view: {de: "anzeigen", es: "ver", fr: "afficher",
 			cs: "zobrazit", it: "visualizzare", pl: "wyświetlać", pt: "exibir", ru: "представление", zh: "检视"},
 		s_load: {de: "laden", es: "cargar", fr: "charger",
@@ -21356,19 +21362,6 @@ C = {
 				}
 			});
 			$("#chnDetails_" + pChain.nexus).hide();
-		}
-		// Show meta event chain name if in default language
-		if (D.isLanguageDefault() && I.isMapEnabled)
-		{
-			$("#chnBar_" + pChain.nexus).hover(
-				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain)); },
-				function() { $("#chnTitle_" + pChain.nexus).text(D.getObjectName(pChain)); }
-			);
-		}
-		// Title text style for these chains
-		if (pChain.flags.isExpansion)
-		{
-			$("#chnTitle_" + pChain.nexus).addClass("chnTitleMisc");
 		}
 		// Clipboard behavior
 		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").each(function()
@@ -25926,6 +25919,7 @@ P = {
 				var newname;
 				var marker, label, area, icon;
 				var coord, coordmarker, areacoords, radius, trueradius;
+				var instructionstr = D.getPhraseOriginal("Drag to separate") + ". " + D.getPhraseOriginal("Double click for wiki") + ".";
 
 				var zoneobj, zonename;
 				initializeEvents(pData || pDataInner);
@@ -25995,7 +25989,7 @@ P = {
 					icon = "img/event/" + determineEventIcon(searchname) + I.cPNG;
 					marker = L.marker(coordmarker,
 					{
-						title: "<span class='" + "mapPoi" + "'><dfn>" + newname + "</dfn> (" + event.level + ")<br /><cite>Drag to unstack. Double click for wiki." + "</cite></span>",
+						title: "<span class='" + "mapPoi" + "'><dfn>" + newname + "</dfn> (" + event.level + ")<br /><cite>" + instructionstr + "</cite></span>",
 						wiki: event.name,
 						coord: coord,
 						eventid: i,
