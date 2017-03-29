@@ -19795,8 +19795,6 @@ D = {
 			cs: "když", it: "quando", pl: "gdy", pt: "quando", ru: "когда", zh: "什么时候"},
 		s_now: {de: "jetzt", es: "ahora", fr: "présent",
 			cs: "nyní", it: "adesso", pl: "teraz", pt: "agora", ru: "теперь", zh: "现在"},
-		s_timeline: {de: "zeitachse", es: "escala de tiempo", fr: "chronologie",
-			cs: "časová osa", it: "sequenza temporale", pl: "oś czasu", pt: "linha do tempo", ru: "временная шкала", zh: "时间线"},
 		
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
@@ -19811,6 +19809,8 @@ D = {
 			cs: "pořadí", it: "rango", pl: "ranga", pt: "classe", ru: "ранг", zh: "级"},
 		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
 			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", zh: "计时器"},
+		s_timeline: {de: "zeitachse", es: "escala de tiempo", fr: "chronologie",
+			cs: "časová osa", it: "sequenza temporale", pl: "oś czasu", pt: "linha do tempo", ru: "временная шкала", zh: "时间线"},
 		s_tools: {de: "extras", es: "herramientas", fr: "outils",
 			cs: "nástroje", it: "strumenti", pl: "narzędzia", pt: "ferramentas", ru: "инструменты", zh: "工具"},
 		s_help: {de: "hilfe", es: "ayuda", fr: "assistance",
@@ -19917,6 +19917,10 @@ D = {
 			cs: "rozbalit", it: "espandere", pl: "rozwinąć", pt: "expandir", ru: "развернуть", zh: "展开"},
 		s_collapse: {de: "verkleiner", es: "contraer", fr: "réduire",
 			cs: "sbalit", it: "comprimere", pl: "zwinąć", pt: "recolher", ru: "свернуть", zh: "摺叠"},
+		s_show: {de: "anzeigen", es: "mostrar", fr: "afficher",
+			cs: "zobrazit", it: "mostra", pl: "pokaż", pt: "mostrar", ru: "показать", zh: "显示"},
+		s_hide: {de: "ausblenden", es: "ocultar", fr: "masquer",
+			cs: "skrýt", it: "nascondi", pl: "ukryj", pt: "ocultar", ru: "скрыть", zh: "隐藏"},
 		s_draw: {de: "zeichnen", es: "dibujar", fr: "dessiner",
 			cs: "kreslit", it: "disegnare", pl: "rysować", pt: "desenhar", ru: "рисова́ть", zh: "画"},
 		s_undo: {de: "rückgängig", es: "deshacer", fr: "annuler",
@@ -33790,7 +33794,7 @@ H = {
 			// Line collapse behavior
 			(function(iLine, iIndex)
 			{
-				$("<kbd class='tmlLineCollapse jsSleepable' title='" + D.getWordCapital("collapse") + " <dfn>" + name + "</dfn>'></kbd>").appendTo(iLine).click(function()
+				$("<kbd class='tmlLineCollapse jsSleepable' title='" + D.getWordCapital("hide") + " <dfn>" + name + "</dfn>'></kbd>").appendTo(iLine).click(function()
 				{
 					iLine.hide("fast");
 					X.setChecklistItem(X.Checklists.Timeline, iIndex, X.ChecklistEnum.Disabled);

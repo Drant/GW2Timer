@@ -38,11 +38,27 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-29T16:00:00Z"),
-		name: "Bank Tab Expansion",
-		id: "19995",
-		price: 480,
-		discount: 600,
+		Finish: new Date("2017-03-30T16:00:00Z"),
+		name: "Crystal Arbiter Glider",
+		id: "72252",
+		price: 300,
+		discount: 500,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-30T16:00:00Z"),
+		name: "Classical Glider",
+		id: "77821",
+		price: 240,
+		discount: 400,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-30T16:00:00Z"),
+		name: "Exalted Glider",
+		id: "76236",
+		price: 240,
+		discount: 400,
 		col: 0
 	},
 	{
@@ -50,7 +66,7 @@ GW2T_SALE_DATA = {
 		id: "80906",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Mini Krytan Floppy Fish",
