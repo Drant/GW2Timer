@@ -303,7 +303,8 @@ BlackLionWeapon: [
 	{i: 79389, n: "Bloodstone weapon skins#Gallery", p: {blticket: 2}},
 	{i: 79655, n: "Gargoyle weapon skins#Gallery", p: {blticket: 2}},
 	{i: 80041, n: "Frostforged weapon skins#Gallery", p: {blticket: 2}},
-	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 1}}
+	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 1}},
+	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	{i: 20764, n: "Recovery Package", p: {gem: -300, discount: [[1, 300], [5, 1200]]}},

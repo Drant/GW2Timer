@@ -1436,8 +1436,7 @@ var GW2T_TIMELINE = [
 	{
 		zone: "tangled",
 		Segments: [
-			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
-			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "准备" },
+			{ time: "00:00", duration: "00:30", primacy: 1, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
 			{ time: "00:30", duration: "00:20", primacy: 3, name_en: "Gerent", name_de: "Potentaten", name_es: "Regente", name_fr: "Régent", name_zh: "虫王" },
 			{ time: "00:50", duration: "01:10", primacy: 2, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" }
 		]
@@ -1445,8 +1444,9 @@ var GW2T_TIMELINE = [
 	{
 		zone: "dragon",
 		Segments: [
-			{ time: "00:00", duration: "01:30", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突袭" }
+			{ time: "00:00", duration: "01:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:30", duration: "00:15", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突袭" },
+			{ time: "01:45", duration: "00:15", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
 		]
 	},
 	{
@@ -1541,7 +1541,7 @@ Countdown: {
 		name_zh: "超级冒险盒",
 		official: "news/super-adventure-festival-is-coming-soon/",
 		Start: new Date("2017-03-30T16:00:00Z"),
-		Finish: new Date("2017-04-20T16:00:00Z")
+		Finish: new Date("2017-04-19T16:00:00Z")
 	}
 	/*{
 		name_en: "Halloween 2017",

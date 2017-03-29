@@ -105,16 +105,16 @@
 	background: transparent;
 	transition: none;
 }
-#tmlToggle {
+#itemTimeline .btnWindow {
 	top: 0;
+}
+#tmlToggle {
 	left: 0;
 }
 #tmlCondense {
-	top: 0px;
 	left: 32px;
 }
 #tmlOpaque {
-	top: 0px;
 	left: 64px;
 }
 #itemTimeline {
@@ -123,6 +123,10 @@
 	margin: auto;
 	top: 0;
 	bottom: auto;
+}
+.tmlTimestampActive .tmlSegmentTimestamp {
+	font-weight: bold;
+	color: lime;
 }
 #tmlIndicator {
 	top: 0;

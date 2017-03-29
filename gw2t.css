@@ -277,7 +277,6 @@ img {
 }
 #qTip cite { /* Instructional text */
 	font-family: Trebuchet MS, Menomonia;
-	font-weight: normal;
 }
 
 /*
@@ -1004,6 +1003,14 @@ textarea.jsCopyCode {
 	margin-left: 24px;
 	width: calc(100% - 48px);
 	white-space: nowrap;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
+}
+#itemTimeline .btnWindow {
+	top: -32px;
 }
 #tmlCondense {
 	left: 16px;
@@ -1025,11 +1032,19 @@ textarea.jsCopyCode {
 }
 #tmlIndicator {
 	z-index: -1;
-	height: 110%;
-	top: -10%;
+	height: calc(100% + 24px);
+	top: -24px;
 	background: lime;
 	opacity: 0.9;
 	box-shadow: -1px 2px 4px lime;
+}
+#tmlIndicatorTime {
+	position: absolute;
+	left: 6px;
+	font-family: Trebuchet MS, Menomonia;
+	font-weight: bold;
+	font-size: 16px;
+	color: lime;
 }
 #tmlBisector {
 	height: 100%;
@@ -1074,6 +1089,9 @@ textarea.jsCopyCode {
 	outline: 1px solid rgba(255, 136, 68, 0.2);
 	transition: background 1s;
 }
+.tmlTimeslice:first-child .tmlSegmentContent { /* The first segment of a line */
+	margin-left: 24px;
+}
 #tmlHeader .tmlSegment {
 	outline: none;
 	background: none;
@@ -1086,15 +1104,18 @@ textarea.jsCopyCode {
 	height: 100%;
 	margin-left: 4px;
 }
+.tmlLineCollapsePadding {
+	display: inline-block;
+	width: 20px;
+}
 .tmlLineCollapse {
 	position: absolute; z-index: 11;
 	left: 0;
-	margin-top: 2px;
-	width: 16px; height: 16px;
+	width: 24px; height: 24px;
 	transition: opacity 0.1s;
 	background: url("img/ui/close.png");
-	background-size: 16px 16px;
-	opacity: 0.4;
+	background-size: 24px 24px;
+	opacity: 0.2;
 }
 .tmlLineName {
 	position: absolute; z-index: 2;
@@ -1113,7 +1134,6 @@ textarea.jsCopyCode {
 	font-family: Menomonia;
 	font-size: 16px;
 	color: #ccc;
-	text-shadow: 0px 0px 4px black;
 }
 .tmlSegmentSpecial {
 	display: block;
@@ -1129,7 +1149,6 @@ textarea.jsCopyCode {
 	font-family: sans-serif;
 	font-size: 14px;
 	color: #bbcc77;
-	text-shadow: 0px 0px 4px black;
 }
 .tmlSegmentTimestamp {
 	display: table-cell;
@@ -1137,14 +1156,10 @@ textarea.jsCopyCode {
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 11px;
 	color: #ddff77;
-	text-shadow: 0px 0px 4px black;
 	opacity: 0.9;
 }
 .tmlSegmentTimestampCondensed {
 	font-size: 14px;
-}
-.tmlSegmentTimestampHour {
-	font-weight: bold;
 }
 .tmlSegmentTimestampFutureFar {
 	color: #ccc;
@@ -1154,10 +1169,6 @@ textarea.jsCopyCode {
 	background-image: url("img/background/hud.png");
 	outline: 1px solid rgba(0, 0, 0, 0.2);
 	transition: background 1s;
-}
-.tmlTimestampActive .tmlSegmentTimestamp {
-	font-weight: bold;
-	color: lime;
 }
 .tmlSegmentActive .tmlSegmentNameBoss {
 	color: lime;
@@ -1367,6 +1378,9 @@ textarea.jsCopyCode {
 	vertical-align: super;
 	font-size: 12px;
 	color: #aaaaaa;
+}
+.dsbVendorEntry:hover .dsbVendorName {
+	color: #ee55cc;
 }
 #dsbVendorNote {
 	margin-left: 4px;
@@ -2199,10 +2213,10 @@ input.mapCoordinatesName {
 	font-size: 12px;
 	color: white;
 	text-shadow: 0px 0px 1px #e4e0b3;
-	opacity: 0.2;
+	opacity: 0.4;
 	pointer-events: none;
 }
-#paneMenu:hover var {
+#paneMenu:hover var, #paneMenu .menuButtonActive var {
 	color: #ffeeaa;
 	opacity: 0.8;
 }
@@ -2920,14 +2934,17 @@ label:hover {
 	top: -16px;
 	left: -16px;
 	width: 32px; height: 32px;
-	opacity: 0.4;
+	opacity: 0.6;
 	transition: opacity 0.1s;
+	box-shadow: inset 0 0 4px 4px rgba(255, 255, 255, 0.2);
+	border-radius: 50%;
 }
 .btnWindow:hover {
 	opacity: 0.8;
+	box-shadow: inset 0 0 4px 4px rgba(255, 255, 255, 0.6);
 }
 .btnWindow:active {
-	opacity: 0.6;
+	opacity: 0.4;
 }
 .btnClose {
 	background: url("img/ui/close.png"), rgba(0, 0, 0, 0.01);

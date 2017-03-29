@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170328"></script>
+	<script type="text/javascript" src="data/general.js?v=20170329"></script>
 	<script type="text/javascript" src="data/sale.js?v=20170328"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
@@ -158,9 +158,9 @@
 						<kbd id="tmlToggle" class="btnWindow btnToggle" title="<dfn>Toggle the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
 						<div id="tmlContainer">
 							<kbd id="tmlOpaque" class="btnWindow btnOpaque" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
-							<kbd id="tmlCondense" class="btnWindow btnVertical" title="<dfn>Condense the timeline and undo collapse.</dfn>"></kbd>
+							<kbd id="tmlCondense" class="btnWindow btnVertical" title="<dfn>Condense the timeline or show all lines again.</dfn>"></kbd>
 							<kbd id="tmlDelete" class="btnWindow btnClose" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
-							<div id="tmlIndicator"></div>
+							<div id="tmlIndicator"><div id="tmlIndicatorTime"></div></div>
 							<div id="tmlBisector"></div>
 						</div>
 					</div>
@@ -768,7 +768,7 @@
 		<nav id="paneMenu" class="paneApp">
 			<span id="clkToggle" class="btnWindow btnVertical" title="<dfn>Toggle Clock</dfn>"></span>
 			<div id="menuChains" class="menuButton"><ins></ins><var class="jsTranslate">Timers</var></div>
-			<div id="menuMap" class="menuButton"><ins></ins><var class="jsTranslate">Tools</var></div>
+			<div id="menuMap" class="menuButton"><ins></ins><var class="jsTranslate">Map</var></div>
 			<div id="menuHelp" class="menuButton"><ins></ins><var class="jsTranslate">Help</var></div>
 			<div id="menuOptions" class="menuButton"><ins></ins><var class="jsTranslate">Options</var>
 				<ul id="itemLanguagePopup" class="cntPopup">

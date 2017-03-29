@@ -38,8 +38,14 @@ html, body {
 	margin-top: 24px;
 	margin-bottom: 24px;
 }
+#itemTimeline .btnWindow {
+	top: -24px;
+}
 #tmlDelete {
 	display: block;
+}
+#tmlIndicatorTime {
+	top: 4px;
 }
 
 #windowMain {

@@ -1654,6 +1654,7 @@ Armor_Heavy_Helm: [
 	{u: 1398, i: 5317, n: "Vigil's Honor Helmet", p: {coin: 15200}},
 	{u: 1417, i: 5335, n: "Whisper's Secret Helmet", p: {coin: 15200}},
 	{u: 1560, i: 5506, n: "Heavy Scale Helm", p: {starting: true}},
+	{u: 1579, i: 80928, n: "Heavy Scale Helm", p: {pvp: true}},
 	{u: 1992, i: 64623, n: "Iron's Tailpipe Bandana", p: {karma: 0}},
 	{u: 2002, i: 49837, n: "Wurmslayer's Visor", p: {achievement: 0}},
 	{u: 2013, i: 43335, n: "Horns of the Dragon", p: {laurel: 25}},
@@ -2006,6 +2007,7 @@ Armor_Heavy_Leggings: [
 	{u: 1399, i: 5318, n: "Vigil's Honor Tassets", p: {coin: 17600}},
 	{u: 1414, i: 5336, n: "Whisper's Secret Tassets", p: {coin: 17600}},
 	{u: 1483, i: 5507, n: "Heavy Scale Leggings", p: {pvp: true}},
+	{u: 1499, i: 80879, n: "Heavy Scale Leggings", p: {pvp: true}},
 	{u: 1530, i: 5967, n: "Guild Defender Legguards", p: {pvp: true}},
 	{u: 5590, i: 67093, n: "Radiant Chausses", p: {achievement: 27000}},
 	{u: 5594, i: 67111, n: "Hellfire Chausses", p: {achievement: 27000}},
@@ -2081,6 +2083,7 @@ Armor_Heavy_Boots: [
 	{u: 1409, i: 5314, n: "Vigil's Honor Greaves", p: {coin: 12400}},
 	{u: 1426, i: 5332, n: "Whisper's Secret Greaves", p: {coin: 12400}},
 	{u: 1514, i: 5503, n: "Heavy Scale Shinguards", p: {starting: true}},
+	{u: 1534, i: 80941, n: "Heavy Scale Shinguards", p: {pvp: true}},
 	{u: 2041, i: 3167, n: "Chainmail Footgear", b: [2843, 2844, 2842, 2845, 2840, 2847, 2846, 2849, 2848, 2841, 2850, 2852, 2851, 2854, 3131, 2855, 3149, 3167, 3113, 3186, 3187, 3185, 3189, 3190, 3191, 3192, 3193, 3188, 3194, 3197, 3198, 3199, 3201, 3200, 3202, 3203, 3204, 3196, 5017, 5029, 5044, 5080, 5062, 5098, 5116, 5170, 5188, 5134, 5152, 5206, 5224, 5260, 5278, 2853, 5242, 3195]},
 	{u: 5601, i: 67134, n: "Glorious Hero's Wargreaves", p: {pvp: true}},
 	{u: 5652, i: 67135, n: "Glorious Wargreaves", p: {pvp: true}},
@@ -2266,7 +2269,8 @@ Weapon_Axe: [
 	{u: 6989, i: 79686, n: "Gargoyle Axe", b: [79686]},
 	{u: 7062, i: 79992, n: "Frostforged Axe", b: [79992]},
 	{u: 7122, i: 80398, n: "Devoted Axe", b: [80398]},
-	{u: 7091, i: 80678, n: "Axe of the Unseen", p: {magnetite: 600}}
+	{u: 7091, i: 80678, n: "Axe of the Unseen", p: {magnetite: 600}},
+	{u: 7191, i: 80916, n: "Beastslayer Axe", b: [80916]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", b: [49332]},
@@ -2404,7 +2408,8 @@ Weapon_Mace: [
 	{u: 6990, i: 79670, n: "Gargoyle Mace", b: [79670]},
 	{u: 7059, i: 80014, n: "Frostforged Mace", b: [80014]},
 	{u: 7105, i: 80299, n: "Devoted Mace", b: [80299]},
-	{u: 7076, i: 80186, n: "The Virge", p: {magnetite: 600}}
+	{u: 7076, i: 80186, n: "The Virge", p: {magnetite: 600}},
+	{u: 7171, i: 80942, n: "Beastslayer Mace", b: [80942]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", b: [49353]},
@@ -2564,7 +2569,9 @@ Weapon_Sword: [
 	{u: 7037, i: 80040, n: "Wrapped Sword", p: {achievement: 0}},
 	{u: 7125, i: 80647, n: "Indomitable Gladius", p: {magnetite: 600}},
 	{u: 7140, i: 80629, n: "Devoted Sword", b: [80629]},
-	{u: 7164, i: 80710, n: "Caladbolg Rosa", p: {achievement: 0}}
+	{u: 7164, i: 80710, n: "Caladbolg Rosa", p: {achievement: 0}},
+	{u: 6937, i: 79366, n: "Elemental Sword", p: {gem: 0}},
+	{u: 7174, i: 80969, n: "Beastslayer Sword", b: [80969]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", b: [49317]},
@@ -2712,7 +2719,8 @@ Weapon_Dagger: [
 	{u: 7009, i: 79920, n: "Caustic Nightmare Anelace", p: {matrix: 200}},
 	{u: 7044, i: 80061, n: "Frostforged Dagger", b: [80061]},
 	{u: 7096, i: 80617, n: "Devoted Dagger", b: [80617]},
-	{u: 7161, i: 80732, n: "Caladbolg Solana", p: {achievement: 0}}
+	{u: 7161, i: 80732, n: "Caladbolg Solana", p: {achievement: 0}},
+	{u: 7195, i: 80910, n: "Beastslayer Dagger", b: [80910]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", b: [49335]},
@@ -2853,7 +2861,8 @@ Weapon_Pistol: [
 	{u: 6994, i: 79637, n: "Grim Pact", b: [79637]},
 	{u: 7057, i: 80020, n: "Frostforged Pistol", b: [80020]},
 	{u: 7101, i: 80659, n: "Indomitable Pistol", p: {magnetite: 600}},
-	{u: 7138, i: 80392, n: "Devoted Pistol", b: [80392]}
+	{u: 7138, i: 80392, n: "Devoted Pistol", b: [80392]},
+	{u: 7181, i: 80891, n: "Beastslayer Pistol", b: [80891]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", b: [49341]},
@@ -2998,7 +3007,8 @@ Weapon_Scepter: [
 	{u: 7053, i: 79976, n: "Frostforged Scepter", b: [79976]},
 	{u: 7063, i: 80057, n: "Wrapped Scepter", p: {achievement: 0}},
 	{u: 7148, i: 80365, n: "Devoted Scepter", b: [80365]},
-	{u: 7163, i: 80741, n: "Caladbolg Iridi", p: {achievement: 0}}
+	{u: 7163, i: 80741, n: "Caladbolg Iridi", p: {achievement: 0}},
+	{u: 7175, i: 80902, n: "Beastslayer Scepter", b: [80902]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", b: [44897]},
@@ -3159,7 +3169,8 @@ Weapon_Focus: [
 	{u: 7033, i: 79753, n: "Nightmare Corsage", p: {achievement: 0}},
 	{u: 7019, i: 79767, n: "Caustic Nightmare Corsage", p: {matrix: 200}},
 	{u: 7054, i: 80021, n: "Frostforged Focus", b: [80021]},
-	{u: 7154, i: 80174, n: "Devoted Focus", b: [80174]}
+	{u: 7154, i: 80174, n: "Devoted Focus", b: [80174]},
+	{u: 7186, i: 80955, n: "Beastslayer Focus", b: [80955]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", b: [49344]},
@@ -3324,7 +3335,8 @@ Weapon_Shield: [
 	{u: 7111, i: 80242, n: "Devoted Shield", b: [80242]},
 	{u: 7135, i: 80526, n: "Seraph Protector", p: {karma: 210000}},
 	{u: 7162, i: 80786, n: "Caladbolg Astera", p: {achievement: 0}},
-	{u: 7165, i: 80861, n: "Shield of the Goddess", p: {gem: 600}}
+	{u: 7165, i: 80861, n: "Shield of the Goddess", p: {gem: 600}},
+	{u: 7177, i: 80944, n: "Beastslayer Shield", b: [80944]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", b: [49356]},
@@ -3459,7 +3471,8 @@ Weapon_Torch: [
 	{u: 6913, i: 79487, n: "Carnival Torch", p: {coin: 500000}},
 	{u: 6996, i: 79649, n: "Gargoyle Torch", b: [79649]},
 	{u: 7036, i: 79944, n: "Frostforged Torch", b: [79944]},
-	{u: 7159, i: 80649, n: "Devoted Torch", b: [80649]}
+	{u: 7159, i: 80649, n: "Devoted Torch", b: [80649]},
+	{u: 7192, i: 80873, n: "Beastslayer Torch", b: [80873]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", b: [49359]},
@@ -3595,7 +3608,8 @@ Weapon_Warhorn: [
 	{u: 6976, i: 79658, n: "Gargoyle Warhorn", b: [79658]},
 	{u: 7052, i: 79973, n: "Frostforged Warhorn", b: [79973]},
 	{u: 7092, i: 80352, n: "Devoted Warhorn", b: [80352]},
-	{u: 7147, i: 80482, n: "Watchkeeper Trophy Warhorn", p: {magnetite: 600}}
+	{u: 7147, i: 80482, n: "Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
+	{u: 7183, i: 80911, n: "Beastslayer Warhorn", b: [80911]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", b: [49321, 49323]},
@@ -3750,7 +3764,8 @@ Weapon_Greatsword: [
 	{u: 7058, i: 80037, n: "Wrapped Greatsword", p: {achievement: 0}},
 	{u: 7090, i: 80179, n: "Devoted Greatsword", b: [80179]},
 	{u: 6403, i: 80707, n: "Caladbolg Origin", p: {achievement: 0}},
-	{u: 7160, i: 80824, n: "Caladbolg Orchida", p: {achievement: 0}}
+	{u: 7160, i: 80824, n: "Caladbolg Orchida", p: {achievement: 0}},
+	{u: 7193, i: 80943, n: "Beastslayer Greatsword", b: [80943]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", b: [49326]},
@@ -3896,7 +3911,8 @@ Weapon_Hammer: [
 	{u: 6991, i: 79690, n: "Onus", b: [79690]},
 	{u: 7060, i: 79967, n: "Frostforged Hammer", b: [79967]},
 	{u: 7132, i: 80630, n: "Devoted Hammer", b: [80630]},
-	{u: 7151, i: 80341, n: "The Gavel", p: {magnetite: 600}}
+	{u: 7151, i: 80341, n: "The Gavel", p: {magnetite: 600}},
+	{u: 7178, i: 80934, n: "Beastslayer Hammer", b: [80934]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", b: [44906]},
@@ -4042,7 +4058,8 @@ Weapon_Longbow: [
 	{u: 7021, i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}},
 	{u: 7041, i: 80035, n: "Frostforged Longbow", b: [80035]},
 	{u: 7097, i: 80414, n: "Arbiter Greatbow", p: {magnetite: 600}},
-	{u: 7137, i: 80246, n: "Devoted Longbow", b: [80246]}
+	{u: 7137, i: 80246, n: "Devoted Longbow", b: [80246]},
+	{u: 7189, i: 80964, n: "Beastslayer Longbow", b: [80964]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", b: [44924]},
@@ -4189,7 +4206,8 @@ Weapon_Shortbow: [
 	{u: 6988, i: 79648, n: "Gargoyle Short Bow", b: [79648]},
 	{u: 7039, i: 79963, n: "Frostforged Short Bow", b: [79963]},
 	{u: 7081, i: 80395, n: "Devoted Short Bow", b: [80395]},
-	{u: 7155, i: 80499, n: "Watchkeeper Trophy Bow", p: {magnetite: 600}}
+	{u: 7155, i: 80499, n: "Watchkeeper Trophy Bow", p: {magnetite: 600}},
+	{u: 7180, i: 80945, n: "Beastslayer Short Bow", b: [80945]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", b: [49338]},
@@ -4335,7 +4353,8 @@ Weapon_Rifle: [
 	{u: 7117, i: 80377, n: "Frigate", p: {craft: true}},
 	{u: 7080, i: 80135, n: "Man o' War", p: {craft: true}},
 	{u: 7078, i: 80488, n: "The HMS Divinity", p: {craft: true}},
-	{u: 7152, i: 80307, n: "Devoted Rifle", b: [80307]}
+	{u: 7152, i: 80307, n: "Devoted Rifle", b: [80307]},
+	{u: 7168, i: 80880, n: "Beastslayer Rifle", b: [80880]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", b: [49348, 49350]},
@@ -4497,7 +4516,8 @@ Weapon_Staff: [
 	{u: 7112, i: 80665, n: "Devoted Staff", b: [80665]},
 	{u: 7118, i: 80304, n: "Bloodstone Savant's Staff", p: {karma: 210000}},
 	{u: 7104, i: 80273, n: "Prisoner's Treasured Bough", p: {magnetite: 600}},
-	{u: 7113, i: 80188, n: "Spire of Samarog", p: {magnetite: 600}}
+	{u: 7113, i: 80188, n: "Spire of Samarog", p: {magnetite: 600}},
+	{u: 7197, i: 80926, n: "Beastslayer Staff", b: [80926]}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", b: [63881]},

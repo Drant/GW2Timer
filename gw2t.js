@@ -1357,7 +1357,11 @@ O = {
 		},
 		bol_tourPrediction: function()
 		{
-			C.isTouring = O.Options.bol_tourPrediction;
+			C.isTouringAuto = O.Options.bol_tourPrediction;
+			if (O.Options.bol_tourPrediction)
+			{
+				C.isTouringManual = false;
+			}
 		},
 		int_setFollow: function()
 		{
@@ -7230,6 +7234,7 @@ Z = {
 		U.getScript(U.URL_DATA.Museum, function()
 		{
 			var record = U.getRecordData("museum");
+			var trimmedrecord = {};
 			if (record[timestamp])
 			{
 				ids = U.getUnion(record[timestamp], pIDs);
@@ -7241,6 +7246,14 @@ Z = {
 			Q.sortItems(ids, function(pSortedItems, pSortedIDs)
 			{
 				record[timestamp] = pSortedIDs;
+				// Print the first month only
+				for (var i in record)
+				{
+					trimmedrecord[i] = record[i];
+					break;
+				}
+				Z.printUnlockables(trimmedrecord, true, true);
+				// Print the full record
 				Z.printUnlockables(record, true, true);
 			});
 		});
@@ -15320,6 +15333,7 @@ Q = {
 	 * number of the datum.
 	 */
 		Items: {},
+		Skins: {},
 		Guilds: {},
 		Achievements: {},
 		Titles: {},
@@ -16687,6 +16701,8 @@ Q = {
 			{
 				Settings.aCallback(box);
 			}
+			// Already succeeded, so prevent recalling this subfunction
+			numfetched = null;
 		};
 		
 		/*
@@ -16780,21 +16796,27 @@ Q = {
 		// TRANSMUTED
 		if (Settings.aItemMeta.skin)
 		{
-			$.getJSON(U.getAPISkin(Settings.aItemMeta.skin), function(pData)
+			Q.getSkins(Settings.aItemMeta.skin, function()
 			{
-				namestr = "<aside class='itmName " + Q.getRarityClass(rarity)
-					+ "'><img class='itmIcon itmIconMain' src='" + pData.icon + "' />" + U.escapeHTML(pData.name) + "</aside>";
-				transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
-				if (Settings.aCallback)
+				var skinbox = Q.getBoxedSkin(Settings.aItemMeta.skin);
+				if (skinbox)
 				{
-					skinobj = pData;
+					var skin = skinbox.oData;
+					namestr = "<aside class='itmName " + Q.getRarityClass(rarity)
+						+ "'><img class='itmIcon itmIconMain' src='" + skin.icon + "' />" + U.escapeHTML(skin.name) + "</aside>";
+					transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
+					if (Settings.aCallback)
+					{
+						skinobj = skin;
+					}
+					numfetched++;
+					finalizeTooltip();
 				}
-				numfetched++;
-				finalizeTooltip();
-			}).fail(function()
-			{
-				numtofetch--;
-				finalizeTooltip();
+				else
+				{
+					numtofetch--;
+					finalizeTooltip();
+				}
 			});
 		}
 		
@@ -16815,10 +16837,26 @@ Q = {
 	{
 		var ids = pIDs;
 		var idstofetch = [];
+		var cache = Q.Boxes[pType];
 		if (isNaN(pIDs) === false)
 		{
 			// If provided a single ID
-			ids = [pIDs];
+			var id = pIDs;
+			if (cache[id])
+			{
+				pCallback();
+			}
+			else
+			{
+				U.getJSON(U.getAPI(pType.toLowerCase(), id), function(pData)
+				{
+					cache[id] = {};
+					cache[id].oData = pData;
+					pCallback();
+				});
+			}
+			// Do not proceed with array fetch
+			return;
 		}
 		else
 		{
@@ -16827,7 +16865,6 @@ Q = {
 		}
 		
 		// Filter out cached data
-		var cache = Q.Boxes[pType];
 		for (var i in ids)
 		{
 			if (cache[ids[i]] === undefined)
@@ -16848,6 +16885,10 @@ Q = {
 				pCallback();
 			}
 		});
+	},
+	getSkins: function(pIDs, pCallback)
+	{
+		Q.getBoxes("Skins", pIDs, pCallback);
 	},
 	getAchievements: function(pIDs, pCallback)
 	{
@@ -16872,6 +16913,10 @@ Q = {
 	getBoxedItem: function(pID)
 	{
 		return Q.Boxes.Items[pID];
+	},
+	getBoxedSkin: function(pID)
+	{
+		return Q.Boxes.Skins[pID];
 	},
 	getBoxedAchievement: function(pID)
 	{
@@ -19736,10 +19781,10 @@ D = {
 			cs: "dobíjení", it: "raffreddamento", pl: "ochładzania", pt: "resfriamento", ru: "перезарядка", zh: "冷却"},
 		s_remaining: {de: "verbleibend", es: "restante", fr: "restant",
 			cs: "zbývající", it: "rimanente", pl: "pozostały", pt: "restante", ru: "оставшиеся", zh: "剩馀"},
-		s_daylight: {de: "tageszeit", es: "luz de día", fr: "lumière du jour",
-			cs: "denní světlo", it: "luce del giorno", pl: "światło dzienne", pt: "luz do dia", ru: "дневной свет", zh: "白天"},
-		s_nighttime: {de: "nacht", es: "noche", fr: "nuit",
-			cs: "noc", it: "ore notturne", pl: "nocna pora", pt: "período noturno", ru: "ночь", zh: "夜间"},
+		s_day: {de: "tag", es: "día", fr: "jour",
+			cs: "den", it: "giorno", pl: "dzień", pt: "dia", ru: "день", zh: "白天"},
+		s_night: {de: "nacht", es: "noche", fr: "nuit",
+			cs: "noc", it: "notturne", pl: "nocna", pt: "noturno", ru: "ночь", zh: "夜间"},
 		s_dawn: {de: "tagesanbruch", es: "amanecer", fr: "aube",
 			cs: "svítání", it: "alba", pl: "świt", pt: "alvorecer", ru: "рассвет", zh: "黎明"},
 		s_dusk: {de: "dämmerung", es: "crepúsculo", fr: "crépuscule",
@@ -19748,6 +19793,10 @@ D = {
 			cs: "blíží", it: "avvicina", pl: "zbliża", pt: "aproximava", ru: "приближается", zh: "来临"},
 		s_when: {de: "wann", es: "cuando", fr: "quand",
 			cs: "když", it: "quando", pl: "gdy", pt: "quando", ru: "когда", zh: "什么时候"},
+		s_now: {de: "jetzt", es: "ahora", fr: "présent",
+			cs: "nyní", it: "adesso", pl: "teraz", pt: "agora", ru: "теперь", zh: "现在"},
+		s_timeline: {de: "zeitachse", es: "escala de tiempo", fr: "chronologie",
+			cs: "časová osa", it: "sequenza temporale", pl: "oś czasu", pt: "linha do tempo", ru: "временная шкала", zh: "时间线"},
 		
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
@@ -20925,7 +20974,8 @@ C = {
 	isDryTopGenerated: false,
 	isDryTopIconsShown: false,
 	isTimetableGenerated: false,
-	isTouring: true,
+	isTouringAuto: true, // False when the program starts touring by itself, to prevent multiple touring calls
+	isTouringManual: false, // True when the user ever moves the map
 	
 	/*
 	 * Gets a chain from its alias.
@@ -22155,14 +22205,14 @@ C = {
 			if (P.wantTourPrediction() && M.isMapAJAXDone
 				&& C.isChainUnchecked(pChain) && isregularchain && !pChain.flags.isSpecial)
 			{
-				if (C.isTouring)
+				if (C.isTouringAuto && C.isTouringManual === false)
 				{
-					C.isTouring = false;
+					C.isTouringAuto = false;
 					$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 					// Prevent simultaneous touring, which would waste bandwidth from downloading unseen map tiles
 					setTimeout(function()
 					{
-						C.isTouring = true;
+						C.isTouringAuto = true;
 					}, 1000);
 				}
 			}
@@ -22865,6 +22915,7 @@ M = {
 		this.Map.on("dragstart", function()
 		{
 			that.isUserDragging = true;
+			C.isTouringManual = true;
 		});
 		this.Map.on("dragend", function()
 		{
@@ -25144,6 +25195,7 @@ M = {
 		{
 			var command = $(this).attr("data-coord");
 			Z.interpretCommand(command, that, pZoom, pPin);
+			C.isTouringManual = false;
 		});
 		
 		pLink.dblclick(function()
@@ -32478,7 +32530,7 @@ T = {
 				// Is transitioning to day
 				if (min === T.cDAYTIME_DAY_START && O.Options.bol_alertDaylight)
 				{
-					D.speak(D.getPhrase("approaching daylight"));
+					D.speak(D.getPhrase("approaching day"));
 				}
 			}
 			else // Night
@@ -32508,7 +32560,7 @@ T = {
 				// Is transitioning to night
 				if (min === T.cDAYTIME_NIGHT_START && O.Options.bol_alertDaylight)
 				{
-					D.speak(D.getPhrase("approaching nighttime"));
+					D.speak(D.getPhrase("approaching night"));
 				}
 			}
 		}
@@ -33697,7 +33749,7 @@ H = {
 		});
 		// Initialize "checklist" so collapsed lines are remembered as so
 		X.initializeChecklist(X.Checklists.Timeline, H.Timeline.length);
-		// Create timings header
+		// Create timeline
 		for (var i = 0; i < H.Timeline.length; i++)
 		{
 			var chain = H.Timeline[i];
@@ -33711,6 +33763,8 @@ H = {
 				// Segments of a timeline (event)
 				var event = chain.Segments[ii];
 				var segmentprefix = "";
+				var segmentname = (D.getObjectName(event) || "");
+				var emptyclass = (!chain.isWB && segmentname === "") ? "tmlTimesliceEmpty" : "";
 				var wbclass = (chain.isWB) ? "tmlTimesliceWB" : "";
 				var wbdata = (chain.isWB) ? "data-offset='" + ii + "'" : "";
 				var bossclass = (event.primacy === C.EventPrimacyEnum.Boss) ? "tmlSegmentNameBoss" : "";
@@ -33724,10 +33778,10 @@ H = {
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 				line.append(
-				"<div class='tmlSegment tmlTimeslice " + wbclass + "' style='width:" + width + "%' "
+				"<div class='tmlSegment tmlTimeslice " + wbclass + " " + emptyclass + "' style='width:" + width + "%' "
 				+ "data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "' " + wbdata + ">"
 					+ "<div class='tmlSegmentContent'>"
-						+ linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + (D.getObjectName(event) || "")+ "</span>"
+						+ linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + segmentname + "</span>"
 						+ "<span class='tmlSegmentCountdown'></span>"
 						+ "<var class='tmlSegmentSpecial'></var>"
 					+ "</div>"
@@ -33747,6 +33801,7 @@ H = {
 				line.hide();
 			}
 		}
+		
 		// Bind window buttons
 		$("#tmlToggle").click(function()
 		{
@@ -33766,6 +33821,7 @@ H = {
 		{
 			$("#opt_bol_opaqueTimeline").trigger("click");
 		});
+		
 		// Initialize
 		O.Enact.bol_condenseTimelineHeader(true);
 		O.Enact.bol_condenseTimelineLine(true);
@@ -33783,9 +33839,10 @@ H = {
 		}
 		var cycleminutes = T.cMINUTES_IN_2_HOURS;
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
-		var offset = (currentminute / cycleminutes) * T.cPERCENT_100;
-		$("#tmlIndicator").css({left: offset + "%"});
-		$(".tmlLineName").css({left: offset + "%"});
+		var offsetpercent = (currentminute / cycleminutes) * T.cPERCENT_100;
+		$("#tmlIndicator").css({left: offsetpercent + "%"});
+		$(".tmlLineName").css({left: offsetpercent + "%"});
+		
 		// Update the countdowns next to the segment names
 		$(".tmlTimeslice").each(function()
 		{
@@ -33794,7 +33851,7 @@ H = {
 			var countdown = $(this).find(".tmlSegmentCountdown");
 			var minutesremaining = $(this).data("start") - currentminute;
 			minutesremaining = (minutesremaining === 0) ? cycleminutes : T.wrapInteger(minutesremaining, cycleminutes);
-			if ($(this).hasClass("tmlTimesliceWB") && isactive)
+			if (($(this).hasClass("tmlTimesliceWB") && isactive) || $(this).hasClass("tmlTimesliceEmpty"))
 			{
 				// If timeslice is for active world bosses
 				countdown.html("");
@@ -33804,8 +33861,30 @@ H = {
 				countdown.html(T.formatMinutes(minutesremaining));
 			}
 		});
-		// Update current timestamp minute
-		$(".tmlTimestampActive").find(".tmlSegmentTimestamp").text(K.currentDaytimeString);
+		
+		// Update current time
+		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		{
+			// If on overlay then change the current active timestamp
+			$(".tmlTimestampActive").find(".tmlSegmentTimestamp").text(K.currentDaytimeString);
+		}
+		else
+		{
+			// Otherwise change the indicator's text
+			$("#tmlIndicatorTime").html(K.currentDaytimeText);
+		}
+		
+		// Reposition the indicator's time text if outside of screen
+		var indtime = $("#tmlIndicatorTime");
+		var indtimepadding = 12;
+		if (offsetpercent > 90)
+		{
+			indtime.css({marginLeft: -(indtime.width() + indtimepadding) + "px"});
+		}
+		else
+		{
+			indtime.css({marginLeft: 0});
+		}
 	},
 	
 	/*
@@ -33914,12 +33993,10 @@ H = {
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var line = $("#tmlHeader").empty();
 		var divisions = T.cMINUTES_IN_2_HOURS / H.minutesInTimelineSpacing;
-		var half = divisions / 2;
 		var ithminute, timestamp;
 		for (var i = 0; i < divisions; i++)
 		{
 			var width = T.cPERCENT_100 / divisions;
-			var hourclass = (i === 0 || i === half) ? "tmlSegmentTimestampHour" : "";
 			var condensedclass = (O.Options.bol_condenseTimelineHeader) ? "tmlSegmentTimestampCondensed" : "";
 			var tenseclass = "";
 			ithminute = H.minutesInTimelineSpacing * i;
@@ -33935,7 +34012,7 @@ H = {
 			}
 			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
 				+ "<span id='tmlSegmentTimestamp_" + ithminute + "' class='tmlSegmentTimestamp "
-					+ condensedclass + " " + hourclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
+					+ condensedclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
 		}
 	},
 	
@@ -33989,7 +34066,9 @@ K = {
 	currentFrameOffsetMinutes: 0,
 	currentPredictionColor: "",
 	currentDaytimeSymbol: "",
+	currentDaytimeWord: "",
 	currentDaytimeString: "",
+	currentDaytimeText: "",
 	oldQuadrantAngle: 0,
 	paneSizePrevious: 0,
 	
@@ -35025,8 +35104,11 @@ K = {
 	 */
 	updateDaytimeIcon: function()
 	{
-		var symbol = (T.isDaylight()) ? I.Symbol.Day : I.Symbol.Night;
+		var isdaylight = T.isDaylight();
+		var symbol = (isdaylight) ? I.Symbol.Day : I.Symbol.Night;
+		var word = (isdaylight) ? D.getWord("day") : D.getWord("night");
 		K.currentDaytimeSymbol = symbol;
+		K.currentDaytimeWord = word;
 		$("#itemTimeDayIcon").text(symbol);
 	},
 	
@@ -35039,6 +35121,7 @@ K = {
 		var daytime = T.getDayPeriodRemaining();
 		K.timeDaytime.innerHTML = daytime;
 		K.currentDaytimeString = T.getTimeFormatted({aWantSeconds: false}) + " " + K.currentDaytimeSymbol + daytime;
+		K.currentDaytimeText = K.currentDaytimeString + " " + K.currentDaytimeWord;
 		// Clock on the map shown in overlay mode
 		K.timeMap.innerHTML = K.currentDaytimeString;
 		K.timeWvW.innerHTML = K.currentDaytimeString;
@@ -37376,11 +37459,14 @@ I = {
 		/*
 		 * Menu click icon to show respective content plate (page).
 		 */
+		$("#menuChains").addClass("menuButtonActive"); // Chains is the default page
 		$(".menuButton").each(function()
 		{
 			$(this).click(function()
 			{
 				var plate = $(this).attr("id");
+				$(".menuButton").removeClass("menuButtonActive");
+				$(this).addClass("menuButtonActive");
 				I.PageCurrent = plate.substring(I.cMenuPrefix.length - 1, plate.length);
 				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
 				if (P.MapSwitchWebsite === P.MapEnum.Mists)
@@ -37395,6 +37481,7 @@ I = {
 						{
 							$("#mapHUDContainerInner").show();
 						}
+						C.isTouringManual = false;
 					} break;
 					case I.PageEnum.Map:
 					{
