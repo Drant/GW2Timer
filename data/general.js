@@ -1542,6 +1542,16 @@ Countdown: {
 		official: "the-game/releases/march-30-2017/",
 		Start: new Date("2017-03-30T16:00:00Z"),
 		Finish: new Date("2017-04-20T16:00:00Z")
+	},
+	{
+		name_en: "April Fools' Day",
+		name_de: "Aprilscherz",
+		name_es: "Pescado de abril",
+		name_fr: "Poisson d'avril",
+		name_zh: "愚人节",
+		url: "https://wiki.guildwars2.com/wiki/April_Fools'_Day",
+		Start: new Date("2017-04-01T16:00:00Z"),
+		Finish: new Date("2017-04-02T16:00:00Z")
 	}
 	/*{
 		name_en: "Halloween 2017",
