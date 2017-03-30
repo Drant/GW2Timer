@@ -22,8 +22,8 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170329"></script>
-	<script type="text/javascript" src="data/sale.js?v=20170329"></script>
+	<script type="text/javascript" src="data/general.js?v=20170330"></script>
+	<script type="text/javascript" src="data/sale.js?v=20170330"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -49,7 +49,7 @@
 	<div id="itemVignette"></div><!-- Ornamental shadow frame for window overlay -->
 	<div id="itemConsole">
 		<div id="cslButtons">
-			<kbd id="cslClose" class="btnWindow btnClose" title="<dfn>Close Console</dfn><br /><cite>Shortcut: Esc Key</cite>"></kbd>
+			<kbd id="cslClose" class="btnWindow btnClose" title="<dfn>Clear Console</dfn><br /><cite>Shortcut: Esc Key</cite>"></kbd>
 			<kbd id="cslSelect" class="btnWindow btnCopy" title="<dfn>Select Console</dfn>"></kbd>
 			<kbd id="cslToggle" class="btnWindow btnToggle" title="<dfn>Toggle Console</dfn>"></kbd>
 		</div>
@@ -63,7 +63,7 @@
 		- This web application encountered a bug; try refreshing (Ctrl+F5).<br />
 		Do you want to <a href="http://forum.renaka.com/topic/5476238/">ask for help?</a><br />
 	</div>
-	<kbd id="watToggle" class="btnWindow btnToggle" title="<dfn>Toggle stopwatch.</dfn> Click the stop button to reset."></kbd>
+	<kbd id="watToggle" class="btnWindow btnToggle" title="<dfn>Toggle stopwatch</dfn>. Click the stop button to reset."></kbd>
 	<div id="itemStopwatch">
 		<div id="watUp"></div>
 		<div id="watDown"></div>
@@ -134,11 +134,11 @@
 				</ul>
 			</div>
 			<article id="mapHUDPane">
-			<div id="mapDisplayButton" class="mapDisplayButton hudButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
+			<kbd id="mapDisplayButton" class="mapDisplayButton btnWindow btnHorizontal" title="<dfn>Toggle Panel</dfn>"></kbd>
 			<div id="mapHUDContainer">
 				<div id="mapHUDContainerInner">
 					<div id="itemDashboard">
-						<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+						<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle the dashboard</dfn>. To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
 						<div id="dsbContainer">
 							<div id="dsbAnnouncement"></div>
 							<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='cssState cssStateInactive'></span>: not started yet, counting down to when it starts.<br /><span class='cssState cssStateActive'></span>: is happening, counting down to when it ends."></div>
@@ -155,11 +155,11 @@
 						</div>
 					</div>
 					<div id="itemTimeline">
-						<kbd id="tmlToggle" class="btnWindow btnToggle" title="<dfn>Toggle the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+						<kbd id="tmlToggle" class="btnWindow btnToggle" title="<dfn>Toggle timeline</dfn>. To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."><var id="tmlTitle"></var></kbd>
 						<div id="tmlContainer">
-							<kbd id="tmlOpaque" class="btnWindow btnOpaque" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
-							<kbd id="tmlCondense" class="btnWindow btnVertical" title="<dfn>Condense the timeline or show all lines again.</dfn>"></kbd>
-							<kbd id="tmlDelete" class="btnWindow btnClose" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
+							<kbd id="tmlOpaque" class="btnWindow btnOpaque" title="<dfn>Toggle timeline opacity</dfn>"></kbd>
+							<kbd id="tmlCondense" class="btnWindow btnVertical" title="<dfn>Condense timeline</dfn> or show all lines again."></kbd>
+							<kbd id="tmlDelete" class="btnWindow btnClose" title="<dfn>Delete timeline</dfn>. To restore, go to Options page, Map section."></kbd>
 							<div id="tmlIndicator"><div id="tmlIndicatorTime"></div></div>
 							<div id="tmlBisector"></div>
 						</div>
@@ -454,28 +454,28 @@
 				</ul>
 			</div>
 			<article id="wvwHUDPane">
-			<div id="wvwDisplayButton" class="mapDisplayButton hudButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
+			<kbd id="wvwDisplayButton" class="mapDisplayButton btnWindow btnHorizontal" title="<dfn>Toggle Panel</dfn>"></kbd>
 			<div id="wvwHUDContainer">
 				<div id="wvwHUDContainerInner">
 					<div id="wvwLeaderboard">
 						<div id="lboContainer">
-							<kbd id="lboToggle" class="btnWindow lboButton btnToggle" title="<dfn>Toggle leaderboard.</dfn>"></kbd>
-							<kbd id="lboCondense" class="btnWindow lboButton btnHorizontal lboExtra" title="<dfn>Condense leaderboard.</dfn>"></kbd>
-							<kbd id="lboRegion" class="btnWindow lboButton btnVertical lboExtra" title="<dfn>Toggle all server matchups.</dfn><br />gw2timer.com/<dfn>wvw/leaderboard</dfn>"></kbd>
-							<kbd id="lboOpaque" class="btnWindow lboButton btnOpaque lboExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
-							<kbd id="lboStats" class="btnWindow lboButton btnStats lboExtra" title="<dfn>Print server population list.</dfn>"></kbd>
+							<kbd id="lboToggle" class="btnWindow lboButton btnToggle" title="<dfn>Toggle leaderboard</dfn>"></kbd>
+							<kbd id="lboCondense" class="btnWindow lboButton btnHorizontal lboExtra" title="<dfn>Condense leaderboard</dfn>"></kbd>
+							<kbd id="lboRegion" class="btnWindow lboButton btnVertical lboExtra" title="<dfn>Toggle all server matchups</dfn><br />gw2timer.com/wvw/leaderboard"></kbd>
+							<kbd id="lboOpaque" class="btnWindow lboButton btnOpaque lboExtra" title="<dfn>Toggle opacity</dfn>"></kbd>
+							<kbd id="lboStats" class="btnWindow lboButton btnStats lboExtra" title="<dfn>Print server population list</dfn>"></kbd>
 							<span id="lboText" class="lboExtra">
 								<a class="lboLink" title="<dfn>North America</dfn> Leaderboard" href="./?page=WvW&section=Leaderboard&enu_Server=1008">NA</a> <a title="<dfn>Europe</dfn> Leaderboard" class="lboLink" href="./?page=WvW&section=Leaderboard&enu_Server=2002">EU</a>
-								<time id="lboCountdown" class="curClick" title="<dfn>Time until matchup reset.</dfn> Click for WvW Rankings."></time>
+								<time id="lboCountdown" class="curClick" title="<dfn>Time until matchup reset</dfn>. Click for WvW Rankings."></time>
 							</span>
 							<div id="lboCurrent"></div>
 							<div id="lboOther"></div>
 						</div>
 					</div>
 					<div id="wvwLogContainer">
-						<kbd id="logToggle" class="btnWindow logButton btnToggle" title="<dfn>Toggle log.</dfn>"></kbd>
-						<kbd id="logExpand" class="btnWindow logButton btnVertical logExtra" title="<dfn>Toggle log height.</dfn>"></kbd>
-						<kbd id="logOpaque" class="btnWindow logButton btnOpaque logExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
+						<kbd id="logToggle" class="btnWindow logButton btnToggle" title="<dfn>Toggle log</dfn>"></kbd>
+						<kbd id="logExpand" class="btnWindow logButton btnVertical logExtra" title="<dfn>Toggle log height</dfn>"></kbd>
+						<kbd id="logOpaque" class="btnWindow logButton btnOpaque logExtra" title="<dfn>Toggle opacity</dfn>"></kbd>
 						<div id="wvwLog" class="cntComposition">
 							<label id="wvwZoom" title="Set initial zoom level for WvW map."><img id="wvwZoomIcon" data-src="img/map/zoom.png" /><input id="wvwZoomInput" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 							<select id="wvwServerList"></select>
@@ -631,7 +631,7 @@
 	</div><!-- End of panelMap -->
 	<div id="panelAccount" class="panelMain"></div>
 	<div id="panelApp" class="panelMain">
-		<div id="itemDisplayButton" class="mapDisplayButton hudButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
+		<kbd id="itemDisplayButton" class="mapDisplayButton btnWindow btnHorizontal" title="<dfn>Toggle Panel</dfn>"></kbd>
 		<var id="itemHome"></var>
 		<div id="paneSimple">
 			<div id="itemSimpleSD">
@@ -837,7 +837,7 @@
 						</div>
 					</div>
 				</div>
-				<kbd id="chnToggle" class="btnWindow btnVertical" title="<dfn>Toggle Active Chains</dfn>"></kbd>
+				<kbd id="chnToggle" class="btnWindow btnVertical" title="<dfn>Toggle Current Timers</dfn>"></kbd>
 				<header id="headerChains_Scheduled" class="chnCategoryHeader chnCategoryHeaderFirst">
 					<ins class="chn_scheduled"></ins>
 					<span class="chnCategoryName jsTranslateCompound">Scheduled Bosses</span>

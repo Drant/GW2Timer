@@ -38,28 +38,78 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-30T16:00:00Z"),
-		name: "Crystal Arbiter Glider",
-		id: "72252",
-		price: 300,
-		discount: 500,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-30T16:00:00Z"),
-		name: "Classical Glider",
-		id: "77821",
-		price: 240,
+		Finish: new Date("2017-03-31T16:00:00Z"),
+		name: "Scarlet's Grasp",
+		id: "48817",
+		price: 320,
 		discount: 400,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-30T16:00:00Z"),
-		name: "Exalted Glider",
-		id: "76236",
-		price: 240,
+		Finish: new Date("2017-03-31T16:00:00Z"),
+		name: "Scarlet's Spaulders",
+		id: "48824",
+		price: 320,
 		discount: 400,
 		col: 0
+	},
+	{
+		Finish: new Date("2017-03-31T16:00:00Z"),
+		name: "Toxic Gloves Skin",
+		id: "49031",
+		price: 320,
+		discount: 400,
+		col: 0
+	},
+	{
+		Finish: new Date("2017-03-31T16:00:00Z"),
+		name: "Toxic Mantle Skin",
+		id: "49024",
+		price: 320,
+		discount: 400,
+		col: 0
+	},
+	{
+		name: "Super Cloud Glider",
+		id: "80919",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Miniature Super Trio",
+		id: "41907",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Miniature Super Trio—World 2",
+		id: "46498",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Super Bee Dog Mail Carrier",
+		id: "78088",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Infinite Continue Coin",
+		id: "46499",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Super Adventure Box o' Fun",
+		id: "41911",
+		price: 125,
+		discount: null,
+		col: 1
 	},
 	{
 		name: "Spring Promenade Outfit",

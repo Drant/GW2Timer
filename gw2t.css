@@ -259,10 +259,10 @@ img {
 	border: 2px solid #111;
 	border-radius: 2px;
 	text-align: left;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 15px;
 	font-weight: bold;
-	line-height: 110%;
+	line-height: normal;
 	color: #eee;
 	background-image: url("img/background/tooltip.png");
 	background-size: cover;
@@ -277,6 +277,8 @@ img {
 }
 #qTip cite { /* Instructional text */
 	font-family: Trebuchet MS, Menomonia;
+	font-weight: normal;
+	font-size: 17px;
 }
 
 /*
@@ -1009,6 +1011,19 @@ textarea.jsCopyCode {
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
 }
+#tmlTitle {
+	display: none;
+	position: absolute;
+	top: 4px;
+	left: 32px;
+	padding: 0px 4px 0px 4px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
+	color: white;
+	opacity: 0.6;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 4px;
+}
 #itemTimeline .btnWindow {
 	top: -32px;
 }
@@ -1185,6 +1200,26 @@ textarea.jsCopyCode {
 	border-top: 1px solid lime;
 	border-left: 1px solid lime;
 	box-shadow: 0px 0px 10px lime;
+}
+.tmlStripe {
+	position: absolute;
+	top: -16px;
+	margin-left: -16px;
+	text-align: left;
+	font-size: 16px;
+	font-weight: bold;
+	color: #ffaa22;
+	transform: rotate(-30deg);
+	transform-origin: left;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+.tmlLineWB:hover .tmlStripe {
+	opacity: 1;
+}
+.tmlSegmentActive .tmlStripe {
+	color: lime;
 }
 
 /* Top right corner: Dashboard */
@@ -1668,15 +1703,12 @@ input.mapCoordinatesName {
 	display: none;
 }
 
-.mapDisplayButton {
+#itemDisplayButton, #mapDisplayButton, #wvwDisplayButton {
 	position: absolute; z-index: 11;
 	top: calc(50% - 16px);
+	left: auto;
 	right: 0;
 	width: 32px; height: 32px;
-	opacity: 0.6;
-}
-.mapDisplayButton:hover {
-	opacity: 0.9;
 }
 #itemDisplayButton {
 	left: auto;
@@ -1802,24 +1834,25 @@ input.mapCoordinatesName {
 	border-radius: 2px;
 	box-shadow: 0px 0px 2px black;
 }
-.mapWp {
+.mapWp, .mapPoi, .mapEvent {
 	font-family: Menomonia;
+	font-weight: bold;
 	font-size: 18px;
 	line-height: 110%;
-	color: #ffcc77;
 	text-shadow:
 		0px 0px 2px black,
 		1px 1px 1px black;
 }
-
-.mapPoi, .mapEvent, .mapTip {
-	font-family: Menomonia;
-	font-size: 18px;
-	line-height: 110%;
+.mapWp {
+	color: #ffcc77;
+}
+.mapPoi, .mapEvent {
 	color: white;
-	text-shadow:
-		0px 0px 2px black,
-		1px 1px 1px black;
+}
+.mapTip {
+	font-family: Trebuchet MS, Menomonia;
+	font-weight: normal;
+	font-size: 17px;
 }
 
 
@@ -2935,7 +2968,7 @@ label:hover {
 	left: -16px;
 	width: 32px; height: 32px;
 	opacity: 0.6;
-	transition: opacity 0.1s;
+	transition: opacity 0.1s, box-shadow 0.2s;
 	box-shadow: inset 0 0 4px 4px rgba(255, 255, 255, 0.2);
 	border-radius: 50%;
 }

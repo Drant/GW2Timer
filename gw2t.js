@@ -15453,6 +15453,7 @@ Q = {
 	{
 		FetchAPI: 800, // Max items before a function resorts to on demand downloads
 		TooltipLines: 100, // Text lines in a tooltip window
+		LevelMax: 80,
 		StackSize: 250,
 		EctoSalvageLevel: 68
 	},
@@ -19752,7 +19753,7 @@ D = {
  * ========================================================================== */
 
 	/*
-	 * Words to be used alone or to construct a phrase.
+	 * Words to be used alone or to form a phrase.
 	 * HTML characters like "'" (single quote) must be escaped because these
 	 * strings are used directly.
 	 */
@@ -19807,10 +19808,20 @@ D = {
 			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", zh: "资讯"},
 		s_tier: {de: "rang", es: "rango", fr: "niveau",
 			cs: "pořadí", it: "rango", pl: "ranga", pt: "classe", ru: "ранг", zh: "级"},
+		s_clock: {de: "uhr", es: "reloj", fr: "horloge",
+			cs: "hodiny", it: "orologio", pl: "zegar", pt: "relógio", ru: "часы", zh: "时钟"},
 		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
 			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", zh: "计时器"},
 		s_timeline: {de: "zeitachse", es: "escala de tiempo", fr: "chronologie",
 			cs: "časová osa", it: "sequenza temporale", pl: "oś czasu", pt: "linha do tempo", ru: "временная шкала", zh: "时间线"},
+		s_countdowns: {de: "countdown", es: "cuenta regresiva", fr: "compte à rebours",
+			cs: "odpočítávání", it: "conto alla rovescia", pl: "odliczanie", pt: "contagem regressiva", ru: "обратный отсчет", zh: "倒计时"},
+		s_announcements: {de: "ankündigungen", es: "anuncios", fr: "annonces",
+			cs: "oznámení", it: "annunci", pl: "ogłoszenia", pt: "anúncios", ru: "объявления", zh: "公告"},
+		s_console: {de: "konsole", es: "consola", fr: "console",
+			cs: "konzola", it: "console", pl: "konsola", pt: "console", ru: "консоль", zh: "控制台"},
+		s_panel: {de: "panel", es: "panel", fr: "panneau",
+			cs: "panel", it: "pannello", pl: "panel", pt: "painel", ru: "панель", zh: "面板"},
 		s_tools: {de: "extras", es: "herramientas", fr: "outils",
 			cs: "nástroje", it: "strumenti", pl: "narzędzia", pt: "ferramentas", ru: "инструменты", zh: "工具"},
 		s_help: {de: "hilfe", es: "ayuda", fr: "assistance",
@@ -19845,6 +19856,8 @@ D = {
 			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", zh: "射程"},
 		s_color: {de: "farbe", es: "color", fr: "couleur",
 			cs: "barva", it: "colore", pl: "kolor", pt: "cor", ru: "цвет", zh: "色"},
+		s_opacity: {de: "deckkraft", es: "opacidad", fr: "opacité",
+			cs: "neprůhlednost", it: "opacità", pl: "nieprzezroczystość", pt: "opacidade", ru: "прозрачность", zh: "不透明度"},
 		s_comment: {de: "kommentar", es: "comentario", fr: "commentaire",
 			cs: "komentář", it: "commento", pl: "komentarz", pt: "comentário", ru: "примечание", zh: "注释"},
 		s_compass: {de: "zirkel", es: "compás", fr: "compas",
@@ -19897,6 +19910,8 @@ D = {
 			cs: "importovat", it: "importować", pl: "", pt: "importar", ru: "импортировать", zh: "导入"},
 		s_export: {de: "exportieren", es: "exportar", fr: "exporter",
 			cs: "exportovat", it: "esportare", pl: "eksportować", pt: "exportar", ru: "экспортировать", zh: "导出"},
+		s_select: {de: "markieren", es: "seleccionar", fr: "sélectionner",
+			cs: "vybrat", it: "selezionare", pl: "zaznaczyć", pt: "selecionar", ru: "выделить", zh: "选择"},
 		s_use: {de: "benutzen", es: "usar", fr: "utiliser",
 			cs: "použít", it: "usare", pl: "używać", pt: "usar", ru: "использовать", zh: "用"},
 		s_add: {de: "hinzufügen", es: "añadir", fr: "ajouter",
@@ -19909,6 +19924,8 @@ D = {
 			cs: "stříhat", it: "tagliare", pl: "odetnij", pt: "cortar", ru: "обрезать", zh: "剪裁"},
 		s_toggle: {de: "umschalten", es: "alternar", fr: "basculer",
 			cs: "přepnout", it: "alterna", pl: "przełączanie", pt: "alternar", ru: "переключить", zh: "切换"},
+		s_condense: {de: "verkleinern", es: "condensar", fr: "condenser",
+			cs: "zúžit", it: "riduci", pl: "zmniejsz", pt: "condensar", ru: "сжать", zh: "紧缩"},
 		s_enable: {de: "aktivieren", es: "habilitar", fr: "activer",
 			cs: "povolit", it: "abilitare", pl: "włączyć", pt: "habilitar", ru: "разрешить", zh: "启用"},
 		s_disable: {de: "deaktivieren", es: "deshabilitar", fr: "désactiver",
@@ -19949,6 +19966,8 @@ D = {
 			cs: "také", it: "anche", pl: "też", pt: "também", ru: "то́же", zh: "也"},
 		s_checked: {de: "abgehakt", es: "visto", fr: "coché",
 			cs: "odškrtnout", it: "controllato", pl: "zakończony", pt: "marcado", ru: "включен", zh: "勾掉"},
+		s_new: {de: "neu", es: "nuevo", fr: "nouveau",
+			cs: "nový", it: "nuovo", pl: "nowy", pt: "novo", ru: "новый", zh: "新"},
 		s_current: {de: "aktuelle", es: "actual", fr: "actuel",
 			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
 		s_expired: {de: "abgelaufen", es: "expirado", fr: "expiré",
@@ -20482,9 +20501,9 @@ D = {
 		if (D.isLanguageDefault() === false)
 		{
 			// Translate tooltips
-			$(".hudButton").each(function()
+			$(".hudSelect, .btnWindow").each(function()
 			{
-				var title = $(this).attr("title");
+				var title = $(this).attr(I.cTooltipAttribute);
 				if (title !== undefined)
 				{
 					var jqobj = $("<div>" + title + "</div>");
@@ -20492,10 +20511,10 @@ D = {
 					jqobj.find("dfn").remove();
 					$(this).attr("title", "<dfn>" + transtext + "</dfn>" + jqobj.html());
 				}
+				I.qTip.init($(this));
 			});
 			D.translateElements();
 		}
-		I.qTip.init(".hudButton");
 	},
 	
 	/*
@@ -21180,9 +21199,10 @@ C = {
 		
 		if (pChain.waypoint)
 		{
-			chainextra = "<input id='chnWaypoint_" + pChain.nexus + "' class='chnWaypoint' type='text' value='" + pChain.waypointText + "' />"
+			chainextra = "<input id='chnWaypoint_" + pChain.nexus + "' class='chnWaypoint' type='text' value='"
+					+ pChain.waypointText + "' title='In-game waypoint chatcode.' />"
 				+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(pChain.title)) + ">"
-					+ "<ins class='s16 s16_wiki' title='Waypoint chatcode. Click for Wiki guide.'></ins></a> "
+					+ "<ins class='s16 s16_wiki' title='Click for Wiki guide.'></ins></a> "
 				+ " (" + pChain.level + ")"
 					+ "<a" + U.convertExternalAnchor(U.getYouTubeLink(D.getObjectDefaultName(pChain))) + ">"
 					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> ";
@@ -26045,7 +26065,7 @@ P = {
 					icon = "img/event/" + determineEventIcon(searchname) + I.cPNG;
 					marker = L.marker(coordmarker,
 					{
-						title: "<span class='" + "mapPoi" + "'><dfn>" + newname + "</dfn> (" + event.level + ")<br /><cite>" + instructionstr + "</cite></span>",
+						title: "<span class='mapPoi'><dfn>" + newname + "</dfn> (" + event.level + ")<br /><cite>" + instructionstr + "</cite></span>",
 						wiki: event.name,
 						coord: coord,
 						eventid: i,
@@ -32748,7 +32768,7 @@ T = {
 		{
 			var ithdaily = pObj.pve[i];
 			// Only allow max level and max expansion access dailies
-			if (ithdaily.level.max === I.cLevelMax)
+			if (ithdaily.level.max === Q.ItemLimit.LevelMax)
 			{
 				for (var ii = 0; ii < ithdaily.required_access.length; ii++)
 				{
@@ -33002,7 +33022,8 @@ H = {
 		// Verify announcement: if announcement exists
 		if (H.Announcement.pve.length > 0 && T.isTimely(H.Announcement, now))
 		{
-			U.convertExternalLink($("#dsbAnnouncement").html(H.Announcement.pve).find("a"));
+			var annprefix = "<strong>" + D.getWordCapital("new") + ": </strong>";
+			U.convertExternalLink($("#dsbAnnouncement").html(annprefix + H.Announcement.pve).find("a"));
 			M.bindMapLinks("#dsbAnnouncement");
 			H.isAnnouncementEnabled = true;
 		}
@@ -33744,6 +33765,7 @@ H = {
 	generateTimeline: function()
 	{
 		H.isTimelineGenerated = true;
+		$("#tmlTitle").text(D.getWordCapital("timeline"));
 		// Container for all the timelines
 		$("#itemTimeline").show();
 		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlHeader'></div>");
@@ -33810,6 +33832,7 @@ H = {
 		$("#tmlToggle").click(function()
 		{
 			$("#tmlContainer").toggle("fast");
+			$("#tmlTitle").toggle();
 		});
 		$("#tmlDelete").click(function()
 		{
@@ -33950,7 +33973,7 @@ H = {
 			{
 				var inner = $(this).find(".tmlSegmentName").empty();
 				var innerspecial = $(this).find(".tmlSegmentSpecial").empty();
-				var bossicon;
+				var bossicon, bossstripe;
 				var thisoffset = parseInt($(this).attr("data-offset"));
 				var timeframeoffset;
 				if (thisoffset >= wbcurrentoffset)
@@ -33975,6 +33998,7 @@ H = {
 							{
 								C.viewChainFinale(iChain);
 							});
+							bossstripe = $("<span class='tmlStripe'>" + D.getObjectName(iChain) + "<span>").insertAfter(bossicon);
 							X.reapplyChainIconState(iChain, bossicon, true);
 							I.bindClipboard(bossicon, iChain.waypointText);
 						})(wbchains[i]);
@@ -35398,7 +35422,6 @@ I = {
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
 	cErrorAPI: "ArenaNet API server may be down.",
-	cLevelMax: 80,
 	cAJAXGlobalTimeout: 30000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
 	cJSON: ".json", // Format of API files

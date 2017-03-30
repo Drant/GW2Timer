@@ -1452,9 +1452,9 @@ var GW2T_TIMELINE = [
 	{
 		zone: "dry",
 		Segments: [
-			{ time: "00:00", duration: "00:40", primacy: 2, name_en: "Crash Site", name_de: "Absturzstelle", name_es: "Lugar del Impacto", name_fr: "Site du crash", name_zh: "坠毁点" },
+			{ time: "00:00", duration: "00:40", primacy: 2, name_en: "Zephyrites", name_de: "Zephyriten", name_es: "Cefiritas", name_fr: "Zéphyrites", name_zh: "风裔" },
 			{ time: "00:40", duration: "00:20", primacy: 3, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙尘暴！" },
-			{ time: "01:00", duration: "00:40", primacy: 2, name_en: "Crash Site", name_de: "Absturzstelle", name_es: "Lugar del Impacto", name_fr: "Site du crash", name_zh: "坠毁点" },
+			{ time: "01:00", duration: "00:40", primacy: 2, name_en: "Zephyrites", name_de: "Zephyriten", name_es: "Cefiritas", name_fr: "Zéphyrites", name_zh: "风裔" },
 			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙尘暴！" }
 		]
 	}
@@ -1473,7 +1473,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<a href='http://gw2timer.com/?page=Gliders'>Account Gliders</a>, <a href='http://gw2timer.com/?page=Hero'>Hero Inspection</a>, <a href='http://gw2timer.com/?page=Audit'>Audit</a>, <a href='http://gw2timer.com/?page=Cats'>Cats</a>. <a href='http://gw2timer.com/?page=Gem'>Gem store alerts</a>. <a href='https://twitter.com/GW2Timer/status/843197087533555712'>Custom map editor</a>.",
+	pve: "",
 	wvw: "",
 	Start: new Date("2016-03-14T16:00:00Z"),
 	Finish: new Date("2017-04-04T16:00:00Z"),
@@ -1523,7 +1523,7 @@ Countdown: {
 		Start: new Date("2018-02-06T17:00:00Z"),
 		Finish: new Date("2018-02-20T17:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "March Gem Store Sale",
 		name_de: "März Edelsteinshop Angebote",
 		name_es: "Marzo tienda rebajas",
@@ -1532,16 +1532,16 @@ Countdown: {
 		url: "https://wiki.guildwars2.com/wiki/Gem_Store/March_Sale#March_Sale.2C_2017",
 		Start: new Date("2017-03-03T16:00:00Z"),
 		Finish: new Date("2017-03-31T16:00:00Z")
-	},
+	},*/
 	{
 		name_en: "Super Adventure Festival",
 		name_de: "Super Adventure Festival",
 		name_es: "Festival Super Adventure",
 		name_fr: "Festival de la Super Adventure",
 		name_zh: "超级冒险盒",
-		official: "news/super-adventure-festival-is-coming-soon/",
+		official: "the-game/releases/march-30-2017/",
 		Start: new Date("2017-03-30T16:00:00Z"),
-		Finish: new Date("2017-04-19T16:00:00Z")
+		Finish: new Date("2017-04-20T16:00:00Z")
 	}
 	/*{
 		name_en: "Halloween 2017",
