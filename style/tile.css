@@ -41,9 +41,6 @@ html, body {
 #itemTimeline .btnWindow {
 	top: -24px;
 }
-#tmlDelete {
-	display: block;
-}
 #tmlIndicatorTime {
 	top: 4px;
 }
@@ -191,6 +188,9 @@ body, #paneContent article {
 	font-weight: bold;
 }
 
+.chnDetails {
+	display: none;
+}
 .chnDetailsExtra {
 	text-align: left;
 }

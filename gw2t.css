@@ -1033,11 +1033,6 @@ textarea.jsCopyCode {
 #tmlOpaque {
 	left: 48px;
 }
-#tmlDelete {
-	left: auto;
-	right: 0;
-	display: none;
-}
 #tmlIndicator, #tmlBisector {
 	display: block;
 	width: 2px;

@@ -8330,6 +8330,57 @@ A = {
 	},
 	
 	/*
+	 * Iterates through an "inventory" style array whose objects may have these properties:
+	 * id, upgrades, infusions, skin. Then return their item and skin IDs for prefetching.
+	 * @param array pArray
+	 * @param function pIterator
+	 * @returns object
+	 */
+	iterateInventory: function(pArray, pIterator)
+	{
+		var slot, upgs, infs, skin;
+		var itemids = [];
+		var skins = [];
+		for (var i in pArray)
+		{
+			slot = pArray[i];
+			if (slot)
+			{
+				itemids.push(slot.id); // The ID of the item itself
+				upgs = slot.upgrades;
+				infs = slot.infusions;
+				skin = slot.skin;
+				if (upgs && upgs.length)
+				{
+					upgs.forEach(function(iUpg)
+					{
+						itemids.push(iUpg);
+					});
+				}
+				if (infs && infs.length)
+				{
+					infs.forEach(function(iInf)
+					{
+						itemids.push(iInf);
+					});
+				}
+				if (skin)
+				{
+					skins.push(skin);
+				}
+				if (pIterator)
+				{
+					pIterator(slot);
+				}
+			}
+		}
+		return {
+			oItemIDs: itemids,
+			oSkinIDs: skins
+		};
+	},
+	
+	/*
 	 * Initializes the associative array accessed by item IDs that holds the
 	 * count of each items, based on the account's bank, inventory, shared slots,
 	 * equipment, and materials. Also initializes the tally and gem store upgrades
@@ -10755,10 +10806,22 @@ V = {
 			A.printError(A.PermissionEnum.Builds);
 			return;
 		}
-		
-		// Generate for single character if user chosen, else all characters
+		var dish = $("#accDish_Hero");
 		var equipcur = $("#eqpContainer_" + A.CharIndexCurrent);
 		var equipall = $(".eqpContainer");
+		var doGenerate = function()
+		{
+			// Generate all characters
+			I.removeThrobber(dish);
+			A.Data.Characters.forEach(function(iChar)
+			{
+				V.generateHero(iChar);
+			});
+			equipall.show();
+			A.isHeroCached = true;
+		};
+		
+		// Generate for single character if user chosen, else all characters
 		if (A.CharIndexCurrent !== null)
 		{
 			V.generateHero();
@@ -10773,42 +10836,22 @@ V = {
 			}
 			else
 			{
-				// Prefetch equipped items
-				var dish = $("#accDish_Hero").prepend(I.cThrobber);
-				var idstofetch = [];
+				// Prefetch equipped items, and their transmuted skins, upgrades, and infusions
+				dish.prepend(I.cThrobber);
+				var itemstofetch = [];
+				var skinstofetch = [];
 				A.Data.Characters.forEach(function(iChar)
 				{
-					iChar.equipment.forEach(function(iItem)
-					{
-						idstofetch.push(iItem.id);
-						var upgs = iItem.upgrades;
-						var infs = iItem.infusions;
-						if (upgs && upgs.length)
-						{
-							upgs.forEach(function(iUpg)
-							{
-								idstofetch.push(iUpg);
-							});
-						}
-						if (infs && infs.length)
-						{
-							infs.forEach(function(iInf)
-							{
-								idstofetch.push(iInf);
-							});
-						}
-					});
+					var result = A.iterateInventory(iChar.equipment);
+					itemstofetch = itemstofetch.concat(result.oItemIDs);
+					skinstofetch = skinstofetch.concat(result.oSkinIDs);
 				});
-				Q.getItems(idstofetch, function()
+				Q.getItems(itemstofetch, function()
 				{
-					// Generate all characters
-					I.removeThrobber(dish);
-					A.Data.Characters.forEach(function(iChar)
+					Q.getSkins(skinstofetch, function()
 					{
-						V.generateHero(iChar);
+						doGenerate();
 					});
-					equipall.show();
-					A.isHeroCached = true;
 				});
 			}
 		}
@@ -11830,65 +11873,68 @@ V = {
 		var numitems = 0;
 		var numfetched = 0;
 		var numtofetch = 0;
+		var doGenerate = function(pData)
+		{
+			// First generate empty bank slots, then fill them up asynchronously by item details retrieval
+			bank.empty();
+			for (var i = 0; i < pData.length; i++)
+			{
+				// Bank tab separator every so slots
+				if ((i === 0 || nexti % A.Metadata.Bank.NumSlotsPerTab === 0) && nexti !== pData.length)
+				{
+					tab = B.createBankTab(bank);
+					slotscontainer = tab.find(".bnkTabSlots");
+				}
+				nexti = i+1;
+
+				slot = B.createBankSlot(slotscontainer);
+				slotdata = pData[i];
+				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
+				if (slotdata)
+				{
+					slot.data("count", slotdata.count);
+					numitems += slotdata.count;
+					(function(iSlot, iSlotData)
+					{
+						Q.getItem(iSlotData.id, function(iItem)
+						{
+							B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+							{
+								numfetched++;
+								A.setProgressBar(numfetched, numtofetch);
+							}});
+						});
+					})(slot, slotdata);
+				}
+				else
+				{
+					// For empty inventory slots
+					B.styleBankSlot(slot);
+				}
+			}
+			// Update tallies
+			B.tallyBank(container);
+			// Ornamental bank tab separator at the bottom
+			bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
+			// Create search bar
+			B.createBankMenu(bank);
+		};
 		
+		// Get bank information and prefetch item data
 		$.getJSON(A.getURL(A.URL.Bank), function(pData)
 		{
 			// Count the number of items in the bank first, because empty slots are written as "null" in the API
-			var itemids = [];
-			for (var i = 0; i < pData.length; i++)
+			var result = A.iterateInventory(pData, function()
 			{
-				slotdata = pData[i];
-				if (slotdata)
-				{
-					itemids.push(slotdata.id);
-					numtofetch++;
-				}
-			}
-			Q.getPricedItems(itemids, function()
+				numtofetch++;
+			});
+			
+			Q.getPricedItems(result.oItemIDs, function()
 			{
-				// First generate empty bank slots, then fill them up asynchronously by item details retrieval
-				bank.empty();
-				for (var i = 0; i < pData.length; i++)
+				Q.getSkins(result.oSkinIDs, function()
 				{
-					// Bank tab separator every so slots
-					if ((i === 0 || nexti % A.Metadata.Bank.NumSlotsPerTab === 0) && nexti !== pData.length)
-					{
-						tab = B.createBankTab(bank);
-						slotscontainer = tab.find(".bnkTabSlots");
-					}
-					nexti = i+1;
-
-					slot = B.createBankSlot(slotscontainer);
-					slotdata = pData[i];
-					// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
-					if (slotdata)
-					{
-						slot.data("count", slotdata.count);
-						numitems += slotdata.count;
-						(function(iSlot, iSlotData)
-						{
-							Q.getItem(iSlotData.id, function(iItem)
-							{
-								B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
-								{
-									numfetched++;
-									A.setProgressBar(numfetched, numtofetch);
-								}});
-							});
-						})(slot, slotdata);
-					}
-					else
-					{
-						// For empty inventory slots
-						B.styleBankSlot(slot);
-					}
-				}
-				// Update tallies
-				B.tallyBank(container);
-				// Ornamental bank tab separator at the bottom
-				bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
-				// Create search bar
-				B.createBankMenu(bank);
+					doGenerate(pData);
+				});
 			});
 		}).fail(function(pRequest, pStatus)
 		{
@@ -15996,46 +16042,6 @@ Q = {
 			return jqxhr;
 		}
 	},
-	getCachedItem: function(pItemID)
-	{
-		var box = Q.getBoxedItem(pItemID);
-		if (box)
-		{
-			return box.oData;
-		}
-		return null;
-	},
-	getItems: function(pItemIDs, pCallback)
-	{
-		// Check for items already cached
-		var arr = [];
-		pItemIDs.forEach(function(iID)
-		{
-			if (Q.Boxes.Items[iID] === undefined)
-			{
-				arr.push(iID);
-			}
-		});
-		arr = U.getUnique(pItemIDs);
-		// Fetch if any uncached
-		U.fetchAPI(U.URL_API.ItemDetail, arr, {
-			aWantCache: true,
-			aCallback: function(pData)
-		{
-			if (pData)
-			{
-				pData.forEach(function(iData)
-				{
-					if (Q.Boxes.Items[iData.id] === undefined)
-					{
-						Q.Boxes.Items[iData.id] = {};
-						Q.Boxes.Items[iData.id].oData = iData;
-					}
-				});
-			}
-			pCallback();
-		}});
-	},
 	getPricedItems: function(pItemIDs, pCallback, pWantCache)
 	{
 		// Combine item details and TP price retrieval in one call
@@ -16058,19 +16064,19 @@ Q = {
 		if (Q.Boxes.Items[id] === undefined)
 		{
 			var item = $.extend({
-				"name": D.getObjectName(pData) || "Unnamed Item",
-				"description": D.getObjectDesc(pData) || "",
-				"type": pData.type || "Consumable",
-				"level": (pData.level) ? pData.level : 0,
-				"rarity": pData.rarity || "Basic",
-				"vendor_value": 0,
-				"game_types": ["Pvp", "PvpLobby", "Wvw", "Dungeon", "Pve"],
-				"flags": ["AccountBound", "NoSell", "DeleteWarning", "AccountBindOnUse"],
-				"restrictions": [],
-				"id": id,
-				"chat_link": "[&AgF3HwAA]",
-				"icon": (pData.icon) ? pData.icon : "img/faux/" + id + I.cPNG,
-				"details": {}
+				name: D.getObjectName(pData) || "Unnamed Item",
+				description: D.getObjectDesc(pData) || "",
+				type: pData.type || "Consumable",
+				level: (pData.level) ? pData.level : 0,
+				rarity: pData.rarity || "Basic",
+				vendor_value: 0,
+				game_types: ["Pvp", "PvpLobby", "Wvw", "Dungeon", "Pve"],
+				flags: ["AccountBound", "NoSell", "DeleteWarning", "AccountBindOnUse"],
+				restrictions: [],
+				id: id,
+				chat_link: "[&AgF3HwAA]",
+				icon: (pData.icon) ? pData.icon : "img/faux/" + id + I.cPNG,
+				details: {}
 			}, pData);
 			// Enter into cache
 			Q.Boxes.Items[id] = {};
@@ -16718,7 +16724,7 @@ Q = {
 			}
 			(function(iIndex, iInfusionID)
 			{
-				$.getJSON(U.getAPIItem(iInfusionID), function(iData)
+				Q.getItem(iInfusionID, function(iData)
 				{
 					infusionstr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + iData.name + "<br />"
 						+ iData.details.infix_upgrade.buff.description + "</span><br /><br />";
@@ -16749,7 +16755,7 @@ Q = {
 			}
 			(function(iIndex, iUpgradeID)
 			{
-				$.getJSON(U.getAPIItem(iUpgradeID), function(iData)
+				Q.getItem(iUpgradeID, function(iData)
 				{
 					var upgdesc = "";
 					if (iData.details.type === "Rune")
@@ -16839,9 +16845,9 @@ Q = {
 		var ids = pIDs;
 		var idstofetch = [];
 		var cache = Q.Boxes[pType];
+		// If provided a single ID
 		if (isNaN(pIDs) === false)
 		{
-			// If provided a single ID
 			var id = pIDs;
 			if (cache[id])
 			{
@@ -16854,38 +16860,48 @@ Q = {
 					cache[id] = {};
 					cache[id].oData = pData;
 					pCallback();
+				}).fail(function()
+				{
+					pCallback();
 				});
 			}
-			// Do not proceed with array fetch
-			return;
 		}
+		// If no IDs to fetch
+		else if (pIDs.length === 0)
+		{
+			pCallback();
+		}
+		// If provided array of IDs
 		else
 		{
 			// Filter out duplicates if provided an array
 			ids = U.getUnique(ids);
-		}
-		
-		// Filter out cached data
-		for (var i in ids)
-		{
-			if (cache[ids[i]] === undefined)
+			// Filter out cached data
+			for (var i in ids)
 			{
-				idstofetch.push(ids[i]);
-			}
-		}
-		// Fetch
-		U.fetchAPI(U.getAPIURL(pType), idstofetch, {
-			aCallback: function(pData)
-			{
-				for (var i in pData)
+				if (cache[ids[i]] === undefined)
 				{
-					var ithdata = pData[i];
-					cache[ithdata.id] = {};
-					cache[ithdata.id].oData = ithdata;
+					idstofetch.push(ids[i]);
 				}
-				pCallback();
 			}
-		});
+			// Fetch
+			U.fetchAPI(U.getAPIURL(pType), idstofetch, {
+				aCallback: function(pData)
+				{
+					for (var i in pData)
+					{
+						var ithdata = pData[i];
+						cache[ithdata.id] = {};
+						cache[ithdata.id].oData = ithdata;
+					}
+					pCallback();
+				}
+			});
+		}
+	},
+	getItems: function(pIDs, pCallback)
+	{
+		Q.getBoxes("Items", pIDs, pCallback);
 	},
 	getSkins: function(pIDs, pCallback)
 	{
@@ -16938,6 +16954,10 @@ Q = {
 	getBoxedSkill: function(pID)
 	{
 		return Q.Boxes.Skills[pID];
+	},
+	getCachedItem: function(pID)
+	{
+		return Q.getBoxedItem(pID).oData;
 	},
 	
 	/*
@@ -33833,12 +33853,6 @@ H = {
 		{
 			$("#tmlContainer").toggle("fast");
 			$("#tmlTitle").toggle();
-		});
-		$("#tmlDelete").click(function()
-		{
-			$("#opt_bol_showTimeline").prop("checked", false).trigger("change");
-			H.toggleTimeline(false);
-			H.isTimelineEnabled = false;
 		});
 		$("#tmlCondense").click(function()
 		{

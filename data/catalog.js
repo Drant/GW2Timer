@@ -365,6 +365,8 @@ Music: [
 	{i: 67391, n: "Haunted Gramophone", p: {gem: 600}},
 	{i: 46500, n: "World 1 Super Boom Box", p: {bubble: 35}},
 	{i: 46504, n: "World 2 Super Boom Box", p: {bubble: 35}},
+	{i: 80972, n: "Duskk's World 1 Super Boom Box", p: {gem: 0}},
+	{i: 80932, n: "Duskk's World 2 Super Boom Box", p: {gem: 0}},
 	{i: 76072, n: "Nuhoch Warbler", p: {starting: true}}
 ],
 Gem: [

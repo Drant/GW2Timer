@@ -5,8 +5,8 @@
 GW2T_SALE_DATA = {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-03-07T16:00:00Z"),
-	Finish: new Date("2017-04-04T16:00:00Z"),
+	Start: new Date("2017-03-30T16:00:00Z"),
+	Finish: new Date("2017-04-20T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample

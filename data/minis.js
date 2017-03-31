@@ -366,6 +366,11 @@ Gem: [
 	{u: 133, i: 41908, n: "Mini Super Spider", p: {gem: 166}},
 	{u: 134, i: 41909, n: "Mini Super Bee Dog", p: {gem: 166}},
 	{u: 135, i: 41910, n: "Mini Super Monkey", p: {gem: 166}},
+	{u: 457, i: 80878, n: "Mini Super Storm Wizard", p: {gem: 500}},
+	{u: 185, i: 46494, n: "Mini Super Banana", p: {gem: 166}},
+	{u: 186, i: 46495, n: "Mini Super Raccoon", p: {gem: 166}},
+	{u: 187, i: 46496, n: "Mini Super Yeti", p: {gem: 166}},
+	{u: 188, i: 46497, n: "Mini Super Assassin", p: {gem: 500}},
 	{u: 139, i: 42579, n: "Mini Hippo Calf", p: {gem: 400}},
 	{u: 143, i: 42591, n: "Mini White Kitten", p: {gem: 400}},
 	{u: 154, i: 42593, n: "Mini Lion Cub", p: {gem: 400}},
@@ -380,10 +385,6 @@ Gem: [
 	{u: 165, i: 43922, n: "Mini Peggellegg the Pirate", p: {gem: 166}},
 	{u: 166, i: 43923, n: "Mini Poowulpi the Persnicketous", p: {gem: 166}},
 	{u: 181, i: 45011, n: "Mini Mr. Sparkles", p: {gem: 0}},
-	{u: 185, i: 46494, n: "Mini Super Banana", p: {gem: 166}},
-	{u: 186, i: 46495, n: "Mini Super Raccoon", p: {gem: 166}},
-	{u: 187, i: 46496, n: "Mini Super Yeti", p: {gem: 166}},
-	{u: 188, i: 46497, n: "Mini Super Assassin", p: {gem: 500}},
 	{u: 189, i: 47841, n: "Mini Risen Thrall", p: {gem: 166}},
 	{u: 190, i: 47842, n: "Mini Risen Brute", p: {gem: 166}},
 	{u: 191, i: 47843, n: "Mini Risen Plague Carrier", p: {gem: 166}},
@@ -457,7 +458,6 @@ Gem: [
 	{u: 331, i: 70112, n: "Mini Mushroom Stomper", p: {gem: 0}},
 	{u: 430, i: 80044, n: "Mini Festive Aurene", p: {gem: 400}},
 	{u: 435, i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}},
-	{u: 454, i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}},
-	{u: 457, i: 80878, n: "Mini Super Storm Wizard", p: {gem: 350}}
+	{u: 454, i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}}
 ]
 };
