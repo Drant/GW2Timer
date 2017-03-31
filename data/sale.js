@@ -38,35 +38,19 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-03-31T16:00:00Z"),
-		name: "Scarlet's Grasp",
-		id: "48817",
-		price: 320,
+		Finish: new Date("2017-04-01T16:00:00Z"),
+		name: "Bobblehead Laboratory",
+		id: "36172",
+		price: 200,
 		discount: 400,
 		col: 0
 	},
 	{
-		Finish: new Date("2017-03-31T16:00:00Z"),
-		name: "Scarlet's Spaulders",
-		id: "48824",
-		price: 320,
-		discount: 400,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-31T16:00:00Z"),
-		name: "Toxic Gloves Skin",
-		id: "49031",
-		price: 320,
-		discount: 400,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-03-31T16:00:00Z"),
-		name: "Toxic Mantle Skin",
-		id: "49024",
-		price: 320,
-		discount: 400,
+		Finish: new Date("2017-04-01T16:00:00Z"),
+		name: "Water Fight Balloon Bucket",
+		id: "66342",
+		price: 250,
+		discount: 500,
 		col: 0
 	},
 	{
