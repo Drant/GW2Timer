@@ -2571,7 +2571,8 @@ Weapon_Sword: [
 	{u: 7140, i: 80629, n: "Devoted Sword", b: [80629]},
 	{u: 7164, i: 80710, n: "Caladbolg Rosa", p: {achievement: 0}},
 	{u: 6937, i: 79366, n: "Elemental Sword", p: {gem: 0}},
-	{u: 7174, i: 80969, n: "Beastslayer Sword", b: [80969]}
+	{u: 7174, i: 80969, n: "Beastslayer Sword", b: [80969]},
+	{u: 7187, i: 80912, n: "Crimson Assassin Sword", p: {token: 12}}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", b: [49317]},
@@ -2720,7 +2721,8 @@ Weapon_Dagger: [
 	{u: 7044, i: 80061, n: "Frostforged Dagger", b: [80061]},
 	{u: 7096, i: 80617, n: "Devoted Dagger", b: [80617]},
 	{u: 7161, i: 80732, n: "Caladbolg Solana", p: {achievement: 0}},
-	{u: 7195, i: 80910, n: "Beastslayer Dagger", b: [80910]}
+	{u: 7195, i: 80910, n: "Beastslayer Dagger", b: [80910]},
+	{u: 7198, i: 80968, n: "Crimson Assassin Dagger", p: {token: 12}}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", b: [49335]},
@@ -2862,7 +2864,8 @@ Weapon_Pistol: [
 	{u: 7057, i: 80020, n: "Frostforged Pistol", b: [80020]},
 	{u: 7101, i: 80659, n: "Indomitable Pistol", p: {magnetite: 600}},
 	{u: 7138, i: 80392, n: "Devoted Pistol", b: [80392]},
-	{u: 7181, i: 80891, n: "Beastslayer Pistol", b: [80891]}
+	{u: 7181, i: 80891, n: "Beastslayer Pistol", b: [80891]},
+	{u: 7176, i: 80896, n: "Crimson Assassin Pistol", p: {token: 12}}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", b: [49341]},
@@ -3008,7 +3011,8 @@ Weapon_Scepter: [
 	{u: 7063, i: 80057, n: "Wrapped Scepter", p: {achievement: 0}},
 	{u: 7148, i: 80365, n: "Devoted Scepter", b: [80365]},
 	{u: 7163, i: 80741, n: "Caladbolg Iridi", p: {achievement: 0}},
-	{u: 7175, i: 80902, n: "Beastslayer Scepter", b: [80902]}
+	{u: 7175, i: 80902, n: "Beastslayer Scepter", b: [80902]},
+	{u: 7172, i: 80876, n: "Crimson Assassin Scepter", p: {token: 12}}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", b: [44897]},
@@ -3336,7 +3340,8 @@ Weapon_Shield: [
 	{u: 7135, i: 80526, n: "Seraph Protector", p: {karma: 210000}},
 	{u: 7162, i: 80786, n: "Caladbolg Astera", p: {achievement: 0}},
 	{u: 7165, i: 80861, n: "Shield of the Goddess", p: {gem: 600}},
-	{u: 7177, i: 80944, n: "Beastslayer Shield", b: [80944]}
+	{u: 7177, i: 80944, n: "Beastslayer Shield", b: [80944]},
+	{u: 7169, i: 80937, n: "Crimson Assassin Shield", p: {token: 8}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", b: [49356]},
@@ -3472,7 +3477,8 @@ Weapon_Torch: [
 	{u: 6996, i: 79649, n: "Gargoyle Torch", b: [79649]},
 	{u: 7036, i: 79944, n: "Frostforged Torch", b: [79944]},
 	{u: 7159, i: 80649, n: "Devoted Torch", b: [80649]},
-	{u: 7192, i: 80873, n: "Beastslayer Torch", b: [80873]}
+	{u: 7192, i: 80873, n: "Beastslayer Torch", b: [80873]},
+	{u: 7167, i: 80950, n: "Crimson Assassin Torch", p: {token: 8}}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", b: [49359]},
@@ -3609,7 +3615,8 @@ Weapon_Warhorn: [
 	{u: 7052, i: 79973, n: "Frostforged Warhorn", b: [79973]},
 	{u: 7092, i: 80352, n: "Devoted Warhorn", b: [80352]},
 	{u: 7147, i: 80482, n: "Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
-	{u: 7183, i: 80911, n: "Beastslayer Warhorn", b: [80911]}
+	{u: 7183, i: 80911, n: "Beastslayer Warhorn", b: [80911]},
+	{u: 7166, i: 80867, n: "Crimson Assassin Warhorn", p: {token: 8}}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", b: [49321, 49323]},
@@ -3765,7 +3772,8 @@ Weapon_Greatsword: [
 	{u: 7090, i: 80179, n: "Devoted Greatsword", b: [80179]},
 	{u: 6403, i: 80707, n: "Caladbolg Origin", p: {achievement: 0}},
 	{u: 7160, i: 80824, n: "Caladbolg Orchida", p: {achievement: 0}},
-	{u: 7193, i: 80943, n: "Beastslayer Greatsword", b: [80943]}
+	{u: 7193, i: 80943, n: "Beastslayer Greatsword", b: [80943]},
+	{u: 7188, i: 80921, n: "Crimson Assassin Greatsword", p: {token: 16}}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", b: [49326]},
@@ -4517,7 +4525,8 @@ Weapon_Staff: [
 	{u: 7118, i: 80304, n: "Bloodstone Savant's Staff", p: {karma: 210000}},
 	{u: 7104, i: 80273, n: "Prisoner's Treasured Bough", p: {magnetite: 600}},
 	{u: 7113, i: 80188, n: "Spire of Samarog", p: {magnetite: 600}},
-	{u: 7197, i: 80926, n: "Beastslayer Staff", b: [80926]}
+	{u: 7197, i: 80926, n: "Beastslayer Staff", b: [80926]},
+	{u: 7194, i: 80963, n: "Crimson Assassin Staff", p: {token: 16}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", b: [63881]},

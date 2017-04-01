@@ -179,6 +179,7 @@ Festival: [
 	{i: 68642, n: "Homemade Lucky Envelope"},
 	{i: 39752, n: "Bauble", p: {coin: 0}},
 	{i: 41886, n: "Bauble Bubble", p: {coin: 0}},
+	{i: 80890, n: "Crimson Assassin Token", p: {coin: 0}},
 	{i: 41824, n: "Continue Coin", p: {coin: 0}},
 	{i: 46499, n: "Infinite Continue Coin", p: {gem: 600}},
 	{i: 36038, n: "Trick-or-Treat Bag"},

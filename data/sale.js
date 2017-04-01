@@ -38,22 +38,6 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-04-01T16:00:00Z"),
-		name: "Bobblehead Laboratory",
-		id: "36172",
-		price: 200,
-		discount: 400,
-		col: 0
-	},
-	{
-		Finish: new Date("2017-04-01T16:00:00Z"),
-		name: "Water Fight Balloon Bucket",
-		id: "66342",
-		price: 250,
-		discount: 500,
-		col: 0
-	},
-	{
 		name: "Super Cloud Glider",
 		id: "80919",
 		price: 500,
