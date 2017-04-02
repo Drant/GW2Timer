@@ -1083,9 +1083,6 @@ textarea.jsCopyCode {
 .tmlLine:hover .tmlSegment {
 	outline: 1px solid #ff8844;
 }
-.tmlLine:hover .tmlLineName {
-	opacity: 1;
-}
 .tmlLine:hover .tmlLineCollapse {
 	opacity: 1;
 }
@@ -1128,16 +1125,7 @@ textarea.jsCopyCode {
 	opacity: 0.2;
 }
 .tmlLineName {
-	position: absolute; z-index: 2;
-	margin-top: 8px;
-	margin-left: 6px;
-	vertical-align: middle;
-	font-family: Menomonia;
-	font-size: 12px;
-	font-weight: bold;
-	color: #ffaa22;
-	opacity: 0.7;
-	pointer-events: none;
+	display: none;
 }
 .tmlSegmentName, .tmlSegmentSpecial {
 	vertical-align: middle;
