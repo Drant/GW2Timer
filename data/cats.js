@@ -9,6 +9,7 @@
 var GW2T_CATS_HEADERS = {
 	Black: {name_en: "Black Cats", name_de: "Schwarze", name_es: "Negro", name_fr: "Noir", name_zh: "黑色"},
 	Orange: {name_en: "Orange Cats", name_de: "Orange", name_es: "Naranja", name_fr: "Orange", name_zh: "橙色"},
+	Yellow: {name_en: "Yellow Cats", name_de: "Gelb", name_es: "Amarillo", name_fr: "Jaune", name_zh: "黄色"},
 	White: {name_en: "White Cats", name_de: "Weiße", name_es: "Blanco", name_fr: "Blanc", name_zh: "白色"},
 	Special: {name_en: "Special Cats", name_de: "Spezial", name_es: "Especial", name_fr: "Spéciales", name_zh: "特殊"}
 };
@@ -48,6 +49,9 @@ Orange: [
 	{u: 26, i: 80060, n: "Super-Hot Poultry and Winter Vegetable Soup", l: "#26", t: "Orange cat by a Pot of Cat-Made Soup.", p: {achievement: 0}},
 	{u: 27, i: 79988, n: "Super-Hot Lemongrass Poultry Soup", l: "#27", t: "Orange cat by a Pot of Cat-Made Soup.", p: {achievement: 0}},
 	{u: 28, i: 80056, n: "Super-Hot Saffron-Scented Poultry Soup", l: "#28", t: "Orange cat by a Pot of Cat-Made Soup.", p: {achievement: 0}}
+],
+Yellow: [
+	{u: 33, i: 41909, n: "Cat (Pain Cliffs)", l: "#33", t: "Yellow striped cat with SAB aura."}
 ],
 White: [
 	{u: 1, i: 24360, n: "Slab of Poultry Meat", l: "#1", t: "Gray cat by entrance."},
