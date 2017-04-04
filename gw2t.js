@@ -26160,7 +26160,7 @@ P = {
 				if (I.ModeCurrent === I.ModeEnum.Website)
 				{
 					I.write(
-						"ArenaNet API server is unreachable. <a" + U.convertExternalAnchor(U.URL_API.Support) + ">Check status</a>.<br />"
+						"ArenaNet API server is unreachable. <a" + U.convertExternalAnchor(U.URL_API.Support + "?source=map") + ">Check status</a>.<br />"
 						+ "Map will use backup cache and features will be limited.<br />");
 				}
 				
@@ -31178,7 +31178,7 @@ W = {
 					W.isFallbackEnabled = true;
 					W.updateObjectives();
 					I.print("<br />Too many failed API retrievals. Switched to backup API server.<br />"
-						+ "If problem persists, please consult <a" + U.convertExternalAnchor(U.URL_API.Support) + ">ArenaNet API forum</a> for status updates.");
+						+ "If problem persists, please consult <a" + U.convertExternalAnchor(U.URL_API.Support + "?source=wvw") + ">ArenaNet API forum</a> for status updates.");
 				}
 				else
 				{
