@@ -7606,7 +7606,7 @@ A = {
 		A.Currency = GW2T_CURRENCY_DATA;
 		A.Equipment = GW2T_EQUIPMENT_DATA;
 		A.Attribute = GW2T_ATTRIBUTE_DATA;
-		var ispageprovided = (typeof pPage === "string" && I.PageEnum.Account[pPage]);
+		var ispageprovided = (typeof pPage === "string" && I.PageEnum.Account[pPage] !== undefined);
 		// Add faux items
 		Q.initializeFaux();
 		
@@ -34932,8 +34932,8 @@ K = {
 		}
 		
 		K.timeLocal.innerHTML = localtime;
-		// Times in the Options page Debug section
 		$("#dirHeaderClock").html(localtime);
+		// Times in the Options page Debug section
 		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
 		K.timestampReset.innerHTML = T.getTimeFormatted(
 		{
