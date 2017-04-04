@@ -458,6 +458,10 @@ Gem: [
 	{u: 331, i: 70112, n: "Mini Mushroom Stomper", p: {gem: 0}},
 	{u: 430, i: 80044, n: "Mini Festive Aurene", p: {gem: 400}},
 	{u: 435, i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}},
-	{u: 454, i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}}
+	{u: 454, i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}},
+	{u: 455, i: 80883, n: "Mini Super Goat", p: {gem: 200}},
+	{u: 456, i: 80903, n: "Mini Super Frog", p: {gem: 200}},
+	{u: 459, i: 80884, n: "Mini Super Snake", p: {gem: 200}},
+	{u: 458, i: 80915, n: "Mini Super Queen Bee Dog", p: {gem: 600}}
 ]
 };

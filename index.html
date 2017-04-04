@@ -22,8 +22,8 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170401"></script>
-	<script type="text/javascript" src="data/sale.js?v=20170401"></script>
+	<script type="text/javascript" src="data/general.js?v=20170404"></script>
+	<script type="text/javascript" src="data/sale.js?v=20170404"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -137,23 +137,6 @@
 			<kbd id="mapDisplayButton" class="mapDisplayButton btnWindow btnHorizontal" title="<dfn>Toggle Panel</dfn>"></kbd>
 			<div id="mapHUDContainer">
 				<div id="mapHUDContainerInner">
-					<div id="itemDashboard">
-						<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle the dashboard</dfn>. To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-						<div id="dsbContainer">
-							<div id="dsbAnnouncement"></div>
-							<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='cssState cssStateInactive'></span>: not started yet, counting down to when it starts.<br /><span class='cssState cssStateActive'></span>: is happening, counting down to when it ends."></div>
-							<div id="dsbMenu">
-								<div id="dsbMenuSale" class="dsbMenuItem curToggle"></div>
-								<div id="dsbMenuVendor" class="dsbMenuItem curToggle"></div>
-								<div id="dsbMenuDaily" class="dsbMenuItem curToggle"></div>
-								<div class="cntDivider"></div>
-							</div>
-							<div id="dsbSale" class="dsbExpansion"></div>
-							<div id="dsbVendor" class="dsbExpansion"></div>
-							<div id="dsbDaily" class="dsbExpansion"></div>
-							<div id="dsbStory" class="jsScrollable"></div>
-						</div>
-					</div>
 					<div id="itemTimeline">
 						<kbd id="tmlToggle" class="btnWindow btnToggle" title="<dfn>Toggle timeline</dfn>. To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."><var id="tmlTitle"></var></kbd>
 						<div id="tmlContainer">
@@ -174,51 +157,51 @@
 			</div>
 			<div class="hudPeripheral hudPeripheralNorth">
 				<div class="hudItem">
-					<span id="mapDirectoryButton" class="hudSelect">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu.png" alt="display" /><span class="hudArrow"></span></span>
-						<var class="hudTitle jsTranslate">Menu</var>
+					<span id="mapAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/account.png" alt="Account" /></span>
+						<var class="hudTitle jsTranslate">Account</var>
 					</span>
-					<div class="hudPopup cntComposition hudDirectory">
-						<div class="hudDirectoryScroll jsScrollable">
-							<table class="hudDirectoryMode">
+				</div>
+				<div class="hudItem">
+					<span id="mapSwitchButton" class="hudSelect curToggle" title="<dfn>View WvW Live Map</dfn><br />gw2timer.com/wvw<div class='mapLoc'><img src='http://i.imgur.com/yimNX7L.png' /></div>">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/wvw.png" alt="WvW" /></span>
+						<var class="hudTitle jsTranslate">WvW</var>
+					</span>
+				</div>
+				<div class="hudItem">
+					<span id="mapHelpButton" class="hudSelect">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/help.png" alt="Guides" /><span class="hudArrow"></span></span>
+						<var class="hudTitle jsTranslate">Guides</var>
+					</span>
+					<div class="hudPopup cntComposition hudHelp">
+						<div class="hudHelpScroll jsScrollable">
+							<table class="hudHelpMode">
 								<tr>
-									<td><var class="hudDirectoryModeName jsTranslate">Tile Mode</var><a href="./?mode=Tile" title="<dfn>gw2timer.com/t</dfn>"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/Q6O2lIx.png" /></a></td>
-									<td><var class="hudDirectoryModeName jsTranslate">Mobile Mode</var><a href="./?mode=Mobile" title="<dfn>gw2timer.com/m</dfn>"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/0QsaeY7.png" /></a></td>
-									<td><var class="hudDirectoryModeName jsTranslate">Simple Mode</var><a href="./?mode=Simple" title="<dfn>gw2timer.com/s</dfn>"><img id="hudDirectoryModePreviewLast" class="hudDirectoryModePreview" data-src="http://i.imgur.com/Nk42voP.png" /></a></td>
+									<td><var class="hudHelpModeName jsTranslate">Tile Mode</var><a href="./?mode=Tile" title="<dfn>gw2timer.com/t</dfn>"><img class="hudHelpModePreview" data-src="http://i.imgur.com/Q6O2lIx.png" /></a></td>
+									<td><var class="hudHelpModeName jsTranslate">Mobile Mode</var><a href="./?mode=Mobile" title="<dfn>gw2timer.com/m</dfn>"><img class="hudHelpModePreview" data-src="http://i.imgur.com/0QsaeY7.png" /></a></td>
+									<td><var class="hudHelpModeName jsTranslate">Simple Mode</var><a href="./?mode=Simple" title="<dfn>gw2timer.com/s</dfn>"><img id="hudHelpModePreviewLast" class="hudHelpModePreview" data-src="http://i.imgur.com/Nk42voP.png" /></a></td>
 								</tr>
 							</table>
-							<div class="cntDivider hudDirectoryDivider"></div>
+							<div class="cntDivider hudHelpDivider"></div>
 							<div>
-								<div class="hudDirectoryColumn">
-									<h2>Quicklinks</h2>
-									<ul>
-										<li><a class="jsTranslate" href="./?page=Audit">Audit</a> - Account value estimate</li>
-										<li><a class="jsTranslate" href="./?page=Catalog">Catalog</a> - Keychain and item watchlist</li>
-										<li><a class="jsTranslate" href="./?page=Cleanup">Cleanup</a> - Unused inventory items</li>
-										<li><a class="jsTranslate" href="./?page=Possessions">Possessions</a> - Account search</li>
-										<li><a class="jsTranslate" href="./?page=Gem">Gem</a> - Gem store wishlist alerts</li>
-									</ul>
+								<div class="hudHelpColumn">
 									<h2>Contact</h2>
 									<ul>
 										<li><strong><a class="jsTranslate" href="http://forum.renaka.com/forum/368355/">Forum</a></strong> - Comments and suggestions</li>
 										<li><a class="jsTranslate" href="http://forum.renaka.com/topic/5500046/">Changelog</a> - Site updates</li>
 										<li><a href="https://twitter.com/gw2timer">Twitter</a> - Follow GW2Timer.com</li>
-										<li><ins class="s16 s16_wiki"></ins> <a href="http://forum.renaka.com/topic/5954229/">ArenaNet endorsements</a></li>
+										<li><ins class="s16 s16_wiki"></ins> <a href="http://forum.renaka.com/topic/5954229/">ArenaNet</a> endorsements</li>
 									</ul>
-									<h2>More Quicklinks</h2>
-									<ul>
-										<li><a href="./?page=WvW&section=Leaderboard&enu_Server=1008">WvW NA Leaderboard</a></li>
-										<li><a href="./?page=WvW&section=Leaderboard&enu_Server=2002">WvW EU Leaderboard</a></li>
-									</ul>
-								</div>
-								<div class="hudDirectoryColumn">
 									<h2>Tutorials</h2>
 									<ul>
 										<li><a href="https://www.youtube.com/watch?v=uXqvTMGNIXo">How to use GW2Timer.com</a></li>
 										<li><a href="http://forum.renaka.com/topic/5602037/">Timer Features</a></li>
 										<li><a href="http://forum.renaka.com/topic/5888854/">Map Features</a></li>
 										<li><a href="http://forum.renaka.com/topic/5697040/">TP &amp; Gem Tracker</a></li>
+										<li><a href="http://forum.renaka.com/topic/5547304/">Embed To Your Website</a></li>
 									</ul>
+								</div>
+								<div class="hudHelpColumn">
 									<h2>Guides</h2>
 									<ul>
 										<li><a href="https://www.reddit.com/r/Guildwars2/comments/5tgubw/compilation_of_lake_doric_maps_and_resources/">Zone: Lake Doric</a></li>
@@ -238,38 +221,59 @@
 								</div>
 							</div>
 						</div>
-						<div class="hudDirectoryCarpet"></div>
+						<div class="cssCarpet"></div>
 					</div>
 				</div>
 				<div class="hudItem">
-					<span id="mapAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/pages/account.png" alt="display" /></span>
-						<var class="hudTitle jsTranslate">Account</var>
+					<span id="mapAlarmButton" class="hudSelect">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/alarm.png" alt="Alarm" /><span class="hudArrow"></span></span>
+						<var class="hudTitle jsTranslate">Alarm</var>
 					</span>
-				</div>
-				<div class="hudItem">
-					<span id="mapSwitchButton" class="hudSelect curToggle" title="<dfn>View WvW Live Map</dfn><br />gw2timer.com/wvw<div class='mapLoc'><img src='http://i.imgur.com/yimNX7L.png' /></div>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/pages/wvw.png" alt="display" /></span>
-						<var class="hudTitle jsTranslate">WvW</var>
-					</span>
-				</div>
-				<div class="mapGPS hudItem">
-					<span id="mapGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
-						<span class="hudButtonContainer"><img id="mapGPSIcon" class="hudButton" data-src="img/map/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
-					</span>
-					<div class="hudPopup cntComposition">
-						<fieldset name="int_setFollow" class="optFollowFieldset" title="Automatically move the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
-							<label><input id="opt_int_setFollow" type="radio" name="int_setFollow" /> Off</label>
-							<label><input type="radio" name="int_setFollow" /> Character</label>
-							<label><input type="radio" name="int_setFollow" /> Zone</label>
-						</fieldset>
-						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
-						<label title="Repeated milliseconds before your character is pinpointed again.<br />This should not be lower than the overlay's interval."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Interval (ms)</label>
+					<div id="mapAlarmPopup" class="hudPopup cntComposition">
+						<div id="mapAlarmStopwatchUp">
+							<input id="watOffsetMinutes" type="number" min="0" max="1440" step="1" value="0" title="<dfn>Stopwatch Offset:</dfn> minutes to add to the initial stopwatch time." />&nbsp;:&nbsp;
+							<input id="watOffsetSeconds" type="number" min="0" max="86400" step="1" value="0" title="<dfn>Stopwatch Offset:</dfn> seconds to add to the initial stopwatch time and egg timer." />
+							<span class="watButtons">
+								<kbd id="watStart">▶/◫</kbd><kbd id="watStop">■</kbd><kbd id="watLap">★</kbd>
+							</span>
+						</div>
+						<div id="mapAlarmStopwatchDown">
+							<input id="opt_int_minStopwatchAlert" type="number" min="0" max="1440" step="1" value="15" title="<dfn>Egg Timer:</dfn> minutes from now when you will be alerted." />
+							<input id="opt_str_textStopwatchAlert" type="text" maxlength="128" value="Alert, alert, alert!" title="The text to be spoken when the egg timer finishes." />
+							<span class="watButtons">
+								<kbd id="watTimerStart">▶</kbd><kbd id="watTimerStop">■</kbd>
+							</span>
+						</div>
+						<div id="mapAlarmChain">
+							<b class="jsTranslate">Timers</b>
+							<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> 24:00 / 12AM</label>
+							<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked bosses</label>
+							<label title="Active/orange chain bars."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand events</label>
+							<label title="Inactive/gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse events</label>
+							<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."></button>
+						</div>
+						<div id="mapAlarmBoss">
+							<div id="optChainsToggle"><button id="optChainsExpand">+</button><button id="optChainsCollapse">−</button></div>
+							<fieldset name="int_setAlarm"><legend id="optAlarmLegend" class="jsTranslate">Boss Alarm</legend>
+								<label title="Turn off the boss alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /><var class="jsTranslate">Off</var></label>
+								<label title="Alert you when an unchecked world boss starts.<br />Checkmark a chain by clicking its boss icon (left side)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /><var class="jsTranslate">Checklist</var></label>
+								<label title="Alert you X minutes before a subscribed chain starts.<br />Subscribe to a chain by clicking its time (right side)."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /><var class="jsTranslate">Subscription</var></label>
+							</fieldset>
+							<input id="opt_int_setVolume" type="range" min="0" max="100" step="5" title="Set volume." />
+							<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
+						</div>
+						<div id="mapAlarmOther">
+							<b class="jsTranslate">Info Alarm</b>
+							<label title="Checks https://api.guildwars2.com/v2/build<br />every minute to see if build ID changed."><input id="opt_bol_alertBuild" type="checkbox" /> Alert new game build version</label>
+							<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
+							<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>
+							<label title="Go to <dfn>gw2timer.com/gem</dfn> to subscribe to specific gem store items."><input id="opt_bol_alertGem" type="checkbox" /> Alert Gem Store item sales</label>
+						</div>
 					</div>
 				</div>
 				<div class="mapOptions hudItem">
-					<span id="mapViewButton" class="hudSelect" title="<dfn>Click to Toggle HUD</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/map/display.png" alt="display" /><span class="hudArrow"></span></span>
+					<span id="mapViewButton" class="hudSelect">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/display.png" alt="Display" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
@@ -301,7 +305,7 @@
 							<label title="Show/Hide gateways, wallows, tunnels, thermal tubes, and launch pads."><img data-src="img/map/gateway_interborders.png" /><input id="opt_bol_showZoneGateways" type="checkbox" /> Show zone gateways</label>
 							<label title="Double click on the map to lay/remove a personal pin.<br />This option will draw a path from these pins."><img data-src="img/map/pin_white.png" /><input id="opt_bol_showPersonalPaths" type="checkbox" /> Show personal paths</label>
 							<label title="Show/Hide the colored chain paths of world bosses."><img data-src="img/map/pin_green.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
-							<label title="Automatically scroll the map to the next predicted world boss event.<br />You'll need to be on the Chains page."><img data-src="img/map/path.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
+							<label title="Automatically scroll the map to the next predicted world boss event."><img data-src="img/map/path.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
 							<label title="Color of the personal path and world completion route."><input id="opt_str_colorPersonalPath" type="text" maxlength="32" style="width:96px;"> Path Color</label>
 							<br />
 							<label title="Show/Hide the side app panel."><img data-src="img/map/panel.png" /><input id="opt_bol_showPanel" type="checkbox" /> Show app panel</label>
@@ -310,9 +314,23 @@
 						</div>
 					</div>
 				</div>
+				<div class="mapGPS hudItem">
+					<span id="mapGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
+						<span class="hudButtonContainer"><img id="mapGPSIcon" class="hudButton" data-src="img/ui/menu/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
+					</span>
+					<div class="hudPopup cntComposition">
+						<fieldset name="int_setFollow" class="optFollowFieldset" title="Automatically move the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
+							<label><input id="opt_int_setFollow" type="radio" name="int_setFollow" /> Off</label>
+							<label><input type="radio" name="int_setFollow" /> Character</label>
+							<label><input type="radio" name="int_setFollow" /> Zone</label>
+						</fieldset>
+						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
+						<label title="Repeated milliseconds before your character is pinpointed again.<br />This should not be lower than the overlay's interval."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Interval (ms)</label>
+					</div>
+				</div>
 				<div class="mapZones hudItem">
 					<span id="mapZoneButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/map/compass.png" alt="compass" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/zone.png" alt="Zone" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>
 					<div class="mapZonesPopup hudPopup cntComposition">
@@ -479,30 +497,6 @@
 							<label id="wvwZoom" title="Set initial zoom level for WvW map."><img id="wvwZoomIcon" data-src="img/map/zoom.png" /><input id="wvwZoomInput" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 							<select id="wvwServerList"></select>
 							<div id="logOptions">
-								<div id=logNarrationContainer>
-									<label id="logCheckNarrate" title="Toggle narration of WvW events.<br />Uncheck to mute current narration."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logCheckNarrateSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
-									<div id="logNarrationPopup" class="cntComposition cntPopup">
-										<div id="logNarrateLand" class="cssColumn">
-											<b>Narration Filter:</b>
-											<label><input id="opt_bol_narrateRedHome" type="checkbox" /><var></var></label>
-											<label><input id="opt_bol_narrateBlueHome" type="checkbox" /><var></var></label>
-											<label><input id="opt_bol_narrateGreenHome" type="checkbox" /><var></var></label>
-											<label><input id="opt_bol_narrateCenter" type="checkbox" /><var></var></label>
-										</div>
-										<div id="logNarrateObjective" class="cssColumn">
-											<label><input id="opt_bol_narrateClaimed" type="checkbox" /><var></var></label>
-											<label><input id="opt_bol_narrateRuins" type="checkbox" /><var></var></label>
-											<label><input id="opt_bol_narrateCamp" type="checkbox" /><var></var></label>
-											<label><input id="opt_bol_narrateTower" type="checkbox" /><var></var></label>
-											<label><input id="opt_bol_narrateKeep" type="checkbox" /><var></var></label>
-											<label><input id="opt_bol_narrateCastle" type="checkbox" /><var></var></label>
-										</div>
-										<div>
-											<button><img id="wvwPause" data-src="img/ui/cancel.png" /></button>&nbsp;
-											<label style="display:inline-block"><input id="logNarrateVolume" type="range" min="0" max="100" step="5" title="Set volume." /></label>
-										</div>
-									</div>
-								</div>
 								<div id="logFilters">
 									<div id="logFiltersRed"><label><input id="opt_bol_logRedHome" type="checkbox" /><var></var></label></div>
 									<div id="logFiltersBlue"><label><input id="opt_bol_logBlueHome" type="checkbox" /><var></var></label></div>
@@ -524,8 +518,20 @@
 			</div>
 			<div class="hudPeripheral hudPeripheralNorth">
 				<div class="hudItem">
+					<span id="wvwAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/account.png" alt="display" /></span>
+						<var class="hudTitle jsTranslate">Account</var>
+					</span>
+				</div>
+				<div class="hudItem">
+					<span id="wvwSwitchButton" class="hudSelect curToggle" title="<dfn>Switch to PvE Map</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton curToggle" data-src="img/ui/menu/leave.png" alt="display" /></span>
+						<var class="hudTitle jsTranslate">PvE</var>
+					</span>
+				</div>
+				<div class="hudItem">
 					<span id="wvwToolsButton" class="hudSelect" title="Right click on the map to lay siege weapons.">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/account/menu/inventory.png" alt="Tools" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/ui/menu/inventory.png" alt="Tools" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Supply</var>
 					</span>
 					<div class="hudPopup cntComposition hudPopupWide">
@@ -543,33 +549,36 @@
 					</div>
 				</div>
 				<div class="hudItem">
-					<span id="wvwAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/pages/account.png" alt="display" /></span>
-						<var class="hudTitle jsTranslate">Account</var>
+					<span id="wvwAlarmButton" class="hudSelect">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/alarm.png" alt="Alarm" /><span class="hudArrow"></span></span>
+						<var class="hudTitle jsTranslate">Alarm</var>
 					</span>
-				</div>
-				<div class="hudItem">
-					<span id="wvwSwitchButton" class="hudSelect curToggle" title="<dfn>Switch to PvE Map</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton curToggle" data-src="img/ui/leave.png" alt="display" /></span>
-						<var class="hudTitle jsTranslate">PvE</var>
-					</span>
-				</div>
-				<div class="mapGPS hudItem">
-					<span id="wvwGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
-					</span>
-					<div class="hudPopup cntComposition">
-						<fieldset name="int_setFollowWvW" class="optFollowFieldset" title="Automatically move the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
-							<label><input id="opt_int_setFollowWvW" type="radio" name="int_setFollowWvW" /> Off</label>
-							<label><input type="radio" name="int_setFollowWvW" /> Character</label>
-							<label><input type="radio" name="int_setFollowWvW" /> Zone</label>
-						</fieldset>
-						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
+					<div id="wvwAlarmPopup" class="hudPopup cntComposition hudPopupWide">
+						<label id="logNarrateCheck" title="Toggle narration of WvW events.<br />Uncheck to mute current narration."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logNarrateCheckSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
+						<div id="logNarrateLand" class="cssColumn">
+							<b>Narration Filter:</b>
+							<label><input id="opt_bol_narrateRedHome" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateBlueHome" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateGreenHome" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateCenter" type="checkbox" /><var></var></label>
+						</div>
+						<div id="logNarrateObjective" class="cssColumn">
+							<label><input id="opt_bol_narrateClaimed" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateRuins" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateCamp" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateTower" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateKeep" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateCastle" type="checkbox" /><var></var></label>
+						</div>
+						<div id="logNarrateOther">
+							<button title="Pause/Resume updates"><img id="wvwPause" data-src="img/ui/cancel.png" /></button>&nbsp;
+							<label style="display:inline-block"><input id="logNarrateVolume" type="range" min="0" max="100" step="5" title="Set volume." /></label>
+						</div>
 					</div>
 				</div>
 				<div class="mapOptions hudItem">
-					<span id="wvwViewButton" class="hudSelect" title="<dfn>Click to Toggle HUD</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/display.png" alt="display" /><span class="hudArrow"></span></span>
+					<span id="wvwViewButton" class="hudSelect">
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/ui/menu/display.png" alt="display" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
@@ -603,9 +612,22 @@
 						</div>
 					</div>
 				</div>
+				<div class="mapGPS hudItem">
+					<span id="wvwGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/ui/menu/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
+					</span>
+					<div class="hudPopup cntComposition">
+						<fieldset name="int_setFollowWvW" class="optFollowFieldset" title="Automatically move the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
+							<label><input id="opt_int_setFollowWvW" type="radio" name="int_setFollowWvW" /> Off</label>
+							<label><input type="radio" name="int_setFollowWvW" /> Character</label>
+							<label><input type="radio" name="int_setFollowWvW" /> Zone</label>
+						</fieldset>
+						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
+					</div>
+				</div>
 				<div class="mapZones hudItem">
 					<span id="wvwZoneButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/compass.png" alt="compass" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/ui/menu/zone.png" alt="compass" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>
 					<div class="mapZonesPopup hudPopup cntComposition">
@@ -757,84 +779,62 @@
 			<time id="itemTimeDaytime" class="itemTimeDigital">
 				<span class="curHelp" title="<dfn>Daylight:</dfn> ☀<br /><dfn>Nighttime:</dfn> ☽<br />(Minutes Remaining)"><var id="itemTimeDayIcon"></var>&nbsp;<var id="itemTimeDayTime">16:00</var></span>
 			</time>
-			<div id="itemLanguage">
-				<span><ins class="s16 s16_language"></ins></span>
-			</div>
 			<canvas id="paneClockCanvas" class="clkSizeRegular" width="300" height="180"></canvas><!-- Size mismatch for anti-aliasing when scaled -->
 		</section>
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
-		<nav id="paneMenu" class="paneApp">
+		<nav id="plateMenu" class="paneApp">
 			<span id="clkToggle" class="btnWindow btnVertical" title="<dfn>Toggle Clock</dfn>"></span>
-			<div id="menuChains" class="menuButton"><ins></ins><var class="jsTranslate">Timers</var></div>
-			<div id="menuMap" class="menuButton"><ins></ins><var class="jsTranslate">Map</var></div>
-			<div id="menuHelp" class="menuButton"><ins></ins><var class="jsTranslate">Help</var></div>
-			<div id="menuOptions" class="menuButton"><ins></ins><var class="jsTranslate">Options</var>
-				<ul id="itemLanguagePopup" class="cntPopup">
-					<li><a class="linkLanguage" data-lang="en">English</a></li>
-					<li><a class="linkLanguage" data-lang="de">Deutsch</a></li>
-					<li><a class="linkLanguage" data-lang="es">Español</a></li>
-					<li><a class="linkLanguage" data-lang="fr">Français</a></li>
-					<li><a class="linkLanguage" data-lang="cs">Čeština</a></li>
-					<li><a class="linkLanguage" data-lang="it">Italiano</a></li>
-					<li><a class="linkLanguage" data-lang="pl">Polski</a></li>
-					<li><a class="linkLanguage" data-lang="pt">Português</a></li>
-					<li><a class="linkLanguage" data-lang="ru">Русский</a></li>
-					<li><a class="linkLanguage" data-lang="tw">繁體中文</a></li>
-					<li><a class="linkLanguage" data-lang="zh">简体中文</a></li>
-					<li><a class="linkExternal" href="http://forum.renaka.com/topic/5529319/"><sub>Help Translate</sub></a></li>
-				</ul>
-			</div>
+			<div id="plateMenu_Directory" class="plateMenuButton"><ins class="mnu mnu_directory"></ins><var class="jsTranslate">Directory</var></div>
+			<div id="plateMenu_Chains" class="plateMenuButton"><ins class="mnu mnu_chains"></ins><var class="jsTranslate">Timers</var></div>
+			<div id="plateMenu_Map" class="plateMenuButton"><ins class="mnu mnu_map"></ins><var class="jsTranslate">Map</var></div>
+			<div id="plateMenu_Help" class="plateMenuButton"><ins class="mnu mnu_help"></ins><var class="jsTranslate">Help</var></div>
+			<div id="plateMenu_Options" class="plateMenuButton"><ins class="mnu mnu_options"></ins><var class="jsTranslate">Options</var></div>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
 		<section id="paneContent" class="paneApp">
+			<article id="plateDirectory" class="jsScrollable">
+				<div id="itemLanguage">
+					<kbd id="itemLanguageButton"></kbd>
+					<ul id="itemLanguagePopup" class="cntPopup">
+						<li><a class="linkLanguage" data-lang="en">English</a></li>
+						<li><a class="linkLanguage" data-lang="de">Deutsch</a></li>
+						<li><a class="linkLanguage" data-lang="es">Español</a></li>
+						<li><a class="linkLanguage" data-lang="fr">Français</a></li>
+						<li><a class="linkLanguage" data-lang="cs">Čeština</a></li>
+						<li><a class="linkLanguage" data-lang="it">Italiano</a></li>
+						<li><a class="linkLanguage" data-lang="pl">Polski</a></li>
+						<li><a class="linkLanguage" data-lang="pt">Português</a></li>
+						<li><a class="linkLanguage" data-lang="ru">Русский</a></li>
+						<li><a class="linkLanguage" data-lang="tw">繁體中文</a></li>
+						<li><a class="linkLanguage" data-lang="zh">简体中文</a></li>
+						<li><a class="linkExternal" href="http://forum.renaka.com/topic/5529319/"><sub>Help Translate</sub></a></li>
+					</ul>
+				</div>
+				<div id="itemDashboard">
+					<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle dashboard</dfn>."></kbd>
+					<div id="dsbContainer">
+						<div id="dsbAnnouncement"></div>
+						<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='cssState cssStateInactive'></span>: not started yet, counting down to when it starts.<br /><span class='cssState cssStateActive'></span>: is happening, counting down to when it ends."></div>
+						<div id="dsbMenu">
+							<div id="dsbMenuSale" class="dsbMenuItem curToggle"></div>
+							<div id="dsbMenuPact" class="dsbMenuItem curToggle"></div>
+							<div id="dsbMenuDaily" class="dsbMenuItem curToggle"></div>
+						</div>
+						<div id="dsbSale" class="dsbExpansion"></div>
+						<div id="dsbPact" class="dsbExpansion"></div>
+						<div id="dsbDaily" class="dsbExpansion"></div>
+						<div id="dsbStory" class="jsScrollable"></div>
+						<div class="cntDivider"></div>
+					</div>
+				</div>
+			</article>
 			<article id="plateChains" class="jsScrollable"><!-- This plate will be populated by JS -->
 				<div id="chnProgressBar"><div id="chnProgress0"></div><div id="chnProgress1"></div></div>
-				<div id="chnOptions">
-					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/alarm.png" alt="Alarm"/>
+				<div id="chnAlarm">
+					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/menu/alarm.png" alt="Alarm"/>
 					<img id="optChainsIcon" src="img/ui/toggle.png" alt="Toggle" />
-					<div id="chnOptionsPopup" class="cntComposition cntPopup">
-						<div id="chnOptionsStopwatchUp">
-							<input id="watOffsetMinutes" type="number" min="0" max="1440" step="1" value="0" title="<dfn>Stopwatch Offset:</dfn> minutes to add to the initial stopwatch time." />&nbsp;:&nbsp;
-							<input id="watOffsetSeconds" type="number" min="0" max="86400" step="1" value="0" title="<dfn>Stopwatch Offset:</dfn> seconds to add to the initial stopwatch time and egg timer." />
-							<span class="watButtons">
-								<kbd id="watStart">▶/◫</kbd><kbd id="watStop">■</kbd><kbd id="watLap">★</kbd>
-							</span>
-						</div>
-						<div id="chnOptionsStopwatchDown">
-							<input id="opt_int_minStopwatchAlert" type="number" min="0" max="1440" step="1" value="15" title="<dfn>Egg Timer:</dfn> minutes from now when you will be alerted." />
-							<input id="opt_str_textStopwatchAlert" type="text" maxlength="128" value="Alert, alert, alert!" title="The text to be spoken when the egg timer finishes." />
-							<span class="watButtons">
-								<kbd id="watTimerStart">▶</kbd><kbd id="watTimerStop">■</kbd>
-							</span>
-						</div>
-						<div id="chnOptionsChain">
-							<b class="jsTranslate">Timers</b>
-							<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> 24:00 / 12AM</label>
-							<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked bosses</label>
-							<label title="Active/orange chain bars."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand events</label>
-							<label title="Inactive/gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse events</label>
-							<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."></button>
-						</div>
-						<div id="chnOptionsAlarm">
-							<div id="optChainsToggle"><button id="optChainsExpand">+</button><button id="optChainsCollapse">−</button></div>
-							<fieldset name="int_setAlarm"><legend id="optAlarmLegend" class="jsTranslate">Boss Alarm</legend>
-								<label title="Turn off the boss alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /><var class="jsTranslate">Off</var></label>
-								<label title="Alert you when an unchecked world boss starts.<br />Checkmark a chain by clicking its boss icon (left side)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /><var class="jsTranslate">Checklist</var></label>
-								<label title="Alert you X minutes before a subscribed chain starts.<br />Subscribe to a chain by clicking its time (right side)."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /><var class="jsTranslate">Subscription</var></label>
-							</fieldset>
-							<input id="opt_int_setVolume" type="range" min="0" max="100" step="5" title="Set volume." />
-							<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
-						</div>
-						<div id="chnOptionsOther">
-							<b class="jsTranslate">Info Alarm</b>
-							<label title="Checks https://api.guildwars2.com/v2/build<br />every minute to see if build ID changed."><input id="opt_bol_alertBuild" type="checkbox" /> Alert new game build version</label>
-							<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
-							<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>
-							<label title="Go to <dfn>gw2timer.com/gem</dfn> to subscribe to specific gem store items."><input id="opt_bol_alertGem" type="checkbox" /> Alert Gem Store item sales</label>
-						</div>
-					</div>
 				</div>
 				<kbd id="chnToggle" class="btnWindow btnVertical" title="<dfn>Toggle Current Timers</dfn>"></kbd>
 				<header id="headerChains_Scheduled" class="chnCategoryHeader chnCategoryHeaderFirst">
@@ -905,17 +905,17 @@
 						</fieldset>
 					</div>
 					<label title="Show/Hide clock's tick hand."><input id="opt_bol_showSecondHand" type="checkbox" /> Show clock second hand</label>
+					<label title="Show/Hide GW2 official event countdowns and gem sales on the main page. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard</label>
 					<br />
 					<h2>Map</h2>
 					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<label title="Show/Hide the container for Dashboard and Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD over the PvE map</label>
 					<label title="Show/Hide the container for Leaderboard and Log."><input id="opt_bol_showHUDWvW" type="checkbox" /> Show HUD over the WvW map</label>
-					<label title="Show/Hide GW2 official event countdowns and gem sales on the top right corner of the map pane. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard (on HUD)</label>
 					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline (on HUD)</label>
 					<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
 					<label title="Only show the HUD when you are on the Chains page."><input id="opt_bol_hideHUD" type="checkbox" /> Hide HUD if not on Chains page</label>
 					<label title="Some map features like right clicking are disabled for touchscreens, check this for normal click behavior. Requires reload."><input id="opt_bol_ignoreTouch" type="checkbox" /> Ignore touchscreens and enable context menus</label>
-					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane. To toggle the Dashboard and Timeline, right click on the map and choose &quot;Toggle HUD&quot;.</span><br />
+					<span>For map options, hover over the <img class="cntIconExample" src="img/ui/menu/display.png" alt="Icon" /> button on the top right corner of the map pane. To toggle the Dashboard and Timeline, right click on the map and choose &quot;Toggle HUD&quot;.</span><br />
 					<br />
 					<h2>Alarm</h2>
 					<span>Voice announcement requires Chrome, Firefox, or IE11+. Hover over the speaker icon on the chains page to change alarm.</span>
@@ -980,6 +980,7 @@
 					<br />
 				</div>
 			</article>
+			<div class="cssCarpet"></div>
 		</section>
 	</div><!-- End of panelApp -->
 	</main>

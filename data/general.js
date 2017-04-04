@@ -1458,7 +1458,7 @@ var GW2T_TIMELINE = [
 			{ time: "00:00", duration: "00:40", primacy: 2, name_en: "Zephyrites", name_de: "Zephyriten", name_es: "Cefiritas", name_fr: "Zéphyrites", name_zh: "风裔" },
 			{ time: "00:40", duration: "00:20", primacy: 3, name_en: "Sandstorm", name_de: "Sandsturm", name_es: "Tormenta", name_fr: "Tempête", name_zh: "沙尘暴" },
 			{ time: "01:00", duration: "00:40", primacy: 2, name_en: "Zephyrites", name_de: "Zephyriten", name_es: "Cefiritas", name_fr: "Zéphyrites", name_zh: "风裔" },
-			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Sandstorm", name_de: "Sandsturm", name_es: "Tormenta", name_fr: "Tempête", name_zh: "沙尘暴" },
+			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Sandstorm", name_de: "Sandsturm", name_es: "Tormenta", name_fr: "Tempête", name_zh: "沙尘暴" }
 		]
 	}
 ];
@@ -1639,7 +1639,7 @@ Faux: [
  * Pact Supply Network Agent locations. Array indexes correspond to the UTC
  * weekday number, where 0 is Sunday.
  */
-Vendor:
+Pact:
 {
 	isEnabled: true,
 	SpreadsheetEdit: "https://docs.google.com/spreadsheets/d/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/edit?usp=sharing",

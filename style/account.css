@@ -140,9 +140,6 @@
 	background-image: linear-gradient(to top, #7c7253 0%, transparent 100%);
 	animation: aniHighlight 0.4s;
 }
-.accMenuTab img {
-	margin-right: 2px;
-}
 .accMenuTabFocused {
 	border-left: 3px solid rgba(228,224,179,0.6);
 	border-right: 1px solid rgba(228,224,179,0.6);
@@ -154,6 +151,7 @@
 	border-left: 2px solid rgba(228,224,179,0.2);
 }
 .accMenuIcon {
+	margin-right: 2px;
 	border-radius: 50%;
 	transition: box-shadow 0.4s;
 }
@@ -300,7 +298,7 @@ input[type="text"].accTokenHovered {
 #accDirectory a:hover {
 	color: #ffeebb;
 }
-#accDirectory img {
+#accDirectory ins {
 	margin-right: 4px;
 }
 
@@ -1760,10 +1758,10 @@ input[type="text"].bnkSearchInput:hover {
 	position: absolute; z-index: 1;
 	top: 4px;
 	left: -38px;
-	background: url("../img/ui/edit.png");
+	background: url("../img/ui/menu/edit.png");
 }
 .bnkTransactionsPrint {
-	background: url("../img/ui/info.png");
+	background: url("../img/ui/menu/info.png");
 }
 .bnkCatalogTabEditor, .bnkCatalogSlotEditor {
 	display: inline-block;

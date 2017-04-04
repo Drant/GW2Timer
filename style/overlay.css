@@ -4,7 +4,7 @@
 */
 
 /* Remove elements extraneous or intrusive to overlay mode */
-#itemWarning, #itemDashboard, .tmlLineName, #paneMenu var, .hudTitle, .hudLinks {
+#itemWarning, #plateMenu var, .hudTitle, .hudLinks {
 	display: none;
 }
 #mapContextToggleFloor, #wvwContextToggleFloor {
@@ -132,26 +132,6 @@
 	top: 0;
 	box-shadow: -1px -2px 4px lime;
 }
-#itemDashboard {
-	bottom: 32px; top: auto; right: 12px;
-	line-height: 20px;
-	font-size: 14px;
-}
-#dsbAnnouncement {
-	font-size: 12px;
-}
-#dsbToggle {
-	left: auto;
-	top: auto;
-	bottom: 0;
-	right: 0;
-}
-#dsbCountdown time {
-	font-size: 16px;
-}
-.dsbSaleEntry {
-	width: 192px;
-}
 .mapGPS {
 	display: inline-block;
 }
@@ -220,10 +200,10 @@ input.mapCoordinatesName {
 }
 
 /* Lower the menu bar's height */
-#paneMenu {
+#plateMenu {
 	height: 32px;
 }
-#paneMenu ins {
+#plateMenu ins {
 	margin-top: 0px;
 }
 #menuOptions:hover #itemLanguagePopup {

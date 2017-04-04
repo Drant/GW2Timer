@@ -81,7 +81,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170317},
+		programVersion: {key: "int_utlProgramVersion", value: 170404},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -2889,7 +2889,6 @@ U = {
 	{
 		var lang = D.getPartiallySupportedLanguage();
 		U.URL_API.LangKey = "lang=" + lang;
-		var langsuffix = "&lang=" + lang;
 		
 		var replacekey = "{0}";
 		U.URL_META.BuildNotes = U.URL_META.BuildNotes.replace(replacekey, lang);
@@ -3337,7 +3336,7 @@ U = {
 		Sentence: 2,
 		Title: 3,
 		Every: 4,
-		All: 5
+		Upper: 5
 	},
 	
 	/*
@@ -3483,11 +3482,11 @@ U = {
 			else if (page === "audit")
 			{
 				U.Args[U.KeyEnum.Page] = I.SpecialPageEnum.Account;
-				U.Args[U.KeyEnum.Section] = I.SectionEnum.Account.Characters;
+				U.Args[U.KeyEnum.Section] = I.PageEnum.Account.Characters;
 				I.ArticleCurrent = I.SpecialPageEnum.Audit;
 			}
 			// Only proceed if "page" is not an actual content page
-			else if (U.isEnumWithin(page, I.PageEnum) === false)
+			else if (U.isEnumWithin(page, I.PlateEnum) === false)
 			{
 				if (page === "forum" || page === "forums")
 				{
@@ -3512,15 +3511,15 @@ U = {
 				else if (page === "draw")
 				{
 					localStorage["bol_showWorldCompletion"] = "true";
-					U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
+					U.Args[U.KeyEnum.Page] = I.PlateEnum.Map;
 					U.Args[U.KeyEnum.Draw] = U.Args[U.KeyEnum.Section];
 				}
 				else
 				{
 					// Check if is a page's section
-					for (i in I.SectionEnum)
+					for (i in I.PageEnum)
 					{
-						ithpage = I.SectionEnum[i];
+						ithpage = I.PageEnum[i];
 						for (ii in ithpage)
 						{
 							if (ii.toLowerCase() === page)
@@ -3564,8 +3563,8 @@ U = {
 			ithpage = X.Collectibles[i].urlkey;
 			if (ithpage === page || U.Args[ithpage] !== undefined)
 			{
-				U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
-				U.Args[U.KeyEnum.Section] = I.SectionEnum.Map.Collectible;
+				U.Args[U.KeyEnum.Page] = I.PlateEnum.Map;
+				U.Args[U.KeyEnum.Section] = I.PageEnum.Map.Collectible;
 				// Setting the article key will tell the generate collectibles function to do so for that one
 				I.ArticleCurrent = ithpage;
 				return;
@@ -3605,6 +3604,215 @@ U = {
 				}
 				return true;
 			}
+		}
+	},
+	
+	/*
+	 * Triggers the button or header associated with the requested page and section,
+	 * which will cause that section to expand/show. This is to be called after
+	 * a page has been AJAX loaded and bindings completed.
+	 * @objparam string aPrefix HTML ID prefix of the button to trigger, optional.
+	 * @objparam string aSection name to override URL's, optional.
+	 * @objparam string aInitialSection to open initially, optional.
+	 * @objparam string aButton HTML ID of the button to trigger, optional.
+	 */
+	openSectionFromURL: function(pSettings)
+	{
+		var Settings = $.extend({
+			aPrefix: I.cHeaderPrefix + I.PageCurrent + "_",
+			aSection: null,
+			aInitialSection: null,
+			aButton: null
+		}, pSettings);
+		
+		/*
+		 * Enclosed in setTimeout because without it the scroll to element
+		 * animation function is glitchy (the function is called when the header
+		 * is clicked so the page automatically scrolls to the header).
+		 */
+		setTimeout(function()
+		{
+			var section = (U.Args[U.KeyEnum.Section]) ? (U.Args[U.KeyEnum.Section]).toString() : null;
+			// If section was specified in the URL arguments
+			if (section)
+			{
+				U.Args[U.KeyEnum.Section] = null; // Use once only
+				section = U.stripToAlphanumeric(section);
+				var elm = $(null);
+				if (typeof Settings.aButton === "string")
+				{
+					if (Settings.aSection !== undefined
+						&& Settings.aSection.toLowerCase() === section.toLowerCase())
+					{
+						elm = $(Settings.aButton);
+					}
+				}
+				else
+				{
+					// Try going to a section name in sentence letter case
+					elm = $(Settings.aPrefix + U.toFirstUpperCase(section));
+					if ( ! elm.length)
+					{
+						// Else try going to a section name in all caps
+						elm = $(Settings.aPrefix + section.toUpperCase());
+					}
+					if (I.PageCurrent === I.PlateEnum.Chains)
+					{
+						// Click the chains header to hide it because it's shown by default
+						$("#headerChains_Scheduled").trigger("click");
+					}
+				}
+				elm.trigger("click");
+			}
+			// If section was specified by the function call
+			else if (typeof Settings.aInitialSection === "string")
+			{
+				$(Settings.aPrefix + Settings.aInitialSection).trigger("click");
+			}
+		}, 0);
+	},
+	
+	/*
+	 * Opens a page by triggering the clicking of the menu button.
+	 * @pre All HTML has been generated.
+	 */
+	openPageFromURL: function()
+	{
+		if (U.Args[U.KeyEnum.Page] !== undefined)
+		{
+			var page = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
+			for (var i in I.PlateEnum)
+			{
+				if (page.toLowerCase() === (I.PlateEnum[i]).toLowerCase())
+				{
+					// Found proper page, so go to it by clicking the menu button
+					$(I.cPlateMenuPrefix + I.PlateEnum[i]).trigger("click");
+					return;
+				}
+			}
+			
+			// Special "page" which does not match a proper page name
+			page = page.toLowerCase();
+			switch (page)
+			{
+				case "account": {
+					$("#mapAccountButton").trigger("click");
+				} break;
+				case "wvw": {
+					I.switchMap();
+				} break;
+			}
+		}
+	},
+	
+	/*
+	 * Automatically opens a "page" for the user, whether the content is generated or not.
+	 * @param enum pPage
+	 */
+	interpretPage: function(pPage)
+	{
+		var pagebutton;
+		var isaccountvisible = $("#panelAccount").is(":visible");
+		var iswvwvisible = P.MapSwitchWebsite === P.MapEnum.Mists;
+		var viewMap = function()
+		{
+			// Close the account panel in order to see the map
+			if (isaccountvisible)
+			{
+				I.toggleAccount();
+			}
+			// Switch to PvE map if viewing WvW
+			if (iswvwvisible)
+			{
+				I.switchMap();
+			}
+		};
+		var viewWvW = function()
+		{
+			// Close the account panel in order to see the map
+			if (isaccountvisible)
+			{
+				I.toggleAccount();
+			}
+			// Switch to WvW map if viewing PvE
+			if (iswvwvisible === false)
+			{
+				I.switchMap(pPage);
+			}
+		};
+		var viewAccount = function(pPage)
+		{
+			pagebutton = $("#accMenu_" + pPage);
+			if (pagebutton.length)
+			{
+				if (isaccountvisible === false)
+				{
+					I.toggleAccount();
+				}
+				pagebutton.trigger("click");
+			}
+			else
+			{
+				I.toggleAccount();
+				I.loadAccountPanel(pPage);
+			}
+		};
+		
+		// If is plate
+		if (I.PlateEnum[pPage])
+		{
+			$(I.cPlateMenuPrefix + pPage).trigger("click");
+			if (pPage === I.PlateEnum.Chains || pPage === I.PlateEnum.Map)
+			{
+				viewMap();
+			}
+		}
+		// If is plate section
+		else if (I.PageEnum.Map[pPage])
+		{
+			viewMap();
+			// View the map section if already loaded, otherwise load then view
+			pagebutton = $("#plateBeamIcon_" + pPage);
+			if (pagebutton.length)
+			{
+				$(I.cPlateMenuPrefix + "Map").trigger("click");
+				pagebutton.trigger("click");
+			}
+			else
+			{
+				I.loadMapPlate(pPage);
+			}
+		}
+		else if (pPage === I.SpecialPageEnum.Account)
+		{
+			viewAccount(pPage);
+		}
+		// If is account section
+		else if (I.PageEnum.Account[pPage])
+		{
+			viewAccount(pPage);
+		}
+		// If is account audit
+		else if (pPage === I.SpecialPageEnum.Audit)
+		{
+			if ($("#audExecute").is(":visible"))
+			{
+				$("#audExecute").trigger("click");
+			}
+			else
+			{
+				viewAccount(I.PageEnum.Account.Characters);
+			}
+		}
+		// If is WvW leaderboard
+		else if (pPage === I.SpecialPageEnum.Leaderboard)
+		{
+			// Switch to WvW map if viewing PvE
+			if (iswvwvisible)
+			{
+				$("#lboRegion").trigger("click");
+			}
+			viewWvW();
 		}
 	},
 	
@@ -4224,7 +4432,7 @@ U = {
 					return U.toFirstUpperCase(pString);
 				}
 			}
-			case U.CaseEnum.All: return pString.toUpperCase();
+			case U.CaseEnum.Upper: return pString.toUpperCase();
 		}
 		return pString;
 	},
@@ -4406,7 +4614,7 @@ U = {
 				sectionstring = "&" + U.KeyEnum.Section + "=" + section;
 				title = section;
 			}
-			else if (I.ModeCurrent === I.ModeEnum.Website && I.PageCurrent === I.PageEnum.Chains)
+			else if (I.ModeCurrent === I.ModeEnum.Website && I.PageCurrent === I.PlateEnum.Directory)
 			{
 				pagestring = "."; // Chains is the default and level top URL, so don't include it
 				title = null;
@@ -4453,103 +4661,13 @@ U = {
 			$(this).attr("href", "./" + suffixes);
 		});
 	},
-	
-	/*
-	 * Triggers the button or header associated with the requested page and section,
-	 * which will cause that section to expand/show. This is to be called after
-	 * a page has been AJAX loaded and bindings completed.
-	 * @objparam string aPrefix HTML ID prefix of the button to trigger, optional.
-	 * @objparam string aSection name to override URL's, optional.
-	 * @objparam string aInitialSection to open initially, optional.
-	 * @objparam string aButton HTML ID of the button to trigger, optional.
-	 */
-	openSectionFromURL: function(pSettings)
+	initializeLanguageButton: function()
 	{
-		var Settings = $.extend({
-			aPrefix: I.cHeaderPrefix + I.PageCurrent + "_",
-			aSection: null,
-			aInitialSection: null,
-			aButton: null
-		}, pSettings);
-		
-		/*
-		 * Enclosed in setTimeout because without it the scroll to element
-		 * animation function is glitchy (the function is called when the header
-		 * is clicked so the page automatically scrolls to the header).
-		 */
-		setTimeout(function()
+		$("#itemLanguageButton").html(O.Options.enu_Language.toUpperCase());
+		$("#itemLanguagePopup").click(function(pEvent)
 		{
-			var section = (U.Args[U.KeyEnum.Section]) ? (U.Args[U.KeyEnum.Section]).toString() : null;
-			// If section was specified in the URL arguments
-			if (section)
-			{
-				U.Args[U.KeyEnum.Section] = null; // Use once only
-				section = U.stripToAlphanumeric(section);
-				var elm = $(null);
-				if (typeof Settings.aButton === "string")
-				{
-					if (Settings.aSection !== undefined
-						&& Settings.aSection.toLowerCase() === section.toLowerCase())
-					{
-						elm = $(Settings.aButton);
-					}
-				}
-				else
-				{
-					// Try going to a section name in sentence letter case
-					elm = $(Settings.aPrefix + U.toFirstUpperCase(section));
-					if ( ! elm.length)
-					{
-						// Else try going to a section name in all caps
-						elm = $(Settings.aPrefix + section.toUpperCase());
-					}
-					if (I.PageCurrent === I.PageEnum.Chains)
-					{
-						// Click the chains header to hide it because it's shown by default
-						$("#headerChains_Scheduled").trigger("click");
-					}
-				}
-				elm.trigger("click");
-			}
-			// If section was specified by the function call
-			else if (typeof Settings.aInitialSection === "string")
-			{
-				$(Settings.aPrefix + Settings.aInitialSection).trigger("click");
-			}
-		}, 0);
-	},
-	
-	/*
-	 * Opens a page by triggering the clicking of the menu button.
-	 * @pre All HTML has been generated.
-	 */
-	openPageFromURL: function()
-	{
-		if (U.Args[U.KeyEnum.Page] !== undefined)
-		{
-			var page = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
-			for (var i in I.PageEnum)
-			{
-				if (page.toLowerCase() === (I.PageEnum[i]).toLowerCase())
-				{
-					// Found proper page, so go to it by clicking the menu button
-					$(I.cMenuPrefix + I.PageEnum[i]).trigger("click");
-					return;
-				}
-			}
-			
-			// Special "page" which does not match a proper page name
-			page = page.toLowerCase();
-			switch (page)
-			{
-				case "account": {
-					$("#mapAccountButton").trigger("click");
-				} break;
-				case "wvw": {
-					$("#mapSwitchButton").trigger("click");
-				} break;
-			}
-		}
+			pEvent.stopPropagation();
+		});
 	},
 	
 	/*
@@ -5142,6 +5260,20 @@ Z = {
 			events: {usage: "Prints the event names of the current zone, dynamic events option must be enabled.", f: function()
 			{
 				P.printZoneEvents();
+			}},
+			lower: {usage: "Converts a string to all lower case. <em>Parameters: str_string</em>", f: function()
+			{
+				if (args[1])
+				{
+					I.printFile(U.toCase(argstr, U.CaseEnum.Lower));
+				}
+			}},
+			upper: {usage: "Converts a string to all upper case. <em>Parameters: str_string</em>", f: function()
+			{
+				if (args[1])
+				{
+					I.printFile(U.toCase(argstr, U.CaseEnum.Upper));
+				}
 			}},
 			help: {usage: "Prints this help message.", f: function()
 			{
@@ -7246,17 +7378,11 @@ Z = {
 			Q.sortItems(ids, function(pSortedItems, pSortedIDs)
 			{
 				record[timestamp] = pSortedIDs;
-				// Print the first month only
-				for (var i in record)
-				{
-					trimmedrecord[i] = record[i];
-					break;
-				}
+				trimmedrecord[timestamp] = pSortedIDs;
 				Z.printUnlockables(trimmedrecord, true, true);
-				// Print the full record
 				Z.printUnlockables(record, true, true);
 			});
-		});
+		}, false);
 	},
 	
 	/*
@@ -7472,7 +7598,7 @@ A = {
 	/*
 	 * Initializes common UI for the account panel.
 	 */
-	initializeAccount: function()
+	initializeAccount: function(pPage)
 	{
 		// Add new words to the dictionary
 		D.addDictionary(GW2T_ACCOUNT_DICTIONARY);
@@ -7480,6 +7606,7 @@ A = {
 		A.Currency = GW2T_CURRENCY_DATA;
 		A.Equipment = GW2T_EQUIPMENT_DATA;
 		A.Attribute = GW2T_ATTRIBUTE_DATA;
+		var ispageprovided = (typeof pPage === "string" && I.PageEnum.Account[pPage]);
 		// Add faux items
 		Q.initializeFaux();
 		
@@ -7505,7 +7632,7 @@ A = {
 		
 		// Initialize common UI
 		U.convertExternalLink($("#accHelp").find(".jsExternal").find("a"));
-		A.generateMenu();
+		A.generateMenu(ispageprovided);
 		
 		// Bind the window buttons
 		$("#accToggle").click(function()
@@ -7570,12 +7697,18 @@ A = {
 			A.adjustAccountPanel();
 		}, 1000);
 		A.isAccountInitialized = true;
+		
+		// Open a section if initially requested
+		if (ispageprovided)
+		{
+			$("#accMenu_" + pPage).trigger("click");
+		}
 	},
 	
 	/*
 	 * Binds functionality of the account page menu bar.
 	 */
-	generateMenu: function()
+	generateMenu: function(pPage)
 	{
 		var menu = $("#accMenu");
 		$("#accContent").find(".accDishMain").each(function()
@@ -7584,8 +7717,8 @@ A = {
 			var sectionnamelow = sectionname.toLowerCase();
 			var menutab = $("<aside id='accMenu_" + sectionname + "' class='accMenuTab accMenuClick curClick'>"
 				+ "<span>"
-					+ "<img class='accMenuIcon accMenuIconMain' src='img/account/menu/" + sectionnamelow + I.cPNG + "' "
-						+ "title='<dfn>" + D.getWordCapital(sectionnamelow) + "</dfn>' />"
+					+ "<ins class='accMenuIcon accMenuIconMain mnu mnu_" + sectionnamelow + "' "
+						+ "title='<dfn>" + D.getWordCapital(sectionnamelow) + "</dfn>'></ins>"
 					+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var>"
 				+ "</span>"
 				+ "<span class='accMenuSubtab' style='display:none;'></span>"
@@ -7629,7 +7762,7 @@ A = {
 						// Update address
 						I.PageCurrent = I.SpecialPageEnum.Account;
 						I.SectionCurrent[I.SpecialPageEnum.Account] =
-							(iSectionName === I.SectionEnum.Account.Manager) ? "" : iSectionName;
+							(iSectionName === I.PageEnum.Account.Manager) ? "" : iSectionName;
 						U.updateQueryString();
 						A.generateDish(iSectionName);
 					}
@@ -7652,9 +7785,8 @@ A = {
 						{
 							var subsectionname = $(this).attr("data-section");
 							var subsectionnamelow = subsectionname.toLowerCase();
-							var subbutton = $("<img id='accMenu_" + subsectionname + "' class='accMenuButton accMenuIcon accMenuClick' "
-								+ "title='<dfn>" + D.getWordCapital(subsectionnamelow) + "</dfn>' "
-								+ "src='img/account/menu/" + subsectionnamelow + I.cPNG + "' />");
+							var subbutton = $("<ins id='accMenu_" + subsectionname + "' class='accMenuButton accMenuIcon accMenuClick mnu mnu_" + subsectionnamelow + "' "
+								+ "title='<dfn>" + D.getWordCapital(subsectionnamelow) + "</dfn>'></ins>");
 							subbuttons.append(subbutton);
 							A.createDishMenu(subsectionname);
 							// Create a divider if this button is the beginning of a subtab group
@@ -7706,8 +7838,11 @@ A = {
 		});
 		
 		// Open the section if specified in the URL
-		$("#accPlatterManager").show();
-		U.openSectionFromURL({aPrefix: "#accMenu_", aInitialSection: I.SectionEnum.Account.Manager});
+		if (pPage !== true)
+		{
+			$("#accPlatterManager").show();
+			U.openSectionFromURL({aPrefix: "#accMenu_", aInitialSection: I.PageEnum.Account.Manager});
+		}
 	},
 	
 	/*
@@ -11002,11 +11137,11 @@ V = {
 			}
 			var traitwindow = $("<div class='spzWindow'>"
 				+ "<aside class='spzSwitchContainer'><span class='spzSwitchWrapper'>"
-					+ "<img class='spzBuildIcon' src='img/account/menu/build.png' />"
+					+ "<img class='spzBuildIcon' src='img/ui/menu/build.png' />"
 					+ "<img src='img/ui/view.png' />"
-					+ "<img class='spzSwitch curClick' data-assoc='PVE' src='img/ui/pages/map.png' />"
-					+ "<img class='spzSwitch curClick' data-assoc='WVW' src='img/ui/pages/wvw.png' />"
-					+ "<img class='spzSwitch curClick' data-assoc='PVP' src='img/account/menu/pvp.png' />"
+					+ "<img class='spzSwitch curClick' data-assoc='PVE' src='img/ui/menu/map.png' />"
+					+ "<img class='spzSwitch curClick' data-assoc='WVW' src='img/ui/menu/wvw.png' />"
+					+ "<img class='spzSwitch curClick' data-assoc='PVP' src='img/ui/menu/pvp.png' />"
 				+ "</span></aside>"
 				+ "<div class='spzContainer'>"
 					+ "<div class='spzPanel spzPanel_PVE'></div>"
@@ -12767,7 +12902,7 @@ V = {
 				{
 					var id = pItem.id;
 					var issubscribed = (availableassoc[id] || discountedassoc[id]);
-					var symbol = $("<img class='bnkSlotSymbol curToggle' src='img/ui/alarm.png' />").appendTo(pSlot);
+					var symbol = $("<img class='bnkSlotSymbol curToggle' src='img/ui/menu/alarm.png' />").appendTo(pSlot);
 					toggleSlotSymbol(pSlot, issubscribed, pItem);
 					symbol.click(function(pEvent)
 					{
@@ -12994,7 +13129,7 @@ V = {
 		var numfetched = 0;
 		var numtofetch = 0;
 		
-		var history, products = H.Vendor.Products;
+		var history, products = H.Pact.Products;
 		var occurnums = {}, occurdates = {}, highestoccur = 0, highestprice = 0;
 		U.convertExternalLink("#accDish_Pact a");
 		var generateStatistics = function()
@@ -13008,7 +13143,7 @@ V = {
 					var priceobj = E.Pricelist[i];
 					var pricevalue = (priceobj) ? priceobj.oPriceSell : 0;
 					var pricestr = ((priceobj) ? E.formatCoinStringColored(priceobj.oPriceSell)
-						: E.formatKarmaString(H.Vendor.Prices[i] || H.Vendor.PriceDefault));
+						: E.formatKarmaString(H.Pact.Prices[i] || H.Pact.PriceDefault));
 					stat.append("<tr class='pctStatRow cssStats'>"
 						+ "<td class='pctStatCount' data-value='" + occurnums[i] + "'>" + occurnums[i] + "</td>"
 						+ "<td data-value='" + occurnums[i] +  "'>" + I.getBar((occurnums[i] / highestoccur) * T.cPERCENT_100, true) + "</td>"
@@ -19818,6 +19953,12 @@ D = {
 			cs: "nyní", it: "adesso", pl: "teraz", pt: "agora", ru: "теперь", zh: "现在"},
 		
 		// Nouns
+		s_directory: {de: "verzeichnis", es: "directorio", fr: "répertoire",
+			cs: "adresář", it: "directory", pl: "katalog", pt: "diretório", ru: "каталог", zh: "目录"},
+		s_dashboard: {de: "dashboard", es: "panel", fr: "tableau de bord",
+			cs: "řídicí panel", it: "dashboard", pl: "pulpit nawigacyjny", pt: "painel", ru: "панель мониторинга", zh: "仪表板"},
+		s_leaderboard: {de: "bestenliste", es: "marcador", fr: "classement",
+			cs: "žebříček", it: "classifica", pl: "liderzy sprzedaży", pt: "placar de líderes", ru: "список лидеров", zh: "排行榜"},
 		s_account: {de: "account", es: "cuenta", fr: "compte",
 			cs: "účet", it: "conto", pl: "konto", pt: "conta", ru: "счёт", zh: "帐户"},
 		s_key: {de: "schlüssel", es: "tecla", fr: "clé",
@@ -19826,6 +19967,12 @@ D = {
 			cs: "historie", it: "cronologia", pl: "historii", pt: "histórico", ru: "истории", zh: "历史"},
 		s_info: {de: "info", es: "información", fr: "info",
 			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", zh: "资讯"},
+		s_item: {de: "gegenstand", es: "objeto", fr: "objet",
+			cs: "objekt", it: "oggetto", pl: "obiekt", pt: "objeto", ru: " объект", zh: "物体"},
+		s_items: {de: "gegenstände", es: "objetos", fr: "objets",
+			cs: "objektů", it: "oggetti", pl: "obiekty", pt: "objetos", ru: "объекты", zh: "物体"},
+		s_collectible: {de: "sammlerstücke", es: "coleccionable", fr: "collectable",
+			cs: "sběratelský", it: "collezione", pl: "kolekcjonerski", pt: "colecionável", ru: "коллекционирования", zh: "收藏"},
 		s_tier: {de: "rang", es: "rango", fr: "niveau",
 			cs: "pořadí", it: "rango", pl: "ranga", pt: "classe", ru: "ранг", zh: "级"},
 		s_clock: {de: "uhr", es: "reloj", fr: "horloge",
@@ -19844,6 +19991,8 @@ D = {
 			cs: "panel", it: "pannello", pl: "panel", pt: "painel", ru: "панель", zh: "面板"},
 		s_tools: {de: "extras", es: "herramientas", fr: "outils",
 			cs: "nástroje", it: "strumenti", pl: "narzędzia", pt: "ferramentas", ru: "инструменты", zh: "工具"},
+		s_guides: {de: "handbuch", es: "guías", fr: "guides",
+			cs: "vodítka", it: "guide", pl: "prowadnice", pt: "guias", ru: "руководства", zh: "指南"},
 		s_help: {de: "hilfe", es: "ayuda", fr: "assistance",
 			cs: "pomoci", it: "guida", pl: "pomoc", pt: "ajuda", ru: "помощь", zh: "辅助"},
 		s_options: {de: "optionen", es: "opciónes", fr: "options",
@@ -19884,14 +20033,22 @@ D = {
 			cs: "kružítko", it: "compasso", pl: "cyrkiel", pt: "compasso", ru: "циркуль", zh: "圆规"},
 		s_slot: {de: "steckplatz", es: "ranura", fr: "emplacement",
 			cs: "slot", it: "slot", pl: "gniazdo", pt: "slot", ru: "слот", zh: "插槽"},
+		s_resource: {de: "ressourcen", es: "recursos", fr: "ressources",
+			cs: "zdrojů", it: "risorse", pl: "zasobów", pt: "recursos", ru: "ресурсные", zh: "资源"},
 		s_nodes: {de: "knoten", es: "nodos", fr: "zones",
 			cs: "uzly", it: "nodi", pl: "węzły", pt: "nós", ru: "узлы", zh: "节点"},
+		s_jumping: {de: "sprung", es: "salto", fr: "saut",
+			cs: "skákání", it: "saltando", pl: "skoki", pt: "pulando", ru: "переход", zh: "跳跳"},
+		s_puzzles: {de: "rätsel", es: "prueba", fr: "puzzle",
+			cs: "hlavolam", it: "rompicapo", pl: "zagadki", pt: "desafio", ru: "пазлы", zh: "乐"},
 		s_bookmarks: {de: "zeichen", es: "marcadores", fr: "signets",
 			cs: "záložky", it: "segnalibri", pl: "zakładki", pt: "favoritos", ru: "закладки", zh: "书签"},
 		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
 			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", zh: "锁定"},
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
 			cs: "kontrolní seznam", it: "elenco di controllo", pl: "lista kontrolna", pt: "lista de verificação", ru: "контрольный список", zh: "检查清单"},
+		s_notepad: {de: "notizblock", es: "bloc de notas", fr: "blocnotes",
+			cs: "poznámkový blok", it: "blocco note", pl: "notatnik", pt: "bloco de notas", ru: "блокнот", zh: "记事本"},
 		s_subscription: {de: "abonnement", es: "suscripción", fr: "abonnement",
 			cs: "předplatné", it: "sottoscrizione", pl: "abonament", pt: "assinatura", ru: "подписка", zh: "订阅"},
 		s_alarm: {de: "alarm", es: "alarma", fr: "alarme",
@@ -19902,8 +20059,14 @@ D = {
 			cs: "chat odkaz", it: "collegamento chat", pl: "czat łącze", pt: "link bate-papo", ru: "чат связь", zh: "连结聊天"},
 		s_stopwatch: {de: "stoppuhr", es: "cronómetro", fr: "chronomètre",
 			cs: "stopky", it: "cronografo", pl: "stoper", pt: "cronômetro", ru: "секундомер", zh: "码表"},
+		s_guild: {de: "gilden", es: "clan", fr: "guilde",
+			cs: "cech", it: "clan", pl: "klan", pt: "clãs", ru: "гильдии", zh: "公会"},
 		s_guilds: {de: "gilden", es: "clanes", fr: "guildes",
 			cs: "cechy", it: "clan", pl: "klany", pt: "clãs", ru: "гильдий", zh: "战队"},
+		s_missions: {de: "missionen", es: "misiónes", fr: "missions",
+			cs: "mise", it: "missioni", pl: "misje", pt: "missões", ru: "миссии", zh: "任务"},
+		s_pact: {de: "pakt", es: "pacto", fr: "pacte",
+			cs: "pakt", it: "patto", pl: "pakt", pt: "pacto", ru: "пакт", zh: "契约团"},
 		
 		// Verbs
 		s_is: {de: "ist", es: "es", fr: "est",
@@ -19998,6 +20161,8 @@ D = {
 			cs: "deníky", it: "quotidiani", pl: "dzienniki", pt: "diários", ru: "ежедневных", zh: "每天成就"},
 		s_achievements: {de: "erfolge", es: "logros", fr: "succès",
 			cs: "výsledky", it: "obiettivi", pl: "osiągnięcia", pt: "conquistas", ru: "достижения", zh: "成就"},
+		s_personal: {de: "persönlicher", es: "personal", fr: "personnel",
+			cs: "osobní", it: "personale", pl: "osobisty", pt: "pessoal", ru: "персональный", zh: "私人"},
 		s_previous: {de: "vorhergehend", es: "previo", fr: "préalable",
 			cs: "předchozí", it: "previo", pl: "poprzedni", pt: "prévio", ru: "предыдущий", zh: "以前的"},
 		s_next: {de: "nächste", es: "siguiente", fr: "prochain",
@@ -20089,9 +20254,73 @@ D = {
 		s_tile: {de: "kacheln", es: "mosaico", fr: "mosaïque",
 			cs: "dlaždice", it: "affianca", pl: "sąsiadująco", pt: "ladrilho", ru: "замостить", zh: "砖"},
 		
+		// Section names
+		s_manager: {de: "manager", es: "administrador", fr: "gestionnaire",
+			cs: "správce", it: "gestione", pl: "menedżer", pt: "gerenciador", ru: "диспетчер", zh: "管理员"},
+		s_bank: {de: "bank", es: "banco", fr: "banque",
+			cs: "banka", it: "banca", pl: "bank", pt: "banco", ru: "банк", zh: "银行"},
+		s_vault: {de: "tresor", es: "arcón", fr: "coffre",
+			cs: "trezor", it: "volta", pl: "kufer", pt: "tesouro", ru: "сундук", zh: "保险箱"},
+		s_materials: {de: "materialien", es: "materiales", fr: "matériaux",
+			cs: "materiály", it: "materiale", pl: "materiały", pt: "materiais", ru: "материалы", zh: "物料"},
+		s_skins: {de: "skins", es: "diseños", fr: "apparences",
+			cs: "vzhledy", it: "apparenze", pl: "karnacje", pt: "desenhos", ru: "конструкции", zh: "皮肤"},
+		s_wardrobe: {de: "garderobenlager", es: "garderobe", fr: "garderobe",
+			cs: "skříň", it: "armadio", pl: "szafa", pt: "roupeiro", ru: "гардероб", zh: "衣柜"},
+		s_outfits: {de: "kleidungssets", es: "atuendos", fr: "tenues",
+			cs: "oblečení", it: "abiti", pl: "strój", pt: "vestuário", ru: "костюмы", zh: "服装"},
+		s_dyes: {de: "farben", es: "tintes", fr: "teintures",
+			cs: "barviva", it: "tinturi", pl: "barwniki", pt: "tinturas", ru: "красители", zh: "染料"},
+		s_minis: {de: "miniaturen", es: "miniaturas", fr: "miniatures",
+			cs: "miniatury", it: "miniature", pl: "miniatury", pt: "miniaturas", ru: "миниатюры", zh: "微缩模型"},
+		s_finishers: {de: "todesstöße", es: "remates", fr: "coups de grâce",
+			cs: "finišer", it: "finitore", pl: "apreter", pt: "arrematador", ru: "финишер", zh: "终结者"},
+		s_carriers: {de: "briefboten", es: "carteros", fr: "messagers",
+			cs: "kurýři", it: "corrieri", pl: "kurierzy", pt: "correios", ru: "курьеры", zh: "快递"},
+		s_gliders: {de: "gleitschirm", es: "planeador", fr: "deltaplanes",
+			cs: "kluzáky", it: "alianti", pl: "szybowce", pt: "planadores", ru: "планеры", zh: "滑翔机"},
+		s_cats: {de: "katzen", es: "gatos", fr: "chats",
+			cs: "kočky", it: "gatti", pl: "koty", pt: "gatos", ru: "коты", zh: "猫"},
+		s_characters: {de: "charaktere", es: "personajes", fr: "personnages",
+			cs: "postavy", it: "personaggi", pl: "postacie", pt: "personagens", ru: "персонажей", zh: "人物"},
+		s_hero: {de: "heldin", es: "héroe", fr: "héros",
+			cs: "hrdina", it: "eroe", pl: "bohater", pt: "herói", ru: "геро́й", zh: "主角"},
+		s_equipment: {de: "ausrüstung", es: "equipamiento", fr: "equipement",
+			cs: "vybavení", it: "equipaggiamento", pl: "sprzęt", pt: "equipamento", ru: "обору́дование", zh: "设备"},
+		s_inventory: {de: "inventar", es: "inventario", fr: "inventaire",
+			cs: "inventář", it: "inventario", pl: "inwentarz", pt: "inventário", ru: "инвента́рь", zh: "库存"},
+		s_ascended: {de: "aufgestiegen", es: "ascendido", fr: "élevé",
+			cs: "vystoupal", it: "asceso", pl: "wstąpił", pt: "ascendeu", ru: "вознесся", zh: "登高"},
+		s_recipes: {de: "rezepte", es: "recetas", fr: "recettes",
+			cs: "recepty", it: "ricette", pl: "recepty", pt: "receitas", ru: "рецепты", zh: "食谱"},
+		s_crafting: {de: "handwerkskunst", es: "artesanía", fr: "artisanat",
+			cs: "řemeslo", it: "mestiere", pl: "rzemiosło", pt: "ofício", ru: "ремесло", zh: "手艺"},
+		s_dungeons: {de: "verliesen", es: "mazmorras", fr: "donjons",
+			cs: "dungeony", it: "dungeon", pl: "lochy", pt: "masmorras", ru: "подземелья", zh: "地下城"},
+		s_raids: {de: "schlachtzügen", es: "incursiones", fr: "raids",
+			cs: "nájezd", it: "incursione", pl: "nalot", pt: "incursão", ru: "набег", zh: "大型地下城"},
+		s_museum: {de: "museum", es: "museo", fr: "musée",
+			cs: "muzeum", it: "museo", pl: "muzeum", pt: "museu", ru: "музей", zh: "博物馆"},
+		
 		// Economy
+		s_trading: {de: "handel", es: "comercio", fr: "commerciale",
+			cs: "obchod", it: "commercio", pl: "handel", pt: "comércio", ru: "продажа", zh: "贸易"},
+		s_tracker: {de: "tracker", es: "rastreador", fr: "suivi",
+			cs: "tracker", it: "tracker", pl: "", pt: "rastreador", ru: "трекер", zh: "跟踪"},
+		s_recent: {de: "aktuell", es: "reciente", fr: "récent",
+			cs: "poslední", it: "recenti", pl: "ostatnie", pt: "recente", ru: "последние", zh: "最近"},
+		s_buying: {de: "kaufen", es: "comprando", fr: "achat en cours",
+			cs: "nákup", it: "comprando", pl: "kupuje", pt: "comprando", ru: "покупаю", zh: "目前买"},
+		s_selling: {de: "verkaufen", es: "vendiendo", fr: "vente en cours",
+			cs: "prodávat", it: "vendendo", pl: "sprzedaje", pt: "vendendo", ru: "продаю", zh: "目前卖"},
+		s_bought: {de: "gekauft", es: "comprado", fr: "achats historique",
+			cs: "koupil", it: "comprato", pl: "kupiłem", pt: "comprei", ru: "купил", zh: "买了"},
+		s_sold: {de: "verkauft", es: "vendido", fr: "ventes historique",
+			cs: "prodal", it: "venduto", pl: "sprzedał", pt: "vendi", ru: "продал", zh: "卖了"},
 		s_this: {de: "dieses", es: "esto", fr: "ce",
 			cs: "toto", it: "questo", pl: "to", pt: "isto", ru: "это", zh: "这"},
+		s_my: {de: "mein", es: "mi", fr: "mon",
+			cs: "můj", it: "mio", pl: "mój", pt: "meu", ru: "мой", zh: "我的"},
 		s_your: {de: "dein", es: "tu", fr: "ton",
 			cs: "tvůj", it: "tuo", pl: "twój", pt: "teu", ru: "твой", zh: "你的"},
 		s_name: {de: "namen", es: "nombre", fr: "nom",
@@ -20394,6 +20623,10 @@ D = {
 		// No error checking, assume entry exists
 		return (D.Dictionary["s_" + pText])[O.Options.enu_Language];
 	},
+	getWordCase: function(pWord, pCase)
+	{
+		return U.toCase(D.getTranslation(pWord), pCase);
+	},
 	getWordCapital: function(pWord)
 	{
 		return U.toFirstUpperCase(D.getTranslation(pWord));
@@ -20462,6 +20695,19 @@ D = {
 	orderModifier: function(pWord, pModifier)
 	{
 		return D.isLanguageModifierFirst() ? (pModifier + " " + pWord) : (pWord + " " + pModifier);
+	},
+	getModifiedPhrase: function(pString, pCase)
+	{
+		var str = pString.split(" ");
+		if (str.length === 1)
+		{
+			return D.getWordCase(str[0], pCase);
+		}
+		else if (str.length === 2)
+		{
+			return D.getModifiedWord(str[1], str[0], pCase); // Default language has modifier before the word
+		}
+		return D.getPhrase(pString, pCase);
 	},
 	
 	/*
@@ -21049,6 +21295,7 @@ C = {
 		if (I.isMapEnabled)
 		{
 			M.goToView(pChain.finalCoord, M.ZoomEnum.Ground, M.Pin.Event);
+			C.isTouringManual = false;
 		}
 	},
 	
@@ -21246,7 +21493,7 @@ C = {
 			chainextrastr = "<div class='chnDetailsExtra'>"
 				+ chainextra
 				+ "<kbd id='chnDelete_" + pChain.nexus + "' class='chnDelete' "
-					+ "title='Permanently hide this event chain (can undo in <img src=img/ui/alarm.png /> menu above).'></kbd>"
+					+ "title='Permanently hide this event chain (can undo in <img src=img/ui/menu/alarm.png /> menu above).'></kbd>"
 			+ "</div>";
 		}
 		
@@ -22668,10 +22915,6 @@ M = {
 		/*
 		 * Bind map HUD buttons functions.
 		 */
-		$(htmlidprefix + "DirectoryButton").click(function()
-		{
-			$("#menuMap").trigger("click");
-		});
 		$(htmlidprefix + "GPSButton").click(function()
 		{
 			// Go to character if cliked on GPS button
@@ -22686,11 +22929,6 @@ M = {
 			{
 				that.Map.setZoom(that.ZoomEnum.Default);
 			}
-		});
-		$(htmlidprefix + "ViewButton").click(function()
-		{
-			// Toggle HUD
-			$("#opt_bol_showHUD" + P.MapSwitchSuffix).trigger("click");
 		});
 		// Translate and bind map zones list
 		$(htmlidprefix + "ZoneButton").one("mouseenter", that.bindZoneList(that)).click(function()
@@ -22756,7 +22994,7 @@ M = {
 		});
 		$("<kbd class='tchToggleMap tchButton'></kbd>").appendTo(menu).click(function()
 		{
-			$("#mapSwitchButton").trigger("click");
+			I.switchMap();
 		});
 		$("<kbd class='tchZoomIn tchButton'></kbd>").appendTo(menu).click(function()
 		{
@@ -23225,7 +23463,7 @@ M = {
 			{
 				case P.MapEnum.Tyria:
 				{
-					if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PageEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
+					if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PlateEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
 					if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
 					if (O.Options.bol_displayPOIs) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
 					if (O.Options.bol_displayVistas) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
@@ -24960,7 +25198,7 @@ M = {
 			// Go to map page if go or draw commanded is provided and page is not
 			if (U.Args[U.KeyEnum.Page] === undefined)
 			{
-				$("#menuMap").trigger("click");
+				$("#plateMenu_Map").trigger("click");
 			}
 		};
 		try { arr = JSON.parse(qsgo); } catch (e) {}
@@ -26201,7 +26439,8 @@ P = {
 	{
 		if (I.isMapEnabled
 			&& O.Options.bol_tourPrediction && I.ModeCurrent !== I.ModeEnum.Overlay
-			&& I.PageCurrent === I.PageEnum.Chains && C.isDryTopIconsShown === false
+			&& (I.PageCurrent === I.PlateEnum.Chains || I.PageCurrent === I.PlateEnum.Directory)
+			&& C.isDryTopIconsShown === false
 			&& !(U.Args[U.KeyEnum.Go]))
 		{
 			return true;
@@ -27297,7 +27536,7 @@ G = {
 		// Generate daily achievement boxes
 		G.fillDailyCalendar(calendar, now);
 	},
-	fillDailyCalendar: function(pContainer, pDate, pIsDashboard)
+	fillDailyCalendar: function(pContainer, pDate, pIsVertical)
 	{
 		var calendar = $(pContainer);
 		var finalizeDailies = function()
@@ -27319,10 +27558,10 @@ G = {
 		calendar.after(I.cThrobber);
 		T.getDaily().done(function()
 		{
-			G.insertDailyDay(calendar, T.DailyToday, pDate, pIsDashboard); // Today's dailies
+			G.insertDailyDay(calendar, T.DailyToday, pDate, pIsVertical); // Today's dailies
 			T.getDaily({aWantGetTomorrow: true}).done(function() // Tomorrow's dailies
 			{
-				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), pIsDashboard);
+				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), pIsVertical);
 				finalizeDailies(calendar);
 			});
 		}).fail(function()
@@ -27365,7 +27604,7 @@ G = {
 	 * @param object pDaily daily object from general.js
 	 * @param object pDate of the day.
 	 */
-	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsDashboard)
+	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsVertical)
 	{
 		var calendar = $(pContainer);
 		// Daily category rows (game modes)
@@ -27472,7 +27711,7 @@ G = {
 			case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
 			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
 		}
-		var dsbclass = (pIsDashboard) ? "dlyBoxDashboard" : "";
+		var dsbclass = (pIsVertical || pIsVertical === undefined) ? "" : "dlyBoxDashboard";
 		// Get daily activity
 		var activity = T.Daily.Activity;
 		var activityalias = activity.Schedule[pDate.getUTCDay()];
@@ -29126,7 +29365,7 @@ W = {
 	/*
 	 * Initializes the WvW map and starts the objective state and time functions.
 	 */
-	initializeWvW: function()
+	initializeWvW: function(pPage)
 	{
 		/*
 		 * Merge W's unique variables and functions with M, and use that new
@@ -29164,7 +29403,14 @@ W = {
 		W.isWvWLoaded = true;
 		
 		// Show leaderboard the first time if requested by URL
-		U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
+		if (pPage === I.SpecialPageEnum.Leaderboard)
+		{
+			$("#lboRegion").trigger("click");
+		}
+		else
+		{
+			U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
+		}
 		
 		// Write announcement if available
 		var announcement = GW2T_DASHBOARD_DATA.Announcement;
@@ -33003,7 +33249,7 @@ H = {
 	Story: GW2T_DASHBOARD_DATA.Story,
 	Faux: GW2T_DASHBOARD_DATA.Faux,
 	Sale: GW2T_SALE_DATA,
-	Vendor: GW2T_DASHBOARD_DATA.Vendor,
+	Pact: GW2T_DASHBOARD_DATA.Pact,
 	SaleCountdowns: null, // Will contain expiration date in UNIX seconds, accessed by Items array index number
 	GemSubscription: null,
 	isDashboardEnabled: true,
@@ -33015,7 +33261,8 @@ H = {
 	isDailyEnabled: true,
 	isSaleEnabled: false,
 	isSaleOpened: false,
-	isVendorEnabled: true,
+	isPactEnabled: true,
+	isVertical: true,
 	
 	Timeline: GW2T_TIMELINE,
 	isTimelineEnabled: true,
@@ -33058,7 +33305,7 @@ H = {
 		if ((H.isCountdownEnabled === false
 				&& H.isAnnouncementEnabled === false
 				&& H.isSaleEnabled === false
-				&& H.isVendorEnabled === false)
+				&& H.isPactEnabled === false)
 			|| H.isDashboardEnabled === false
 			|| O.Options.bol_showDashboard === false)
 		{
@@ -33116,8 +33363,11 @@ H = {
 				 */
 				$("#dsbCountdown").append(
 					"<div id='dsbCountdown_" + i + "' class='dsbCountdownEntry'>"
-						+ "<code></code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> "
-						+ "<span class='dsbCountdownDate'><abbr></abbr> <var></var></span>"
+						+ "<div class='dsbCountdownSide0'><code></code>" + ctd.Anchor + "</div> "
+						+ "<div class='dsbCountdownSide1'>"
+							+ "<time id='dsbCountdownTime_" + i + "'></time> "
+							+ "<span class='dsbCountdownDate'><abbr></abbr> <var></var></span>"
+						+ "</div>"
 					+ "</div>");
 			}
 			I.qTip.init("#dsbCountdown");
@@ -33140,9 +33390,9 @@ H = {
 		}
 		
 		// Initialize vendor
-		if (H.isVendorEnabled)
+		if (H.isPactEnabled)
 		{
-			H.generateDashboardVendorHeader();
+			H.generateDashboardPactHeader();
 		}
 		
 		// Initialize daily
@@ -33160,11 +33410,11 @@ H = {
 		var range = T.getMinMax(H.Sale.Items, "price");
 		var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
 		// Create "button" to toggle list of items on sale
-		$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle' title='<dfn>Gem Store Promotions and Sales</dfn><br />Expires: " + T.formatWeektime(H.Sale.Finish, true) + "'>"
+		$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'>"
 			+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + H.Sale.Items.length + " " + D.getWordCapital("promotions") + "</var> "
 			+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
-		+ "</div>").addClass("dsbMenuEnabled");
+		+ "</div>").addClass("dsbMenuItemEnabled");
 		$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
 		// Determine if the current sale has price reduction
 		var isdiscounted = false;
@@ -33216,7 +33466,7 @@ H = {
 			{
 				table.append("<div class='dsbNote'>Note: " + U.convertExternalString(H.Sale.note) + "</div>");
 			}
-			table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
+			table.append("<div id='dsbSaleSide0'></div><div id='dsbSaleSide1'></div>");
 
 			var gemstr = "<ins class='s16 s16_gem'></ins>";
 			// Include the exchange rate "items" after determining range
@@ -33229,7 +33479,7 @@ H = {
 				var item = H.Sale.Items[i];
 				var url = item.url || U.getWikiSearchDefault(item.name);
 				var video = U.getYouTubeLink(item.name);
-				var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
+				var side = (H.isVertical) ? 0 : ((item.col !== undefined) ? item.col : parseInt(i) % 2);
 				if (item.Finish)
 				{
 					H.SaleCountdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
@@ -33279,7 +33529,7 @@ H = {
 				}
 				var idprop = (idisimg) ? "" : ("id='dsbSaleItem_" + item.id + "'");
 				var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
-				$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
+				$("#dsbSaleSide" + side).append("<div class='dsbSaleEntry'>"
 					+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + idprop + " src='" + imgsrc + "' /></a> "
 					+ "<div class='dsbSaleText'>"
 						+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
@@ -33383,59 +33633,58 @@ H = {
 	/*
 	 * Generates the header for the vendor feature.
 	 */
-	generateDashboardVendorHeader: function(pIsReset)
+	generateDashboardPactHeader: function(pIsReset)
 	{
-		var weekdaylocation = H.getDashboardVendorWeekday();
-		var vendorname = D.getObjectName(H.Vendor);
+		var weekdaylocation = H.getDashboardPactWeekday();
+		var vendorname = D.getObjectName(H.Pact);
 		var vendorcodes = "";
-		for (var i in H.Vendor.Codes)
+		for (var i in H.Pact.Codes)
 		{
-			vendorcodes += i + "@" + (H.Vendor.Codes[i])[weekdaylocation] + " ";
+			vendorcodes += i + "@" + (H.Pact.Codes[i])[weekdaylocation] + " ";
 		}
 		vendorcodes += "- " + vendorname;
-		var expirestr = (H.Vendor.Offers.length) ? ("<br />Expires: " + T.formatWeektime(H.Vendor.Finish, true)) : "";
-		var menubutton = $("#dsbMenuVendor");
-		menubutton.empty().append("<div><kbd id='dsbVendorHeader' class='curToggle jsTitle' "
-			+  "title='<dfn>Pact Supply Network Agent</dfn>" + expirestr
-				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
-			+ "<var>" + vendorname + "</var></kbd>"
-		+ "</div>").addClass("dsbMenuEnabled");
-		$("#dsbVendor").empty().append("<div id='dsbVendorMenu'>"
-			+ "<img data-src='img/map/waypoint.png' style='width:32px;height:32px;' /><input id='dsbVendorCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
+		var menubutton = $("#dsbMenuPact");
+		menubutton.empty().append("<div><kbd id='dsbPactHeader' class='curToggle'>"
+			+ "<img src='img/map/vendor_karma.png' /><img id='dsbPactToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
+			+ "<var>" + vendorname + "</var></kbd></div>").addClass("dsbMenuItemEnabled");
+		$("#dsbPact").empty().append("<div id='dsbPactMenu'>"
+			+ "<img data-src='img/map/waypoint.png' style='width:32px;height:32px;' /><input id='dsbPactCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
-			+ ((I.isMapEnabled) ? "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u> " : "")
-			+ "<img data-src='img/ui/info.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
-			+ "<img data-src='img/ui/tradingpost.png' /><a class='jsTitle'" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
-				+ "title='Previous recipes and frequency statistics.'>" + D.getWordCapital("history") + "</a> "
-			+ "<img data-src='img/ui/import.png' /><a class='jsTitle'" + U.convertExternalAnchor(H.Vendor.SpreadsheetEdit)
-					+ "title='Update and verify the collaborative daily offers list.'>" + D.getWordCapital("update") + "</a>"
-			+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>").hide();
+			+ ((I.isMapEnabled) ? "<img data-src='img/map/route.png' /><dfn class='curZoom' id='dsbPactDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</dfn> " : "")
+			+ "<a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>"
+				+ "<img data-src='img/ui/menu/info.png' />" + D.getWordCapital("info") + "</a> "
+			+ "<a class='jsTitle'" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
+				+ "title='Previous recipes and frequency statistics.'>"
+				+ "<img data-src='img/ui/tradingpost.png' />" + D.getWordCapital("history") + "</a> "
+			+ "<a class='jsTitle'" + U.convertExternalAnchor(H.Pact.SpreadsheetEdit)
+				+ "title='Update and verify the collaborative daily offers list.'>"
+				+ "<img data-src='img/ui/import.png' />" + D.getWordCapital("update") + "</a>"
+			+ "</div><div id='dsbPactTable' class='jsScrollable'></div>").hide();
 		I.qTip.reinit();
 
 		// Bind buttons
-		var vendorcopy = $("#dsbVendorCodes");
-		I.bindClipboard(vendorcopy, vendorcodes);
-		I.preventMapPropagation(vendorcopy).click(function()
+		var vendorcopy = $("#dsbPactCodes").click(function()
 		{
 			$(this).select();
-		});
+		});;
+		I.bindClipboard(vendorcopy, vendorcodes);
 		if (pIsReset)
 		{
 			menubutton.unbind("click");
 		}
 		menubutton.click(function()
 		{
-			H.generateDashboardVendor();
+			H.generateDashboardPact();
 		});
-		$("#dsbVendorDraw").click(function()
+		$("#dsbPactDraw").click(function()
 		{
 			if ($(this).data("hasDrawn") !== true)
 			{
 				var coords = [];
-				for (var i in H.Vendor.Coords)
+				for (var i in H.Pact.Coords)
 				{
-					var coord = (H.Vendor.Coords[i])[weekdaylocation];
+					var coord = (H.Pact.Coords[i])[weekdaylocation];
 					if (coord !== undefined)
 					{
 						coords.push(coord);
@@ -33450,17 +33699,17 @@ H = {
 				$(this).data("hasDrawn", false);
 			}
 		});
-		I.toggleToggleIcon("#dsbVendorToggleIcon", H.Sale.isPreshown);
+		I.toggleToggleIcon("#dsbPactToggleIcon", H.Sale.isPreshown);
 	},
-	generateDashboardVendor: function()
+	generateDashboardPact: function()
 	{
 		var animationspeed = 200;
-		var weekdaylocation = H.getDashboardVendorWeekday();
-		var table = $("#dsbVendorTable");
+		var weekdaylocation = H.getDashboardPactWeekday();
+		var table = $("#dsbPactTable");
 		
-		var finalizeVendorTable = function(pUpdateTime)
+		var finalizePactTable = function(pUpdateTime)
 		{
-			$(".dsbVendorItem").each(function()
+			$(".dsbPactItem").each(function()
 			{
 				M.bindMapLinkBehavior($(this));
 			});
@@ -33468,8 +33717,8 @@ H = {
 			table.css({height: 0}).animate({height: height}, animationspeed, function()
 			{
 				$(this).css({height: "auto"});
-				I.bindScrollbar("#dsbVendorTable");
-				I.updateScrollbar("#dsbVendorTable");
+				I.bindScrollbar("#dsbPactTable");
+				I.updateScrollbar("#dsbPactTable");
 			});
 			I.removeThrobber(table);
 			// Insert timestamp of daily offers
@@ -33482,9 +33731,9 @@ H = {
 				timestamp = T.formatWeektime(pUpdateTime, true) + " (" + T.formatMilliseconds(now - updatetime) + " " + D.getWord("ago") + ")";
 				expiredstr = (updatetime > T.ResetToday && updatetime < T.ResetTomorrow) ? "" : D.getWordCapital("expired") + ". ";
 			}
-			table.append("<div id='dsbVendorNote'>This daily list is user contributed. "
-				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Vendor.SpreadsheetEdit) + ">Update</a> link."
-				+ "<br />" + expiredstr + "<time id='dsbVendorTime'>" + timestamp + "</time></div>");
+			table.append("<div id='dsbPactNote'>This daily recipes list is user contributed. "
+				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Pact.SpreadsheetEdit) + ">Update</a> link."
+				+ "<br />" + expiredstr + "<time id='dsbPactTime'>" + timestamp + "</time></div>");
 		};
 		
 		var doGenerate = function(pData)
@@ -33494,10 +33743,10 @@ H = {
 			try
 			{
 				var data = pData.feed.entry[0];
-				for (var i in H.Vendor.OffersAssoc)
+				for (var i in H.Pact.OffersAssoc)
 				{
 					var id = parseInt(data["gsx$" + i.toLowerCase()].$t);
-					if (H.Vendor.Products[id])
+					if (H.Pact.Products[id])
 					{
 						list.push(id);
 					}
@@ -33509,7 +33758,7 @@ H = {
 				updatetime = pData.feed.updated.$t;
 			}
 			catch (e) {}
-			if (list.length !== H.Vendor.numOffers)
+			if (list.length !== H.Pact.numOffers)
 			{
 				I.removeThrobber(table);
 				I.write("Error parsing external data. Please collaboratively update the list.");
@@ -33517,71 +33766,75 @@ H = {
 			}
 			
 			var idstofetch = [];
-			for (var i in H.Vendor.OffersAssoc)
+			for (var i in H.Pact.OffersAssoc)
 			{
-				var recipeid = list[(H.Vendor.OffersAssoc[i])];
-				var productid = H.Vendor.Products[recipeid] || recipeid;
+				var recipeid = list[(H.Pact.OffersAssoc[i])];
+				var productid = H.Pact.Products[recipeid] || recipeid;
 				idstofetch.push(recipeid);
 				idstofetch.push(productid);
 			}
 			Q.getPricedItems(idstofetch, function()
 			{
-				for (var i in H.Vendor.OffersAssoc)
+				for (var i in H.Pact.OffersAssoc)
 				{
-					table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
-					var recipeid = list[(H.Vendor.OffersAssoc[i])];
+					table.append("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>");
+					var recipeid = list[(H.Pact.OffersAssoc[i])];
 					var recipe = Q.getCachedItem(recipeid);
+					var productid = H.Pact.Products[recipeid] || recipeid;
+					var product = Q.getCachedItem(productid);
 					var wikiquery = (D.isLanguageDefault()) ? recipe.name : recipeid.toString();
-					$("#dsbVendorEntry_" + i).html(
-						"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + i + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
-						+ "<span id='dsbVendorItem_" + i + "' class='dsbVendorItem curZoom " + Q.getRarityClass(recipe.rarity)
-							+ "' data-coord='" + (H.Vendor.Coords[i])[weekdaylocation] + "'>" + recipe.name + "</span> "
-						+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + i + "'></span>"
-						+ "<span class='dsbVendorName'>" + i + "</span>"
-						+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[recipeid] || H.Vendor.PriceDefault) + "</span>");
+					$("#dsbPactEntry_" + i).html(
+						"<div class='dsbPactSide0'>"
+							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbPactIcon_" + i + "' class='dsbPactIcon' src='img/ui/placeholder.png' /></a> "
+							+ "<span id='dsbPactItem_" + i + "' class='dsbPactItem curZoom " + Q.getRarityClass(recipe.rarity)
+								+ "' data-coord='" + (H.Pact.Coords[i])[weekdaylocation] + "'>" + product.name + "</span> "
+							+ "</div>"
+						+ "<div class='dsbPactSide1'>"
+							+ "<span class='dsbPactPriceCoin' id='dsbPactPriceCoin_" + i + "'></span> "
+							+ "<span class='dsbPactName'>" + i + "</span> "
+							+ "<span class='dsbPactPriceKarma'>" + E.formatKarmaString(H.Pact.Prices[recipeid] || H.Pact.PriceDefault) + "</span>"
+						+ "</div>");
 					// Get TP prices also
 					var recipeprice = E.getCachedPrice(recipeid);
-					var recipepricestr = (recipeprice) ? (" = " + E.formatCoinStringColored(recipeprice.oPriceSell)) : " = " + E.formatCoinStringColored(0);
-					$("#dsbVendorPriceCoin_" + i).html(recipepricestr);
-					M.bindMapLinkBehavior($("#dsbVendorItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
+					var recipepricestr = (recipeprice) ? (E.formatCoinStringColored(recipeprice.oPriceSell)) : " = " + E.formatCoinStringColored(0);
+					$("#dsbPactPriceCoin_" + i).html(recipepricestr);
+					M.bindMapLinkBehavior($("#dsbPactItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
 					// Get the product that the recipe crafts
-					var productid = H.Vendor.Products[recipeid] || recipeid;
-					var product = Q.getCachedItem(productid);
-					var icon = $("#dsbVendorIcon_" + i);
+					var icon = $("#dsbPactIcon_" + i);
 					icon.attr("src", product.icon);
 					Q.scanItem(product, {aElement: icon});
 					// Finalize the table after every offer has been added
-					if ($(".dsbVendorItem").length === H.Vendor.numOffers)
+					if ($(".dsbPactItem").length === H.Pact.numOffers)
 					{
-						finalizeVendorTable(updatetime);
+						finalizePactTable(updatetime);
 					}
 				}
 			});
 		};
 		
 		// Collapse and empty the table if currently expanded, else generate
-		if ($("#dsbVendorMenu").is(":visible"))
+		if ($("#dsbPactMenu").is(":visible"))
 		{
-			I.toggleToggleIcon("#dsbVendorToggleIcon", false);
+			I.toggleToggleIcon("#dsbPactToggleIcon", false);
 			table.animate({height: 0}, animationspeed, function()
 			{
 				$(this).css({height: "auto"}).empty();
-				$("#dsbVendor").hide();
-				$("#dsbMenuVendor").removeClass("dsbMenuItemActive");
+				$("#dsbPact").hide();
+				$("#dsbMenuPact").removeClass("dsbMenuItemActive");
 			});
 		}
 		else
 		{
-			$("#dsbVendor").show();
-			$("#dsbMenuVendor").addClass("dsbMenuItemActive");
-			I.loadImg($("#dsbVendorMenu"));
-			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
+			$("#dsbPact").show();
+			$("#dsbMenuPact").addClass("dsbMenuItemActive");
+			I.loadImg($("#dsbPactMenu"));
+			I.toggleToggleIcon("#dsbPactToggleIcon", true);
 			table.empty();
 			
-			if (H.Vendor.isEnabled)
+			if (H.Pact.isEnabled)
 			{
 				table.append(I.cThrobber);
-				U.getJSON(H.Vendor.SpreadsheetData, function(pData)
+				U.getJSON(H.Pact.SpreadsheetData, function(pData)
 				{
 					if (I.isAPIEnabled)
 					{
@@ -33598,21 +33851,21 @@ H = {
 			}
 			else
 			{
-				for (var i in H.Vendor.OffersAssoc)
+				for (var i in H.Pact.OffersAssoc)
 				{
-					var elm = $("<dfn id='dsbVendorEntry_" + i + "' class='dsbVendorEntry' data-coord='"
-						+ (H.Vendor.Coords[i])[weekdaylocation] + "'>" + i + "</dfn>").appendTo(table);
+					var elm = $("<dfn id='dsbPactEntry_" + i + "' class='dsbPactEntry' data-coord='"
+						+ (H.Pact.Coords[i])[weekdaylocation] + "'>" + i + "</dfn>").appendTo(table);
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
 			}
 		}
 	},
-	getDashboardVendorWeekday: function()
+	getDashboardPactWeekday: function()
 	{
 		var now = new Date();
 		var weekday = now.getUTCDay();
 		var hour = now.getUTCHours();
-		return (hour < H.Vendor.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
+		return (hour < H.Pact.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
 	},
 	
 	/*
@@ -33621,11 +33874,10 @@ H = {
 	generateDashboardDailyHeader: function(pDate)
 	{
 		var headername = (I.ModeCurrent === I.ModeEnum.Overlay) ? D.getWordCapital("daily") : D.getModifiedWord("achievements", "daily", U.CaseEnum.Every);
-		$("#dsbMenuDaily").empty().append("<div><kbd id='dsbDailyHeader' class='curToggle' "
-			+  "title='<dfn>Daily Achievements</dfn><br />" + T.formatWeektime(pDate) + " and Next'>"
+		$("#dsbMenuDaily").empty().append("<div><kbd id='dsbDailyHeader' class='curToggle'>"
 			+ "<img src='img/ui/daily.png' /><img id='dsbDailyToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + headername + "</var></kbd>"
-		+ "</div>").addClass("dsbMenuEnabled").click(function()
+		+ "</div>").addClass("dsbMenuItemEnabled").click(function()
 		{
 			H.generateDashboardDaily();
 		}).one("click", function()
@@ -33658,7 +33910,7 @@ H = {
 			I.loadImg($("#dsbDailyMenu"));
 			I.toggleToggleIcon("#dsbDailyToggleIcon", true);
 			var calendar = $("<div class='dlyCalendar'></div>").appendTo(table);
-			G.fillDailyCalendar(calendar, now, true);
+			G.fillDailyCalendar(calendar, now, H.isVertical);
 		}
 	},
 	
@@ -33750,9 +34002,9 @@ H = {
 		}
 		
 		// Refresh vendor header at its specific time
-		if (hour === H.Vendor.resetHour && minute === 0)
+		if (hour === H.Pact.resetHour && minute === 0)
 		{
-			H.generateDashboardVendorHeader(true);
+			H.generateDashboardPactHeader(true);
 		}
 	},
 	
@@ -33819,7 +34071,6 @@ H = {
 					case C.EventPrimacyEnum.Normal: segmentprefix = I.Symbol.Ellipsis; break;
 					case C.EventPrimacyEnum.Boss: segmentprefix = I.Symbol.Star + " "; break;
 				}
-				var linename = (ii === 0 && !chain.isWB) ? ("<b class='tmlLineName'>" + name + "</b>") : "";
 				event.duration = T.parseChainTime(event.duration);
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
@@ -33827,7 +34078,7 @@ H = {
 				"<div class='tmlSegment tmlTimeslice " + wbclass + " " + emptyclass + "' style='width:" + width + "%' "
 				+ "data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "' " + wbdata + ">"
 					+ "<div class='tmlSegmentContent'>"
-						+ linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + segmentname + "</span>"
+						+ "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + segmentname + "</span>"
 						+ "<span class='tmlSegmentCountdown'></span>"
 						+ "<var class='tmlSegmentSpecial'></var>"
 					+ "</div>"
@@ -34331,7 +34582,7 @@ K = {
 				 * all absolutely positioned, so to move them the CSS "top" attribute
 				 * needs to be changed: less to go up, more to go down.
 				 */
-				$("#paneMenu").animate({top: 0}, animationspeed);
+				$("#plateMenu").animate({top: 0}, animationspeed);
 				$("#paneContent").animate({top: I.cPANE_MENU_HEIGHT,
 					"min-height": I.cPANEL_HEIGHT_MIN - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
 					function()
@@ -34348,7 +34599,7 @@ K = {
 		if (O.Options.int_setClock !== O.IntEnum.Clock.None)
 		{
 			// Resize panes by animation
-			$("#paneMenu").animate({top: clockpaneheight}, animationspeed);
+			$("#plateMenu").animate({top: clockpaneheight}, animationspeed);
 			$("#paneClock, #paneClockWall, #paneClockBackground, #paneClockIcons, #paneClockCanvas")
 				.animate({height: clockpaneheight}, animationspeed);
 
@@ -34446,7 +34697,6 @@ K = {
 				$(this).unbind(zoombossbehavior).on(zoombossbehavior, function()
 				{
 					C.viewChainFinale(C.Chains[$(this).data(C.cIndexSynonym)]);
-					
 				}).unbind(checkbossbehavior).on(checkbossbehavior, function()
 				{
 					$("#chnCheck_" + C.Chains[$(this).data(C.cIndexSynonym)].nexus).trigger("click");
@@ -34683,6 +34933,7 @@ K = {
 		
 		K.timeLocal.innerHTML = localtime;
 		// Times in the Options page Debug section
+		$("#dirHeaderClock").html(localtime);
 		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
 		K.timestampReset.innerHTML = T.getTimeFormatted(
 		{
@@ -35359,7 +35610,7 @@ K = {
 			K.StopwatchTimerStart = 0;
 			K.stopwatchDown.innerHTML = "";
 		});
-		$("#chnOptionsStopwatchUp input, #chnOptionsStopwatchDown input").click(function()
+		$("#mapAlarmStopwatchUp input, #mapAlarmStopwatchDown input").click(function()
 		{
 			$(this).select();
 		});
@@ -35539,31 +35790,34 @@ I = {
 		Overlay: "Overlay",
 		Projection: "Projection"
 	},
-	cPagePrefix: "#plate",
-	cMenuPrefix: "#menu",
+	cPlatePrefix: "#plate",
+	cPlateMenuPrefix: "#plateMenu_",
 	PageInitial: "",
 	PageCurrent: "",
 	PagePrevious: "",
-	PageEnum:
+	PlateEnum: // The pages displayed by the side app panel
 	{
-		// These are the X in "menuX" and "plateX" IDs in the HTML
+		Directory: "Directory",
 		Chains: "Chains",
 		Map: "Map",
 		Help: "Help",
 		Options: "Options"
 	},
+	isMapPlateInitialized: false,
+	isAccountPanelInitialized: false,
 	SpecialPageEnum:
 	{
 		Account: "Account",
 		Audit: "Audit",
-		WvW: "WvW"
+		WvW: "WvW",
+		Leaderboard: "Leaderboard"
 	},
 	LoadedStylesheets: {}, // Holds names of stylesheets to not download again
 	/*
-	 * Enumeration for opening a valid page section upon site load, if URL provided.
-	 * Section names must be unique, and may be in sentence case or all caps.
+	 * Enumeration for opening a valid page or section (subpage) upon site load, if URL provided.
+	 * Page names must be unique, and may be in sentence case or all caps.
 	 */
-	SectionEnum:
+	PageEnum:
 	{
 		Chains:
 		{
@@ -35630,11 +35884,82 @@ I = {
 			Buying: "Buying",
 			Selling: "Selling",
 			Bought: "Bought",
-			Sold: "Sold",
+			Sold: "Sold"
 			
-			PVP: "PVP",
+			/*PVP: "PVP",
 			Guilds: "Guilds",
-			Achievements: "Achievements"
+			Achievements: "Achievements"*/
+		}
+	},
+	/*
+	 * Outline of the directory menu. Format:
+	 * Grouping: {Page: "Translatable Name"}
+	 */
+	Directory:
+	{
+		Directory:
+		{
+			Chains: "Boss Timers",
+			Map: "PvE Map",
+			Leaderboard: "WvW Leaderboard",
+			Account: "Account Manager",
+			Gem: "Gem Alarm",
+			Help: "Help",
+			Options: "Options"
+		},
+		Map:
+		{
+			Resource: "Resource Nodes",
+			JP: "Jumping Puzzles",
+			Collectible: "Collectible Items",
+			Guild: "Guild Missions"
+		},
+		Checklist:
+		{
+			Personal: "Personal",
+			Notepad: "Notepad",
+			Dungeons: "Dungeons",
+			Raids: "Raids"
+		},
+		Account:
+		{
+			Audit: "Audit",
+			Characters: "Characters",
+			Hero: "Hero",
+			Catalog: "Catalog",
+			Cleanup: "Cleanup"
+		},
+		Bank:
+		{
+			Possessions: "Possessions",
+			Bank: "Bank",
+			Materials: "Materials",
+			Vault: "Vault",
+			Inventory: "Inventory",
+			Ascended: "Ascended"
+		},
+		Wardrobe:
+		{
+			Wardrobe: "Skins",
+			Outfits: "Outfits",
+			Gliders: "Gliders",
+			Dyes: "Dyes",
+			Minis: "Minis",
+			Finishers: "Finishers",
+			Nodes: "Nodes",
+			Cats: "Cats",
+			Recipes: "Recipes"
+		},
+		Trading:
+		{
+			TP: "Tracker",
+			Trading: "Recent",
+			Buying: "Buying",
+			Selling: "Selling",
+			Bought: "Bought",
+			Sold: "Sold",
+			Museum: "Museum",
+			Pact: "Pact"
 		}
 	},
 	/*
@@ -35766,16 +36091,9 @@ I = {
 		// Set the maximum wait time for all non-custom AJAX requests, such as getJSON
 		$.ajaxSetup({ timeout: I.cAJAXGlobalTimeout });
 		
-		// Add throbber to AJAX loaded pages
-		$("#plateMap, #plateWvW, #plateHelp").each(function()
-		{
-			$(this).append(I.cThrobber);
-		});
+		// Initialize first interfaces
 		I.Scrl.Anchor = $("#itemAutoscroll");
 		I.qTip.start();
-		
-		// Default content plate
-		I.PageCurrent = I.PageEnum.Chains;
 		
 		// Temporary transfer of old named compasses
 		if (localStorage["obj_utlStoredWeapons"])
@@ -35800,6 +36118,7 @@ I = {
 		I.bindWindowReadjust();
 		I.initializeUIForMenu();
 		I.initializeUIForHUD();
+		I.initializeUIForDirectory();
 		I.styleContextMenu("#mapContext");
 		$("#mapHUDContainer").toggle(O.Options.bol_showHUD);
 		// Bind switch map buttons
@@ -35818,17 +36137,7 @@ I = {
 		// Bind account button
 		$("#mapAccountButton, #wvwAccountButton").one("click", function()
 		{
-			if (A.isAccountInitialized === false)
-			{
-				I.loadStylesheet("account");
-				$("#panelAccount").load(U.getPageSrc("account"), function()
-				{
-					U.getScript(U.URL_DATA.Account, function()
-					{
-						A.initializeAccount();
-					});
-				});
-			}
+			I.loadAccountPanel();
 		}).click(function()
 		{
 			I.toggleAccount();
@@ -35837,7 +36146,7 @@ I = {
 		// Do special commands from the URL
 		U.enforceURLArgumentsLast();
 		// Open Chains section if on that page
-		if (I.PageCurrent === I.PageEnum.Chains)
+		if (I.PageCurrent === I.PlateEnum.Chains)
 		{
 			U.openSectionFromURL();
 		}
@@ -35865,7 +36174,7 @@ I = {
 			});
 		});
 		// Initialize the elements in the chain options popup
-		$("#chnOptions").one("mouseenter", function()
+		$("#mapAlarmPopup").one("mouseenter", function()
 		{
 			I.loadImg($(this));
 			K.initializeStopwatch();
@@ -35924,7 +36233,7 @@ I = {
 		// Initialize scroll bars for pre-loaded plates
 		if (I.isMapEnabled)
 		{
-			I.bindScrollbar("#cslContent, #plateChains, #plateOptions");
+			I.bindScrollbar("#cslContent, #plateDirectory, #plateChains, #plateOptions");
 		}
 		
 		// Clean the localStorage of unrecognized variables
@@ -35935,6 +36244,7 @@ I = {
 		
 		// Post translations
 		D.translateAfter();
+		U.initializeLanguageButton();
 		
 		// View map event or map center
 		if (P.wantTourPrediction())
@@ -36003,7 +36313,7 @@ I = {
 				{
 					// EXPANDED
 					I.updateScrollbar();
-					var container = $(I.cPagePrefix + I.PageEnum.Chains);
+					var container = $(I.cPlatePrefix + I.PlateEnum.Chains);
 					var header = $(this).prev();
 					header.find("kbd").html(I.Symbol.Collapse);
 					// Automatically scroll to the clicked header
@@ -36027,7 +36337,7 @@ I = {
 						} break;
 					}
 					// Update current section variable, ignore if on Scheduled section of Chains page
-					I.SectionCurrent[I.PageEnum.Chains] = (section === I.SectionEnum.Chains.Scheduled) ? "" : section;
+					I.SectionCurrent[I.PlateEnum.Chains] = (section === I.PageEnum.Chains.Scheduled) ? "" : section;
 				}
 				else
 				{
@@ -36048,7 +36358,7 @@ I = {
 						} break;
 					}
 					// Nullify current section variable
-					I.SectionCurrent[I.PageEnum.Chains] = "";
+					I.SectionCurrent[I.PlateEnum.Chains] = "";
 				}
 				U.updateQueryString();
 			});
@@ -37179,21 +37489,23 @@ I = {
 			return;
 		}
 		
-		var plate = pPlate.substring(I.cPagePrefix.length, pPlate.length);
-		var beamid = "menuBeam_" + plate;
-		var beamcontainer = $("<div class='menuBeamContainer'></div>").prependTo(pPlate);
-		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(beamcontainer);
+		var plate = pPlate.substring(I.cPlatePrefix.length, pPlate.length);
+		var beamid = "plateBeam_" + plate;
+		var beamcontainer = $("<div class='plateBeamContainer'></div>").prependTo(pPlate);
+		var platebeam = $("<div class='plateBeam' id='" + beamid + "'></div>").prependTo(beamcontainer);
 		
 		$(pPlate + " header.jsSection").each(function()
 		{
 			var header = $(this);
-			var section = header.next().addClass("cntSection");
+			var section = U.getSubstringFromHTMLID($(this));
+			var sectioncontent = header.next().addClass("cntSection");
 			var headercontent = $(this).children("var").first();
 			// Translate header if available
-			var headertext = D.getDataAttribute(headercontent) || header.text();
+			var headertext = (headercontent.length && D.isLanguageDefault() === false)
+				? D.getModifiedPhrase(header.text().toLowerCase(), U.CaseEnum.Title) : header.text();
 			headercontent.text(headertext);
 			// Hide the entire collapsible div tag next to the header tag
-			section.hide();
+			sectioncontent.hide();
 			header.wrapInner("<span></span>");
 			header.append("<sup>" + I.Symbol.Expand + "</sup>");
 			
@@ -37201,8 +37513,7 @@ I = {
 			header.click(function()
 			{
 				var istobeexpanded = false;
-				var section = U.getSubstringFromHTMLID($(this));
-				$(pPlate + " .menuBeamIcon").removeClass("menuBeamIconActive");
+				$(pPlate + " .plateBeamIcon").removeClass("plateBeamIconActive");
 				
 				if ($(this).next().is(":visible"))
 				{
@@ -37221,8 +37532,8 @@ I = {
 					// TO BE EXPANDED
 					istobeexpanded = true;
 					$(this).children("sup").text(I.Symbol.Collapse);
-					$(pPlate + " .menuBeamIcon[data-section='" + section + "']")
-						.addClass("menuBeamIconActive");
+					$(pPlate + " .plateBeamIcon[data-section='" + section + "']")
+						.addClass("plateBeamIconActive");
 					
 					I.displaySectionMarkers(section, true); // Show associated map icons
 					I.SectionCurrent[plate] = section;
@@ -37279,7 +37590,7 @@ I = {
 			
 			// Create and bind the additional bottom header to collapse the container
 			$("<div class='curClick jsSectionDone'><img src='img/ui/close.png' />" + headertext + "</div>")
-			.appendTo(section).click(function()
+			.appendTo(sectioncontent).click(function()
 			{
 				$(this).parent().prev().trigger("click");
 			});
@@ -37293,9 +37604,9 @@ I = {
 			var src = header.find("img:eq(0)").attr("src");
 			if (I.isMapEnabled || header.hasClass("mapOnly") === false)
 			{
-				$("<img class='menuBeamIcon' data-section='" + sectionname + "' src='" + src + "' "
-				+ "title='&lt;dfn&gt;" + D.getWordCapital("section") + ": &lt;/dfn&gt;" + headertext + "' />")
-				.appendTo(menubeam).click(function()
+				$("<img id='plateBeamIcon_" + section + "' class='plateBeamIcon' data-section='" + sectionname + "' src='" + src + "' "
+				+ "title='&lt;dfn&gt;" + D.getPhraseTitle("view") + ": &lt;/dfn&gt;" + headertext + "' />")
+				.appendTo(platebeam).click(function()
 				{
 					// Hide all the collapsible sections
 					$(pPlate + " header.jsSection").each(function()
@@ -37315,9 +37626,9 @@ I = {
 		});
 
 		// Side menu icon to close all the sections
-		$("<img class='menuBeamIcon menuBeamIconCollapse' src='img/ui/exit.png' "
+		$("<img id='plateBeamIconCollapse_" + plate + "' class='plateBeamIcon plateBeamIconCollapse' src='img/ui/exit.png' "
 			+ "title='&lt;dfn&gt;" + D.getPhraseTitle("collapse section") + "&lt;/dfn&gt;' />")
-		.prependTo(menubeam).click(function()
+		.prependTo(platebeam).click(function()
 		{
 			$(pPlate + " header.jsSection").each(function()
 			{
@@ -37326,12 +37637,11 @@ I = {
 					$(this).trigger("click");
 				}
 			});
-			$(pPlate + " .menuBeamIcon").removeClass("menuBeamIconActive");
+			$(pPlate + " .plateBeamIcon").removeClass("plateBeamIconActive");
 		});
 		
-		
 		// Make tooltips for the beam menu icons
-		I.qTip.init(pPlate + " .menuBeamIcon");
+		I.qTip.init(pPlate + " .plateBeamIcon");
 	},
 	
 		
@@ -37493,6 +37803,55 @@ I = {
 	},
 	
 	/*
+	 * Generates the front page directory on the app panel.
+	 */
+	initializeUIForDirectory: function()
+	{
+		var dir = $("#plateDirectory");
+		var isnondefaultlang = !D.isLanguageDefault();
+		var group, groupname, groupheader, grouplist, pagename, pagebutton;
+		for (var i in I.Directory)
+		{
+			group = $("<div class='dirGroup'></div>").appendTo(dir);
+			groupname = i.toLowerCase();
+			groupheader = $("<h2 class='dirHeader'><ins class='dirHeaderIcon mnu mnu_" + groupname + "'></ins><var class='dirHeaderName'>"
+				+ ((isnondefaultlang) ? D.getWordCapital(groupname) : i) + "</var></h2>").appendTo(group);
+			grouplist = $("<ul class='dirList'></ul>").appendTo(group);
+			if (I.ModeCurrent === I.ModeEnum.Mobile)
+			{
+				// Only create a dashboard container (first group) for mobile
+				break;
+			}
+			for (var ii in I.Directory[i])
+			{
+				pagename = (I.Directory[i])[ii];
+				if (isnondefaultlang)
+				{
+					pagename = D.getModifiedPhrase(pagename.toLowerCase(), U.CaseEnum.Title);
+				}
+				pagebutton = $("<li class='curClick'>" + pagename + "</li>").appendTo(grouplist);
+				(function(iPage)
+				{
+					pagebutton.click(function()
+					{
+						U.interpretPage(iPage);
+					});
+				})(ii);
+			}
+		}
+		var firstheader = dir.find(".dirHeader").first().addClass("dirHeaderFirst");
+		firstheader.find(".dirHeaderName").first().addClass("curToggle").attr("id", "dirHeaderClock").click(function()
+		{
+			$("#opt_bol_use24Hour").trigger("click");
+		});
+		// Move the dashboard to a group now that the directory is generated
+		if (I.ModeCurrent !== I.ModeEnum.Tile)
+		{
+			$("#itemDashboard").insertAfter(firstheader);
+		}
+	},
+	
+	/*
 	 * Menu event handlers and UI postchanges.
 	 */
 	initializeUIForMenu: function()
@@ -37500,23 +37859,32 @@ I = {
 		/*
 		 * Menu click icon to show respective content plate (page).
 		 */
-		$("#menuChains").addClass("menuButtonActive"); // Chains is the default page
-		$(".menuButton").each(function()
+		$(".plateMenuButton").each(function()
 		{
 			$(this).click(function()
 			{
 				var plate = $(this).attr("id");
-				$(".menuButton").removeClass("menuButtonActive");
-				$(this).addClass("menuButtonActive");
-				I.PageCurrent = plate.substring(I.cMenuPrefix.length - 1, plate.length);
-				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
+				$(".plateMenuButton").removeClass("plateMenuButtonActive");
+				$(this).addClass("plateMenuButtonActive");
+				I.PageCurrent = plate.substring(I.cPlateMenuPrefix.length - 1, plate.length);
+				I.contentCurrentPlate = I.cPlatePrefix + I.PageCurrent;
 				if (P.MapSwitchWebsite === P.MapEnum.Mists)
 				{
 					I.PagePrevious = I.PageCurrent;
 				}
 				switch (I.PageCurrent)
 				{
-					case I.PageEnum.Chains:
+					case I.PlateEnum.Directory:
+					{
+						if (O.Options.bol_hideHUD)
+						{
+							$("#mapHUDContainerInner").show();
+						}
+						C.isTouringManual = false;
+						// Hide any opened map sections when viewing directory
+						$("#plateBeamIconCollapse_Map").trigger("click");
+					} break;
+					case I.PlateEnum.Chains:
 					{
 						if (O.Options.bol_hideHUD)
 						{
@@ -37524,7 +37892,7 @@ I = {
 						}
 						C.isTouringManual = false;
 					} break;
-					case I.PageEnum.Map:
+					case I.PlateEnum.Map:
 					{
 						if (I.isMapEnabled)
 						{
@@ -37533,7 +37901,7 @@ I = {
 					} break;
 				}
 				$("#paneContent article").hide(); // Hide all plates
-				if (I.PageCurrent !== I.PageEnum.Chains && O.Options.bol_hideHUD)
+				if ((I.PageCurrent !== I.PlateEnum.Chains && I.PageCurrent !== I.PlateEnum.Directory) && O.Options.bol_hideHUD)
 				{
 					$("#mapHUDContainerInner").hide();
 				}
@@ -37559,7 +37927,7 @@ I = {
 				if (I.isMapEnabled)
 				{
 					M.toggleLayer(M.ZoneCurrent.Layers.Path,
-						(I.PageCurrent !== I.PageEnum.Map && O.Options.bol_showChainPaths));
+						(I.PageCurrent !== I.PlateEnum.Map && O.Options.bol_showChainPaths));
 				}
 			});
 		});
@@ -37570,16 +37938,16 @@ I = {
 		 * the user expand a section of the content.
 		*/
 		// Map plate
-		$("#menuMap").one("click", I.loadMapPlate);
+		$(I.cPlateMenuPrefix + "Map").one("click", I.loadMapPlate);
 		// Help plate
-		$("#menuHelp").one("click", I.loadHelpPlate);
+		$(I.cPlateMenuPrefix + "Help").one("click", I.loadHelpPlate);
 		
 	}, // End of menu initialization
 	
 	/*
 	 * Switches between the API continents, and update associated variables.
 	 */
-	switchMap: function()
+	switchMap: function(pPage)
 	{
 		// When first switching to the WvW, do initializations
 		if (P.MapSwitchWebsite === P.MapEnum.Tyria && W.isWvWPrepped === false)
@@ -37601,7 +37969,7 @@ I = {
 					window.clearInterval(waitForWvWStylesheet);
 					U.getScript(U.URL_DATA.WvW, function()
 					{
-						W.initializeWvW();
+						W.initializeWvW(pPage);
 					});
 				}
 			}, 100);
@@ -37689,12 +38057,31 @@ I = {
 	},
 	
 	/*
+	 * Loads the account page into its panel.
+	 */
+	loadAccountPanel: function(pPage)
+	{
+		if (A.isAccountInitialized === false && I.isAccountPanelInitialized === false)
+		{
+			I.isAccountPanelInitialized = true;
+			I.loadStylesheet("account");
+			$("#panelAccount").load(U.getPageSrc("account"), function()
+			{
+				U.getScript(U.URL_DATA.Account, function()
+				{
+					A.initializeAccount(pPage);
+				});
+			});
+		}
+	},
+	
+	/*
 	 * Macro function for various written content added functionality. Must be
 	 * run at the beginning of any load function's done block.
 	 */
-	bindAfterAJAXContent: function(pPageEnum)
+	bindAfterAJAXContent: function(pPlateEnum)
 	{
-		var plate = I.cPagePrefix + pPageEnum;
+		var plate = I.cPlatePrefix + pPlateEnum;
 		I.generateSectionMenu(plate);
 		if (I.isMapEnabled)
 		{
@@ -37712,14 +38099,23 @@ I = {
 	},
 	
 	/*
-	 * Loads the map page into the map content plate.
+	 * Loads the map HTML into the map content plate.
 	 */
-	loadMapPlate: function()
+	loadMapPlate: function(pPage)
 	{
-		I.loadStylesheet("features");
-		$("#plateMap").load(U.getPageSrc("map"), function()
+		if (I.isMapPlateInitialized)
 		{
-			I.bindAfterAJAXContent(I.PageEnum.Map);
+			return;
+		}
+		if (pPage)
+		{
+			$(I.cPlateMenuPrefix + "Map").trigger("click");
+		}
+		I.isMapPlateInitialized = true;
+		I.loadStylesheet("features");
+		$("#plateMap").append(I.cThrobber).load(U.getPageSrc("map"), function()
+		{
+			I.bindAfterAJAXContent(I.PlateEnum.Map);
 			
 			// Hide map dependent sections in mobile mode
 			if (I.ModeCurrent === I.ModeEnum.Mobile)
@@ -37771,17 +38167,23 @@ I = {
 				G.generateGuildUI();
 			});
 			I.qTip.init("#plateMap label");
+			
+			// Open a section if initially requested
+			if (typeof pPage === "string")
+			{
+				$("#plateBeamIcon_" + pPage).trigger("click");
+			}
 		});
 	},
 	
 	/*
-	 * Loads the help page into the help content plate.
+	 * Loads the help HTML into the help content plate.
 	 */
 	loadHelpPlate: function()
 	{
-		$("#plateHelp").load(U.getPageSrc("help"), function()
+		$("#plateHelp").append(I.cThrobber).load(U.getPageSrc("help"), function()
 		{
-			I.bindAfterAJAXContent(I.PageEnum.Help);
+			I.bindAfterAJAXContent(I.PlateEnum.Help);
 			$(".jsCopyCode").click(function()
 			{
 				$(this).select();
@@ -37794,9 +38196,9 @@ I = {
 	 */
 	initializeUIForHUD: function()
 	{
-		U.convertModeLink(".hudDirectoryColumn a");
-		U.convertExternalLink(".hudDirectoryColumn a");
-		I.bindScrollbar(".hudDirectoryScroll");
+		U.convertModeLink(".hudHelpColumn a");
+		U.convertExternalLink(".hudHelpColumn a");
+		I.bindScrollbar(".hudHelpScroll");
 		$(".hudPeripheral").css({visibility: "visible"});
 	},
 	
@@ -37869,7 +38271,6 @@ I = {
 			{
 				I.cPANE_MENU_HEIGHT = 32;
 				I.loadImg("#mapGPSIcon");
-				$("#dsbMenu").appendTo("#dsbContainer");
 				// Manually assign F5 key browser reload functionality
 				$(document.body).on("keydown", this, function (event)
 				{
@@ -37885,7 +38286,7 @@ I = {
 				I.showHomeLink();
 				// Readjust panels
 				$("#itemTimeline").appendTo("#panelApp");
-				$("#itemLanguagePopup").appendTo("#itemLanguage");
+				$("#itemLanguage").insertAfter("#itemHome");
 				I.readjustSimple();
 			} break;
 			case I.ModeEnum.Mobile:
@@ -37895,13 +38296,15 @@ I = {
 				I.showHomeLink();
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
 					.append("<link rel='canonical' href='http://gw2timer.com' />");
+				$("#itemLanguage").insertAfter("#itemHome");
 			} break;
 			case I.ModeEnum.Tile:
 			{
 				I.isMapEnabled = false;
+				H.isVertical = false;
 				I.showHomeLink();
 				$("#itemLanguage").prependTo("#plateChains");
-				$("#itemLanguagePopup").appendTo("#itemLanguage");
+				$("#itemLanguage").insertAfter("#itemHome");
 				// Show the timeline if the website is not embedded
 				if (I.isProgramEmbedded)
 				{
@@ -37965,21 +38368,36 @@ I = {
 		}
 		
 		// Disable dashboard for non-using modes
-		if (I.ModeCurrent === I.ModeEnum.Mobile || I.ModeCurrent === I.ModeEnum.Simple)
+		if (I.ModeCurrent === I.ModeEnum.Simple)
 		{
 			if (I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
 				H.isDashboardEnabled = false;
 			}
 		}
-		$("#itemLanguagePopup").click(function(pEvent)
+		
+		// Set the initial plate on the app panel
+		if (I.isProgramEmbedded || I.ModeCurrent === I.ModeEnum.Mobile || I.ModeCurrent === I.ModeEnum.Tile)
 		{
-			pEvent.stopPropagation();
-		});
+			I.setInitialPlate(I.PlateEnum.Chains);
+			// Move the alarm options from the map popup to the app panel
+			$("#mapAlarmPopup").appendTo("#chnAlarm").removeClass("hudPopup").addClass("cntPopup");
+		}
+		else
+		{
+			I.setInitialPlate(I.PlateEnum.Directory);
+		}
 	},
 	getMode: function()
 	{
 		return (I.isProjectionEnabled) ? I.ModeEnum.Projection : I.ModeCurrent;
+	},
+	setInitialPlate: function(pPlate)
+	{
+		// Default content plate
+		I.PageCurrent = pPlate;
+		$("#plate" + pPlate).show();
+		$(I.cPlateMenuPrefix + pPlate).addClass("plateMenuButtonActive");
 	},
 	
 	/*
@@ -38061,7 +38479,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind these tags with the title attribute for tooltip
-		I.qTip.init("#chnOptions img, a, ins, kbd, span, time, fieldset, label, input, button");
+		I.qTip.init("#mapAlarm img, a, ins, kbd, span, time, fieldset, label, input, button");
 	},
 	
 	/*

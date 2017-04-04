@@ -14,7 +14,7 @@ html, body {
 	bottom: 24px;
 }
 
-#panelMap, #itemExpandButton, #paneClock, #paneMenu, .chnEvents {
+#panelMap, #itemExpandButton, #paneClock, #plateMenu, .chnEvents {
 	display: none;
 }
 
@@ -23,7 +23,6 @@ html, body {
 	text-align: center;
 }
 #itemDashboard {
-	display: inline-block !important;
 	position: relative;
 	margin-top: -16px;
 	margin-bottom: 64px;
@@ -96,19 +95,15 @@ body, #paneContent article {
 /* Element resize */
 
 #itemLanguage {
-	display: block;
-	position: absolute;
-	padding-top: 12px;
-	padding-bottom: 0;
-	right: 96px;
-	bottom: auto;
-	left: auto;
-	z-index: 9;
+	position: fixed;
 }
 
 #chnProgressBar {
 	position: fixed;
 	width: 100%; height: 4px;
+}
+#chnAlarm {
+	display: block;
 }
 
 .chnBar, .chnSlot {

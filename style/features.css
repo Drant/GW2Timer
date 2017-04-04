@@ -30,20 +30,15 @@
 	border-radius: 4px;
 	padding: 4px;
 	text-align: left;
-	background: linear-gradient(to top, #111 0%, #333 100%);
+	background: linear-gradient(to top, rgba(17, 17, 17, 0.4) 0%, rgba(51, 51, 51, 0.4) 100%);
 }
 .dlyBox:hover {
-	background: linear-gradient(to bottom, #111 0%, #333 100%);
+	background: linear-gradient(to bottom, rgba(17, 17, 17, 0.4) 0%, rgba(51, 51, 51, 0.4) 100%);
 }
 .dlyBoxDashboard {
 	display: inline-block;
-	width: 45%;
 	margin: 0px 8px 0px 8px;
 	vertical-align: middle;
-	background: linear-gradient(to top, rgba(17, 17, 17, 0.4) 0%, rgba(51, 51, 51, 0.4) 100%);
-}
-.dlyBoxDashboard:hover {
-	background: linear-gradient(to bottom, rgba(17, 17, 17, 0.4) 0%, rgba(51, 51, 51, 0.4) 100%);
 }
 .dlyBoxDashboard .dlyMonthday {
 	margin: 0px;

@@ -14,7 +14,7 @@ GW2T_SALE_DATA = {
 			url: "http://gw2timer.com/?page=Gem",
 			price: 100,
 			discount: null,
-			col: 0
+			side: 0
 		},
 		{
 			name: "Coin", // Gold exchange rate sample
@@ -22,7 +22,7 @@ GW2T_SALE_DATA = {
 			url: "http://gw2timer.com/?page=Trading",
 			price: 1000000,
 			discount: null,
-			col: 1
+			side: 1
 		}
 	],
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
@@ -34,64 +34,79 @@ GW2T_SALE_DATA = {
 	 *	url: "", // If not provided, will use name as a wiki link, optional
 	 *	price: 400, // Current gem price for one item
 	 *	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]] OR 200, // [[quantity, gempricecurrent, gempriceoldOptional], ...] OR gempriceoldOptional
-	 *	col: 0 // Display on left (0) or right (1) column
+	 *	side: 0 // Display on left (0) or right (1) column
 	*/
 	Items: [
+	{
+		name: "Super Adventure Box o' Fun",
+		id: "41911",
+		price: 0,
+		discount: 125,
+		side: 1
+	},
 	{
 		name: "Super Cloud Glider",
 		id: "80919",
 		price: 500,
 		discount: null,
-		col: 0
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-11T16:00:00Z"),
+		name: "Super Adventure Glider",
+		id: "78009",
+		price: 400,
+		discount: null,
+		side: 0
 	},
 	{
 		name: "Miniature Super Trio",
 		id: "41907",
 		price: 500,
 		discount: null,
-		col: 0
+		side: 0
 	},
 	{
 		name: "Miniature Super Trio—World 2",
 		id: "46498",
 		price: 500,
 		discount: null,
-		col: 0
+		side: 0
+	},
+	{
+		name: "Miniature Super Trio—Series 3",
+		id: "80939",
+		price: 600,
+		discount: null,
+		side: 0
 	},
 	{
 		name: "Super Bee Dog Mail Carrier",
 		id: "78088",
 		price: 600,
 		discount: null,
-		col: 1
+		side: 1
 	},
 	{
 		name: "Infinite Continue Coin",
 		id: "46499",
 		price: 600,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "Super Adventure Box o' Fun",
-		id: "41911",
-		price: 125,
-		discount: null,
-		col: 1
+		side: 1
 	},
 	{
 		name: "Spring Promenade Outfit",
 		id: "80906",
 		price: 700,
 		discount: null,
-		col: 1
+		side: 1
 	},
 	{
 		name: "Mini Krytan Floppy Fish",
 		id: "80860",
 		price: 350,
 		discount: null,
-		col: 1
+		side: 1
 	}
 	]
 };

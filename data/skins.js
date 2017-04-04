@@ -2270,7 +2270,8 @@ Weapon_Axe: [
 	{u: 7062, i: 79992, n: "Frostforged Axe", b: [79992]},
 	{u: 7122, i: 80398, n: "Devoted Axe", b: [80398]},
 	{u: 7091, i: 80678, n: "Axe of the Unseen", p: {magnetite: 600}},
-	{u: 7191, i: 80916, n: "Beastslayer Axe", b: [80916]}
+	{u: 7191, i: 80916, n: "Beastslayer Axe", b: [80916]},
+	{u: 7179, i: 80959, n: "Crimson Assassin Axe", p: {token: 12}}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", b: [49332]},
@@ -2409,7 +2410,8 @@ Weapon_Mace: [
 	{u: 7059, i: 80014, n: "Frostforged Mace", b: [80014]},
 	{u: 7105, i: 80299, n: "Devoted Mace", b: [80299]},
 	{u: 7076, i: 80186, n: "The Virge", p: {magnetite: 600}},
-	{u: 7171, i: 80942, n: "Beastslayer Mace", b: [80942]}
+	{u: 7171, i: 80942, n: "Beastslayer Mace", b: [80942]},
+	{u: 7182, i: 80931, n: "Crimson Assassin Mace", p: {token: 12}}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", b: [49353]},
@@ -3174,7 +3176,8 @@ Weapon_Focus: [
 	{u: 7019, i: 79767, n: "Caustic Nightmare Corsage", p: {matrix: 200}},
 	{u: 7054, i: 80021, n: "Frostforged Focus", b: [80021]},
 	{u: 7154, i: 80174, n: "Devoted Focus", b: [80174]},
-	{u: 7186, i: 80955, n: "Beastslayer Focus", b: [80955]}
+	{u: 7186, i: 80955, n: "Beastslayer Focus", b: [80955]},
+	{u: 7184, i: 80870, n: "Crimson Assassin Focus", p: {token: 8}}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", b: [49344]},
@@ -4067,7 +4070,8 @@ Weapon_Longbow: [
 	{u: 7041, i: 80035, n: "Frostforged Longbow", b: [80035]},
 	{u: 7097, i: 80414, n: "Arbiter Greatbow", p: {magnetite: 600}},
 	{u: 7137, i: 80246, n: "Devoted Longbow", b: [80246]},
-	{u: 7189, i: 80964, n: "Beastslayer Longbow", b: [80964]}
+	{u: 7189, i: 80964, n: "Beastslayer Longbow", b: [80964]},
+	{u: 7170, i: 80933, n: "Crimson Assassin Longbow", p: {token: 16}}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", b: [44924]},

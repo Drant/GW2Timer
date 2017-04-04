@@ -51,7 +51,7 @@ Orange: [
 	{u: 28, i: 80056, n: "Super-Hot Saffron-Scented Poultry Soup", l: "#28", t: "Orange cat by a Pot of Cat-Made Soup.", p: {achievement: 0}}
 ],
 Yellow: [
-	{u: 33, i: 41909, n: "Cat (Pain Cliffs)", l: "#33", t: "Yellow striped cat with SAB aura."}
+	{u: 33, i: 41909, n: "Cat (Pain Cliffs)", l: "#33", t: "Yellow striped cat with Super Adventure Box aura."}
 ],
 White: [
 	{u: 1, i: 24360, n: "Slab of Poultry Meat", l: "#1", t: "Gray cat by entrance."},

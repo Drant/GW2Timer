@@ -48,7 +48,7 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	box-shadow: 0px 0px 16px #111;
 }
 
-#paneMenu {
+#plateMenu {
 	border-bottom-right-radius: 8px;
 }
 
@@ -62,6 +62,10 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
 }
+#plateDirectory {
+	position: relative;
+	top: auto;
+}
 
 .cntComposition {
 	margin-top: 0;
@@ -69,16 +73,8 @@ body, html, .panelMain, #windowMain, #paneContent article {
 
 /* Element resize */
 
-#itemLanguage:hover #itemLanguagePopup {
-	left: 64px;
-}
-#itemLanguagePopup a {
-	font-size: 18px;
-	line-height: 100%;
-	margin-top: 4px;
-	margin-bottom: 4px;
-	padding-top: 4px;
-	padding-bottom: 4px;
+#itemLanguage {
+	position: fixed;
 }
 
 #optAlarmSpeaker {
@@ -92,6 +88,9 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	position: fixed;
 	height: 4px;
 	top: 0;
+}
+#chnAlarm {
+	display: block;
 }
 
 .chnBar, .chnSlot {

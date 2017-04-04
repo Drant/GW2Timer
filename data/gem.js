@@ -425,6 +425,7 @@ Mini: [
 	{i: 36320, n: "Miniature Spooky Trio", p: {gem: -500}},
 	{i: 41907, n: "Miniature Super Trio", p: {gem: -500}},
 	{i: 46498, n: "Miniature Super Trio—World 2", p: {gem: -500}},
+	{i: 80939, n: "Miniature Super Trio—Series 3", p: {gem: -600}},
 	{i: 42897, n: "Dragon Bash Mini Pack", p: {gem: -500}},
 	{i: 42978, n: "Wintersday Minis 3-Pack", p: {gem: -500}},
 	{i: 42981, n: "Bazaar Quaggan Mini Pack", p: {gem: -500}},
@@ -531,7 +532,11 @@ Mini: [
 	{i: 79693, n: "Mini Bloodstone Rock", p: {gem: 350}},
 	{i: 80044, n: "Mini Festive Aurene", p: {gem: -400}},
 	{i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}},
-	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: -350}}
+	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: -350}},
+	{i: 80883, n: "Mini Super Goat", p: {gem: -200}},
+	{i: 80903, n: "Mini Super Frog", p: {gem: -200}},
+	{i: 80884, n: "Mini Super Snake", p: {gem: -200}},
+	{i: 80915, n: "Mini Super Queen Bee Dog", p: {gem: -600}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},

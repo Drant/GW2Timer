@@ -59,7 +59,7 @@ del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0
 /* Structure (same order as browser view)
 body > windowMain
 {
-	panelLeft[mapPane], panelRight[paneClock, paneMenu, paneContent]
+	panelLeft[mapPane], panelRight[paneClock, plateMenu, paneContent]
 }
 ----------------------------------------------------------------------------- */
 @font-face {
@@ -587,8 +587,8 @@ html, body,
 
 /* Clickable */
 .curClick, .jsClip, a, kbd, input, select, label, button,
-.menuButton, .btnWindow, .hudSelect, .itemContext li,
-.menuBeam img:hover, .chnCheck:hover, .chnTitle time {
+.plateMenuButton, .btnWindow, .hudSelect, .itemContext li,
+.plateBeam img:hover, .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 
@@ -715,7 +715,8 @@ html, body,
 	position: absolute;
 	margin: 0;
 	padding: 10px 18px 10px 16px;
-	background: linear-gradient(to right, rgba(15, 15, 15, 0.9) 0%, rgba(51, 51, 51, 0.9) 100%);
+	background: rgba(0, 0, 0, 0.7);
+	background-image: url("img/background/hud.png");
 	border-top: 4px solid #111;
 	border-bottom: 4px solid #111;
 	border-radius: 2px;
@@ -1124,9 +1125,6 @@ textarea.jsCopyCode {
 	background-size: 24px 24px;
 	opacity: 0.2;
 }
-.tmlLineName {
-	display: none;
-}
 .tmlSegmentName, .tmlSegmentSpecial {
 	vertical-align: middle;
 	font-family: Menomonia;
@@ -1208,31 +1206,34 @@ textarea.jsCopyCode {
 /* Top right corner: Dashboard */
 #itemDashboard {
 	display: none;
-	position: absolute; z-index: 2;
-	top: 32px; right: 12px;
-	margin-left: 24px;
-	margin-top: 4px;
 	padding: 4px 10px 4px 10px;
-	font-family: Menomonia;
+	margin-bottom: 8px;
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 16px;
-	color: #bbcc77;
+	color: #888888;
 	text-shadow: 0px 0px 4px black;
 	background: rgba(0, 0, 0, 0.4);
 	background-image: url("img/background/hud.png");
 	border-left: 4px solid rgba(0, 0, 0, 0.4);
 	border-radius: 2px;
 }
+#dsbToggle {
+	top: 8px;
+	left: 12px;
+}
 #itemDashboard a {
-	color: #bbcc77;
+	color: rgba(255, 238, 187, 0.8);
+	text-decoration: none;
 }
 #itemDashboard a:hover, #itemDashboard u:hover, .dsbMenuItem:hover u {
-	color: #44dd44;
+	color: rgba(255, 238, 187, 1);
 }
 .dsbMenuItem {
 	display: none;
-	line-height: normal;
+	width: 100%;
 	padding: 0px 4px 0px 4px;
 	margin: 4px 0px 0px 0px;
+	line-height: normal;
 	font-family: Trebuchet MS, Menomonia;
 	color: rgba(255, 238, 187, 0.8);
 	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
@@ -1240,20 +1241,20 @@ textarea.jsCopyCode {
 	border-radius: 4px;
 	transition: border 0.4s;
 }
+.dsbMenuItemEnabled {
+	display: block;
+}
 .dsbMenuItem:hover {
 	color: rgba(255, 238, 187, 1);
-	background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+	background: #2d2619;
 	border-top: 2px solid rgba(255, 238, 187, 0.4);
 }
 .dsbMenuItemActive {
 	border-top: 2px solid rgba(255, 238, 187, 0.4);
-	background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 1) 100%);
+	background: #2d2619;
 }
 .dsbMenuItem img {
 	width: 24px; height: 24px;
-}
-.dsbMenuEnabled {
-	display: inline-block;
 }
 .dsbExpansion {
 	display: none;
@@ -1268,20 +1269,26 @@ textarea.jsCopyCode {
 	margin-left: -8px;
 }
 #dsbAnnouncement {
-	font-family: Arial, sans-serif;
 	font-size: 14px;
+}
+#dsbCountdown {
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 #dsbCountdown:before, #dsbCountdown:after {
 	content: "";
-	width: 100%;
-	height: 1px;
 	display: block;
-	background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.4) 100%);
+	width: 100%; height: 1px;
+	margin-bottom: 8px;
+	margin-top: 8px;
+	background: linear-gradient(to right, transparent 0%, #333 100%);
+}
+.dsbCountdownSide1 {
+	white-space: nowrap;
+	font-size: 14px;
 }
 #dsbCountdown time {
 	font-family: Consolas, monospace;
-	font-size: 18px;
-	color: #ddff77;
 }
 #dsbCountdown code {
 	margin-right: 8px;
@@ -1293,31 +1300,32 @@ textarea.jsCopyCode {
 #itemDashboard:hover .dsbCountdownDate {
 	opacity: 1;
 }
-#dsbSaleHeader:active, #dsbVendorHeader:active {
+#dsbSaleHeader:active, #dsbPactHeader:active {
 	opacity: 0.8;
 }
-#dsbSaleTable, #dsbVendorTable {
-	max-height: 320px;
-}
-#dsbSaleCol0, #dsbSaleCol1 {
+#dsbSaleSide0, #dsbSaleSide1 {
 	display: inline-block;
 	vertical-align: top;
 }
-#dsbSaleCol0 {
+#dsbSaleSide0 {
 	margin-left: 32px;
 }
 .dsbSaleEntry {
 	width: 256px;
 	white-space: nowrap;
 }
-.dsbSaleIcon, .dsbVendorIcon {
+.dsbSaleIcon {
 	width: 32px; height: 32px;
 	border-radius: 4px;
 }
-.dsbSaleEntry:hover .dsbSaleIcon, .dsbVendorEntry:hover .dsbVendorIcon {
+.dsbPactIcon {
+	width: 48px; height: 48px;
+	border-radius: 4px;
+}
+.dsbSaleEntry:hover .dsbSaleIcon, .dsbPactEntry:hover .dsbPactIcon {
 	width: 64px; height: 64px;
 	opacity: 0.9;
-	border-radius: 16px;
+	border-radius: 8px;
 	box-shadow: 0px 0px 10px #44bbff;
 }
 .dsbSaleText {
@@ -1361,7 +1369,7 @@ textarea.jsCopyCode {
 }
 .dsbSaleCountdown {
 	position: absolute;
-	top: 12px;
+	top: 16px;
 	left: 0;
 	font-size: 12px;
 	font-family: monospace;
@@ -1371,36 +1379,38 @@ textarea.jsCopyCode {
 	color: #6a9bfd;
 }
 
-#dsbVendorMenu {
+#dsbPactMenu {
 	width: 100%;
 	margin-bottom: 4px;
 	border-bottom: 2px solid black;
 	text-align: center;
 	font-family: Trebuchet MS, Menomonia;
 }
-.dsbVendorPriceKarma {
-	float: right;
+.dsbPactPriceKarma {
 	color: white;
 }
-.dsbVendorEntry {
-	margin-left: 32px;
-}
-.dsbVendorEntry:hover .dsbVendorItem {
+.dsbPactEntry:hover .dsbPactItem {
 	display: inline-block;
 	line-height: 64px;
 	text-decoration: underline;
 }
-.dsbVendorName {
-	position: absolute;
-	right: 64px;
-	vertical-align: super;
-	font-size: 12px;
-	color: #aaaaaa;
+.dsbPactName {
+	color: #aaa;
 }
-.dsbVendorEntry:hover .dsbVendorName {
+.dsbPactSide0 {
+	white-space: nowrap;
+}
+.dsbPactSide1 {
+	position: absolute;
+	right: 0;
+	margin-top: -12px;
+	font-size: 12px;
+}
+.dsbPactEntry:hover .dsbPactName {
 	color: #ee55cc;
 }
-#dsbVendorNote {
+#dsbPactNote {
+	margin-top: 16px;
 	margin-left: 4px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 14px;
@@ -1619,31 +1629,27 @@ input.mapCoordinatesName {
 .hudItem:hover .hudArrow {
 	display: block;
 }
-.hudDirectory {
+.hudHelp {
 	width: auto;
-	font-size: 14px;
 	text-align: center;
+	font-size: 15px;
 }
-.hudDirectory a {
-	font-family: Menomonia;
-	font-size: 17px;
-}
-.hudDirectory ul {
+.hudHelp ul {
 	margin-bottom: 8px;
 }
-.hudDirectoryColumn {
+.hudHelpColumn {
 	display: inline-block;
 	margin-left: 8px;
 	vertical-align: top;
 	text-align: left;
 }
-.hudDirectoryScroll {
+.hudHelpScroll {
 	max-height: 360px;
 }
-.hudDirectoryMode {
+.hudHelpMode {
 	position: relative;
 }
-.hudDirectoryModePreview {
+.hudHelpModePreview {
 	width: 180px;
 	margin-right: 16px;
 	border: 2px solid black;
@@ -1651,14 +1657,14 @@ input.mapCoordinatesName {
 	border-radius: 4px;
 	box-shadow: 4px -4px 4px rgba(0, 0, 0, 0.5);
 }
-#hudDirectoryModePreviewLast {
+#hudHelpModePreviewLast {
 	margin-right: 0px;
 }
-.hudDirectoryModePreview:hover {
+.hudHelpModePreview:hover {
 	border: 2px solid #222;
 	animation: aniFlicker 1s ease infinite;
 }
-.hudDirectoryModeName {
+.hudHelpModeName {
 	position: absolute;
 	margin-left: 6px;
 	font-family: Menomonia;
@@ -1670,16 +1676,8 @@ input.mapCoordinatesName {
 		-1px 0px 1px #000;
 	pointer-events: none;
 }
-.hudDirectoryDivider {
+.hudHelpDivider {
 	margin-bottom: 4px;
-}
-.hudDirectoryCarpet {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%; height: 32px;
-	background: linear-gradient(to bottom, transparent 0%, rgba(15, 15, 15, 0.5) 100%);
-	pointer-events: none;
 }
 
 .mapGPS { /* Only shown in overlay mode */
@@ -1919,6 +1917,8 @@ input.mapCoordinatesName {
 #paneClockBackground { /* Festival sensitive */
 	/*background: url("img/background/globe_halloween.png") no-repeat center;*/
 	/*background: url("img/background/globe_wintersday.png") no-repeat center;*/
+	right: 0;
+	width: 359px; /* To avoid bleeding left edge */
 	background: url("img/background/globe.jpg") no-repeat center;
 	filter: blur(1px);
 	opacity: 0;
@@ -2119,12 +2119,21 @@ input.mapCoordinatesName {
 }
 
 #itemLanguage {
-	display: none;
-	position: absolute;
-	padding-top: 4px;
-	padding-bottom: 28px;
-	bottom: 0px;
-	left: 10px;
+	display: table;
+	position: absolute; z-index: 9;
+	width: 32px; height: 32px;
+	top: 4px;
+	right: 12px;
+	text-align: center;
+	border: 1px solid #444;
+	background: rgba(0, 0, 0, 0.2);
+}
+#itemLanguageButton {
+	display: table-cell;
+	vertical-align: middle;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 18px;
+	color: #eee;
 }
 #itemLanguage ins {
 	width: 64px;
@@ -2137,25 +2146,26 @@ input.mapCoordinatesName {
 #itemLanguagePopup {
 	display: none;
 	position: absolute;
-	width: 90px;
+	top: 32px;
+	right: 0px;
+	padding: 4px 2px 4px 2px;
 	text-align: left;
-	font-family: sans-serif;
-	color: #e4e0b3;
+}
+#itemLanguagePopup a {
+	display: block;
+	padding: 0px 16px 0px 16px;
+	line-height: 150%;
+	text-decoration: none;
+	white-space: nowrap;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 16px;
+	color: #eee;
 	text-shadow:
 		1px 1px 0px #000,
 		-1px -1px 0px #000,
 		1px -1px 0px #000,
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
-}
-#itemLanguagePopup a {
-	display: block;
-	padding-left: 8px;
-	padding-right: 8px;
-	font-size: 14px;
-	line-height: 150%;
-	text-decoration: none;
-	color: #ffeebb;
 }
 #itemLanguagePopup a:hover {
 	color: #ddff77;
@@ -2166,14 +2176,6 @@ input.mapCoordinatesName {
 }
 #itemLanguage:hover #itemLanguagePopup { /* Popup when hovered over language button */
 	display: block;
-	right: 0px;
-	padding: 4px 2px 4px 2px;
-}
-#menuOptions:hover #itemLanguagePopup {
-	display: block;
-	top: 48px;
-	right: -2px;
-	padding: 4px 2px 4px 2px;
 }
 
 /* @@Bar primary menu for switching pages
@@ -2182,44 +2184,96 @@ input.mapCoordinatesName {
 	left: 164px;
 }
 
-#paneMenu {
+#plateMenu {
 	position: absolute; z-index: 2;
 	top: 360px;
 	width: 360px; height: 48px;
 	background: linear-gradient(to bottom, #555 0%, #222 50%, #000 51%, #222 100%);
 }
-#paneMenu:hover .menuButton {
+#plateMenu:hover .plateMenuButton {
 	opacity: 0.5;
 }
-#paneMenu .menuButton:hover {
+#plateMenu .plateMenuButton:hover {
 	box-shadow: 0px 0px 10px #e7e3bd;
 	opacity: 1;
 }
-.menuButton {
+.plateMenuButton {
 	display: table;
 	float: left;
 	width: 25%; height: 100%;
 	text-align: center;
 	transition: opacity 0.2s, box-shadow 0.2s;
 }
-.menuButton:active {
+.plateMenuButton:active {
 	background: linear-gradient(135deg, rgba(255, 238, 187, 0.2) 0%, transparent 100%);
 	background-size: 400% 400%;
 	animation: aniPulsate 1s;
 }
-#paneMenu ins { /* Button image */
-	width: 32px; height: 32px;
+#plateMenu ins { /* Button image */
 	margin-top: 8px;
-	background-image: linear-gradient(to bottom, transparent 0%, transparent 50%, #111 100%), url("img/ui/pages.png");
+	background-image: linear-gradient(to bottom, transparent 0%, transparent 50%, #111 100%), url("img/ui/menu.png");
 	border-radius: 50%;
 }
-#menuAccount ins { background-position: 0 0, 0 0; }
-#menuChains ins { background-position: 0 0, -32px 0; }
-#menuHelp ins { background-position: 0 0, -64px 0; }
-#menuMap ins { background-position: 0 0, -96px 0; }
-#menuOptions ins { background-position: 0 0, -128px 0; }
+#plateMenu_Help { display: none; } /* This plate is hidden from the menu bar */
+.mnu {
+	width: 32px; height: 32px;
+	background-image: url("img/ui/menu.png");
+}
+.mnu_account { background-position: 0 0; }
+.mnu_achievements { background-position: -32px 0; }
+.mnu_alarm { background-position: -64px 0; }
+.mnu_ascended { background-position: -96px 0; }
+.mnu_audit { background-position: -128px 0; }
+.mnu_bank { background-position: -160px 0; }
+.mnu_bought { background-position: -192px 0; }
+.mnu_build { background-position: -224px 0; }
+.mnu_buying { background-position: -256px 0; }
+.mnu_carriers { background-position: -288px 0; }
+.mnu_catalog { background-position: -320px 0; }
+.mnu_cats { background-position: -352px 0; }
+.mnu_chains { background-position: -384px 0; }
+.mnu_characters { background-position: -416px 0; }
+.mnu_checklist { background-position: -448px 0; }
+.mnu_cleanup { background-position: -480px 0; }
+.mnu_crafting { background-position: -512px 0; }
+.mnu_directory { background-position: -544px 0; }
+.mnu_display { background-position: -576px 0; }
+.mnu_dungeons { background-position: -608px 0; }
+.mnu_dyes { background-position: -640px 0; }
+.mnu_edit { background-position: -672px 0; }
+.mnu_finishers { background-position: -704px 0; }
+.mnu_forum { background-position: -736px 0; }
+.mnu_gem { background-position: -768px 0; }
+.mnu_gliders { background-position: -800px 0; }
+.mnu_guilds { background-position: -832px 0; }
+.mnu_help { background-position: -864px 0; }
+.mnu_hero { background-position: -896px 0; }
+.mnu_info { background-position: -928px 0; }
+.mnu_inventory { background-position: -960px 0; }
+.mnu_lab { background-position: -992px 0; }
+.mnu_leave { background-position: -1024px 0; }
+.mnu_manager { background-position: -1056px 0; }
+.mnu_map { background-position: -1088px 0; }
+.mnu_materials { background-position: -1120px 0; }
+.mnu_minis { background-position: -1152px 0; }
+.mnu_museum { background-position: -1184px 0; }
+.mnu_nodes { background-position: -1216px 0; }
+.mnu_options { background-position: -1248px 0; }
+.mnu_outfits { background-position: -1280px 0; }
+.mnu_pact { background-position: -1312px 0; }
+.mnu_possessions { background-position: -1344px 0; }
+.mnu_pvp { background-position: -1376px 0; }
+.mnu_raids { background-position: -1408px 0; }
+.mnu_recipes { background-position: -1440px 0; }
+.mnu_selling { background-position: -1472px 0; }
+.mnu_sold { background-position: -1504px 0; }
+.mnu_trading { background-position: -1536px 0; }
+.mnu_vault { background-position: -1568px 0; }
+.mnu_wardrobe { background-position: -1600px 0; }
+.mnu_wvw { background-position: -1632px 0; }
+.mnu_zone { background-position: -1664px 0; }
 
-#paneMenu var { /* Button subtitle */
+#plateMenu var { /* Button subtitle */
 	display: table-cell;
 	position: absolute;
 	bottom: 0;
@@ -2232,7 +2286,7 @@ input.mapCoordinatesName {
 	opacity: 0.4;
 	pointer-events: none;
 }
-#paneMenu:hover var, #paneMenu .menuButtonActive var {
+#plateMenu:hover var, #plateMenu .plateMenuButtonActive var {
 	color: #ffeeaa;
 	opacity: 0.8;
 }
@@ -2240,7 +2294,7 @@ input.mapCoordinatesName {
 /* @@Beam sub-navigation menu generated by JS for a page's sections
 ----------------------------------------------------------------------------- */
 
-.menuBeamContainer {
+.plateBeamContainer {
 	position: fixed; z-index: 1;
 	width: 360px;
 	min-height: 32px;
@@ -2249,18 +2303,18 @@ input.mapCoordinatesName {
 	border-bottom-left-radius: 5px;
 	opacity: 0.5;
 }
-.menuBeamContainer:hover {
+.plateBeamContainer:hover {
 	background: none;
 	border-radius: 0;
 	opacity: 1;
 }
-.menuBeamContainer .menuBeam {
+.plateBeamContainer .plateBeam {
 	display: none;
 }
-.menuBeamContainer:hover .menuBeam {
+.plateBeamContainer:hover .plateBeam {
 	display: block;
 }
-.menuBeam {
+.plateBeam {
 	margin-left: -1px;
 	padding-top: 4px;
 	text-align: left;
@@ -2271,26 +2325,26 @@ input.mapCoordinatesName {
 	background: #222;
 	opacity: 0.9;
 }
-.menuBeam img { /* Clickable icon, its src is duplicated from an img tag in a header */
+.plateBeam img { /* Clickable icon, its src is duplicated from an img tag in a header */
 	display: inline-block;
 	width: 32px; height: 32px;
 	margin: 0 1px 0 1px;
 	opacity: 0.8;
 }
-.menuBeam img:hover {
+.plateBeam img:hover {
 	box-shadow: 0px 0px 4px #e4e0b3;
 	opacity: 1;
 }
-.menuBeam img:active {
+.plateBeam img:active {
 	box-shadow: 0px 0px 4px #009900;
 }
-.menuBeamIconActive {
+.plateBeamIconActive {
 	padding-left: 4px;
 	padding-right: 4px;
 	background: black;
 	opacity: 1;
 }
-.menuBeamIconCollapse {
+.plateBeamIconCollapse {
 	float: right;
 }
 
@@ -2338,7 +2392,7 @@ header.jsSection sup {
  *  JavaScript to toggle their display based on what menu icon was clicked.
  * ========================================================================== */
 #paneContent {
-	position: absolute;
+	position: absolute; z-index: 2;
 	bottom: 0px;
 	width: 360px; height: auto;
 	top: 408px;
@@ -2351,11 +2405,48 @@ header.jsSection sup {
 	width: 360px; height: 100%;
 }
 
-#plateChains {
-	display: block; /* The first plate to be displayed, others are hidden */
-}
-#plateMap, #plateWvW, #plateHelp, #plateOptions {
+#paneContent article {
 	display: none;
+}
+
+/* @@Directory plate
+----------------------------------------------------------------------------- */
+#plateDirectory {
+	position: fixed; z-index: 13;
+	top: 0;
+	background: linear-gradient(115deg, #111 0%, #222 50%, #000 51%, #222 100%);
+}
+.dirHeader {
+	margin-left: 12px;
+	font-family: Menomonia;
+	font-size: 22px;
+	color: #999;
+	border-bottom: 1px solid #444;
+}
+.dirHeaderFirst {
+	padding-top: 8px;
+}
+.dirHeaderIcon {
+	margin-right: 6px;
+}
+.dirList {
+	margin-top: 8px;
+	margin-bottom: 32px;
+	margin-left: 36px;
+}
+.dirList li {
+	padding: 4px 0 4px 16px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 16px;
+	color: #eee;
+}
+.dirList li:hover {
+	background-image: linear-gradient(to right, #7c7253 0%, transparent 100%);
+	background-repeat: repeat-y;
+	animation: aniHighlight 0.4s;
+}
+#dirHeaderClock {
+	font-family: Trebuchet MS, Menomonia;
 }
 
 /* @@Chains plate
@@ -2383,13 +2474,14 @@ header.jsSection sup {
 	left: 32px;
 }
 
-#chnOptions {
+#chnAlarm {
+	display: none; /* Only shown for modes where the map is disabled */
 	position: absolute; z-index: 12;
 	right: 0;
 	padding: 7px 4px 6px 0px;
 	opacity: 0.5;
 }
-#chnOptions:hover {
+#chnAlarm:hover {
 	opacity: 1;
 }
 #optAlarmSpeaker, #optChainsIcon {
@@ -2398,50 +2490,52 @@ header.jsSection sup {
 #optAlarmIcon {
 	width: 16px; height: 16px;
 }
-#chnOptionsPopup {
+#mapAlarmPopup {
+	width: 320px;
+}
+#chnAlarm #mapAlarmPopup {
 	display: none;
 }
-#chnOptions:hover #chnOptionsPopup {
+#chnAlarm:hover #mapAlarmPopup {
 	display: block;
 	position: absolute;
 	right: 0;
 	text-align: right;
-	width: 320px;
 	margin: 0;
 	padding: 8px;
 }
-#chnOptionsChain, #chnOptionsAlarm {
+#mapAlarmChain, #mapAlarmBoss {
 	display: inline-block;
 	vertical-align: top;
 	text-align: left;
 }
-#chnOptionsAlarm {
+#mapAlarmBoss {
 	width: 50%;
 	padding-left: 8px;
 	margin-left: 4px;
 	border-left: 1px solid gray;
 }
-#chnOptionsOther {
+#mapAlarmOther {
 	margin-top: 4px;
 	padding-top: 8px;
 	border-top: 1px solid gray;
 	text-align: left;
 }
-#chnOptionsStopwatchUp, #chnOptionsStopwatchDown {
+#mapAlarmStopwatchUp, #mapAlarmStopwatchDown {
 	width: 100%;
 	padding-bottom: 8px;
 	margin-bottom: 8px;
 	border-bottom: 1px solid gray;
 	text-align: left;
 }
-#chnOptionsPopup fieldset {
+#mapAlarmPopup fieldset {
 	min-width: 120px;
 	margin: 0;
 	border: none;
 }
 #optChainsToggle {
 	position: absolute;
-	right: 0;
+	right: 16px;
 }
 #opt_int_volAlarm, #optMute, #optRestoreAllChains {
 	width: 100%;
@@ -3049,6 +3143,14 @@ label:hover {
 .cssColumn, .mapOptionsDisplay, .mapOptionsOther {
 	display: inline-block;
 	vertical-align: top;
+}
+.cssCarpet {
+	position: absolute; z-index: 19;
+	bottom: 0;
+	left: 0;
+	width: 100%; height: 32px;
+	background: linear-gradient(to bottom, transparent 0%, rgba(15, 15, 15, 0.5) 100%);
+	pointer-events: none;
 }
 .cssSpin {
     animation: aniSpin 1s linear infinite;
