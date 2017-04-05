@@ -1402,7 +1402,7 @@ textarea.jsCopyCode {
 }
 .dsbPactSide1 {
 	position: absolute;
-	right: 0;
+	right: 16px;
 	margin-top: -12px;
 	font-size: 12px;
 }
@@ -1410,7 +1410,7 @@ textarea.jsCopyCode {
 	color: #ee55cc;
 }
 #dsbPactNote {
-	margin-top: 16px;
+	margin-top: 32px;
 	margin-left: 4px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 14px;
@@ -2428,6 +2428,9 @@ header.jsSection sup {
 }
 .dirHeaderIcon {
 	margin-right: 6px;
+}
+.dirHeaderName {
+	vertical-align: middle;
 }
 .dirList {
 	margin-top: 8px;

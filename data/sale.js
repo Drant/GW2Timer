@@ -38,11 +38,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		name: "Super Adventure Box o' Fun",
-		id: "41911",
-		price: 0,
-		discount: 125,
-		side: 1
+		name: "Permanent Super Explosive Finisher",
+		id: "44724",
+		price: 600,
+		discount: null,
+		side: 0
 	},
 	{
 		name: "Super Cloud Glider",
@@ -102,9 +102,9 @@ GW2T_SALE_DATA = {
 		side: 1
 	},
 	{
-		name: "Mini Krytan Floppy Fish",
-		id: "80860",
-		price: 350,
+		name: "Super Adventure Box o' Fun",
+		id: "41911",
+		price: 125,
 		discount: null,
 		side: 1
 	}

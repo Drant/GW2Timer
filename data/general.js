@@ -1,7 +1,7 @@
 /*
  * This file is used by http://gw2timer.com
  * Map data for Kryta continent: zone, region, submaps, and dailies.
- * Dashboard time sensitive data: announcement, countdown, and sales.
+ * Timeline and dashboard data: announcements, countdowns, Pact Supply.
  */
 
 /*

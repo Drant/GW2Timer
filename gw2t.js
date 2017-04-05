@@ -3783,10 +3783,6 @@ U = {
 				I.loadMapPlate(pPage);
 			}
 		}
-		else if (pPage === I.SpecialPageEnum.Account)
-		{
-			viewAccount(pPage);
-		}
 		// If is account section
 		else if (I.PageEnum.Account[pPage])
 		{
@@ -3795,6 +3791,10 @@ U = {
 		// If is account audit
 		else if (pPage === I.SpecialPageEnum.Audit)
 		{
+			if (A.isAccountInitialized === false)
+			{
+				I.ArticleCurrent = I.SpecialPageEnum.Audit;
+			}
 			if ($("#audExecute").is(":visible"))
 			{
 				$("#audExecute").trigger("click");
@@ -33338,8 +33338,8 @@ H = {
 				// Initialize countdown properties
 				ctd = H.Countdown.Events[i];
 				ctd.isTimely = true;
-				ctd.StartStamp = ctd.Start.toLocaleString();
-				ctd.FinishStamp = ctd.Finish.toLocaleString();
+				ctd.StartStamp = T.formatWeektime(ctd.Start, true);
+				ctd.FinishStamp = T.formatWeektime(ctd.Finish, true);
 				// Use default name if available, or use the translated name
 				countdownname = (ctd.name === undefined) ? D.getObjectName(ctd) : ctd.name;
 				// If available: set the URL as the official news page, the translated url, or a regular url
@@ -33796,7 +33796,7 @@ H = {
 						+ "</div>");
 					// Get TP prices also
 					var recipeprice = E.getCachedPrice(recipeid);
-					var recipepricestr = (recipeprice) ? (E.formatCoinStringColored(recipeprice.oPriceSell)) : " = " + E.formatCoinStringColored(0);
+					var recipepricestr = (recipeprice) ? (E.formatCoinStringColored(recipeprice.oPriceSell)) : E.formatCoinStringColored(0);
 					$("#dsbPactPriceCoin_" + i).html(recipepricestr);
 					M.bindMapLinkBehavior($("#dsbPactItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
 					// Get the product that the recipe crafts
@@ -34368,7 +34368,7 @@ K = {
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
 	clockBackground: {}, clockCircumference: {}, timeProgress0: {}, timeProgress1: {},
-	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {}, timeWvW: {}, timeLog: {}, countdownWvW: {},
+	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeDirectory: {}, timeSimple: {}, timeMap: {}, timeWvW: {}, timeLog: {}, countdownWvW: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	stopwatchUp: {}, stopwatchDown: {},
 	
@@ -34395,6 +34395,9 @@ K = {
 	 */
 	initializeClock: function()
 	{
+		// Create directory and dashboard beforehand
+		H.initializeDashboard();
+		I.initializeUIForDirectory();
 		// Remember frequently accessed elements
 		K.handSecond = $("#clkSecondHand")[0];
 		K.handMinute = $("#clkMinuteHand")[0];
@@ -34405,6 +34408,7 @@ K = {
 		K.timeProgress1 = $("#chnProgress1")[0];
 		K.timeLocal = $("#itemTimeLocalActual")[0];
 		K.timeDaytime = $("#itemTimeDayTime")[0];
+		K.timeDirectory = $("#dirHeaderClock")[0];
 		K.timeSimple = $("#itemSimpleTime")[0];
 		K.timeMap = $("#mapTime")[0];
 		K.timeWvW = $("#wvwTime")[0];
@@ -34415,7 +34419,6 @@ K = {
 		K.stopwatchUp = $("#watUp")[0];
 		K.stopwatchDown = $("#watDown")[0];
 		
-		H.initializeDashboard();
 		K.updateTimeFrame(new Date()); // This also calls the server reset check function
 		T.getDaily();
 		K.updateDaytimeIcon();
@@ -34932,7 +34935,7 @@ K = {
 		}
 		
 		K.timeLocal.innerHTML = localtime;
-		$("#dirHeaderClock").html(localtime);
+		K.timeDirectory.innerHTML = localtime;
 		// Times in the Options page Debug section
 		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
 		K.timestampReset.innerHTML = T.getTimeFormatted(
@@ -35420,7 +35423,7 @@ K = {
 		K.timeWvW.innerHTML = K.currentDaytimeString;
 		// Local clock updates additional times in tooltip
 		K.timeLocal.title =
-			(new Date()).toLocaleString() + "<br />" +
+			T.formatWeektime(new Date(), true) + "<br />" +
 			"<dfn>Anet:</dfn> " + T.getTimeFormatted(
 			{
 				aReference: T.ReferenceEnum.Server,
@@ -35434,7 +35437,9 @@ K = {
 			}) + "<br />" +
 			"<dfn>Daily:</dfn> " + T.formatTimeLetter(T.SECONDS_TILL_DAILY, false) + "<br />" +
 			"<dfn>Weekly:</dfn> " + T.formatTimeLetter(T.SECONDS_TILL_WEEKLY, false);
+		K.timeDirectory.title = K.timeLocal.title;
 		I.qTip.init(K.timeLocal);
+		I.qTip.init(K.timeDirectory);
 		// Also update timeline
 		H.updateTimelineIndicator();
 	},
@@ -35902,7 +35907,7 @@ I = {
 			Chains: "Boss Timers",
 			Map: "PvE Map",
 			Leaderboard: "WvW Leaderboard",
-			Account: "Account Manager",
+			Manager: "Account Manager",
 			Gem: "Gem Alarm",
 			Help: "Help",
 			Options: "Options"
@@ -35918,6 +35923,7 @@ I = {
 		{
 			Personal: "Personal",
 			Notepad: "Notepad",
+			Daily: "Dailies",
 			Dungeons: "Dungeons",
 			Raids: "Raids"
 		},
@@ -36118,7 +36124,6 @@ I = {
 		I.bindWindowReadjust();
 		I.initializeUIForMenu();
 		I.initializeUIForHUD();
-		I.initializeUIForDirectory();
 		I.styleContextMenu("#mapContext");
 		$("#mapHUDContainer").toggle(O.Options.bol_showHUD);
 		// Bind switch map buttons

@@ -532,7 +532,7 @@ Mini: [
 	{i: 79693, n: "Mini Bloodstone Rock", p: {gem: 350}},
 	{i: 80044, n: "Mini Festive Aurene", p: {gem: -400}},
 	{i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}},
-	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: -350}},
+	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}},
 	{i: 80883, n: "Mini Super Goat", p: {gem: -200}},
 	{i: 80903, n: "Mini Super Frog", p: {gem: -200}},
 	{i: 80884, n: "Mini Super Snake", p: {gem: -200}},
