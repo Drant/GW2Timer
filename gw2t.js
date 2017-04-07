@@ -3670,6 +3670,7 @@ U = {
 			return;
 		}
 		var page = U.toFirstUpperCase(pPage);
+		var pagecaps = pPage.toUpperCase();
 		var pagebutton;
 		var isaccountvisible = $("#panelAccount").is(":visible");
 		var iswvwvisible = P.MapSwitchWebsite === P.MapEnum.Mists;
@@ -3726,9 +3727,10 @@ U = {
 				viewMap();
 			}
 		}
-		// PLATE SECTION
-		else if (I.PageEnum.Map[page])
+		// PLATE SECTION: Map
+		else if (I.PageEnum.Map[page] || I.PageEnum.Map[pagecaps])
 		{
+			page = (I.PageEnum.Map[pagecaps]) ? pagecaps : page;
 			viewMap();
 			// View the map section if already loaded, otherwise load then view
 			pagebutton = $("#plateBeamIcon_" + page);
@@ -3743,8 +3745,9 @@ U = {
 			}
 		}
 		// PLATE SECTION: Chains
-		else if (I.PageEnum.Chains[page])
+		else if (I.PageEnum.Chains[page] || I.PageEnum.Chains[pagecaps])
 		{
+			page = (I.PageEnum.Chains[pagecaps]) ? pagecaps : page;
 			viewMap();
 			$(I.cPlateMenuPrefix + I.PlateEnum.Chains).trigger("click");
 			I.openChainsSection(page);
