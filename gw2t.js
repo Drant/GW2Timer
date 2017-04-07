@@ -12970,8 +12970,7 @@ V = {
 			{
 				var item = H.Sale.Items[i];
 				// Allow integer IDs or faux IDs and ignore expired
-				if ((isNaN(item.id) === false || Q.Boxes.Items[item.id]) &&
-					(T.isTimely(item) || (item.Finish === undefined && issalecurrent)))
+				if (T.isTimely(item) || (item.Finish === undefined && issalecurrent))
 				{
 					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
 					H.Sale.Values[item.id] = item.price;
@@ -38123,11 +38122,11 @@ I = {
 		{
 			return;
 		}
+		I.isMapPlateInitialized = true;
 		if (pPage)
 		{
 			$(I.cPlateMenuPrefix + "Map").trigger("click");
 		}
-		I.isMapPlateInitialized = true;
 		I.loadStylesheet("features");
 		$("#plateMap").append(I.cThrobber).load(U.getPageSrc("map"), function()
 		{

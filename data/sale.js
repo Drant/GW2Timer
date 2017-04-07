@@ -38,6 +38,34 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
+		name: "Character Slot Expansion",
+		id: "character_slot_expansion",
+		price: 640,
+		discount: 800,
+		side: 0
+	},
+	{
+		name: "Shadow Dye Kit",
+		id: "68786",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		side: 0
+	},
+	{
+		name: "Bat Wings Glider",
+		id: "74684",
+		price: 700,
+		discount: null,
+		side: 0
+	},
+	{
+		name: "Bat Wings Backpack",
+		id: "73939",
+		price: 700,
+		discount: null,
+		side: 0
+	},
+	{
 		name: "Permanent Super Explosive Finisher",
 		id: "44724",
 		price: 600,
@@ -64,21 +92,21 @@ GW2T_SALE_DATA = {
 		id: "41907",
 		price: 500,
 		discount: null,
-		side: 0
+		side: 1
 	},
 	{
 		name: "Miniature Super Trio—World 2",
 		id: "46498",
 		price: 500,
 		discount: null,
-		side: 0
+		side: 1
 	},
 	{
 		name: "Miniature Super Trio—Series 3",
 		id: "80939",
 		price: 600,
 		discount: null,
-		side: 0
+		side: 1
 	},
 	{
 		name: "Super Bee Dog Mail Carrier",
