@@ -1072,7 +1072,6 @@ O = {
 		O.Enact.bol_useSiteTag();
 		O.Enact.bol_alignPanelRight(true);
 		O.Enact.bol_showPanel();
-		O.Enact.bol_showTimeline();
 		if (I.ModeCurrent !== I.ModeEnum.Simple & I.ModeCurrent !== I.ModeEnum.Tile)
 		{
 			O.Enact.int_setClock();
@@ -1485,29 +1484,17 @@ O = {
 				$("#mapHUDContainerInner").show();
 			}
 		},
+		bol_showDashboard: function()
+		{
+			H.toggleDashboard();
+		},
 		bol_showTimeline: function()
 		{
-			if (O.Options.bol_showTimeline)
-			{
-				if (H.isTimelineGenerated)
-				{
-					H.toggleTimeline(true);
-					return;
-				}
-				else
-				{
-					H.generateTimeline();
-					O.Enact.bol_opaqueTimeline();
-				}
-			}
-			else
-			{
-				H.toggleTimeline(false);
-			}
+			H.toggleTimeline();
 		},
 		bol_opaqueTimeline: function()
 		{
-			I.toggleHUDOpacity("#itemTimeline", "tml", O.Options.bol_opaqueTimeline);
+			H.opaqueTimeline();
 		},
 		bol_condenseTimelineLine: function(pIsInitial)
 		{
@@ -3433,7 +3420,7 @@ U = {
 	 */
 	enforceURLArgumentsLast: function()
 	{
-		U.openPageFromURL();
+		U.interpretPage(U.Args[U.KeyEnum.Page]);
 	},
 	
 	/*
@@ -3673,44 +3660,16 @@ U = {
 	},
 	
 	/*
-	 * Opens a page by triggering the clicking of the menu button.
-	 * @pre All HTML has been generated.
-	 */
-	openPageFromURL: function()
-	{
-		if (U.Args[U.KeyEnum.Page] !== undefined)
-		{
-			var page = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
-			for (var i in I.PlateEnum)
-			{
-				if (page.toLowerCase() === (I.PlateEnum[i]).toLowerCase())
-				{
-					// Found proper page, so go to it by clicking the menu button
-					$(I.cPlateMenuPrefix + I.PlateEnum[i]).trigger("click");
-					return;
-				}
-			}
-			
-			// Special "page" which does not match a proper page name
-			page = page.toLowerCase();
-			switch (page)
-			{
-				case "account": {
-					$("#mapAccountButton").trigger("click");
-				} break;
-				case "wvw": {
-					I.switchMap();
-				} break;
-			}
-		}
-	},
-	
-	/*
 	 * Automatically opens a "page" for the user, whether the content is generated or not.
 	 * @param enum pPage
 	 */
 	interpretPage: function(pPage)
 	{
+		if (typeof pPage !== "string")
+		{
+			return;
+		}
+		var page = U.toFirstUpperCase(pPage);
 		var pagebutton;
 		var isaccountvisible = $("#panelAccount").is(":visible");
 		var iswvwvisible = P.MapSwitchWebsite === P.MapEnum.Mists;
@@ -3737,12 +3696,12 @@ U = {
 			// Switch to WvW map if viewing PvE
 			if (iswvwvisible === false)
 			{
-				I.switchMap(pPage);
+				I.switchMap(page);
 			}
 		};
-		var viewAccount = function(pPage)
+		var viewAccount = function(page)
 		{
-			pagebutton = $("#accMenu_" + pPage);
+			pagebutton = $("#accMenu_" + page);
 			if (pagebutton.length)
 			{
 				if (isaccountvisible === false)
@@ -3754,42 +3713,49 @@ U = {
 			else
 			{
 				I.toggleAccount();
-				I.loadAccountPanel(pPage);
+				I.loadAccountPanel(page);
 			}
 		};
 		
-		// If is plate
-		if (I.PlateEnum[pPage])
+		// PLATE
+		if (I.PlateEnum[page])
 		{
-			$(I.cPlateMenuPrefix + pPage).trigger("click");
-			if (pPage === I.PlateEnum.Chains || pPage === I.PlateEnum.Map)
+			$(I.cPlateMenuPrefix + page).trigger("click");
+			if (page === I.PlateEnum.Chains || page === I.PlateEnum.Map)
 			{
 				viewMap();
 			}
 		}
-		// If is plate section
-		else if (I.PageEnum.Map[pPage])
+		// PLATE SECTION
+		else if (I.PageEnum.Map[page])
 		{
 			viewMap();
 			// View the map section if already loaded, otherwise load then view
-			pagebutton = $("#plateBeamIcon_" + pPage);
+			pagebutton = $("#plateBeamIcon_" + page);
 			if (pagebutton.length)
 			{
-				$(I.cPlateMenuPrefix + "Map").trigger("click");
+				$(I.cPlateMenuPrefix + I.PlateEnum.Map).trigger("click");
 				pagebutton.trigger("click");
 			}
 			else
 			{
-				I.loadMapPlate(pPage);
+				I.loadMapPlate(page);
 			}
 		}
-		// If is account section
-		else if (I.PageEnum.Account[pPage])
+		// PLATE SECTION: Chains
+		else if (I.PageEnum.Chains[page])
 		{
-			viewAccount(pPage);
+			viewMap();
+			$(I.cPlateMenuPrefix + I.PlateEnum.Chains).trigger("click");
+			I.openChainsSection(page);
 		}
-		// If is account audit
-		else if (pPage === I.SpecialPageEnum.Audit)
+		// ACCOUNT SECTION
+		else if (I.PageEnum.Account[page] || page === I.SpecialPageEnum.Account)
+		{
+			viewAccount(page);
+		}
+		// SPECIAL PAGE: Audit
+		else if (page === I.SpecialPageEnum.Audit)
 		{
 			if (A.isAccountInitialized === false)
 			{
@@ -3804,8 +3770,13 @@ U = {
 				viewAccount(I.PageEnum.Account.Characters);
 			}
 		}
-		// If is WvW leaderboard
-		else if (pPage === I.SpecialPageEnum.Leaderboard)
+		// SPECIAL PAGE: WvW
+		else if (page === U.toFirstUpperCase(I.SpecialPageEnum.WvW))
+		{
+			viewWvW();
+		}
+		// SPECIAL PAGE: Leaderboard
+		else if (page === I.SpecialPageEnum.Leaderboard)
 		{
 			// Switch to WvW map if viewing PvE
 			if (iswvwvisible)
@@ -3813,6 +3784,11 @@ U = {
 				$("#lboRegion").trigger("click");
 			}
 			viewWvW();
+		}
+		// MODE
+		else if (I.ModeEnum[page])
+		{
+			document.location = "./?mode=" + page;
 		}
 	},
 	
@@ -19993,6 +19969,8 @@ D = {
 			cs: "nástroje", it: "strumenti", pl: "narzędzia", pt: "ferramentas", ru: "инструменты", zh: "工具"},
 		s_guides: {de: "handbuch", es: "guías", fr: "guides",
 			cs: "vodítka", it: "guide", pl: "prowadnice", pt: "guias", ru: "руководства", zh: "指南"},
+		s_links: {de: "links", es: "vínculos", fr: "liens",
+			cs: "odkazy", it: "collegamenti", pl: "linki", pt: "vínculos", ru: "ссылки", zh: "链接"},
 		s_help: {de: "hilfe", es: "ayuda", fr: "assistance",
 			cs: "pomoci", it: "guida", pl: "pomoc", pt: "ajuda", ru: "помощь", zh: "辅助"},
 		s_options: {de: "optionen", es: "opciónes", fr: "options",
@@ -20143,6 +20121,10 @@ D = {
 			cs: "žádný", it: "non", pl: "żaden", pt: "nada de", ru: "нет", zh: "没有"},
 		s_not: {de: "nicht", es: "no", fr: "ne",
 			cs: "ne", it: "non", pl: "nie", pt: "não", ru: "не", zh: "不"},
+		s_all: {de: "alle", es: "todos", fr: "tous",
+			cs: "všechny", it: "tutti", pl: "wszystkie", pt: "todo", ru: "все", zh: "所有"},
+		s_only: {de: "nur", es: "solamente", fr: "seulement",
+			cs: "pouze", it: "solo", pl: "tylko", pt: "só", ru: "только", zh: "只要"},
 		s_ago: {de: "vor", es: "hace", fr: "il ya",
 			cs: "před", it: "fa", pl: "temu", pt: "há", ru: "назад", zh: "前"},
 		s_also: {de: "auch", es: "también", fr: "aussi",
@@ -23463,7 +23445,7 @@ M = {
 			{
 				case P.MapEnum.Tyria:
 				{
-					if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PlateEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
+					if (P.isChainPathsAllowed()) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
 					if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
 					if (O.Options.bol_displayPOIs) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
 					if (O.Options.bol_displayVistas) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
@@ -27101,6 +27083,10 @@ P = {
 			});
 		}
 	},
+	isChainPathsAllowed: function()
+	{
+		return (O.Options.bol_showChainPaths && I.PageCurrent !== I.PlateEnum.Map && I.ModeCurrent !== I.ModeEnum.Overlay);
+	},
 	
 	/*
 	 * Creates event icons for Dry Top chains, they will be resized by the zoomend function
@@ -28966,12 +28952,12 @@ G = {
 			{
 				var missiontype = P.Guild[i];
 				var translatedname = D.getObjectName(missiontype);
-				$("#gldButtons").append("<div>"
+				$("#gldButtons").append("<div class='gldButtonContainer'>"
 					+ "<button class='gldButton curToggle btnTab' id='gldButton_" + i
 						+ "' style='background-size:cover; background-image:url(img/guild/" + i.toLowerCase() + I.cPNG + ")' "
 						+ "title='<dfn>" + translatedname + "</dfn><br />" + I.cSiteLink + "<dfn>guild/" + i.toLowerCase() + "</dfn>'></button>"
-					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname) + "'>Y</a>&nbsp;"
-					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "'>W</a>"
+					+ "<a class='gldLink cssButton' href='" + U.getYouTubeLink(translatedname) + "'>Y</a>&nbsp;"
+					+ "<a class='gldLink cssButton' href='" + D.getObjectURL(missiontype) + "'>W</a>"
 					+ "</div>");
 				$("#gldBooks").append("<div class='gldBook' id='gldBook_" + i + "'></div>");
 			}
@@ -30044,7 +30030,6 @@ W = {
 		
 		// Prevent map scroll from interfering when using the list
 		I.preventMapPropagation(list);
-		I.blinkElement(list, 5000, 250);
 	},
 	
 	/*
@@ -30534,7 +30519,7 @@ W = {
 			$("#opt_bol_opaqueLog").trigger("click");
 		});
 		// Apply the log appearance options
-		W.toggleLog();
+		W.toggleLog(true);
 		W.opaqueLog();
 		W.toggleLogHeight();
 		I.bindScrollbar("#logWindow");
@@ -30617,16 +30602,9 @@ W = {
 	/*
 	 * Toggles the log display.
 	 */
-	toggleLog: function()
+	toggleLog: function(pIsInitial)
 	{
-		if (O.Options.bol_showLog)
-		{
-			$("#wvwLog, .logExtra").show("fast");
-		}
-		else
-		{
-			$("#wvwLog, .logExtra").hide("fast");
-		}
+		I.toggleElement("#wvwLog, .logExtra", O.Options.bol_showLog, "fast", pIsInitial);
 	},
 	opaqueLog: function()
 	{
@@ -31809,7 +31787,9 @@ T = {
 		}
 	},
 	
-	// World boss chains
+	/*
+	 * Initializes the schedule used by chains, clock, and timeline.
+	 */
 	initializeSchedule: function()
 	{
 		var i, ii, iii;
@@ -31868,12 +31848,6 @@ T = {
 		
 		// Initialize for the touring function to access current active event
 		C.CurrentChainSD = T.getStandardChain();
-		
-		// Update the timeline
-		if (O.Options.bol_showTimeline)
-		{
-			H.updateTimelineSegments(true);
-		}
 	},
 	
 	/*
@@ -33306,22 +33280,24 @@ H = {
 				&& H.isAnnouncementEnabled === false
 				&& H.isSaleEnabled === false
 				&& H.isPactEnabled === false)
-			|| H.isDashboardEnabled === false
-			|| O.Options.bol_showDashboard === false)
+			|| H.isDashboardEnabled === false)
 		{
 			H.isDashboardEnabled = false;
 			return;
 		}
 		else
 		{
-			H.toggleDashboard(true);
+			if (O.Options.bol_showDashboard === false)
+			{
+				H.toggleDashboard(true);
+			}
 			H.isCountdownTickEnabled = true;
 		}
 		
 		// Button to toggle the dashboard
 		$("#dsbToggle").click(function()
 		{
-			$("#dsbContainer").toggle("fast");
+			$("#opt_bol_showDashboard").trigger("click");
 		});
 		
 		// Initialize countdown entries
@@ -33457,6 +33433,10 @@ H = {
 		};
 		var animationspeed = 200;
 		var table = $("#dsbSaleTable");
+		if (H.isVertical)
+		{
+			table.addClass("dsbSaleVertical");
+		}
 		
 		var doGenerate = function()
 		{
@@ -33479,7 +33459,7 @@ H = {
 				var item = H.Sale.Items[i];
 				var url = item.url || U.getWikiSearchDefault(item.name);
 				var video = U.getYouTubeLink(item.name);
-				var side = (H.isVertical) ? 0 : ((item.col !== undefined) ? item.col : parseInt(i) % 2);
+				var side = (item.side !== undefined) ? item.side : parseInt(i) % 2;
 				if (item.Finish)
 				{
 					H.SaleCountdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
@@ -34010,25 +33990,10 @@ H = {
 	
 	/*
 	 * Shows or hides the dashboard.
-	 * @param boolean pBoolean.
 	 */
-	toggleDashboard: function(pBoolean)
+	toggleDashboard: function(pIsInitial)
 	{
-		if (pBoolean === undefined)
-		{
-			pBoolean = !($("#itemDashboard").is(":visible"));
-		}
-		if (O.Options.bol_showDashboard && H.isDashboardEnabled)
-		{
-			if (pBoolean)
-			{
-				$("#itemDashboard").show().css({opacity: 0}).animate({opacity: 1}, 200);
-			}
-			else
-			{
-				$("#itemDashboard").hide();
-			}
-		}
+		I.toggleElement("#dsbContainer", O.Options.bol_showDashboard, "fast", pIsInitial);
 	},
 	
 	/*
@@ -34039,7 +34004,6 @@ H = {
 		H.isTimelineGenerated = true;
 		$("#tmlTitle").text(D.getWordCapital("timeline"));
 		// Container for all the timelines
-		$("#itemTimeline").show();
 		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlHeader'></div>");
 		$("#tmlHeader").click(function()
 		{
@@ -34102,8 +34066,7 @@ H = {
 		// Bind window buttons
 		$("#tmlToggle").click(function()
 		{
-			$("#tmlContainer").toggle("fast");
-			$("#tmlTitle").toggle();
+			$("#opt_bol_showTimeline").trigger("click");
 		});
 		$("#tmlCondense").click(function()
 		{
@@ -34117,7 +34080,10 @@ H = {
 		// Initialize
 		O.Enact.bol_condenseTimelineHeader(true);
 		O.Enact.bol_condenseTimelineLine(true);
+		H.toggleTimeline(true);
+		H.opaqueTimeline();
 		I.qTip.init(".tmlLine");
+		$("#itemTimeline").show();
 	},
 	
 	/*
@@ -34262,7 +34228,12 @@ H = {
 							bossicon.attr("title", "<dfn>" + D.getObjectName(iChain) + "</dfn>").click(function()
 							{
 								C.viewChainFinale(iChain);
+							}).contextmenu(function(pEvent)
+							{
+								pEvent.preventDefault();
+								C.viewChainFinale(iChain);
 							});
+							I.preventMapPropagation(bossicon);
 							bossstripe = $("<span class='tmlStripe'>" + D.getObjectName(iChain) + "<span>").insertAfter(bossicon);
 							X.reapplyChainIconState(iChain, bossicon, true);
 							I.bindClipboard(bossicon, iChain.waypointText);
@@ -34321,29 +34292,15 @@ H = {
 	
 	/*
 	 * Shows or hides the timeline.
-	 * @param boolean pBoolean.
 	 */
-	toggleTimeline: function(pBoolean)
+	toggleTimeline: function(pIsInitial)
 	{
-		if (pBoolean === undefined)
-		{
-			pBoolean = !($("#itemTimeline").is(":visible"));
-		}
-		if (O.Options.bol_showTimeline && H.isTimelineEnabled)
-		{
-			if (pBoolean)
-			{
-				$("#itemTimeline").show().css({opacity: 0}).animate({opacity: 1}, 200);
-			}
-			else
-			{
-				$("#itemTimeline").hide();
-			}
-		}
-		else if (O.Options.bol_showTimeline === false)
-		{
-			$("#itemTimeline").hide();
-		}
+		I.toggleElement("#tmlContainer", O.Options.bol_showTimeline, "fast", pIsInitial);
+		$("#tmlTitle").toggle(!O.Options.bol_showTimeline);
+	},
+	opaqueTimeline: function()
+	{
+		I.toggleHUDOpacity("#itemTimeline", "tml", O.Options.bol_opaqueTimeline);
 	}
 };
 K = {
@@ -34396,8 +34353,10 @@ K = {
 	initializeClock: function()
 	{
 		// Create directory and dashboard beforehand
+		H.generateTimeline();
+		H.updateTimelineSegments(true);
 		H.initializeDashboard();
-		I.initializeUIForDirectory();
+		I.initializeDirectory();
 		// Remember frequently accessed elements
 		K.handSecond = $("#clkSecondHand")[0];
 		K.handMinute = $("#clkMinuteHand")[0];
@@ -35737,6 +35696,7 @@ I = {
 		Night: "☽",
 		Expand: "◢",
 		Collapse: "◣",
+		External: "↗",
 		Help: "[?]",
 		StateActive: "<span class='cssState cssStateActive'></span>",
 		StateInactive: "<span class='cssState cssStateInactive'></span>",
@@ -35828,7 +35788,7 @@ I = {
 		{
 			Scheduled: "Scheduled",
 			Special: "Special",
-			DryTop: "DryTop",
+			Drytop: "Drytop",
 			Legacy: "Legacy",
 			Temple: "Temple",
 			Timetable: "Timetable"
@@ -35904,13 +35864,20 @@ I = {
 	{
 		Directory:
 		{
-			Chains: "Boss Timers",
-			Map: "PvE Map",
+			Scheduled: "Boss Timers",
+			Map: "World Map",
 			Leaderboard: "WvW Leaderboard",
 			Manager: "Account Manager",
 			Gem: "Gem Alarm",
-			Help: "Help",
 			Options: "Options"
+		},
+		Timers:
+		{
+			Tile: "Timers Only",
+			Special: "Special Bosses",
+			Timetable: "Full Timetable",
+			DryTop: "Dry Top",
+			Help: "Boss Guides"
 		},
 		Map:
 		{
@@ -35967,6 +35934,16 @@ I = {
 			Museum: "Museum",
 			Pact: "Pact"
 		}
+	},
+	DirectoryExternal: // Associative array of URL that opens a new window
+	{
+		
+	},
+	DirectoryCompound: // Associative array of compound translation buttons
+	{
+		Special: true,
+		Timetable: true,
+		DryTop: true
 	},
 	/*
 	 * Number used to open a section's subcontent, written as 1-indexed via
@@ -36122,8 +36099,8 @@ I = {
 		I.initializeTooltip();
 		I.bindHelpButtons("#plateOptions");
 		I.bindWindowReadjust();
-		I.initializeUIForMenu();
-		I.initializeUIForHUD();
+		I.initializePlateMenu();
+		I.initializeHUD();
 		I.styleContextMenu("#mapContext");
 		$("#mapHUDContainer").toggle(O.Options.bol_showHUD);
 		// Bind switch map buttons
@@ -36417,6 +36394,26 @@ I = {
 			I.readjustTile();
 		});
 		I.readjustTile();
+	},
+	openChainsSection: function(pSection)
+	{
+		// Collapse all currently expanded sections
+		$("#plateChains section").each(function()
+		{
+			var section = U.getSubstringFromHTMLID($(this));
+			if ($(this).is(":visible") && section !== pSection)
+			{
+				$(this).prev().trigger("click");
+			}
+		});
+		// Expand the requested section if not already
+		if (pSection)
+		{
+			if ($("#sectionChains_" + pSection).is(":visible") === false)
+			{
+				$("#headerChains_" + pSection).trigger("click");
+			}
+		}
 	},
 	
 	/*
@@ -36744,17 +36741,25 @@ I = {
 	 * @param jqobject or string pElement
 	 * @param boolean pBoolean
 	 * @param string pSpeed
+	 * @param boolean pIsInitial to not animate on initial call.
 	 */
-	toggleElement: function(pElement, pBoolean, pSpeed)
+	toggleElement: function(pElement, pBoolean, pSpeed, pIsInitial)
 	{
 		var elm = $(pElement);
-		if (pBoolean)
+		if (pIsInitial)
 		{
-			elm.show(pSpeed);
+			elm.toggle(pBoolean);
 		}
 		else
 		{
-			elm.hide(pSpeed);
+			if (pBoolean)
+			{
+				elm.show(pSpeed);
+			}
+			else
+			{
+				elm.hide(pSpeed);
+			}
 		}
 	},
 	
@@ -37493,11 +37498,7 @@ I = {
 		{
 			return;
 		}
-		
 		var plate = pPlate.substring(I.cPlatePrefix.length, pPlate.length);
-		var beamid = "plateBeam_" + plate;
-		var beamcontainer = $("<div class='plateBeamContainer'></div>").prependTo(pPlate);
-		var platebeam = $("<div class='plateBeam' id='" + beamid + "'></div>").prependTo(beamcontainer);
 		
 		$(pPlate + " header.jsSection").each(function()
 		{
@@ -37518,8 +37519,6 @@ I = {
 			header.click(function()
 			{
 				var istobeexpanded = false;
-				$(pPlate + " .plateBeamIcon").removeClass("plateBeamIconActive");
-				
 				if ($(this).next().is(":visible"))
 				{
 					// TO BE COLLAPSED
@@ -37605,14 +37604,11 @@ I = {
 			 * shows the associated header's sibling container (section) by
 			 * triggering that header's handler.
 			 */
-			var sectionname = U.getSubstringFromHTMLID(header);
-			var src = header.find("img:eq(0)").attr("src");
 			if (I.isMapEnabled || header.hasClass("mapOnly") === false)
 			{
-				$("<img id='plateBeamIcon_" + section + "' class='plateBeamIcon' data-section='" + sectionname + "' src='" + src + "' "
-				+ "title='&lt;dfn&gt;" + D.getPhraseTitle("view") + ": &lt;/dfn&gt;" + headertext + "' />")
-				.appendTo(platebeam).click(function()
+				header.find("img").attr("id", "plateBeamIcon_" + section).addClass("plateBeamIcon curClick").click(function(pEvent)
 				{
+					pEvent.stopPropagation();
 					// Hide all the collapsible sections
 					$(pPlate + " header.jsSection").each(function()
 					{
@@ -37631,9 +37627,9 @@ I = {
 		});
 
 		// Side menu icon to close all the sections
-		$("<img id='plateBeamIconCollapse_" + plate + "' class='plateBeamIcon plateBeamIconCollapse' src='img/ui/exit.png' "
-			+ "title='&lt;dfn&gt;" + D.getPhraseTitle("collapse section") + "&lt;/dfn&gt;' />")
-		.prependTo(platebeam).click(function()
+		$("<img id='plateBeamIconCollapse_" + plate + "' class='plateBeamIcon plateBeamIconCollapse curClick' src='img/ui/collapse.png' "
+			+ "title='&lt;dfn&gt;" + D.getPhraseTitle("collapse all section") + "&lt;/dfn&gt;' />")
+		.prependTo(pPlate).click(function()
 		{
 			$(pPlate + " header.jsSection").each(function()
 			{
@@ -37810,7 +37806,7 @@ I = {
 	/*
 	 * Generates the front page directory on the app panel.
 	 */
-	initializeUIForDirectory: function()
+	initializeDirectory: function()
 	{
 		var dir = $("#plateDirectory");
 		var isnondefaultlang = !D.isLanguageDefault();
@@ -37830,7 +37826,11 @@ I = {
 			for (var ii in I.Directory[i])
 			{
 				pagename = (I.Directory[i])[ii];
-				if (isnondefaultlang)
+				if (I.DirectoryCompound[ii])
+				{
+					pagename = D.getTranslation(pagename);
+				}
+				else if (isnondefaultlang)
 				{
 					pagename = D.getModifiedPhrase(pagename.toLowerCase(), U.CaseEnum.Title);
 				}
@@ -37839,7 +37839,14 @@ I = {
 				{
 					pagebutton.click(function()
 					{
-						U.interpretPage(iPage);
+						if (I.DirectoryExternal[iPage])
+						{
+							U.openExternalURL(I.DirectoryExternal[iPage]);
+						}
+						else
+						{
+							U.interpretPage(iPage);
+						}
 					});
 				})(ii);
 			}
@@ -37859,7 +37866,7 @@ I = {
 	/*
 	 * Menu event handlers and UI postchanges.
 	 */
-	initializeUIForMenu: function()
+	initializePlateMenu: function()
 	{
 		/*
 		 * Menu click icon to show respective content plate (page).
@@ -37886,7 +37893,9 @@ I = {
 							$("#mapHUDContainerInner").show();
 						}
 						C.isTouringManual = false;
-						// Hide any opened map sections when viewing directory
+						// Hide any opened chains sections
+						I.openChainsSection();
+						// Hide any opened map sections
 						$("#plateBeamIconCollapse_Map").trigger("click");
 					} break;
 					case I.PlateEnum.Chains:
@@ -37931,8 +37940,7 @@ I = {
 				// Also hide chain paths if on the map page
 				if (I.isMapEnabled)
 				{
-					M.toggleLayer(M.ZoneCurrent.Layers.Path,
-						(I.PageCurrent !== I.PlateEnum.Map && O.Options.bol_showChainPaths));
+					M.toggleLayer(M.ZoneCurrent.Layers.Path, P.isChainPathsAllowed());
 				}
 			});
 		});
@@ -38199,7 +38207,7 @@ I = {
 	/*
 	 * Binds Map pane special effects on HUD GUI elements.
 	 */
-	initializeUIForHUD: function()
+	initializeHUD: function()
 	{
 		U.convertModeLink(".hudHelpColumn a");
 		U.convertExternalLink(".hudHelpColumn a");

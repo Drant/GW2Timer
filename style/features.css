@@ -509,19 +509,20 @@ dt.jpzListNameHover {
 	margin-top: 8px;
 	text-align: center;
 }
-#gldButtons div {
+.gldButtonContainer {
 	display: inline-block;
 	width: 50px;
 	margin-right: 8px;
 }
-#gldBooks a {
+.gldLink {
 	text-decoration: none;
 }
-#gldButtons button {
+.gldButton {
 	width: 48px; height: 48px;
 	padding: 0;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
-#gldButtons button:active {
+.gldButton:active {
 	opacity: 0.8;
 }
 

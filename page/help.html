@@ -4,46 +4,11 @@
 
 
 
-<header id="headerHelp_FAQ" class="jsSection"><img src="img/ui/question.png" alt="FAQ" />FAQ</header>
-<section>
-	<p><a href="https://www.youtube.com/watch?v=uXqvTMGNIXo">Video Demo</a> and overview of <a href="http://forum.renaka.com/topic/5602037/">GW2Timer.com features</a>.</p>
-<h2>What do the colors in the clock mean?</h2>
-<p>As you may know, pre-expansion world boss (WB) chains start exactly 15 minutes apart (X:00, X:15, X:30, X:45), and most of them don't take longer than 15 minutes to complete, so the chains can be neatly fitted into a clock's quadrants. The <strong>bright green</strong> mark is the current WB's start (<strong>dark green</strong> is the next), the <strong>orange</strong> mark is the minimum time it is completed (usually by a full map population), and the <strong>red</strong> mark is the average. If you waypoint to a WB after the red mark is passed, it's likely the boss is already dead, and you'll be placed in a newer map instance with the chain still in the early events. Chains have a 15-20 minutes time limit to start the boss, so you can still make it, but you may miss the next boss because of the 15 minute per boss timeframe overlap.</p>
-
-<h2>How do I get or use a chat link?</h2>
-<p>Click one of the four little waypoint icons <img class="cntIconExample" src="img/map/waypoint.png" alt="Icon" /> on the clock area to automatically copy the current and next boss to your clipboard. Go back to GW2 and paste (Ctrl+V) and enter chat to show the clickable waypoint link. If you don't have Adobe Flash in your browser, then click a waypoint icon in the map area and do the keystroke (Ctrl+C).</p>
-
-<h2>What do the colors of the map lines mean?</h2>
-<p>Each different colored lines represent one &quot;step&quot;: one event, or multiple simultaneous events that are considered a single link in the meta event chain. The colors are ordered like the mnemonic ROYGBIV: Red, Orange, Yellow, Green, Blue, Indigo, Violet; so red is the first step in the chain, and green and blue are much later. You can click on the event name to be directed to the path, which were hand drawn to trace a player's progress or NPC route. A straight line through lots of obstacles means you should waypoint instead of walk there.</p>
-
-<h2>Why is there no timer for the other world bosses?</h2>
-<p>Megaservers are pretty much overflows, and the API (files on the game's website that tells when events are up) don't give information about overflows because they are dynamic instances not tied to a particular server. To do these events you have to physically check the places where they happen, and if none of them are active for that chain, you should ask map chat when the chain was last completed.</p>
-
-<p>Knowing the timings for these events will be helpful, so in the chains/timers tab, mouse over an orange icon <img class="cntIconExample" src="img/event/swords.png" alt="Icon" /> next to an event name to show that event's information:</p>
-<dl>
-	<dt>Event Number</dt><dd>The order in the chain. Numbers like 1 and 2 (without letters) are single running events in the chain. Numbers like 1A1 and 1B1 happen at the same time, and 1A2 happens after 1A1. Numbers like 1a1 and 1b1 happen at the same time but branch out as subchains. Numbers like 1.1 are failure events.</dd>
-	<dt>If Success/Failure Go To</dt><dd>The event that follows for that condition. Failure number 0 means the event is unfailable.</dd>
-	<dt>If Success/Failure Wait</dt><dd>The time between an event has just succeeded/failed and the one that follows it starting.</dd>
-	<dt>Time Limit</dt><dd>The timer you see in the game; may be the time until the event fails or the time you have to endure to succeed.</dd>
-	<dt>Avg to Complete</dt><dd>The time it usually takes to complete (by a zerg).</dd>
-	<dt>Min to Complete</dt><dd>The shortest possible time it takes to complete (by a full map).</dd>
-	<dt>Max to Complete</dt><dd>The longest reasonable time it takes to complete (solo or small group)</dd>
-</dl>
-<br />
-
-<h2>How is GW2Timer.com able to tell when individual events in the chain are active without an API?</h2>
-<p>tl;dr: Statistics.</p>
-<p>Before the megaserver launch, the site was originally meant to predict for world boss trains a sorted schedule of the next quickest-to-complete meta event chain which were then asynchronous. To do that the site had to collect time statistics on the chains' individual events. Using the API, a monitor program recorded (continuously over two weeks on four varied tier servers) the times between an event changing its state, most importantly the "Active" to "Success" transition. Another custom written program was used to generate histogram and boxplot data, which were handpicked as the minimum possible, modal average, and modal maximum time an event is completed.</p>
-<p>Additionally, the interim between an event finishes and its followup event starts is also collected (usually this is a preset time, or the time for an NPC to run a place), and all these times are summed to give an estimate of how long an entire chain takes to complete. Although most meta events are now prescheduled and time sorting is moot, the site can still give players a general idea of the battlefield without having to set foot on it.</p>
-</section>
-
-
-
-
 <header id="headerHelp_About" class="jsSection"><img src="img/ui/about.png" alt="About" />About / Contact</header>
 <section>
 
 <h1>Contact</h1>
+<p><a href="https://www.youtube.com/watch?v=uXqvTMGNIXo">Video Demo</a> and overview of <a href="http://forum.renaka.com/topic/5602037/">GW2Timer.com features</a>.</p>
 <span>Use the <a href="http://www.reddit.com/r/gw2timer/">/r/gw2timer subreddit</a> or the <a href="http://forum.renaka.com/forum/368355/">forum</a> for questions/suggestions/reports; you can post as an unregistered guest at the forum.</span>
 
 <h1>About</h1>
@@ -120,6 +85,41 @@
 
 
 
+<header id="headerHelp_FAQ" class="jsSection"><img src="img/ui/categories/timetable.png" alt="FAQ" />Timings FAQ</header>
+<section>
+<h2>What do the colors in the clock mean?</h2>
+<p>As you may know, pre-expansion world boss (WB) chains start exactly 15 minutes apart (X:00, X:15, X:30, X:45), and most of them don't take longer than 15 minutes to complete, so the chains can be neatly fitted into a clock's quadrants. The <strong>bright green</strong> mark is the current WB's start (<strong>dark green</strong> is the next), the <strong>orange</strong> mark is the minimum time it is completed (usually by a full map population), and the <strong>red</strong> mark is the average. If you waypoint to a WB after the red mark is passed, it's likely the boss is already dead, and you'll be placed in a newer map instance with the chain still in the early events. Chains have a 15-20 minutes time limit to start the boss, so you can still make it, but you may miss the next boss because of the 15 minute per boss timeframe overlap.</p>
+
+<h2>How do I get or use a chat link?</h2>
+<p>Click one of the four little waypoint icons <img class="cntIconExample" src="img/map/waypoint.png" alt="Icon" /> on the clock area to automatically copy the current and next boss to your clipboard. Go back to GW2 and paste (Ctrl+V) and enter chat to show the clickable waypoint link. If you don't have Adobe Flash in your browser, then click a waypoint icon in the map area and do the keystroke (Ctrl+C).</p>
+
+<h2>What do the colors of the map lines mean?</h2>
+<p>Each different colored lines represent one &quot;step&quot;: one event, or multiple simultaneous events that are considered a single link in the meta event chain. The colors are ordered like the mnemonic ROYGBIV: Red, Orange, Yellow, Green, Blue, Indigo, Violet; so red is the first step in the chain, and green and blue are much later. You can click on the event name to be directed to the path, which were hand drawn to trace a player's progress or NPC route. A straight line through lots of obstacles means you should waypoint instead of walk there.</p>
+
+<h2>Why is there no timer for the other world bosses?</h2>
+<p>Megaservers are pretty much overflows, and the API (files on the game's website that tells when events are up) don't give information about overflows because they are dynamic instances not tied to a particular server. To do these events you have to physically check the places where they happen, and if none of them are active for that chain, you should ask map chat when the chain was last completed.</p>
+
+<p>Knowing the timings for these events will be helpful, so in the chains/timers tab, mouse over an orange icon <img class="cntIconExample" src="img/event/swords.png" alt="Icon" /> next to an event name to show that event's information:</p>
+<dl>
+	<dt>Event Number</dt><dd>The order in the chain. Numbers like 1 and 2 (without letters) are single running events in the chain. Numbers like 1A1 and 1B1 happen at the same time, and 1A2 happens after 1A1. Numbers like 1a1 and 1b1 happen at the same time but branch out as subchains. Numbers like 1.1 are failure events.</dd>
+	<dt>If Success/Failure Go To</dt><dd>The event that follows for that condition. Failure number 0 means the event is unfailable.</dd>
+	<dt>If Success/Failure Wait</dt><dd>The time between an event has just succeeded/failed and the one that follows it starting.</dd>
+	<dt>Time Limit</dt><dd>The timer you see in the game; may be the time until the event fails or the time you have to endure to succeed.</dd>
+	<dt>Avg to Complete</dt><dd>The time it usually takes to complete (by a zerg).</dd>
+	<dt>Min to Complete</dt><dd>The shortest possible time it takes to complete (by a full map).</dd>
+	<dt>Max to Complete</dt><dd>The longest reasonable time it takes to complete (solo or small group)</dd>
+</dl>
+<br />
+
+<h2>How is GW2Timer.com able to tell when individual events in the chain are active without an API?</h2>
+<p>tl;dr: Statistics.</p>
+<p>Before the megaserver launch, the site was originally meant to predict for world boss trains a sorted schedule of the next quickest-to-complete meta event chain which were then asynchronous. To do that the site had to collect time statistics on the chains' individual events. Using the API, a monitor program recorded (continuously over two weeks on four varied tier servers) the times between an event changing its state, most importantly the "Active" to "Success" transition. Another custom written program was used to generate histogram and boxplot data, which were handpicked as the minimum possible, modal average, and modal maximum time an event is completed.</p>
+<p>Additionally, the interim between an event finishes and its followup event starts is also collected (usually this is a preset time, or the time for an NPC to run a place), and all these times are summed to give an estimate of how long an entire chain takes to complete. Although most meta events are now prescheduled and time sorting is moot, the site can still give players a general idea of the battlefield without having to set foot on it.</p>
+</section>
+
+
+
+
 <header id="headerHelp_Schedules" class="jsSection"><img src="img/ui/categories/scheduled.png" alt="Scheduled Bosses" />Scheduled Bosses</header>
 <section>
 <h1>Walkthrough</h1>
@@ -161,6 +161,15 @@
 
 <h2>Tequatl, Triple Wurm, The Shatterer</h2>
 <p>A mini-walkthrough will not suffice for these heavy coordination-required bosses. The TTS guild provides a guide for <a href="http://forums.ttsgamers.com/topic/1438-tequatl-guide/">Tequatl</a>, <a href="http://forums.ttsgamers.com/topic/2758-triple-trouble-guide/">Triple Wurm</a>, and <a href="http://forums.ttsgamers.com/topic/2767-shatterer-guide/">The Shatterer</a>.</p>
+</section>
+
+
+
+
+<header id="headerHelp_Specials" class="jsSection"><img src="img/ui/categories/special.png" alt="Specials" />Special Bosses</header>
+<section>
+<h2>Bloodstone-Crazed Creatures</h2>
+<p><a href="http://forum.renaka.com/topic/6205181/">External guide.</a> These bosses have a repeating rotation, but random spawn window times. Due to their difficulty in encountering, they are done once only for the achievements to unlock a reward skin.</p>
 </section>
 
 

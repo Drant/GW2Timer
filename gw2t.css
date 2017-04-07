@@ -178,11 +178,10 @@ img {
 	font-size: 16px;
 	color: lime;
 	text-shadow:
-		1px 1px 0px #333,
-		-1px -1px 0px #333,
-		1px -1px 0px #333,
-		-1px 1px 0px #333,
-		1px 1px 0px #333;
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 }
 #cslContent {
 	padding: 4px 10px 4px 10px;
@@ -587,8 +586,7 @@ html, body,
 
 /* Clickable */
 .curClick, .jsClip, a, kbd, input, select, label, button,
-.plateMenuButton, .btnWindow, .hudSelect, .itemContext li,
-.plateBeam img:hover, .chnCheck:hover, .chnTitle time {
+.plateMenuButton, .btnWindow, .hudSelect, .itemContext li, .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 
@@ -1204,8 +1202,7 @@ textarea.jsCopyCode {
 }
 
 /* Top right corner: Dashboard */
-#itemDashboard {
-	display: none;
+#dsbContainer {
 	padding: 4px 10px 4px 10px;
 	margin-bottom: 8px;
 	font-family: Trebuchet MS, Menomonia;
@@ -1220,12 +1217,13 @@ textarea.jsCopyCode {
 #dsbToggle {
 	top: 8px;
 	left: 12px;
+	background: none;
 }
-#itemDashboard a {
+#dsbContainer a {
 	color: rgba(255, 238, 187, 0.8);
 	text-decoration: none;
 }
-#itemDashboard a:hover, #itemDashboard u:hover, .dsbMenuItem:hover u {
+#dsbContainer a:hover, #dsbContainer u:hover, .dsbMenuItem:hover u {
 	color: rgba(255, 238, 187, 1);
 }
 .dsbMenuItem {
@@ -1297,7 +1295,7 @@ textarea.jsCopyCode {
 	opacity: 0.3;
 	transition: opacity 0.2s;
 }
-#itemDashboard:hover .dsbCountdownDate {
+#dsbContainer:hover .dsbCountdownDate {
 	opacity: 1;
 }
 #dsbSaleHeader:active, #dsbPactHeader:active {
@@ -1308,6 +1306,9 @@ textarea.jsCopyCode {
 	vertical-align: top;
 }
 #dsbSaleSide0 {
+	margin-left: 32px;
+}
+.dsbSaleVertical #dsbSaleSide1 {
 	margin-left: 32px;
 }
 .dsbSaleEntry {
@@ -1684,7 +1685,7 @@ input.mapCoordinatesName {
 	display: none;
 }
 
-#itemDisplayButton, #mapDisplayButton, #wvwDisplayButton {
+#itemDisplayButton, #mapDisplayButton, #wvwDisplayButton, #accDisplayButton {
 	position: absolute; z-index: 11;
 	top: calc(50% - 16px);
 	left: auto;
@@ -2245,33 +2246,35 @@ input.mapCoordinatesName {
 .mnu_forum { background-position: -736px 0; }
 .mnu_gem { background-position: -768px 0; }
 .mnu_gliders { background-position: -800px 0; }
-.mnu_guilds { background-position: -832px 0; }
-.mnu_help { background-position: -864px 0; }
-.mnu_hero { background-position: -896px 0; }
-.mnu_info { background-position: -928px 0; }
-.mnu_inventory { background-position: -960px 0; }
-.mnu_lab { background-position: -992px 0; }
-.mnu_leave { background-position: -1024px 0; }
-.mnu_manager { background-position: -1056px 0; }
-.mnu_map { background-position: -1088px 0; }
-.mnu_materials { background-position: -1120px 0; }
-.mnu_minis { background-position: -1152px 0; }
-.mnu_museum { background-position: -1184px 0; }
-.mnu_nodes { background-position: -1216px 0; }
-.mnu_options { background-position: -1248px 0; }
-.mnu_outfits { background-position: -1280px 0; }
-.mnu_pact { background-position: -1312px 0; }
-.mnu_possessions { background-position: -1344px 0; }
-.mnu_pvp { background-position: -1376px 0; }
-.mnu_raids { background-position: -1408px 0; }
-.mnu_recipes { background-position: -1440px 0; }
-.mnu_selling { background-position: -1472px 0; }
-.mnu_sold { background-position: -1504px 0; }
-.mnu_trading { background-position: -1536px 0; }
-.mnu_vault { background-position: -1568px 0; }
-.mnu_wardrobe { background-position: -1600px 0; }
-.mnu_wvw { background-position: -1632px 0; }
-.mnu_zone { background-position: -1664px 0; }
+.mnu_gps { background-position: -832px 0; }
+.mnu_guilds { background-position: -864px 0; }
+.mnu_help { background-position: -896px 0; }
+.mnu_hero { background-position: -928px 0; }
+.mnu_info { background-position: -960px 0; }
+.mnu_inventory { background-position: -992px 0; }
+.mnu_lab { background-position: -1024px 0; }
+.mnu_leave { background-position: -1056px 0; }
+.mnu_manager { background-position: -1088px 0; }
+.mnu_map { background-position: -1120px 0; }
+.mnu_materials { background-position: -1152px 0; }
+.mnu_minis { background-position: -1184px 0; }
+.mnu_museum { background-position: -1216px 0; }
+.mnu_nodes { background-position: -1248px 0; }
+.mnu_options { background-position: -1280px 0; }
+.mnu_outfits { background-position: -1312px 0; }
+.mnu_pact { background-position: -1344px 0; }
+.mnu_possessions { background-position: -1376px 0; }
+.mnu_pvp { background-position: -1408px 0; }
+.mnu_raids { background-position: -1440px 0; }
+.mnu_recipes { background-position: -1472px 0; }
+.mnu_selling { background-position: -1504px 0; }
+.mnu_sold { background-position: -1536px 0; }
+.mnu_timers { background-position: -1568px 0; }
+.mnu_trading { background-position: -1600px 0; }
+.mnu_vault { background-position: -1632px 0; }
+.mnu_wardrobe { background-position: -1664px 0; }
+.mnu_wvw { background-position: -1696px 0; }
+.mnu_zone { background-position: -1728px 0; }
 
 #plateMenu var { /* Button subtitle */
 	display: table-cell;
@@ -2293,59 +2296,26 @@ input.mapCoordinatesName {
 
 /* @@Beam sub-navigation menu generated by JS for a page's sections
 ----------------------------------------------------------------------------- */
-
-.plateBeamContainer {
-	position: fixed; z-index: 1;
-	width: 360px;
-	min-height: 32px;
-	background: url("img/ui/toggle.png") no-repeat center;
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	opacity: 0.5;
-}
-.plateBeamContainer:hover {
-	background: none;
-	border-radius: 0;
-	opacity: 1;
-}
-.plateBeamContainer .plateBeam {
-	display: none;
-}
-.plateBeamContainer:hover .plateBeam {
-	display: block;
-}
-.plateBeam {
-	margin-left: -1px;
-	padding-top: 4px;
-	text-align: left;
-	border-left: 1px solid #444;
-	border-top: 1px solid #444;
-	border-bottom: 1px solid #444;
-	box-shadow: -5px 0px 5px #223;
-	background: #222;
-	opacity: 0.9;
-}
-.plateBeam img { /* Clickable icon, its src is duplicated from an img tag in a header */
+.plateBeamIcon { /* Clickable icon, its src is duplicated from an img tag in a header */
 	display: inline-block;
 	width: 32px; height: 32px;
 	margin: 0 1px 0 1px;
-	opacity: 0.8;
 }
-.plateBeam img:hover {
+.plateBeamIcon:hover {
 	box-shadow: 0px 0px 4px #e4e0b3;
-	opacity: 1;
 }
-.plateBeam img:active {
-	box-shadow: 0px 0px 4px #009900;
+.plateBeamIcon:active {
+	opacity: 0.6;
 }
 .plateBeamIconActive {
 	padding-left: 4px;
 	padding-right: 4px;
 	background: black;
-	opacity: 1;
 }
 .plateBeamIconCollapse {
-	float: right;
+	position: fixed; z-index: 1;
+	margin-top: 8px;
+	margin-left: 320px;
 }
 
 header.jsSection {

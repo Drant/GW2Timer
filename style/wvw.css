@@ -327,8 +327,7 @@ a.lboLink {
 	overflow: visible;
 	text-align: center;
 	white-space: nowrap;
-	font-family: Menomonia;
-	font-weight: bold;
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 16px;
 }
 .lboScore {
@@ -692,15 +691,14 @@ a.lboLink {
 #wvwStats td {
 	padding: 2px 8px 2px 8px;
 	font-family: Trebuchet MS, Menomonia;
+	font-weight: normal;
+	font-size: 17px;
 }
 #wvwStats th {
 	padding: 8px 8px 4px 8px;
 }
 #wvwStats td:first-child, #wvwStats th:first-child {
 	text-align: left;
-}
-#wvwStats td:first-child {
-	font-family: Menomonia;
 }
 #wvwStats .wvwStatsLink {
 	text-decoration: none;
