@@ -1476,10 +1476,10 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "",
+	pve: "Character Slots are 20% off in gem store.",
 	wvw: "",
-	Start: new Date("2016-03-14T16:00:00Z"),
-	Finish: new Date("2017-04-04T16:00:00Z"),
+	Start: new Date("2016-04-07T16:00:00Z"),
+	Finish: new Date("2017-04-08T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
