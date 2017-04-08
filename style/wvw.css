@@ -590,6 +590,10 @@ a.lboLink {
 }
 #logNarrateLand {
 	padding-right: 16px;
+	text-align: left;
+}
+#logNarrateObjective {
+	text-align: left;
 }
 #logNarrateOther {
 	width: 100%;

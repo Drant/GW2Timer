@@ -211,8 +211,16 @@ input.mapCoordinatesName {
 #plateMenu ins {
 	margin-top: 0px;
 }
+.plateMenuButtonActive {
+	background: rgba(255, 238, 187, 0.2);
+}
 #menuOptions:hover #itemLanguagePopup {
 	top: 32px;
+}
+
+#plateDirectory {
+	position: relative;
+	top: auto;
 }
 
 .btnWindow {

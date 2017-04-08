@@ -10497,8 +10497,9 @@ V = {
 		var trivial = (pCharacter.oCharIsLowLevel) ? "accTrivial" : "";
 		// Remember character portrait
 		pCharacter.oCharPortrait = "img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG;
+		// Create character name row that leads to its hero page
 		$("#chrSelection_" + pCharacter.oCharIndex).append(
-			"<img class='chrPortrait' src='" + pCharacter.oCharPortrait + "' />"
+			"<img id='chrPortrait_" + pCharacter.oCharIndex + "' class='chrPortrait' src='" + pCharacter.oCharPortrait + "' />"
 			+ "<var id='chrName_" + pCharacter.oCharIndex + "' class='chrName' data-value='" + charvalue + "'>" + pCharacter.oCharName + "</var>"
 			+ "<span class='chrCommitment' data-value='" + professionvalue + "'>"
 				+ "<var class='chrProfession " + trivial + "'>"
@@ -10525,8 +10526,11 @@ V = {
 				$("#accMenu_Hero").trigger("click");
 				A.adjustAccountScrollbar();
 			}
-		}).dblclick(function()
+		});
+		// Mini portrait can be clicked to print raw data
+		$("#chrPortrait_" + pCharacter.oCharIndex).click(function(pEvent)
 		{
+			pEvent.stopPropagation();
 			var charindex = U.getSubintegerFromHTMLID($(this));
 			I.prettyJSON(A.Data.Characters[charindex]);
 		});
@@ -37939,10 +37943,13 @@ I = {
 							$("#mapHUDContainerInner").show();
 						}
 						C.isTouringManual = false;
-						// Hide any opened chains sections
-						I.openChainsSection();
-						// Hide any opened map sections
-						$("#plateBeamIconCollapse_Map").trigger("click");
+						if (I.ModeCurrent !== I.ModeEnum.Overlay)
+						{
+							// Hide any opened chains sections
+							I.openChainsSection();
+							// Hide any opened map sections
+							$("#plateBeamIconCollapse_Map").trigger("click");
+						}
 					} break;
 					case I.PlateEnum.Chains:
 					{

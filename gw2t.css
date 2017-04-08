@@ -2215,7 +2215,13 @@ input.mapCoordinatesName {
 }
 #plateMenu ins { /* Button image */
 	margin-top: 8px;
-	background-image: linear-gradient(to bottom, transparent 0%, transparent 50%, #111 100%), url("img/ui/menu.png");
+	border-radius: 50%;
+}
+#plateMenu ins:before {
+	content: "";
+	display: block;
+	width: 32px; height: 32px;
+	background-image: linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
 	border-radius: 50%;
 }
 #plateMenu_Help { display: none; } /* This plate is hidden from the menu bar */
