@@ -1481,7 +1481,7 @@ Announcement:
 	pve: "Character Slots are 20% off in gem store.",
 	wvw: "",
 	Start: new Date("2016-04-07T16:00:00Z"),
-	Finish: new Date("2017-04-08T16:00:00Z"),
+	Finish: new Date("2017-04-09T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "

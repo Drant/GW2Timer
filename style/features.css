@@ -37,15 +37,8 @@
 }
 .dlyBoxDashboard {
 	display: inline-block;
-	margin: 0px 8px 0px 8px;
-	vertical-align: middle;
-}
-.dlyBoxDashboard .dlyMonthday {
-	margin: 0px;
-	bottom: 0;
-	right: 0;
-	opacity: 0.2;
-	pointer-events: none;
+	min-width: 320px;
+	margin: 8px;
 }
 .dlyCurrent {
 	padding-top: 8px;
