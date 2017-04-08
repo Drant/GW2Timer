@@ -29,7 +29,7 @@
 	opacity: 0.6;
 }
 #prjToggleTerrain {
-	background: url("../img/ui/pages/map.png"), radial-gradient(ellipse at center, rgba(236, 121, 37, 0.6) 0%, transparent 100%);
+	background: url("../img/ui/menu/map.png"), radial-gradient(ellipse at center, rgba(236, 121, 37, 0.6) 0%, transparent 100%);
 }
 #prjToggleHUD {
 	background: url("../img/ui/switch.png"), radial-gradient(ellipse at center, rgba(236, 121, 37, 0.6) 0%, transparent 100%);
@@ -63,19 +63,24 @@
 	left: -4px; top: -4px;
 }
 
-.hudDirectory {
+.hudPeripheral {
+	background: url("../img/background/hud.png"), linear-gradient(to bottom, #222 0%, transparent 100%);
+	border-left: 4px solid #111;
+	border-radius: 2px;
+}
+.hudHelp {
 	font-size: 13px;
 }
-.hudDirectoryScroll {
+.hudHelpScroll {
 	max-height: 320px;
 }
-.hudDirectory a {
+.hudHelp a {
 	font-size: 14px;
 }
-.hudDirectory h2 {
+.hudHelp h2 {
 	font-size: 16px;
 }
-.hudDirectoryModePreview {
+.hudHelpModePreview {
 	width: 160px;
 	margin-right: 8px;
 }

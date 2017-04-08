@@ -3760,10 +3760,7 @@ U = {
 		// SPECIAL PAGE: Audit
 		else if (page === I.SpecialPageEnum.Audit)
 		{
-			if (A.isAccountInitialized === false)
-			{
-				I.ArticleCurrent = I.SpecialPageEnum.Audit;
-			}
+			I.ArticleCurrent = I.SpecialPageEnum.Audit;
 			if ($("#audExecute").is(":visible"))
 			{
 				$("#audExecute").trigger("click");
@@ -4646,6 +4643,25 @@ U = {
 		$("#itemLanguagePopup").click(function(pEvent)
 		{
 			pEvent.stopPropagation();
+		});
+	},
+	
+	/*
+	 * Binds pseudolinks that has the "data-page" attribute pointing to pages.
+	 * @param string pSelector
+	 */
+	convertInternalLink: function(pSelector)
+	{
+		$(pSelector).each(function()
+		{
+			var page = $(this).attr(I.cPageAttribute);
+			if (page.length)
+			{
+				$(this).click(function()
+				{
+					U.interpretPage(page);
+				});
+			}
 		});
 	},
 	
@@ -7428,6 +7444,7 @@ A = {
 	CharIndexCurrent: null,
 	isAccountInitialized: false,
 	isChartsInitialized: false,
+	isAuditReady: false,
 	isCharactersCached: false, // For force redownloading of characters data rather than use cached
 	isHeroCached: false, // For fetching hero equipment, skills, etc. again
 	Metadata: {}, // Prewritten data loaded along with account page
@@ -7996,6 +8013,7 @@ A = {
 		}
 		A.Data.CharacterNames = null;
 		A.Data.Vaults = null;
+		A.isAuditReady = false;
 		// Prevent skipping loading the characters section first
 		$("#accMenu_Characters").data("iscurrentaccounttab", null);
 		$(".accDishMenu").empty();
@@ -8110,7 +8128,7 @@ A = {
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
 		var use = $("<button class='accTokenUse' title='<dfn>" + D.getWordCapital("use") + "</dfn> "
-			+ D.getPhrase("this key") + ".'><img src='img/ui/check.png' /></button>").appendTo(buttons);
+			+ D.getPhrase("this key") + ".<br />" + D.getPhraseOriginal("Double click to audit") + ".'><img src='img/ui/check.png' /></button>").appendTo(buttons);
 		var del = $("<button class='accTokenDelete' title='<dfn>" + D.getWordCapital("delete") + "</dfn> "
 			+ D.getPhrase("this key") + ".'><img src='img/ui/default.png' /></button>").appendTo(buttons);
 		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
@@ -8147,6 +8165,9 @@ A = {
 			{
 				I.write("Please enter a valid API key.");
 			}
+		}).dblclick(function()
+		{
+			U.interpretPage(I.SpecialPageEnum.Audit);
 		});
 		// Entering a new key in the input box triggers the use button
 		key.change(function()
@@ -10327,10 +10348,18 @@ V = {
 		I.qTip.init("#audExecuteAlternate");
 		
 		// Scroll to execute button if requested by URL
-		U.verifyArticle(I.SpecialPageEnum.Audit, function()
+		A.isAuditReady = true;
+		V.attemptAudit();
+	},
+	attemptAudit: function()
+	{
+		if (A.isAuditReady)
 		{
-			executebtnalt.trigger("click");
-		});
+			U.verifyArticle(I.SpecialPageEnum.Audit, function()
+			{
+				$("#audExecute").trigger("click");
+			});
+		}
 	},
 	
 	/*
@@ -10343,6 +10372,7 @@ V = {
 		var dish = $("#accDish_Characters");
 		if (A.reinitializeDish(dish) === false)
 		{
+			V.attemptAudit();
 			return;
 		}
 		var menusubsection = $("#accMenu_Characters").find(".accMenuSubtab");
@@ -24310,8 +24340,8 @@ M = {
 		var x, y;
 		for (var i = 0; i < qty; i++)
 		{
-			x = T.getRandomIntRange(0, this.Continent.Bound[0]);
-			y = T.getRandomIntRange(0, this.Continent.Bound[1]);
+			x = T.getRandomIntRange(0, this.Continent.Dimensions[0]);
+			y = T.getRandomIntRange(0, this.Continent.Dimensions[1]);
 			this.createPersonalPin(this.convertGCtoLC([x, y]));
 		}
 		this.drawPersonalPath();
@@ -33266,7 +33296,9 @@ H = {
 		if (H.Announcement.pve.length > 0 && T.isTimely(H.Announcement, now))
 		{
 			var annprefix = "<strong>" + D.getWordCapital("new") + ": </strong>";
-			U.convertExternalLink($("#dsbAnnouncement").html(annprefix + H.Announcement.pve).find("a"));
+			var announcementlinks = $("#dsbAnnouncement").html(annprefix + H.Announcement.pve).find("a");
+			U.convertExternalLink(announcementlinks);
+			U.convertInternalLink(announcementlinks);
 			M.bindMapLinks("#dsbAnnouncement");
 			H.isAnnouncementEnabled = true;
 		}
@@ -34028,7 +34060,7 @@ H = {
 				var event = chain.Segments[ii];
 				var segmentprefix = "";
 				var segmentname = (D.getObjectName(event) || "");
-				var emptyclass = (!chain.isWB && segmentname === "") ? "tmlTimesliceEmpty" : "";
+				var emptyclass = (event.primacy < C.EventPrimacyEnum.Primary) ? "tmlTimesliceEmpty" : "";
 				var wbclass = (chain.isWB) ? "tmlTimesliceWB" : "";
 				var wbdata = (chain.isWB) ? "data-offset='" + ii + "'" : "";
 				var bossclass = (event.primacy === C.EventPrimacyEnum.Boss) ? "tmlSegmentNameBoss" : "";
@@ -34454,14 +34486,12 @@ K = {
 					width: "100%",
 					right: "auto", bottom: "90px",
 					"text-align": "center",
-					color: "#eee",
 					opacity: 0.5
 				});
 				$("#itemTimeDaytime").css({
 					width: "100%",
 					top: "90px", bottom: "auto", left: "auto",
 					"text-align": "center",
-					color: "#eee",
 					opacity: 0.5
 				});
 
@@ -34497,14 +34527,12 @@ K = {
 					width: "auto",
 					right: "10px", bottom: "10px",
 					"text-align": "left",
-					color: "#bbcc77",
 					opacity: 1
 				});
 				$("#itemTimeDaytime").css({
 					width: "auto",
 					top: "auto", bottom: "10px", left: "10px",
 					"text-align": "left",
-					color: "#bbcc77",
 					opacity: 1
 				});
 
@@ -34799,16 +34827,16 @@ K = {
 		var timeframeprogress = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
 		// Progress bar over chains page to show how far in timeframe
 		var percent = (T.cPERCENT_100 * timeframeprogress);
-		K.timeProgress0.style.width = percent + "%";
-		K.timeProgress1.style.width = (100 - percent) + "%";
+		K.timeProgress0.style.width = (100 - percent) + "%";
+		K.timeProgress1.style.width = percent + "%";
 		
 		/*
 		 * If crossing a 15 minute mark (IMPORTANT).
 		 */
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
-			$(K.timeProgress0).css({width: "0%"}).animate({width: "100%"}, 800);
-			$(K.timeProgress1).css({width: "100%"}).animate({width: "0%"}, 800);
+			$(K.timeProgress0).css({width: "100%"}).animate({width: "0%"}, 800);
+			$(K.timeProgress1).css({width: "0%"}).animate({width: "100%"}, 800);
 			K.updateTimeFrame(pDate);
 			// Check gem store alerts if opted
 			if (O.Options.bol_alertGem)
@@ -35667,6 +35695,7 @@ I = {
 	cClipboardAttribute: "data-clipboard-text",
 	cClipboardSuccessText: "Text copied to clipboard :)<br />",
 	cTooltipAttribute: "data-tip",
+	cPageAttribute: "data-page",
 	consoleTimeout: {},
 	siteTagDefault: " - gw2timer.com",
 	siteTagCurrent: " - gw2timer.com",
@@ -37629,7 +37658,7 @@ I = {
 		});
 
 		// Side menu icon to close all the sections
-		$("<img id='plateBeamIconCollapse_" + plate + "' class='plateBeamIcon plateBeamIconCollapse curClick' src='img/ui/collapse.png' "
+		$("<img id='plateBeamIconCollapse_" + plate + "' class='plateBeamIcon plateBeamIconCollapse curClick' src='img/ui/adjust_minus.png' "
 			+ "title='&lt;dfn&gt;" + D.getPhraseTitle("collapse all section") + "&lt;/dfn&gt;' />")
 		.prependTo(pPlate).click(function()
 		{
@@ -37812,12 +37841,15 @@ I = {
 	{
 		var dir = $("#plateDirectory");
 		var isnondefaultlang = !D.isLanguageDefault();
-		var group, groupname, groupheader, grouplist, pagename, pagebutton;
+		var group, groupname, groupheader, headerclass, grouplist, pagename, pagebutton;
+		var counter = 0;
 		for (var i in I.Directory)
 		{
 			group = $("<div class='dirGroup'></div>").appendTo(dir);
 			groupname = i.toLowerCase();
-			groupheader = $("<h2 class='dirHeader'><ins class='dirHeaderIcon mnu mnu_" + groupname + "'></ins><var class='dirHeaderName'>"
+			headerclass = (counter === 0) ? "dirHeaderPrimary" : "dirHeaderSecondary curToggle";
+			groupheader = $("<h2 class='dirHeader " + headerclass + "'>"
+				+ "<ins class='dirHeaderIcon mnu mnu_" + groupname + "'></ins><var class='dirHeaderName'>"
 				+ ((isnondefaultlang) ? D.getWordCapital(groupname) : i) + "</var></h2>").appendTo(group);
 			grouplist = $("<ul class='dirList'></ul>").appendTo(group);
 			if (I.ModeCurrent === I.ModeEnum.Mobile)
@@ -37827,6 +37859,7 @@ I = {
 			}
 			for (var ii in I.Directory[i])
 			{
+				// Page translation
 				pagename = (I.Directory[i])[ii];
 				if (I.DirectoryCompound[ii])
 				{
@@ -37836,6 +37869,7 @@ I = {
 				{
 					pagename = D.getModifiedPhrase(pagename.toLowerCase(), U.CaseEnum.Title);
 				}
+				// Page action
 				pagebutton = $("<li class='curClick'>" + pagename + "</li>").appendTo(grouplist);
 				(function(iPage)
 				{
@@ -37852,16 +37886,26 @@ I = {
 					});
 				})(ii);
 			}
+			counter++;
 		}
-		var firstheader = dir.find(".dirHeader").first().addClass("dirHeaderFirst");
-		firstheader.find(".dirHeaderName").first().addClass("curToggle").attr("id", "dirHeaderClock").click(function()
+		
+		// Bind header collapsible behavior
+		$(".dirHeaderSecondary").click(function()
+		{
+			$(this).next().toggle();
+		});
+		
+		// First group is for dashboard and general pages
+		var primaryheader = $(".dirHeaderPrimary").first();
+		primaryheader.find(".dirHeaderName").addClass("curToggle").attr("id", "dirHeaderClock").click(function()
 		{
 			$("#opt_bol_use24Hour").trigger("click");
 		});
+		
 		// Move the dashboard to a group now that the directory is generated
 		if (I.ModeCurrent !== I.ModeEnum.Tile)
 		{
-			$("#itemDashboard").insertAfter(firstheader);
+			$("#itemDashboard").insertAfter(primaryheader);
 		}
 	},
 	
@@ -38423,14 +38467,14 @@ I = {
 		if (I.isSleeping)
 		{
 			I.isSleeping = false;
-			$(".jsSleepable, .hudButton, .btnWindow").removeClass("jsSleeped");
+			$(".jsSleepable, .hudPeripheral, .btnWindow").removeClass("jsSleeped");
 		}
 		window.clearTimeout(I.SleepTimeout);
 		I.SleepTimeout = setTimeout(function()
 		{
 			var filterclass = (I.isProjectionEnabled) ? ".mapDisplayButton" : "";
 			I.isSleeping = true;
-			$(".jsSleepable, .hudButton, .btnWindow").not(filterclass).addClass("jsSleeped");
+			$(".jsSleepable, .hudPeripheral, .btnWindow").not(filterclass).addClass("jsSleeped");
 		}, I.cMSECONDS_SLEEP);
 	},
 	

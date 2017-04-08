@@ -1513,14 +1513,12 @@ input.mapCoordinatesName {
 	opacity: 1;
 	transition: opacity 0.4s;
 }
-.hudPeripheral div {
-	text-align: left;
-}
 .hudPeripheralNorth {
 	position: absolute; z-index: 11;
 	height: 32px;
 	overflow: hidden;
-	top: 4px; right: 12px;
+	top: 0; right: 0;
+	padding-top: 4px; padding-right: 12px;
 }
 .hudPeripheralNorth:hover {
 	height: auto;
@@ -1559,6 +1557,7 @@ input.mapCoordinatesName {
 .hudItem {
 	display: inline-block;
 	margin-left: 0px; /* This squeezes the HUD buttons closer */
+	text-align: left;
 }
 .hudSelect {
 	display: block;
@@ -1634,7 +1633,6 @@ input.mapCoordinatesName {
 }
 .hudHelp {
 	width: auto;
-	text-align: center;
 	font-size: 15px;
 }
 .hudHelp ul {
@@ -1644,7 +1642,6 @@ input.mapCoordinatesName {
 	display: inline-block;
 	margin-left: 8px;
 	vertical-align: top;
-	text-align: left;
 }
 .hudHelpScroll {
 	max-height: 360px;
@@ -1920,8 +1917,8 @@ input.mapCoordinatesName {
 #paneClockBackground { /* Festival sensitive */
 	/*background: url("img/background/globe_halloween.png") no-repeat center;*/
 	/*background: url("img/background/globe_wintersday.png") no-repeat center;*/
-	right: 0;
-	width: 359px; /* To avoid bleeding left edge */
+	right: 1px;
+	width: 358px; /* To avoid bleeding left edge */
 	background: url("img/background/globe.jpg") no-repeat center;
 	filter: blur(1px);
 	opacity: 0;
@@ -2041,23 +2038,27 @@ input.mapCoordinatesName {
 	opacity: 0.2;
 }
 #clkTicks { /* Hour separator lines */
-	stroke-width: 2px;
+	stroke-width: 1px;
+	stroke-linecap: square;
 	opacity: 0.2;
 }
 #clkMarkers {
 	stroke-width: 1px;
 }
 #clkHourHand {
+	stroke-linecap: square;
 	stroke-width: 3px;
 	stroke: black;
 	opacity: 0.2;
 }
 #clkMinuteHand {
+	stroke-linecap: square;
 	stroke-width: 2px;
 	stroke: white;
 	opacity: 0.6;
 }
 #clkSecondHand {
+	stroke-linecap: square;
 	stroke-width: 1px;
 	stroke: #feffef;
 	opacity: 0.6;
@@ -2089,7 +2090,7 @@ input.mapCoordinatesName {
 	font-size: 16px;
 	font-weight: bold;
 	text-decoration: none;
-	color: #bbcc77;
+	color: #eee;
 	text-shadow:
 		1px 1px 0px #333,
 		-1px -1px 0px #333,
@@ -2393,10 +2394,14 @@ header.jsSection sup {
 	font-family: Menomonia;
 	font-size: 22px;
 	color: #999;
+	transition: color 0.2s;
 	border-bottom: 1px solid #444;
 }
-.dirHeaderFirst {
+.dirHeaderPrimary {
 	padding-top: 8px;
+}
+.dirGroup:hover .dirHeaderSecondary {
+	color: #ffeebb;
 }
 .dirHeaderIcon {
 	margin-right: 6px;
@@ -2985,8 +2990,7 @@ label:hover {
 	background: url("img/map/display_hide.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
 }
 .btnTab {
-	border-top-left-radius: 33%;
-	border-top-right-radius: 33%;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 .btnSwap { /* Container div for the two swap up and botn buttons */
 	display: inline-block;

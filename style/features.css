@@ -520,7 +520,6 @@ dt.jpzListNameHover {
 .gldButton {
 	width: 48px; height: 48px;
 	padding: 0;
-	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 .gldButton:active {
 	opacity: 0.8;
@@ -920,12 +919,6 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 .chlDungeonBar label:hover {
 	border: 1px solid red;
 }
-.chlDungeonBar label.chlCheckboxChecked {
-	border: 1px solid #ddff77;
-	font-weight: bold;
-	color: #ff2200;
-	opacity: 1;
-}
 .chlDungeonBar label.chlCheckboxDisabled {
 	opacity: 0.3;
 }
@@ -979,8 +972,11 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 	border: 1px solid red;
 }
 
-#chlCustom label.chlCheckboxChecked, label.chlCheckboxChecked {
-	border: 1px solid #ddff77;
+.chlDungeonBar label.chlCheckboxChecked, #chlCustom label.chlCheckboxChecked, label.chlCheckboxChecked {
+	border: 1px solid black;
+	box-shadow: inset 0 0 32px 0 rgba(0, 0, 0, 1);
+	font-weight: bold;
+	color: #ff2200;
 }
 
 #chlNotepadButtons {
