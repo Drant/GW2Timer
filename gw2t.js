@@ -36508,7 +36508,7 @@ I = {
 		if (I.ModeCurrent === I.ModeEnum.Tile)
 		{
 			$("#headerChains_Drytop").hide();
-			O.Enact.bol_expandWB();
+			$("#sectionChains_Scheduled .chnDetails").hide();
 		}
 		else
 		{

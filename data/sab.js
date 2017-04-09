@@ -47,23 +47,23 @@ Tribulation: [
 	{u: "zones_30", i: "mode_tribulation", n: "Storm Top", l: "2-3"}
 ],
 Unlocks: [
-	{u: "unlocks_1", i: "chain_stick", n: "Chain Stick"},
+	{u: "unlocks_1", i: "chain_stick", n: "Chain Sticks"},
 	{u: "unlocks_3", i: "slingshot", n: "Slingshot"},
 	{u: "unlocks_6", i: "whip", n: "Whip"},
 	{u: "unlocks_9", i: "mini_bomb", n: "Mini Bomb"},
-	{u: "unlocks_12", i: "candle", n: "Candle"},
-	{u: "unlocks_13", i: "torch", n: "Torch"},
+	{u: "unlocks_12", i: "candle", n: "Candle (Super Adventure Box)"},
+	{u: "unlocks_13", i: "torch", n: "Torch (Super Adventure Box)"},
 	{u: "unlocks_15", i: "wooden_whistle", n: "Wooden Whistle"},
 	{u: "unlocks_18", i: "digger", n: "Digger"},
 	{u: "unlocks_19", i: "nice_scoop", n: "Nice Scoop"},
 	{u: "unlocks_21", i: "glove_of_wisdom", n: "Glove Of Wisdom"},
 	{u: "unlocks_24", i: "bauble_purse", n: "Bauble Purse"},
 	{u: "unlocks_25", i: "bauble_tote_bag", n: "Bauble Tote Bag"},
-	{u: "unlocks_27", i: "moto_breath", n: "Moto Breath"},
-	{u: "unlocks_28", i: "moto_finger", n: "Moto Finger"},
-	{u: "unlocks_31", i: "health_vessel_1", n: "Health Vessel 1"},
-	{u: "unlocks_32", i: "health_vessel_2", n: "Health Vessel 2"},
-	{u: "unlocks_34", i: "medium_health_potion", n: "Medium Health Potion"}
+	{u: "unlocks_27", i: "moto_breath", n: "Moto's Breath"},
+	{u: "unlocks_28", i: "moto_finger", n: "Moto's Finger"},
+	{u: "unlocks_31", i: "health_vessel_1", n: "Health Vessel"},
+	{u: "unlocks_32", i: "health_vessel_2", n: "Health Vessel"},
+	{u: "unlocks_34", i: "medium_health_potion", n: "Medium Health Bottle"}
 ],
 Songs: [
 	{u: "songs_1", i: "song", n: "Wooden_Whistle#Songs", l: "Secret", t: "Secret Song"},
