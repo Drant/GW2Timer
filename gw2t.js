@@ -11971,7 +11971,7 @@ V = {
 					unlock = (record[i])[ii];
 					slot = B.createPseudoSlot(slotscontainer, {
 						aName: unlock.n,
-						aTooltip: unlock.n,
+						aTooltip: unlock.t || unlock.n,
 						aIcon: "img/account/sab/" + unlock.i + I.cPNG,
 						aIsUnlocked: pUnlockAssoc[unlock.u],
 						aLabel: unlock.l

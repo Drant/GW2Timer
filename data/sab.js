@@ -19,6 +19,7 @@ var GW2T_SAB_HEADERS = {
  * u: Unlockable ID (unlock ID)
  * n: Name of item
  * l: Label over the slot
+ * t: Tooltip, if not provided name will be used
  */
 var GW2T_SAB_DATA = {
 Infantile: [
@@ -65,9 +66,9 @@ Unlocks: [
 	{u: "unlocks_34", i: "medium_health_potion", n: "Medium Health Potion"}
 ],
 Songs: [
-	{u: "songs_1", i: "song", n: "Secret Song", l: "Secret"},
-	{u: "songs_2", i: "song", n: "Gatekeeper Lullaby", l: "Gatekeeper"},
-	{u: "songs_3", i: "song", n: "Shatter Serenade", l: "Shatter"}
+	{u: "songs_1", i: "song", n: "Wooden_Whistle#Songs", l: "Secret", t: "Secret Song"},
+	{u: "songs_2", i: "song", n: "Wooden_Whistle#Songs", l: "Gatekeeper", t: "Gatekeeper Lullaby"},
+	{u: "songs_3", i: "song", n: "Wooden_Whistle#Songs", l: "Shatter", t: "Shatter Serenade"}
 ]
 };
 
