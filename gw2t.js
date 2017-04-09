@@ -3059,6 +3059,7 @@ U = {
 		var Settings = pSettings || {};
 		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : true;
 		var data = {};
+		var datasorted = {}, idata;
 		var numfetched = 0;
 		var numtofetch = pIDs.length;
 		var finalizeFetch = function()
@@ -3066,9 +3067,18 @@ U = {
 			A.setProgressBar(numfetched, numtofetch);
 			if (numfetched === numtofetch)
 			{
+				// Sort according to original ID order
+				for (var i in pIDs)
+				{
+					idata = data[(pIDs[i])];
+					if (idata)
+					{
+						datasorted[(pIDs[i])] = idata;
+					}
+				}
 				if (Settings.aCallback)
 				{
-					Settings.aCallback(data, numfetched);
+					Settings.aCallback(datasorted, numfetched);
 				}
 			}
 		};
@@ -3611,7 +3621,6 @@ U = {
 	 * Tells if the current article variable matches the requesting initialization
 	 * function before "opening" parts of the section automatically.
 	 * @param string pArticle.
-	 * @param function pCallback to execute if matches.
 	 * @returns boolean.
 	 */
 	verifyArticle: function(pArticle, pCallback)
@@ -3625,8 +3634,11 @@ U = {
 			}
 			return true;
 		}
-		I.ArticleCurrent = null;
 		return false;
+	},
+	nullifyArticle: function()
+	{
+		I.ArticleCurrent = null;
 	},
 	
 	/*
@@ -8121,7 +8133,7 @@ A = {
 				$("#accMenu_Manager").trigger("click");
 			}
 		}
-		I.ArticleCurrent = null;
+		U.nullifyArticle();
 	},
 	
 	/*
@@ -10483,8 +10495,9 @@ V = {
 			U.verifyArticle(I.SpecialPageEnum.Audit, function()
 			{
 				$("#audExecute").trigger("click");
-			});
+			}, true);
 		}
+		U.nullifyArticle();
 	},
 	
 	/*
@@ -11009,6 +11022,10 @@ V = {
 				// Show the audit button now that wallet is loaded
 				V.serveAudit();
 			});
+		}).fail(function()
+		{
+			// Cannot audit without wallet
+			U.nullifyArticle();
 		});
 	},
 	

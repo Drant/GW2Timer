@@ -186,6 +186,13 @@ input.mapCoordinatesName {
 	top: 0 !important;
 	left: 0 !important;
 }
+.lboButton {
+	top: 80px !important;
+}
+#lboToggle {
+	top: 16px !important;
+	left: 8px !important;
+}
 .lboOpaque {
 	background: url("../img/background/hud.png"), rgba(0, 0, 0, 1) !important;
 }
