@@ -175,7 +175,6 @@ O = {
 		bol_alignPanelRight: true,
 		bol_ignoreTouch: false,
 		bol_showPanel: true,
-		bol_showMap: true,
 		bol_showHUD: true,
 		bol_showHUDWvW: true,
 		bol_showDashboard: true,
@@ -1076,7 +1075,6 @@ O = {
 		{
 			O.Enact.int_setClock();
 			O.Enact.int_setDimming();
-			O.Enact.bol_showMap();
 		}
 		
 		/*
@@ -1120,10 +1118,12 @@ O = {
 		});
 		$("#optChainsExpand").click(function()
 		{
+			U.interpretPage(I.PlateEnum.Chains);
 			$(".chnDetails").show();
 		});
 		$("#optChainsCollapse").click(function()
 		{
+			U.interpretPage(I.PlateEnum.Chains);
 			$(".chnDetails").hide();
 			I.scrollToElement("#plateChains");
 		});
@@ -1406,7 +1406,7 @@ O = {
 		},
 		bol_showPanel: function()
 		{
-			if (O.Options.bol_showMap && I.isMapEnabled) // Only hide panel if map is visible
+			if (I.isMapEnabled) // Only hide panel if map is visible
 			{
 				$("#panelApp").toggle(O.Options.bol_showPanel);
 				$("#mapDisplayButton, #wvwDisplayButton, #accDisplayButton").toggle(!O.Options.bol_showPanel);
@@ -1455,14 +1455,6 @@ O = {
 					$("#itemDisplayButton").css({right: "auto", left: "auto", "margin-left": (I.cPANEL_WIDTH - 16) + "px"});
 					$("#prjController").css({right: 0});
 				}
-			}
-		},
-		bol_showMap: function()
-		{
-			if (I.isMapEnabled)
-			{
-				$("#panelMap").toggle(O.Options.bol_showMap);
-				M.refreshMap();
 			}
 		},
 		bol_showHUD: function()
@@ -2857,6 +2849,7 @@ U = {
 		Cleanup: "data/cleanup.js",
 		Ascended: "data/ascended.js",
 		Recipes: "data/recipes.js",
+		SAB: "data/sab.js",
 		Prices: "cache/prices.json",
 		Gem:  "data/gem.js",
 		Sale:  "data/sale.js",
@@ -2877,7 +2870,7 @@ U = {
 		var lang = D.getPartiallySupportedLanguage();
 		U.URL_API.LangKey = "lang=" + lang;
 		
-		var replacekey = "{0}";
+		var replacekey = I.cTextReplace;
 		U.URL_META.BuildNotes = U.URL_META.BuildNotes.replace(replacekey, lang);
 		U.URL_DATA.Maps = U.URL_DATA.Maps.replace(replacekey, lang);
 		U.URL_DATA.Events = U.URL_DATA.Events.replace(replacekey, lang);
@@ -3054,6 +3047,49 @@ U = {
 				}
 			}
 		});
+	},
+	
+	/*
+	 * Fetches multiple URLs with IDs embedded.
+	 * @param string pURL with substring "{0}" to be replaced with an ID.
+	 * @param array pIDs
+	 */
+	fetchPattern: function(pURL, pIDs, pSettings)
+	{
+		var Settings = pSettings || {};
+		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : true;
+		var data = {};
+		var numfetched = 0;
+		var numtofetch = pIDs.length;
+		var finalizeFetch = function()
+		{
+			A.setProgressBar(numfetched, numtofetch);
+			if (numfetched === numtofetch)
+			{
+				if (Settings.aCallback)
+				{
+					Settings.aCallback(data, numfetched);
+				}
+			}
+		};
+		
+		// Fetch all at once
+		for (var i = 0; i < pIDs.length; i++)
+		{
+			(function(iID)
+			{
+				U.getJSON(pURL.replace(I.cTextReplace, U.encodeURL(iID)), function(pData)
+				{
+					data[iID] = pData;
+					numfetched++;
+					finalizeFetch();
+				}, wantcache).fail(function()
+				{
+					numtofetch--;
+					finalizeFetch();
+				});
+			})(pIDs[i]);
+		}
 	},
 	
 	/*
@@ -3278,9 +3314,9 @@ U = {
 	/*
 	 * URLArguments (Args) may contain Options object's variables. In the form of:
 	 * http://example.com/?ExampleKey=ExampleValue&MoreExampleKey=MoreExampleValue
-	 * so if a user enters http://gw2timer.com/?bol_showMap=false then the map
-	 * will be hidden regardless of previous localStorage or the defaults here.
-	 * Note that "bol_showMap" matches exactly as in the Options, otherwise
+	 * so http://gw2timer.com/?bol_showPanel=false will hide the side panel
+	 * regardless of previous localStorage or the defaults here.
+	 * Note that "bol_showPanel" matches exactly as in the Options, otherwise
 	 * it would have not overridden any Options variable. Values used apart from
 	 * comparison should be sanitized first.
 	 */
@@ -3580,18 +3616,17 @@ U = {
 	 */
 	verifyArticle: function(pArticle, pCallback)
 	{
-		if (I.ArticleCurrent)
+		if (I.ArticleCurrent && I.ArticleCurrent.toLowerCase() === pArticle.toLowerCase())
 		{
-			if (I.ArticleCurrent.toLowerCase() === pArticle.toLowerCase())
+			I.ArticleCurrent = null;
+			if (pCallback)
 			{
-				I.ArticleCurrent = null;
-				if (pCallback)
-				{
-					pCallback();
-				}
-				return true;
+				pCallback();
 			}
+			return true;
 		}
+		I.ArticleCurrent = null;
+		return false;
 	},
 	
 	/*
@@ -3753,8 +3788,9 @@ U = {
 			I.openChainsSection(page);
 		}
 		// ACCOUNT SECTION
-		else if (I.PageEnum.Account[page] || page === I.SpecialPageEnum.Account)
+		else if (I.PageEnum.Account[page] || I.PageEnum.Account[pagecaps] || page === I.SpecialPageEnum.Account)
 		{
+			page = (I.PageEnum.Account[pagecaps]) ? pagecaps : page;
 			viewAccount(page);
 		}
 		// SPECIAL PAGE: Audit
@@ -3794,7 +3830,7 @@ U = {
 	
 	/*
 	 * Sanitizes URLArguments value part before overriding. For example:
-	 * http://gw2timer.com/?bol_showMap=falsse "falsse" defaults to "true"
+	 * http://gw2timer.com/?bol_showPanel=falsse "falsse" defaults to "true"
 	 * @param string pKey of an option.
 	 * @param string pValue of that option.
 	 * @returns string sanitized value.
@@ -4655,7 +4691,7 @@ U = {
 		$(pSelector).each(function()
 		{
 			var page = $(this).attr(I.cPageAttribute);
-			if (page.length)
+			if (page)
 			{
 				$(this).click(function()
 				{
@@ -4676,6 +4712,10 @@ U = {
 		$(pSelector).each(function()
 		{
 			var url = $(this).attr("href");
+			if (!url)
+			{
+				return;
+			}
 			if (url.indexOf("./") === 0)
 			{
 				// Don't convert relative links
@@ -4753,7 +4793,7 @@ U = {
 	},
 	
 	/*
-	 * Extracts the name part from a variable, as in "bol_showMap" returns "showMap".
+	 * Extracts the name part from a variable, as in "bol_showPanel" returns "showPanel".
 	 * @param string pVariable full name.
 	 * @returns string option name.
 	 * @pre Variable name has exactly one underscore character.
@@ -7454,6 +7494,7 @@ A = {
 	Data: { // Cache for retrieved API data objects and arrays
 		Account: {},
 		Characters: [],
+		CharacterAssoc: {},
 		CharacterNames: null,
 		Vaults: null,
 		Wallet: null,
@@ -7481,6 +7522,7 @@ A = {
 		Dungeons: "account/dungeons",
 		Raids: "account/raids",
 		Characters: "characters",
+		CharactersSAB: "characters/{0}/sab",
 		Transactions: "commerce/transactions",
 		CurrentBuys: "commerce/transactions/current/buys",
 		CurrentSells: "commerce/transactions/current/sells",
@@ -7491,13 +7533,13 @@ A = {
 		Standings: "pvp/standings",
 		TokenInfo: "tokeninfo",
 		GuildLog: "log",
-		GuildMembers: "members",
-		GuildPermission: "permission",
-		GuildRanks: "ranks",
-		GuildStash: "stash",
-		GuildTeams: "teams",
-		GuildTreasury: "treasury",
-		GuildUpgrades: "upgrades"
+		GuildMembers: "guild/{0}/members",
+		GuildPermission: "guild/{0}/permission",
+		GuildRanks: "guild/{0}/ranks",
+		GuildStash: "guild/{0}/stash",
+		GuildTeams: "guild/{0}/teams",
+		GuildTreasury: "guild/{0}/treasury",
+		GuildUpgrades: "guild/{0}/upgrades"
 	},
 	Permissions: {}, // Corresponds to tokeninfo.json permissions array
 	PermissionEnum: {
@@ -7524,10 +7566,6 @@ A = {
 	{
 		return "https://api.guildwars2.com/v2/" + pSuffix + U.getDivider(pSuffix) + "access_token=" + A.TokenCurrent;
 	},
-	getURLGuild: function(pSuffix, pGuildID)
-	{
-		return A.getURL("guild/" + pGuildID + "/" + pSuffix);
-	},
 	getURLAll: function(pSuffix)
 	{
 		return A.getURL(pSuffix + "?ids=all");
@@ -7543,6 +7581,11 @@ A = {
 		var Settings = pSettings || {};
 		Settings.aPermission = A.PermissionEnum.TradingPost;
 		U.fetchPaginated(A.getURL(pURL), Settings);
+	},
+	
+	getCharactersData: function(pSuffix, pCallback)
+	{
+		
 	},
 	
 	/*
@@ -7685,7 +7728,8 @@ A = {
 				$(this).html(D.getWordCapital(word));
 			});
 		}
-		U.convertModeLink("#accDirectory a");
+		U.convertExternalLink("#accDirectory .linkExternal");
+		U.convertInternalLink("#accDirectory a");
 	
 		// Finally
 		setTimeout(function()
@@ -7828,10 +7872,10 @@ A = {
 							})(subbutton, $(this));
 						}
 					});
-					I.qTip.init(".accMenuButton");
 				}
 			})(menutab, sectionname);
 		});
+		I.qTip.init(".accMenuIcon");
 		
 		// Open the section if specified in the URL
 		if (pPage !== true)
@@ -7839,6 +7883,17 @@ A = {
 			$("#accPlatterManager").show();
 			U.openSectionFromURL({aPrefix: "#accMenu_", aInitialSection: I.PageEnum.Account.Manager});
 		}
+	},
+	resetMenu: function()
+	{
+		// Clear menu tabs and icons state
+		$(".accMenuTab").each(function()
+		{
+			$(this).data("iscurrentaccounttab", null).removeClass("accMenuTabFocused").find(".accMenuSubtab").hide();
+			$(this).find(".accMenuIcon").removeClass("accMenuButtonFocused");
+		});
+		// Go to default dish
+		$("#accMenu_Manager").trigger("click");
 	},
 	
 	/*
@@ -8017,6 +8072,7 @@ A = {
 		// Prevent skipping loading the characters section first
 		$("#accMenu_Characters").data("iscurrentaccounttab", null);
 		$(".accDishMenu").empty();
+		A.wipeDish("Characters");
 		
 		// Initialize permissions
 		$.getJSON(A.getURL(A.URL.TokenInfo), function(pData)
@@ -8269,6 +8325,11 @@ A = {
 		catch (e) {}
 		return null;
 	},
+	getCharacterByName: function(pName)
+	{
+		var charindex = A.Data.CharacterAssoc[pName];
+		return A.Data.Characters[charindex];
+	},
 	
 	/*
 	 * Gets the name of the account section an element resides in.
@@ -8283,31 +8344,46 @@ A = {
 	/*
 	 * Tells if a section has the current account's content generated, else wipe.
 	 * @param jqobject pDish to check.
+	 * @param boolean pIsForce to proceed without checks.
 	 * @returns boolean.
 	 */
-	reinitializeDish: function(pDish)
+	reinitializeDish: function(pDish, pIsForce)
 	{
-		if (pDish.is(":empty") === false && pDish.data("token") === A.TokenCurrent)
+		if (!pIsForce && pDish.is(":empty") === false && pDish.data("token") === A.TokenCurrent)
 		{
 			return false;
 		}
-		if (pDish.data("isinitialized") === undefined)
-		{
-			pDish.data("isinitialized", true);
-			var originalhtml = pDish.html();
-			if (originalhtml.length)
-			{
-				pDish.data("originalhtml", originalhtml);
-			}
-		}
+		var dishname = U.getSubstringFromHTMLID(pDish);
+		
+		// Wipe dish
 		pDish.empty().data("token", A.TokenCurrent);
-		I.updateScrollbar(pDish);
-		// Restore original HTML if available, after wiping the dish
-		if (pDish.data("originalhtml"))
+		// Wipe dish menu
+		$("#accDishMenu_" + dishname).empty();
+		
+		if (pIsForce)
 		{
-			pDish.html(pDish.data("originalhtml"));
+			pDish.removeClass("accDishWipeable");
+		}
+		else
+		{
+			pDish.addClass("accDishWipeable");
+			I.updateScrollbar(pDish);
 		}
 		return true;
+	},
+	
+	/*
+	 * Wipes all applicable dishes to relieve browser rendering, to be called
+	 * when account panel is no longer used.
+	 */
+	reinitializePanel: function()
+	{
+		$(".accDishWipeable").each(function()
+		{
+			A.reinitializeDish($(this), true);
+		});
+		// Reset account viewed page
+		A.resetMenu();
 	},
 	
 	/*
@@ -8345,11 +8421,78 @@ A = {
 	 */
 	createDishMenu: function(pDish)
 	{
-		$("<aside id='accDishMenu_" + U.toFirstUpperCase(pDish) + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+		$("<aside id='accDishMenu_" + pDish + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
 	},
 	getDishMenu: function(pDish)
 	{
-		return $("#accDishMenu_" + U.toFirstUpperCase(pDish));
+		return $("#accDishMenu_" + pDish);
+	},
+	
+	/*
+	 * Creates fixed menu that scrolls to an associated character's element when
+	 * clicked on its icon from the selection bar.
+	 * @param objarray pCharacters
+	 * @param string pSection
+	 * @objparam function aClick custom scrolling action, with provided character index, optional.
+	 * @objparam string aElementPrefix HTML ID for element to scroll to, to be suffixed by character index.
+	 */
+	createCharacterScroller: function(pCharacters, pSection, pSettings)
+	{
+		var Settings = pSettings || {};
+		var dishmenu = A.getDishMenu(pSection);
+		var container = $("<div class='eqpSelectContainer'></div>").appendTo(dishmenu);
+		pCharacters.forEach(function(iChar)
+		{
+			var select = $("<span class='eqpSelect curClick' title='" + iChar.oCharName + " (" + iChar.level + ")' style='border-left: 2px solid " + iChar.oCharColor + "'>"
+				+ "<img class='eqpSelectPortrait' src='" + iChar.oCharPortrait + "' />"
+				+ "<img class='eqpSelectProfession' src='img/account/classes/" + iChar.oCharElite + ".png' />"
+			+ "</span>").appendTo(container);
+			if (iChar.oCharIsLowLevel)
+			{
+				select.addClass("accTrivial");
+			}
+			
+			(function(iIndex)
+			{
+				select.click(function()
+				{
+					if (Settings.aClick)
+					{
+						Settings.aClick(iIndex);
+					}
+					else
+					{
+						var elm = $("#" + Settings.aElementPrefix + iIndex);
+						if (elm && elm.length)
+						{
+							I.scrollToElement(elm, {
+								aOffset: Settings.aOffset,
+								aSpeed: "fast"
+							});
+						}
+					}
+					A.adjustAccountScrollbar();
+				});
+			})(iChar.oCharIndex);
+		});
+		I.qTip.init(container.find(".eqpSelect"));
+		// Readjust because the newly created bar takes space up top
+		A.adjustAccountPanel();
+	},
+	
+	/*
+	 * Creates a page wide banner with a character's name and portrait.
+	 * @param object pCharacter
+	 * @param jqobject pContainer
+	 * @param string pPrefix for creating banner HTML ID.
+	 */
+	createCharacterBanner: function(pContainer, pCharacter, pPrefix)
+	{
+		var idstr = (pPrefix) ? "id='" + pPrefix + pCharacter.oCharIndex + "'" : "";
+		$("<div " + idstr + " class='eqpCharSeparator'><img class='eqpCharPortrait' src='" + pCharacter.oCharPortrait + "' />"
+			+ "<img class='eqpCharProfession' src='img/account/classes/" + pCharacter.oCharElite + ".png' />"
+			+ "<span class='eqpCharName'>" + pCharacter.oCharName + "</span>"
+		+ "</div>").prependTo(pContainer);
 	},
 	
 	/*
@@ -8430,37 +8573,19 @@ A = {
 	{
 		A.initializeGuilds(function()
 		{
-			var guilds = A.Data.Account.guilds;
-			A.Data.Vaults = {};
-			var numfetched = 0;
-			var numtofetch = guilds.length;
-
-			var finalizeFetch = function()
+			U.fetchPattern(A.getURL(A.URL.GuildStash), A.Data.Account.guilds, {aCallback: function(pData, pLength)
 			{
-				if (numfetched === numtofetch)
+				if (pLength)
 				{
-					if (numfetched === 0)
-					{
-						A.Data.Vaults = null;
-						I.print("Unable to access any guild bank for this account.<br />Requires API key from account of guild leader.");
-					}
-					pCallback(A.Data.Vaults);
+					A.Data.Vaults = pData;
 				}
-			};
-
-			guilds.forEach(function(iGuildID)
-			{
-				$.getJSON(A.getURLGuild(A.URL.GuildStash, iGuildID), function(pData)
+				else
 				{
-					A.Data.Vaults[iGuildID] = pData;
-					numfetched++;
-					finalizeFetch();
-				}).fail(function()
-				{
-					numtofetch--;
-					finalizeFetch();
-				});
-			});
+					A.Data.Vaults = null;
+					I.print("Unable to access any guild bank for this account.<br />Requires API key from account of guild leader.");
+				}
+				pCallback(A.Data.Vaults);
+			}});
 		});
 	},
 	
@@ -10399,6 +10524,7 @@ V = {
 		// Retrieve characters data
 		U.getJSON(A.getURLAll(A.URL.Characters), function(pData)
 		{
+			$("#accDish_Hero").empty();
 			I.removeThrobber(dish);
 			A.adjustAccountScrollbar();
 			A.isCharactersCached = true;
@@ -10412,6 +10538,7 @@ V = {
 			A.CharIndexCurrent = null;
 			A.Data.Characters = null;
 			A.Data.Characters = new Array(numcharacters);
+			A.Data.CharacterAssoc = {};
 			var charindex = 0;
 			pData.forEach(function(iCharData)
 			{
@@ -10423,12 +10550,30 @@ V = {
 				A.Data.Characters[charindex] = iCharData;
 				A.Data.Characters[charindex].oCharIndex = charindex;
 				A.Data.Characters[charindex].oCharName = U.escapeHTML(iCharData.name);
+				A.Data.CharacterAssoc[iCharData.name] = charindex;
 				V.generateCharactersSelection(iCharData);
 				charindex++;
 			});
 			I.suspendElement(menusubsection, false);
 			V.generateCharactersStatistics();
-			V.createHeroMenu();
+			// Create the characters bar for the hero page beforehand
+			A.createCharacterScroller(A.Data.Characters, "Hero", {aClick: function(iCharIndex)
+			{
+				var elm = $("#eqpContainer_" + iCharIndex);
+				if (elm.is(":visible")) // If viewing all characters
+				{
+					I.scrollToElement(elm, {
+						aContainer: $("#accDish_Hero").parent(),
+						aOffset: -($("#accOverhead").height() + 32),
+						aSpeed: "fast"
+					});
+				}
+				else // If viewing one character at a time
+				{
+					$("#chrSelection_" + A.CharIndexCurrent).trigger("click");
+					$("#chrSelection_" + iCharIndex).trigger("click");
+				}
+			}});
 			if (pSection)
 			{
 				$("#accMenu_" + pSection).trigger("click");
@@ -11006,50 +11151,6 @@ V = {
 	},
 	
 	/*
-	 * Creates subnavigational menu for the characters' equipment section.
-	 */
-	createHeroMenu: function()
-	{
-		$("#accDish_Hero").empty();
-		var dishmenu = A.getDishMenu("Hero");
-		var container = $("<div class='eqpSelectContainer'></div>").appendTo(dishmenu);
-		A.Data.Characters.forEach(function(iChar)
-		{
-			var select = $("<span class='eqpSelect curClick' title='" + iChar.oCharName + " (" + iChar.level + ")' style='border-left: 2px solid " + iChar.oCharColor + "'>"
-				+ "<img class='eqpSelectPortrait' src='" + iChar.oCharPortrait + "' />"
-				+ "<img class='eqpSelectProfession' src='img/account/classes/" + iChar.oCharElite + ".png' />"
-			+ "</span>").appendTo(container);
-			if (iChar.oCharIsLowLevel)
-			{
-				select.addClass("accTrivial");
-			}
-			
-			(function(iIndex)
-			{
-				select.click(function()
-				{
-					var elm = $("#eqpContainer_" + iIndex);
-					if (elm.is(":visible")) // If viewing all characters
-					{
-						I.scrollToElement(elm, {
-							aContainer: $("#accDish_Hero").parent(),
-							aOffset: -($("#accOverhead").height() + 32),
-							aSpeed: "fast"
-						});
-					}
-					else // If viewing one character at a time
-					{
-						$("#chrSelection_" + A.CharIndexCurrent).trigger("click");
-						$("#chrSelection_" + iIndex).trigger("click");
-					}
-					A.adjustAccountScrollbar();
-				});
-			})(iChar.oCharIndex);
-		});
-		I.qTip.init(container.find(".eqpSelect"));
-	},
-	
-	/*
 	 * Generates the equipment subsection of the characters page.
 	 * @param object pCharacter characters data.
 	 */
@@ -11064,10 +11165,7 @@ V = {
 		var dish = $("#accDish_Hero");
 		var container = $("<div id='eqpContainer_" + char.oCharIndex + "' class='eqpContainer'></div>").appendTo(dish);
 		// Title and separator
-		$("<div class='eqpCharSeparator'><img class='eqpCharPortrait' src='" + char.oCharPortrait + "' />"
-			+ "<img class='eqpCharProfession' src='img/account/classes/" + char.oCharElite + ".png' />"
-			+ "<span class='eqpCharName'>" + char.oCharName + "</span>"
-		+ "</div>").appendTo(container);
+		A.createCharacterBanner(container, char);
 		// Equipment icons and brief glance information
 		var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
 		var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
@@ -11837,169 +11935,106 @@ V = {
 	/*
 	 * Generates the learned recipes as a bank categorized by crafting disciplines.
 	 */
-	serveRecipes: function()
+	serveSAB: function()
 	{
-		if (V.requireCharacters("Recipes"))
+		var section = "SAB";
+		if (V.requireCharacters(section))
 		{
-			return;
-		}
-		else if ( ! A.Data.Characters[0].recipes)
-		{
-			A.printError(A.PermissionEnum.Inventories);
 			return;
 		}
 		
-		var dish = $("#accDish_Recipes");
+		var dish = $("#accDish_SAB");
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
 		}
-		var container = B.createBank(dish, {
-			aIsCollection: true,
-			aWantGem: false
-		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
 		
-		// Retrieve data before generating
-		U.getScript(U.URL_DATA.Recipes, function()
+		var record, headers;
+		var elmprefix = "sabProgressionBanner_";
+		var createBank = function(pUnlockAssoc, pCharacter)
 		{
-			var headers = {};
-			var metadata = GW2T_RECIPES_METADATA;
-			var record = GW2T_RECIPES_DATA;
+			var container = B.createBank(dish, {
+				aIsCollection: true,
+				aWantGem: false,
+				aWantCoin: false
+			});
+			A.createCharacterBanner(container, pCharacter, elmprefix);
+			var bank = container.find(".bnkBank");
+			var tab, slotscontainer, slot, unlock;
 			
-			// Merge the record arrays into one lookup table
-			var recipelookup = {}; // Will be used to find a character's unlocked recipe
-			var itemlookup = {}; // Will be used to find a character's unlocked recipe by searching with the item
-			var discname, entry, recipeid, itemid;
 			for (var i in record)
 			{
-				discname = i.split("_")[0];
-				for (var ii = 0; ii < record[i].length; ii++)
+				tab = B.createBankTab(bank, {aTitle: D.getObjectName(headers[i])});
+				slotscontainer = tab.find(".bnkTabSlots");
+				for (var ii in record[i])
 				{
-					entry = (record[i])[ii];
-					if (recipelookup[entry.u] === undefined)
-					{
-						recipelookup[entry.u] = {
-							oItemID: entry.i, // Item ID of crafted product
-							oDisciplines: [discname] // Disciplines that can craft this recipe
-						};
-					}
-					else
-					{
-						recipelookup[entry.u].oDisciplines.push(discname);
-					}
+					unlock = (record[i])[ii];
+					slot = B.createPseudoSlot(slotscontainer, {
+						aName: unlock.n,
+						aTooltip: unlock.n,
+						aIcon: "img/account/sab/" + unlock.i + I.cPNG,
+						aIsUnlocked: pUnlockAssoc[unlock.u],
+						aLabel: unlock.l
+					});
 				}
 			}
-			
-			// Merge all characters' unlocked recipes array into one
-			var unlockeds = [];
-			A.Data.Characters.forEach(function(iChar)
+			B.tallyBank(container);
+			B.createDivider(container);
+		};
+		
+		// Turns the API's multiple arrays into one associative array
+		var flattenUnlocks = function(pData)
+		{
+			var unlockassoc = {};
+			for (var i in pData)
 			{
-				unlockeds = U.getUnion(unlockeds, iChar.recipes);
-				// Create a list of items with the characters' names who can craft it
-				for (var ii = 0; ii < iChar.recipes.length; ii++)
+				for (var ii in pData[i])
 				{
-					recipeid = iChar.recipes[ii];
-					if (recipelookup[recipeid])
-					{
-						itemid = recipelookup[recipeid].oItemID;
-						var discnames = recipelookup[recipeid].oDisciplines;
-						var discicons = "";
-						for (var iii = 0; iii < discnames.length; iii++)
-						{
-							discname = discnames[iii];
-							if (iChar.oCharCraft && iChar.oCharCraft[discname])
-							{
-								discicons += "<ins class='acc_craft acc_craft_" + discname.toLowerCase() + "'></ins>";
-							}
-						}
-						if (discicons.length)
-						{
-							if (itemlookup[itemid] === undefined)
-							{
-								itemlookup[itemid] = [];
-							}
-							itemlookup[itemid].push(iChar.oCharName + discicons);
-						}
-					}
-				}
-			});
-			// Add the characters' names to the record so later the style slot function can write them in item tooltips
-			var craftstr = D.getPhrase("crafted by", U.CaseEnum.Sentence) + ": ";
-			for (var i in record)
-			{
-				for (var ii = 0; ii < record[i].length; ii++)
-				{
-					var entry = (record[i])[ii];
-					if (itemlookup[entry.i])
-					{
-						entry.t = "<var class='itmColor_reminder'>" + craftstr + (itemlookup[entry.i]).join(", ") + "</var>";
-					}
-					else
-					{
-						delete entry.t;
-					}
+					var newid = i + "_" + (pData[i])[ii].id; // This is the ID as it appears in the custom record
+					unlockassoc[newid] = true;
 				}
 			}
-			
-			// Construct tab headers from crafting disciplines and recipe types
-			var lang = D.getFullySupportedLanguage();
-			var catname;
-			for (var i in metadata.Disciplines)
+			return unlockassoc;
+		};
+		
+		// Retrieve data and unlocks
+		dish.prepend(I.cThrobber);
+		U.getScript(U.URL_DATA.SAB, function()
+		{
+			headers = U.getRecordHeader(section);
+			record = U.getRecordData(section);
+			U.fetchPattern(A.getURL(A.URL.CharactersSAB), A.Data.CharacterNames, {aCallback: function(pData, pLength)
 			{
-				for (var ii in metadata.Types)
+				I.removeThrobber(dish);
+				if (pLength)
 				{
-					catname = i + "_" + ii;
-					headers[catname] = {};
-					(headers[catname])["name_" + lang] = (metadata.Disciplines[i])[lang] + " " + (metadata.Types[ii])[lang];
+					var validcharacters = [];
+					for (var i in pData)
+					{
+						// Only create a bank for a character if it has any unlocks
+						var idata = pData[i];
+						if (idata.zones && idata.unlocks && idata.songs &&
+							(idata.zones.length || idata.unlocks.length || idata.songs.length))
+						{
+							var ichar = A.getCharacterByName(i);
+							validcharacters.push(ichar);
+							createBank(flattenUnlocks(pData[i]), ichar);
+						}
+					}
+					// Create characters bar after generating banks
+					if (validcharacters.length > 1)
+					{
+						A.createCharacterScroller(validcharacters, "SAB", {
+							aElementPrefix: elmprefix,
+							aOffset: -120 // Consider the character banner
+						});
+					}
 				}
-			}
-			
-			// Get the account wide unlocked recipes
-			$.getJSON(A.getURL(A.URL.Recipes), function(pData)
-			{
-				unlockeds = U.getUnion(unlockeds, pData);
-				// Generate the bank
-				B.generateUnlockables(bank, {
-					aHeaders: headers,
-					aRecord: record,
-					aUnlockeds: unlockeds,
-					aIsCollapsed: true,
-					aHelpMessage: $("#accHelpRecipes").html(),
-					aTabIterator: function(pCatName)
-					{
-						var discipline = pCatName.split("_")[0];
-						var catname = D.getObjectName(headers[pCatName]);
-						var caticon = "<ins class='bnkTabIcon acc_craft acc_craft_" + discipline.toLowerCase() + "'></ins>"
-							+ "<ins class='bnkTabIcon acc_recipes acc_recipes_" + pCatName.toLowerCase() + "'></ins>";
-						var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
-						return tab;
-					}
-				});
-
-				/*
-				 * Piggyback on the bank search bar (created by the generate unlockables
-				 * function) and make it print the characters who have unlocked the
-				 * recipe to create that searched item.
-				 */
-				var searchbar = $("#accDishMenu_Recipes").find(".bnkSearch .bnkSearchInput").first();
-				Q.bindItemSearch(searchbar, {
-					aFillerText: null,
-					aCallback: function(pItem)
-					{
-						var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
-						if (itemlookup[pItem.id])
-						{
-							var charnames = (itemlookup[pItem.id]).join(", ");
-							I.write(itemname + " was learned and can be crafted by:<br /><br />" + charnames);
-						}
-						else
-						{
-							I.write("None of your characters have learned how to craft " + itemname);
-						}
-					}
-				});
-			});
+				else
+				{
+					A.printError(A.PermissionEnum.Progression);
+				}
+			}});
 		});
 	},
 	
@@ -12013,6 +12048,7 @@ V = {
 		{
 			return;
 		}
+		
 		var container = B.createBank(dish);
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var slotdata;
@@ -12762,13 +12798,9 @@ V = {
 	serveGem: function()
 	{
 		var dish = $("#accDish_Gem");
-		if (dish.data("isloaded"))
+		if (A.reinitializeDish(dish) === false)
 		{
 			return;
-		}
-		else
-		{
-			dish.data("isloaded", true);
 		}
 		
 		var section = "Gem";
@@ -13290,6 +13322,7 @@ B = {
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
 	 * @objparam string aTitle of the bank, optional.
+	 * @objparam string aID HTML ID for the container.
 	 * @objparam string aClass CSS style class for bank element, optional.
 	 * @objparam boolean aIsCollection whether the bank is an unlock collection, which will show untaxed prices, optional
 	 * @objparam boolean aWantCoin whether to display the coin tally, optional.
@@ -13301,7 +13334,7 @@ B = {
 	{
 		var Settings = pSettings || {};
 		
-		var container = $("<div class='bnkContainer'>"
+		var container = $("<div " + ((Settings.aID) ? "id='" + Settings.aID + "'" : "") + " class='bnkContainer'>"
 			+ "<div class='bnkTop'>"
 				+ ((Settings.aTitle) ? "<aside class='bnkTitle'>" + Settings.aTitle + "</aside>" : "")
 				+ "<aside class='bnkBankTally'></aside>"
@@ -13334,6 +13367,10 @@ B = {
 		}
 
 		return container;
+	},
+	createDivider: function(pContainer)
+	{
+		pContainer.append("<div class='bnkDivider'></div>");
 	},
 	
 	/*
@@ -13535,6 +13572,52 @@ B = {
 		slot.className = "bnkSlot";
 		pSlotContainer[0].appendChild(slot);
 		return $(slot);
+	},
+	createPseudoSlot: function(pSlotContainer, pSettings)
+	{
+		var Settings = pSettings || {};
+		
+		var slot = B.createBankSlot(pSlotContainer);
+		var count = 0;
+		
+		if (Settings.aName)
+		{
+			slot.click(function(pEvent)
+			{
+				if (pEvent.which === I.ClickEnum.Left)
+				{
+					U.openExternalURL(U.getWikiSearchLanguage(Settings.aName));
+				}
+			});
+		}
+		if (Settings.aTooltip)
+		{
+			slot.attr("title", Settings.aTooltip);
+			I.qTip.init(slot);
+		}
+		if (Settings.aIcon)
+		{
+			slot.find(".bnkSlotIcon").css({backgroundImage: "url(" + Settings.aIcon + ")"});
+		}
+		if (Settings.aCount === undefined && !Settings.aIsUnlocked)
+		{
+			slot.addClass("bnkSlotZero");
+		}
+		if (Settings.aIsUnlocked)
+		{
+			count = 1;
+		}
+		else if (Settings.aCount !== undefined)
+		{
+			count = Settings.aCount;
+			slot.append("<var class='bnkSlotCount'>" + Settings.aCount + "</var>");
+		}
+		if (Settings.aLabel)
+		{
+			slot.append("<var class='bnkSlotLabel'>" + Settings.aLabel + "</var>");
+		}
+		slot.data("count", count);
+		return slot;
 	},
 	
 	/*
@@ -35695,6 +35778,7 @@ I = {
 	cChatcodeSuffix: "]",
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,
+	cTextReplace: "{0}",
 	cOptionsDelimiter: ": ",
 	cClipboardAttribute: "data-clipboard-text",
 	cClipboardSuccessText: "Text copied to clipboard :)<br />",
@@ -35873,6 +35957,7 @@ I = {
 			Cleanup: "Cleanup",
 			Recipes: "Recipes",
 			Crafting: "Crafting",
+			SAB: "SAB",
 			
 			Dungeons: "Dungeons",
 			Raids: "Raids",
@@ -35956,7 +36041,8 @@ I = {
 			Finishers: "Finishers",
 			Nodes: "Nodes",
 			Cats: "Cats",
-			Recipes: "Recipes"
+			Recipes: "Recipes",
+			SAB: "SAB"
 		},
 		Trading:
 		{
@@ -37330,8 +37416,9 @@ I = {
 					// Update the pages if element is not specified
 					if (pElement === undefined)
 					{
-						$("#plateMap").perfectScrollbar("update");
+						$("#plateDirectory").perfectScrollbar("update");
 						$("#plateChains").perfectScrollbar("update");
+						$("#plateMap").perfectScrollbar("update");
 						$("#plateHelp").perfectScrollbar("update");
 						$("#plateOptions").perfectScrollbar("update");
 					}
@@ -37893,12 +37980,6 @@ I = {
 			counter++;
 		}
 		
-		// Bind header collapsible behavior
-		$(".dirHeaderSecondary").click(function()
-		{
-			$(this).next().toggle();
-		});
-		
 		// First group is for dashboard and general pages
 		var primaryheader = $(".dirHeaderPrimary").first();
 		primaryheader.find(".dirHeaderName").addClass("curToggle").attr("id", "dirHeaderClock").click(function()
@@ -37911,6 +37992,12 @@ I = {
 		{
 			$("#itemDashboard").insertAfter(primaryheader);
 		}
+		
+		// Bind header collapsible behavior
+		$(".dirHeaderSecondary").click(function()
+		{
+			$(this).next().toggle();
+		});
 	},
 	
 	/*
@@ -37943,7 +38030,7 @@ I = {
 							$("#mapHUDContainerInner").show();
 						}
 						C.isTouringManual = false;
-						if (I.ModeCurrent !== I.ModeEnum.Overlay)
+						if (I.ModeCurrent === I.ModeEnum.Website)
 						{
 							// Hide any opened chains sections
 							I.openChainsSection();
@@ -38082,10 +38169,11 @@ I = {
 		if (panel.is(":visible")) // Hide
 		{
 			content.hide();
+			A.reinitializePanel();
 			panel.css({width: "100%"}).animate({width: 0}, "fast", function()
 			{
 				$(this).hide();
-				if (I.isMapEnabled && O.Options.bol_showMap)
+				if (I.isMapEnabled)
 				{
 					$("#panelMap").show();
 					switch (P.MapSwitchWebsite)
@@ -38273,9 +38361,10 @@ I = {
 	 */
 	showHomeLink: function()
 	{
-		I.qTip.init($("<a title='&lt;dfn&gt;Switch back to full site.&lt;/dfn&gt;' href='./'>"
-			+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
-			.appendTo("#itemHome"));
+		var home = $("#itemHome").css({display: "table"});
+		$("<a id='itemHomeButton' title='&lt;dfn&gt;Switch back to full site.&lt;/dfn&gt;' href='./'>"
+			+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>").appendTo(home);
+		I.qTip.init(home);
 	},
 	
 	/*

@@ -52,8 +52,8 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	border-bottom-right-radius: 8px;
 }
 
-.menuBeamContainer {
-	position: absolute;
+.plateBeamIconCollapse {
+	position: fixed;
 	top: 0;
 }
 

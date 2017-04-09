@@ -1115,7 +1115,7 @@ textarea.jsCopyCode {
 	width: 20px;
 }
 .tmlLineCollapse {
-	position: absolute; z-index: 11;
+	position: absolute; z-index: 10;
 	left: 0;
 	width: 24px; height: 24px;
 	transition: opacity 0.1s;
@@ -1516,13 +1516,12 @@ input.mapCoordinatesName {
 	position: absolute; z-index: 11;
 	height: 32px;
 	overflow: hidden;
-	top: 0; right: 0;
-	padding-top: 4px; padding-right: 12px;
+	top: 4px; right: 12px;
 }
 .hudPeripheralNorth:hover {
 	height: auto;
 	overflow: visible;
-	min-width: 520px; /* This becomes the maximum width of the HUD popup divs */
+	min-width: 580px; /* This becomes the maximum width of the HUD popup divs */
 }
 .hudPeripheralSouth {
 	position: absolute; z-index: 10;
@@ -1697,7 +1696,20 @@ input.mapCoordinatesName {
 }
 
 /* Map options */
-.mapOptionsDisplay {
+#mapOptionsNotes {
+	display: block;
+	width: 120px;
+	margin-top: 8px;
+}
+.wvwOptionsSide2 {
+	padding-left: 8px;
+	margin-left: 4px;
+	border-left: 1px solid gray;
+}
+.mapOptionsSide1 {
+	padding-left: 8px;
+	margin-left: 4px;
+	border-left: 1px solid gray;
 	padding-right: 8px;
 	margin-right: 4px;
 	border-right: 1px solid gray;
@@ -2109,19 +2121,7 @@ input.mapCoordinatesName {
 #itemTimeDayIcon {
 	font-weight: normal;
 }
-#itemHome {
-	position: fixed; z-index: 9;
-	bottom: 0px;
-	right: 10px;
-	color: #eee;
-	opacity: 0.5;
-}
-#itemHome a {
-	color: #eee;
-	text-decoration: none;
-}
-
-#itemLanguage {
+#itemLanguage, #itemHome {
 	display: table;
 	position: absolute; z-index: 9;
 	width: 32px; height: 32px;
@@ -2131,12 +2131,20 @@ input.mapCoordinatesName {
 	border: 1px solid #444;
 	background: rgba(0, 0, 0, 0.2);
 }
-#itemLanguageButton {
+#itemHome {
+	display: none;
+	position: fixed;
+	right: 48px;
+}
+#itemLanguageButton, #itemHomeButton {
 	display: table-cell;
 	vertical-align: middle;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 18px;
 	color: #eee;
+}
+#itemHomeButton {
+	vertical-align: bottom;
 }
 #itemLanguage ins {
 	width: 64px;
@@ -2275,14 +2283,15 @@ input.mapCoordinatesName {
 .mnu_pvp { background-position: -1408px 0; }
 .mnu_raids { background-position: -1440px 0; }
 .mnu_recipes { background-position: -1472px 0; }
-.mnu_selling { background-position: -1504px 0; }
-.mnu_sold { background-position: -1536px 0; }
-.mnu_timers { background-position: -1568px 0; }
-.mnu_trading { background-position: -1600px 0; }
-.mnu_vault { background-position: -1632px 0; }
-.mnu_wardrobe { background-position: -1664px 0; }
-.mnu_wvw { background-position: -1696px 0; }
-.mnu_zone { background-position: -1728px 0; }
+.mnu_sab { background-position: -1504px 0; }
+.mnu_selling { background-position: -1536px 0; }
+.mnu_sold { background-position: -1568px 0; }
+.mnu_timers { background-position: -1600px 0; }
+.mnu_trading { background-position: -1632px 0; }
+.mnu_vault { background-position: -1664px 0; }
+.mnu_wardrobe { background-position: -1696px 0; }
+.mnu_wvw { background-position: -1728px 0; }
+.mnu_zone { background-position: -1760px 0; }
 
 #plateMenu var { /* Button subtitle */
 	display: table-cell;
@@ -2504,6 +2513,13 @@ header.jsSection sup {
 	margin-top: 4px;
 	padding-top: 8px;
 	border-top: 1px solid gray;
+	margin-bottom: 4px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid gray;
+	text-align: left;
+}
+#mapAlarmChains {
+	width: 320px;
 	text-align: left;
 }
 #mapAlarmStopwatchUp, #mapAlarmStopwatchDown {
@@ -3124,7 +3140,7 @@ label:hover {
 	margin-left: 16px;
 	list-style-type: disc;
 }
-.cssColumn, .mapOptionsDisplay, .mapOptionsOther {
+.cssColumn {
 	display: inline-block;
 	vertical-align: top;
 }
@@ -3315,8 +3331,8 @@ laurelunit {
  *  Adjustments based on browser size.
  * ========================================================================== */
 @media (max-height: 800px) {
-	
-	
+
+
 
 }
 

@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170408"></script>
+	<script type="text/javascript" src="data/general.js?v=20170408A"></script>
 	<script type="text/javascript" src="data/sale.js?v=20170408"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
@@ -269,6 +269,19 @@
 							<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>
 							<label title="Go to <dfn>gw2timer.com/gem</dfn> to subscribe to specific gem store items."><input id="opt_bol_alertGem" type="checkbox" /> Alert Gem Store item sales</label>
 						</div>
+						<div id="mapAlarmChains">
+							<b class="jsTranslate">Boss Alarm</b>
+							<label title="This is based on the prediction. Will alert you when the final event in the unchecked or subscribed chain begins."><input id="opt_bol_alertArrival" type="checkbox" /> Alert arrival of boss finale event</label>
+							<b class="jsTranslate">Checklist Alarm Mode</b>
+							<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> Alert when new chain begins</label>
+							<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> Alert when current boss dies</label>
+							<label title="This is for either times."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if boss is checked off</label>
+							<b class="jsTranslate">Subscription Alarm Mode</b>
+							<label title="Alert X minutes before a subscribed chain starts. Enter 0 to disable."><input id="opt_int_alertSubscribedFirst" type="number" min="0" max="30" step="1" /> First Alarm</label>
+							<label title="Alert X minutes before a subscribed chain starts. Enter 0 to disable."><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
+							<label title="This happens at server reset or timestamp expiration. Alarm must be in Subscription Mode."><input id="opt_bol_alertAutosubscribe" type="checkbox" /> Autosubscribe to today's daily world boss</label>
+							<label title="This is based on the prediction."><input id="opt_bol_alertUnsubscribe" type="checkbox" /> Unsubscribe from boss after it dies</label>
+						</div>
 					</div>
 				</div>
 				<div class="mapOptions hudItem">
@@ -277,8 +290,16 @@
 						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
-						<div class="mapOptionsDisplay">
-							<label title="Show/Hide all icons listed below.<br /><dfn>Right click on the map</dfn> to show the world completion route."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show Completion</label>
+						<div class="mapOptionsSide0 cssColumn">
+							<label title="Show/Hide timeline for zone and world boss events on the HUD."><input id="opt_bol_showTimeline" type="checkbox" /> Show timeline</label>
+							<label title="Only show the timeline HUD when you are on the Chains page."><input id="opt_bol_hideHUD" type="checkbox" /> Auto-hide timeline</label>
+							<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
+							<label title="Show/Hide the container for Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD</label>
+							<label title="Some map features like right clicking are disabled for touchscreens, check this for normal click behavior. Requires reload."><input id="opt_bol_ignoreTouch" type="checkbox" /> Ignore touchscreens</label>
+							<span id="mapOptionsNotes">Right click on the map for world completion routes, placement tool for markers, paths, and range measure.</span><br />
+						</div>
+						<div class="mapOptionsSide1 cssColumn">
+							<label title="Show/Hide all icons listed below."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show Completion</label>
 							<div id="mapOptionsCompletion" class="mapOptionsCompletion">
 								<label><img data-src="img/ui/question.png" /><input id="opt_bol_showZoneOverview" type="checkbox" /> Zone Overview</label>
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
@@ -295,7 +316,7 @@
 							</div>
 							<label title="Show/Hide possible zone events.<br />Will increase initial site load time if enabled.<br />Most in-game events have a cooldown of 15 minutes.<br />They can become active by simply being near them.<br />Click on the map then type /events to see all the moused zone's event names."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
 						</div>
-						<div class="mapOptionsOther">
+						<div class="mapOptionsSide2 cssColumn">
 							<label class="cssHidden"><input id="opt_bol_showFloor" type="checkbox" /></label>
 							<label class="cssHidden"><input id="opt_bol_showCoordinatesBar" type="checkbox" /></label>
 							<label class="cssHidden"><input id="opt_bol_condenseTimelineLine" type="checkbox" /></label>
@@ -582,7 +603,7 @@
 						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
-						<div class="mapOptionsDisplay">
+						<div class="wvwOptionsSide1 cssColumn">
 							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletionWvW" type="checkbox" /> Show completion</label>
 							<div id="wvwOptionsCompletion" class="mapOptionsCompletion">
 								<label><img data-src="img/ui/question.png" /><input id="opt_bol_showZoneOverviewWvW" type="checkbox" /> Zone Overview</label>
@@ -594,7 +615,7 @@
 							</div>
 							<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						</div>
-						<div class="mapOptionsOther">
+						<div class="wvwOptionsSide2 cssColumn">
 							<label class="cssHidden"><input id="opt_bol_showFloorWvW" type="checkbox" /></label>
 							<label class="cssHidden"><input id="opt_int_setFloorWvW" class="optSlider" type="range" min="1" max="1" step="1" /></label>
 							<label title="Show or hide shrines, ruins, sentries, and supply depots."><img data-src="img/wvw/secondaries/sentry.png" /><input id="opt_bol_showSecondaries" type="checkbox" /> Show secondaries</label>
@@ -606,6 +627,7 @@
 							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log</label>
 							<label class="cssHidden"><input id="opt_bol_opaqueLog" type="checkbox" /></label>
 							<label class="cssHidden"><input id="opt_bol_maximizeLog" type="checkbox" /></label>
+							<label title="Show/Hide the container for Leaderboard and Log."><img data-src="img/ui/hud.png" /><input id="opt_bol_showHUDWvW" type="checkbox" /> Show HUD</label>
 							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="60" step="1" /> Refresh Interval (sec)</label>
 							<label title="Old log entries beyond this limit shall be deleted."><input id="opt_int_numLogEntries" type="number" min="64" max="1024" step="1" /> Max Log Entries</label>
 							<div id="wvwHelpLinks"><a href="http://forum.renaka.com/forum/368355/">Forum</a> - <a href="https://www.youtube.com/watch?v=uXqvTMGNIXo&t=16m09s">Help</a> - <a href="http://forum.renaka.com/topic/5547304/1/#post-455300">Embed</a> - <a href="http://forum.renaka.com/topic/5546166/">Overlay</a></div>
@@ -906,31 +928,6 @@
 					</div>
 					<label title="Show/Hide clock's tick hand."><input id="opt_bol_showSecondHand" type="checkbox" /> Show clock second hand</label>
 					<label title="Show/Hide GW2 official event countdowns and gem sales on the main page."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard</label>
-					<br />
-					<h2>Map</h2>
-					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
-					<label title="Show/Hide the container for Dashboard and Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD over the PvE map</label>
-					<label title="Show/Hide the container for Leaderboard and Log."><input id="opt_bol_showHUDWvW" type="checkbox" /> Show HUD over the WvW map</label>
-					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline (on HUD)</label>
-					<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
-					<label title="Only show the HUD when you are on the Chains page."><input id="opt_bol_hideHUD" type="checkbox" /> Hide HUD if not on Chains page</label>
-					<label title="Some map features like right clicking are disabled for touchscreens, check this for normal click behavior. Requires reload."><input id="opt_bol_ignoreTouch" type="checkbox" /> Ignore touchscreens and enable context menus</label>
-					<span>For map options, hover over the <img class="cntIconExample" src="img/ui/menu/display.png" alt="Icon" /> button on the top right corner of the map pane.</span><br />
-					<br />
-					<h2>Alarm</h2>
-					<span>Voice announcement requires Chrome, Firefox, or IE11+. Hover over the speaker icon on the chains page to change alarm.</span>
-					<label title="This is based on the prediction. Will alert you when the final event in the unchecked or subscribed chain begins."><input id="opt_bol_alertArrival" type="checkbox" /> Alert the arrival of the actual boss</label>
-					<h3>Checklist Mode</h3>
-					<span>When should the program announce the next chain?</span>
-					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
-					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current world boss dies</label>
-					<label title="This is for either times."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
-					<h3>Subscription Mode</h3>
-					<span>How many minutes before a subscribed chain starts should you be alerted? Enter 0 to disable an alarm. Checked off bosses are ignored.</span>
-					<label><input id="opt_int_alertSubscribedFirst" type="number" min="0" max="30" step="1" /> First Alarm</label>
-					<label><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
-					<label title="This happens at server reset or timestamp expiration. Alarm must be in Subscription Mode."><input id="opt_bol_alertAutosubscribe" type="checkbox" /> Autosubscribe to today's daily world boss</label>
-					<label title="This is based on the prediction."><input id="opt_bol_alertUnsubscribe" type="checkbox" /> Unsubscribe from boss after it dies</label>
 					<br />
 					<h2>Account</h2>
 					<label title="Show/Hide colored borders over items in account banks."><input id="opt_bol_showRarity" type="checkbox" /> Always show rarity on item slots</label>

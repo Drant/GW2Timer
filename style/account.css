@@ -24,7 +24,7 @@
 }
 
 #accToggle, #accExpand, #accClose {
-	top: auto; bottom: -14px; /* Center it across the horizontal line */
+	top: auto; bottom: -40px; /* Center it across the horizontal line */
 	left: auto; right: 0;
 }
 #accToggle {
@@ -174,9 +174,9 @@
 }
 #accProgressCount {
 	position: absolute;
-	margin-top: 16px;
+	margin-top: 40px;
 	padding: 4px 6px 4px 6px;
-	right: 12px;
+	right: 0;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 17px;
 	color: #ffeeaa;
@@ -1622,6 +1622,9 @@ a.chrWalletLink {
 	border-radius: 8px;
 	box-shadow: 0px 0px 32px #0b0d0e;
 }
+.bnkDivider {
+	margin-bottom: 64px;
+}
 .bnkBankDyes {
 	background: black;
 }
@@ -2656,29 +2659,24 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */
 @media (max-width: 1080px) {
-	
-.accComposition {
-	width: 90%;
-	margin-left: 5%;
-	margin-right: 5%;
-}
-
-.accDirectoryColumn {
-	margin-right: 12px;
-	font-size: 14px;
-}
-
+	.accComposition {
+		width: 90%;
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+	.accDirectoryColumn {
+		margin-right: 12px;
+		font-size: 14px;
+	}
 }
 
 @media (max-width: 720px) {
-	
-.accMenuTitle { /* Hide text on the account page menu */
-	display: none;
-}
-#accMenu kbd {
-	padding-left: 2px;
-	padding-right: 2px;
-	margin-right: 2px;
-}
-
+	.accMenuTitle { /* Hide text on the account page menu */
+		display: none;
+	}
+	#accMenu kbd {
+		padding-left: 2px;
+		padding-right: 2px;
+		margin-right: 2px;
+	}
 }
