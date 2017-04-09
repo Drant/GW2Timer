@@ -38,14 +38,6 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-04-09T16:00:00Z"),
-		name: "Character Slot Expansion",
-		id: "character_slot_expansion",
-		price: 640,
-		discount: 800,
-		side: 0
-	},
-	{
 		name: "Shadow Dye Kit",
 		id: "68786",
 		price: 125,

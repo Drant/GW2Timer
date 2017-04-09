@@ -33587,6 +33587,11 @@ H = {
 				var side = (item.side !== undefined) ? item.side : parseInt(i) % 2;
 				if (item.Finish)
 				{
+					// Skip expired items, if has expiration
+					if (T.isTimely(item) === false)
+					{
+						continue;
+					}
 					H.SaleCountdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
 				}
 
