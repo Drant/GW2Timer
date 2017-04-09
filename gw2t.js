@@ -22071,6 +22071,7 @@ C = {
 	/*
 	 * Updates the current chain bar's time as a countdown until the chain is
 	 * predicted to finish, or until the next chain starts if finished.
+	 * To be called every 1 second.
 	 */
 	updateCurrentChainTimeHTML: function(pChain)
 	{
@@ -22095,12 +22096,15 @@ C = {
 				aWantHours: false
 			});
 			
-			elm.html("(:" + currentframe + ") " + timestr);
+			var zerostr = (currentframe < T.cBASE_10) ? "0" : "";
+			elm.html(":" + currentframe + " (:" + zerostr + timestr + ")");
 			if (C.isDryTopIconsShown)
 			{
+				var colorprefix0 = "<var style='color:" + T.getCurrentDryTopColor() + "'>";
+				var colorprefix1 = "<var style='color:" + T.getCurrentDryTopColor(1) + "'>";
 				$("#mapDryTopTimer").html(
-					"<var style='color:" + T.getCurrentDryTopColor() + "'>:" + currentframe + "</var> " + timestr
-					+ " <var style='color:" + T.getCurrentDryTopColor(1) + "'>:" + nextframe + "</var>");
+					colorprefix0 + ":" + currentframe + " (:" + zerostr + timestr + ") </var>" + colorprefix1 + ":" + nextframe + "</var><br />"
+					+ colorprefix0 + D.getWord("now") + " →</var> " + colorprefix1 + D.getWord("next") + "</var>");
 			}
 		}
 		else
@@ -27231,7 +27235,7 @@ P = {
 						{
 							className: "mapNick",
 							html: "<span class='mapNickIn'>" + D.getObjectName(event)
-								+ "<br /><ins style='color:" + event.color + "'>" + event.time + "</ins></span>",
+								+ "<br /><var class='mapDryTopTimestamp' style='color:" + event.color + "'>" + event.time + "</var></span>",
 							iconSize: [512, 64],
 							iconAnchor: [256, 32]
 						})
@@ -27399,7 +27403,7 @@ P = {
 					iLayer._icon.style.display = "table"; // For middle vertical alignment
 				}
 			});
-			P.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
+			P.DryTopTimer._icon.style.fontSize = Math.ceil(nickfontsize * 1.5) + "px";
 			P.DryTopTimer._icon.style.opacity = nickopacity;
 			P.DryTopTimer._icon.style.zIndex = M.cZIndexRaise + 1;
 			P.DryTopTimer._icon.style.display = "table";

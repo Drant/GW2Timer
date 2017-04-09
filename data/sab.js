@@ -19,7 +19,6 @@ var GW2T_SAB_HEADERS = {
  * u: Unlockable ID (unlock ID)
  * n: Name of item
  * l: Label over the slot
- * t: Text for tooltip comment
  */
 var GW2T_SAB_DATA = {
 Infantile: [

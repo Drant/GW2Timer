@@ -2687,6 +2687,9 @@ header.jsSection sup {
 #mapDryTopClip0:hover, #mapDryTopClip1:hover {
 	opacity: 1;
 }
+#mapDryTopTimer, .mapDryTopTimestamp {
+	font-family: Trebuchet MS, Menomonia;
+}
 
 /* A bar containing the chain icon, title, time, and events */
 .chnBar, .chnSlot {
