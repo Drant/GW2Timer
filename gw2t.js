@@ -3808,13 +3808,13 @@ U = {
 		// SPECIAL PAGE: Audit
 		else if (page === I.SpecialPageEnum.Audit)
 		{
-			I.ArticleCurrent = I.SpecialPageEnum.Audit;
 			if ($("#audExecute").is(":visible"))
 			{
 				$("#audExecute").trigger("click");
 			}
 			else
 			{
+				I.ArticleCurrent = I.SpecialPageEnum.Audit;
 				viewAccount(I.PageEnum.Account.Characters);
 			}
 		}
@@ -11669,102 +11669,6 @@ V = {
 	},
 	
 	/*
-	 * Generates the account's possessions as single item slots in bank tabs.
-	 */
-	servePossessions: function()
-	{
-		if (V.requireCharacters("Possessions"))
-		{
-			return;
-		}
-		else if ( ! A.Data.Characters[0].bags)
-		{
-			A.printError(A.PermissionEnum.Inventories);
-			return;
-		}
-		
-		var dish = $("#accDish_Possessions");
-		if (A.reinitializeDish(dish) === false)
-		{
-			return;
-		}
-		var container = B.createBank(dish);
-		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var slotscontainers = {};
-		var tab, slotscontainer, slot;
-		
-		var generatePossessions = function()
-		{
-			bank.empty();
-			// Bank tab for each item type
-			for (var i in Q.ItemEnum)
-			{
-				tab = B.createBankTab(bank, {aTitle: D.getString(i)});
-				slotscontainers[i] = tab.find(".bnkTabSlots");
-			}
-			// Insert item slots into proper type tab
-			for (var i in A.Possessions)
-			{
-				(function(iItemID, iPossession)
-				{
-					Q.getItem(iItemID, function(iItem)
-					{
-						slotscontainer = slotscontainers[iItem.type];
-						if (slotscontainer)
-						{
-							slot = B.createBankSlot(slotscontainer);
-							B.styleBankSlot(slot,
-							{
-								aItem: iItem,
-								aSlotMeta: {count: iPossession.oCount},
-								aComment: A.getFoundString(iPossession)
-							});
-						}
-					});
-				})(i, A.Possessions[i]);
-			}
-			B.createBankMenu(bank, {
-				aHelpMessage: $("#accHelpPossessions").html()
-			});
-			B.tallyBank(container);
-		};
-		
-		A.initializePossessions(function()
-		{
-			Q.getPricedItems(U.convertAssocToArray(A.Possessions), function()
-			{
-				generatePossessions();
-			});
-		});
-	},
-	
-	/*
-	 * Generates the ascended equipment catalog bank window.
-	 */
-	serveCleanup: function()
-	{
-		B.generateCatalog("Cleanup", {
-			aIsCollection: false,
-			aIsLookup: true,
-			aWantItems: true,
-			aWantGem: false,
-			aWantDefaultHelp: false
-		});
-	},
-	
-	/*
-	 * Generates the ascended equipment catalog bank window.
-	 */
-	serveAscended: function()
-	{
-		B.generateCatalog("Ascended", {
-			aWantPrices: false,
-			aWantGem: false,
-			aWantDefaultHelp: false
-		});
-	},
-	
-	/*
 	 * Generates inventory of all characters as bank tabs.
 	 */
 	serveInventory: function()
@@ -11940,6 +11844,76 @@ V = {
 	},
 	
 	/*
+	 * Generates the account's possessions as single item slots in bank tabs.
+	 */
+	servePossessions: function()
+	{
+		if (V.requireCharacters("Possessions"))
+		{
+			return;
+		}
+		else if ( ! A.Data.Characters[0].bags)
+		{
+			A.printError(A.PermissionEnum.Inventories);
+			return;
+		}
+		
+		var dish = $("#accDish_Possessions");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var container = B.createBank(dish);
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var slotscontainers = {};
+		var tab, slotscontainer, slot;
+		
+		var generatePossessions = function()
+		{
+			bank.empty();
+			// Bank tab for each item type
+			for (var i in Q.ItemEnum)
+			{
+				tab = B.createBankTab(bank, {aTitle: D.getString(i)});
+				slotscontainers[i] = tab.find(".bnkTabSlots");
+			}
+			// Insert item slots into proper type tab
+			for (var i in A.Possessions)
+			{
+				(function(iItemID, iPossession)
+				{
+					Q.getItem(iItemID, function(iItem)
+					{
+						slotscontainer = slotscontainers[iItem.type];
+						if (slotscontainer)
+						{
+							slot = B.createBankSlot(slotscontainer);
+							B.styleBankSlot(slot,
+							{
+								aItem: iItem,
+								aSlotMeta: {count: iPossession.oCount},
+								aComment: A.getFoundString(iPossession)
+							});
+						}
+					});
+				})(i, A.Possessions[i]);
+			}
+			B.createBankMenu(bank, {
+				aHelpMessage: $("#accHelpPossessions").html()
+			});
+			B.tallyBank(container);
+		};
+		
+		A.initializePossessions(function()
+		{
+			Q.getPricedItems(U.convertAssocToArray(A.Possessions), function()
+			{
+				generatePossessions();
+			});
+		});
+	},
+	
+	/*
 	 * Generates the items catalog bank window.
 	 */
 	serveCatalog: function()
@@ -11950,7 +11924,202 @@ V = {
 	},
 	
 	/*
+	 * Generates the ascended equipment catalog bank window.
+	 */
+	serveCleanup: function()
+	{
+		B.generateCatalog("Cleanup", {
+			aIsCollection: false,
+			aIsLookup: true,
+			aWantItems: true,
+			aWantGem: false,
+			aWantDefaultHelp: false
+		});
+	},
+	
+	/*
+	 * Generates the ascended equipment catalog bank window.
+	 */
+	serveAscended: function()
+	{
+		B.generateCatalog("Ascended", {
+			aWantPrices: false,
+			aWantGem: false,
+			aWantDefaultHelp: false
+		});
+	},
+	
+	/*
 	 * Generates the learned recipes as a bank categorized by crafting disciplines.
+	 */
+	serveRecipes: function()
+	{
+		if (V.requireCharacters("Recipes"))
+		{
+			return;
+		}
+		else if ( ! A.Data.Characters[0].recipes)
+		{
+			A.printError(A.PermissionEnum.Inventories);
+			return;
+		}
+		
+		var dish = $("#accDish_Recipes");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var container = B.createBank(dish, {
+			aIsCollection: true,
+			aWantGem: false
+		});
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		
+		// Retrieve data before generating
+		U.getScript(U.URL_DATA.Recipes, function()
+		{
+			var headers = {};
+			var metadata = GW2T_RECIPES_METADATA;
+			var record = GW2T_RECIPES_DATA;
+			
+			// Merge the record arrays into one lookup table
+			var recipelookup = {}; // Will be used to find a character's unlocked recipe
+			var itemlookup = {}; // Will be used to find a character's unlocked recipe by searching with the item
+			var discname, entry, recipeid, itemid;
+			for (var i in record)
+			{
+				discname = i.split("_")[0];
+				for (var ii = 0; ii < record[i].length; ii++)
+				{
+					entry = (record[i])[ii];
+					if (recipelookup[entry.u] === undefined)
+					{
+						recipelookup[entry.u] = {
+							oItemID: entry.i, // Item ID of crafted product
+							oDisciplines: [discname] // Disciplines that can craft this recipe
+						};
+					}
+					else
+					{
+						recipelookup[entry.u].oDisciplines.push(discname);
+					}
+				}
+			}
+			
+			// Merge all characters' unlocked recipes array into one
+			var unlockeds = [];
+			A.Data.Characters.forEach(function(iChar)
+			{
+				unlockeds = U.getUnion(unlockeds, iChar.recipes);
+				// Create a list of items with the characters' names who can craft it
+				for (var ii = 0; ii < iChar.recipes.length; ii++)
+				{
+					recipeid = iChar.recipes[ii];
+					if (recipelookup[recipeid])
+					{
+						itemid = recipelookup[recipeid].oItemID;
+						var discnames = recipelookup[recipeid].oDisciplines;
+						var discicons = "";
+						for (var iii = 0; iii < discnames.length; iii++)
+						{
+							discname = discnames[iii];
+							if (iChar.oCharCraft && iChar.oCharCraft[discname])
+							{
+								discicons += "<ins class='acc_craft acc_craft_" + discname.toLowerCase() + "'></ins>";
+							}
+						}
+						if (discicons.length)
+						{
+							if (itemlookup[itemid] === undefined)
+							{
+								itemlookup[itemid] = [];
+							}
+							itemlookup[itemid].push(iChar.oCharName + discicons);
+						}
+					}
+				}
+			});
+			// Add the characters' names to the record so later the style slot function can write them in item tooltips
+			var craftstr = D.getPhrase("crafted by", U.CaseEnum.Sentence) + ": ";
+			for (var i in record)
+			{
+				for (var ii = 0; ii < record[i].length; ii++)
+				{
+					var entry = (record[i])[ii];
+					if (itemlookup[entry.i])
+					{
+						entry.t = "<var class='itmColor_reminder'>" + craftstr + (itemlookup[entry.i]).join(", ") + "</var>";
+					}
+					else
+					{
+						delete entry.t;
+					}
+				}
+			}
+			
+			// Construct tab headers from crafting disciplines and recipe types
+			var lang = D.getFullySupportedLanguage();
+			var catname;
+			for (var i in metadata.Disciplines)
+			{
+				for (var ii in metadata.Types)
+				{
+					catname = i + "_" + ii;
+					headers[catname] = {};
+					(headers[catname])["name_" + lang] = (metadata.Disciplines[i])[lang] + " " + (metadata.Types[ii])[lang];
+				}
+			}
+			
+			// Get the account wide unlocked recipes
+			$.getJSON(A.getURL(A.URL.Recipes), function(pData)
+			{
+				unlockeds = U.getUnion(unlockeds, pData);
+				// Generate the bank
+				B.generateUnlockables(bank, {
+					aHeaders: headers,
+					aRecord: record,
+					aUnlockeds: unlockeds,
+					aIsCollapsed: true,
+					aHelpMessage: $("#accHelpRecipes").html(),
+					aTabIterator: function(pCatName)
+					{
+						var discipline = pCatName.split("_")[0];
+						var catname = D.getObjectName(headers[pCatName]);
+						var caticon = "<ins class='bnkTabIcon acc_craft acc_craft_" + discipline.toLowerCase() + "'></ins>"
+							+ "<ins class='bnkTabIcon acc_recipes acc_recipes_" + pCatName.toLowerCase() + "'></ins>";
+						var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
+						return tab;
+					}
+				});
+
+				/*
+				 * Piggyback on the bank search bar (created by the generate unlockables
+				 * function) and make it print the characters who have unlocked the
+				 * recipe to create that searched item.
+				 */
+				var searchbar = $("#accDishMenu_Recipes").find(".bnkSearch .bnkSearchInput").first();
+				Q.bindItemSearch(searchbar, {
+					aFillerText: null,
+					aCallback: function(pItem)
+					{
+						var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
+						if (itemlookup[pItem.id])
+						{
+							var charnames = (itemlookup[pItem.id]).join(", ");
+							I.write(itemname + " was learned and can be crafted by:<br /><br />" + charnames);
+						}
+						else
+						{
+							I.write("None of your characters have learned how to craft " + itemname);
+						}
+					}
+				});
+			});
+		});
+	},
+	
+	/*
+	 * Generates Super Adventure Box per-character unlocks.
 	 */
 	serveSAB: function()
 	{
@@ -12041,7 +12210,7 @@ V = {
 					// Create characters bar after generating banks
 					if (validcharacters.length > 1)
 					{
-						A.createCharacterScroller(validcharacters, "SAB", {
+						A.createCharacterScroller(validcharacters, section, {
 							aElementPrefix: elmprefix,
 							aOffset: -120 // Consider the character banner
 						});
@@ -13182,6 +13351,11 @@ V = {
 		{
 			return;
 		}
+		$("<div id='pctBank'></div>"
+			+ "<div id='pctStatistics' data-date='2015-2016'>"
+				+ "<div class='bnkTitle cssCenter'>Statistics</div><br />"
+				+ "<table id='pctStatTable'></table>"
+			+ "</div>").appendTo(dish);
 		
 		var section = "Pact";
 		var container = B.createBank($("#pctBank"));
@@ -13603,7 +13777,7 @@ B = {
 			{
 				if (pEvent.which === I.ClickEnum.Left)
 				{
-					U.openExternalURL(U.getWikiSearchLanguage(Settings.aName));
+					U.openExternalURL(U.getWikiSearchDefault(Settings.aName));
 				}
 			});
 		}
