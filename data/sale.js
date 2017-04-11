@@ -45,6 +45,7 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
+		Finish: new Date("2017-04-11T16:00:00Z"),
 		name: "Bat Wings Glider",
 		id: "74684",
 		price: 700,
@@ -52,6 +53,7 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
+		Finish: new Date("2017-04-11T16:00:00Z"),
 		name: "Bat Wings Backpack",
 		id: "73939",
 		price: 700,

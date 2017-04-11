@@ -1478,7 +1478,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "<a data-page='SAB'>Super Adventure Box</a> character progression.",
+	pve: "<a href='https://twitter.com/GW2Timer/status/850984189071572992'>Super Adventure Box</a> character progression.",
 	wvw: "",
 	Start: new Date("2016-04-07T16:00:00Z"),
 	Finish: new Date("2017-04-20T16:00:00Z"),

@@ -22,8 +22,8 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170408A"></script>
-	<script type="text/javascript" src="data/sale.js?v=20170409"></script>
+	<script type="text/javascript" src="data/general.js?v=20170410"></script>
+	<script type="text/javascript" src="data/sale.js?v=20170410"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -293,7 +293,7 @@
 					<div class="hudPopup cntComposition">
 						<div class="mapOptionsSide0 cssColumn">
 							<label title="Show/Hide timeline for zone and world boss events on the HUD."><input id="opt_bol_showTimeline" type="checkbox" /> Show timeline</label>
-							<label title="Only show the timeline HUD when you are on the Chains page."><input id="opt_bol_hideHUD" type="checkbox" /> Auto-hide timeline</label>
+							<label title="Only show the timeline HUD when you are on the main page."><input id="opt_bol_hideHUD" type="checkbox" /> Auto-hide timeline</label>
 							<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
 							<label title="Show/Hide the container for Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD</label>
 							<label title="Some map features like right clicking are disabled for touchscreens, check this for normal click behavior. Requires reload."><input id="opt_bol_ignoreTouch" type="checkbox" /> Ignore touchscreens</label>
@@ -929,6 +929,7 @@
 					</div>
 					<label title="Show/Hide clock's tick hand."><input id="opt_bol_showSecondHand" type="checkbox" /> Show clock second hand</label>
 					<label title="Show/Hide GW2 official event countdowns and gem sales on the main page."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard</label>
+					<span><img class="cntIconExample" src="img/ui/menu/alarm.png" alt="Alarm" /> and <img class="cntIconExample" src="img/ui/menu/display.png" alt="Display" /> icons on the map pane can be hovered on for timer alarm and map display options.</span><br />
 					<br />
 					<h2>Account</h2>
 					<label title="Show/Hide colored borders over items in account banks."><input id="opt_bol_showRarity" type="checkbox" /> Always show rarity on item slots</label>
@@ -937,7 +938,7 @@
 					<label title="Include guild vaults contents in audit."><input id="opt_bol_auditVault" type="checkbox" /> Audit includes guilds vault</label>
 					<label title="Will load an invisible iframe of the audit page at every daily reset.<br />You must have an API key entered and checkmarked on the account page."><input id="opt_bol_auditAccountOnReset" type="checkbox" /> Automatically audit at daily reset</label>
 					<label title="Audit history will record the converted sum of all currencies in a category (for example gems of outfits) rather than only the coin currency."><input id="opt_bol_auditHistoryConverted" type="checkbox" /> Convert category's currencies in audit history</label>
-					<label title="How many last audit reports will be saved?"><input id="opt_int_numAuditReports" type="number" min="32" max="4096" step="1" /> Number of audit reports in history</label>
+					<label title="How many audit reports per account will be saved?"><input id="opt_int_numAuditReports" type="number" min="32" max="4096" step="1" /> Number of audit reports in history</label>
 					<h2>Trading</h2>
 					<label title="Regularly get the current buy and sell prices. This option must be enabled for notification of desired price range to work."><input id="opt_bol_refreshPrices" type="checkbox" /> Auto-refresh data and enable notification</label>
 					<label title="How many seconds before the program refreshes price and exchange data?"><input id="opt_int_secTradingRefresh" type="number" min="30" max="600" step="1" /> Seconds between refreshes</label>

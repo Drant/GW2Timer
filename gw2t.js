@@ -7498,7 +7498,6 @@ A = {
 	isChartsInitialized: false,
 	isAuditReady: false,
 	isCharactersCached: false, // For force redownloading of characters data rather than use cached
-	isHeroCached: false, // For fetching hero equipment, skills, etc. again
 	Metadata: {}, // Prewritten data loaded along with account page
 	Currency: {}, // Currency data
 	Equipment: {}, // Character equipment slots information
@@ -8447,6 +8446,7 @@ A = {
 	 * @param string pSection
 	 * @objparam function aClick custom scrolling action, with provided character index, optional.
 	 * @objparam string aElementPrefix HTML ID for element to scroll to, to be suffixed by character index.
+	 * @objparam int aOffset scroll from the element.
 	 */
 	createCharacterScroller: function(pCharacters, pSection, pSettings)
 	{
@@ -10537,7 +10537,7 @@ V = {
 		// Retrieve characters data
 		U.getJSON(A.getURLAll(A.URL.Characters), function(pData)
 		{
-			$("#accDish_Hero").empty();
+			A.wipeDish("Hero");
 			I.removeThrobber(dish);
 			A.adjustAccountScrollbar();
 			A.isCharactersCached = true;
@@ -10547,7 +10547,6 @@ V = {
 			A.initializeAccountUpgrades();
 			A.assignAccountUpgrades("CharacterSlot", numcharacters);
 			A.Data.CharacterNames = [];
-			A.isHeroCached = false;
 			A.CharIndexCurrent = null;
 			A.Data.Characters = null;
 			A.Data.Characters = new Array(numcharacters);
@@ -10569,24 +10568,6 @@ V = {
 			});
 			I.suspendElement(menusubsection, false);
 			V.generateCharactersStatistics();
-			// Create the characters bar for the hero page beforehand
-			A.createCharacterScroller(A.Data.Characters, "Hero", {aClick: function(iCharIndex)
-			{
-				var elm = $("#eqpContainer_" + iCharIndex);
-				if (elm.is(":visible")) // If viewing all characters
-				{
-					I.scrollToElement(elm, {
-						aContainer: $("#accDish_Hero").parent(),
-						aOffset: -($("#accOverhead").height() + 32),
-						aSpeed: "fast"
-					});
-				}
-				else // If viewing one character at a time
-				{
-					$("#chrSelection_" + A.CharIndexCurrent).trigger("click");
-					$("#chrSelection_" + iCharIndex).trigger("click");
-				}
-			}});
 			if (pSection)
 			{
 				$("#accMenu_" + pSection).trigger("click");
@@ -11128,7 +11109,12 @@ V = {
 				V.generateHero(iChar);
 			});
 			equipall.show();
-			A.isHeroCached = true;
+			
+			// Create the quick scroller since multiple characters are shown
+			A.createCharacterScroller(A.Data.Characters, "Hero", {
+				aElementPrefix: "eqpContainer_",
+				aOffset: -120
+			});
 		};
 		
 		// Generate for single character if user chosen, else all characters
@@ -11140,7 +11126,7 @@ V = {
 		}
 		else
 		{
-			if (A.isHeroCached)
+			if (A.reinitializeDish(dish) === false)
 			{
 				equipall.show();
 			}
@@ -22774,6 +22760,7 @@ C = {
 						{
 							M.toggleLayerArray(P.LayerArray.DryTopActive, true);
 						}
+						P.rebindMarkerTooltips();
 					}
 				}
 			});
@@ -23787,7 +23774,7 @@ M = {
 			}
 
 			// Re-tooltip
-			I.qTip.init(".leaflet-marker-icon");
+			P.rebindMarkerTooltips();
 			// Rescale current moused mapping markers
 			this.adjustZoomMapping();
 			
@@ -25994,6 +25981,10 @@ P = {
 			M.initializeMap();
 		}
 	},
+	rebindMarkerTooltips: function()
+	{
+		I.qTip.init(".leaflet-marker-icon");
+	},
 	
 	/*
 	 * Adds an API map location to the searchable database array.
@@ -27291,7 +27282,7 @@ P = {
 				});
 				P.Layer.ZoneGateway.addLayer(path);
 			});
-			I.qTip.init(".leaflet-marker-icon");
+			P.rebindMarkerTooltips();
 		}
 		M.toggleLayer(P.Layer.ZoneGateway, O.Options.bol_showZoneGateways);
 		M.adjustZoomMapping();
@@ -27472,7 +27463,7 @@ P = {
 						});
 						event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
 						{
-							title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
+							title: "<span class='mapEvent'><dfn>" + D.getObjectName(event) + "</dfn></span>",
 							wiki: D.getObjectName(event),
 							icon: L.icon(
 							{
@@ -27496,7 +27487,7 @@ P = {
 						P.LayerArray.DryTopIcons.push(event.eventicon);
 					}
 				}
-				I.qTip.init(".leaflet-marker-icon");
+				P.rebindMarkerTooltips();
 			}
 			I.loadImg($("#sectionChains_Drytop"));
 			
@@ -28536,7 +28527,7 @@ G = {
 				}
 			});
 
-			I.qTip.init(".leaflet-marker-icon");
+			P.rebindMarkerTooltips();
 			
 			/*
 			 * Initialize checklist and bind marker and checkboxes together.
@@ -29053,7 +29044,7 @@ G = {
 			{
 				M.goToArguments(P.Collectibles[type].view);
 				// Rebind tooltip
-				I.qTip.init(".leaflet-marker-icon");
+				P.rebindMarkerTooltips();
 				$(this).parent().addClass("cltCheckedLabel");
 			}
 			else

@@ -15,8 +15,8 @@ var GW2T_SAB_HEADERS = {
 };
 
 /*
- * Associated finisher item with that finisher unlockable.
- * u: Unlockable ID (unlock ID)
+ * Associated icons and names with that unlock.
+ * u: Unlock ID
  * n: Name of item
  * l: Label over the slot
  * t: Tooltip, if not provided name will be used

@@ -3923,7 +3923,8 @@ Weapon_Hammer: [
 	{u: 7060, i: 79967, n: "Frostforged Hammer", b: [79967]},
 	{u: 7132, i: 80630, n: "Devoted Hammer", b: [80630]},
 	{u: 7151, i: 80341, n: "The Gavel", p: {magnetite: 600}},
-	{u: 7178, i: 80934, n: "Beastslayer Hammer", b: [80934]}
+	{u: 7178, i: 80934, n: "Beastslayer Hammer", b: [80934]},
+	{u: 7196, i: 80894, n: "Crimson Assassin Hammer", p: {token: 16}}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", b: [44906]},
@@ -4219,7 +4220,8 @@ Weapon_Shortbow: [
 	{u: 7039, i: 79963, n: "Frostforged Short Bow", b: [79963]},
 	{u: 7081, i: 80395, n: "Devoted Short Bow", b: [80395]},
 	{u: 7155, i: 80499, n: "Watchkeeper Trophy Bow", p: {magnetite: 600}},
-	{u: 7180, i: 80945, n: "Beastslayer Short Bow", b: [80945]}
+	{u: 7180, i: 80945, n: "Beastslayer Short Bow", b: [80945]},
+	{u: 7185, i: 80905, n: "Crimson Assassin Short Bow", p: {token: 16}}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", b: [49338]},
@@ -4366,7 +4368,8 @@ Weapon_Rifle: [
 	{u: 7080, i: 80135, n: "Man o' War", p: {craft: true}},
 	{u: 7078, i: 80488, n: "The HMS Divinity", p: {craft: true}},
 	{u: 7152, i: 80307, n: "Devoted Rifle", b: [80307]},
-	{u: 7168, i: 80880, n: "Beastslayer Rifle", b: [80880]}
+	{u: 7168, i: 80880, n: "Beastslayer Rifle", b: [80880]},
+	{u: 7173, i: 80940, n: "Crimson Assassin Rifle", p: {token: 16}}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", b: [49348, 49350]},

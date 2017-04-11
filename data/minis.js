@@ -7,11 +7,11 @@
  * Category translations.
  */
 var GW2T_MINIS_HEADERS = {
-	Set1: {name_en: "Miniatures Set I", name_de: "Miniatures Satz I", name_es: "Miniatures conjunto I", name_fr: "Miniatures Ensemble I"},
-	Set2: {name_en: "Miniatures Set II", name_de: "Miniatures Satz II", name_es: "Miniatures conjunto II", name_fr: "Miniatures Ensemble II"},
-	Set3: {name_en: "Miniatures Set III", name_de: "Miniatures Satz III", name_es: "Miniatures conjunto III", name_fr: "Miniatures Ensemble III"},
-	Special: {name_en: "Miniatures (Special)", name_de: "Miniaturen (Spezial)", name_es: "Miniaturas (especial)", name_fr: "Miniatures (spéciales)"},
-	Gem: {name_en: "Miniatures (Gem Store)", name_de: "Miniaturen (Edelsteinshop)", name_es: "Miniaturas (Tienda de gemas)", name_fr: "Miniatures (Boutique aux gemmes)"}
+	Set1: {name_en: "Set I", name_de: "Satz I", name_es: "Conjunto I", name_fr: "Ensemble I", name_zh: "套件1"},
+	Set2: {name_en: "Set II", name_de: "Satz II", name_es: "Conjunto II", name_fr: "Ensemble II", name_zh: "套件2"},
+	Set3: {name_en: "Set III", name_de: "Satz III", name_es: "Conjunto III", name_fr: "Ensemble III", name_zh: "套件3"},
+	Special: {name_en: "Special", name_de: "Spezial", name_es: "Especial", name_fr: "Spéciales", name_zh: "特殊"},
+	Gem: {name_en: "Gem Store", name_de: "Edelsteinshop", name_es: "Tienda de gemas", name_fr: "Boutique aux gemmes)", name_zh: "宝石商店"}
 };
 
 /*
