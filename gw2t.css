@@ -219,6 +219,7 @@ img {
 }
 #cslContent a, #itemWarning a {
 	color: limegreen;
+	text-decoration: underline;
 }
 #cslContent a:hover, #itemWarning a:hover {
 	color: greenyellow;
@@ -842,6 +843,7 @@ header.cntHeader {
 
 .cntComposition a {
 	color: #aaff55;
+	text-decoration: underline;
 }
 .cntComposition a:hover {
 	color: #44dd44;

@@ -22,8 +22,8 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170410"></script>
-	<script type="text/javascript" src="data/sale.js?v=20170410"></script>
+	<script type="text/javascript" src="data/general.js?v=20170411"></script>
+	<script type="text/javascript" src="data/sale.js?v=20170411"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -297,7 +297,7 @@
 							<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
 							<label title="Show/Hide the container for Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD</label>
 							<label title="Some map features like right clicking are disabled for touchscreens, check this for normal click behavior. Requires reload."><input id="opt_bol_ignoreTouch" type="checkbox" /> Ignore touchscreens</label>
-							<span id="mapOptionsNotes">Right click on the map for world completion routes, placement tool for markers, paths, and range measure.</span><br />
+							<span id="mapOptionsNotes">Double click on the map to create paths. Right click on the map for path features, completion routes, and marker tool.</span><br />
 						</div>
 						<div class="mapOptionsSide1 cssColumn">
 							<label title="Show/Hide all icons listed below."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show Completion</label>
@@ -325,9 +325,9 @@
 							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
 							<label title="Show/Hide region-colored borders over zones."><img data-src="img/map/border.png" /><input id="opt_bol_showZoneBorders" type="checkbox" /> Show zone borders</label>
 							<label title="Show/Hide gateways, wallows, tunnels, thermal tubes, and launch pads."><img data-src="img/map/gateway_interborders.png" /><input id="opt_bol_showZoneGateways" type="checkbox" /> Show zone gateways</label>
-							<label title="Double click on the map to lay/remove a personal pin.<br />This option will draw a path from these pins."><img data-src="img/map/pin_white.png" /><input id="opt_bol_showPersonalPaths" type="checkbox" /> Show personal paths</label>
+							<label title="Double click on the map to lay/remove a personal pin.<br />This option will draw a path from these pins."><img data-src="img/map/path.png" /><input id="opt_bol_showPersonalPaths" type="checkbox" /> Show personal paths</label>
 							<label title="Show/Hide the colored chain paths of world bosses."><img data-src="img/map/pin_green.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
-							<label title="Automatically scroll the map to the next predicted world boss event."><img data-src="img/map/path.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
+							<label title="Automatically scroll the map to the next predicted world boss event."><img data-src="img/map/tour.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
 							<label title="Color of the personal path and world completion route."><input id="opt_str_colorPersonalPath" type="text" maxlength="32" style="width:96px;"> Path Color</label>
 							<br />
 							<label title="Show/Hide the side app panel."><img data-src="img/map/panel.png" /><input id="opt_bol_showPanel" type="checkbox" /> Show app panel</label>

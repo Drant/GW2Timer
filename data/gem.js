@@ -121,7 +121,8 @@ Glider: [
 	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
 	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: -400}},
 	{i: 80725, n: "Raven's Spirit Glider", p: {gem: -500}},
-	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}}
+	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}},
+	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: 700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
@@ -151,7 +152,8 @@ Back: [
 	{i: 78745, n: "Moth Wings Backpack", p: {gem: 700}},
 	{i: 79288, n: "Shining Blade Backpack", p: {gem: -700}},
 	{i: 79523, n: "Mursaat Wings Backpack", p: {gem: 700}},
-	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: -700}}
+	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: -700}},
+	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: -700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -413,7 +415,8 @@ Gathering: [
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: -1000}},
 	{i: 78996, n: "Unbreakable Harvesting Sickle", p: {gem: 800}},
 	{i: 78806, n: "Unbreakable Logging Axe", p: {gem: 800}},
-	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 800}}
+	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 800}},
+	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: -1000}}
 	//{n: "Unbreakable Gathering Tools", p: {gem: 2400}},
 ],
 Mini: [

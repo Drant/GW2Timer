@@ -38,29 +38,44 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		name: "Shadow Dye Kit",
-		id: "68786",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
+		Finish: new Date("2017-04-18T16:00:00Z"),
+		name: "Wide Rim Glasses",
+		id: "64753",
+		price: 150,
+		discount: null,
 		side: 0
 	},
 	{
-		Finish: new Date("2017-04-11T16:00:00Z"),
-		name: "Bat Wings Glider",
-		id: "74684",
+		Finish: new Date("2017-04-18T16:00:00Z"),
+		name: "Bunny Ears",
+		id: "64738",
+		price: 200,
+		discount: null,
+		side: 0
+	},
+	{
+		name: "Super Adventure Logging Bear",
+		id: "80966",
+		price: 1000,
+		discount: null,
+		side: 0
+	},
+	{
+		name: "Super Adventure Holo-Copter Backpack",
+		id: "80887",
 		price: 700,
 		discount: null,
 		side: 0
 	},
 	{
-		Finish: new Date("2017-04-11T16:00:00Z"),
-		name: "Bat Wings Backpack",
-		id: "73939",
+		name: "Super Adventure Holo-Copter",
+		id: "80958",
 		price: 700,
 		discount: null,
 		side: 0
 	},
 	{
+		Finish: new Date("2017-04-18T16:00:00Z"),
 		name: "Permanent Super Explosive Finisher",
 		id: "44724",
 		price: 600,
@@ -68,6 +83,7 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
+		Finish: new Date("2017-04-18T16:00:00Z"),
 		name: "Super Cloud Glider",
 		id: "80919",
 		price: 500,
@@ -75,14 +91,7 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
-		Finish: new Date("2017-04-11T16:00:00Z"),
-		name: "Super Adventure Glider",
-		id: "78009",
-		price: 400,
-		discount: null,
-		side: 0
-	},
-	{
+		Finish: new Date("2017-04-18T16:00:00Z"),
 		name: "Miniature Super Trio",
 		id: "41907",
 		price: 500,
@@ -90,6 +99,7 @@ GW2T_SALE_DATA = {
 		side: 1
 	},
 	{
+		Finish: new Date("2017-04-18T16:00:00Z"),
 		name: "Miniature Super Trio—World 2",
 		id: "46498",
 		price: 500,
@@ -118,18 +128,18 @@ GW2T_SALE_DATA = {
 		side: 1
 	},
 	{
-		name: "Spring Promenade Outfit",
-		id: "80906",
-		price: 700,
-		discount: null,
-		side: 1
-	},
-	{
 		name: "Super Adventure Box o' Fun",
 		id: "41911",
 		price: 125,
 		discount: null,
 		side: 1
+	},
+	{
+		name: "Shadow Dye Kit",
+		id: "68786",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		side: 0
 	}
 	]
 };

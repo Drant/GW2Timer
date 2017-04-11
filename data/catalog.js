@@ -260,7 +260,8 @@ Gathering: [
 	{i: 79591, n: "Unbound Harvesting Sickle", p: {karma: 4900}},
 	{i: 79465, n: "Unbound Logging Axe", p: {karma: 4900}},
 	{i: 79581, n: "Unbound Mining Pick", p: {karma: 4900}},
-	{i: 80067, n: "Celestial Rooster Harvesting Tool", p: {gem: 1000}}
+	{i: 80067, n: "Celestial Rooster Harvesting Tool", p: {gem: 1000}},
+	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: 1000}}
 ],
 Salvage: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},

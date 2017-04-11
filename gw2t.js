@@ -4705,7 +4705,7 @@ U = {
 			var page = $(this).attr(I.cPageAttribute);
 			if (page)
 			{
-				$(this).click(function()
+				$(this).removeAttr(I.cPageAttribute).click(function()
 				{
 					U.interpretPage(page);
 				});
@@ -13278,8 +13278,9 @@ V = {
 			}
 			if (isavailable || isdiscounted)
 			{
-				I.print("<a href='http://gw2timer.com/?page=Gem'>Go to Gem Store Wishlist</a> - "
+				I.print("<a data-page='Gem'>Go to Gem Store Wishlist</a> - "
 					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>Turn off Gem Alert</a>");
+				I.bindConsoleLink();
 			}
 		};
 		
@@ -36931,6 +36932,14 @@ I = {
 				$(this).select();
 			});
 		});
+	},
+	bindConsoleLink: function()
+	{
+		var links = I.getConsole().find("a");
+		if (links.length)
+		{
+			U.convertInternalLink(links);
+		}
 	},
 	
 	/*
