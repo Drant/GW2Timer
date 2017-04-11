@@ -139,7 +139,7 @@ GW2T_SALE_DATA = {
 		id: "68786",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
-		side: 0
+		side: 1
 	}
 	]
 };
