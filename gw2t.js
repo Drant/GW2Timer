@@ -6915,7 +6915,7 @@ Z = {
 				{
 					continue;
 				}
-				catname = Q.categorizeCleanupItem(item, true);
+				catname = Q.categorizeCleanupItem(item);
 				// Add the item if matched
 				if (catname)
 				{
@@ -13630,6 +13630,10 @@ B = {
 				var keywords = ($(pBox.oHTML).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
 				pSlot.data("itemid", Settings.aItem.id);
+				if (itemmeta && itemmeta.skin)
+				{
+					pSlot.data("skinid", itemmeta.skin);
+				}
 				// Bind slot click behavior
 				var wikisearch = Settings.aWiki || Settings.aItem.name;
 				var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
@@ -13903,9 +13907,10 @@ B = {
 	 * Creates and binds a search bar and buttons for a bank.
 	 * @param jqobject pBank for insertion.
 	 * @objparam boolean aWantClear whether to wipe the dish menu to recreate the menu, optional.
+	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching, optional.
+	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
 	 * @objparam jqobject aReloadElement to trigger instead of the default reload, optional.
 	 * @objparam string aHelpMessage HTML of the message to append to the help screen, optional.
-	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching, optional.
 	 * @pre Bank slots were generated.
 	 */
 	createBankMenu: function(pBank, pSettings)
@@ -14153,38 +14158,45 @@ B = {
 			A.adjustAccountScrollbar();
 		});
 		
-		// Button to filter cleanable items
-		var cleanupfilterstate = 0;
-		$("<div class='bnkButtonClean bnkButton curToggle' title='Filter:<br />"
-			+ "1st click: <dfn>cleanable</dfn> items<br />2nd click: any items (reset).<br />"
-			+ "Example: salvageable items, vendorable items, unopened bags.'></div>")
-			.appendTo(buttoncontainer).click(function()
+		if (Settings.aIsCollection !== true)
 		{
-			var slots = pBank.find(".bnkSlot");
-			if (cleanupfilterstate === 0)
+			// Button to filter cleanable items
+			var cleanupfilterstate = 0;
+			$("<div class='bnkButtonClean bnkButton curToggle' title='Filter:<br />"
+				+ "1st click: <dfn>cleanable</dfn> items<br />2nd click: any items (reset).<br />"
+				+ "Example: salvageable items, vendorable items, unopened bags.'></div>")
+				.appendTo(buttoncontainer).click(function()
 			{
-				slots.each(function()
+				var thisbutton = $(this);
+				var slots = pBank.find(".bnkSlot");
+				if (cleanupfilterstate === 0)
 				{
-					var itemid = $(this).data("itemid");
-					if (itemid)
+					Q.initializeCleanupFilter(function()
 					{
-						if (Q.categorizeCleanupItem(Q.getCachedItem(itemid)))
+						slots.each(function()
 						{
-							$(this).addClass("bnkSlotMatchAlternate");
-						}
-					}
-				});
-				$(this).addClass("bnkButtonFocused");
-				cleanupfilterstate++;
-			}
-			else
-			{
-				slots.removeClass("bnkSlotMatchAlternate");
-				$(this).removeClass("bnkButtonFocused");
-				cleanupfilterstate = 0;
-			}
-			A.adjustAccountScrollbar();
-		});
+							var itemid = $(this).data("itemid");
+							if (itemid && $(this).data("skinid") === undefined) // Ignore transmuted items
+							{
+								if (Q.isCleanable(itemid))
+								{
+									$(this).addClass("bnkSlotMatchAlternate");
+								}
+							}
+						});
+						thisbutton.addClass("bnkButtonFocused");
+						cleanupfilterstate++;
+					});
+				}
+				else
+				{
+					slots.removeClass("bnkSlotMatchAlternate");
+					thisbutton.removeClass("bnkButtonFocused");
+					cleanupfilterstate = 0;
+				}
+				A.adjustAccountScrollbar();
+			});
+		}
 		
 		// Button to show rarity colored borders over items
 		var isfilteringrarity = O.Options.bol_showRarity;
@@ -14763,6 +14775,7 @@ B = {
 			var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
 			var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
 			B.createBankMenu(pBank, {
+				aIsCollection: true,
 				aWantSearchHighlight: wantsearchhighlight,
 				aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
 				aIsCustomCatalog: Settings.aIsCustomCatalog
@@ -15600,6 +15613,7 @@ Q = {
 		Traits: {},
 		Skills: {}
 	},
+	CleanupFilter: null, // Associative array of cleanable items to be used by the bank filters, not the cleanup tool
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	SearchDatabase: null,
 	ItemEnum: // Corresponds to item details type property
@@ -16417,14 +16431,31 @@ Q = {
 	/*
 	 * Gets the cleanup category of an item, if not cleanable then null.
 	 * @param object pItem details.
-	 * @param boolean pIsCollate if called by the collate cleanup function.
+	 * @param boolean pIsFilter if called by a filter action rather than collate.
 	 * Calling without this boolean assumes it is for filtering inventory items.
 	 * @returns string category.
 	 */
-	categorizeCleanupItem: function(pItem, pIsCollate)
+	categorizeCleanupItem: function(pItem, pIsFilter)
 	{
 		var name = pItem.name.toLowerCase();
 		var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
+		
+		// These language-independent filters supplement the cleanup filter associative array
+		if (pIsFilter)
+		{
+			if (pItem.type === Q.ItemEnum.UpgradeComponent || pItem.type === Q.ItemEnum.CraftingMaterial)
+			{
+				return "Combine";
+			}
+			if ((pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Weapon)
+				&& Q.RarityNumber[pItem.rarity] < Q.RarityNumber.Rare)
+			{
+				return "Junk";
+			}
+			return null; // Do not proceed with other filters
+		}
+		
+		// These filters are for the collate function
 		if (desc.indexOf("decoration") !== -1)
 		{
 			if (pItem.type === Q.ItemEnum.Gizmo || pItem.type === Q.ItemEnum.Consumable || pItem.type === Q.ItemEnum.Trophy)
@@ -16504,11 +16535,7 @@ Q = {
 		{
 			if (pItem.details.type === "Food" || pItem.details.type === "Utility")
 			{
-				if (pIsCollate)
-				{
-					return "Food";
-				}
-				return null;
+				return "Food";
 			}
 			if (pItem.details.type === "Transmutation")
 			{
@@ -16516,22 +16543,58 @@ Q = {
 			}
 			return "Consumable";
 		}
-		// Additional category inclusion not meant for the collate cleanup
-		if (pIsCollate !== false)
-		{
-			if (pItem.type === Q.ItemEnum.UpgradeComponent || pItem.type === Q.ItemEnum.CraftingMaterial)
-			{
-				return "Combine";
-			}
-			if ((pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Weapon)
-				&& Q.RarityNumber[pItem.rarity] < Q.RarityNumber.Rare)
-			{
-				return "Junk";
-			}
-		}
 		
 		// No match so return none
 		return null;
+	},
+	
+	/*
+	 * Initializes the filter used by the bank menu button that highlights
+	 * cleanable items.
+	 * @param function pCallback after initialization.
+	 */
+	initializeCleanupFilter: function(pCallback)
+	{
+		var section = "Cleanup";
+		if (Q.CleanupFilter !== null)
+		{
+			pCallback();
+		}
+		else
+		{
+			I.write(D.getPhraseOriginal("Loading cleanup") + "...");
+			U.getScript(U.URL_DATA.Cleanup, function()
+			{
+				I.clear();
+				Q.CleanupFilter = {};
+				var record = U.getRecordData(section), catarr;
+				for (var i in record)
+				{
+					// Exclude some categories
+					if (i === "Food")
+					{
+						continue;
+					}
+					catarr = record[i];
+					for (var ii = 0; ii < catarr.length; ii++)
+					{
+						Q.CleanupFilter[(catarr[ii])] = true;
+					}
+				}
+				pCallback();
+			});
+		}
+	},
+	
+	/*
+	 * Tells if an item as shown in a bank or inventory can salvaged, vendored, or destroyed.
+	 * @param int pItemID
+	 * @returns boolean
+	 * @pre Cleanup filter was initialized.
+	 */
+	isCleanable: function(pItemID)
+	{
+		return (Q.CleanupFilter[pItemID] || Q.categorizeCleanupItem(Q.getCachedItem(pItemID), true));
 	},
 	
 	/*
@@ -34087,7 +34150,7 @@ H = {
 		$("#dsbPact").empty().append("<div id='dsbPactMenu'>"
 			+ "<img data-src='img/map/waypoint.png' style='width:32px;height:32px;' /><input id='dsbPactCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
-			+ ((I.isMapEnabled) ? "<img data-src='img/map/route.png' /><dfn class='curZoom' id='dsbPactDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</dfn> " : "")
+			+ ((I.isMapEnabled) ? "<img data-src='img/map/path.png' /><dfn class='curZoom' id='dsbPactDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</dfn> " : "")
 			+ "<a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>"
 				+ "<img data-src='img/ui/menu/info.png' />" + D.getWordCapital("info") + "</a> "
