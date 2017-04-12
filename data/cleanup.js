@@ -7,19 +7,19 @@
  * Cleanup translations.
  */
 var GW2T_CLEANUP_HEADERS = {
-	Salvage: {name_en: "Salvage Items", name_de: "Wiederverwertbarer Gegenstand", name_es: "Objeto reciclable", name_fr: "Objet recyclable"},
-	Rare: {name_en: "Ectoplasm Rares", name_de: "Ektoplasmakugel Selten", name_es: "Excepcional ectoplasma", name_fr: "Rare ectoplasme"},
-	Container: {name_en: "Unopened Bags", name_de: "Beutel", name_es: "Saco", name_fr: "Sac"},
-	ContainerGear: {name_en: "Equipment Boxes", name_de: "Ausrüstung Kiste", name_es: "Caja de equipo", name_fr: "Boîte de l'équipement"},
-	ContainerAscended: {name_en: "Ascended Chests", name_de: "Aufgestiegen Truhe", name_es: "Cofre Ascendido", name_fr: "Coffre Élevé"},
-	Food: {name_en: "Food", name_de: "Nahrung", name_es: "Comida", name_fr: "Nourriture"},
-	Consumable: {name_en: "Consumables", name_de: "Verbrauchsgegenstand", name_es: "Consumibles", name_fr: "Consommables"},
-	Skin: {name_en: "Skins", name_de: "Skin", name_es: "Diseño", name_fr: "Apparence"},
-	Recipe: {name_en: "Recipes", name_de: "Rezept", name_es: "Receta", name_fr: "Recette"},
-	Decoration: {name_en: "Guild Decorations", name_de: "Gilden-Dekoration", name_es: "Decoración de clan", name_fr: "Décoration de guilde"},
-	Combine: {name_en: "Combine Items", name_de: "Einer-Gegenstand", name_es: "Objeto de combinar", name_fr: "Objet de combiner"},
-	Collection: {name_en: "Collection Items", name_de: "Sammlung-Gegenstand", name_es: "Objeto de colección", name_fr: "Objet de collection"},
-	Junk: {name_en: "Junk", name_de: "Schrott", name_es: "Basura", name_fr: "Inutile"}
+	Salvage: {name_en: "Salvage Items", name_de: "Wiederverwertbarer Gegenstand", name_es: "Objeto reciclable", name_fr: "Objet recyclable", name_zh: "拆解物品"},
+	Rare: {name_en: "Ectoplasm Rares", name_de: "Ektoplasmakugel Selten", name_es: "Excepcional ectoplasma", name_fr: "Rare ectoplasme", name_zh: "稀有"},
+	Container: {name_en: "Unopened Bags", name_de: "Beutel", name_es: "Saco", name_fr: "Sac", name_zh: "包"},
+	ContainerGear: {name_en: "Equipment Boxes", name_de: "Ausrüstung Kiste", name_es: "Caja de equipo", name_fr: "Boîte de l'équipement", name_zh: "装备包"},
+	ContainerAscended: {name_en: "Ascended Chests", name_de: "Aufgestiegen Truhe", name_es: "Cofre Ascendido", name_fr: "Coffre Élevé", name_zh: "升华宝箱"},
+	Food: {name_en: "Food", name_de: "Nahrung", name_es: "Comida", name_fr: "Nourriture", name_zh: "食物"},
+	Consumable: {name_en: "Consumables", name_de: "Verbrauchsgegenstand", name_es: "Consumibles", name_fr: "Consommables", name_zh: "消耗型"},
+	Skin: {name_en: "Skins", name_de: "Skin", name_es: "Diseño", name_fr: "Apparence", name_zh: "皮肤"},
+	Recipe: {name_en: "Recipes", name_de: "Rezept", name_es: "Receta", name_fr: "Recette", name_zh: "食谱"},
+	Decoration: {name_en: "Guild Decorations", name_de: "Gilden-Dekoration", name_es: "Decoración de clan", name_fr: "Décoration de guilde", name_zh: "公会装饰"},
+	Combine: {name_en: "Combine Items", name_de: "Einer-Gegenstand", name_es: "Objeto de combinar", name_fr: "Objet de combiner", name_zh: "合成"},
+	Collection: {name_en: "Collection Items", name_de: "Sammlung-Gegenstand", name_es: "Objeto de colección", name_fr: "Objet de collection", name_zh: "收藏"},
+	Junk: {name_en: "Junk", name_de: "Schrott", name_es: "Basura", name_fr: "Inutile", name_zh: "垃圾"}
 };
 
 /*

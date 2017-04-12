@@ -1511,13 +1511,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	/*{
-		name: "ArenaNet API Offline",
-		url: "https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-rate-limiting-is-coming",
+	{
+		name: "ArenaNet API Images Offline",
+		url: "https://forum-en.guildwars2.com/forum/community/api/",
 		isIndefinite: true,
-		Start: new Date("2017-03-18T7:00:00Z"),
-		Finish: new Date("2017-03-22T17:00:00Z")
-	},*/
+		Start: new Date("2017-04-11T7:00:00Z"),
+		Finish: new Date("2017-04-12T17:00:00Z")
+	},
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",

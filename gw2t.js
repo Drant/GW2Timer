@@ -6872,101 +6872,6 @@ Z = {
 		var record = {};
 		var db;
 		
-		// Returns the category name of an item, if fitting
-		var categorizeItem = function(pItem)
-		{
-			var name = pItem.name.toLowerCase();
-			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
-			if (desc.indexOf("decoration") !== -1)
-			{
-				if (pItem.type === Q.ItemEnum.Gizmo || pItem.type === Q.ItemEnum.Consumable || pItem.type === Q.ItemEnum.Trophy)
-				{
-					return "Decoration";
-				}
-			}
-			if (desc.indexOf("value as part of a collection") !== -1)
-			{
-				return "Collection";
-			}
-			if (name.indexOf("recipe") !== -1)
-			{
-				return "Recipe";
-			}
-			if (pItem.rarity === Q.RarityEnum.Rare && pItem.level && pItem.level > Q.ItemLimit.EctoSalvageLevel)
-			{
-				if (pItem.type === Q.ItemEnum.Weapon || pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Trinket || pItem.type === Q.ItemEnum.Back)
-				{
-					if (pItem.flags.indexOf("NoSalvage") === -1)
-					{
-						return "Rare";
-					}
-				}
-			}
-			if (pItem.type === Q.ItemEnum.Container)
-			{
-				if (pItem.rarity === Q.RarityEnum.Ascended)
-				{
-					return "ContainerAscended";
-				}
-				if (name.indexOf("weapon") !== -1 || name.indexOf("armor") !== -1 || name.indexOf("skin") !== -1)
-				{
-					return "ContainerGear";
-				}
-				if (pItem.rarity === Q.RarityEnum.Rare || pItem.rarity === Q.RarityEnum.Exotic)
-				{
-					if (name.indexOf("gear") !== -1 
-						|| desc.indexOf("weapon") !== -1 || desc.indexOf("armor") !== -1 || desc.indexOf("gear") !== -1 || desc.indexOf("skin") !== -1)
-					{
-						return "ContainerGear";
-					}
-				}
-				return "Container";
-			}
-			if (pItem.type === Q.ItemEnum.Trophy)
-			{
-				if (desc.indexOf("salvage item") !== -1)
-				{
-					return "Salvage";
-				}
-				if (desc.indexOf("used to") !== -1 || desc.indexOf("to make") !== -1)
-				{
-					return "Combine";
-				}
-				if (pItem.rarity === Q.RarityEnum.Junk)
-				{
-					return "Junk";
-				}
-				if (pItem.rarity !== "Legendary" &&
-					(Q.isTradeable(pItem) === false
-					|| desc.indexOf("event item") !== -1
-					|| desc.indexOf("task item") !== -1
-					|| (pItem.vendor_value > 0 && pItem.flags.indexOf("NoSell") === -1)))
-				{
-					return "Collection";
-				}
-			}
-			if (pItem.type === Q.ItemEnum.Gizmo)
-			{
-				if (desc.indexOf("combine") !== -1 && desc.indexOf("tier") === -1)
-				{
-					return "Combine";
-				}
-			}
-			if (pItem.type === Q.ItemEnum.Consumable)
-			{
-				if (pItem.details.type === "Food" || pItem.details.type === "Utility")
-				{
-					return "Food";
-				}
-				if (pItem.details.type === "Transmutation")
-				{
-					return "Skin";
-				}
-				return "Consumable";
-			}
-			return null;
-		};
-		
 		var doCollate = function()
 		{
 			// Initialize the record's arrays
@@ -7009,7 +6914,7 @@ Z = {
 				{
 					continue;
 				}
-				catname = categorizeItem(item);
+				catname = Q.categorizeCleanupItem(item, true);
 				// Add the item if matched
 				if (catname)
 				{
@@ -12981,11 +12886,7 @@ V = {
 			aWantCoin: false
 		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		
-		// Initialize the stored subscription object
-		var key = O.Utilities.GemSubscription.key;
-		var validids = {}, unlockeds = {}, values = {};
-		var availableassoc, discountedassoc;
+		var validids = {}, availableids = {}, recordedvalues = {};
 		
 		// Sets the memory of a slot
 		var toggleSlotAlarm = function(pSlot, pItem)
@@ -12996,31 +12897,28 @@ V = {
 			{
 				// If subscribed then unsubscribe the slot
 				toggleSlotSymbol(pSlot, false);
-				delete availableassoc[id];
-				delete discountedassoc[id];
+				H.unsubscribeGem(id);
 			}
 			else
 			{
 				X.setCheckboxEnumState($("#opt_bol_alertGem"), X.ChecklistEnum.Checked); // Turn on voice alert
-				if (unlockeds[id])
+				if (availableids[id])
 				{
 					// Subscribing to an available item will alert for discounted condition
-					discountedassoc[id] = true;
+					H.subscribeGemDiscounted(id);
 					I.write(U.escapeHTML(pItem.name) + D.getPhraseOriginal(" is available - Alarm when item is discount"));
 				}
 				else
 				{
 					// Subscribing to an unavailable item will alert for available condition
-					availableassoc[id] = true;
+					H.subscribeGemAvailable(id);
 					I.write(U.escapeHTML(pItem.name) + D.getPhraseOriginal(" is not available - Alarm when item is available"));
 				}
 				toggleSlotSymbol(pSlot, true);
 			}
 			
 			// Save to storage
-			H.GemSubscription.Available = U.convertAssocToArray(availableassoc);
-			H.GemSubscription.Discounted = U.convertAssocToArray(discountedassoc);
-			localStorage[key] = JSON.stringify(H.GemSubscription);
+			H.saveGemSubscription();
 		};
 		
 		// Sets the appearance of a slot
@@ -13048,12 +12946,12 @@ V = {
 			}
 			if (pItem)
 			{
-				var value = values[pItem.id];
+				var value = recordedvalues[pItem.id];
 				var salevalue = H.Sale.Values[pItem.id];
 				if (value !== undefined && salevalue >= 0)
 				{
 					pSlot.data("ismarked", true);
-					if (salevalue < value || salevalue === 0)
+					if (salevalue < Math.abs(value) || salevalue === 0)
 					{
 						pSlot.addClass("bnkSlotDiscount");
 						// Show pre-discounted gem price when hovered
@@ -13074,7 +12972,7 @@ V = {
 			A.iterateRecord(record, function(pEntry)
 			{
 				var id = pEntry.i;
-				validids[id] = true; // Subscribed IDs that do not exist in record will be erased
+				validids[id] = true;
 				pEntry.u = id; // The item's ID is its unlock ID
 				var payment = pEntry.p;
 				var salevalue = H.Sale.Values[id];
@@ -13082,11 +12980,11 @@ V = {
 				{
 					for (var i in payment)
 					{
-						values[id] = payment[i];
+						recordedvalues[id] = payment[i];
 						if (salevalue >= 0 && salevalue <= Math.abs(payment[i])) // Items being promoted overrides the payment value of the record's
 						{
 							payment[i] = salevalue;
-							unlockeds[id] = true;
+							availableids[id] = true;
 						}
 						if (payment[i] <= 0)
 						{
@@ -13096,21 +12994,26 @@ V = {
 						else
 						{
 							// Positive price signifies it is available
-							unlockeds[id] = true;
+							availableids[id] = true;
 						}
 						break; // Consider only the first payment type
 					}
 				}
 			});
-			// Initialize subscription assoc
-			availableassoc = U.getExistAssoc(H.GemSubscription.Available, validids);
-			discountedassoc = U.getExistAssoc(H.GemSubscription.Discounted, validids);
+			// Erase entries in the subscription that do not exist in the gem record
+			for (var i in H.GemSubscription)
+			{
+				if (validids[i] === undefined)
+				{
+					delete H.GemSubscription[i];
+				}
+			}
 			
 			// Fill the "bank"
 			B.generateUnlockables(bank, {
 				aHeaders: U.getRecordHeader(section),
 				aRecord: record,
-				aUnlockeds: unlockeds,
+				aUnlockeds: availableids,
 				aWantGemConvert: true,
 				aWantDefaultHelp: false,
 				aWantSearchHighlight: false,
@@ -13118,9 +13021,8 @@ V = {
 				aBind: function(pSlot, pItem)
 				{
 					var id = pItem.id;
-					var issubscribed = (availableassoc[id] || discountedassoc[id]);
 					var symbol = $("<img class='bnkSlotSymbol curToggle' src='img/ui/menu/alarm.png' />").appendTo(pSlot);
-					toggleSlotSymbol(pSlot, issubscribed, pItem);
+					toggleSlotSymbol(pSlot, H.isGemSubscribed(id), pItem);
 					symbol.click(function(pEvent)
 					{
 						pEvent.stopPropagation();
@@ -13145,153 +13047,20 @@ V = {
 				if (confirm("Delete all gem store subscriptions?"))
 				{
 					I.write(D.getPhraseOriginal("Gem alarm and subscription off"));
-					V.initializeGemSubscription(true);
+					H.initializeGemSubscription(true);
 					X.setCheckboxEnumState($("#opt_bol_alertGem"), X.ChecklistEnum.Unchecked); // Turn off voice alert
 					toggleSlotSymbol();
 				}
 			});
 		};
 		
-		V.updateGemSubscription(function()
+		H.updateGemSubscription(function()
 		{
 			Q.loadItemsSubdatabase(section.toLowerCase(), function()
 			{
 				generateUnlockables();
 			});
 		});
-	},
-	
-	/*
-	 * Initializes the gem store subscription object.
-	 * @param boolean pWantClear whether to wipe all subscriptions.
-	 * @returns object
-	 */
-	initializeGemSubscription: function(pWantClear)
-	{
-		var key = O.Utilities.GemSubscription.key;
-		H.GemSubscription = { Available: [], Discounted: [] };
-		if (localStorage[key] === undefined || pWantClear)
-		{
-			localStorage[key] = JSON.stringify(H.GemSubscription);
-		}
-		try
-		{
-			if (pWantClear !== true)
-			{
-				var tempsubs = JSON.parse(localStorage[key]);
-				if (Array.isArray(tempsubs.Available) && Array.isArray(tempsubs.Discounted))
-				{
-					H.GemSubscription = tempsubs;
-				}
-			}
-		}
-		catch (e) {}
-	},
-	
-	/*
-	 * Downloads the gem record and checks against subscription for alerts.
-	 * @param function pCallback if and for generating the gem store gallery.
-	 * If no callback is provided then assume it is a checkup call.
-	 */
-	updateGemSubscription: function(pCallback)
-	{
-		var section = "Gem";
-		var checkSubscriptions = function()
-		{
-			if (H.GemSubscription === null)
-			{
-				V.initializeGemSubscription();
-			}
-			// Initialize price assoc
-			var issalecurrent = T.isTimely(H.Sale);
-			for (var i = 0; i < H.Sale.Items.length; i++)
-			{
-				var item = H.Sale.Items[i];
-				// Allow integer IDs or faux IDs and ignore expired
-				if (T.isTimely(item) || (item.Finish === undefined && issalecurrent))
-				{
-					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
-					H.Sale.Values[item.id] = item.price;
-				}
-			}
-			
-			// Execute gem store gallery callback
-			if (pCallback)
-			{
-				pCallback();
-				return;
-			}
-			
-			// Do the subscription alerts if gallery callback not provided
-			var availableassoc = U.getExistAssoc(H.GemSubscription.Available);
-			var discountedassoc = U.getExistAssoc(H.GemSubscription.Discounted);
-			
-			var record = U.getRecordData(section);
-			var isavailable = false;
-			var isdiscounted = false;
-			var alertstr = D.getWord("alarm");
-			var availablestr = D.getPhraseOriginal(" gem item is available");
-			var discountstr = D.getPhraseOriginal(" gem item discount");
-			A.iterateRecord(record, function(pEntry)
-			{
-				var id = pEntry.i;
-				var value;
-				var salevalue = H.Sale.Values[id];
-				for (var i in pEntry.p)
-				{
-					value = pEntry.p[i];
-					if (salevalue >= 0)
-					{
-						value = Math.abs(value); // If exists in promotions then consider as available in the record
-					}
-					break; // Consider only the first payment type
-				}
-				// Check for available
-				if (availableassoc[id] && (salevalue >= 0 || value > 0))
-				{
-					I.print(pEntry.n + availablestr + "!");
-					isavailable = true;
-				}
-				// Check for discount
-				if (discountedassoc[id])
-				{
-					if (salevalue >= 0 && value && (salevalue < value || salevalue === 0))
-					{
-						I.print(pEntry.n + discountstr + "! " + E.formatGemString(value) + " − "
-							+ E.formatGemString(value - salevalue) + " = " + E.formatGemString(salevalue));
-						isdiscounted = true;
-					}
-				}
-			});
-			
-			// Speak the alert
-			if (O.Options.bol_alertGem)
-			{
-				if (isavailable)
-				{
-					D.speak(alertstr + "! " + availablestr);
-				}
-				if (isdiscounted)
-				{
-					D.speak(alertstr + "! " + discountstr);
-				}
-			}
-			if (isavailable || isdiscounted)
-			{
-				I.print("<a data-page='Gem'>Go to Gem Store Wishlist</a> - "
-					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>Turn off Gem Alert</a>");
-				I.bindConsoleLink();
-			}
-		};
-		
-		// Retrieve data first
-		U.getScript(U.URL_DATA.Gem, function()
-		{
-			H.updateSaleData(function()
-			{
-				checkSubscriptions();
-			});
-		}, false);
 	},
 	
 	/*
@@ -13753,6 +13522,7 @@ B = {
 	},
 	createPseudoSlot: function(pSlotContainer, pSettings)
 	{
+		// Pseudo slot does not contain a game item
 		var Settings = pSettings || {};
 		
 		var slot = B.createBankSlot(pSlotContainer);
@@ -13858,6 +13628,7 @@ B = {
 				// Make the item searchable by converting its tooltip HTML into plain text
 				var keywords = ($(pBox.oHTML).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
+				pSlot.data("itemid", Settings.aItem.id);
 				// Bind slot click behavior
 				var wikisearch = Settings.aWiki || Settings.aItem.name;
 				var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
@@ -14128,7 +13899,7 @@ B = {
 	},
 	
 	/*
-	 * Creates and binds a search bar for a bank. Also creates functional buttons.
+	 * Creates and binds a search bar and buttons for a bank.
 	 * @param jqobject pBank for insertion.
 	 * @objparam boolean aWantClear whether to wipe the dish menu to recreate the menu, optional.
 	 * @objparam jqobject aReloadElement to trigger instead of the default reload, optional.
@@ -14377,6 +14148,39 @@ B = {
 				$(this).removeClass("bnkButtonFocused");
 				pBank.removeClass("bnkTradeable");
 				tradefilterstate = 0;
+			}
+			A.adjustAccountScrollbar();
+		});
+		
+		// Button to filter cleanable items
+		var cleanupfilterstate = 0;
+		$("<div class='bnkButtonClean bnkButton curToggle' title='Filter:<br />"
+			+ "1st click: <dfn>cleanable</dfn> items<br />2nd click: any items (reset).<br />"
+			+ "Example: salvageable items, vendorable items, unopened bags.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			var slots = pBank.find(".bnkSlot");
+			if (cleanupfilterstate === 0)
+			{
+				slots.each(function()
+				{
+					var itemid = $(this).data("itemid");
+					if (itemid)
+					{
+						if (Q.categorizeCleanupItem(Q.getCachedItem(itemid)))
+						{
+							$(this).addClass("bnkSlotMatchAlternate");
+						}
+					}
+				});
+				$(this).addClass("bnkButtonFocused");
+				cleanupfilterstate++;
+			}
+			else
+			{
+				slots.removeClass("bnkSlotMatchAlternate");
+				$(this).removeClass("bnkButtonFocused");
+				cleanupfilterstate = 0;
 			}
 			A.adjustAccountScrollbar();
 		});
@@ -14676,7 +14480,7 @@ B = {
 		{
 			if (Settings.aIsCustomCatalog)
 			{
-				pSlot.data("itemid", pItemID);
+				pSlot.addClass("bnkSlotCatalog");
 				unlockid = pItemID;
 				wiki = iItem.name;
 			}
@@ -14841,8 +14645,8 @@ B = {
 		{
 			/*
 			 * Records called with this boolean will be in the form of an array
-			 * of item IDs rather array of objects. Reformat the record so that
-			 * it only contains items that is already unlocked (no locked slots
+			 * of item IDs rather array of objects. Reformat the record so it
+			 * only contains items that is already unlocked (no locked slots
 			 * will be generated).
 			 */
 			headers = Settings.aHeaders;
@@ -15229,7 +15033,7 @@ B = {
 			var items = [];
 			var itemid;
 			var slotscontainer = $(this).find(".bnkTabSlots").first();
-			slotscontainer.find(".bnkSlot").each(function()
+			slotscontainer.find(".bnkSlotCatalog").each(function()
 			{
 				itemid = $(this).data("itemid");
 				if (itemid)
@@ -15841,6 +15645,17 @@ Q = {
 		Exotic: "Exotic",
 		Ascended: "Ascended",
 		Legendary: "Legendary"
+	},
+	RarityNumber: // Corresponds to API names for rarity levels
+	{
+		Junk: 1,
+		Basic: 2,
+		Fine: 3,
+		Masterwork: 4,
+		Rare: 5,
+		Exotic: 6,
+		Ascended: 7,
+		Legendary: 8
 	},
 	RarityRank:
 	{
@@ -16596,6 +16411,126 @@ Q = {
 			// If callback parameter is an items database
 			return startSort();
 		}
+	},
+	
+	/*
+	 * Gets the cleanup category of an item, if not cleanable then null.
+	 * @param object pItem details.
+	 * @param boolean pIsCollate if called by the collate cleanup function.
+	 * Calling without this boolean assumes it is for filtering inventory items.
+	 * @returns string category.
+	 */
+	categorizeCleanupItem: function(pItem, pIsCollate)
+	{
+		var name = pItem.name.toLowerCase();
+		var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
+		if (desc.indexOf("decoration") !== -1)
+		{
+			if (pItem.type === Q.ItemEnum.Gizmo || pItem.type === Q.ItemEnum.Consumable || pItem.type === Q.ItemEnum.Trophy)
+			{
+				return "Decoration";
+			}
+		}
+		if (desc.indexOf("value as part of a collection") !== -1)
+		{
+			return "Collection";
+		}
+		if (name.indexOf("recipe") !== -1)
+		{
+			return "Recipe";
+		}
+		if (pItem.rarity === Q.RarityEnum.Rare && pItem.level && pItem.level > Q.ItemLimit.EctoSalvageLevel)
+		{
+			if (pItem.type === Q.ItemEnum.Weapon || pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Trinket || pItem.type === Q.ItemEnum.Back)
+			{
+				if (pItem.flags.indexOf("NoSalvage") === -1)
+				{
+					return "Rare";
+				}
+			}
+		}
+		if (pItem.type === Q.ItemEnum.Container)
+		{
+			if (pItem.rarity === Q.RarityEnum.Ascended)
+			{
+				return "ContainerAscended";
+			}
+			if (name.indexOf("weapon") !== -1 || name.indexOf("armor") !== -1 || name.indexOf("skin") !== -1)
+			{
+				return "ContainerGear";
+			}
+			if (pItem.rarity === Q.RarityEnum.Rare || pItem.rarity === Q.RarityEnum.Exotic)
+			{
+				if (name.indexOf("gear") !== -1 
+					|| desc.indexOf("weapon") !== -1 || desc.indexOf("armor") !== -1 || desc.indexOf("gear") !== -1 || desc.indexOf("skin") !== -1)
+				{
+					return "ContainerGear";
+				}
+			}
+			return "Container";
+		}
+		if (pItem.type === Q.ItemEnum.Trophy)
+		{
+			if (desc.indexOf("salvage item") !== -1)
+			{
+				return "Salvage";
+			}
+			if (desc.indexOf("used to") !== -1 || desc.indexOf("to make") !== -1)
+			{
+				return "Combine";
+			}
+			if (pItem.rarity === Q.RarityEnum.Junk)
+			{
+				return "Junk";
+			}
+			if (pItem.rarity !== "Legendary" &&
+				(Q.isTradeable(pItem) === false
+				|| desc.indexOf("event item") !== -1
+				|| desc.indexOf("task item") !== -1
+				|| (pItem.vendor_value > 0 && pItem.flags.indexOf("NoSell") === -1)))
+			{
+				return "Collection";
+			}
+		}
+		if (pItem.type === Q.ItemEnum.Gizmo)
+		{
+			if (desc.indexOf("combine") !== -1 && desc.indexOf("tier") === -1)
+			{
+				return "Combine";
+			}
+		}
+		if (pItem.type === Q.ItemEnum.Consumable)
+		{
+			if (pItem.details.type === "Food" || pItem.details.type === "Utility")
+			{
+				if (pIsCollate)
+				{
+					return "Food";
+				}
+				return null;
+			}
+			if (pItem.details.type === "Transmutation")
+			{
+				return "Skin";
+			}
+			return "Consumable";
+		}
+		// Additional category inclusion not meant for the collate cleanup
+		if (pIsCollate !== false)
+		{
+			if (pItem.type === Q.ItemEnum.UpgradeComponent || pItem.type === Q.ItemEnum.CraftingMaterial)
+			{
+				return "Combine";
+			}
+			if ((pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Weapon)
+				&& Q.RarityNumber[pItem.rarity] < Q.RarityNumber.Rare)
+			{
+				return "Junk";
+			}
+		}
+		
+		// No match so return none
+		return null;
 	},
 	
 	/*
@@ -20348,6 +20283,8 @@ D = {
 			cs: "je", it: "è", pl: "jest", pt: "é", ru: "является", zh: "是"},
 		s_subscribe: {de: "abonnieren", es: "subscribir", fr: "abonner",
 			cs: "předplatit si", it: "sottoscrivere", pl: "abonować", pt: "assinar", ru: "подписаться", zh: "订阅"},
+		s_unsubscribe: {de: "abonnement kündigen", es: "cancelar suscripción", fr: "se désabonner",
+			cs: "přestat odebírat", it: "annulla sottoscrizione", pl: "anulować subskrypcję", pt: "cancelar assinatura", ru: "отменить подписку", zh: "取消订阅"},
 		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera",
 			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "开始"},
 		s_click: {de: "klicken", es: "clic", fr: "cliquer",
@@ -20414,6 +20351,8 @@ D = {
 			cs: "tisk", it: "stampa", pl: "drukuj", pt: "imprimir", ru: "печать", zh: "打印"},
 		
 		// Adjectives, Adverbs, Participles
+		s_yes: {de: "ja", es: "sí", fr: "oui",
+			cs: "ano", it: "sì", pl: "tak", pt: "sim", ru: "да", zh: "是"},
 		s_no: {de: "kein", es: "no", fr: "pas de",
 			cs: "žádný", it: "non", pl: "żaden", pt: "nada de", ru: "нет", zh: "没有"},
 		s_not: {de: "nicht", es: "no", fr: "ne",
@@ -20460,6 +20399,8 @@ D = {
 			cs: "zjištěno", it: "trovato", pl: "stwierdzono", pt: "encontrado", ru: "найден", zh: "发现了"},
 		s_loading: {de: "laden", es: "cargando", fr: "chargement",
 			cs: "načítání", it: "caricamento", pl: "ładowanie", pt: "carregando", ru: "загрузка", zh: "正在载入"},
+		s_done: {de: "erledigt", es: "hecho", fr: "terminé",
+			cs: "hotovo", it: "fatto", pl: "gotowe", pt: "concluído", ru: "сделанный", zh: "完成了"},
 		s_automatic: {de: "automatisch", es: "automático", fr: "automatique",
 			cs: "automatický", it: "automatico", pl: "automatyczny", pt: "automático", ru: "автоматический", zh: "自动的"},
 		s_custom: {de: "benutzerdefinierte", es: "personalizado", fr: "personnalisée",
@@ -20682,7 +20623,7 @@ D = {
 		s_Basic: {en: "Basic", de: "Einfach", es: "Básico", fr: "Simple", zh: "基本"},
 		s_Fine: {en: "Fine", de: "Edel", es: "Selecto", fr: "Raffiné", zh: "精"},
 		s_Masterwork: {en: "Masterwork", de: "Meisterwerk", es: "Obra de arte", fr: "Chef-d&apos;œuvre", zh: "杰作"},
-		s_Rare: {en: "Rare", de: "Selten", es: "Excepcional", fr: "Rare", zh: "罕见"},
+		s_Rare: {en: "Rare", de: "Selten", es: "Excepcional", fr: "Rare", zh: "稀有"},
 		s_Exotic: {en: "Exotic", de: "Exotisch", es: "Exótico", fr: "Exotique", zh: "傀"},
 		s_Ascended: {en: "Ascended", de: "Aufgestiegen", es: "Ascendido", fr: "Élevé", zh: "上升"},
 		s_Legendary: {en: "Legendary", de: "Legendär", es: "Legendario", fr: "Légendaire", zh: "传奇的"},
@@ -33521,7 +33462,7 @@ T = {
 };
 H = {
 /* =============================================================================
- * @@HUD head up display on the map panel: dashboard and timeline
+ * @@Horologe dashboard, timeline, and time sensitive content
  * ========================================================================== */
 
 	Announcement: GW2T_DASHBOARD_DATA.Announcement,
@@ -33924,6 +33865,208 @@ H = {
 	},
 	
 	/*
+	 * Initializes the gem store subscription object.
+	 * @param boolean pWantClear whether to wipe all subscriptions.
+	 * @returns object
+	 */
+	initializeGemSubscription: function(pWantClear)
+	{
+		var key = O.Utilities.GemSubscription.key;
+		H.GemSubscription = {};
+		if (localStorage[key] === undefined || pWantClear)
+		{
+			localStorage[key] = JSON.stringify(H.GemSubscription);
+		}
+		if (pWantClear !== true)
+		{
+			try
+			{
+				var tempsubs = JSON.parse(localStorage[key]);
+				// Convert legacy format of two arrays into one assoc
+				if (Array.isArray(tempsubs.Available) && Array.isArray(tempsubs.Discounted))
+				{
+					tempsubs.Available.forEach(function(iID)
+					{
+						H.subscribeGemAvailable(iID);
+					});
+					tempsubs.Discounted.forEach(function(iID)
+					{
+						H.subscribeGemDiscounted(iID);
+					});
+					H.saveGemSubscription();
+				}
+				else if (typeof tempsubs === "object")
+				{
+					H.GemSubscription = tempsubs;
+				}
+			}
+			catch (e) {}
+		}
+	},
+	subscribeGemAvailable: function(pID)
+	{
+		H.GemSubscription[pID] = X.ChecklistEnum.Tracked;
+	},
+	subscribeGemDiscounted: function(pID)
+	{
+		H.GemSubscription[pID] = X.ChecklistEnum.Found;
+	},
+	isGemSubscribedForAvailable: function(pID)
+	{
+		if (H.GemSubscription[pID] === X.ChecklistEnum.Tracked)
+		{
+			return true;
+		}
+		return false;
+	},
+	isGemSubscribedForDiscounted: function(pID)
+	{
+		if (H.GemSubscription[pID] === X.ChecklistEnum.Found)
+		{
+			return true;
+		}
+		return false;
+	},
+	isGemSubscribed: function(pID)
+	{
+		if (H.GemSubscription[pID])
+		{
+			return true;
+		}
+		return false;
+	},
+	unsubscribeGem: function(pID)
+	{
+		delete H.GemSubscription[pID];
+	},
+	saveGemSubscription: function()
+	{
+		localStorage[O.Utilities.GemSubscription.key] = JSON.stringify(H.GemSubscription);
+	},
+	
+	/*
+	 * Downloads the gem record and checks against subscription for alerts.
+	 * @param function pCallback if and for generating the gem store gallery.
+	 * If no callback is provided then assume it is a checkup call.
+	 */
+	updateGemSubscription: function(pCallback)
+	{
+		var section = "Gem";
+		var getUnsubscribeLink = function(pID)
+		{
+			return "<a class='jsGemUnsubscribe' data-item='" + pID + "'>" + D.getWordCapital("unsubscribe") + "</a>";
+		};
+		var checkSubscriptions = function()
+		{
+			if (H.GemSubscription === null)
+			{
+				H.initializeGemSubscription();
+			}
+			// Initialize price assoc
+			var issalecurrent = T.isTimely(H.Sale);
+			for (var i = 0; i < H.Sale.Items.length; i++)
+			{
+				var item = H.Sale.Items[i];
+				// Allow integer IDs or faux IDs and ignore expired
+				if (T.isTimely(item) || (item.Finish === undefined && issalecurrent))
+				{
+					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
+					H.Sale.Values[item.id] = item.price;
+				}
+			}
+			
+			// Execute gem store gallery callback
+			if (pCallback)
+			{
+				pCallback();
+				return;
+			}
+			
+			// Do the subscription alerts if gallery callback not provided
+			var record = U.getRecordData(section);
+			var isavailable = false;
+			var isdiscounted = false;
+			var alertstr = D.getWord("alarm");
+			var availablestr = D.getPhraseOriginal(" gem item is available");
+			var discountstr = D.getPhraseOriginal(" gem item discount");
+			A.iterateRecord(record, function(pEntry)
+			{
+				var id = pEntry.i;
+				var value;
+				var salevalue = H.Sale.Values[id];
+				for (var i in pEntry.p)
+				{
+					value = pEntry.p[i];
+					if (salevalue >= 0)
+					{
+						value = Math.abs(value); // If exists in promotions then consider as available in the record
+					}
+					break; // Consider only the first payment type
+				}
+				// Check for available
+				if (H.isGemSubscribedForAvailable(id) && (salevalue >= 0 || value > 0))
+				{
+					I.print(pEntry.n + availablestr + "! " + getUnsubscribeLink(id));
+					isavailable = true;
+				}
+				// Check for discount
+				if (H.isGemSubscribedForDiscounted(id))
+				{
+					if (salevalue >= 0 && value && (salevalue < value || salevalue === 0))
+					{
+						I.print(pEntry.n + discountstr + "! " + E.formatGemString(value) + " − "
+							+ E.formatGemString(value - salevalue) + " = " + E.formatGemString(salevalue) + " " + getUnsubscribeLink(id));
+						isdiscounted = true;
+					}
+				}
+			});
+			
+			// Bind the printed unsubscribe link
+			$(".jsGemUnsubscribe").each(function()
+			{
+				var id = $(this).removeClass("jsGemUnsubscribe").attr("data-item");
+				if (id)
+				{
+					$(this).click(function()
+					{
+						H.unsubscribeGem(id);
+						H.saveGemSubscription();
+						I.print(D.getWordCapital("done") + ".");
+					});
+				}
+			});
+			
+			// Speak the alert
+			if (O.Options.bol_alertGem)
+			{
+				if (isavailable)
+				{
+					D.speak(alertstr + "! " + availablestr);
+				}
+				if (isdiscounted)
+				{
+					D.speak(alertstr + "! " + discountstr);
+				}
+			}
+			if (isavailable || isdiscounted)
+			{
+				I.print("<a data-page='Gem'>Go to Gem Store Wishlist</a> - "
+					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>Turn off all Gem Alert</a>");
+				I.bindConsoleLink();
+			}
+		};
+		
+		// Retrieve data first
+		U.getScript(U.URL_DATA.Gem, function()
+		{
+			H.updateSaleData(function()
+			{
+				checkSubscriptions();
+			});
+		}, false);
+	},
+	
+	/*
 	 * Generates the header for the vendor feature.
 	 */
 	generateDashboardPactHeader: function(pIsReset)
@@ -33960,7 +34103,7 @@ H = {
 		var vendorcopy = $("#dsbPactCodes").click(function()
 		{
 			$(this).select();
-		});;
+		});
 		I.bindClipboard(vendorcopy, vendorcodes);
 		if (pIsReset)
 		{
@@ -35120,7 +35263,7 @@ K = {
 			// Check gem store alerts if opted
 			if (O.Options.bol_alertGem)
 			{
-				V.updateGemSubscription();
+				H.updateGemSubscription();
 			}
 		}
 		else // If crossing a 1 second mark and hasn't crossed the 15 minute mark
@@ -36581,7 +36724,7 @@ I = {
 		// Check gem store alerts if opted
 		if (O.Options.bol_alertGem)
 		{
-			V.updateGemSubscription();
+			H.updateGemSubscription();
 		}
 		
 		// Finally

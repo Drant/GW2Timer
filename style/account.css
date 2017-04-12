@@ -1710,6 +1710,9 @@ input[type="text"].bnkSearchInput:hover {
 .bnkButtonTrade {
 	background-image: url("../img/ui/tradingpost.png");
 }
+.bnkButtonClean {
+	background-image: url("../img/ui/opened.png");
+}
 .bnkButtonRarity {
 	background-image: url("../img/ui/rarity.png");
 }
