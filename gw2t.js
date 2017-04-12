@@ -1087,6 +1087,7 @@ O = {
 		 */
 		$("#optRestoreAllChains").click(function()
 		{
+			U.interpretPage(I.PlateEnum.Chains);
 			var chain;
 			var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
 			for (var i in C.Chains)

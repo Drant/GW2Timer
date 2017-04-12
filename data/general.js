@@ -1511,13 +1511,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
+	/*{
 		name: "ArenaNet API Images Offline",
-		url: "https://forum-en.guildwars2.com/forum/community/api/",
+		url: "https://forum-en.guildwars2.com/forum/community/api/Render-and-Tile-images-service-error",
 		isIndefinite: true,
 		Start: new Date("2017-04-11T7:00:00Z"),
 		Finish: new Date("2017-04-12T17:00:00Z")
-	},
+	},*/
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
