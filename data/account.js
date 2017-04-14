@@ -121,7 +121,7 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 18, coefficient: 10000, name_en: "Transmutation Charge", name_de: "Transmutations-Ladung", name_es: "Carga de transmutación", name_fr: "Charge de transmutation", name_zh: "幻化力" }
 		],
 		Map: [
-			{ id: 25, payment: "map_dt", name_en: "Geode", name_de: "Geode", name_es: "Geoda", name_fr: "Géode", name_zh: "" },
+			{ id: 25, payment: "map_dt", name_en: "Geode", name_de: "Geode", name_es: "Geoda", name_fr: "Géode", name_zh: "晶块" },
 			{ id: 27, payment: "map_sw", name_en: "Bandit Crest", name_de: "Banditen-Wappen", name_es: "Enseña de bandido", name_fr: "Écu de bandit", name_zh: "强盗徽饰" },
 			{ id: 19, payment: "map_vb", name_en: "Airship Part", name_de: "Luftschiff-Teil", name_es: "Pieza de aeronave", name_fr: "Pièce d'aéronef", name_zh: "飞船部件" },
 			{ id: 22, payment: "map_ab", name_en: "Lump of Aurillium", name_de: "Aurilliumklumpen", name_es: "Trozo de aurilio", name_fr: "Bloc d'aurillium", name_zh: "块状赤金元素" },

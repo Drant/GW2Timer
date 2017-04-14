@@ -39,6 +39,14 @@ GW2T_SALE_DATA = {
 	Items: [
 	{
 		Finish: new Date("2017-04-18T16:00:00Z"),
+		name: "Bag Slot Expansion",
+		id: "19993",
+		price: 300,
+		discount: 400,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-18T16:00:00Z"),
 		name: "Wide Rim Glasses",
 		id: "64753",
 		price: 150,
@@ -54,6 +62,31 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
+		name: "Shadow of the Dragon Helmet Skin",
+		id: "68574",
+		price: 300,
+		discount: null,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
+		name: "Shadow of the Dragon Shoulder Skin",
+		id: "68575",
+		price: 300,
+		discount: null,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
+		name: "Shadow of the Dragon Gloves Skin",
+		id: "68576",
+		price: 300,
+		discount: null,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Super Adventure Logging Bear",
 		id: "80966",
 		price: 1000,
@@ -61,6 +94,7 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Super Adventure Holo-Copter Backpack",
 		id: "80887",
 		price: 700,
@@ -68,6 +102,7 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Super Adventure Holo-Copter",
 		id: "80958",
 		price: 700,
@@ -76,11 +111,19 @@ GW2T_SALE_DATA = {
 	},
 	{
 		Finish: new Date("2017-04-18T16:00:00Z"),
+		name: "Crimson Lion Dye Kit",
+		id: "68653",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-18T16:00:00Z"),
 		name: "Permanent Super Explosive Finisher",
 		id: "44724",
 		price: 600,
 		discount: null,
-		side: 0
+		side: 1
 	},
 	{
 		Finish: new Date("2017-04-18T16:00:00Z"),
@@ -88,7 +131,7 @@ GW2T_SALE_DATA = {
 		id: "80919",
 		price: 500,
 		discount: null,
-		side: 0
+		side: 1
 	},
 	{
 		Finish: new Date("2017-04-18T16:00:00Z"),
@@ -107,6 +150,7 @@ GW2T_SALE_DATA = {
 		side: 1
 	},
 	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Miniature Super Trio—Series 3",
 		id: "80939",
 		price: 600,
@@ -114,6 +158,7 @@ GW2T_SALE_DATA = {
 		side: 1
 	},
 	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Super Bee Dog Mail Carrier",
 		id: "78088",
 		price: 600,
@@ -121,6 +166,7 @@ GW2T_SALE_DATA = {
 		side: 1
 	},
 	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Infinite Continue Coin",
 		id: "46499",
 		price: 600,
@@ -128,6 +174,7 @@ GW2T_SALE_DATA = {
 		side: 1
 	},
 	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Super Adventure Box o' Fun",
 		id: "41911",
 		price: 125,

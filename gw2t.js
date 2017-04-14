@@ -339,12 +339,11 @@ O = {
 		isModifierFirst:
 		{
 			// If adjective-noun or adverb-verb modifier is before the modified
-			fr: true,
-			es: true,
-			it: true,
-			pt: true,
-			zh: true,
-			tw: true
+			en: true,
+			de: true,
+			cs: true,
+			pl: true,
+			ru: true
 		},
 		isLogographic:
 		{
@@ -794,8 +793,7 @@ O = {
 			&& I.ModeCurrent !== I.ModeEnum.Overlay
 		);
 		O.bindOptionsInputs();
-		U.initializeAPIURLs();
-		D.initializeDictionary();
+		D.initializeLanguage();
 	},
 	
 	/*
@@ -2868,7 +2866,7 @@ U = {
 	
 	initializeAPIURLs: function()
 	{
-		var lang = D.getPartiallySupportedLanguage();
+		var lang = D.langPartiallySupported;
 		U.URL_API.LangKey = "lang=" + lang;
 		
 		var replacekey = I.cTextReplace;
@@ -4875,11 +4873,11 @@ U = {
 	getWikiLinkLanguage: function(pString)
 	{
 		pString = pString.replace(/ /g, "_");
-		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/wiki/" + U.encodeURL(pString);
+		return "http://wiki-" + D.langFullySupported + ".guildwars2.com/wiki/" + U.encodeURL(pString);
 	},
 	getWikiLinkObject: function(pObject)
 	{
-		return D.isLanguageFullySupported() ? U.getWikiLinkLanguage(D.getObjectName(pObject)) : U.getWikiLinkDefault(D.getObjectDefaultName(pObject));
+		return D.isLanguageFullySupported ? U.getWikiLinkLanguage(D.getObjectName(pObject)) : U.getWikiLinkDefault(D.getObjectDefaultName(pObject));
 	},
 	getWikiLinkCode: function(pID, pName)
 	{
@@ -4895,12 +4893,12 @@ U = {
 	getWikiSearchLanguage: function(pString)
 	{
 		pString = pString.replace(/ /g, "_");
-		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/index.php?search=" + U.encodeURL(pString);
+		return "http://wiki-" + D.langFullySupported + ".guildwars2.com/index.php?search=" + U.encodeURL(pString);
 	},
 	getWikiItemDefault: function(pItem)
 	{
 		// This always return the English wiki. Non-English queries use item ID search rather than direct name
-		if (D.isLanguageFullySupported() === true && D.isLanguageDefault() === false)
+		if (D.isLanguageFullySupported && D.isLanguageDefault === false)
 		{
 			return U.getWikiSearchDefault((pItem.id).toString());
 		}
@@ -4914,7 +4912,7 @@ U = {
 	 */
 	getGW2OfficialLink: function(pString)
 	{
-		return "https://www.guildwars2.com/" + D.getFullySupportedLanguage() + "/" + pString;
+		return "https://www.guildwars2.com/" + D.langFullySupported + "/" + pString;
 	},
 	
 	/*
@@ -6915,7 +6913,7 @@ Z = {
 				{
 					continue;
 				}
-				catname = Q.categorizeCleanupItem(item);
+				catname = Q.categorizeCleanableItem(item);
 				// Add the item if matched
 				if (catname)
 				{
@@ -7637,7 +7635,7 @@ A = {
 		Q.initializeItemContextMenu();
 		
 		// Translate directory
-		if (D.isLanguageDefault() === false)
+		if (D.isLanguageDefault === false)
 		{
 			$("#accDirectory var").each(function()
 			{
@@ -11950,7 +11948,7 @@ V = {
 			}
 			
 			// Construct tab headers from crafting disciplines and recipe types
-			var lang = D.getFullySupportedLanguage();
+			var lang = D.langFullySupported;
 			var catname;
 			for (var i in metadata.Disciplines)
 			{
@@ -13226,6 +13224,7 @@ V = {
 				B.tallyBank(container);
 				// Create search bar
 				B.createBankMenu(bank, {
+					aIsCollection: true,
 					aHelpMessage: $("#accHelpPact").html()
 				});
 				generateStatistics();
@@ -14171,7 +14170,7 @@ B = {
 				var slots = pBank.find(".bnkSlot");
 				if (cleanupfilterstate === 0)
 				{
-					Q.initializeCleanupFilter(function()
+					Q.initializeCleanableFilter(function()
 					{
 						slots.each(function()
 						{
@@ -15613,9 +15612,9 @@ Q = {
 		Traits: {},
 		Skills: {}
 	},
-	CleanupFilter: null, // Associative array of cleanable items to be used by the bank filters, not the cleanup tool
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	SearchDatabase: null,
+	CleanableFilter: null, // Associative array of cleanable items to be used by the bank filters, not the cleanup tool
 	ItemEnum: // Corresponds to item details type property
 	{
 		Gathering: "Gathering",
@@ -15766,7 +15765,7 @@ Q = {
 		}
 		else
 		{
-			var filepath = "cache/" + pName + "_" + D.getPartiallySupportedLanguage() + I.cJSON;
+			var filepath = "cache/" + pName + "_" + D.langPartiallySupported + I.cJSON;
 			$.getJSON(filepath, function(pData)
 			{
 				Q.RetrievedDatabases[pName] = true;
@@ -15798,7 +15797,7 @@ Q = {
 		}
 		else
 		{
-			$.getJSON("cache/search_" + D.getPartiallySupportedLanguage() + I.cJSON, function(pData)
+			$.getJSON("cache/search_" + D.langPartiallySupported + I.cJSON, function(pData)
 			{
 				Q.SearchDatabase = pData;
 				pCallback();
@@ -15911,7 +15910,7 @@ Q = {
 		var Settings = pSettings || {};
 		var det, attrstr, points, keyextracted, keyproper;
 		// This object translates the current language extracted attribute name to the proper key name
-		var assocobj = A.Attribute["KeyDescription_" + D.getFullySupportedLanguage()];
+		var assocobj = A.Attribute["KeyDescription_" + D.langFullySupported];
 		// Reuseable function to parse array of attribute strings which are language dependent
 		var sumAttributeArray = function(pArray)
 		{
@@ -16435,7 +16434,7 @@ Q = {
 	 * Calling without this boolean assumes it is for filtering inventory items.
 	 * @returns string category.
 	 */
-	categorizeCleanupItem: function(pItem, pIsFilter)
+	categorizeCleanableItem: function(pItem, pIsFilter)
 	{
 		var name = pItem.name.toLowerCase();
 		var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
@@ -16553,20 +16552,18 @@ Q = {
 	 * cleanable items.
 	 * @param function pCallback after initialization.
 	 */
-	initializeCleanupFilter: function(pCallback)
+	initializeCleanableFilter: function(pCallback)
 	{
 		var section = "Cleanup";
-		if (Q.CleanupFilter !== null)
+		if (Q.CleanableFilter !== null)
 		{
 			pCallback();
 		}
 		else
 		{
-			I.write(D.getPhraseOriginal("Loading cleanup") + "...");
 			U.getScript(U.URL_DATA.Cleanup, function()
 			{
-				I.clear();
-				Q.CleanupFilter = {};
+				Q.CleanableFilter = {};
 				var record = U.getRecordData(section), catarr;
 				for (var i in record)
 				{
@@ -16578,7 +16575,7 @@ Q = {
 					catarr = record[i];
 					for (var ii = 0; ii < catarr.length; ii++)
 					{
-						Q.CleanupFilter[(catarr[ii])] = true;
+						Q.CleanableFilter[(catarr[ii])] = true;
 					}
 				}
 				pCallback();
@@ -16594,7 +16591,7 @@ Q = {
 	 */
 	isCleanable: function(pItemID)
 	{
-		return (Q.CleanupFilter[pItemID] || Q.categorizeCleanupItem(Q.getCachedItem(pItemID), true));
+		return (Q.CleanableFilter[pItemID] || Q.categorizeCleanableItem(Q.getCachedItem(pItemID), true));
 	},
 	
 	/*
@@ -17857,7 +17854,7 @@ Q = {
 	{
 		var Settings = pSettings || {};
 		var elm = $(pElement).wrap("<span class='itmSearchContainer'></span>");
-		var queryminchar = D.isLanguageLogographic() ? 1 : 2;
+		var queryminchar = D.isLanguageLogographic ? 1 : 2;
 		var resultslimit = Settings.aResultsLimit || O.Options.int_numTradingResults;
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").insertAfter(elm).hide();
 		var resultsscroll = $("<div class='itmSearchResultScroll cntPopup jsScrollable'></div>").appendTo(resultscontainer);
@@ -20775,6 +20772,31 @@ D = {
 		s_DeepCave: {en: "Deep Cave", de: "Tiefe Höhle", es: "Cueva profunda", fr: "Grotte profonde"}
 	},
 	
+	/*
+	 * Information about the user's selected language in determining content to present.
+	 */
+	isLanguageFullySupported: null,
+	isLanguageDefault: null,
+	isLanguageTraditional: null,
+	isLanguageModifierFirst: null,
+	isLanguageLogographic: null,
+	langFullySupported: null, // The API supports zh but the wiki does not
+	langPartiallySupported: null,
+	initializeLanguage: function()
+	{
+		D.isLanguageFullySupported = (O.LanguageMeta.isFullySupported[O.Options.enu_Language]) ? true : false;
+		D.isLanguageDefault = (O.Options.enu_Language === O.OptionEnum.Language.Default);
+		D.isLanguageTraditional = (O.Options.enu_Language === O.OptionEnum.Language.ChineseTraditional);
+		D.isLanguageModifierFirst = (O.LanguageMeta.isModifierFirst[O.Options.enu_Language]) ? true : false;
+		D.isLanguageLogographic = (O.LanguageMeta.isLogographic[O.Options.enu_Language]) ? true : false;
+		D.langFullySupported = (D.isLanguageFullySupported) ? O.Options.enu_Language : O.OptionEnum.Language.Default;
+		D.langPartiallySupported = (O.Options.enu_Language === O.OptionEnum.Language.ChineseSimplified
+			|| O.Options.enu_Language === O.OptionEnum.Language.ChineseTraditional)
+			? O.OptionEnum.Language.ChineseSimplified : D.langFullySupported;
+		
+		D.initializeDictionary();
+		U.initializeAPIURLs();
+	},
 	
 	/*
 	 * Gets a codex string based on the opted language.
@@ -20806,14 +20828,14 @@ D = {
 	getDataAttribute: function(pElm)
 	{
 		var elm = $(pElm);
-		if (D.isLanguageDefault() === false)
+		if (D.isLanguageDefault === false)
 		{
 			var str = pElm.attr("data-" + O.Options.enu_Language);
 			if (str)
 			{
 				return str;
 			}
-			else if (D.isLanguageTraditional())
+			else if (D.isLanguageTraditional)
 			{
 				return $.s2t(pElm.attr("data-" + O.OptionEnum.Language.ChineseSimplified));
 			}
@@ -20827,7 +20849,7 @@ D = {
 	initializeDictionary: function()
 	{
 		// Use Simplified Chinese to create a Traditional Chinese dictionary
-		if (D.isLanguageTraditional())
+		if (D.isLanguageTraditional)
 		{
 			var entry, simp = O.OptionEnum.Language.ChineseSimplified, trad = O.OptionEnum.Language.ChineseTraditional;
 			for (var i in D.Dictionary)
@@ -20871,7 +20893,7 @@ D = {
 	getTranslation: function(pText)
 	{
 		// If opted language is English then just return the given text
-		if (D.isLanguageDefault())
+		if (D.isLanguageDefault)
 		{
 			return pText;
 		}
@@ -20900,7 +20922,7 @@ D = {
 	},
 	getWord: function(pText)
 	{
-		if (D.isLanguageDefault())
+		if (D.isLanguageDefault)
 		{
 			return pText;
 		}
@@ -20945,7 +20967,7 @@ D = {
 			}
 		}
 		
-		var text = (D.isLanguageLogographic()) ? str.join("") : str.join(" ");
+		var text = (D.isLanguageLogographic) ? str.join("") : str.join(" ");
 		if (pCase === U.CaseEnum.None || pCase === U.CaseEnum.Original)
 		{
 			return text;
@@ -20958,7 +20980,7 @@ D = {
 	},
 	getPhraseOriginal: function(pString)
 	{
-		if (D.isLanguageDefault() === false)
+		if (D.isLanguageDefault === false)
 		{
 			return D.getPhrase(pString, U.CaseEnum.Original);
 		}
@@ -20978,7 +21000,7 @@ D = {
 	},
 	orderModifier: function(pWord, pModifier)
 	{
-		return D.isLanguageModifierFirst() ? (pModifier + " " + pWord) : (pWord + " " + pModifier);
+		return D.isLanguageModifierFirst ? (pModifier + " " + pWord) : (pWord + " " + pModifier);
 	},
 	getModifiedPhrase: function(pString, pCase)
 	{
@@ -21025,7 +21047,7 @@ D = {
 	 */
 	translateElements: function()
 	{
-		if (D.isLanguageDefault() === false)
+		if (D.isLanguageDefault === false)
 		{
 			// Translate each word individually for these elements
 			$(".jsTranslate").each(function()
@@ -21048,7 +21070,7 @@ D = {
 	 */
 	translateAfter: function()
 	{
-		if (D.isLanguageDefault() === false)
+		if (D.isLanguageDefault === false)
 		{
 			// Translate tooltips
 			$(".hudSelect, .btnWindow").each(function()
@@ -21068,67 +21090,19 @@ D = {
 	},
 	
 	/*
-	 * Tells if the user's opted language is an GW2 supported language
-	 * which has translations already done.
-	 * @returns boolean if fully supported.
+	 * Tells whether a substring is within a string, with provided multilingual substrings.
+	 * @param string pString to search for the substring.
+	 * @param object pSubstrings search strings keyed by language code. Example: {en: "day", de: "tag", ...}
+	 * @returns boolean
 	 */
-	isLanguageFullySupported: function()
+	isWithin: function(pString, pSubstrings)
 	{
-		if (O.LanguageMeta.isFullySupported[O.Options.enu_Language])
+		var findstr = pSubstrings[D.langPartiallySupported];
+		if (pString.indexOf(findstr) !== -1)
 		{
 			return true;
 		}
 		return false;
-	},
-	isLanguageDefault: function()
-	{
-		return O.Options.enu_Language === O.OptionEnum.Language.Default;
-	},
-	isLanguageTraditional: function()
-	{
-		return O.Options.enu_Language === O.OptionEnum.Language.ChineseTraditional;
-	},
-	isLanguageModifierFirst: function()
-	{
-		if (O.LanguageMeta.isModifierFirst[O.Options.enu_Language])
-		{
-			return false;
-		}
-		return true;
-	},
-	isLanguageLogographic: function()
-	{
-		if (O.LanguageMeta.isLogographic[O.Options.enu_Language])
-		{
-			return true;
-		}
-		return false;
-	},
-	
-	/*
-	 * Gets the language code of the opted fully supported language, or the default if isn't.
-	 * @returns string language code.
-	 */
-	getFullySupportedLanguage: function()
-	{
-		if (D.isLanguageFullySupported())
-		{
-			return O.Options.enu_Language;
-		}
-		return O.OptionEnum.Language.Default;
-	},
-	getPartiallySupportedLanguage: function()
-	{
-		if (D.isLanguageFullySupported())
-		{
-			return O.Options.enu_Language;
-		}
-		else if (O.Options.enu_Language === O.OptionEnum.Language.ChineseSimplified
-			|| O.Options.enu_Language === O.OptionEnum.Language.ChineseTraditional)
-		{
-			return O.OptionEnum.Language.ChineseSimplified;
-		}
-		return O.OptionEnum.Language.Default;
 	},
 	
 	/*
@@ -21139,16 +21113,23 @@ D = {
 	 */
 	getNameKey: function()
 	{
-		return "name_" + D.getFullySupportedLanguage();
+		return "name_" + D.langFullySupported;
 	},
 	getURLKey: function()
 	{
-		return "url_" + D.getFullySupportedLanguage();
+		return "url_" + D.langFullySupported;
 	},
 	getObjectTranslation: function(pObject) // No prefix, just the language code
 	{
 		if (pObject[O.Options.enu_Language] !== undefined)
 		{
+			return pObject[O.Options.enu_Language];
+		}
+		else if (O.Options.enu_Language === O.OptionEnum.Language.ChineseTraditional
+			&& pObject[O.OptionEnum.Language.ChineseSimplified])
+		{
+			// Obtain Traditional Chinese from Simplified Chinese
+			pObject[O.Options.enu_Language] = $.s2t(pObject[O.OptionEnum.Language.ChineseSimplified]);
 			return pObject[O.Options.enu_Language];
 		}
 		return pObject[O.OptionEnum.Language.Default];
@@ -21198,7 +21179,7 @@ D = {
 	},
 	getObjectURL: function(pObject)
 	{
-		return pObject["url_" + D.getFullySupportedLanguage()];
+		return pObject["url_" + D.langFullySupported];
 	},
 	
 	/*
@@ -21208,7 +21189,7 @@ D = {
 	 */
 	getChainTitle: function(pChain)
 	{
-		if (D.isLanguageDefault())
+		if (D.isLanguageDefault)
 		{
 			return pChain.title;
 		}
@@ -21222,7 +21203,7 @@ D = {
 	 */
 	getChainAlias: function(pChain)
 	{
-		if (D.isLanguageDefault())
+		if (D.isLanguageDefault)
 		{
 			return C.parseChainAlias(pChain.alias);
 		}
@@ -21334,7 +21315,7 @@ D = {
 		if (pDuration === undefined || pDuration === null)
 		{
 			// If no duration is given, then estimate speech length
-			var charspersecond = (D.isLanguageLogographic()) ? 4 : 12;
+			var charspersecond = (D.isLanguageLogographic) ? 4 : 12;
 			pDuration = 1 + (Math.round(pString.length / charspersecond));
 		}
 		
@@ -21477,7 +21458,7 @@ D = {
 	 */
 	getChainPronunciation: function(pChain)
 	{
-		if (D.isLanguageDefault()
+		if (D.isLanguageDefault
 			|| I.BrowserCurrent !== I.BrowserEnum.Chrome)
 		{
 			return C.Chains[pChain.nexus].pronunciation;
@@ -24046,6 +24027,12 @@ M = {
 			that.resizeMarkerIcon(iLayer, landmarksize);
 		});
 		
+		// Mastery
+		this.ZoneCurrent.Layers.Mastery.eachLayer(function(iLayer)
+		{
+			that.resizeMarkerIcon(iLayer, landmarksize);
+		});
+		
 		// Challenge
 		this.ZoneCurrent.Layers.Challenge.eachLayer(function(iLayer)
 		{
@@ -26246,7 +26233,7 @@ P = {
 								});
 								marker.on("dblclick", function()
 								{
-									if (D.isLanguageDefault())
+									if (D.isLanguageDefault)
 									{
 										U.openExternalURL(U.getWikiLinkLanguage(this.options.markername));
 									}
@@ -26291,7 +26278,7 @@ P = {
 								});
 								that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
 								that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-								zoneobj.Layers.Challenge.addLayer(marker);
+								zoneobj.Layers.Mastery.addLayer(marker);
 								P.addMapLocation(poi.coord, zonename + " " + translationmastery + " " + poi.id, icon, zonename + " " + translationmastery);
 							}
 						}
@@ -26663,7 +26650,7 @@ P = {
 		 * so obsolete events can be filtered. Non-default languages has to download
 		 * the event data twice because the filter keywords are in the default language.
 		 */
-		if (D.isLanguageDefault())
+		if (D.isLanguageDefault)
 		{
 			generateEvents();
 		}
@@ -27621,7 +27608,7 @@ P = {
 				floors: pData.floors,
 				center: that.computeZoneCenter(pData)
 			};
-			var namekey = "name_" + D.getPartiallySupportedLanguage();
+			var namekey = "name_" + D.langPartiallySupported;
 			(subzones[pID])[namekey] = pData.name;
 		}).fail(function()
 		{
@@ -32124,7 +32111,7 @@ T = {
 		}
 		
 		// Initialize chains
-		if (D.isLanguageLogographic())
+		if (D.isLanguageLogographic)
 		{
 			C.cEventCharLimit = C.cEventCharLimitLogographic;
 		}
@@ -34282,7 +34269,7 @@ H = {
 					var recipe = Q.getCachedItem(recipeid);
 					var productid = H.Pact.Products[recipeid] || recipeid;
 					var product = Q.getCachedItem(productid);
-					var wikiquery = (D.isLanguageDefault()) ? recipe.name : recipeid.toString();
+					var wikiquery = (D.isLanguageDefault) ? recipe.name : recipeid.toString();
 					$("#dsbPactEntry_" + i).html(
 						"<div class='dsbPactSide0'>"
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbPactIcon_" + i + "' class='dsbPactIcon' src='img/ui/placeholder.png' /></a> "
@@ -37495,7 +37482,7 @@ I = {
 			// If it is a menu item
 			if ($(this).hasClass("itemContextSubmenu") === false)
 			{
-				if (D.isLanguageDefault() === false)
+				if (D.isLanguageDefault === false)
 				{
 					$(this).text(D.getPhraseOriginal($(this).text()));
 				}
@@ -38036,7 +38023,7 @@ I = {
 			var sectioncontent = header.next().addClass("cntSection");
 			var headercontent = $(this).children("var").first();
 			// Translate header if available
-			var headertext = (headercontent.length && D.isLanguageDefault() === false)
+			var headertext = (headercontent.length && D.isLanguageDefault === false)
 				? D.getModifiedPhrase(header.text().toLowerCase(), U.CaseEnum.Title) : header.text();
 			headercontent.text(headertext);
 			// Hide the entire collapsible div tag next to the header tag
@@ -38338,7 +38325,7 @@ I = {
 	initializeDirectory: function()
 	{
 		var dir = $("#plateDirectory");
-		var isnondefaultlang = !D.isLanguageDefault();
+		var isnondefaultlang = !D.isLanguageDefault;
 		var group, groupname, groupheader, headerclass, grouplist, pagename, pagebutton;
 		var counter = 0;
 		for (var i in I.Directory)
