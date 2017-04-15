@@ -1491,7 +1491,7 @@ Announcement:
 		Finish: new Date("2017-01-01T16:00:00Z")
 	},
 	UrgentWVW: { // Shown on console
-		content: "ArenaNet's North America WvW API is currently bugged.<br />Only Kills and Deaths data are updated. <a href='https://forum-en.guildwars2.com/forum/community/api/WvW-wrong-matches-and-data-2017-04-14'>Check status</a>.",
+		content: "",
 		Finish: new Date("2017-04-17T16:00:00Z")
 	},
 	UrgentAccount: { // Shown on console
