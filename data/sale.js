@@ -38,7 +38,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-04-18T16:00:00Z"),
+		Finish: new Date("2017-04-16T16:00:00Z"),
 		name: "Bag Slot Expansion",
 		id: "19993",
 		price: 300,
