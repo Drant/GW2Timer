@@ -4967,6 +4967,21 @@ U = {
 	},
 	
 	/*
+	 * Gets an API image URL from the cached emblem array. These emblems are
+	 * uncolorized and unbackgrounded. Used as a backup or workaround when the
+	 * default banner renderer is offline.
+	 * @param object pGuild
+	 * @returns string
+	 * @pre Account page data was loaded, since the emblem data is inside it.
+	 */
+	getGuildBannerRaw: function(pGuild)
+	{
+		try { return "https://render.guildwars2.com/file/" + GW2T_EMBLEM_DATA.foreground[pGuild.emblem.foreground.id] + ".png"; }
+		catch (e) {}
+		return "img/ui/unavailable.png";
+	},
+	
+	/*
 	 * Converts a poi_id number from maps_floor.json to a valid chatlink.
 	 * Code from http://virtus-gilde.de/gw2map
 	 * @param int pID of the poi.
@@ -10803,7 +10818,7 @@ V = {
 					{
 						(function(iGuild)
 						{
-							var banner = U.getGuildBannerURL(iGuild.name);
+							var banner = U.getGuildBannerRaw(iGuild);
 							var guildrow = $("<li class='chrGuild'><span class='chrGuildHover'><img class='chrGuildBanner' src='" + banner + "' />"
 									+ "<img class='chrGuildBanner chrGuildBannerLarge' src='" + banner + "' /></span>"
 								+ "<var class='chrGuildName'>" + iGuild.name + " " + iGuild.oTag + "</var></li>").click(function()
