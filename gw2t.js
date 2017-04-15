@@ -4732,6 +4732,11 @@ U = {
 				// Don't convert relative links
 				return;
 			}
+			if (url.indexOf(I.cSiteExternal) === 0)
+			{
+				// Don't convert already converted links
+				return;
+			}
 			if (I.ModeCurrent === I.ModeEnum.Overlay && url.indexOf(I.cSiteURL + "?") !== -1)
 			{
 				// For overlay, self-linking URLs should not new open window and must contain the mode
@@ -7652,6 +7657,9 @@ A = {
 			A.adjustAccountPanel();
 		}, 1000);
 		A.isAccountInitialized = true;
+		
+		// Print messages if available
+		H.getUrgent(H.Announcement.UrgentAccount);
 		
 		// Open a section if initially requested
 		if (ispageprovided)
@@ -23155,11 +23163,13 @@ M = {
 				P.drawZoneBorders();
 				P.drawZoneGateways();
 				C.ScheduledChains.forEach(P.drawChainPaths);
+				H.getUrgent(H.Announcement.UrgentPVE);
 			} break;
 			
 			case P.MapEnum.Mists: {
 				this.createStandardPins();
 				P.populateMap(W);
+				H.getUrgent(H.Announcement.UrgentWVW);
 			} break;
 		}
 		
@@ -26439,7 +26449,7 @@ P = {
 			{
 				if (I.ModeCurrent === I.ModeEnum.Website)
 				{
-					I.write(
+					I.urge(
 						"ArenaNet API server is unreachable. <a" + U.convertExternalAnchor(U.URL_API.Support + "?source=map") + ">Check status</a>.<br />"
 						+ "Map will use backup cache and features will be limited.<br />");
 				}
@@ -29697,10 +29707,10 @@ W = {
 		}
 		
 		// Write announcement if available
-		var announcement = GW2T_DASHBOARD_DATA.Announcement;
-		if (announcement.wvw.length > 0 && T.isTimely(announcement, now))
+		var announcement = H.getAnnouncement(H.Announcement.NewsWVW, now);
+		if (announcement)
 		{
-			W.addLogEntry(announcement.wvw);
+			W.addLogEntry(announcement);
 		}
 	},
 	
@@ -33559,10 +33569,11 @@ H = {
 		}
 		
 		// Verify announcement: if announcement exists
-		if (H.Announcement.pve.length > 0 && T.isTimely(H.Announcement, now))
+		var announcement = H.getAnnouncement(H.Announcement.NewsPVE);
+		if (announcement)
 		{
 			var annprefix = "<strong>" + D.getWordCapital("new") + ": </strong>";
-			var announcementlinks = $("#dsbAnnouncement").html(annprefix + H.Announcement.pve).find("a");
+			var announcementlinks = $("#dsbAnnouncement").html(annprefix + announcement).find("a");
 			U.convertExternalLink(announcementlinks);
 			U.convertInternalLink(announcementlinks);
 			M.bindMapLinks("#dsbAnnouncement");
@@ -33675,6 +33686,28 @@ H = {
 		if (H.isDailyEnabled)
 		{
 			H.generateDashboardDailyHeader(now);
+		}
+	},
+	
+	/*
+	 * Gets an announcement string if its object has timely content.
+	 * @param object pAnnouncement
+	 * @returns boolean
+	 */
+	getAnnouncement: function(pAnnouncement, pDate)
+	{
+		if (pAnnouncement && pAnnouncement.content.length > 0 && T.isTimely(pAnnouncement, pDate))
+		{
+			return pAnnouncement.content;
+		}
+		return null;
+	},
+	getUrgent: function(pAnnouncement, pDate)
+	{
+		var announcement = H.getAnnouncement(pAnnouncement, pDate);
+		if (announcement)
+		{
+			I.urge(announcement);
 		}
 	},
 	
@@ -36942,9 +36975,10 @@ I = {
 	 * @param string pString to write.
 	 * @param float pSeconds to display the console with that string. 0 for infinite.
 	 * @param boolean pClear to empty the console before printing.
+	 * @param boolean pWantBreak to insert break at the end.
 	 * @pre If input was from an outside source it must be escaped first!
 	 */
-	write: function(pString, pSeconds, pClear)
+	write: function(pString, pSeconds, pClear, pWantBreak)
 	{
 		$("#itemConsole").show();
 		var content = $("#cslContent").show();
@@ -36978,7 +37012,8 @@ I = {
 			 */
 			pSeconds = 3 + parseInt(pString.length / characterspersecond);
 		}
-		content.append(pString + "<br />");
+		var breakstr = (pWantBreak !== false) ? "<br />" : "";
+		content.append(pString + breakstr);
 		I.updateScrollbar(content);
 		
 		// Ignore previous display time, which is how long before the console is cleared
@@ -37009,8 +37044,9 @@ I = {
 	 * Writes HTML into the console without disappearing, with fast DOM implementation.
 	 * @param string pString to write.
 	 * @param boolean pClear to empty the console before printing.
+	 * @param boolean pWantBreak to insert break at the end.
 	 */
-	print: function(pString, pClear)
+	print: function(pString, pClear, pWantBreak)
 	{
 		if (pClear)
 		{
@@ -37019,8 +37055,9 @@ I = {
 		window.clearTimeout(I.consoleTimeout);
 		var console = document.getElementById("itemConsole");
 		var content = document.getElementById("cslContent");
+		var breakstr = (pWantBreak !== false) ? "<br />" : "";
 		console.style.display = "block";
-		content.insertAdjacentHTML("beforeend", pString + "<br />");
+		content.insertAdjacentHTML("beforeend", pString + breakstr);
 	},
 	printFile: function(pString)
 	{
@@ -37055,6 +37092,17 @@ I = {
 		{
 			I.write(msg);
 		}
+	},
+	
+	/*
+	 * Prints an urgent message with high visibility
+	 * @param string pString
+	 */
+	urge: function(pString, pSeconds)
+	{
+		var str = "<div class='cslUrgent'>" + pString + "</div>";
+		I.write(str, pSeconds, false, false);
+		I.bindConsoleLink();
 	},
 	
 	/*
@@ -37132,6 +37180,7 @@ I = {
 		var links = I.getConsole().find("a");
 		if (links.length)
 		{
+			U.convertExternalLink(links);
 			U.convertInternalLink(links);
 		}
 	},
@@ -38929,8 +38978,11 @@ I = {
 		if (I.isProgramEmbedded || I.ModeCurrent === I.ModeEnum.Mobile || I.ModeCurrent === I.ModeEnum.Tile)
 		{
 			I.setInitialPlate(I.PlateEnum.Chains);
-			// Move the alarm options from the map popup to the app panel
-			$("#mapAlarmPopup").appendTo("#chnAlarm").removeClass("hudPopup").addClass("cntPopup");
+			if (I.isMapEnabled === false)
+			{
+				// Move the alarm options from the map popup to the app panel
+				$("#mapAlarmPopup").appendTo("#chnAlarm").removeClass("hudPopup").addClass("cntPopup");
+			}
 		}
 		else
 		{

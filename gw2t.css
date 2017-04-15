@@ -212,10 +212,10 @@ img {
 	left: 64px;
 }
 #cslButtons kbd {
-	opacity: 0.4;
+	opacity: 0.8;
 }
 #cslButtons kbd:hover {
-	opacity: 0.8;
+	opacity: 1;
 }
 #cslContent a, #itemWarning a {
 	color: limegreen;
@@ -231,6 +231,12 @@ img {
 	width: 100%;
 	min-width: 360px;
 	height: 180px;
+}
+.cslUrgent {
+	padding: 16px;
+	background-image: url("img/background/stripe.png");
+	border-top: 4px solid rgba(255, 34, 0, 0.4);
+	border-bottom: 4px solid rgba(255, 34, 0, 0.4);
 }
 
 #jsAuditFrame, #jsTTSAudio {

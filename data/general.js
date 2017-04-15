@@ -1478,10 +1478,26 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
-	pve: "Bag Slot Expansion is on sale. Bunny Ears and Wide Rim Glasses are back on the gem store. <a href='https://twitter.com/GW2Timer/status/850984189071572992'>Super Adventure Box</a> character progression.",
-	wvw: "",
-	Start: new Date("2016-04-07T16:00:00Z"),
-	Finish: new Date("2017-04-20T16:00:00Z"),
+	NewsPVE: { // Shown on main page dashboard
+		content: "Bag Slot Expansion is on sale. Bunny Ears and Wide Rim Glasses are back on the gem store. <a href='https://twitter.com/GW2Timer/status/850984189071572992'>Super Adventure Box</a> character progression.",
+		Finish: new Date("2017-04-20T16:00:00Z")
+	},
+	NewsWVW: { // Shown on WvW message log
+		content: "",
+		Finish: new Date("2017-04-20T16:00:00Z")
+	},
+	UrgentPVE: { // Shown on console
+		content: "",
+		Finish: new Date("2017-01-01T16:00:00Z")
+	},
+	UrgentWVW: { // Shown on console
+		content: "ArenaNet WvW API is currently bugged. <a href='https://forum-en.guildwars2.com/forum/community/api/WvW-wrong-matches-and-data-2017-04-14'>Check status</a>.",
+		Finish: new Date("2017-04-15T16:00:00Z")
+	},
+	UrgentAccount: { // Shown on console
+		content: "",
+		Finish: new Date("2017-01-01T16:00:00Z")
+	},
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Mystic Forger</a>, "
