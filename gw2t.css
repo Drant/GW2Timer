@@ -1441,7 +1441,7 @@ textarea.jsCopyCode {
 
 #dsbStory {
 	display: none;
-	width: auto; max-height: 124px;
+	width: auto;
 	margin-top: 4px;
 	border-top: 1px solid #dd9900;
 	background: rgba(229, 158, 36, 0.1);

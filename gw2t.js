@@ -33682,7 +33682,6 @@ H = {
 			var storytitle = D.getObjectName(H.Story);
 			var storystr = (H.Story.url.length) ? "<a" + U.convertExternalAnchor(H.Story.url) + ">" + storytitle + "</a>" : storytitle;
 			$("#dsbStory").prepend("<div id='dsbStoryTitle'>" + storystr + "</div>").show();
-			I.bindScrollbar("#dsbStory");
 		}
 		
 		// Initialize sale
@@ -33878,8 +33877,6 @@ H = {
 			table.css({height: 0}).animate({height: height}, animationspeed, function()
 			{
 				$(this).css({height: "auto"});
-				I.bindScrollbar("#dsbSaleTable");
-				I.updateScrollbar("#dsbSaleTable");
 			});
 			// Retrieve item info
 			Q.getItems(idstofetch, function()
@@ -34252,8 +34249,6 @@ H = {
 			table.css({height: 0}).animate({height: height}, animationspeed, function()
 			{
 				$(this).css({height: "auto"});
-				I.bindScrollbar("#dsbPactTable");
-				I.updateScrollbar("#dsbPactTable");
 			});
 			I.removeThrobber(table);
 			// Insert timestamp of daily offers
