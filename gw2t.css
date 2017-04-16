@@ -367,7 +367,7 @@ img {
 	outline: 1px solid #595859;
 }
 .itmPrefaceIcon:hover {
-	border: 1px solid red;
+	border: 1px solid #ffcc77;
 }
 .itmPrefaceIconImage {
 	width: 64px; height: 64px;
@@ -729,18 +729,19 @@ html, body,
 	animation: aniDisplayFadeIn 0.2s;
 }
 
-.cntComposition input[type="text"], .cntComposition textarea, input[type="text"].cntSearch, .cssText {
+.cntComposition input[type="text"], .cntComposition textarea, input[type="text"].cntSearch, input[type="number"], .cssText {
 	margin: 0;
 	padding: 2px;
 	overflow: hidden;
-	border: 1px solid #555;
-	background: #222;
+	border: 1px solid rgba(255, 238, 187, 0.2);
+	background: transparent;
 	font-family: sans-serif;
 	color: #ffddcc;
+	transition: border 0.2s;
 }
 
-.cntComposition input[type="text"]:hover, .cntComposition textarea:hover, .cssText:hover {
-	border: 1px solid red;
+.cntComposition input[type="text"]:hover, .cntComposition textarea:hover, input[type="number"]:hover, .cssText:hover {
+	border: 1px solid rgba(255, 238, 187, 0.6);
 }
 
 .cssInputSelect {
@@ -762,7 +763,7 @@ html, body,
 	display: inline-block;
 	padding: 4px;
 	margin-bottom: 16px;
-	border: 1px solid gray;
+	border: 1px solid rgba(255, 238, 187, 0.2);
 }
 .cntComposition fieldset legend {
 	font-weight: bold;
@@ -783,12 +784,12 @@ button, .cssButton {
 	padding-left: 4px;
 	padding-right: 4px;
 	vertical-align: middle;
-	border: 1px solid #222;
+	border: 1px solid rgba(255, 238, 187, 0.2);
 	border-radius: 4px;
-	background: #333;
-	background: linear-gradient(to bottom, #444 0%, #333 100%);
+	background: linear-gradient(135deg, #111 0%, #222 50%, #000 51%, #222 100%);
 	font-family: Trebuchet MS, Menomonia;
-	color: white;
+	color: #ddccaa;
+	transition: border 0.2s;
 	text-decoration: none;
 	text-shadow:
 		1px 1px 0px #000,
@@ -798,14 +799,11 @@ button, .cssButton {
 		1px 1px 0px #000;
 }
 button:hover, .cssButton:hover {
-	border: 1px solid red;
+	border: 1px solid rgba(255, 238, 187, 0.4);
+	color: #ffeebb;
 }
-button:active, .cssButton:active {
-	background: #444;
-	background: linear-gradient(to bottom, #333 0%, #444 100%);
-}
-button.btnFocused {
-	border: 1px solid #ddff77;
+button:active, .cssButton:active, button.btnFocused {
+	background: #2d2619;
 }
 button img {
 	width: 24px; height: 24px;
@@ -849,7 +847,6 @@ header.cntHeader {
 
 .cntComposition a {
 	color: #aaff55;
-	text-decoration: underline;
 }
 .cntComposition a:hover {
 	color: #44dd44;
@@ -1231,10 +1228,10 @@ textarea.jsCopyCode {
 	color: rgba(255, 238, 187, 0.8);
 	text-decoration: none;
 }
-#dsbContainer a:hover, #dsbContainer u:hover, .dsbMenuItem:hover u {
+#dsbContainer a:hover, #dsbContainer u:hover, .dsbTab:hover u {
 	color: rgba(255, 238, 187, 1);
 }
-.dsbMenuItem {
+.dsbTab {
 	display: none;
 	width: 100%;
 	padding: 0px 4px 0px 4px;
@@ -1247,22 +1244,22 @@ textarea.jsCopyCode {
 	border-radius: 4px;
 	transition: border 0.4s;
 }
-.dsbMenuItemEnabled {
+.dsbTabEnabled {
 	display: block;
 }
-.dsbMenuItem:hover {
+.dsbTab:hover {
 	color: rgba(255, 238, 187, 1);
 	background: #2d2619;
 	border-top: 2px solid rgba(255, 238, 187, 0.4);
 }
-.dsbMenuItemActive {
+.dsbTabActive {
 	border-top: 2px solid rgba(255, 238, 187, 0.4);
 	background: #2d2619;
 }
-.dsbMenuItem img {
+.dsbTab img {
 	width: 24px; height: 24px;
 }
-.dsbExpansion {
+.dsbSubcontainer {
 	display: none;
 	background: rgba(0, 0, 0, 0.4);
 	border-radius: 2px;
@@ -1971,7 +1968,7 @@ input.mapCoordinatesName {
 	box-shadow: 0px 0px 10px green;
 }
 #paneClockIcons img:hover {
-	border: 1px solid red;
+	border: 1px solid #ffcc77;
 	box-shadow: 0px 0px 10px red;
 }
 #clkIconSD0 {
@@ -2587,7 +2584,7 @@ header.jsSection sup {
 	border-radius: 2px;
 }
 .watButtons kbd:hover {
-	border: 1px solid red;
+	border: 1px solid #ffcc77;
 }
 .watButtons kbd:active {
 	border: 1px solid white;
@@ -2662,7 +2659,7 @@ header.jsSection sup {
 
 #plateChains section {
 	margin-bottom: 12px;
-	font-family: Menomonia;
+	font-family: Trebuchet MS, Menomonia;
 	text-shadow:
 		1px 1px 0px #000,
 		-1px -1px 0px #000,
@@ -2758,7 +2755,6 @@ header.jsSection sup {
 	width: 92px;
 	vertical-align: middle;
 	text-align: right;
-	font-family: Trebuchet MS, Menomonia;
 }
 .chnTitle time sup {
 	font-size: 14px;
@@ -2784,7 +2780,6 @@ header.jsSection sup {
 	display: block;
 	margin-bottom: 4px;
 	white-space: nowrap;
-	font-family: Trebuchet MS, Menomonia;
 	font-size: 15px;
 }
 .chnDetails ol li ins { /* Orange event icon */
@@ -2969,9 +2964,10 @@ input[type="range"].optSlider {
 
 label, input {
 	vertical-align: middle;
+	color: #ddccaa;
 }
 label:hover {
-	color: #ddff77;
+	color: #ffeebb;
 	background: rgba(255, 255, 255, 0.1);
 	border-radius: 4px;
 }
@@ -2999,27 +2995,27 @@ label:hover {
 }
 
 .btnUncheck {
-	background: url("img/ui/uncheck.png") center no-repeat, linear-gradient(to bottom, #444 0%, #333 100%);
+	background: url("img/ui/uncheck.png") center no-repeat, linear-gradient(135deg, #111 0%, #222 50%, #000 51%, #222 100%);
 	width: 64px; height: 32px;
 }
 .btnUncheck:active {
-	background: url("img/ui/uncheck.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
+	background: url("img/ui/uncheck.png") center no-repeat, #2d2619;
 }
 .btnDefault {
-	background: url("img/ui/default.png") center no-repeat, linear-gradient(to bottom, #444 0%, #333 100%);
+	background: url("img/ui/default.png") center no-repeat, linear-gradient(135deg, #111 0%, #222 50%, #000 51%, #222 100%);
 	width: 32px; height: 32px;
 }
 .btnDefault:active {
-	background: url("img/ui/default.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
+	background: url("img/ui/default.png") center no-repeat, #2d2619;
 }
 .btnDisplay {
 	margin-top: 8px;
 	margin-bottom: 8px;
 	width: 220px; height: 28px;
-	background: url("img/map/display_hide.png") center no-repeat, linear-gradient(to bottom, #444 0%, #333 100%);
+	background: url("img/map/display_hide.png") center no-repeat, linear-gradient(135deg, #111 0%, #222 50%, #000 51%, #222 100%);
 }
 .btnDisplay:active {
-	background: url("img/map/display_hide.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
+	background: url("img/map/display_hide.png") center no-repeat, #2d2619;
 }
 .btnTab {
 	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);

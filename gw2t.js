@@ -1584,6 +1584,7 @@ X = {
 	Checklists:
 	{
 		// localStorage key-value pairs (key is required)
+		Directory: { key: "str_chlDirectory" },
 		Chain: { key: "str_chlChain" },
 		ChainSubscription: { key: "str_chlChainSubscription" },
 		Timeline: { key: "str_chlTimeline" },
@@ -1758,20 +1759,17 @@ X = {
 				}
 			}
 		}
-		/*
-		 * If localStorage doesn't have the checklist already then it gets a
-		 * default checklist string of 0's.
-		 */
+		// If no checklist exists then it create one with a string of 0s
 		else if (storedlist === undefined)
 		{
 			X.clearChecklist(pChecklist, pJob);
 		}
-		// If stored list is longer than requested, then truncate it from right to left
+		// If stored list is longer than requested, then cut off the right portion
 		else if (storedlist.length > pLength)
 		{
 			localStorage[pChecklist.key] = storedlist.substring(0, pLength);
 		}
-		// If stored list is shorter than requested, then concatenate it with 0's so its new length equals so
+		// If stored list is shorter than requested, then concatenate it with 0s so its new length equals so
 		else if (storedlist.length < pLength)
 		{
 			var padding = U.repeatChar(X.ChecklistEnum.Unchecked, pLength - storedlist.length);
@@ -4615,12 +4613,10 @@ U = {
 		if (I.PageCurrent !== "")
 		{
 			var section = I.SectionCurrent[I.PageCurrent];
-			var article = I.ArticleCurrent;
 			var go = U.Args[U.KeyEnum.Go];
 
 			var pagestring = "?" + U.KeyEnum.Page + "=" + I.PageCurrent;
 			var sectionstring = "";
-			var articlestring = "";
 			var gostring = "";
 			var modestring = "";
 			pParamOptions = (pParamOptions === undefined) ? "" : "&" + pParamOptions;
@@ -4642,15 +4638,11 @@ U = {
 				pagestring = "."; // Chains is the default and level top URL, so don't include it
 				title = null;
 			}
-			if (article)
-			{
-				articlestring = "&" + U.KeyEnum.Article + "=" + article;
-			}
 			if (go)
 			{
 				gostring = "&" + U.KeyEnum.Go + "=" + go;
 			}
-			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring + modestring + pParamOptions);
+			U.updateAddressBar(pagestring + sectionstring + gostring + modestring + pParamOptions);
 			U.updateTitle(title);
 			U.updateLanguageLinks(pagestring + sectionstring + modestring);
 		}
@@ -8122,9 +8114,9 @@ A = {
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
 		var use = $("<button class='accTokenUse' title='<dfn>" + D.getWordCapital("use") + "</dfn> "
-			+ D.getPhrase("this key") + ".<br />" + D.getPhraseOriginal("Double click to audit") + ".'><img src='img/ui/check.png' /></button>").appendTo(buttons);
+			+ D.getPhrase("this key") + ".<br />" + D.getPhraseOriginal("Double click to audit") + ".'><img src='img/ui/adjust_use.png' /></button>").appendTo(buttons);
 		var del = $("<button class='accTokenDelete' title='<dfn>" + D.getWordCapital("delete") + "</dfn> "
-			+ D.getPhrase("this key") + ".'><img src='img/ui/default.png' /></button>").appendTo(buttons);
+			+ D.getPhrase("this key") + ".'><img src='img/ui/adjust_del.png' /></button>").appendTo(buttons);
 		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
 		var swapup = $("<button class='btnSwapUp'></button>").appendTo(swap);
 		var swapdown = $("<button class='btnSwapDown'></button>").appendTo(swap);
@@ -33737,7 +33729,7 @@ H = {
 			+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + H.Sale.Items.length + " " + D.getWordCapital("promotions") + "</var> "
 			+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
-		+ "</div>").addClass("dsbMenuItemEnabled");
+		+ "</div>").addClass("dsbTabEnabled");
 		$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
 		// Determine if the current sale has price reduction
 		var isdiscounted = false;
@@ -33901,14 +33893,14 @@ H = {
 			{
 				$(this).css({height: "auto"}).empty();
 				$("#dsbSale").hide();
-				$("#dsbMenuSale").removeClass("dsbMenuItemActive");
+				$("#dsbMenuSale").removeClass("dsbTabActive");
 			});
 		}
 		else
 		{
 			H.isSaleOpened = true;
 			$("#dsbSale").show();
-			$("#dsbMenuSale").addClass("dsbMenuItemActive");
+			$("#dsbMenuSale").addClass("dsbTabActive");
 			table.append(I.cThrobber);
 			Q.initializeFaux();
 			H.updateSaleData(function()
@@ -34178,7 +34170,7 @@ H = {
 		var menubutton = $("#dsbMenuPact");
 		menubutton.empty().append("<div><kbd id='dsbPactHeader' class='curToggle'>"
 			+ "<img src='img/map/vendor_karma.png' /><img id='dsbPactToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
-			+ "<var>" + vendorname + "</var></kbd></div>").addClass("dsbMenuItemEnabled");
+			+ "<var>" + vendorname + "</var></kbd></div>").addClass("dsbTabEnabled");
 		$("#dsbPact").empty().append("<div id='dsbPactMenu'>"
 			+ "<img data-src='img/map/waypoint.png' style='width:32px;height:32px;' /><input id='dsbPactCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
@@ -34350,13 +34342,13 @@ H = {
 			{
 				$(this).css({height: "auto"}).empty();
 				$("#dsbPact").hide();
-				$("#dsbMenuPact").removeClass("dsbMenuItemActive");
+				$("#dsbMenuPact").removeClass("dsbTabActive");
 			});
 		}
 		else
 		{
 			$("#dsbPact").show();
-			$("#dsbMenuPact").addClass("dsbMenuItemActive");
+			$("#dsbMenuPact").addClass("dsbTabActive");
 			I.loadImg($("#dsbPactMenu"));
 			I.toggleToggleIcon("#dsbPactToggleIcon", true);
 			table.empty();
@@ -34407,7 +34399,7 @@ H = {
 		$("#dsbMenuDaily").empty().append("<div><kbd id='dsbDailyHeader' class='curToggle'>"
 			+ "<img src='img/ui/daily.png' /><img id='dsbDailyToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + headername + "</var></kbd>"
-		+ "</div>").addClass("dsbMenuItemEnabled").click(function()
+		+ "</div>").addClass("dsbTabEnabled").click(function()
 		{
 			H.generateDashboardDaily();
 		}).one("click", function()
@@ -34430,13 +34422,13 @@ H = {
 			{
 				$(this).css({height: "auto"}).empty();
 				table.hide();
-				$("#dsbMenuDaily").removeClass("dsbMenuItemActive");
+				$("#dsbMenuDaily").removeClass("dsbTabActive");
 			});
 		}
 		else
 		{
 			table.show();
-			$("#dsbMenuDaily").addClass("dsbMenuItemActive");
+			$("#dsbMenuDaily").addClass("dsbTabActive");
 			I.loadImg($("#dsbDailyMenu"));
 			I.toggleToggleIcon("#dsbDailyToggleIcon", true);
 			var calendar = $("<div class='dlyCalendar'></div>").appendTo(table);
@@ -38386,21 +38378,40 @@ I = {
 		var dir = $("#plateDirectory");
 		var isnondefaultlang = !D.isLanguageDefault;
 		var group, groupname, groupheader, headerclass, grouplist, pagename, pagebutton;
-		var counter = 0;
+		var index = 0;
+		// Initialize the checklist storing which directory group was collapsed
+		X.initializeChecklist(X.Checklists.Directory, U.getObjectLength(I.Directory));
+		// Generate the directory groups
 		for (var i in I.Directory)
 		{
 			group = $("<div class='dirGroup'></div>").appendTo(dir);
 			groupname = i.toLowerCase();
-			headerclass = (counter === 0) ? "dirHeaderPrimary" : "dirHeaderSecondary curToggle";
+			headerclass = (index === 0) ? "dirHeaderPrimary" : "dirHeaderSecondary curToggle";
 			groupheader = $("<h2 class='dirHeader " + headerclass + "'>"
 				+ "<ins class='dirHeaderIcon mnu mnu_" + groupname + "'></ins><var class='dirHeaderName'>"
 				+ ((isnondefaultlang) ? D.getWordCapital(groupname) : i) + "</var></h2>").appendTo(group);
-			grouplist = $("<ul class='dirList'></ul>").appendTo(group);
+			grouplist = $("<ul id='dirList_" + index + "' class='dirList'></ul>").appendTo(group);
+			// Only create a dashboard container (first group) for mobile, and nothing else
 			if (I.ModeCurrent === I.ModeEnum.Mobile)
 			{
-				// Only create a dashboard container (first group) for mobile
 				break;
 			}
+			// Bind header collapsible behavior
+			if (index !== 0)
+			{
+				groupheader.click(function()
+				{
+					var thisgrouplist = $(this).next();
+					X.setChecklistItem(X.Checklists.Directory, U.getSubintegerFromHTMLID(thisgrouplist),
+						thisgrouplist.is(":visible") ? X.ChecklistEnum.Checked : X.ChecklistEnum.Unchecked);
+					thisgrouplist.toggle();
+				});
+				if (X.getChecklistItem(X.Checklists.Directory, index) === X.ChecklistEnum.Checked)
+				{
+					grouplist.hide();
+				}
+			}
+			// Generate page links for this group
 			for (var ii in I.Directory[i])
 			{
 				// Page translation
@@ -38430,7 +38441,7 @@ I = {
 					});
 				})(ii);
 			}
-			counter++;
+			index++;
 		}
 		
 		// First group is for dashboard and general pages
@@ -38445,12 +38456,6 @@ I = {
 		{
 			$("#itemDashboard").insertAfter(primaryheader);
 		}
-		
-		// Bind header collapsible behavior
-		$(".dirHeaderSecondary").click(function()
-		{
-			$(this).next().toggle();
-		});
 	},
 	
 	/*
@@ -38941,7 +38946,7 @@ I = {
 					var dashboard = $("#itemDashboard");
 					var dashboardcontainer = $("<div id='dsbContainerOuter'></div>").appendTo("#plateChains");
 					dashboard.appendTo(dashboardcontainer);
-					$(".dsbMenuItem").click(function()
+					$(".dsbTab").click(function()
 					{
 						setTimeout(function()
 						{
