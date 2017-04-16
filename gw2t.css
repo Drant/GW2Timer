@@ -2964,10 +2964,9 @@ input[type="range"].optSlider {
 
 label, input {
 	vertical-align: middle;
-	color: #ddccaa;
 }
 label:hover {
-	color: #ffeebb;
+	color: #ddff77;
 	background: rgba(255, 255, 255, 0.1);
 	border-radius: 4px;
 }
