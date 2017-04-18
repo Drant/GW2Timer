@@ -110,7 +110,7 @@ GW2T_SALE_DATA = {
 	},
 	{
 		name: "Primordus Dye Kit",
-		id: "http://i.imgur.com/I6gg0mr.png",
+		id: "80974",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
 		side: 0

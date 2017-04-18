@@ -50,7 +50,8 @@ var GW2T_DYES_HEADERS = {
 	Shift: {id: 78734, name_en: "Blue Shift Dye Kit", name_de: "Blauverschiebung-Farbkit", name_es: "Kit de tintes de corrimiento al azul", name_fr: "Kit de teintures Variation de bleu", name_zh: "蓝移染料包"},
 	Bloodstone: {id: 79354, name_en: "Bloodstone Dye Kit", name_de: "Blutstein-Farbkit", name_es: "Kit de tintes de hematites", name_fr: "Kit de teintures de pierre de Sang", name_zh: "血石染料包"},
 	Vibrant: {id: 79695, name_en: "Vibrant Dye Kit", name_de: "Lebendige-Farben-Farbkit", name_es: "Kit de tintes vibrantes", name_fr: "Kit de teintures vibrantes", name_zh: "醒目染料包"},
-	Solar: {id: 80069, name_en: "Solar and Lunar Dye Kit", name_de: "Sonne-und-Mond-Farbkit", name_es: "Kit de tintes solares y lunares", name_fr: "Kit de teinture solaire et lunaire", name_zh: "日月染料包"}
+	Solar: {id: 80069, name_en: "Solar and Lunar Dye Kit", name_de: "Sonne-und-Mond-Farbkit", name_es: "Kit de tintes solares y lunares", name_fr: "Kit de teinture solaire et lunaire", name_zh: "日月染料包"},
+	Primordus: {id: 80974, name_en: "Primordus Dye Kit", name_de: "Primordus-Farbkit", name_es: "Kit de tintes de Primordus", name_fr: "Kit de teintures de Primordius", name_zh: "派莫德斯染料包"}
 };
 
 /*
@@ -630,5 +631,13 @@ Solar: [
 	{u: 1499, i: 80079, n: "Rose Gold Dye", c: ["#b08f80", "#b08f80", "#b08f80"], h: "Red", m: "Vibrant", l: "[&AgHPOAEA]", en: "Rose Gold", de: "Rotgold", es: "Oro rosado", fr: "Or rose", zh: "玫瑰金"},
 	{u: 1481, i: 80068, n: "Daybreak Dye", c: ["#f6f0b3", "#f6f0b3", "#f6f0b3"], h: "Yellow", m: "Vibrant", l: "[&AgHEOAEA]", en: "Daybreak", de: "Tagesanbruch", es: "Alba", fr: "Point du jour", zh: "破晓"},	
 	{u: 1498, i: 80071, n: "Blue Whale Dye", c: ["#2d2c3f", "#2d2c3f", "#2d2c3f"], h: "Purple", m: "Vibrant", l: "[&AgHHOAEA]", en: "Blue Whale", de: "Blauwal", es: "Azul ballena", fr: "Bleu baleine", zh: "蓝鲸"}	
+],
+Primordus: [
+	{u: 1540, i: 80988, n: "Magma Dye", c: ["#c40000", "#c40000", "#c40000"], h: "Red", m: "Vibrant", l: "[&AgFcPAEA]", en: "Magma", de: "Magma", es: "Magma", fr: "Magma", zh: "岩浆"},
+	{u: 1542, i: 80978, n: "Bloody Red Dye", c: ["#070000", "#070000", "#070000"], h: "Red", m: "Leather", l: "[&AgFSPAEA]", en: "Bloody Red", de: "Blutrot", es: "Rojo sangriento", fr: "Rouge sang", zh: "血红"},	
+	{u: 1538, i: 80982, n: "Sunfire Lava Dye", c: ["#ff9303", "#ff9303", "#ff9303"], h: "Orange", m: "Vibrant", l: "[&AgFWPAEA]", en: "Sunfire Lava", de: "Sonnenfeuer-Lava", es: "Lava fuego solar", fr: "Lave de feu solaire", zh: "艳阳岩浆"},
+	{u: 1537, i: 80983, n: "Destroyer Orange Dye", c: ["#f05000", "#f05000", "#f05000"], h: "Orange", m: "Vibrant", l: "[&AgFXPAEA]", en: "Destroyer Orange", de: "Zerstörer-Orange", es: "Naranja destructor", fr: "Orange destructeur", zh: "毁灭者橙"},
+	{u: 1541, i: 80976, n: "Scorched Dye", c: ["#ee2500", "#ee2500", "#ee2500"], h: "Orange", m: "Vibrant", l: "[&AgFQPAEA]", en: "Scorched", de: "Versengt", es: "Chamuscado", fr: "Brûlure", zh: "焦灼"},
+	{u: 1539, i: 80986, n: "Incandescent Dye", c: ["#ffec4c", "#ffec4c", "#ffec4c"], h: "Yellow", m: "Vibrant", l: "[&AgFaPAEA]", en: "Incandescent", de: "Weißglut", es: "Incandescente", fr: "Incandescent", zh: "辉耀白"}
 ]
 };
