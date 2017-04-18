@@ -862,10 +862,10 @@ header.cntHeader {
 }
 
 .cntComposition a {
-	color: #ffbb44;
+	color: #aaff55;
 }
 .cntComposition a:hover {
-	color: #ffeebb;
+	color: #44dd44;
 }
 .cntComposition a:active {
 	color: white;
