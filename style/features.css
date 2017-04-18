@@ -274,10 +274,12 @@ dt.jpzListNameHover {
 }
 .nodList {
 	font-size: 11px;
+	white-space: nowrap;
 }
 .nodColumn {
-	display: table-cell;
-	min-width: 110px;
+	display: inline-block;
+	vertical-align: top;
+	width: 110px;
 }
 .nodColumn label {
 	white-space: nowrap;
@@ -365,10 +367,7 @@ dt.jpzListNameHover {
 .cltBox:hover label {
 	font-weight: bold;
 }
-.cltBox:hover ins {
-	box-shadow: 0px 0px 4px #ffff66;
-}
-.cltBox span { /* Text buttons line */
+.cltLinks { /* Text buttons line */
 	display: block;
 	margin-top: -4px;
 	padding-bottom: 4px;

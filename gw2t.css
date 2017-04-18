@@ -809,6 +809,22 @@ button img {
 	width: 24px; height: 24px;
 }
 
+.cssCheckbox {
+	display: inline-block;
+	position: relative;
+}
+input[type="checkbox"] + .cssCheckboxImage {
+	display: block;
+	position: absolute;
+	margin-top: -26px;
+	margin-left: -6px;
+	width: 24px; height: 24px;
+	background-image: url("img/ui/uncheckbox.png");
+}
+input[type="checkbox"]:checked + .cssCheckboxImage {
+	background-image: url("img/ui/checkbox.png");
+}
+
 .cntComposition hr {
 	margin-top: 8px;
 	margin-bottom: 4px;
@@ -846,10 +862,10 @@ header.cntHeader {
 }
 
 .cntComposition a {
-	color: #aaff55;
+	color: #ffbb44;
 }
 .cntComposition a:hover {
-	color: #44dd44;
+	color: #ffeebb;
 }
 .cntComposition a:active {
 	color: white;
@@ -2408,6 +2424,9 @@ header.jsSection sup {
 	top: 0;
 	background: linear-gradient(115deg, #111 0%, #222 50%, #000 51%, #222 100%);
 }
+#dirContent {
+	padding-bottom: 32px;
+}
 .dirHeader {
 	margin-left: 12px;
 	font-family: Menomonia;
@@ -3359,6 +3378,7 @@ laurelunit {
 	color: #ee6655; /* Salmon chat map name */
 	color: #ffddcc; /* Salmon chat map */
 	color: #ff8844; /* Orange event name in panel */
+	color: #ff7700; /* Orange population */
 	color: #dd8800; /* Orange AP */
 	color: #fcb84d; /* Orange gem store notes */
 	color: #ee9911; /* Orange WvW points */
@@ -3373,6 +3393,7 @@ laurelunit {
 	color: #ffaa22; /* Yellow orange chain title in event panel */
 	color: #ffff00; /* Yellow chat squad name and game notices */
 	color: #ffff66; /* Yellow chat squad */
+	color: #eecc55; /* Yellow population */
 	color: #aaaaaa; /* Gray tooltip */
 	color: #88ff88; /* Green WvW team */
 	color: #44dd44; /* Green laurel */
@@ -3381,6 +3402,7 @@ laurelunit {
 	color: #44dd44; /* Green story title */
 	color: #ddff77; /* Green bright chat notice */
 	color: #88ff88; /* Green chat say name */
+	color: #99dd88; /* Green population */
 	color: #66ff66; /* Green lime story chapter */
 	color: #aaff55; /* Green lime electric story */
 	color: #66ccff; /* Blue WvW team */

@@ -520,10 +520,10 @@
 							<select id="wvwServerList"></select>
 							<div id="logOptions">
 								<div id="logFilters">
-									<div id="logFiltersRed"><label><input id="opt_bol_logRedHome" type="checkbox" /><var></var></label></div>
-									<div id="logFiltersBlue"><label><input id="opt_bol_logBlueHome" type="checkbox" /><var></var></label></div>
-									<div id="logFiltersGreen"><label><input id="opt_bol_logGreenHome" type="checkbox" /><var></var></label></div>
-									<div><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><span id="logFiltersCenter"><label><input id="opt_bol_logCenter" type="checkbox" /><var></var></label></span></div>
+									<div id="logFiltersRed"><label><input id="opt_bol_logRedHome" type="checkbox" /></label></div>
+									<div id="logFiltersBlue"><label><input id="opt_bol_logBlueHome" type="checkbox" /></label></div>
+									<div id="logFiltersGreen"><label><input id="opt_bol_logGreenHome" type="checkbox" /></label></div>
+									<div><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><span id="logFiltersCenter"><label><input id="opt_bol_logCenter" type="checkbox" /></label></span></div>
 								</div>
 							</div>
 							<ul id="logWindow"></ul>
@@ -579,22 +579,22 @@
 						<label id="logNarrateCheck" title="Toggle narration of WvW events.<br />Uncheck to mute current narration."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logNarrateCheckSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
 						<div id="logNarrateLand" class="cssColumn">
 							<b>Narration Filter:</b>
-							<label><input id="opt_bol_narrateRedHome" type="checkbox" /><var></var></label>
-							<label><input id="opt_bol_narrateBlueHome" type="checkbox" /><var></var></label>
-							<label><input id="opt_bol_narrateGreenHome" type="checkbox" /><var></var></label>
-							<label><input id="opt_bol_narrateCenter" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateRedHome" type="checkbox" /></label>
+							<label><input id="opt_bol_narrateBlueHome" type="checkbox" /></label>
+							<label><input id="opt_bol_narrateGreenHome" type="checkbox" /></label>
+							<label><input id="opt_bol_narrateCenter" type="checkbox" /></label>
 						</div>
 						<div id="logNarrateObjective" class="cssColumn">
-							<label><input id="opt_bol_narrateClaimed" type="checkbox" /><var></var></label>
-							<label><input id="opt_bol_narrateRuins" type="checkbox" /><var></var></label>
-							<label><input id="opt_bol_narrateCamp" type="checkbox" /><var></var></label>
-							<label><input id="opt_bol_narrateTower" type="checkbox" /><var></var></label>
-							<label><input id="opt_bol_narrateKeep" type="checkbox" /><var></var></label>
-							<label><input id="opt_bol_narrateCastle" type="checkbox" /><var></var></label>
+							<label><input id="opt_bol_narrateClaimed" type="checkbox" /></label>
+							<label><input id="opt_bol_narrateRuins" type="checkbox" /></label>
+							<label><input id="opt_bol_narrateCamp" type="checkbox" /></label>
+							<label><input id="opt_bol_narrateTower" type="checkbox" /></label>
+							<label><input id="opt_bol_narrateKeep" type="checkbox" /></label>
+							<label><input id="opt_bol_narrateCastle" type="checkbox" /></label>
 						</div>
 						<div id="logNarrateOther">
-							<button title="Pause/Resume updates."><img id="wvwPause" data-src="img/ui/cancel.png" /></button>&nbsp;
-							<label style="display:inline-block"><input id="logNarrateVolume" type="range" min="0" max="100" step="5" title="Set volume." /></label>
+							<button style="width:45%;" title="Pause/Resume updates."><img id="wvwPause" data-src="img/ui/cancel.png" /></button>&nbsp;
+							<label style="width:45%;display:inline-block"><input id="logNarrateVolume" type="range" min="0" max="100" step="5" title="Set volume." /></label>
 						</div>
 					</div>
 				</div>
@@ -852,6 +852,7 @@
 						<div class="cntDivider"></div>
 					</div>
 				</div>
+				<div id="dirContent"></div>
 			</article>
 			<article id="plateChains" class="jsScrollable"><!-- This plate will be populated by JS -->
 				<div id="chnProgressBar"><div id="chnProgress0"></div><div id="chnProgress1"></div></div>

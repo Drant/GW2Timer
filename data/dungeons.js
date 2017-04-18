@@ -23,6 +23,7 @@ var GW2T_DUNGEONS_HEADERS = {
  * i: Item ID associated with that unlock
  * n: Name of item
  * l: Label for comment
+ * p: Payment reward. Path reward + 2600 copper daily + 6250 copper (5 gold / 8 paths "Dungeon Frequenter")
  */
 var GW2T_DUNGEONS_DATA = {
 AC: [

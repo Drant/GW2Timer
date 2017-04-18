@@ -71,6 +71,7 @@ O = {
 
 	cLengthOfPrefixes: 3,
 	cPrefixOption: "opt_",
+	cPrefixLabel: "lbl_",
 	legalLocalStorageKeys: {},
 	isServerReset: false,
 
@@ -713,6 +714,11 @@ O = {
 			else if (inputtype === "number" || inputtype === "range")
 			{
 				O.OptionRange[optionkey] = new Array(inputelm.prop("min"), inputelm.prop("max"));
+			}
+			else if (inputtype === "checkbox")
+			{
+				// Custom checkbox image
+				I.styleCheckbox(inputelm);
 			}
 			
 			/*
@@ -2058,28 +2064,26 @@ X = {
 	 * Adds style classes to a label that wraps a checkbox depending on its state.
 	 * @param object pChecklist to get state.
 	 * @param int pIndex of state.
-	 * @param jqobject pElement checkbox label to style.
+	 * @param jqobject pElement checkbox to style its label.
 	 * @pre In format <label><input type="checkbox" />ExampleLabel</label>.
 	 */
 	styleCheckbox: function(pChecklist, pIndex, pElement)
 	{
 		var state = X.getChecklistItem(pChecklist, pIndex);
+		var label = pElement.closest("label");
 		switch (state)
 		{
 			case X.ChecklistEnum.Disabled:
 			{
-				pElement.parent().removeClass("chlCheckboxChecked")
-					.addClass("chlCheckboxDisabled");
+				label.removeClass("chlCheckboxChecked").addClass("chlCheckboxDisabled");
 			} break;
 			case X.ChecklistEnum.Checked:
 			{
-				pElement.parent().removeClass("chlCheckboxDisabled")
-					.addClass("chlCheckboxChecked");
+				label.removeClass("chlCheckboxDisabled").addClass("chlCheckboxChecked");
 			} break;
 			default:
 			{
-				pElement.parent().removeClass("chlCheckboxDisabled")
-					.removeClass("chlCheckboxChecked");
+				label.removeClass("chlCheckboxDisabled").removeClass("chlCheckboxChecked");
 			}
 		}
 	},
@@ -2498,6 +2502,7 @@ X = {
 		X.initializeDungeonChecklist();
 		X.initializeCustomChecklist();
 		X.initializeRaidChecklist();
+		I.restyleCheckboxes();
 	},
 	
 	/*
@@ -10370,15 +10375,16 @@ V = {
 		$("#accAuditContainer").show("fast");
 		// Audit option
 		$("#accAuditTop").append(
-			"<label><input id='audWantTransactions' type='checkbox' />" + D.getPhraseOriginal("Include current trading transactions") + ".</label><br />"
-			+ "<label><input id='audWantVaults' type='checkbox' />" + D.getPhraseOriginal("Include guilds vault") + ".</label><br />"
-			+ "<label><input id='audWantAutomatic' type='checkbox' />" + D.getPhraseOriginal("Automatic daily audit") + ".</label><br />"
-			+ "<label><input id='audWantConverted' type='checkbox' />" + D.getPhraseOriginal("Convert currencies in history") + ".</label>"
+			"<label><input id='audWantTransactions' type='checkbox' /> " + D.getPhraseOriginal("Include current trading transactions") + ".</label><br />"
+			+ "<label><input id='audWantVaults' type='checkbox' /> " + D.getPhraseOriginal("Include guilds vault") + ".</label><br />"
+			+ "<label><input id='audWantAutomatic' type='checkbox' /> " + D.getPhraseOriginal("Automatic daily audit") + ".</label><br />"
+			+ "<label><input id='audWantConverted' type='checkbox' /> " + D.getPhraseOriginal("Convert currencies in history") + ".</label>"
 		);
 		O.mimicInput("#audWantTransactions", "bol_auditTransactions");
 		O.mimicInput("#audWantVaults", "bol_auditVault");
 		O.mimicInput("#audWantAutomatic", "bol_auditAccountOnReset");
 		O.mimicInput("#audWantConverted", "bol_auditHistoryConverted");
+		I.restyleCheckboxes();
 		// Audit buttons
 		var buttoncontainer = $("#accAuditCenter");
 		var executebtn = $("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
@@ -19403,6 +19409,7 @@ E = {
 			);
 			I.qTip.init($(entry + " .trdOverwrite").parent());
 			I.qTip.init($(entry + " .trdNotify").parent());
+			I.restyleCheckboxes();
 			
 			name = $(entry + " .trdName");
 			buy = $(entry + " .trdBuy");
@@ -24713,7 +24720,7 @@ M = {
 		var customcheck = $("<input type='checkbox' />");
 		var customchecklabel = $("<label title='" + D.getPhraseOriginal("Enable custom range and comment") + ".'></label>").append(customcheck);
 		var customrange = $("<input type='number' value='1200' min='0' max='" + rangemaxvalue
-			+ "' step='100' style='width:48px' class='cssInputText' title='" + D.getWordCapital("range") + "' />");
+			+ "' step='100' style='width:48px' title='" + D.getWordCapital("range") + "' />");
 		var customcolor = $("<input type='text' value='#ffffff' maxlength='" + colormaxlength
 			+ "' style='width:48px' class='cssInputText' title='" + D.getWordCapital("color") + "' />");
 		var customcomment = $("<input type='text' value='" + D.getWordCapital("comment") + "...' maxlength='" + commentmaxlength
@@ -24873,6 +24880,7 @@ M = {
 		
 		// Finally
 		I.qTip.init(compasscontext.find("label, input, img"));
+		I.restyleCheckboxes();
 		that.initializeCompassStorage();
 	},
 	
@@ -28399,6 +28407,7 @@ G = {
 			
 			// Finally
 			refreshResourcePrices();
+			I.restyleCheckboxes();
 			U.verifyArticle("All", function()
 			{
 				$("#nodShowRegular, #nodShowHotspot").trigger("click");
@@ -28500,6 +28509,7 @@ G = {
 			U.convertExternalLink(".jpzList a");
 			I.createSearchBar("#jpzSearch", ".jpzItem");
 			I.qTip.init(".jpzList dt");
+			I.restyleCheckboxes();
 
 			// Button to toggle JP markers only
 			$("#jpzToggleJP").change(function()
@@ -28794,6 +28804,7 @@ G = {
 			U.convertExternalLink("#cltList cite a");
 			I.qTip.init(".cltLinks");
 			I.createSearchBar("#cltSearch", ".cltBox");
+			I.restyleCheckboxes();
 			
 			// Create category filter
 			for (var i in metadata.Categories)
@@ -30870,16 +30881,16 @@ W = {
 		
 		// Label the narration filters
 		var blstr = W.getName("Borderlands");
-		$("#opt_bol_narrateRedHome").next().html(D.orderModifier(blstr, W.getName("Red")));
-		$("#opt_bol_narrateBlueHome").next().html(D.orderModifier(blstr, W.getName("Blue")));
-		$("#opt_bol_narrateGreenHome").next().html(D.orderModifier(blstr, W.getName("Green")));
-		$("#opt_bol_narrateCenter").next().html(W.getName("Center"));
-		$("#opt_bol_narrateRuins").next().html(W.getName("Ruins"));
-		$("#opt_bol_narrateCamp").next().html(W.getName("Camp"));
-		$("#opt_bol_narrateTower").next().html(W.getName("Tower"));
-		$("#opt_bol_narrateKeep").next().html(W.getName("Keep"));
-		$("#opt_bol_narrateCastle").next().html(W.getName("Castle"));
-		$("#opt_bol_narrateClaimed").next().html(W.getName("Claimed"));
+		I.relabelCheckbox("#opt_bol_narrateRedHome", D.orderModifier(blstr, W.getName("Red")));
+		I.relabelCheckbox("#opt_bol_narrateBlueHome", D.orderModifier(blstr, W.getName("Blue")));
+		I.relabelCheckbox("#opt_bol_narrateGreenHome", D.orderModifier(blstr, W.getName("Green")));
+		I.relabelCheckbox("#opt_bol_narrateCenter", W.getName("Center"));
+		I.relabelCheckbox("#opt_bol_narrateRuins", W.getName("Ruins"));
+		I.relabelCheckbox("#opt_bol_narrateCamp", W.getName("Camp"));
+		I.relabelCheckbox("#opt_bol_narrateTower", W.getName("Tower"));
+		I.relabelCheckbox("#opt_bol_narrateKeep", W.getName("Keep"));
+		I.relabelCheckbox("#opt_bol_narrateCastle", W.getName("Castle"));
+		I.relabelCheckbox("#opt_bol_narrateClaimed", W.getName("Claimed"));
 		
 		// Mimic the master volumn slider
 		I.preventMapPropagation(O.mimicInput("#logNarrateVolume", "int_setVolume"));
@@ -31211,10 +31222,10 @@ W = {
 		if (W.MatchupCurrent !== null)
 		{
 			// Log server borderlands names
-			$("#opt_bol_logRedHome").next().html(W.MatchupCurrent["red"].oNameStr);
-			$("#opt_bol_logBlueHome").next().html(W.MatchupCurrent["blue"].oNameStr);
-			$("#opt_bol_logGreenHome").next().html(W.MatchupCurrent["green"].oNameStr);
-			$("#opt_bol_logCenter").next().html(W.getName("Center"));
+			I.relabelCheckbox("#opt_bol_logRedHome", W.MatchupCurrent["red"].oNameStr);
+			I.relabelCheckbox("#opt_bol_logBlueHome", W.MatchupCurrent["blue"].oNameStr);
+			I.relabelCheckbox("#opt_bol_logGreenHome", W.MatchupCurrent["green"].oNameStr);
+			I.relabelCheckbox("#opt_bol_logCenter", W.getName("Center"));
 			
 			// Compass zone links borderlands names
 			$("#wvwZoneLinkRed").html(W.MatchupCurrent["red"].oNameStr);
@@ -34178,14 +34189,14 @@ H = {
 			+ "<a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>"
 				+ "<img data-src='img/ui/menu/info.png' />" + D.getWordCapital("info") + "</a> "
-			+ "<a class='jsTitle'" + U.convertExternalAnchor("http://gw2timer.com/?page=Pact")
-				+ "title='Previous recipes and frequency statistics.'>"
+			+ "<a id='dsbPactHistoryLink' class='jsTitle' data-page='Pact' title='Previous recipes and frequency statistics.'>"
 				+ "<img data-src='img/ui/tradingpost.png' />" + D.getWordCapital("history") + "</a> "
 			+ "<a class='jsTitle'" + U.convertExternalAnchor(H.Pact.SpreadsheetEdit)
 				+ "title='Update and verify the collaborative daily offers list.'>"
 				+ "<img data-src='img/ui/import.png' />" + D.getWordCapital("update") + "</a>"
 			+ "</div><div id='dsbPactTable' class='jsScrollable'></div>").hide();
 		I.qTip.reinit();
+		U.convertInternalLink("#dsbPactHistoryLink");
 
 		// Bind buttons
 		var vendorcopy = $("#dsbPactCodes").click(function()
@@ -37519,6 +37530,36 @@ I = {
 	},
 	
 	/*
+	 * Adds custom checkbox image to a checkbox element.
+	 * @param jqobject pElm
+	 * @pre Checkbox is enclosed by a label tag.
+	 */
+	styleCheckbox: function(pElement)
+	{
+		$(pElement).addClass("jsCheckbox").wrap("<span class='cssCheckbox'></span>").after("<kbd class='cssCheckboxImage'></kbd>");
+	},
+	restyleCheckboxes: function()
+	{
+		$("input[type='checkbox']").not(".jsCheckbox").each(function()
+		{
+			I.styleCheckbox($(this));
+		});
+	},
+	
+	/*
+	 * Sets a checkbox's label text. Also assigns ID of checkbox to label.
+	 * @param jqobject pElement
+	 * @param string pHTML
+	 */
+	relabelCheckbox: function(pElement, pHTML)
+	{
+		var elm = $(pElement);
+		var parent = elm.closest("label").attr("id", elm.attr("id").replace(O.cPrefixOption, O.cPrefixLabel));
+		parent.find(".jsCheckboxText").remove();
+		parent.append("<var class='jsCheckboxText'> " + pHTML + "</var>");
+	},
+	
+	/*
 	 * Styles and translates a custom context menu.
 	 * @param string pMenu name of the menu.
 	 */
@@ -38149,7 +38190,7 @@ I = {
 				// Scroll to header if expanding, top of page if collapsing
 				if (istobeexpanded)
 				{
-					I.scrollToElement($(this), {aContainer: pPlate, aSpeed: "fast"});
+					I.scrollToElement($(this), {aContainer: pPlate, aSpeed: "fast", aOffset: -12});
 				}
 			});
 			
@@ -38375,7 +38416,7 @@ I = {
 	 */
 	initializeDirectory: function()
 	{
-		var dir = $("#plateDirectory");
+		var dir = $("#dirContent");
 		var isnondefaultlang = !D.isLanguageDefault;
 		var group, groupname, groupheader, headerclass, grouplist, pagename, pagebutton;
 		var index = 0;

@@ -601,16 +601,16 @@ a.lboLink {
 	text-align: center;
 	border-top: 1px solid gray;
 }
-#opt_bol_logRedHome + var, #opt_bol_narrateRedHome + var {
+#lbl_bol_logRedHome, #lbl_bol_narrateRedHome {
 	color: #ff5544;
 }
-#opt_bol_logGreenHome + var, #opt_bol_narrateGreenHome + var  {
+#lbl_bol_logGreenHome, #lbl_bol_narrateGreenHome  {
 	color: #88ff88;
 }
-#opt_bol_logBlueHome + var, #opt_bol_narrateBlueHome + var  {
+#lbl_bol_logBlueHome, #lbl_bol_narrateBlueHome  {
 	color: #66ccff;
 }
-#opt_bol_logCenter + var, #opt_bol_narrateCenter + var  {
+#lbl_bol_logCenter, #lbl_bol_narrateCenter  {
 	color: #ffeeaa;
 }
 

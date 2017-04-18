@@ -174,6 +174,7 @@ GW2T_SALE_DATA = {
 		side: 1
 	},
 	{
+		Finish: new Date("2017-04-24T16:00:00Z"),
 		name: "Shadow Dye Kit",
 		id: "68786",
 		price: 125,
