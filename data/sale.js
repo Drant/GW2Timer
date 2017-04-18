@@ -38,18 +38,49 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		Finish: new Date("2017-04-18T16:00:00Z"),
-		name: "Wide Rim Glasses",
-		id: "64753",
-		price: 150,
+		name: "Chaos weapon skins#Gallery",
+		id: "67028",
+		price: 5,
 		discount: null,
 		side: 0
 	},
 	{
-		Finish: new Date("2017-04-18T16:00:00Z"),
-		name: "Bunny Ears",
-		id: "64738",
-		price: 200,
+		Finish: new Date("2017-04-25T16:00:00Z"),
+		name: "Crystalline Dragon Wings Glider",
+		id: "79704",
+		price: 700,
+		discount: null,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-25T16:00:00Z"),
+		name: "Crystalline Dragon Wings Backpack",
+		id: "79707",
+		price: 700,
+		discount: null,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
+		name: "Fused Molten Sickle",
+		id: "67032",
+		price: 1000,
+		discount: null,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
+		name: "Fused Molten Logging Axe",
+		id: "67030",
+		price: 1000,
+		discount: null,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-21T16:00:00Z"),
+		name: "Molten Alliance Mining Pick",
+		id: "48933",
+		price: 1000,
 		discount: null,
 		side: 0
 	},
@@ -78,12 +109,19 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
+		name: "Primordus Dye Kit",
+		id: "http://i.imgur.com/I6gg0mr.png",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		side: 0
+	},
+	{
 		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Super Adventure Logging Bear",
 		id: "80966",
 		price: 1000,
 		discount: null,
-		side: 0
+		side: 1
 	},
 	{
 		Finish: new Date("2017-04-21T16:00:00Z"),
@@ -91,53 +129,13 @@ GW2T_SALE_DATA = {
 		id: "80887",
 		price: 700,
 		discount: null,
-		side: 0
+		side: 1
 	},
 	{
 		Finish: new Date("2017-04-21T16:00:00Z"),
 		name: "Super Adventure Holo-Copter",
 		id: "80958",
 		price: 700,
-		discount: null,
-		side: 0
-	},
-	{
-		Finish: new Date("2017-04-18T16:00:00Z"),
-		name: "Crimson Lion Dye Kit",
-		id: "68653",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		side: 0
-	},
-	{
-		Finish: new Date("2017-04-18T16:00:00Z"),
-		name: "Permanent Super Explosive Finisher",
-		id: "44724",
-		price: 600,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-18T16:00:00Z"),
-		name: "Super Cloud Glider",
-		id: "80919",
-		price: 500,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-18T16:00:00Z"),
-		name: "Miniature Super Trio",
-		id: "41907",
-		price: 500,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-18T16:00:00Z"),
-		name: "Miniature Super Trio—World 2",
-		id: "46498",
-		price: 500,
 		discount: null,
 		side: 1
 	},
@@ -175,6 +173,14 @@ GW2T_SALE_DATA = {
 	},
 	{
 		Finish: new Date("2017-04-24T16:00:00Z"),
+		name: "Solar and Lunar Dye Kit",
+		id: "80069",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		side: 1
+	},
+	{
+		Finish: new Date("2017-04-25T16:00:00Z"),
 		name: "Shadow Dye Kit",
 		id: "68786",
 		price: 125,

@@ -279,7 +279,7 @@ dt.jpzListNameHover {
 .nodColumn {
 	display: inline-block;
 	vertical-align: top;
-	width: 110px;
+	width: 33%;
 }
 .nodColumn label {
 	white-space: nowrap;

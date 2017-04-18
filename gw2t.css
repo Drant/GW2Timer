@@ -734,7 +734,7 @@ html, body,
 	padding: 2px;
 	overflow: hidden;
 	border: 1px solid rgba(255, 238, 187, 0.2);
-	background: transparent;
+	background: url("img/background/stripe.png");
 	font-family: sans-serif;
 	color: #ffddcc;
 	transition: border 0.2s;
@@ -2473,6 +2473,7 @@ header.jsSection sup {
 	position: absolute; z-index: 2;
 	margin-top: 1px;
 	width: 360px; height: 1px;
+	pointer-events: none;
 }
 #chnProgress0, #chnProgress1 {
 	display: block;

@@ -29066,11 +29066,11 @@ G = {
 				M.goToArguments(P.Collectibles[type].view);
 				// Rebind tooltip
 				P.rebindMarkerTooltips();
-				$(this).parent().addClass("cltCheckedLabel");
+				$(this).closest("label").addClass("cltCheckedLabel");
 			}
 			else
 			{
-				$(this).parent().removeClass("cltCheckedLabel");
+				$(this).closest("label").removeClass("cltCheckedLabel");
 			}
 			// Special case for ranger pets
 			if (pType === "RangerPets")
@@ -34093,17 +34093,30 @@ H = {
 				var id = pEntry.i;
 				var value;
 				var salevalue = H.Sale.Values[id];
+				var isavailableinrecord = false;
+				var isavailableinsale = false;
+				var isdiscountedinsale = false;
 				for (var i in pEntry.p)
 				{
 					value = pEntry.p[i];
+					if (value > 0)
+					{
+						isavailableinrecord = true;
+					}
 					if (salevalue >= 0)
 					{
+						isavailableinsale = true;
 						value = Math.abs(value); // If exists in promotions then consider as available in the record
+					}
+					if (salevalue < value || salevalue === 0)
+					{
+						isdiscountedinsale = true;
 					}
 					break; // Consider only the first payment type
 				}
+				
 				// Check for available
-				if (H.isGemSubscribedForAvailable(id) && (salevalue >= 0 || value > 0))
+				if (H.isGemSubscribedForAvailable(id) && (isavailableinsale || isavailableinrecord))
 				{
 					I.print(pEntry.n + availablestr + "! " + getUnsubscribeLink(id));
 					isavailable = true;
@@ -34111,11 +34124,17 @@ H = {
 				// Check for discount
 				if (H.isGemSubscribedForDiscounted(id))
 				{
-					if (salevalue >= 0 && value && (salevalue < value || salevalue === 0))
+					if (isdiscountedinsale)
 					{
 						I.print(pEntry.n + discountstr + "! " + E.formatGemString(value) + " − "
 							+ E.formatGemString(value - salevalue) + " = " + E.formatGemString(salevalue) + " " + getUnsubscribeLink(id));
 						isdiscounted = true;
+					}
+					// If item is no longer available, then convert the discount subscription to an availability subscription
+					else if (salevalue === undefined && isavailableinrecord === false)
+					{
+						H.subscribeGemAvailable(id);
+						H.saveGemSubscription();
 					}
 				}
 			});
