@@ -22,7 +22,7 @@ var GW2T_MINIS_BLACKLIST = {
 };
 
 /*
- * Associated mini item with that mini unlockable.
+ * Associated item with that unlockable.
  * Chronologically sorted based on http://wiki.guildwars2.com/wiki/Miniature
  * u: Unlockable ID (unlock ID)
  * i: Item ID associated with that unlock

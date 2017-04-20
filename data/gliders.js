@@ -13,7 +13,7 @@ var GW2T_GLIDERS_HEADERS = {
 };
 
 /*
- * Associated finisher item with that finisher unlockable.
+ * Associated item with that unlockable.
  * u: Unlockable ID (unlock ID)
  * i: Item ID associated with that unlock
  * n: Name of unlock

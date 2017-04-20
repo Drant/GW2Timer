@@ -25,7 +25,7 @@ var GW2T_FINISHERS_BLACKLIST = {
 };
 
 /*
- * Associated finisher item with that finisher unlockable.
+ * Associated item with that unlockable.
  * u: Unlockable ID (unlock ID)
  * i: Item ID associated with that unlock
  * n: Name of finisher

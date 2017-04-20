@@ -773,21 +773,5 @@ Legendary: [
 	{i: 71383, n: "Nevermore", p: {craft: true}},
 	{i: 77474, n: "The Ascension", p: {craft: true}},
 	{i: 74155, n: "Ad Infinitum", p: {craft: true}}
-],
-Carrier: [
-	{i: 67355, n: "Ghostly Mail Courier", p: {gem: 500}},
-	{i: 67863, n: "Exalted Mail Courier", p: {gem: 500}},
-	{i: 68102, n: "Confetti Mail Delivery", p: {gem: 300}},
-	{i: 68104, n: "Gifts Mail Delivery", p: {gem: 350}},
-	{i: 68106, n: "Griffon Mail Carrier", p: {gem: 500}},
-	{i: 68652, n: "Red Envelope Mail Carrier", p: {gem: 600}},
-	{i: 68681, n: "Snow Owl Mail Carrier", p: {gem: 350}},
-	{i: 68682, n: "Sylvari Seed Pod Mail Carrier", p: {gem: 350}},
-	{i: 69628, n: "Aviator Quaggan Mail Carrier", p: {gem: 500}},
-	{i: 69715, n: "Revenant Mail Carrier", p: {gem: 350}},
-	{i: 69745, n: "Raven Mail Carrier"},
-	{i: 69774, n: "Parrot Mail Carrier"},
-	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 600}},
-	{i: 79341, n: "Anniversary Mail Carrier", p: {starting: true}}
 ]
 };

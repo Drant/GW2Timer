@@ -192,7 +192,6 @@ O = {
 		bol_showCoordinatesBar: true,
 		bol_showZoneBorders: false,
 		bol_showZoneGateways: false,
-		bol_showPersonalPaths: true,
 		bol_showChainPaths: true,
 		bol_tourPrediction: true,
 		bol_showWorldCompletion: false,
@@ -1332,17 +1331,6 @@ O = {
 		bol_showZoneGateways: function()
 		{
 			P.drawZoneGateways();
-		},
-		bol_showPersonalPaths: function()
-		{
-			if (M.isMapInitialized)
-			{
-				M.redrawPersonalPath();
-			}
-			if (W.isMapInitialized)
-			{
-				W.redrawPersonalPath();
-			}
 		},
 		str_colorPersonalPath: function()
 		{
@@ -2842,6 +2830,7 @@ U = {
 		Gliders: "data/gliders.js",
 		Dyes: "data/dyes.js",
 		Minis: "data/minis.js",
+		Carriers: "data/carriers.js",
 		Finishers: "data/finishers.js",
 		Nodes: "data/nodes.js",
 		Cats: "data/cats.js",
@@ -6737,10 +6726,10 @@ Z = {
 	/*
 	 * Finds and prints unlockables from the API not already in the unlockables record.
 	 */
-	collateUnlockables: function(pSection)
+	collateUnlockables: function(pSection, pEndpoint)
 	{
 		var section = pSection;
-		Z.getNewAPIEntries(section, section, function(pReturn)
+		Z.getNewAPIEntries(section, pEndpoint || section, function(pReturn)
 		{
 			Z.printRecordEntry(pReturn.oEntries, {
 				aItemIDsKey: "item_id"
@@ -6758,6 +6747,10 @@ Z = {
 	collateMinis: function()
 	{
 		Z.collateUnlockables("Minis");
+	},
+	collateCarriers: function()
+	{
+		Z.collateUnlockables("Carriers", "mailcarriers");
 	},
 	collateFinishers: function()
 	{
@@ -7156,7 +7149,7 @@ Z = {
 	collatePrices: function()
 	{
 		// Should only include records that have tradeable items
-		var recordnames = ["materials", "skins", "dyes", "minis", "finishers", "nodes", "recipes"];
+		var recordnames = ["materials", "skins", "dyes", "minis", "carriers", "finishers", "nodes", "recipes"];
 		var recordnamescounter = 0;
 		var db, record, catarr;
 		var idstocache = {};
@@ -7292,6 +7285,13 @@ Z = {
 				}
 			});
 			iterateRecord(function(iEntry) // Minis
+			{
+				if (Q.isTradeable(db[iEntry.i]))
+				{
+					idstocache[iEntry.i] = true;
+				}
+			});
+			iterateRecord(function(iEntry) // Carriers
 			{
 				if (Q.isTradeable(db[iEntry.i]))
 				{
@@ -7445,6 +7445,7 @@ A = {
 		Cats: "account/home/cats",
 		Materials: "account/materials",
 		Minis: "account/minis",
+		Carriers: "account/mailcarriers",
 		Outfits: "account/outfits",
 		Gliders: "account/gliders",
 		Skins: "account/skins",
@@ -9008,6 +9009,7 @@ A = {
 			Gliders: {},
 			Dyes: {},
 			Minis: {},
+			Carriers: {},
 			Finishers: {},
 			Nodes: {},
 			Recipes: {}
@@ -9018,6 +9020,7 @@ A = {
 			Gliders: {},
 			Dyes: {},
 			Minis: {},
+			Carriers: {},
 			Finishers: {},
 			Nodes: {}
 		};
@@ -10005,6 +10008,7 @@ A = {
 			auditUnlocks("Gliders");
 			auditUnlocks("Dyes");
 			auditUnlocks("Minis");
+			auditUnlocks("Carriers");
 			auditUnlocks("Finishers");
 			auditUnlocks("Nodes");
 			auditUnlocks("Recipes");
@@ -10174,6 +10178,8 @@ A = {
 				insertPaymentsFromRecord("Gliders");
 				// Insert minis item payments
 				insertPaymentsFromRecord("Minis");
+				// Insert mail carriers item payments
+				insertPaymentsFromRecord("Carriers");
 				// Insert finisher item payments
 				insertPaymentsFromRecord("Finishers");
 				// Insert home instance node item payments
@@ -12563,6 +12569,10 @@ V = {
 	serveMinis: function()
 	{
 		V.serveUnlockables("Minis");
+	},
+	serveCarriers: function()
+	{
+		V.serveUnlockables("Carriers");
 	},
 	serveFinishers: function()
 	{
@@ -24317,11 +24327,11 @@ M = {
 		var that = this;
 		var index = this.numPins;
 		var coord = this.convertLCtoGC(pLatLng);
-		var angle = (this.coordPreviousPin && O.Options.bol_showPersonalPaths) ? this.convertDirectionAngle(this.coordPreviousPin, coord) : 0;
+		var angle = (this.coordPreviousPin) ? this.convertDirectionAngle(this.coordPreviousPin, coord) : 0;
 		this.coordPreviousPin = coord;
 		
 		// Create a pin at double click location
-		var url = (this.numPins === 0) ? "img/map/pin_red.png" : (O.Options.bol_showPersonalPaths ? "img/map/pin_directed.png" : "img/map/pin_white.png");
+		var url = (this.numPins === 0) ? "img/map/pin_red.png" : "img/map/pin_directed.png";
 		var marker = L.marker(pLatLng,
 		{
 			icon: L.icon(
@@ -24461,51 +24471,43 @@ M = {
 	drawPersonalPath: function()
 	{
 		var that = this;
-		if (O.Options.bol_showPersonalPaths)
+		var path;
+		var latlngs = [];
+		var pinids = [];
+		var length = 0;
+		this.Layer.PersonalPin.eachLayer(function(iPin)
 		{
-			var path;
-			var latlngs = [];
-			var pinids = [];
-			var length = 0;
-			this.Layer.PersonalPin.eachLayer(function(iPin)
+			latlngs.push(iPin.getLatLng());
+			pinids.push(P.getLayerId(iPin));
+			length++;
+		});
+		if (length > 1)
+		{
+			this.Layer.PersonalPath.clearLayers();
+			for (var i = 0; i < length - 1; i++)
 			{
-				latlngs.push(iPin.getLatLng());
-				pinids.push(P.getLayerId(iPin));
-				length++;
-			});
-			if (length > 1)
-			{
-				this.Layer.PersonalPath.clearLayers();
-				for (var i = 0; i < length - 1; i++)
+				// Create a single line connecting next two pins
+				path = L.polyline([latlngs[i], latlngs[i+1]], {
+					color: P.getUserPathColor(),
+					opacity: 0.4,
+					precede: i // Store the index of the preceding pin that connects the path
+				});
+				// Single click path: get the coordinates of all pins
+				path.on("click", function()
 				{
-					// Create a single line connecting next two pins
-					path = L.polyline([latlngs[i], latlngs[i+1]], {
-						color: P.getUserPathColor(),
-						opacity: 0.4,
-						precede: i // Store the index of the preceding pin that connects the path
-					});
-					// Single click path: get the coordinates of all pins
-					path.on("click", function()
-					{
-						that.outputCoordinatesCopy(that.getPersonalString());
-						that.outputPinsDistance();
-					});
-					// Double click path: insert a pin between the two pins that connect the path
-					path.on("dblclick", function(pEvent)
-					{
-						that.saveBackupPins();
-						that.insertPersonalPin(this.options.precede, pEvent.latlng);
-					});
-					this.Layer.PersonalPath.addLayer(path);
-				}
-				this.toggleLayer(this.Layer.PersonalPath, true);
-				that.outputPinsDistance();
+					that.outputCoordinatesCopy(that.getPersonalString());
+					that.outputPinsDistance();
+				});
+				// Double click path: insert a pin between the two pins that connect the path
+				path.on("dblclick", function(pEvent)
+				{
+					that.saveBackupPins();
+					that.insertPersonalPin(this.options.precede, pEvent.latlng);
+				});
+				this.Layer.PersonalPath.addLayer(path);
 			}
-			else
-			{
-				this.toggleLayer(this.Layer.PersonalPath, false);
-				this.Layer.PersonalPath.clearLayers();
-			}
+			this.toggleLayer(this.Layer.PersonalPath, true);
+			that.outputPinsDistance();
 		}
 		else
 		{
@@ -36395,6 +36397,7 @@ I = {
 			Gliders: "Gliders",
 			Dyes: "Dyes",
 			Minis: "Minis",
+			Carriers: "Carriers",
 			Finishers: "Finishers",
 			Nodes: "Nodes",
 			Cats: "Cats",
@@ -36489,6 +36492,7 @@ I = {
 			Gliders: "Gliders",
 			Dyes: "Dyes",
 			Minis: "Minis",
+			Carriers: "Carriers",
 			Finishers: "Finishers",
 			Nodes: "Nodes",
 			Cats: "Cats",
