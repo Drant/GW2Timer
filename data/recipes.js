@@ -11094,7 +11094,12 @@ Scribe_GuildDecoration: [
 	{u: 11891, i: 80043, n: "Large Hemisphere of Snow", r: [[24277, 2], [74768, 1]]},
 	{u: 11892, i: 79998, n: "Cuboid of Snow", r: [[24277, 1], [70454, 1]]},
 	{u: 11896, i: 79954, n: "Cube of Snow", r: [[70454, 1], [24277, 1]]},
-	{u: 11897, i: 79956, n: "Large Cuboid of Snow", r: [[24277, 2], [74768, 1]]}
+	{u: 11897, i: 79956, n: "Large Cuboid of Snow", r: [[24277, 2], [74768, 1]]},
+	{u: 12036, i: 80885, n: "Super Pine Tree", r: [[70926, 1], [68942, 2]]},
+	{u: 12037, i: 80922, n: "Super Flower", r: [[70926, 1], [19713, 8]]},
+	{u: 12038, i: 80913, n: "Super Mushroom", r: [[70926, 1], [70842, 2]]},
+	{u: 12039, i: 80864, n: "Super Campfire", r: [[70926, 1], [19760, 8]]},
+	{u: 12040, i: 80866, n: "Super Forest House", r: [[70926, 1], [19709, 64]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
