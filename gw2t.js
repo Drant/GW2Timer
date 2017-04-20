@@ -4962,9 +4962,13 @@ U = {
 	 */
 	getGuildBannerRaw: function(pGuild)
 	{
-		try { return "https://render.guildwars2.com/file/" + GW2T_EMBLEM_DATA.foreground[pGuild.emblem.foreground.id] + ".png"; }
+		try { return U.getAPIImage(GW2T_EMBLEM_DATA.foreground[pGuild.emblem.foreground.id]); }
 		catch (e) {}
 		return "img/ui/unavailable.png";
+	},
+	getAPIImage: function(pSubstring)
+	{
+		return "https://render.guildwars2.com/file/" + pSubstring + ".png";
 	},
 	
 	/*
@@ -26536,6 +26540,17 @@ P = {
 			if (pName.indexOf("burglar") !== -1) return "fist";
 			return "swords";
 		};
+		var iconURL = {
+			release: "img/event/release.png",
+			flag: "https://render.guildwars2.com/file/A4F01E7A5E90382F0ACFA71348E4241900529EB5/102321.png",
+			shield: "https://render.guildwars2.com/file/4D52C9605D6F19D3B6FB00D39E95EC45C3FCB62C/102387.png",
+			boss: "https://render.guildwars2.com/file/9C97043218F4EF1205B6FB5503CFCCA038D607E1/102392.png",
+			collect: "https://render.guildwars2.com/file/7695C3055956ACCC4D7F273F59B2120B0CB123B0/102330.png",
+			star: "https://render.guildwars2.com/file/F6B0F9F82D1D3A000D1827E3EA59A7D734141004/102388.png",
+			cog: "https://render.guildwars2.com/file/92BC536037C0AA531E9019D7AB3A23C71805FB99/102393.png",
+			fist: "https://render.guildwars2.com/file/9005555700262173FB6506A12204776AAEC6A40F/102391.png",
+			swords: "https://render.guildwars2.com/file/98EB189CADF825549B187C57B551CE1AA29CA694/102320.png"
+		};
 		
 		// Function to store event names for filtering
 		var initializeEvents = function(pEventData)
@@ -26626,8 +26641,15 @@ P = {
 					});
 					zoneobj.Layers.EventLabel.addLayer(label);
 
-					// Create event's icon
-					icon = "img/event/" + determineEventIcon(searchname) + I.cPNG;
+					// Use API's icon type if available, otherwise guess
+					if (event.icon)
+					{
+						icon = U.getAPIImage(event.icon.signature + "/" + event.icon.file_id);
+					}
+					else
+					{
+						icon = iconURL[determineEventIcon(searchname)];
+					}
 					marker = L.marker(coordmarker,
 					{
 						title: "<span class='mapPoi'><dfn>" + newname + "</dfn> (" + event.level + ")<br /><cite>" + instructionstr + "</cite></span>",

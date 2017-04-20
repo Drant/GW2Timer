@@ -1551,19 +1551,19 @@ Countdown: {
 		name_fr: "Mars boutique promotions",
 		name_zh: "宝石店三月促销",
 		url: "https://wiki.guildwars2.com/wiki/Gem_Store/March_Sale#March_Sale.2C_2017",
-		Start: new Date("2017-03-03T16:00:00Z"),
-		Finish: new Date("2017-03-31T16:00:00Z")
+		Start: new Date("2018-03-03T16:00:00Z"),
+		Finish: new Date("2018-03-31T16:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "Super Adventure Festival",
 		name_de: "Super Adventure Festival",
 		name_es: "Festival Super Adventure",
 		name_fr: "Festival de la Super Adventure",
 		name_zh: "超级冒险盒",
 		official: "the-game/releases/march-30-2017/",
-		Start: new Date("2017-03-30T16:00:00Z"),
-		Finish: new Date("2017-04-20T16:00:00Z")
-	}
+		Start: new Date("2018-03-30T16:00:00Z"),
+		Finish: new Date("2018-04-20T16:00:00Z")
+	}*/
 	/*{
 		name_en: "Halloween 2017",
 		name_de: "Halloween 2017",
@@ -1594,7 +1594,7 @@ Countdown: {
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
 	}*/
-	/*{ // 8 weeks cycle, repeats 56 days after this event's start
+	{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
@@ -1603,7 +1603,7 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-04-27T20:00:00Z"),
 		Finish: new Date("2017-05-04T20:00:00Z")
-	},*/
+	}
 	/*{
 		name_en: "LS3: Episode V",
 		name_de: "LG3: Episode V",
