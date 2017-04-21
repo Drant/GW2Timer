@@ -38,9 +38,18 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{
-		name: "Chaos weapon skins#Gallery",
-		id: "67028",
-		price: 5,
+		Finish: new Date("2017-04-25T16:00:00Z"),
+		name: "Wizard's Hat",
+		id: "64757",
+		price: 200,
+		discount: null,
+		side: 0
+	},
+	{
+		Finish: new Date("2017-04-24T16:00:00Z"),
+		name: "Belinda's Greatsword Skin",
+		id: "8466",
+		price: 600,
 		discount: null,
 		side: 0
 	},
@@ -61,114 +70,17 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Fused Molten Sickle",
-		id: "67032",
-		price: 1000,
+		name: "Chaos weapon skins#Gallery",
+		id: "67028",
+		price: 5,
 		discount: null,
-		side: 0
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Fused Molten Logging Axe",
-		id: "67030",
-		price: 1000,
-		discount: null,
-		side: 0
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Molten Alliance Mining Pick",
-		id: "48933",
-		price: 1000,
-		discount: null,
-		side: 0
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Shadow of the Dragon Helmet Skin",
-		id: "68574",
-		price: 300,
-		discount: null,
-		side: 0
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Shadow of the Dragon Shoulder Skin",
-		id: "68575",
-		price: 300,
-		discount: null,
-		side: 0
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Shadow of the Dragon Gloves Skin",
-		id: "68576",
-		price: 300,
-		discount: null,
-		side: 0
+		side: 1
 	},
 	{
 		name: "Primordus Dye Kit",
 		id: "80974",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
-		side: 0
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Super Adventure Logging Bear",
-		id: "80966",
-		price: 1000,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Super Adventure Holo-Copter Backpack",
-		id: "80887",
-		price: 700,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Super Adventure Holo-Copter",
-		id: "80958",
-		price: 700,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Miniature Super Trio—Series 3",
-		id: "80939",
-		price: 600,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Super Bee Dog Mail Carrier",
-		id: "78088",
-		price: 600,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Infinite Continue Coin",
-		id: "46499",
-		price: 600,
-		discount: null,
-		side: 1
-	},
-	{
-		Finish: new Date("2017-04-21T16:00:00Z"),
-		name: "Super Adventure Box o' Fun",
-		id: "41911",
-		price: 125,
-		discount: null,
 		side: 1
 	},
 	{

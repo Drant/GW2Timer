@@ -35,6 +35,6 @@ Gem: [
 	{u: 2, i: 68682, n: "Sylvari Seed Pod Mail Carrier", p: {gem: 350}},
 	{u: 11, i: 69628, n: "Aviator Quaggan Mail Carrier", p: {gem: 500}},
 	{u: 12, i: 69715, n: "Revenant Mail Carrier", p: {gem: 350}},
-	{u: 14, i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 600}}
+	{u: 14, i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 0}}
 ]
 };

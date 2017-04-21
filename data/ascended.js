@@ -712,11 +712,12 @@ Back: [
 	{i: 79837, n: "Icebrood Horn Backpack (Infused)", p: {map_bf: 400}},
 	{i: 80369, n: "Seraph Backpack", p: {map_ld: 200}},
 	{i: 80289, n: "Assaulter's Burden", p: {magnetite: 600}},
+	{i: 80437, n: "Assaulter's Burden (Infused)", p: {magnetite: 600}},
 	{i: 80434, n: "Malicious Burden", p: {magnetite: 600}},
 	{i: 80257, n: "Malicious Burden (Infused)", p: {magnetite: 600}},
 	{i: 80184, n: "Defender's Burden", p: {magnetite: 600}},
 	{i: 80541, n: "Healer's Burden", p: {magnetite: 600}},
-	{i: 80437, n: "Assaulter's Burden (Infused)", p: {magnetite: 600}}
+	{i: 80405, n: "Healer's Burden (Infused)", p: {magnetite: 600}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},

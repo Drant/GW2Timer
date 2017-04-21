@@ -808,6 +808,10 @@ button:active, .cssButton:active, button.btnFocused {
 button img {
 	width: 24px; height: 24px;
 }
+input:focus, textarea:focus, button:focus {
+    border: 1px solid rgba(255, 238, 187, 0.8);
+	outline: none;
+}
 
 .cssCheckbox {
 	display: inline-block;

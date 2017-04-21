@@ -584,7 +584,7 @@ Carrier: [
 	{i: 68682, n: "Sylvari Seed Pod Mail Carrier", p: {gem: 350}},
 	{i: 69628, n: "Aviator Quaggan Mail Carrier", p: {gem: 500}},
 	{i: 69715, n: "Revenant Mail Carrier", p: {gem: 350}},
-	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: -600}}
+	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 0}}
 ],
 Node: [
 	{i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
