@@ -110,7 +110,7 @@ Glider: [
 	{i: 78790, n: "Floral Glider", p: {gem: 400}},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
 	{i: 79016, n: "White Mantle Glider", p: {gem: 400}},
-	{i: 79084, n: "Shining Blade Glider", p: {gem: 700}},
+	{i: 79084, n: "Shining Blade Glider", p: {gem: -700}},
 	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}},
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
 	{i: 79663, n: "Bloodstone Glider", p: {gem: 500}},
@@ -122,7 +122,7 @@ Glider: [
 	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: -400}},
 	{i: 80725, n: "Raven's Spirit Glider", p: {gem: -500}},
 	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}},
-	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: 700}}
+	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
