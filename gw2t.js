@@ -2455,8 +2455,8 @@ X = {
 		var clkweekly = $("#chlCountdownToWeekly").hide();
 		var showChecklist = function(pTab, pContainer, pChecklist, pClock)
 		{
-			tabs.removeClass("btnFocused");
-			pTab.addClass("btnFocused");
+			tabs.removeClass("btnActive");
+			pTab.addClass("btnActive");
 			contcust.hide();
 			contdung.hide();
 			contraid.hide();
@@ -2727,8 +2727,8 @@ X = {
 				// Show selected number's sheet
 				$("#chlNotepadSheets textarea").hide().eq(iIndex).show()
 					.css({opacity: 0.5}).animate({opacity: 1}, 400);
-				$("#chlNotepadButtons button").removeClass("btnFocused");
-				$(this).addClass("btnFocused");
+				$("#chlNotepadButtons button").removeClass("btnActive");
+				$(this).addClass("btnActive");
 			});
 		}).first().click(); // First sheet is default view
 		
@@ -7932,6 +7932,10 @@ A = {
 			}
 			catch (e) {}
 		});
+		$("#accManagerHide").click(function()
+		{
+			$("#accManager").toggle();
+		});
 		
 		// Bind button to add another token/row
 		$("#accTokenNew").attr("title", "<dfn>" + D.getWordCapital("add") + "</dfn> " + D.getPhrase("key slot") + ".");
@@ -7950,6 +7954,7 @@ A = {
 		});
 		
 		// Finally
+		D.translateElements();
 		I.qTip.init($("#accManager").find("button"));
 	},
 	
@@ -7983,7 +7988,7 @@ A = {
 		{
 			var name = U.escapeHTML($(this).find(".accTokenName").val());
 			var key = U.stripToAlphanumericDash($(this).find(".accTokenKey").val());
-			var token = A.createToken(name, key, $(this).find(".accTokenUse").hasClass("btnFocused"));
+			var token = A.createToken(name, key, $(this).find(".accTokenUse").hasClass("btnActive"));
 			tokens.push(token);
 		});
 		var obj = O.Utilities.APITokens;
@@ -8139,8 +8144,8 @@ A = {
 		if (pIsUsed === true)
 		{
 			A.TokenCurrent = U.stripToAlphanumericDash(pAPIKey);
-			name.addClass("accTokenNameUsed");
-			use.addClass("btnFocused");
+			name.addClass("cssInputActive");
+			use.addClass("btnActive");
 		}
 		
 		// Button to use this token's API key
@@ -8149,10 +8154,10 @@ A = {
 			var str = key.val();
 			if (str.length > 0)
 			{
-				$(".accTokenName").removeClass("accTokenNameUsed");
-				$(".accTokenUse").removeClass("btnFocused");
-				name.addClass("accTokenNameUsed");
-				use.addClass("btnFocused").find("img");
+				$(".accTokenName").removeClass("cssInputActive");
+				$(".accTokenUse").removeClass("btnActive");
+				name.addClass("cssInputActive");
+				use.addClass("btnActive").find("img");
 				A.TokenCurrent = U.stripToAlphanumericDash(str);
 				A.loadToken();
 				A.saveTokens();
@@ -18344,6 +18349,20 @@ E = {
 		Coin: "Coin",
 		Karma: "Karma",
 		Gem: "Gem"
+	},
+	
+	/*
+	 * Gets the first payment amount from an object.
+	 * @param object pObject
+	 * @returns int
+	 */
+	getPaymentAmount: function(pObject)
+	{
+		for (var i in pObject.p)
+		{
+			return pObject.p[i];
+		}
+		return 0;
 	},
 	
 	/*
@@ -28840,15 +28859,15 @@ G = {
 					$("<button class='cltFilterButton btnTab curToggle' title='Filter: <dfn>" + iCategory + "</dfn>'><img src='" + catimg + "' /></button>")
 						.appendTo("#cltFilter").click(function()
 					{
-						if ($(this).hasClass("btnFocused"))
+						if ($(this).hasClass("btnActive"))
 						{
-							$(".cltFilterButton").removeClass("btnFocused");
+							$(".cltFilterButton").removeClass("btnActive");
 							$(".cltBox").show();
 						}
 						else
 						{
-							$(".cltFilterButton").removeClass("btnFocused");
-							$(this).addClass("btnFocused");
+							$(".cltFilterButton").removeClass("btnActive");
+							$(this).addClass("btnActive");
 							$(".cltBox").hide();
 							$(".cltBox_" + iCategory).show();
 						}
@@ -29319,7 +29338,7 @@ G = {
 			// Bind button to show the guild mission type
 			$(".gldButton").click(function()
 			{
-				$(".gldButton").removeClass("btnFocused");
+				$(".gldButton").removeClass("btnActive");
 				var missiontype = U.getSubstringFromHTMLID($(this));
 				var wantshow = true;
 				// If current mission type is already showing
@@ -29331,7 +29350,7 @@ G = {
 				$(".gldBook").hide();
 				if (wantshow)
 				{
-					$(this).addClass("btnFocused");
+					$(this).addClass("btnActive");
 					$("#gldBook_" + missiontype).show();
 				}
 				I.updateScrollbar();
@@ -29340,7 +29359,7 @@ G = {
 			// Bind button to hide all guild map drawings
 			$("#mapToggle_Guild").data("hideonly", true).click(function()
 			{
-				$(".gldButton").removeClass("btnFocused").each(function()
+				$(".gldButton").removeClass("btnActive").each(function()
 				{
 					hideGuildMapDrawings(U.getSubstringFromHTMLID($(this)));
 					$(".gldBook").hide();
@@ -33624,7 +33643,7 @@ H = {
 		}
 		
 		// Verify sale: if sale exists and has not expired
-		if (H.Sale.Items.length > 0 && T.isTimely(H.Sale, now))
+		if (H.Sale.Items.length - H.Sale.numPaddingItems > 0 && T.isTimely(H.Sale, now))
 		{
 			H.isSaleEnabled = true;
 		}
@@ -33758,42 +33777,41 @@ H = {
 	 */
 	generateDashboardSaleHeader: function()
 	{
-		var range = T.getMinMax(H.Sale.Items, "price");
+		var item;
+		var gemarray = [];
+		// Determine price range and whether a discount exists
+		for (var i = 0; i < H.Sale.Items.length; i++)
+		{
+			item = H.Sale.Items[i];
+			if (item.side === undefined) // Skip padding items which are headers
+			{
+				if (item.discount && (isFinite(item.discount) || (item.discount.length && item.discount[0].length > 2)))
+				{
+					isdiscounted = true;
+				}
+				if (item.p && item.p.gem)
+				{
+					gemarray.push(item.p.gem);
+				}
+			}
+		}
+		var range = T.getMinMax(gemarray);
 		var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
 		// Create "button" to toggle list of items on sale
 		$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'>"
 			+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
-			+ "<var>" + H.Sale.Items.length + " " + D.getWordCapital("promotions") + "</var> "
+			+ "<var>" + (H.Sale.Items.length - H.Sale.numPaddingItems) + " " + D.getWordCapital("promotions") + "</var> "
 			+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
 		+ "</div>").addClass("dsbTabEnabled");
 		$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
 		// Determine if the current sale has price reduction
 		var isdiscounted = false;
-		var item;
-		for (var i = 0; i < H.Sale.Items.length; i++)
-		{
-			item = H.Sale.Items[i];
-			if (isdiscounted === false)
-			{
-				if (item.discount &&
-					(isFinite(item.discount) || (item.discount.length && item.discount[0].length > 2)))
-				{
-					isdiscounted = true;
-				}
-			}
-		}
 		$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
 		// Bind buttons
 		$("#dsbMenuSale").click(function()
 		{
 			H.generateDashboardSale();
 		});
-		// Automatically generate the items on sale if the boolean is true
-		I.toggleToggleIcon("#dsbSaleToggleIcon", H.Sale.isPreshown);
-		if (H.Sale.isPreshown === true)
-		{
-			H.generateDashboardSale();
-		}
 	},
 	generateDashboardSale: function()
 	{
@@ -33825,16 +33843,20 @@ H = {
 
 			var gemstr = "<ins class='s16 s16_gem'></ins>";
 			// Include the exchange rate "items" after determining range
-			H.Sale.Items = H.Sale.Padding.concat(H.Sale.Items);
 			H.SaleCountdowns = {};
 			var idstofetch = [];
+			var side = 0;
 			for (var i = 0; i < H.Sale.Items.length; i++)
 			{
 				// Initialize variables
 				var item = H.Sale.Items[i];
-				var url = item.url || U.getWikiSearchDefault(item.name);
-				var video = U.getYouTubeLink(item.name);
-				var side = (item.side !== undefined) ? item.side : parseInt(i) % 2;
+				var itemid = item.i;
+				var itemname = item.n;
+				var itemprice = E.getPaymentAmount(item);
+				var itemdiscount = item.discount;
+				var url = item.url || U.getWikiSearchDefault(itemname);
+				var video = U.getYouTubeLink(itemname);
+				side = (item.side !== undefined) ? item.side : side;
 				if (item.Finish)
 				{
 					// Skip expired items, if has expiration
@@ -33847,20 +33869,20 @@ H = {
 
 				var oldprice = null;
 				// Old price also includes percent off by dividing the new with the old
-				oldprice = (U.isInteger(item.discount)) ? item.discount : oldprice;
-				oldprice = (Array.isArray(item.discount) && item.discount[0].length > 2) ? ((item.discount[0])[2]) : oldprice;
-				var oldpricestr = (oldprice !== null) ? getOldPriceString(item.price, oldprice) : "";
+				oldprice = (U.isInteger(itemdiscount)) ? itemdiscount : oldprice;
+				oldprice = (Array.isArray(itemdiscount) && itemdiscount[0].length > 2) ? ((itemdiscount[0])[2]) : oldprice;
+				var oldpricestr = (oldprice !== null) ? getOldPriceString(itemprice, oldprice) : "";
 				// Write bulk discount hover information if available
 				var discountstr = "";
-				if (item.discount && Array.isArray(item.discount))
+				if (itemdiscount && Array.isArray(itemdiscount))
 				{
 					discountstr += "<span class='dsbDiscount'>";
-					for (var ii = 0; ii < item.discount.length; ii++)
+					for (var ii = 0; ii < itemdiscount.length; ii++)
 					{
-						var disc = item.discount[ii];
+						var disc = itemdiscount[ii];
 						var priceper = Math.ceil(disc[1] / disc[0]);
 						// Percent off for bulk discount comes from the price per item in the bulk--divided by the old price for a single (non-bulk) item
-						var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
+						var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (itemdiscount[0])[2], disc[2]) : getPercentOffString(priceper, (itemdiscount[0])[1]);
 						var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
 						discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
 							+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(disc[1]) + "<br />";
@@ -33869,26 +33891,31 @@ H = {
 				}
 				// Price display
 				var pricestr = "";
-				if (item.name === "Coin")
+				if (item.p["gem"])
 				{
-					pricestr = "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(item.price) + " " + I.Symbol.ArrowLeft + " " + "</span>"
-						+ "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(item.price)) + "</span>"
-						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(item.price)) + "</span>";
+					pricestr = "<span class='dsbSalePriceCurrent'>" + itemprice + gemstr + "</span>"
+						+ "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(itemprice) + "</span>"
+						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(itemprice) + "</span>";
+					
 				}
-				else
+				else if (item.p["coin"])
 				{
-					pricestr = "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
-						+ "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(item.price) + "</span>"
-						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
+					pricestr = "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(itemprice) + " " + I.Symbol.ArrowLeft + " " + "</span>"
+						+ "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(itemprice)) + "</span>"
+						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(itemprice)) + "</span>";
+				}
+				else if (item.p["blticket"])
+				{
+					pricestr = "<span class='dsbSalePriceCurrent'>" + E.PaymentFormat["blticket"](itemprice) + "</span>";
 				}
 				// Format the presentation of this item
-				var idisimg = isNaN(item.id) && Q.Boxes.Items[item.id] === undefined;
+				var idisimg = isNaN(itemid) && Q.Boxes.Items[itemid] === undefined;
 				if (idisimg === false)
 				{
-					idstofetch.push(item.id);
+					idstofetch.push(itemid);
 				}
-				var idprop = (idisimg) ? "" : ("id='dsbSaleItem_" + item.id + "'");
-				var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
+				var idprop = (idisimg) ? "" : ("id='dsbSaleItem_" + itemid + "'");
+				var imgsrc = (idisimg) ? itemid : "img/ui/placeholder.png";
 				$("#dsbSaleSide" + side).append("<div class='dsbSaleEntry'>"
 					+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + idprop + " src='" + imgsrc + "' /></a> "
 					+ "<div class='dsbSaleText'>"
@@ -34092,10 +34119,10 @@ H = {
 			{
 				var item = H.Sale.Items[i];
 				// Allow integer IDs or faux IDs and ignore expired
-				if (T.isTimely(item) || (item.Finish === undefined && issalecurrent))
+				if (item.side === undefined && (T.isTimely(item) || (item.Finish === undefined && issalecurrent)))
 				{
 					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
-					H.Sale.Values[item.id] = item.price;
+					H.Sale.Values[item.i] = E.getPaymentAmount(item);
 				}
 			}
 			
@@ -34116,28 +34143,23 @@ H = {
 			A.iterateRecord(record, function(pEntry)
 			{
 				var id = pEntry.i;
-				var value;
+				var value = E.getPaymentAmount(pEntry);
 				var salevalue = H.Sale.Values[id];
 				var isavailableinrecord = false;
 				var isavailableinsale = false;
 				var isdiscountedinsale = false;
-				for (var i in pEntry.p)
+				if (value > 0)
 				{
-					value = pEntry.p[i];
-					if (value > 0)
-					{
-						isavailableinrecord = true;
-					}
-					if (salevalue >= 0)
-					{
-						isavailableinsale = true;
-						value = Math.abs(value); // If exists in promotions then consider as available in the record
-					}
-					if (salevalue < value || salevalue === 0)
-					{
-						isdiscountedinsale = true;
-					}
-					break; // Consider only the first payment type
+					isavailableinrecord = true;
+				}
+				if (salevalue >= 0)
+				{
+					isavailableinsale = true;
+					value = Math.abs(value); // If exists in promotions then consider as available in the record
+				}
+				if (salevalue < value || salevalue === 0)
+				{
+					isdiscountedinsale = true;
 				}
 				
 				// Check for available
@@ -34278,7 +34300,6 @@ H = {
 				$(this).data("hasDrawn", false);
 			}
 		});
-		I.toggleToggleIcon("#dsbPactToggleIcon", H.Sale.isPreshown);
 	},
 	generateDashboardPact: function()
 	{

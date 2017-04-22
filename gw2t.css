@@ -743,6 +743,10 @@ html, body,
 .cntComposition input[type="text"]:hover, .cntComposition textarea:hover, input[type="number"]:hover, .cssText:hover {
 	border: 1px solid rgba(255, 238, 187, 0.6);
 }
+input[type="text"].cssInputActive {
+	background: linear-gradient(to right, #7c7253 0%, transparent 100%), url("img/background/stripe.png");
+	color: #ddff77;
+}
 
 .cssInputSelect {
 	border: 1px solid #48423c;
@@ -802,7 +806,7 @@ button:hover, .cssButton:hover {
 	border: 1px solid rgba(255, 238, 187, 0.4);
 	color: #ffeebb;
 }
-button:active, .cssButton:active, button.btnFocused {
+button:active, .cssButton:active, button.btnActive {
 	background: #2d2619;
 }
 button img {
