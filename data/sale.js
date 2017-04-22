@@ -46,6 +46,14 @@ GW2T_SALE_DATA = {
 		side: 0
 	},
 	{
+		Finish: new Date("2017-04-25T16:00:00Z"),
+		name: "Dragon Kama Skin",
+		id: "79386",
+		price: 600,
+		discount: null,
+		side: 0
+	},
+	{
 		Finish: new Date("2017-04-24T16:00:00Z"),
 		name: "Belinda's Greatsword Skin",
 		id: "8466",

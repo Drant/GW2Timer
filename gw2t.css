@@ -3126,6 +3126,9 @@ label:hover {
 	border-radius: 1px;
 }
 
+.cssInline {
+	display: inline-block !important;
+}
 .cssHidden {
 	display: none !important;
 }

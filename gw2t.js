@@ -12894,6 +12894,7 @@ V = {
 			});
 			I.qTip.init(inputs);
 			dish.data("isloaded", true);
+			I.restyleCheckboxes();
 		}
 		else if (dish.data("token") !== A.TokenCurrent)
 		{
