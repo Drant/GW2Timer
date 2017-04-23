@@ -726,8 +726,18 @@ O = {
 			 * then URLArguments overrides Options only, and user preferences
 			 * (localStorage) will not modified. Strings may not be overriden by URL.
 			 */
-			if (I.isProgramExternal)
+			if (I.isProgramEmbedded)
 			{
+				// Use stored options if self embedded
+				if (I.isProgramExternal === false)
+				{
+					if (localStorage[optionkey] !== undefined)
+					{
+						O.Options[optionkey] = O.convertLocalStorageDataType(localStorage[optionkey]);
+					}
+				}
+				
+				// URL options override localStorage, but do not overwrite
 				if (isURLOptionLegal(optionkey))
 				{
 					O.Options[optionkey] = O.convertLocalStorageDataType(U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]));
@@ -735,19 +745,20 @@ O = {
 			}
 			else
 			{
-				if (I.isProgramEmbedded === false && isURLOptionLegal(optionkey))
+				// Overwrite localStorage with URL's options if available
+				if (isURLOptionLegal(optionkey))
 				{
-					// Override localStorage with URL's options if available
 					localStorage[optionkey] = U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]);
 				}
-
+				
 				// Assign default values to localStorage if they are empty
 				if (localStorage[optionkey] === undefined)
 				{
 					localStorage[optionkey] = O.Options[optionkey];
 				}
+				// Else user set options from localStorage become the new options
 				else
-				{	// Else user set options from localStorage become the new options
+				{
 					O.Options[optionkey] = O.convertLocalStorageDataType(localStorage[optionkey]);
 				}
 			}
