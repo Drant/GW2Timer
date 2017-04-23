@@ -22,6 +22,7 @@ GW2T_SALE_DATA = {
 	Items: [
 		{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 		{i: 64757, n: "Wizard's Hat", p: {gem: 200}, Finish: new Date("2017-04-25T16:00:00Z")},
+		{i: 79365, n: "Peacock Scepter Skin", p: {gem: 600}, Finish: new Date("2017-04-26T16:00:00Z")},
 		{i: 79386, n: "Dragon Kama Skin", p: {gem: 600}, Finish: new Date("2017-04-25T16:00:00Z")},
 		{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: 600}, Finish: new Date("2017-04-24T16:00:00Z")},
 		{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2017-04-25T16:00:00Z")},
