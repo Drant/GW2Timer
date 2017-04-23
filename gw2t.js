@@ -730,15 +730,14 @@ O = {
 			{
 				if (isURLOptionLegal(optionkey))
 				{
-					O.Options[optionkey] = O.convertLocalStorageDataType(
-						U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]));
+					O.Options[optionkey] = O.convertLocalStorageDataType(U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]));
 				}
 			}
 			else
 			{
-				if (isURLOptionLegal(optionkey))
+				if (I.isProgramEmbedded === false && isURLOptionLegal(optionkey))
 				{
-					// Override localStorage
+					// Override localStorage with URL's options if available
 					localStorage[optionkey] = U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]);
 				}
 
@@ -38547,15 +38546,18 @@ I = {
 				pagebutton = $("<li class='curClick'>" + pagename + "</li>").appendTo(grouplist);
 				(function(iPage)
 				{
-					pagebutton.click(function()
+					pagebutton.click(function(pEvent)
 					{
-						if (I.DirectoryExternal[iPage])
+						if (pEvent.which === I.ClickEnum.Left)
 						{
-							U.openExternalURL(I.DirectoryExternal[iPage]);
-						}
-						else
-						{
-							U.interpretPage(iPage);
+							if (I.DirectoryExternal[iPage])
+							{
+								U.openExternalURL(I.DirectoryExternal[iPage]);
+							}
+							else
+							{
+								U.interpretPage(iPage);
+							}
 						}
 					});
 				})(ii);
