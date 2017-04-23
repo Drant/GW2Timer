@@ -726,7 +726,7 @@ O = {
 			 * then URLArguments overrides Options only, and user preferences
 			 * (localStorage) will not modified. Strings may not be overriden by URL.
 			 */
-			if (I.isProgramEmbedded)
+			if (I.isProgramExternal)
 			{
 				if (isURLOptionLegal(optionkey))
 				{
@@ -956,7 +956,7 @@ O = {
 			}, resetgraceperiodms);
 		}
 		// Load the audit page in a hidden iframe, which is set to close itself when the audit finishes
-		if (O.Options.bol_auditAccountOnReset)
+		if (O.Options.bol_auditAccountOnReset && U.Args[(U.KeyEnum.AutoAudit)] === undefined)
 		{
 			document.getElementById("jsAuditFrame").src = "./?page=Audit&" + U.KeyEnum.AutoAudit + "=true";
 			I.greet("Automatic account audit started.", messagetime);
@@ -36353,6 +36353,7 @@ I = {
 	// Content-Plate-Page and Section-Header
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
+	isProgramExternal: false, // If is embedded in another site rather self-embedded
 	isAPIEnabled: true, // This will be changed asynchronously by the populate map function
 	isMapEnabled: true,
 	isTouchEnabled: false,
@@ -36614,6 +36615,16 @@ I = {
 		if (window !== window.top)
 		{
 			I.isProgramEmbedded = true;
+			try
+			{
+				// If self-embedded
+				parent.document;
+			}
+			catch (e)
+			{
+				// If embedded in another website
+				I.isProgramExternal = true;
+			}
 		}
 		
 		// Get URL arguments and do appropriate changes
