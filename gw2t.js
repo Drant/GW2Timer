@@ -717,7 +717,7 @@ O = {
 			else if (inputtype === "checkbox")
 			{
 				// Custom checkbox image
-				I.styleCheckbox(inputelm);
+				X.wrapCheckbox(inputelm);
 			}
 			
 			/*
@@ -2065,10 +2065,10 @@ X = {
 	 * @param jqobject pElement checkbox to style its label.
 	 * @pre In format <label><input type="checkbox" />ExampleLabel</label>.
 	 */
-	styleCheckbox: function(pChecklist, pIndex, pElement)
+	setCheckboxStyle: function(pChecklist, pIndex, pElement)
 	{
 		var state = X.getChecklistItem(pChecklist, pIndex);
-		var label = pElement.closest("label");
+		var label = X.getCheckboxLabel(pElement);
 		switch (state)
 		{
 			case X.ChecklistEnum.Disabled:
@@ -2084,6 +2084,40 @@ X = {
 				label.removeClass("chlCheckboxDisabled").removeClass("chlCheckboxChecked");
 			}
 		}
+	},
+	
+	/*
+	 * Adds custom checkbox image to a checkbox element.
+	 * @param jqobject pElm
+	 * @pre Checkbox is enclosed by a label tag.
+	 */
+	wrapCheckbox: function(pElement)
+	{
+		$(pElement).addClass("jsCheckbox").wrap("<span class='cssCheckbox'></span>").after("<kbd class='cssCheckboxImage'></kbd>");
+	},
+	rewrapCheckboxes: function()
+	{
+		$("input[type='checkbox']").not(".jsCheckbox").each(function()
+		{
+			X.wrapCheckbox($(this));
+		});
+	},
+	getCheckboxLabel: function(pCheckbox)
+	{
+		return $(pCheckbox).closest("label");
+	},
+	
+	/*
+	 * Sets a checkbox's label text. Also assigns ID of checkbox to label.
+	 * @param jqobject pElement
+	 * @param string pHTML
+	 */
+	relabelCheckbox: function(pElement, pHTML)
+	{
+		var elm = $(pElement);
+		var parent = X.getCheckboxLabel(elm).attr("id", elm.attr("id").replace(O.cPrefixOption, O.cPrefixLabel));
+		parent.find(".jsCheckboxText").remove();
+		parent.append("<var class='jsCheckboxText'> " + pHTML + "</var>");
 	},
 	
 	/*
@@ -2105,7 +2139,7 @@ X = {
 				X.setChecklistItem(pChecklist, iIndex, state);
 				if (pWantStyle !== false)
 				{
-					X.styleCheckbox(pChecklist, iIndex, $(this));
+					X.setCheckboxStyle(pChecklist, iIndex, $(this));
 				}
 			});
 			
@@ -2113,7 +2147,7 @@ X = {
 			X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
 			if (pWantStyle !== false)
 			{
-				X.styleCheckbox(pChecklist, iIndex, $(this));
+				X.setCheckboxStyle(pChecklist, iIndex, $(this));
 			}
 		});
 		
@@ -2500,7 +2534,7 @@ X = {
 		X.initializeDungeonChecklist();
 		X.initializeCustomChecklist();
 		X.initializeRaidChecklist();
-		I.restyleCheckboxes();
+		X.rewrapCheckboxes();
 	},
 	
 	/*
@@ -2534,7 +2568,7 @@ X = {
 			{
 				var state = X.getCheckboxEnumState($(this));
 				X.setChecklistItem(X.Checklists.Dungeon, iIndex, state);
-				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
+				X.setCheckboxStyle(X.Checklists.Dungeon, iIndex, $(this));
 				
 				// Sum the checkbox's path money
 				var calc = $("#chlDungeonCalculator");
@@ -2589,7 +2623,7 @@ X = {
 					checkbox.prop("disabled", false);
 				}
 				X.setChecklistItem(X.Checklists.Dungeon, iIndex, X.getCheckboxEnumState(checkbox));
-				X.styleCheckbox(X.Checklists.Dungeon, iIndex, checkbox);
+				X.setCheckboxStyle(X.Checklists.Dungeon, iIndex, checkbox);
 			});
 		});
 		
@@ -2609,7 +2643,7 @@ X = {
 				{
 					$(this).trigger("click");
 				};
-				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
+				X.setCheckboxStyle(X.Checklists.Dungeon, iIndex, $(this));
 			});
 		});
 	},
@@ -2667,7 +2701,7 @@ X = {
 					var state = X.getCheckboxEnumState($(this));
 
 					X.setChecklistItem(pChecklist, iIndex, state);
-					X.styleCheckbox(pChecklist, iIndex, $(this));
+					X.setCheckboxStyle(pChecklist, iIndex, $(this));
 
 					if (state === X.ChecklistEnum.Checked)
 					{
@@ -2693,7 +2727,7 @@ X = {
 					{
 						$(this).trigger("click");
 					};
-					X.styleCheckbox(pChecklist, iIndex, $(this));
+					X.setCheckboxStyle(pChecklist, iIndex, $(this));
 				});
 			});
 
@@ -3779,7 +3813,10 @@ U = {
 		else if (I.PageEnum.Map[page] || I.PageEnum.Map[pagecaps])
 		{
 			page = (I.PageEnum.Map[pagecaps]) ? pagecaps : page;
-			viewMap();
+			if (I.PageMapIndependent[page] === undefined)
+			{
+				viewMap();
+			}
 			// View the map section if already loaded, otherwise load then view
 			pagebutton = $("#plateBeamIcon_" + page);
 			if (pagebutton.length)
@@ -4617,10 +4654,12 @@ U = {
 		if (I.PageCurrent !== "")
 		{
 			var section = I.SectionCurrent[I.PageCurrent];
+			var article = I.ArticleCurrent;
 			var go = U.Args[U.KeyEnum.Go];
 
 			var pagestring = "?" + U.KeyEnum.Page + "=" + I.PageCurrent;
 			var sectionstring = "";
+			var articlestring = "";
 			var gostring = "";
 			var modestring = "";
 			pParamOptions = (pParamOptions === undefined) ? "" : "&" + pParamOptions;
@@ -4642,11 +4681,15 @@ U = {
 				pagestring = "."; // Chains is the default and level top URL, so don't include it
 				title = null;
 			}
+			if (article)
+			{
+				articlestring = "&" + U.KeyEnum.Article + "=" + article;
+			}
 			if (go)
 			{
 				gostring = "&" + U.KeyEnum.Go + "=" + go;
 			}
-			U.updateAddressBar(pagestring + sectionstring + gostring + modestring + pParamOptions);
+			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring + modestring + pParamOptions);
 			U.updateTitle(title);
 			U.updateLanguageLinks(pagestring + sectionstring + modestring);
 		}
@@ -10409,7 +10452,7 @@ V = {
 		O.mimicInput("#audWantVaults", "bol_auditVault");
 		O.mimicInput("#audWantAutomatic", "bol_auditAccountOnReset");
 		O.mimicInput("#audWantConverted", "bol_auditHistoryConverted");
-		I.restyleCheckboxes();
+		X.rewrapCheckboxes();
 		// Audit buttons
 		var buttoncontainer = $("#accAuditCenter");
 		var executebtn = $("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
@@ -12909,7 +12952,7 @@ V = {
 			});
 			I.qTip.init(inputs);
 			dish.data("isloaded", true);
-			I.restyleCheckboxes();
+			X.rewrapCheckboxes();
 		}
 		else if (dish.data("token") !== A.TokenCurrent)
 		{
@@ -19453,7 +19496,7 @@ E = {
 			);
 			I.qTip.init($(entry + " .trdOverwrite").parent());
 			I.qTip.init($(entry + " .trdNotify").parent());
-			I.restyleCheckboxes();
+			X.rewrapCheckboxes();
 			
 			name = $(entry + " .trdName");
 			buy = $(entry + " .trdBuy");
@@ -24916,7 +24959,7 @@ M = {
 		
 		// Finally
 		I.qTip.init(compasscontext.find("label, input, img"));
-		I.restyleCheckboxes();
+		X.rewrapCheckboxes();
 		that.initializeCompassStorage();
 	},
 	
@@ -28275,6 +28318,26 @@ G = {
 			X.initializeChecklist(X.Checklists["Resource" + grade], counter);
 			reapplyNodesState();
 		};
+		var displayNodes = function(pCheckbox, pIsExclusive)
+		{
+			if (pIsExclusive)
+			{
+				// If want exclusive then hide all other node types before showing only this one
+				for (var i in P.Resources)
+				{
+					$("#nod_" + i).prop("checked", false).trigger("change");
+				}
+				pCheckbox.prop("checked", true);
+			}
+			var thisresource = U.getSubstringFromHTMLID(pCheckbox);
+			var wantshow = pCheckbox.prop("checked");
+			var wantregular = $("#nodShowRegular").prop("checked");
+			var wanthotspot = $("#nodShowHotspot").prop("checked");
+			M.toggleLayer(P.Layer["Resource_Rich_" + thisresource], wantshow);
+			M.toggleLayer(P.Layer["Resource_Permanent_" + thisresource], wantshow);
+			M.toggleLayer(P.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
+			M.toggleLayer(P.Layer["Resource_Hotspot_" + thisresource], (wantshow && wanthotspot));
+		};
 		
 		U.getScript(U.URL_DATA.Resource, function()
 		{
@@ -28300,17 +28363,18 @@ G = {
 			// Bind checkboxes
 			for (i in P.Resources)
 			{
-				$("#nod_" + i).change(function()
+				(function(iCheckbox)
 				{
-					var thisresource = U.getSubstringFromHTMLID($(this));
-					var wantshow = $(this).prop("checked");
-					var wantregular = $("#nodShowRegular").prop("checked");
-					var wanthotspot = $("#nodShowHotspot").prop("checked");
-					M.toggleLayer(P.Layer["Resource_Rich_" + thisresource], wantshow);
-					M.toggleLayer(P.Layer["Resource_Permanent_" + thisresource], wantshow);
-					M.toggleLayer(P.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
-					M.toggleLayer(P.Layer["Resource_Hotspot_" + thisresource], (wantshow && wanthotspot));
-				});
+					iCheckbox.change(function()
+					{
+						displayNodes(iCheckbox);
+					});
+					X.getCheckboxLabel(iCheckbox).dblclick(function()
+					{
+						displayNodes(iCheckbox, true);
+					});
+				})($("#nod_" + i));
+					
 			}
 			
 			// Bind button to toggle all checkboxes
@@ -28461,7 +28525,8 @@ G = {
 			
 			// Finally
 			refreshResourcePrices();
-			I.restyleCheckboxes();
+			X.rewrapCheckboxes();
+			// Pre-show specific grades of nodes if requested
 			U.verifyArticle("All", function()
 			{
 				$("#nodShowRegular, #nodShowHotspot").trigger("click");
@@ -28563,7 +28628,7 @@ G = {
 			U.convertExternalLink(".jpzList a");
 			I.createSearchBar("#jpzSearch", ".jpzItem");
 			I.qTip.init(".jpzList dt");
-			I.restyleCheckboxes();
+			X.rewrapCheckboxes();
 
 			// Button to toggle JP markers only
 			$("#jpzToggleJP").change(function()
@@ -28858,7 +28923,7 @@ G = {
 			U.convertExternalLink("#cltList cite a");
 			I.qTip.init(".cltLinks");
 			I.createSearchBar("#cltSearch", ".cltBox");
-			I.restyleCheckboxes();
+			X.rewrapCheckboxes();
 			
 			// Create category filter
 			for (var i in metadata.Categories)
@@ -29120,11 +29185,11 @@ G = {
 				M.goToArguments(P.Collectibles[type].view);
 				// Rebind tooltip
 				P.rebindMarkerTooltips();
-				$(this).closest("label").addClass("cltCheckedLabel");
+				X.getCheckboxLabel($(this)).addClass("cltCheckedLabel");
 			}
 			else
 			{
-				$(this).closest("label").removeClass("cltCheckedLabel");
+				X.getCheckboxLabel($(this)).removeClass("cltCheckedLabel");
 			}
 			// Special case for ranger pets
 			if (pType === "RangerPets")
@@ -30935,16 +31000,16 @@ W = {
 		
 		// Label the narration filters
 		var blstr = W.getName("Borderlands");
-		I.relabelCheckbox("#opt_bol_narrateRedHome", D.orderModifier(blstr, W.getName("Red")));
-		I.relabelCheckbox("#opt_bol_narrateBlueHome", D.orderModifier(blstr, W.getName("Blue")));
-		I.relabelCheckbox("#opt_bol_narrateGreenHome", D.orderModifier(blstr, W.getName("Green")));
-		I.relabelCheckbox("#opt_bol_narrateCenter", W.getName("Center"));
-		I.relabelCheckbox("#opt_bol_narrateRuins", W.getName("Ruins"));
-		I.relabelCheckbox("#opt_bol_narrateCamp", W.getName("Camp"));
-		I.relabelCheckbox("#opt_bol_narrateTower", W.getName("Tower"));
-		I.relabelCheckbox("#opt_bol_narrateKeep", W.getName("Keep"));
-		I.relabelCheckbox("#opt_bol_narrateCastle", W.getName("Castle"));
-		I.relabelCheckbox("#opt_bol_narrateClaimed", W.getName("Claimed"));
+		X.relabelCheckbox("#opt_bol_narrateRedHome", D.orderModifier(blstr, W.getName("Red")));
+		X.relabelCheckbox("#opt_bol_narrateBlueHome", D.orderModifier(blstr, W.getName("Blue")));
+		X.relabelCheckbox("#opt_bol_narrateGreenHome", D.orderModifier(blstr, W.getName("Green")));
+		X.relabelCheckbox("#opt_bol_narrateCenter", W.getName("Center"));
+		X.relabelCheckbox("#opt_bol_narrateRuins", W.getName("Ruins"));
+		X.relabelCheckbox("#opt_bol_narrateCamp", W.getName("Camp"));
+		X.relabelCheckbox("#opt_bol_narrateTower", W.getName("Tower"));
+		X.relabelCheckbox("#opt_bol_narrateKeep", W.getName("Keep"));
+		X.relabelCheckbox("#opt_bol_narrateCastle", W.getName("Castle"));
+		X.relabelCheckbox("#opt_bol_narrateClaimed", W.getName("Claimed"));
 		
 		// Mimic the master volumn slider
 		I.preventMapPropagation(O.mimicInput("#logNarrateVolume", "int_setVolume"));
@@ -31276,10 +31341,10 @@ W = {
 		if (W.MatchupCurrent !== null)
 		{
 			// Log server borderlands names
-			I.relabelCheckbox("#opt_bol_logRedHome", W.MatchupCurrent["red"].oNameStr);
-			I.relabelCheckbox("#opt_bol_logBlueHome", W.MatchupCurrent["blue"].oNameStr);
-			I.relabelCheckbox("#opt_bol_logGreenHome", W.MatchupCurrent["green"].oNameStr);
-			I.relabelCheckbox("#opt_bol_logCenter", W.getName("Center"));
+			X.relabelCheckbox("#opt_bol_logRedHome", W.MatchupCurrent["red"].oNameStr);
+			X.relabelCheckbox("#opt_bol_logBlueHome", W.MatchupCurrent["blue"].oNameStr);
+			X.relabelCheckbox("#opt_bol_logGreenHome", W.MatchupCurrent["green"].oNameStr);
+			X.relabelCheckbox("#opt_bol_logCenter", W.getName("Center"));
 			
 			// Compass zone links borderlands names
 			$("#wvwZoneLinkRed").html(W.MatchupCurrent["red"].oNameStr);
@@ -36485,6 +36550,12 @@ I = {
 			Achievements: "Achievements"*/
 		}
 	},
+	PageMapIndependent: // Sections on the map page but doesn't need the map
+	{
+		TP: true,
+		Notepad: true,
+		Personal: true
+	},
 	/*
 	 * Outline of the directory menu. Format:
 	 * Grouping: {Page: "Translatable Name"}
@@ -37615,36 +37686,6 @@ I = {
 		{
 			$(pElement).removeClass("jsSuspended");
 		}
-	},
-	
-	/*
-	 * Adds custom checkbox image to a checkbox element.
-	 * @param jqobject pElm
-	 * @pre Checkbox is enclosed by a label tag.
-	 */
-	styleCheckbox: function(pElement)
-	{
-		$(pElement).addClass("jsCheckbox").wrap("<span class='cssCheckbox'></span>").after("<kbd class='cssCheckboxImage'></kbd>");
-	},
-	restyleCheckboxes: function()
-	{
-		$("input[type='checkbox']").not(".jsCheckbox").each(function()
-		{
-			I.styleCheckbox($(this));
-		});
-	},
-	
-	/*
-	 * Sets a checkbox's label text. Also assigns ID of checkbox to label.
-	 * @param jqobject pElement
-	 * @param string pHTML
-	 */
-	relabelCheckbox: function(pElement, pHTML)
-	{
-		var elm = $(pElement);
-		var parent = elm.closest("label").attr("id", elm.attr("id").replace(O.cPrefixOption, O.cPrefixLabel));
-		parent.find(".jsCheckboxText").remove();
-		parent.append("<var class='jsCheckboxText'> " + pHTML + "</var>");
 	},
 	
 	/*
@@ -39109,7 +39150,7 @@ I = {
 		if (I.isProgramEmbedded)
 		{
 			$("#itemWarning, .hudTitle").remove();
-			$(".hudLinks").hide();
+			$(".btnSite, .hudLinks").hide();
 		}
 		
 		// Disable dashboard for non-using modes

@@ -233,6 +233,14 @@ input.mapCoordinatesName {
 	position: relative;
 	top: auto;
 }
+.dirHeader {
+	border-top: 1px solid #444;
+	border-bottom: none;
+}
+.dirList {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
 
 .btnWindow {
 	opacity: 0.8;
