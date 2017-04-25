@@ -1310,6 +1310,9 @@ textarea.jsCopyCode {
 	margin-top: 8px;
 	background: linear-gradient(to right, transparent 0%, #333 100%);
 }
+.dsbCountdownEntry {
+	margin-bottom: 4px;
+}
 .dsbCountdownSide1 {
 	white-space: nowrap;
 	font-size: 14px;
@@ -1619,8 +1622,7 @@ input.mapCoordinatesName {
 	opacity: 0.8;
 }
 .hudItem:hover .hudButton {
-	width: 36px; height: 36px;
-	top: -2px; left: -2px;
+	transform: scale(1.125, 1.125); /* 32px becomes 36px */
 	opacity: 1;
 }
 .hudItem:hover .hudTitle {

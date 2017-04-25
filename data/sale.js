@@ -21,15 +21,15 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 		{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-		{i: 64757, n: "Wizard's Hat", p: {gem: 200}, Finish: new Date("2017-04-25T16:00:00Z")},
+		{i: 69863, n: "Monk's Outfit", p: {gem: 420}, discount: 700},
+		{i: 78667, n: "Chaos Gloves Skin", p: {gem: 400}, discount: 500},
+		{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
+		{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
+		{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
+		{i: 80981, n: "Hourglass Staff", p: {gem: 600}},
 		{i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}, Finish: new Date("2017-04-27T16:00:00Z")},
 		{i: 79365, n: "Peacock Scepter Skin", p: {gem: 600}, Finish: new Date("2017-04-26T16:00:00Z")},
-		{i: 79386, n: "Dragon Kama Skin", p: {gem: 600}, Finish: new Date("2017-04-25T16:00:00Z")},
-		{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-		{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2017-04-25T16:00:00Z")},
-		{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2017-04-25T16:00:00Z")},
-		{i: 67028, n: "Chaos weapon skins#Gallery", p: {blticket: 5}},
 		{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-		{i: 68786, n: "Shadow Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-04-25T16:00:00Z")}
+		{i: 67028, n: "Chaos weapon skins#Gallery", p: {blticket: 5}}
 	]
 };

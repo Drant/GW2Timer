@@ -22,8 +22,8 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170424"></script>
-	<script type="text/javascript" src="data/sale.js?v=20170424"></script>
+	<script type="text/javascript" src="data/general.js?v=20170425"></script>
+	<script type="text/javascript" src="data/sale.js?v=20170425"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -158,19 +158,19 @@
 			<div class="hudPeripheral hudPeripheralNorth">
 				<div class="hudItem">
 					<span id="mapAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/account.png" alt="Account" /></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_account"></ins></span>
 						<var class="hudTitle jsTranslate">Account</var>
 					</span>
 				</div>
 				<div class="hudItem">
 					<span id="mapSwitchButton" class="hudSelect curToggle" title="<dfn>View WvW Live Map</dfn><br />gw2timer.com/wvw<div class='mapLoc'><img src='http://i.imgur.com/yimNX7L.png' /></div>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/wvw.png" alt="WvW" /></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_wvw"></ins></span>
 						<var class="hudTitle jsTranslate">WvW</var>
 					</span>
 				</div>
 				<div class="hudItem">
 					<span id="mapHelpButton" class="hudSelect">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/help.png" alt="Guides" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_help"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Guides</var>
 					</span>
 					<div class="hudPopup cntComposition hudHelp">
@@ -226,7 +226,7 @@
 				</div>
 				<div class="hudItem">
 					<span id="mapAlarmButton" class="hudSelect">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/alarm.png" alt="Alarm" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_alarm"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Alarm</var>
 					</span>
 					<div id="mapAlarmPopup" class="hudPopup cntComposition">
@@ -287,7 +287,7 @@
 				</div>
 				<div class="mapOptions hudItem">
 					<span id="mapViewButton" class="hudSelect">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/display.png" alt="Display" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_display"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
@@ -337,7 +337,7 @@
 				</div>
 				<div class="mapGPS hudItem">
 					<span id="mapGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
-						<span class="hudButtonContainer"><img id="mapGPSIcon" class="hudButton" data-src="img/ui/menu/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_gps"></ins><span class="hudArrow"></span></span>
 					</span>
 					<div class="hudPopup cntComposition">
 						<fieldset name="int_setFollow" class="optFollowFieldset" title="Automatically move the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
@@ -351,7 +351,7 @@
 				</div>
 				<div class="mapZones hudItem">
 					<span id="mapZoneButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/zone.png" alt="Zone" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_zone"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>
 					<div class="mapZonesPopup hudPopup cntComposition">
@@ -540,19 +540,19 @@
 			<div class="hudPeripheral hudPeripheralNorth">
 				<div class="hudItem">
 					<span id="wvwAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/account.png" alt="display" /></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_account"></ins></span>
 						<var class="hudTitle jsTranslate">Account</var>
 					</span>
 				</div>
 				<div class="hudItem">
 					<span id="wvwSwitchButton" class="hudSelect curToggle" title="<dfn>Switch to PvE Map</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton curToggle" data-src="img/ui/menu/leave.png" alt="display" /></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_leave"></ins></span>
 						<var class="hudTitle jsTranslate">PvE</var>
 					</span>
 				</div>
 				<div class="hudItem">
 					<span id="wvwToolsButton" class="hudSelect" title="Right click on the map to lay siege weapons.">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/ui/menu/inventory.png" alt="Tools" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_inventory"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Supply</var>
 					</span>
 					<div class="hudPopup cntComposition hudPopupWide">
@@ -571,7 +571,7 @@
 				</div>
 				<div class="hudItem">
 					<span id="wvwAlarmButton" class="hudSelect">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/menu/alarm.png" alt="Alarm" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_alarm"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Alarm</var>
 					</span>
 					<div id="wvwAlarmPopup" class="hudPopup cntComposition hudPopupWide">
@@ -599,7 +599,7 @@
 				</div>
 				<div class="mapOptions hudItem">
 					<span id="wvwViewButton" class="hudSelect">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/ui/menu/display.png" alt="display" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_display"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
@@ -636,7 +636,7 @@
 				</div>
 				<div class="mapGPS hudItem">
 					<span id="wvwGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/ui/menu/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_gps"></ins><span class="hudArrow"></span></span>
 					</span>
 					<div class="hudPopup cntComposition">
 						<fieldset name="int_setFollowWvW" class="optFollowFieldset" title="Automatically move the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
@@ -649,7 +649,7 @@
 				</div>
 				<div class="mapZones hudItem">
 					<span id="wvwZoneButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/ui/menu/zone.png" alt="compass" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_zone"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>
 					<div class="mapZonesPopup hudPopup cntComposition">

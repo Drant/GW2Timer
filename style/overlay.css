@@ -63,14 +63,12 @@
 	left: -4px; top: -4px;
 }
 
-.hudPeripheral {
-	background: url("../img/background/hud.png"), linear-gradient(to bottom, #222 0%, transparent 100%);
-	border-left: 4px solid rgba(0, 0, 0, 0.6);
-	border-radius: 2px;
-}
 .hudPeripheralNorth {
 	top: 0; right: 0;
 	padding-top: 4px; padding-right: 12px;
+	background: url("../img/background/hud.png"), linear-gradient(to bottom, #222 0%, transparent 100%);
+	border-left: 4px solid rgba(0, 0, 0, 0.6);
+	border-radius: 2px;
 }
 .hudHelp {
 	font-size: 13px;

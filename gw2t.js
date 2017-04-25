@@ -3813,7 +3813,7 @@ U = {
 		else if (I.PageEnum.Map[page] || I.PageEnum.Map[pagecaps])
 		{
 			page = (I.PageEnum.Map[pagecaps]) ? pagecaps : page;
-			if (I.PageMapIndependent[page] === undefined)
+			if (I.Directory.Map[page])
 			{
 				viewMap();
 			}
@@ -36549,12 +36549,6 @@ I = {
 			Guilds: "Guilds",
 			Achievements: "Achievements"*/
 		}
-	},
-	PageMapIndependent: // Sections on the map page but doesn't need the map
-	{
-		TP: true,
-		Notepad: true,
-		Personal: true
 	},
 	/*
 	 * Outline of the directory menu. Format:

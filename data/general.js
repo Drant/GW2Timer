@@ -1603,17 +1603,17 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-04-27T20:00:00Z"),
 		Finish: new Date("2017-05-04T20:00:00Z")
-	}
-	/*{
+	},
+	{
 		name_en: "LS3: Episode V",
 		name_de: "LG3: Episode V",
 		name_es: "HV3: Episodio V",
 		name_fr: "HV3: Épisode V",
 		name_zh: "第二生活世界：第五集",
-		official: "",
-		Start: new Date("2017-05-08T17:00:00Z"),
-		Finish: new Date("2017-05-09T17:00:00Z")
-	}*/
+		official: "news/watch-the-trailer-for-flashpoint/",
+		Start: new Date("2017-05-02T17:00:00Z"),
+		Finish: new Date("2017-05-03T17:00:00Z")
+	}
 	]
 },
 
