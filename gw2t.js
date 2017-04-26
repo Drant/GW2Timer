@@ -39164,6 +39164,7 @@ I = {
 			{
 				// Move the alarm options from the map popup to the app panel
 				$("#mapAlarmPopup").appendTo("#chnAlarm").removeClass("hudPopup").addClass("cntPopup");
+				I.loadImg($("#chnAlarm"));
 			}
 		}
 		else

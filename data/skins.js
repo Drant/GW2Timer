@@ -4534,7 +4534,8 @@ Weapon_Staff: [
 	{u: 7104, i: 80273, n: "Prisoner's Treasured Bough", p: {magnetite: 600}},
 	{u: 7113, i: 80188, n: "Spire of Samarog", p: {magnetite: 600}},
 	{u: 7197, i: 80926, n: "Beastslayer Staff", b: [80926]},
-	{u: 7194, i: 80963, n: "Crimson Assassin Staff", p: {token: 16}}
+	{u: 7194, i: 80963, n: "Crimson Assassin Staff", p: {token: 16}},
+	{u: 7204, i: 80981, n: "Hourglass Staff", p: {gem: 600}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", b: [63881]},

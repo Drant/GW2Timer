@@ -11,19 +11,12 @@
 
 	<!-- Stylesheets -->
 	<link rel="shortcut icon" type="image/x-icon" href="img/ui/favicon.png" />
-	<link rel="stylesheet" href="bin/leaflet.css" />
 	<link rel="stylesheet" media="screen" href="gw2t.css" />
 	
-	<!-- JavaScript -->
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-	<!-- CDN fallbacks -->
-	<script>window.jQuery || document.write("<script src='bin/jquery.min.js'><\/script>");</script>
-	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
-	<!-- Web application files  -->
+	<!-- Web application files -->
 	<script type="text/javascript" src="plugins.js"></script>
 	<script type="text/javascript" src="data/general.js?v=20170425"></script>
-	<script type="text/javascript" src="data/sale.js?v=20170425"></script>
+	<script type="text/javascript" src="data/sale.js?v=20170426"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -59,7 +52,7 @@
 		If you can read this then <strong>maybe</strong>:<br />
 		- You are still loading the website (slowly); ignore this message.<br />
 		- You are using an unsupported browser; please try another browser.<br />
-		- Your browser is blocking the leaflet.js map script; please whitelist it.<br />
+		- Your browser is blocking the plugins.js map script; please whitelist it.<br />
 		- This web application encountered a bug; try refreshing (Ctrl+F5).<br />
 		Do you want to <a href="http://forum.renaka.com/topic/5476238/">ask for help?</a><br />
 	</div>
@@ -575,7 +568,7 @@
 						<var class="hudTitle jsTranslate">Alarm</var>
 					</span>
 					<div id="wvwAlarmPopup" class="hudPopup cntComposition hudPopupWide">
-						<label id="logNarrateCheck" title="Toggle narration of WvW events.<br />Uncheck to mute current narration."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logNarrateCheckSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
+						<label id="logNarrateCheck" title="Toggle narration of WvW events.<br />Uncheck to mute current narration."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logNarrateCheckSpeaker" data-src="img/ui/speaker.png" alt="Narration"/></label>
 						<div id="logNarrateLand" class="cssColumn">
 							<b>Narration Filter:</b>
 							<label><input id="opt_bol_narrateRedHome" type="checkbox" /></label>
@@ -856,8 +849,8 @@
 			<article id="plateChains" class="jsScrollable"><!-- This plate will be populated by JS -->
 				<div id="chnProgressBar"><div id="chnProgress0"></div><div id="chnProgress1"></div></div>
 				<div id="chnAlarm">
-					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/menu/alarm.png" alt="Alarm"/>
-					<img id="optChainsIcon" src="img/ui/toggle.png" alt="Toggle" />
+					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." data-src="img/ui/menu/alarm.png" alt="Alarm"/>
+					<img id="optChainsIcon" data-src="img/ui/toggle.png" alt="Toggle" />
 				</div>
 				<kbd id="chnToggle" class="btnWindow btnVertical" title="<dfn>Toggle Current Timers</dfn>"></kbd>
 				<header id="headerChains_Scheduled" class="chnCategoryHeader chnCategoryHeaderFirst">
@@ -929,7 +922,7 @@
 					</div>
 					<label title="Show/Hide clock's tick hand."><input id="opt_bol_showSecondHand" type="checkbox" /> Show clock second hand</label>
 					<label title="Show/Hide GW2 official event countdowns and gem sales on the main page."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard</label>
-					<span><img class="cntIconExample" src="img/ui/menu/alarm.png" alt="Alarm" /> and <img class="cntIconExample" src="img/ui/menu/display.png" alt="Display" /> icons on the map pane can be hovered on for timer alarm and map display options.</span><br />
+					<span><ins class="mnu mnu_alarm"></ins> and <ins class="mnu mnu_display"></ins> icons on the map pane can be hovered on for timer alarm and map display options.</span><br />
 					<br />
 					<h2>Account</h2>
 					<label title="Show/Hide colored borders over items in account banks."><input id="opt_bol_showRarity" type="checkbox" /> Always show rarity on item slots</label>

@@ -136,6 +136,7 @@
 	color: lime;
 }
 #tmlIndicator {
+	height: 100%;
 	top: 0;
 	box-shadow: -1px -2px 4px lime;
 }
@@ -231,7 +232,7 @@ input.mapCoordinatesName {
 	position: relative;
 	top: auto;
 }
-.dirHeader {
+.dirHeaderSecondary {
 	border-top: 1px solid #444;
 	border-bottom: none;
 }
