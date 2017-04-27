@@ -34300,9 +34300,9 @@ H = {
 			}
 			if (isavailable || isdiscounted)
 			{
-				I.print("<br /><a data-page='Gem'>" + D.getPhraseOriginal("View Gem Wishlist") + "</a> - "
+				I.print("<a data-page='Gem'>" + D.getPhraseOriginal("View Gem Wishlist") + "</a> - "
 					+ "<a id='dsbGemPause_" + T.TIMESTAMP_UNIX_SECONDS + "'>" + D.getPhraseOriginal("Pause alarm") + "</a> - "
-					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>" + D.getPhraseOriginal("Disable alarm") + "</a><br />");
+					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>" + D.getPhraseOriginal("Disable alarm") + "</a>");
 				I.bindConsoleLink();
 				$("#dsbGemPause_" + T.TIMESTAMP_UNIX_SECONDS).click(function()
 				{
