@@ -12995,6 +12995,7 @@ V = {
 			else
 			{
 				X.setCheckboxEnumState($("#opt_bol_alertGem"), X.ChecklistEnum.Checked); // Turn on voice alert
+				H.isGemPaused = false;
 				if (availableids[id])
 				{
 					// Subscribing to an available item will alert for discounted condition
@@ -20455,6 +20456,10 @@ D = {
 			cs: "předplatit si", it: "sottoscrivere", pl: "abonować", pt: "assinar", ru: "подписаться", zh: "订阅"},
 		s_unsubscribe: {de: "abonnement kündigen", es: "cancelar suscripción", fr: "se désabonner",
 			cs: "přestat odebírat", it: "annulla sottoscrizione", pl: "anulować subskrypcję", pt: "cancelar assinatura", ru: "отменить подписку", zh: "取消订阅"},
+		s_pause: {de: "anhalten", es: "pausar", fr: "suspendre",
+			cs: "pozastavit", it: "sospendere", pl: "wstrzymaj", pt: "pausar", ru: "приостановить", zh: "暂停"},
+		s_resume: {de: "fortsetzen", es: "reanudar", fr: "reprendre",
+			cs: "pokračovat", it: "riprendere", pl: "wznawiać", pt: "retomar", ru: "продолжить", zh: "继续"},
 		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera",
 			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "开始"},
 		s_click: {de: "klicken", es: "clic", fr: "cliquer",
@@ -20691,12 +20696,16 @@ D = {
 			cs: "nájezd", it: "incursione", pl: "nalot", pt: "incursão", ru: "набег", zh: "大型地下城"},
 		s_museum: {de: "museum", es: "museo", fr: "musée",
 			cs: "muzeum", it: "museo", pl: "muzeum", pt: "museu", ru: "музей", zh: "博物馆"},
+		s_wishlist: {de: "wunschliste", es: "lista de deseos", fr: "liste d'envies",
+			cs: "seznam přání", it: "lista desideri", pl: "lista życzeń", pt: "lista de desejos", ru: "список желаемого", zh: "愿望清单"},
 		
 		// Economy
 		s_trading: {de: "handel", es: "comercio", fr: "commerciale",
 			cs: "obchod", it: "commercio", pl: "handel", pt: "comércio", ru: "продажа", zh: "贸易"},
 		s_tracker: {de: "tracker", es: "rastreador", fr: "suivi",
 			cs: "tracker", it: "tracker", pl: "", pt: "rastreador", ru: "трекер", zh: "跟踪"},
+		s_exchange: {de: "austauschen", es: "intercambiar", fr: "échanger",
+			cs: "spoluužívat", it: "condividere", pl: "dzielić", pt: "compartilhar", ru: "предоставлять", zh: "交换"},
 		s_recent: {de: "aktuell", es: "reciente", fr: "récent",
 			cs: "poslední", it: "recenti", pl: "ostatnie", pt: "recente", ru: "последние", zh: "最近"},
 		s_buying: {de: "kaufen", es: "comprando", fr: "achat en cours",
@@ -33680,6 +33689,7 @@ H = {
 	isDailyEnabled: true,
 	isSaleEnabled: false,
 	isSaleOpened: false,
+	isGemPaused: false,
 	isPactEnabled: true,
 	isVertical: true,
 	
@@ -34180,7 +34190,7 @@ H = {
 		var section = "Gem";
 		var getUnsubscribeLink = function(pID)
 		{
-			return "<a class='jsGemUnsubscribe' data-item='" + pID + "'>" + D.getWordCapital("unsubscribe") + "</a>";
+			return "<a class='jsGemUnsubscribe' data-item='" + pID + "'>" + D.getPhraseOriginal("Unsubscribe this item") + "?</a>";
 		};
 		var checkSubscriptions = function()
 		{
@@ -34290,9 +34300,15 @@ H = {
 			}
 			if (isavailable || isdiscounted)
 			{
-				I.print("<a data-page='Gem'>Go to Gem Store Wishlist</a> - "
-					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>Turn off all Gem Alert</a>");
+				I.print("<br /><a data-page='Gem'>" + D.getPhraseOriginal("View Gem Wishlist") + "</a> - "
+					+ "<a id='dsbGemPause_" + T.TIMESTAMP_UNIX_SECONDS + "'>" + D.getPhraseOriginal("Pause alarm") + "</a> - "
+					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>" + D.getPhraseOriginal("Disable alarm") + "</a><br />");
 				I.bindConsoleLink();
+				$("#dsbGemPause_" + T.TIMESTAMP_UNIX_SECONDS).click(function()
+				{
+					H.isGemPaused = true;
+					I.clear();
+				});
 			}
 		};
 		
@@ -35498,7 +35514,7 @@ K = {
 			$(K.timeProgress1).css({width: "0%"}).animate({width: "100%"}, 800);
 			K.updateTimeFrame(pDate);
 			// Check gem store alerts if opted
-			if (O.Options.bol_alertGem)
+			if (O.Options.bol_alertGem && H.isGemPaused === false)
 			{
 				H.updateGemSubscription();
 			}
@@ -36622,7 +36638,7 @@ I = {
 		Trading:
 		{
 			TP: "Tracker",
-			Trading: "Recent",
+			Trading: "Exchange",
 			Buying: "Buying",
 			Selling: "Selling",
 			Bought: "Bought",
