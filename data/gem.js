@@ -311,7 +311,15 @@ BlackLionWeapon: [
 	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
+	{i: 20761, n: "Air Rider Package", p: {gem: -650}},
+	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},
+	{i: 37190, n: "Consortium Chest", p: {gem: -250}, discount: [[1, 250], [5, 1100]]},
+	{i: 42600, n: "Southsun Supply Crate", p: {gem: -150}, discount: [[1, 150], [10, 1200]]},
+	{i: 42899, n: "Rich Dragon Coffer", p: {gem: -100}, discount: [[1, 100], [5, 400], [25, 2000]]},
 	{i: 20764, n: "Recovery Package", p: {gem: -300}, discount: [[1, 300], [5, 1200]]},
+	{i: 8468, n: "Zephyrite Rescue Pack", p: {gem: -1000}},
+	{i: 68568, n: "Pact Fleet Survival Pack", p: {gem: -1600}},
+	{i: 67359, n: "World vs. World Support Pack", p: {gem: -1895}},
 	{i: 37204, n: "Tyrian Explorer's Knapsack", p: {gem: -1650}},
 	{i: 43077, n: "Black Lion Introductory Package", p: {gem: 1600}},
 	{i: 68013, n: "Salvager's Supplies", p: {gem: -2720}},
@@ -372,9 +380,12 @@ Consumable: [
 	{i: 20005, n: "Heroic Booster", p: {gem: 150}, discount: [[1, 150], [5, 637], [20, 2100]]},
 	{i: 20002, n: "Experience Booster", p: {gem: 100}, discount: [[1, 100], [5, 450], [20, 1600]]},
 	{i: 20003, n: "Item Booster", p: {gem: 100}, discount: [[1, 100], [5, 450], [20, 1600]]},
+	{i: 41741, n: "Communal Boost Bonfire", p: {gem: -300}, discount: [[1, 300], [5, 1200]]},
 	{i: 67406, n: "Candy Corn Gobbler Pack", p: {gem: -300}},
+	{i: 67352, n: "Foil-Wrapped Candy", p: {gem: -25}, discount: [[1, 25], [5, 118], [25, 500]]},
 	{i: 42876, n: "Dragon's Fortune Fireworks", p: {gem: -200}, discount: [[1, 200], [5, 800]]},
-	{i: 48714, n: "Hallows Fortune Fireworks", p: {gem: -200}}
+	{i: 48714, n: "Hallows Fortune Fireworks", p: {gem: -200}},
+	{i: 42974, n: "Kite Fortune", p: {gem: -24}, discount: [[5, 120], [10, 200], [25, 400]]}
 ],
 Pass: [
 	{i: 46499, n: "Infinite Continue Coin", p: {gem: -600}},
@@ -550,6 +561,7 @@ Toy: [
 	{i: 67881, n: "Aviator's Memory Box", p: {gem: 400}},
 	{i: 20000, n: "Box o' Fun", p: {gem: 80}, discount: [[1, 80], [5, 320]]},
 	{i: 41911, n: "Super Adventure Box o' Fun", p: {gem: -125}, discount: [[1, 125], [5, 400]]},
+	{i: 49930, n: "Boxing Gloves", p: {gem: -300}},
 	{i: 49931, n: "Riding Broom", p: {gem: 250}},
 	{i: 49948, n: "Sonic Tunneling Tool", p: {gem: 250}},
 	{i: 67356, n: "Magic Carpet", p: {gem: 250}},

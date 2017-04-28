@@ -25,11 +25,12 @@ GW2T_SALE_DATA = {
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 400}, discount: 500},
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
+	{i: 37190, n: "Consortium Chest", p: {gem: 250}, discount: [[1, 250], [5, 1100]]},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 80981, n: "Hourglass Staff", p: {gem: 600}},
+	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 600}, Finish: new Date("2017-05-01T16:00:00Z")},
 	{i: 79360, n: "Amethyst Aegis", p: {gem: 600}, Finish: new Date("2017-04-30T16:00:00Z")},
 	{i: 69664, n: "Elegant Fan Focus Skin", p: {gem: 600}, Finish: new Date("2017-04-29T16:00:00Z")},
-	{i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}, Finish: new Date("2017-04-27T16:00:00Z")},
 	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 67028, n: "Chaos weapon skins#Gallery", p: {blticket: 5}}
 	]
