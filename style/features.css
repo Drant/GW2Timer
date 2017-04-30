@@ -492,6 +492,7 @@ dt.jpzListNameHover {
 .chlCountdown {
 	margin: 12px;
 	text-align: center;
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 32px;
 	color: #bbcc77;
 	text-shadow: 0px 0px 2px black;
@@ -947,7 +948,7 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 }
 
 #chlCustom input[type="text"].chlCustomTextChecked {
-	color: red;
+	color: #ff2200;
 }
 
 #chlCustom label, .trdEntry label {

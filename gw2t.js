@@ -35477,7 +35477,10 @@ K = {
 			$("#paneClockBackground").css({"background": "url('img/background/globe.jpg') no-repeat center}"});
 			//$("#paneClockBackground").css({"background": "url('img/background/globe_halloween.jpg') no-repeat center}"});
 			//$("#paneClockBackground").css({"background": "url('img/background/globe_wintersday.jpg') no-repeat center}"});
-			$("#paneClockFace").css({"background": "url('img/background/face.png') no-repeat center"});
+			$("#paneClockFace").css({
+				"background": "url('img/background/face.png') no-repeat center",
+				"background-size": "100% 100%;"
+			});
 		}
 	},
 	
@@ -39446,6 +39449,7 @@ I = {
 			{
 				I.cPANE_MENU_HEIGHT = 32;
 				I.loadImg("#mapGPSIcon");
+				K.styleClock();
 				// Manually assign F5 key browser reload functionality
 				$(document.body).on("keydown", this, function (event)
 				{
