@@ -148,6 +148,7 @@ var GW2T_CURRENCY_DATA = {
 		Dyes: null,
 		Minis: null,
 		Carriers: null,
+		Champions: null,
 		Finishers: null,
 		Nodes: null,
 		Recipes: null,
@@ -184,6 +185,7 @@ var GW2T_CURRENCY_DATA = {
 		Dyes: {color: "deepskyblue"},
 		Minis: {color: "aquamarine"},
 		Carriers: {color: "dodgerblue"},
+		Champions: {color: "steelblue"},
 		Finishers: {color: "slateblue"},
 		Nodes: {color: "darkcyan"},
 		Recipes: {color: "purple"},
@@ -405,6 +407,146 @@ var GW2T_ACCOUNT_METADATA = {
 	ProfLevel: {
 		Max: 80
 	},
+	AchievementCategories: [ // Same order as in game, which is different from API
+		{en: "Daily", de: "Täglich", es: "Logros diarios", fr: "Quotidien", zh: "日常"},
+		97, // Daily
+		88, // Daily Fractals
+		145, // Daily Ember Bay
+		142, // Daily Bloodstone Fen
+		149, // Daily Bitterfrost Frontier
+		159, // Daily Lake Doric
+		101, // Seasonal Activities
+		102, // Lunar New Year Dailies
+		162, // Daily Super Adventure Festival
+		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
+		68, // Gates of Maguuma
+		70, // Entanglement
+		71, // The Dragon's Reach, Part 1
+		72, // The Dragon's Reach, Part 2
+		81, // Echoes of the Past
+		82, // Tangled Paths
+		83, // Seeds of Truth
+		100, // Point of No Return
+		104, // Heart of Thorns: Act 1
+		123, // Heart of Thorns: Act 2
+		122, // Heart of Thorns: Act 3
+		121, // Heart of Thorns: Act 4
+		139, // Out of the Shadows
+		144, // Rising Flames
+		147, // A Crack in the Ice
+		154, // The Head of the Snake
+		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
+		137, // Current Events
+		27, // Dungeons
+		51, // Twilight Arbor Aetherpath
+		80, // The Silverwastes
+		69, // Dry Top
+		1, // Slayer
+		2, // Hero
+		4, // Tradesman
+		5, // Explorer
+		6, // Fashion
+		7, // Weapon Master
+		10, // Community
+		11, // Hall of Monuments
+		14, // Jumping Puzzles
+		133, // The Shatterer
+		58, // Triple Trouble
+		47, // Tequatl
+		16, // Bosses
+		{en: "Heart of Thorns", de: "Heart of Thorns", es: "Heart of Thorns", fr: "Heart of Thorns", zh: "决战迈古玛"},
+		116, // Verdant Brink
+		111, // Auric Basin
+		112, // Tangled Depths
+		109, // Dragon's Stand
+		108, // Mastery Insights
+		110, // Specializations
+		{en: "Competitive", de: "Wettkampf", es: "Logros competitivos", fr: "Compétition", zh: "竞技"},
+		143, // Eternal Coliseum
+		152, // Forest of Niflhel
+		153, // Legacy of Foefire
+		141, // Revenge of the Capricorn
+		156, // Battle of Kyhlo
+		157, // Temple of the Silent Storm
+		158, // Battle of Champion's Dusk
+		160, // Spirit Watch
+		161, // Skyhammer
+		126, // Year of the Ascension Part I
+		127, // Year of the Ascension Part IV
+		129, // Year of the Ascension Part II
+		130, // Year of the Ascension Part III
+		3, // PvP Conqueror
+		13, // World vs World
+		60, // Edge of the Mists
+		38, // Sanctum Sprint
+		40, // Crab Toss
+		39, // Southsun Survival
+		35, // Belcher's Bluff
+		{en: "Raids", de: "Schlachtzüge", es: "Incursiones", fr: "Raids", zh: "大型地下城"},
+		124, // Spirit Vale
+		134, // Salvation Pass
+		138, // Stronghold of the Faithful
+		155, // Bastion of the Penitent
+		{en: "Fractals of the Mists", de: "Fraktale der Nebel", es: "Fractales de la Niebla", fr: "Fractales des Brumes", zh: "迷雾碎层"},
+		148, // Nightmare Fractal
+		136, // Fractals of the Mists
+		30, // Fractals of the Mists
+		{en: "World versus World", de: "Welt gegen Welt", es: "Mundo contra Mundo", fr: "Monde contre Monde", zh: "世界之战"},
+		61, // Edge of the Mists
+		74, // WvW Fall Tournament 2014
+		66, // WvW Spring Tournament 2014
+		49, // World vs. World Season 1
+		{en: "Collections", de: "Sammlungen", es: "Logros de colecciones", fr: "Collections", zh: "收藏"},
+		77, // Basic Collections
+		75, // Rare Collections
+		117, // Specialization Collections
+		114, // Legendary Weapons
+		118, // Legendary Backpacks
+		125, // Legendary Armor
+		76, // Black Lion Collections
+		{en: "Festival", de: "Festlicher", es: "Festivo", fr: "Festival", zh: "传统"},
+		132, // Lunar New Year
+		151, // Lunar New Year
+		22, // Super Adventure Box: World 1
+		45, // Super Adventure Box: World 2
+		46, // Super Adventure Box: Tribulation Mode
+		29, // Shadow of the Mad King
+		119, // Shadow of the Mad King
+		146, // Shadow of the Mad King
+		52, // Blood and Madness
+		78, // Blood and Madness
+		57, // A Very Merry Wintersday
+		99, // A Very Merry Wintersday
+		131, // A Very Merry Wintersday
+		150, // A Very Merry Wintersday
+		{en: "Living Story", de: "Lebendigen Geschichte", es: "Historia viviente", fr: "Histoire vivante", zh: "世界动"},
+		23, // Secret of Southsun
+		25, // Dragon Bash
+		26, // Sky Pirates
+		28, // The Wondrous Workshop of Toymaker Tixx
+		31, // Keg Brawl
+		33, // Flame and Frost
+		34, // Bazaar of the Four Winds
+		36, // Support Ellen Kiel
+		37, // Support Evon Gnashblade
+		41, // Queen Jennah's Jubilee
+		42, // The Queen's Gauntlet
+		43, // Clockwork Chaos
+		44, // Emissary Vorpp's Field Assistant
+		48, // Boss Week
+		50, // Twilight Assault
+		53, // Tower of Nightmares
+		54, // The Nightmares Within
+		55, // Fractured!
+		56, // The Nightmare Is Over
+		59, // The Origins of Madness
+		62, // Escape from Lion's Arch
+		65, // The Battle for Lion's Arch
+		67, // Festival of the Four Winds
+		73, // Retired Achievement
+		{en: "Temporary", de: "Vorübergehend", es: "Temporal", fr: "Temporaire", zh: "临时"},
+		-1
+	],
 	WvWRank: {
 		Ranks: [
 			1, 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120,

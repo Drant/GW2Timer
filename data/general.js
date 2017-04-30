@@ -1605,11 +1605,11 @@ Countdown: {
 		Finish: new Date("2017-05-04T20:00:00Z")
 	},
 	{
-		name_en: "LS3: Episode V",
-		name_de: "LG3: Episode V",
-		name_es: "HV3: Episodio V",
-		name_fr: "HV3: Épisode V",
-		name_zh: "第二生活世界：第五集",
+		name_en: "Living Story 3: Episode V",
+		name_de: "Lebendigen Geschichte 3: Episode V",
+		name_es: "Historia viviente 3: Episodio V",
+		name_fr: "Histoire vivante 3: Épisode V",
+		name_zh: "第三生活世界：第五集",
 		official: "news/watch-the-trailer-for-flashpoint/",
 		Start: new Date("2017-05-02T17:00:00Z"),
 		Finish: new Date("2017-05-03T17:00:00Z")

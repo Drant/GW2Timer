@@ -821,13 +821,30 @@ img {
 }
 
 /*
- * Achievement tooltips.
+ * Achievement tooltips, also reuseable for other API information.
  */
+.achWrap {
+	display: table;
+}
+.achIcon {
+	display: table-cell;
+	vertical-align: top;
+	margin-right: 8px;
+	max-width: 128px; max-height: 128px;
+}
+.achText {
+	display: table-cell;
+	vertical-align: top;
+}
 .achName {
 	color: #ffcc77;
 }
 .achRequirement {
 	margin-top: 6px;
+}
+.achInstruction {
+	margin-top: 6px;
+	color: white;
 }
 .achDescription {
 	margin-top: 6px;
@@ -2395,21 +2412,13 @@ input.mapCoordinatesName {
 	background: radial-gradient(ellipse at center, #4c4c4c 0%, #444444 50%, #131313 100%);
 }
 
-#clkWaypoints .cssWaypoint { /* Festival sensitive */
-	/*background-image: url("img/map/halloween.png");*/
-	/*background-image: url("img/map/wintersday.png");*/
-}
-#paneClockBackground { /* Festival sensitive */
-	/*background: url("img/background/globe_halloween.png") no-repeat center;*/
-	/*background: url("img/background/globe_wintersday.png") no-repeat center;*/
+#paneClockBackground {
 	right: 1px;
 	width: 358px; /* To avoid bleeding left edge */
-	background: url("img/background/globe.jpg") no-repeat center;
 	filter: blur(1px);
 	opacity: 0;
 }
 #paneClockFace {
-	background: url("img/background/face.png") no-repeat center;
 	background-size: 100% 100%;
 	/*opacity: 0.9;*/
 }
@@ -2723,49 +2732,52 @@ input.mapCoordinatesName {
 .mnu_catalog { background-position: -320px 0; }
 .mnu_cats { background-position: -352px 0; }
 .mnu_chains { background-position: -384px 0; }
-.mnu_characters { background-position: -416px 0; }
-.mnu_checklist { background-position: -448px 0; }
-.mnu_cleanup { background-position: -480px 0; }
-.mnu_crafting { background-position: -512px 0; }
-.mnu_directory { background-position: -544px 0; }
-.mnu_display { background-position: -576px 0; }
-.mnu_dungeons { background-position: -608px 0; }
-.mnu_dyes { background-position: -640px 0; }
-.mnu_edit { background-position: -672px 0; }
-.mnu_finishers { background-position: -704px 0; }
-.mnu_forum { background-position: -736px 0; }
-.mnu_gem { background-position: -768px 0; }
-.mnu_gliders { background-position: -800px 0; }
-.mnu_gps { background-position: -832px 0; }
-.mnu_guilds { background-position: -864px 0; }
-.mnu_help { background-position: -896px 0; }
-.mnu_hero { background-position: -928px 0; }
-.mnu_info { background-position: -960px 0; }
-.mnu_inventory { background-position: -992px 0; }
-.mnu_lab { background-position: -1024px 0; }
-.mnu_leave { background-position: -1056px 0; }
-.mnu_manager { background-position: -1088px 0; }
-.mnu_map { background-position: -1120px 0; }
-.mnu_materials { background-position: -1152px 0; }
-.mnu_minis { background-position: -1184px 0; }
-.mnu_museum { background-position: -1216px 0; }
-.mnu_nodes { background-position: -1248px 0; }
-.mnu_options { background-position: -1280px 0; }
-.mnu_outfits { background-position: -1312px 0; }
-.mnu_pact { background-position: -1344px 0; }
-.mnu_possessions { background-position: -1376px 0; }
-.mnu_pvp { background-position: -1408px 0; }
-.mnu_raids { background-position: -1440px 0; }
-.mnu_recipes { background-position: -1472px 0; }
-.mnu_sab { background-position: -1504px 0; }
-.mnu_selling { background-position: -1536px 0; }
-.mnu_sold { background-position: -1568px 0; }
-.mnu_timers { background-position: -1600px 0; }
-.mnu_trading { background-position: -1632px 0; }
-.mnu_vault { background-position: -1664px 0; }
-.mnu_wardrobe { background-position: -1696px 0; }
-.mnu_wvw { background-position: -1728px 0; }
-.mnu_zone { background-position: -1760px 0; }
+.mnu_champions { background-position: -416px 0; }
+.mnu_characters { background-position: -448px 0; }
+.mnu_checklist { background-position: -480px 0; }
+.mnu_cleanup { background-position: -512px 0; }
+.mnu_crafting { background-position: -544px 0; }
+.mnu_directory { background-position: -576px 0; }
+.mnu_display { background-position: -608px 0; }
+.mnu_dungeons { background-position: -640px 0; }
+.mnu_dyes { background-position: -672px 0; }
+.mnu_edit { background-position: -704px 0; }
+.mnu_finishers { background-position: -736px 0; }
+.mnu_forum { background-position: -768px 0; }
+.mnu_gem { background-position: -800px 0; }
+.mnu_gliders { background-position: -832px 0; }
+.mnu_gps { background-position: -864px 0; }
+.mnu_guilds { background-position: -896px 0; }
+.mnu_help { background-position: -928px 0; }
+.mnu_hero { background-position: -960px 0; }
+.mnu_info { background-position: -992px 0; }
+.mnu_inventory { background-position: -1024px 0; }
+.mnu_lab { background-position: -1056px 0; }
+.mnu_leave { background-position: -1088px 0; }
+.mnu_manager { background-position: -1120px 0; }
+.mnu_map { background-position: -1152px 0; }
+.mnu_masteries { background-position: -1184px 0; }
+.mnu_materials { background-position: -1216px 0; }
+.mnu_minis { background-position: -1248px 0; }
+.mnu_museum { background-position: -1280px 0; }
+.mnu_nodes { background-position: -1312px 0; }
+.mnu_options { background-position: -1344px 0; }
+.mnu_outfits { background-position: -1376px 0; }
+.mnu_pact { background-position: -1408px 0; }
+.mnu_possessions { background-position: -1440px 0; }
+.mnu_pvp { background-position: -1472px 0; }
+.mnu_raids { background-position: -1504px 0; }
+.mnu_recipes { background-position: -1536px 0; }
+.mnu_sab { background-position: -1568px 0; }
+.mnu_selling { background-position: -1600px 0; }
+.mnu_sold { background-position: -1632px 0; }
+.mnu_story { background-position: -1664px 0; }
+.mnu_timers { background-position: -1696px 0; }
+.mnu_trading { background-position: -1728px 0; }
+.mnu_vault { background-position: -1760px 0; }
+.mnu_wardrobe { background-position: -1792px 0; }
+.mnu_wvw { background-position: -1824px 0; }
+.mnu_zone { background-position: -1856px 0; }
 
 #plateMenu var { /* Button subtitle */
 	display: table-cell;
@@ -3760,16 +3772,17 @@ gem {
 .s16_map_ds { background-position: -784px 0; }
 .s16_map_eb { background-position: -800px 0; }
 .s16_map_ld { background-position: -816px 0; }
-.s16_matrix { background-position: -832px 0; }
-.s16_money { background-position: -848px 0; }
-.s16_monument { background-position: -864px 0; }
-.s16_mysticcoin { background-position: -880px 0; }
-.s16_pvp { background-position: -896px 0; }
-.s16_starting { background-position: -912px 0; }
-.s16_token { background-position: -928px 0; }
-.s16_view { background-position: -944px 0; }
-.s16_wiki { background-position: -960px 0; }
-.s16_youtube { background-position: -976px 0; }
+.s16_mastery { background-position: -832px 0; }
+.s16_matrix { background-position: -848px 0; }
+.s16_money { background-position: -864px 0; }
+.s16_monument { background-position: -880px 0; }
+.s16_mysticcoin { background-position: -896px 0; }
+.s16_pvp { background-position: -912px 0; }
+.s16_starting { background-position: -928px 0; }
+.s16_token { background-position: -944px 0; }
+.s16_view { background-position: -960px 0; }
+.s16_wiki { background-position: -976px 0; }
+.s16_youtube { background-position: -992px 0; }
 
 coppercoin, silvercoin, goldcoin, gemunit, karmaunit, laurelunit {
 	display: inline-block;

@@ -35,7 +35,6 @@ GW2T_SALE_DATA = {
 	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}, Finish: new Date("2017-05-02T16:00:00Z")},
 	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 600}, Finish: new Date("2017-05-01T16:00:00Z")},
 	{i: 79360, n: "Amethyst Aegis", p: {gem: 600}, Finish: new Date("2017-04-30T16:00:00Z")},
-	{i: 69664, n: "Elegant Fan Focus Skin", p: {gem: 600}, Finish: new Date("2017-04-29T16:00:00Z")},
 	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 67028, n: "Chaos weapon skins#Gallery", p: {blticket: 5}}
 	]

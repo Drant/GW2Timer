@@ -2703,13 +2703,14 @@ X = {
 					X.setChecklistItem(pChecklist, iIndex, state);
 					X.setCheckboxStyle(pChecklist, iIndex, $(this));
 
+					var textinput = X.getCheckboxLabel($(this)).next();
 					if (state === X.ChecklistEnum.Checked)
 					{
-						$(this).parent().next().addClass("chlCustomTextChecked");
+						textinput.addClass("chlCustomTextChecked");
 					}
 					else
 					{
-						$(this).parent().next().removeClass("chlCustomTextChecked");
+						textinput.removeClass("chlCustomTextChecked");
 					}
 				});
 
@@ -2875,11 +2876,12 @@ U = {
 		Dyes: "data/dyes.js",
 		Minis: "data/minis.js",
 		Carriers: "data/carriers.js",
+		Champions: "data/champions.js",
 		Finishers: "data/finishers.js",
 		Nodes: "data/nodes.js",
 		Cats: "data/cats.js",
-		Dungeons: "data/dungeons.js",
 		Raids: "data/raids.js",
+		Dungeons: "data/dungeons.js",
 		Catalog: "data/catalog.js",
 		Cleanup: "data/cleanup.js",
 		Ascended: "data/ascended.js",
@@ -3256,14 +3258,13 @@ U = {
 	/*
 	 * Gets the language specific URL of a standard v2 API that requires an ID.
 	 * @param string pAPI endpoint name.
-	 * @param int pID for request.
+	 * @param int pID for request, if provided "true" then will use "all" query.
 	 * @returns string URL to request data.
 	 */
 	getAPI: function(pAPI, pID)
 	{
-		var idstr = (pID === undefined) ? "" : "/" + pID;
-		var url = U.URL_API.Prefix + pAPI + idstr;
-		return U.getLangURL(url);
+		var idstr = (pID === undefined) ? "" : ((pID === true) ? "?ids=all" : "/" + pID);
+		return U.getLangURL(U.URL_API.Prefix + pAPI + idstr);
 	},
 	getAPIURL: function(pAPI)
 	{
@@ -5956,7 +5957,7 @@ Z = {
 			array = pArray;
 			retrieveData();
 		}
-		else if (isNaN(pArray) === false)
+		else if (typeof pArray === "number")
 		{
 			array = [pArray];
 			retrieveData();
@@ -7206,7 +7207,7 @@ Z = {
 	collatePrices: function()
 	{
 		// Should only include records that have tradeable items
-		var recordnames = ["materials", "skins", "dyes", "minis", "carriers", "finishers", "nodes", "recipes"];
+		var recordnames = ["materials", "skins", "dyes", "minis", "carriers", "champions", "finishers", "nodes", "recipes"];
 		var recordnamescounter = 0;
 		var db, record, catarr;
 		var idstocache = {};
@@ -7355,6 +7356,13 @@ Z = {
 					idstocache[iEntry.i] = true;
 				}
 			});
+			iterateRecord(function(iEntry) // Champions
+			{
+				if (Q.isTradeable(db[iEntry.i]))
+				{
+					idstocache[iEntry.i] = true;
+				}
+			});
 			iterateRecord(function(iEntry) // Finishers
 			{
 				if (Q.isTradeable(db[iEntry.i]))
@@ -7493,25 +7501,27 @@ A = {
 	Tally: null, // Number of filled slots and capacity of banks and collections, used in auditing
 	URL: { // Account data type and URL substring
 		Account: "account",
-		Achievements: "account/achievements",
-		Shared: "account/inventory", // Shared inventory slots
 		Bank: "account/bank",
+		Materials: "account/materials",
+		Skins: "account/skins",
+		Outfits: "account/outfits",
+		Gliders: "account/gliders",
 		Dyes: "account/dyes",
+		Minis: "account/minis",
+		Carriers: "account/mailcarriers",
+		Champions: "account/pvp/heroes",
 		Finishers: "account/finishers",
 		Nodes: "account/home/nodes",
 		Cats: "account/home/cats",
-		Materials: "account/materials",
-		Minis: "account/minis",
-		Carriers: "account/mailcarriers",
-		Outfits: "account/outfits",
-		Gliders: "account/gliders",
-		Skins: "account/skins",
+		Achievements: "account/achievements",
+		Masteries: "account/masteries",
+		Raids: "account/raids",
+		Dungeons: "account/dungeons",
+		Characters: "characters",
+		Shared: "account/inventory", // Shared inventory slots
 		Wallet: "account/wallet",
 		Titles: "account/titles",
 		Recipes: "account/recipes",
-		Dungeons: "account/dungeons",
-		Raids: "account/raids",
-		Characters: "characters",
 		CharactersSAB: "characters/{0}/sab",
 		Transactions: "commerce/transactions",
 		CurrentBuys: "commerce/transactions/current/buys",
@@ -7571,11 +7581,6 @@ A = {
 		var Settings = pSettings || {};
 		Settings.aPermission = A.PermissionEnum.TradingPost;
 		U.fetchPaginated(A.getURL(pURL), Settings);
-	},
-	
-	getCharactersData: function(pSuffix, pCallback)
-	{
-		
 	},
 	
 	/*
@@ -9072,6 +9077,7 @@ A = {
 			Dyes: {},
 			Minis: {},
 			Carriers: {},
+			Champions: {},
 			Finishers: {},
 			Nodes: {},
 			Recipes: {}
@@ -9083,6 +9089,7 @@ A = {
 			Dyes: {},
 			Minis: {},
 			Carriers: {},
+			Champions: {},
 			Finishers: {},
 			Nodes: {}
 		};
@@ -9571,17 +9578,17 @@ A = {
 		{
 			var audview = $("#audView").empty();
 			var viewcontainer = B.createBank(audview);
-			var viewbank = viewcontainer.find(".bnkBank");
+			var viewbank = B.getTabsContainer(viewcontainer);
 			var tabtitle = (isNaN(pCategory) === false) ? A.Data.Characters[pCategory].oCharPreface : D.getWordCapital(pCategory);
 			var viewtab = B.createBankTab(viewbank, {aTitle: tabtitle});
-			var viewslotscontainer = viewtab.find(".bnkTabSlots");
+			var viewslotscontainer = B.getSlotsContainer(viewtab);
 			var itemids = [];
 			for (var i in categoriesview[pCategory])
 			{
 				itemids.push(i);
 			}
 			
-			// Fill the "bank" with pseudo item slots
+			// Fill the "bank" with item slots
 			Q.getPricedItems(itemids, function()
 			{
 				for (var i in categoriesview[pCategory])
@@ -9711,9 +9718,9 @@ A = {
 			var summaryupgrades = $("<div id='audUpgrades'></div>").appendTo(container);
 			var upggems = A.getAccountUpgradesGem();
 			var upgcontainer = B.createBank(summaryupgrades);
-			var upgbank = upgcontainer.find(".bnkBank");
+			var upgbank = B.getTabsContainer(upgcontainer);
 			var upgtab = B.createBankTab(upgbank, {aTitle: D.getPhraseTitle("Account Upgrades")});
-			var upgslotscontainer = upgtab.find(".bnkTabSlots");
+			var upgslotscontainer = B.getSlotsContainer(upgtab);
 			// Fill the "bank" with pseudo item slots
 			for (var i in A.Currency.AuditUpgrades)
 			{
@@ -10071,6 +10078,7 @@ A = {
 			auditUnlocks("Dyes");
 			auditUnlocks("Minis");
 			auditUnlocks("Carriers");
+			auditUnlocks("Champions");
 			auditUnlocks("Finishers");
 			auditUnlocks("Nodes");
 			auditUnlocks("Recipes");
@@ -10242,6 +10250,8 @@ A = {
 				insertPaymentsFromRecord("Minis");
 				// Insert mail carriers item payments
 				insertPaymentsFromRecord("Carriers");
+				// Insert mists champions item payments
+				insertPaymentsFromRecord("Champions");
 				// Insert finisher item payments
 				insertPaymentsFromRecord("Finishers");
 				// Insert home instance node item payments
@@ -11668,7 +11678,7 @@ V = {
 			return;
 		}
 		var container = B.createBank(dish);
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var slotdata;
 		var tab, slotscontainer, slot;
 		var char, bagdata;
@@ -11685,7 +11695,7 @@ V = {
 			var itemids = [];
 			var numfetched = 0;
 			var numtofetch = 0;
-			slotscontainer = pTab.append(I.cThrobber).find(".bnkTabSlots");
+			slotscontainer = B.getSlotsContainer(pTab.append(I.cThrobber));
 			// First count items to fetch
 			for (var ii = 0; ii < pCharacter.bags.length; ii++)
 			{
@@ -11753,7 +11763,7 @@ V = {
 			// Generate a first tab for the shared inventory slots
 			for (var i = 0; i < pData.length; i++)
 			{
-				slot = B.createBankSlot(sharedtab.find(".bnkTabSlots"), "bnkSlotShared");
+				slot = B.createBankSlot(B.getSlotsContainer(sharedtab), "bnkSlotShared");
 				slotdata = pData[i];
 				if (slotdata)
 				{
@@ -11843,7 +11853,7 @@ V = {
 			return;
 		}
 		var container = B.createBank(dish);
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var slotscontainers = {};
 		var tab, slotscontainer, slot;
 		
@@ -11854,7 +11864,7 @@ V = {
 			for (var i in Q.ItemEnum)
 			{
 				tab = B.createBankTab(bank, {aTitle: D.getString(i)});
-				slotscontainers[i] = tab.find(".bnkTabSlots");
+				slotscontainers[i] = B.getSlotsContainer(tab);
 			}
 			// Insert item slots into proper type tab
 			for (var i in A.Possessions)
@@ -11952,7 +11962,7 @@ V = {
 			aIsCollection: true,
 			aWantGem: false
 		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		
 		// Retrieve data before generating
 		U.getScript(U.URL_DATA.Recipes, function()
@@ -12124,13 +12134,13 @@ V = {
 				aWantCoin: false
 			});
 			A.createCharacterBanner(container, pCharacter, elmprefix);
-			var bank = container.find(".bnkBank");
+			var bank = B.getTabsContainer(container);
 			var tab, slotscontainer, slot, unlock;
 			
 			for (var i in record)
 			{
 				tab = B.createBankTab(bank, {aTitle: D.getObjectName(headers[i])});
-				slotscontainer = tab.find(".bnkTabSlots");
+				slotscontainer = B.getSlotsContainer(tab);
 				for (var ii in record[i])
 				{
 					unlock = (record[i])[ii];
@@ -12144,7 +12154,7 @@ V = {
 				}
 			}
 			B.tallyBank(container);
-			B.createDivider(container);
+			B.createBankDivider(container);
 		};
 		
 		// Turns the API's multiple arrays into one associative array
@@ -12215,7 +12225,7 @@ V = {
 		}
 		
 		var container = B.createBank(dish);
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var slotdata;
 		var tab, slotscontainer, slot;
 		var nexti;
@@ -12232,7 +12242,7 @@ V = {
 				if ((i === 0 || nexti % A.Metadata.Bank.NumSlotsPerTab === 0) && nexti !== pData.length)
 				{
 					tab = B.createBankTab(bank);
-					slotscontainer = tab.find(".bnkTabSlots");
+					slotscontainer = B.getSlotsContainer(tab);
 				}
 				nexti = i+1;
 
@@ -12303,7 +12313,7 @@ V = {
 			return;
 		}
 		var container = B.createBank(dish);
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var guild;
 		var tab, slotscontainer, slot;
 		var sortedvaults = [], vault, subvault;
@@ -12363,7 +12373,7 @@ V = {
 					{
 						subvault = vault[ii];
 						tab = B.createBankTab(bank, {aTitle: guild.oTag + " " + subbankname[ii]});
-						slotscontainer = tab.find(".bnkTabSlots");
+						slotscontainer = B.getSlotsContainer(tab);
 						subvault.inventory.forEach(function(iSlotData)
 						{
 							slot = B.createBankSlot(slotscontainer);
@@ -12439,7 +12449,7 @@ V = {
 			aIsCollection: false,
 			aWantGem: false
 		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var doGenerate = function(pUnlockeds)
 		{
 			var entry;
@@ -12530,7 +12540,7 @@ V = {
 		};
 		
 		var container = B.createBank(dish, {aIsCollection: true});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var generateWardrobe = function(pUnlockeds)
 		{
 			galleries = GW2T_SKINS_GALLERIES;
@@ -12590,7 +12600,7 @@ V = {
 			aIsCollection: true,
 			aWantGem: Settings.aWantGem
 		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var helpmsg = $("#accHelp" + section);
 		var helpstr = (helpmsg.length) ? helpmsg.html() : "";
 		var generateUnlockables = function(pUnlockeds)
@@ -12636,6 +12646,10 @@ V = {
 	{
 		V.serveUnlockables("Carriers");
 	},
+	serveChampions: function()
+	{
+		V.serveUnlockables("Champions");
+	},
 	serveFinishers: function()
 	{
 		V.serveUnlockables("Finishers");
@@ -12651,20 +12665,20 @@ V = {
 			A.embedFrame("#accDish_Cats", G.getCollectibleURL(X.Collectibles.HungryCats, pReturn.aUnlockAssoc));
 		}});
 	},
-	serveDungeons: function()
-	{
-		V.serveUnlockables("Dungeons", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false, aCallback: function()
-		{
-			T.isChecklistCountdownsStarted = true;
-			$("#accDish_Dungeons").prepend("<div class='accCountdown jsCountdownToDaily'></div>");
-		}});
-	},
 	serveRaids: function()
 	{
 		V.serveUnlockables("Raids", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false, aCallback: function()
 		{
 			T.isChecklistCountdownsStarted = true;
 			$("#accDish_Raids").prepend("<div class='accCountdown jsCountdownToWeekly'></div>");
+		}});
+	},
+	serveDungeons: function()
+	{
+		V.serveUnlockables("Dungeons", {aPermission: A.PermissionEnum.Progression, aWantPrices: false, aWantGem: false, aCallback: function()
+		{
+			T.isChecklistCountdownsStarted = true;
+			$("#accDish_Dungeons").prepend("<div class='accCountdown jsCountdownToDaily'></div>");
 		}});
 	},
 	
@@ -12681,10 +12695,9 @@ V = {
 		
 		var container = B.createBank(dish, {
 			aClass: "bnkBankDyes",
-			aIsCollection: true,
-			aWantGem: false
+			aIsPseudo: true
 		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		U.getScript(U.URL_DATA.Dyes, function()
 		{
 			$.getJSON(A.getURL(A.URL.Dyes), function(pData)
@@ -12702,6 +12715,213 @@ V = {
 			{
 				A.printError(A.PermissionEnum.Unlocks, pStatus);
 				dish.empty();
+			});
+		});
+	},
+	
+	/*
+	 * Generates and tallies achievement points.
+	 */
+	serveAchievements: function()
+	{
+		var dish = $("#accDish_Achievements");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		
+		var unlocks = {};
+		var generateBank = function(pData)
+		{
+			I.removeThrobber(dish);
+			var container = B.createBank(dish, {
+				aIsPseudo: true
+			});
+			var bank = B.getTabsContainer(container);
+			var tab, slotscontainer, slot;
+			var categorizedach = {};
+			var categories = {}, cat, achid, box, ithach, points;
+			pData.forEach(function(iCategory)
+			{
+				categories[iCategory.id] = iCategory;
+			});
+			
+			var createTab = function(pCategory)
+			{
+				tab = B.createBankTab(bank, {
+					aTitle: pCategory.name,
+					aIcon: "<img class='bnkTabIcon' src='" + pCategory.icon + "' />"
+				});
+				slotscontainer = B.getSlotsContainer(tab);
+				for (var ii = 0; ii < pCategory.achievements.length; ii++)
+				{
+					achid = pCategory.achievements[ii];
+					box = Q.getBoxedAchievement(achid);
+					if (box)
+					{
+						categorizedach[achid] = true;
+						ithach = box.oData;
+						points = 0;
+						ithach.tiers.forEach(function(iTier)
+						{
+							points += iTier.points;
+						});
+						slot = B.createPseudoSlot(slotscontainer, {
+							aIsUnlocked: (unlocks[achid]) ? true : false,
+							aName: ithach.name,
+							aIcon: pCategory.icon,
+							aTooltip: Q.analyzeAchievement(ithach),
+							aKeywords: pCategory.name + " " + ithach.name + " " + ithach.description,
+							aLabel: ithach.name,
+							aPayment: {achievement: points}
+						});
+					}
+				}
+			};
+			
+			// Create the achievement category tabs in the same order as the game, not the API
+			A.Metadata.AchievementCategories.forEach(function(iCategoryID)
+			{
+				if (typeof iCategoryID === "object")
+				{
+					B.createTabDivider(bank, {aTitle: D.getObjectTranslation(iCategoryID)});
+				}
+				else
+				{
+					cat = categories[iCategoryID];
+					if (cat)
+					{
+						createTab(cat);
+						delete categories[iCategoryID]; // Any unknown categories will remain in the assoc
+					}
+					else if (iCategoryID === -1) // Extra category for achievements without a category
+					{
+						var fauxcategory = {
+							name: "",
+							icon: "img/ui/unknown.png",
+							achievements: []
+						};
+						for (var i in Q.Boxes.Achievements)
+						{
+							if (categorizedach[i] === undefined)
+							{
+								fauxcategory.achievements.push(i);
+							}
+						}
+						createTab(fauxcategory);
+					}
+				}
+			});
+			// Include any unknown categories not in the pre-sorted achievement categories
+			for (var i in categories)
+			{
+				createTab(categories[i]);
+			}
+			
+			B.tallyBank(container);
+			B.createBankDivider(container);
+			B.createBankMenu(bank, {
+				aIsPseudo: true,
+				aIsCollapsed: true
+			});
+		};
+		
+		dish.prepend(I.cThrobber);
+		// Get account's achievement unlocks
+		U.getJSON(A.getURL(A.URL.Achievements), function(pDataInner)
+		{
+			// Convert array into associative array for constant access
+			pDataInner.forEach(function(iUnlock)
+			{
+				unlocks[iUnlock.id] = iUnlock;
+			});
+			// Get achievement categories
+			U.getJSON(U.getAPI("achievements/categories", true), function(pData)
+			{
+				// Get all possible achievements
+				Q.getAchievements(true, function()
+				{
+					generateBank(pData);
+				});
+			});
+		}).fail(function()
+		{
+			A.printError(A.PermissionEnum.Progression);
+		});
+	},
+	
+	/*
+	 * Generates mastery unlocks.
+	 */
+	serveMasteries: function()
+	{
+		var dish = $("#accDish_Masteries");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		
+		var unlockassoc = {};
+		var generateBank = function(pData)
+		{
+			I.removeThrobber(dish);
+			var container = B.createBank(dish, {
+				aIsPseudo: true
+			});
+			var bank = B.getTabsContainer(container);
+			var tab, slotscontainer, slot;
+			var ithmastery;
+			
+			pData.forEach(function(iLine)
+			{
+				tab = B.createBankTab(bank, {aTitle: iLine.name});
+				slotscontainer = B.getSlotsContainer(tab);
+				for (var ii = 0; ii < iLine.levels.length; ii++)
+				{
+					ithmastery = iLine.levels[ii];
+					slot = B.createPseudoSlot(slotscontainer, {
+						aIsUnlocked: unlockassoc[iLine.id + "_" + ii],
+						aName: ithmastery.name,
+						aIcon: ithmastery.icon,
+						aLabel: ithmastery.name,
+						aTooltip: Q.analyzeAchievement(ithmastery, {
+							aClass: "itmTooltipMastery",
+							aWantIcon: true
+						}),
+						aPayment: {mastery: ithmastery.point_cost}
+					});
+				}
+			});
+			B.tallyBank(container);
+			B.createBankDivider(container);
+			B.createBankMenu(bank, {
+				aIsPseudo: true
+			});
+		};
+		
+		// Get all possible masteries
+		dish.prepend(I.cThrobber);
+		U.getJSON(U.getAPI("masteries", true), function(pData)
+		{
+			// Get account's mastery unlocks
+			U.getJSON(A.getURL(A.URL.Masteries), function(pDataInner)
+			{
+				/*
+				 * The API gives how far in the mastery track the account has
+				 * progressed (array length) rather than the ID of mastery unlocked.
+				 */
+				pDataInner.forEach(function(iLine)
+				{
+					for (var ii = 0; ii < iLine.level; ii++)
+					{
+						// Create a custom ID based on mastery line ID and the mastery's array index
+						unlockassoc[iLine.id + "_" + ii] = true;
+					}
+				});
+				generateBank(pData);
+			}).fail(function()
+			{
+				A.printError(A.PermissionEnum.Progression);
 			});
 		});
 	},
@@ -12978,7 +13198,7 @@ V = {
 			aIsCollection: true,
 			aWantCoin: false
 		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var validids = {}, availableids = {}, recordedvalues = {};
 		
 		// Sets the memory of a slot
@@ -13172,7 +13392,7 @@ V = {
 			aIsCollection: true,
 			aWantGem: false
 		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		
 		U.getScript(U.URL_DATA.Museum, function()
 		{
@@ -13209,7 +13429,7 @@ V = {
 		
 		var section = "Pact";
 		var container = B.createBank($("#pctBank"));
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var tab, slotscontainer, slot;
 		var numfetched = 0;
 		var numtofetch = 0;
@@ -13286,7 +13506,7 @@ V = {
 				tab = B.createBankTab(bank, {
 					aTitle: $("#pctStatistics").attr("data-date")
 				});
-				slotscontainer = tab.find(".bnkTabSlots");
+				slotscontainer = B.getSlotsContainer(tab);
 				for (var i = 0; i < itemids.length; i++)
 				{
 					var itemid = itemids[i];
@@ -13375,6 +13595,11 @@ B = {
 	createBank: function(pDestination, pSettings)
 	{
 		var Settings = pSettings || {};
+		if (Settings.aIsPseudo)
+		{
+			Settings.aIsCollection = true;
+			Settings.aWantGem = false;
+		}
 		
 		var container = $("<div " + ((Settings.aID) ? "id='" + Settings.aID + "'" : "") + " class='bnkContainer'>"
 			+ "<div class='bnkTop'>"
@@ -13410,7 +13635,11 @@ B = {
 
 		return container;
 	},
-	createDivider: function(pContainer)
+	getTabsContainer: function(pContainer)
+	{
+		return pContainer.find(".bnkBank");
+	},
+	createBankDivider: function(pContainer)
 	{
 		pContainer.append("<div class='bnkDivider'></div>");
 	},
@@ -13482,6 +13711,27 @@ B = {
 		}
 		return tab;
 	},
+	getSlotsContainer: function(pElement)
+	{
+		return pElement.find(".bnkTabSlots");
+	},
+	
+	/*
+	 * Creates a divider between tabs in a bank.
+	 * @param jqobject pBank container.
+	 * @param string pHTML within the divider, optional.
+	 */
+	createTabDivider: function(pBank, pSettings)
+	{
+		var Settings = pSettings || {};
+		
+		var titlestr = (Settings.aTitle) ? "<var class='bnkTabDividerText'>" + Settings.aTitle + "</var>" : "";
+		$("<div class='bnkTabDivider'>"
+			+ "<aside class='bnkTabHeader'>"
+				+ titlestr
+			+ "</aside>"
+		+ "</div>").appendTo(pBank);
+	},
 	
 	/*
 	 * Gets the tally numbers on the tab header of how many slots are filled.
@@ -13517,7 +13767,7 @@ B = {
 		var itemsinbank = 0;
 		var bankfill = 0;
 		var bankcapacity = 0;
-		pContainer.find(".bnkTabSlots").each(function()
+		B.getSlotsContainer(pContainer).each(function()
 		{
 			var itemsintab = 0;
 			var tabfill = 0;
@@ -13642,23 +13892,35 @@ B = {
 		{
 			slot.find(".bnkSlotIcon").css({backgroundImage: "url(" + Settings.aIcon + ")"});
 		}
-		if (Settings.aCount === undefined && !Settings.aIsUnlocked)
+		if (!Settings.aIsUnlocked)
 		{
 			slot.addClass("bnkSlotZero");
 		}
 		if (Settings.aIsUnlocked)
 		{
-			count = 1;
+			count = Settings.aCount || 1;
 		}
-		else if (Settings.aCount !== undefined)
+		if (Settings.aCount !== undefined)
 		{
-			count = Settings.aCount;
 			slot.append("<var class='bnkSlotCount'>" + Settings.aCount + "</var>");
 		}
 		if (Settings.aLabel)
 		{
 			slot.append("<var class='bnkSlotLabel'>" + Settings.aLabel + "</var>");
 		}
+		if (Settings.aPayment)
+		{
+			for (var i in Settings.aPayment)
+			{
+				B.updateSlotPrice(slot, {
+					aPrice: Settings.aPayment[i],
+					aCount: count,
+					aPaymentEnum: i
+				});
+			}
+		}
+		
+		slot.data("keywords", $("<div>" + (Settings.aKeywords || Settings.aTooltip || "").toLowerCase() + "</div>").text());
 		slot.data("count", count);
 		return slot;
 	},
@@ -13846,16 +14108,18 @@ B = {
 	{
 		var Settings = pSettings || {};
 		
+		var elementsuffix = (E.PaymentEnum[Settings.aPaymentEnum]) ? Settings.aPaymentEnum : E.PaymentEnum.Coin;
 		var container = pSlot.parents(".bnkContainer");
 		var top = container.find(".bnkTop");
 		var iscollection = container.data("iscollection");
-		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + Settings.aPaymentEnum);
+		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + elementsuffix);
 		
 		var count = Settings.aCount || 1;
 		var prices = (typeof Settings.aPrice === "number") ?
 			((Settings.aPaymentEnum) ? E.createPricePlain(Settings.aPrice, count) : E.createPrice(Settings.aPrice, count))
 			: E.recountPrice(Settings.aPrice, count);
 		var pricetorecord = (iscollection || Settings.aPaymentEnum) ? prices.oPriceSell : prices.oPriceSellTaxed;
+		
 		if (Settings.aTransactionBuy)
 		{
 			prices = E.createPrice(Settings.aTransactionBuy);
@@ -13866,6 +14130,7 @@ B = {
 			prices = E.createPrice(Settings.aTransactionSell);
 			pricetorecord = prices.oPriceSellTaxed;
 		}
+		
 		var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
 		{
 			var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
@@ -13884,6 +14149,11 @@ B = {
 					pricestrright = E.formatGemString(displaypriceright, true);
 					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
 				}; break;
+				default: {
+					pricestrleft = E.PaymentFormat[Settings.aPaymentEnum](displaypriceleft, true);
+					pricestrright = E.PaymentFormat[Settings.aPaymentEnum](displaypriceright, true);
+					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
+				}
 			}
 			pDisplay.html(tabtext);
 		};
@@ -13911,6 +14181,9 @@ B = {
 					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatGemToCoin(pricetorecord) + "</var>");
 				}
 			}; break;
+			default: {
+				pSlot.append("<var class='bnkSlotPrice'>" + E.PaymentFormat[Settings.aPaymentEnum](pricetorecord) + "</var>");
+			}
 		}
 
 		// Only add if item actually exists (not a zero stack slot)
@@ -13923,12 +14196,12 @@ B = {
 			if (Settings.aCount !== 0)
 			{
 				updatePriceDisplay(tabdisplayprice, prices.oPriceSell, 0, true);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), priceleft, priceright);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceright);
 			}
 			else
 			{
 				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceSell, true);
-				updatePriceDisplay(top.find(".bnkPriceValueB_" + Settings.aPaymentEnum), priceleft, priceright);
+				updatePriceDisplay(top.find(".bnkPriceValueB_" + elementsuffix), priceleft, priceright);
 			}
 		}
 		else
@@ -13952,7 +14225,7 @@ B = {
 			if (Settings.aCount !== 0)
 			{
 				updatePriceDisplay(tabdisplayprice, priceleft, priceright);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), priceleft, priceright);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceright);
 			}
 		}
 		// Remember coin value for price search
@@ -14003,6 +14276,8 @@ B = {
 	 * @objparam boolean aWantClear whether to wipe the dish menu to recreate the menu, optional.
 	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching, optional.
 	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
+	 * @objparam boolean aIsPseudo if bank contains pseudo slots instead of items.
+	 * @objparam boolean aIsCollapsed whether to initially collapse all the tabs, assuming slots are generated, optional.
 	 * @objparam jqobject aReloadElement to trigger instead of the default reload, optional.
 	 * @objparam string aHelpMessage HTML of the message to append to the help screen, optional.
 	 * @pre Bank slots were generated.
@@ -14018,7 +14293,7 @@ B = {
 			dishmenu.empty();
 		}
 		var bankmenu = $("<div class='bnkMenu'></div>").prependTo(dishmenu);
-		var tabslots = pBank.find(".bnkTabSlots");
+		var tabslots = B.getSlotsContainer(pBank);
 		var tabtoggles = pBank.find(".bnkTabToggle");
 		
 		/*
@@ -14216,43 +14491,46 @@ B = {
 		});
 		
 		// Button to filter tradeable items
-		var tradefilterstate = 0;
-		$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter:<br />1st click: <dfn>tradeable</dfn> items<br />2nd click: bound items<br />3rd click: any items (reset).'></div>")
-			.appendTo(buttoncontainer).click(function()
+		if (Settings.aIsPseudo !== true)
 		{
-			var slots = pBank.find(".bnkSlot");
-			if (tradefilterstate === 0 || tradefilterstate === 1)
+			var tradefilterstate = 0;
+			$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter:<br />1st click: <dfn>tradeable</dfn> items<br />2nd click: bound items<br />3rd click: any items (reset).'></div>")
+				.appendTo(buttoncontainer).click(function()
 			{
-				slots.each(function()
+				var slots = pBank.find(".bnkSlot");
+				if (tradefilterstate === 0 || tradefilterstate === 1)
 				{
-					if ($(this).data("istradeable"))
+					slots.each(function()
 					{
-						$(this).toggle(tradefilterstate === 0);
-					}
-					else
-					{
-						$(this).toggle(tradefilterstate === 1);
-					}
-					if ($(this).data("count") === undefined)
-					{
-						$(this).hide();
-					}
-				});
-				$(this).addClass("bnkButtonFocused");
-				pBank.addClass("bnkTradeable");
-				tradefilterstate++;
-			}
-			else
-			{
-				slots.show();
-				$(this).removeClass("bnkButtonFocused");
-				pBank.removeClass("bnkTradeable");
-				tradefilterstate = 0;
-			}
-			A.adjustAccountScrollbar();
-		});
+						if ($(this).data("istradeable"))
+						{
+							$(this).toggle(tradefilterstate === 0);
+						}
+						else
+						{
+							$(this).toggle(tradefilterstate === 1);
+						}
+						if ($(this).data("count") === undefined)
+						{
+							$(this).hide();
+						}
+					});
+					$(this).addClass("bnkButtonFocused");
+					pBank.addClass("bnkTradeable");
+					tradefilterstate++;
+				}
+				else
+				{
+					slots.show();
+					$(this).removeClass("bnkButtonFocused");
+					pBank.removeClass("bnkTradeable");
+					tradefilterstate = 0;
+				}
+				A.adjustAccountScrollbar();
+			});
+		}
 		
-		if (Settings.aIsCollection !== true)
+		if (Settings.aIsPseudo !== true && Settings.aIsCollection !== true)
 		{
 			// Button to filter cleanable items
 			var cleanupfilterstate = 0;
@@ -14293,22 +14571,25 @@ B = {
 		}
 		
 		// Button to show rarity colored borders over items
-		var isfilteringrarity = O.Options.bol_showRarity;
-		var changeRarity = function(pRarityButton)
+		if (Settings.aIsPseudo !== true)
 		{
-			pBank.toggleClass("bnkRarity", isfilteringrarity);
-			pRarityButton.toggleClass("bnkButtonFocused");
-		};
-		var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='"
-			+ "Show <dfn>rarity</dfn> colored boxes.<br />Change permanently at Options page, Account section.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			isfilteringrarity = !isfilteringrarity;
-			changeRarity($(this));
-		});
-		if (O.Options.bol_showRarity)
-		{
-			changeRarity(raritybutton);
+			var isfilteringrarity = O.Options.bol_showRarity;
+			var changeRarity = function(pRarityButton)
+			{
+				pBank.toggleClass("bnkRarity", isfilteringrarity);
+				pRarityButton.toggleClass("bnkButtonFocused");
+			};
+			var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='"
+				+ "Show <dfn>rarity</dfn> colored boxes.<br />Change permanently at Options page, Account section.'></div>")
+				.appendTo(buttoncontainer).click(function()
+			{
+				isfilteringrarity = !isfilteringrarity;
+				changeRarity($(this));
+			});
+			if (O.Options.bol_showRarity)
+			{
+				changeRarity(raritybutton);
+			}
 		}
 		
 		// Button to condense bank and smaller slots
@@ -14335,7 +14616,7 @@ B = {
 		
 		// Button to toggle all tabs
 		var istabscollapsed = false;
-		$("<div class='bnkButtonTab bnkButton curToggle' title='Expand/<dfn>Collapse</dfn> all tabs.'></div>")
+		var collapsebutton = $("<div class='bnkButtonTab bnkButton curToggle' title='Expand/<dfn>Collapse</dfn> all tabs.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			// Expand or collapse all tabs
@@ -14361,6 +14642,10 @@ B = {
 			$(this).toggleClass("bnkButtonFocused");
 			istabscollapsed = !istabscollapsed;
 		});
+		if (Settings.aIsCollapsed)
+		{
+			collapsebutton.trigger("click");
+		}
 		
 		// Button to increase or decrease bank width
 		$("<div class='bnkButtonWideLess bnkButton curClick' title='<dfn>Decrease</dfn> bank width.'></div>")
@@ -14406,7 +14691,7 @@ B = {
 		var slot, unlockobj;
 		var numfetched = 0;
 		var numtofetch = U.getObjectLength(pCatArr);
-		var slotscontainer = pTab.find(".bnkTabSlots");
+		var slotscontainer = B.getSlotsContainer(pTab);
 		if (Settings.aIsCollapsed)
 		{
 			pTab.append(I.cThrobber);
@@ -14475,7 +14760,7 @@ B = {
 	fillDyeTab: function(pTab, pCatArr, pUnlockAssoc, pCatArrName)
 	{
 		var slot, unlockobj;
-		var slotscontainer = pTab.find(".bnkTabSlots");
+		var slotscontainer = B.getSlotsContainer(pTab);
 		var metadata = GW2T_DYES_METADATA;
 		var translations = {};
 		for (var i in metadata.Translations)
@@ -14979,7 +15264,7 @@ B = {
 			aIsCollection: (Settings.aIsCollection !== undefined) ? Settings.aIsCollection : true,
 			aWantGem: Settings.aWantGem
 		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var fillCatalog = function()
 		{
 			Settings.aHeaders = U.getRecordHeader(pSection);
@@ -15140,7 +15425,7 @@ B = {
 		{
 			var items = [];
 			var itemid;
-			var slotscontainer = $(this).find(".bnkTabSlots").first();
+			var slotscontainer = B.getSlotsContainer($(this)).first();
 			slotscontainer.find(".bnkSlotCatalog").each(function()
 			{
 				itemid = $(this).data("itemid");
@@ -15294,7 +15579,7 @@ B = {
 				var tab = pBank.data("currenttab");
 				if (tab)
 				{
-					var slotscontainer = tab.find(".bnkTabSlots");
+					var slotscontainer = B.getSlotsContainer(tab);
 					var slot = B.createBankSlot(slotscontainer);
 					B.fillSlot(slot, pItem.id, {
 						aUnlockAssoc: pUnlockAssoc,
@@ -15449,7 +15734,7 @@ B = {
 			aIsCollection: false,
 			aWantGem: false
 		});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var itemids = [];
 		var numfetched = 0, numtofetch = 0;
 		var calendar = {}, datestr, datearray, calkey, timesince, transaction, multitrans, transactionstr;
@@ -15460,7 +15745,7 @@ B = {
 		{
 			var tabnumfetched = 0, tabnumtofetch = U.getObjectLength(calendar[pMonthKey]);
 			var slot;
-			var slotscontainer = pTab.find(".bnkTabSlots");
+			var slotscontainer = B.getSlotsContainer(pTab);
 			var tabdata = []; // Contains the multi-transactions objects but will be chronologically sorted instead of by item ID
 			for (var ii in calendar[pMonthKey])
 			{
@@ -15707,6 +15992,7 @@ Q = {
 		Traits: {},
 		Skills: {}
 	},
+	isBoxedFully: {}, // Whether all data has been stored for that API type
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	SearchDatabase: null,
 	CleanableFilter: null, // Associative array of cleanable items to be used by the bank filters, not the cleanup tool
@@ -17336,7 +17622,7 @@ Q = {
 	/*
 	 * Macro function to retrieve and cache API data with IDs.
 	 * @param string pType name of the API endpoint.
-	 * @param intarray or int pIDs
+	 * @param intarray or int pIDs, or "true" if want fetch of entire API of that type
 	 * @param function pCallback
 	 */
 	getBoxes: function(pType, pIDs, pCallback)
@@ -17344,8 +17630,34 @@ Q = {
 		var ids = pIDs;
 		var idstofetch = [];
 		var cache = Q.Boxes[pType];
+		var getData = function()
+		{
+			// Filter out duplicates if provided an array
+			ids = U.getUnique(ids);
+			// Filter out cached data
+			for (var i in ids)
+			{
+				if (cache[ids[i]] === undefined)
+				{
+					idstofetch.push(ids[i]);
+				}
+			}
+			// Fetch
+			U.fetchAPI(U.getAPIURL(pType), idstofetch, {
+				aCallback: function(pData)
+				{
+					for (var i in pData)
+					{
+						var ithdata = pData[i];
+						cache[ithdata.id] = {};
+						cache[ithdata.id].oData = ithdata;
+					}
+					pCallback();
+				}
+			});
+		};
 		// If provided a single ID
-		if (isNaN(pIDs) === false)
+		if (typeof pIDs === "number")
 		{
 			var id = pIDs;
 			if (cache[id])
@@ -17373,29 +17685,27 @@ Q = {
 		// If provided array of IDs
 		else
 		{
-			// Filter out duplicates if provided an array
-			ids = U.getUnique(ids);
-			// Filter out cached data
-			for (var i in ids)
+			// If provided as so then regard as all possible IDs
+			if (pIDs === true)
 			{
-				if (cache[ids[i]] === undefined)
+				if (Q.isBoxedFully[pType])
 				{
-					idstofetch.push(ids[i]);
-				}
-			}
-			// Fetch
-			U.fetchAPI(U.getAPIURL(pType), idstofetch, {
-				aCallback: function(pData)
-				{
-					for (var i in pData)
-					{
-						var ithdata = pData[i];
-						cache[ithdata.id] = {};
-						cache[ithdata.id].oData = ithdata;
-					}
 					pCallback();
 				}
-			});
+				else
+				{
+					Q.isBoxedFully[pType] = true;
+					U.getJSON(U.getAPI(pType), function(pArray)
+					{
+						ids = pArray;
+						getData();
+					});
+				}
+			}
+			else
+			{
+				getData();
+			}
 		}
 	},
 	getItems: function(pIDs, pCallback)
@@ -17508,14 +17818,17 @@ Q = {
 	 * Generates achievement tooltip HTML
 	 * @param object pAchievement details retrieved from API.
 	 * @objparam jqobject aElement to bind tooltip.
+	 * @objparam boolean aWantIcon whether to include achievement's icon.
 	 * @objparam function aCallback what to do after the tooltip generation.
 	 */
 	analyzeAchievement: function(pAchievement, pSettings)
 	{
 		var Settings = pSettings || {};
 		var ach = pAchievement;
+		var iconstr = "";
 		var namestr = "<aside class='itmName achName'>" + U.escapeHTML(ach.name) + "</aside>";
 		var descstr = "";
+		var instructstr = "";
 		var reqstr = "";
 		var countstr = "";
 		var tierstr = "";
@@ -17524,6 +17837,14 @@ Q = {
 		var sumpoints = 0;
 		var ithtier;
 		
+		if (Settings.aWantIcon && ach.icon)
+		{
+			iconstr = "<img class='achIcon' src='" + ach.icon + "'/ >";
+		}
+		if (ach.instruction)
+		{
+			instructstr = "<aside class='achInstruction'>" + ach.instruction + "</aside>";
+		}
 		if (ach.description)
 		{
 			descstr = "<aside class='achDescription'>" + ach.description + "</aside>";
@@ -17534,24 +17855,33 @@ Q = {
 		}
 		
 		// Sum the tiers for a combined count of achievement requirements
-		for (var i in ach.tiers)
+		if (ach.tiers)
 		{
-			ithtier = ach.tiers[i];
-			sumcount += ithtier.count;
-			sumpoints += ithtier.points;
+			for (var i in ach.tiers)
+			{
+				ithtier = ach.tiers[i];
+				sumcount += ithtier.count;
+				sumpoints += ithtier.points;
+			}
+			var tierword = D.getWordCapital("tier");
+			countstr = "<aside class='achCount'>0 / " + ithtier.count + " " + D.getWordCapital("completion") + "</aside>";
+			tierstr = "<aside class='achTier'>" + tierword + " 1 " + D.getWord("of") + " " + + ach.tiers.length + " " + tierword + "</aside>";
+			pointsstr = "<aside class='achPoints'>" + sumpoints + " <img src='img/ui/ap.png' /></aside";
 		}
-		var tierword = D.getWordCapital("tier");
-		countstr = "<aside class='achCount'>0 / " + ithtier.count + " " + D.getWordCapital("completion") + "</aside>";
-		tierstr = "<aside class='achTier'>" + tierword + " 1 " + D.getWord("of") + " " + + ach.tiers.length + " " + tierword + "</aside>";
-		pointsstr = "<aside class='achPoints'>" + sumpoints + " <img src='img/ui/ap.png' /></aside";
 		
-		var html = "<div class='itmTooltip'>"
-			+ namestr
-			+ reqstr
-			+ descstr
-			+ countstr
-			+ tierstr
-			+ pointsstr
+		var html = "<div class='itmTooltip " + (Settings.aClass || "") + "'>"
+			+ "<div class='achWrap'>"
+				+ iconstr
+				+ "<div class='achText'>"
+					+ namestr
+					+ reqstr
+					+ instructstr
+					+ descstr
+					+ countstr
+					+ tierstr
+					+ pointsstr
+				+ "</div>"
+			+ "</div>"
 		+ "</div>";
 		// Bind tooltip if provided an element
 		if (Settings.aElement)
@@ -17560,11 +17890,15 @@ Q = {
 			elm.attr("title", html);
 			I.qTip.init(elm);
 		}
-		var box = Q.getBoxedAchievement(ach.id);
+		var box = Q.getBoxedAchievement(ach.id) || {};
 		box.oHTML = html;
 		if (Settings.aCallback)
 		{
 			Settings.aCallback(box);
+		}
+		else
+		{
+			return html;
 		}
 	},
 	
@@ -18358,7 +18692,8 @@ E = {
 		karma: function(pAmount) { return E.formatKarmaString(pAmount, true); },
 		laurel: function(pAmount) { return E.formatLaurelString(pAmount, true); },
 		token: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_token'></ins>"; },
-		achievement: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_achievement'></ins>"; },
+		mastery: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_mastery'></ins>"; },
+		achievement: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_achievement'></ins>"; },
 		monument: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_monument'></ins>"; },
 		craft: function() { return "<ins class='s16 s16_craft'></ins>"; },
 		pvp: function() { return "<ins class='s16 s16_pvp'></ins>"; },
@@ -18401,7 +18736,6 @@ E = {
 	PaymentEnum:
 	{
 		Coin: "Coin",
-		Karma: "Karma",
 		Gem: "Gem"
 	},
 	
@@ -20664,16 +20998,18 @@ D = {
 			cs: "skříň", it: "armadio", pl: "szafa", pt: "roupeiro", ru: "гардероб", zh: "衣柜"},
 		s_outfits: {de: "kleidungssets", es: "atuendos", fr: "tenues",
 			cs: "oblečení", it: "abiti", pl: "strój", pt: "vestuário", ru: "костюмы", zh: "服装"},
+		s_gliders: {de: "gleitschirm", es: "planeador", fr: "deltaplanes",
+			cs: "kluzáky", it: "alianti", pl: "szybowce", pt: "planadores", ru: "планеры", zh: "滑翔机"},
 		s_dyes: {de: "farben", es: "tintes", fr: "teintures",
 			cs: "barviva", it: "tinturi", pl: "barwniki", pt: "tinturas", ru: "красители", zh: "染料"},
 		s_minis: {de: "miniaturen", es: "miniaturas", fr: "miniatures",
 			cs: "miniatury", it: "miniature", pl: "miniatury", pt: "miniaturas", ru: "миниатюры", zh: "微缩模型"},
-		s_finishers: {de: "todesstöße", es: "remates", fr: "coups de grâce",
-			cs: "finišer", it: "finitore", pl: "apreter", pt: "arrematador", ru: "финишер", zh: "终结者"},
 		s_carriers: {de: "briefboten", es: "carteros", fr: "messagers",
 			cs: "kurýři", it: "corrieri", pl: "kurierzy", pt: "correios", ru: "курьеры", zh: "快递"},
-		s_gliders: {de: "gleitschirm", es: "planeador", fr: "deltaplanes",
-			cs: "kluzáky", it: "alianti", pl: "szybowce", pt: "planadores", ru: "планеры", zh: "滑翔机"},
+		s_champions: {de: "champion", es: "campeón", fr: "champion",
+			cs: "mistr", it: "campione", pl: "mistrz", pt: "campeão", ru: "чемпион", zh: "迷雾首领"},
+		s_finishers: {de: "todesstöße", es: "remates", fr: "coups de grâce",
+			cs: "finišer", it: "finitore", pl: "apreter", pt: "arrematador", ru: "финишер", zh: "终结者"},
 		s_cats: {de: "katzen", es: "gatos", fr: "chats",
 			cs: "kočky", it: "gatti", pl: "koty", pt: "gatos", ru: "коты", zh: "猫"},
 		s_characters: {de: "charaktere", es: "personajes", fr: "personnages",
@@ -20690,10 +21026,12 @@ D = {
 			cs: "recepty", it: "ricette", pl: "recepty", pt: "receitas", ru: "рецепты", zh: "食谱"},
 		s_crafting: {de: "handwerkskunst", es: "artesanía", fr: "artisanat",
 			cs: "řemeslo", it: "mestiere", pl: "rzemiosło", pt: "ofício", ru: "ремесло", zh: "手艺"},
-		s_dungeons: {de: "verliesen", es: "mazmorras", fr: "donjons",
-			cs: "dungeony", it: "dungeon", pl: "lochy", pt: "masmorras", ru: "подземелья", zh: "地下城"},
 		s_raids: {de: "schlachtzügen", es: "incursiones", fr: "raids",
 			cs: "nájezd", it: "incursione", pl: "nalot", pt: "incursão", ru: "набег", zh: "大型地下城"},
+		s_dungeons: {de: "verliesen", es: "mazmorras", fr: "donjons",
+			cs: "dungeony", it: "dungeon", pl: "lochy", pt: "masmorras", ru: "подземелья", zh: "地下城"},
+		s_masteries: {de: "beherrschungs", es: "dominios", fr: "maîtrises",
+			cs: "nadvláda", it: "maestria", pl: "dominacji", pt: "mestrias", ru: "господства", zh: "专精"},
 		s_museum: {de: "museum", es: "museo", fr: "musée",
 			cs: "muzeum", it: "museo", pl: "muzeum", pt: "museu", ru: "музей", zh: "博物馆"},
 		s_wishlist: {de: "wunschliste", es: "lista de deseos", fr: "liste d'envies",
@@ -30910,7 +31248,7 @@ W = {
 		I.print(I.cThrobber, true);
 		E.updateCoinInGem(function()
 		{
-			$.getJSON(U.getAPI("worlds?ids=all"), function(pData)
+			$.getJSON(U.getAPI("worlds", true), function(pData)
 			{
 				// Sort by population
 				pData.forEach(function(iWorld)
@@ -33833,6 +34171,8 @@ H = {
 		{
 			H.generateDashboardDailyHeader(now);
 		}
+		
+		I.toggleToggleIcon(".dsbToggleIcon", false, false);
 	},
 	
 	/*
@@ -34573,7 +34913,6 @@ H = {
 		{
 			I.loadStylesheet("features");
 		});
-		I.toggleToggleIcon("#dsbDailyToggleIcon", false);
 	},
 	generateDashboardDaily: function()
 	{
@@ -35017,6 +35356,7 @@ K = {
  * @@Klock analog and by-the-second and frame refreshes
  * ========================================================================== */
 
+	isClockStyled: false,
 	tickerFrequency: 250, // Must be a divisor of 1000 milliseconds
 	tickerSecondPrevious: null,
 	stopwatchFrequency: 50,
@@ -35120,6 +35460,25 @@ K = {
 				X.setFieldsetState("int_setClock", K.paneSizePrevious);
 			}
 		});
+	},
+	
+	/*
+	 * Sets the clock's background image, and custom if during festival.
+	 * The clock is not visible when viewed on the website's main page, so don't
+	 * load its images until shown.
+	 */
+	styleClock: function()
+	{
+		if (K.isClockStyled === false)
+		{
+			K.isClockStyled = true;
+			//$("#clkWaypoints .cssWaypoint").css({"background-image": "url('img/map/halloween.png')"});
+			//$("#clkWaypoints .cssWaypoint").css({"background-image": "url('img/map/wintersday.png')"});
+			$("#paneClockBackground").css({"background": "url('img/background/globe.jpg') no-repeat center}"});
+			//$("#paneClockBackground").css({"background": "url('img/background/globe_halloween.jpg') no-repeat center}"});
+			//$("#paneClockBackground").css({"background": "url('img/background/globe_wintersday.jpg') no-repeat center}"});
+			$("#paneClockFace").css({"background": "url('img/background/face.png') no-repeat center"});
+		}
 	},
 	
 	/*
@@ -36534,9 +36893,14 @@ I = {
 			Dyes: "Dyes",
 			Minis: "Minis",
 			Carriers: "Carriers",
+			Champions: "Champions",
 			Finishers: "Finishers",
 			Nodes: "Nodes",
 			Cats: "Cats",
+			Achievements: "Achievements",
+			Masteries: "Masteries",
+			Raids: "Raids",
+			Dungeons: "Dungeons",
 			
 			Characters: "Characters",
 			Hero: "Hero",
@@ -36548,9 +36912,6 @@ I = {
 			Recipes: "Recipes",
 			Crafting: "Crafting",
 			SAB: "SAB",
-			
-			Dungeons: "Dungeons",
-			Raids: "Raids",
 			
 			Trading: "Trading",
 			Gem: "Gem",
@@ -36602,7 +36963,8 @@ I = {
 			Notepad: "Notepad",
 			Daily: "Dailies",
 			Dungeons: "Dungeons",
-			Raids: "Raids"
+			Raids: "Raids",
+			Achievements: "Achievements"
 		},
 		Account:
 		{
@@ -36629,11 +36991,13 @@ I = {
 			Dyes: "Dyes",
 			Minis: "Minis",
 			Carriers: "Carriers",
+			Champions: "Champions",
 			Finishers: "Finishers",
 			Nodes: "Nodes",
 			Cats: "Cats",
 			Recipes: "Recipes",
-			SAB: "SAB"
+			SAB: "SAB",
+			Masteries: "Masteries"
 		},
 		Trading:
 		{
@@ -37535,16 +37899,31 @@ I = {
 	 * Toggles a standard arrowhead icon by rotating it.
 	 * @param string pSelector of the element.
 	 * @param boolean pBoolean true is open state, false is closed state.
+	 * @param boolean pWantAnimation
 	 */
-	toggleToggleIcon: function(pSelector, pBoolean)
+	toggleToggleIcon: function(pSelector, pBoolean, pWantAnimation)
 	{
-		if (pBoolean)
+		if (pWantAnimation || pWantAnimation == undefined)
 		{
-			$(pSelector).animate({rotation: 0}, 200);
+			if (pBoolean)
+			{
+				$(pSelector).animate({rotation: 0}, 200);
+			}
+			else
+			{
+				$(pSelector).animate({rotation: -90}, 200);
+			}
 		}
 		else
 		{
-			$(pSelector).animate({rotation: -90}, 200);
+			if (pBoolean)
+			{
+				$(pSelector).css({rotation: 0});
+			}
+			else
+			{
+				$(pSelector).css({rotation: -90});
+			}
 		}
 	},
 	
@@ -38723,7 +39102,7 @@ I = {
 				{
 					M.toggleLayer(M.ZoneCurrent.Layers.Path, P.isChainPathsAllowed());
 				}
-			});
+			}).one("click", K.styleClock);
 		});
 
 		/*
@@ -39176,6 +39555,7 @@ I = {
 		if (I.isProgramEmbedded || I.ModeCurrent === I.ModeEnum.Mobile || I.ModeCurrent === I.ModeEnum.Tile)
 		{
 			I.setInitialPlate(I.PlateEnum.Chains);
+			K.styleClock();
 			if (I.isMapEnabled === false)
 			{
 				// Move the alarm options from the map popup to the app panel
