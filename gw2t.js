@@ -35474,7 +35474,7 @@ K = {
 			K.isClockStyled = true;
 			//$("#clkWaypoints .cssWaypoint").css({"background-image": "url('img/map/halloween.png')"});
 			//$("#clkWaypoints .cssWaypoint").css({"background-image": "url('img/map/wintersday.png')"});
-			$("#paneClockBackground").css({"background": "url('img/background/globe.jpg') no-repeat center}"});
+			$("#paneClockBackground").css({"background": "url('img/background/globe.jpg') no-repeat center"});
 			//$("#paneClockBackground").css({"background": "url('img/background/globe_halloween.jpg') no-repeat center}"});
 			//$("#paneClockBackground").css({"background": "url('img/background/globe_wintersday.jpg') no-repeat center}"});
 			$("#paneClockFace").css({
@@ -36965,9 +36965,9 @@ I = {
 			Personal: "Personal",
 			Notepad: "Notepad",
 			Daily: "Dailies",
-			Dungeons: "Dungeons",
+			Achievements: "Achievements",
 			Raids: "Raids",
-			Achievements: "Achievements"
+			Dungeons: "Dungeons"
 		},
 		Account:
 		{
