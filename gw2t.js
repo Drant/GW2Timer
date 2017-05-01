@@ -23943,6 +23943,10 @@ M = {
 				{
 					P.drawCompletionRoute();
 				});
+				$(htmlidprefix + "ContextDrawResource").click(function()
+				{
+					G.drawResourceRoute();
+				});
 			} break;
 			case P.MapEnum.Mists:
 			{
@@ -24201,6 +24205,25 @@ M = {
 	},
 	
 	/*
+	 * Tells if the provided coordinates is within the provided zone.
+	 * @param object pZone for getting bounds.
+	 * @param 2D array pCoord GW2 coordinates.
+	 * @returns boolean
+	 */
+	isWithinZone: function(pZone, pCoord)
+	{
+		var rect = pZone.continent_rect;
+		if (pCoord[0] >= rect[0][0]
+			&& pCoord[1] >= rect[0][1]
+			&& pCoord[0] <= rect[1][0]
+			&& pCoord[1] <= rect[1][1])
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
 	 * Gets the zone a coordinates reside in.
 	 * @param array pCoord.
 	 * @returns object zone if found else null.
@@ -24209,10 +24232,7 @@ M = {
 	{
 		for (var i in this.Zones) // i is the index and nickname of the zone
 		{
-			if (pCoord[0] >= this.Zones[i].continent_rect[0][0]
-				&& pCoord[1] >= this.Zones[i].continent_rect[0][1]
-				&& pCoord[0] <= this.Zones[i].continent_rect[1][0]
-				&& pCoord[1] <= this.Zones[i].continent_rect[1][1])
+			if (this.isWithinZone(this.Zones[i], pCoord))
 			{
 				return this.Zones[i];
 			}
@@ -24854,9 +24874,9 @@ M = {
 		
 		// Single click pin: get its coordinates and toggle its opacity
 		this.bindMarkerCoordBehavior(marker, "click");
-		marker.on("click", function(pEvent)
+		marker.on("mousedown", function(pEvent)
 		{
-			if (pEvent.originalEvent.which === 2)
+			if (pEvent.originalEvent.which === I.ClickEnum.Middle)
 			{
 				// If middle click then set as starting pin
 				that.optimizePersonalPath(index);
@@ -28630,9 +28650,9 @@ G = {
 		{
 			M.bindMarkerZoomBehavior(pMarker, "contextmenu");
 			M.bindMarkerCoordBehavior(pMarker, "click");
-			pMarker.on("click", function(pEvent)
+			pMarker.on("mousedown", function(pEvent)
 			{
-				if (pEvent.originalEvent.which === 2)
+				if (pEvent.originalEvent.which === I.ClickEnum.Middle)
 				{
 					M.createPersonalPin(this.getLatLng(), true);
 				}
@@ -28761,6 +28781,66 @@ G = {
 			M.toggleLayer(P.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
 			M.toggleLayer(P.Layer["Resource_Hotspot_" + thisresource], (wantshow && wanthotspot));
 		};
+		var drawResourceRoute = function(pZone)
+		{
+			var i = 0;
+			var coords = [];
+			var coord;
+			var eastmostcoord = Number.POSITIVE_INFINITY;
+			var indexofeastmostcoord;
+
+			var WAYPOINT_COPPER_AVERAGE = $("#nod_int_coinWaypointAverage").val();
+			var TIME_SECOND_AVERAGE = $("#nod_int_secNodeVisitAverage").val();
+			var waypointcost = 0;
+			var timecost = 0;
+			var sumprice = 0;
+
+			// Gather the coordinates of valid resource node markers
+			M.Map.eachLayer(function(iLayer)
+			{
+				if (iLayer instanceof L.Marker && iLayer.options.isNode
+					&& getNodeState(iLayer) === X.ChecklistEnum.Unchecked)
+				{
+					if (pZone && M.isWithinZone(M.ZoneCurrent, iLayer.options.coord) === false)
+					{
+						return;
+					}
+					/*
+					 * Sum the price with the node's single resource price times the output of the node.
+					 * The price was initialized the TP refresh function.
+					 * The quantity was initialized by the marker initialization function.
+					 */
+					sumprice += P.Resources[(iLayer.options.name)].price * iLayer.options.quantity;
+
+					// Find eastmost coordinate to use it as the starting point
+					coords.push(iLayer.options.coord);
+					coord = (coords[i])[0];
+					if (coord < eastmostcoord)
+					{
+						eastmostcoord = coord;
+						indexofeastmostcoord = i;
+					}
+					i++;
+				}
+			});
+			var numnodes = coords.length;
+
+			if (numnodes > 0)
+			{
+				// The eastmost coordinates will be the starting point of the optimized path
+				M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord));
+				waypointcost = P.printClosestWaypoints() * WAYPOINT_COPPER_AVERAGE;
+				timecost = numnodes * TIME_SECOND_AVERAGE;
+				var summary = "Gather Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice) + "</span><br />"
+					+ "Waypoint Cost: <span class='cssRight'>" + E.formatCoinStringColored(waypointcost) + "</span><br />"
+					+ "</br >"
+					+ "Net Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice - waypointcost) + "</span><br />"
+					+ "<br />"
+					+ "Nodes to Visit: <span class='cssRight'>" + numnodes + "</span><br />"
+					+ "Estimated Time: <span class='cssRight'>" + T.getTimeFormatted({aCustomTimeInSeconds: timecost, aWantLetters: true}) + "</span>";
+				I.print(summary);
+			}
+		};
 		
 		U.getScript(U.URL_DATA.Resource, function()
 		{
@@ -28819,59 +28899,11 @@ G = {
 					M.clearPersonalPins();
 					return;
 				}
-				var i = 0;
-				var coords = [];
-				var coord;
-				var eastmostcoord = Number.POSITIVE_INFINITY;
-				var indexofeastmostcoord;
-				
-				var WAYPOINT_COPPER_AVERAGE = $("#nod_int_coinWaypointAverage").val();
-				var TIME_SECOND_AVERAGE = $("#nod_int_secNodeVisitAverage").val();
-				var waypointcost = 0;
-				var timecost = 0;
-				var sumprice = 0;
-				
-				// Gather the coordinates of valid resource node markers
-				M.Map.eachLayer(function(iLayer)
-				{
-					if (iLayer instanceof L.Marker && iLayer.options.isNode
-						&& getNodeState(iLayer) === X.ChecklistEnum.Unchecked)
-					{
-						/*
-						 * Sum the price with the node's single resource price times the output of the node.
-						 * The price was initialized the TP refresh function.
-						 * The quantity was initialized by the marker initialization function.
-						 */
-						sumprice += P.Resources[(iLayer.options.name)].price * iLayer.options.quantity;
-						
-						// Find eastmost coordinate to use it as the starting point
-						coords.push(iLayer.options.coord);
-						coord = (coords[i])[0];
-						if (coord < eastmostcoord)
-						{
-							eastmostcoord = coord;
-							indexofeastmostcoord = i;
-						}
-						i++;
-					}
-				});
-				var numnodes = coords.length;
-				
-				if (numnodes > 0)
-				{
-					// The eastmost coordinates will be the starting point of the optimized path
-					M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord));
-					waypointcost = P.printClosestWaypoints() * WAYPOINT_COPPER_AVERAGE;
-					timecost = numnodes * TIME_SECOND_AVERAGE;
-					var summary = "Gather Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice) + "</span><br />"
-						+ "Waypoint Cost: <span class='cssRight'>" + E.formatCoinStringColored(waypointcost) + "</span><br />"
-						+ "</br >"
-						+ "Net Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice - waypointcost) + "</span><br />"
-						+ "<br />"
-						+ "Nodes to Visit: <span class='cssRight'>" + numnodes + "</span><br />"
-						+ "Estimated Time: <span class='cssRight'>" + T.getTimeFormatted({aCustomTimeInSeconds: timecost, aWantLetters: true}) + "</span>";
-					I.print(summary);
-				}
+				drawResourceRoute();
+			}).contextmenu(function(pEvent)
+			{
+				pEvent.preventDefault();
+				drawResourceRoute(M.ZoneCurrent);
 			});
 			
 			// Bind buttons to toggle all checkboxes of that resource category
@@ -28963,6 +28995,18 @@ G = {
 				$("#nodShowHotspot").trigger("click");
 			});
 		});
+	},
+	drawResourceRoute: function()
+	{
+		if ($("#nodMenu").is(":visible") === false)
+		{
+			I.write("Please view the <a data-page='Resource'>Resource Nodes</a> section first.");
+			I.bindConsoleLink();
+		}
+		else
+		{
+			$("#nodRoute").trigger("contextmenu");
+		}
 	},
 	
 	/*

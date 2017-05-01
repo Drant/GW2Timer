@@ -116,9 +116,10 @@
 							<li id="mapContextUndoPins">Undo</li>
 						</ul>
 					</li>
-					<li class="itemContextSubmenu"><span>Map</span>
+					<li class="itemContextSubmenu"><span>Zone</span>
 						<ul>
 							<li id="mapContextDrawCompletion">Draw completion route</li>
+							<li id="mapContextDrawResource">Draw resource route</li>
 							<li id="mapContextToggleCompletion">Toggle world completion</li>
 							<li id="mapContextToggleLock">Toggle zone lock</li>
 							<li id="mapContextToggleFloor">Toggle terrain</li>
@@ -318,7 +319,7 @@
 							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
 							<label title="Show/Hide region-colored borders over zones."><img data-src="img/map/border.png" /><input id="opt_bol_showZoneBorders" type="checkbox" /> Show zone borders</label>
 							<label title="Show/Hide gateways, wallows, tunnels, thermal tubes, and launch pads."><img data-src="img/map/gateway_interborders.png" /><input id="opt_bol_showZoneGateways" type="checkbox" /> Show zone gateways</label>
-							<label title="Show/Hide the colored chain paths of world bosses."><img data-src="img/map/path_chains.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
+							<label title="Show/Hide the colored chain paths of world bosses."><img data-src="img/map/path_chains.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show boss paths</label>
 							<label title="Automatically scroll the map to the next predicted world boss event."><img data-src="img/map/pin_green.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
 							<label title="Color of the personal path and world completion route."><input id="opt_str_colorPersonalPath" type="text" maxlength="32" style="width:96px;"> Path Color</label>
 							<br />
@@ -475,7 +476,7 @@
 							<li id="wvwContextUndoPins">Undo</li>
 						</ul>
 					</li>
-					<li class="itemContextSubmenu"><span>Map</span>
+					<li class="itemContextSubmenu"><span>Zone</span>
 						<ul>
 							<li id="wvwContextToggleCompletion">Toggle world completion</li>
 							<li id="wvwContextToggleLock">Toggle zone lock</li>
