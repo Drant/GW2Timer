@@ -254,9 +254,6 @@
 	margin-top: 8px;
 	width: 96px;
 }
-input[type="text"].accTokenHovered {
-	border: 1px solid red;
-}
 
 #accCommandLeft, #accCommandRight {
 	display: inline-block;

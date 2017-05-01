@@ -1207,6 +1207,9 @@ input[type="text"].cssInputActive {
 	background: linear-gradient(to right, #7c7253 0%, transparent 100%), url("img/background/stripe.png");
 	color: #ddff77;
 }
+input[type="text"].cssInputFocused {
+	border: 1px solid red;
+}
 
 .cssInputSelect {
 	border: 1px solid #48423c;
@@ -1756,13 +1759,14 @@ textarea.jsCopyCode {
 	margin-left: -8px;
 }
 #dsbAnnouncement {
+	display: none;
 	font-size: 14px;
-}
-#dsbCountdown {
-	margin-top: 8px;
 	margin-bottom: 8px;
 }
-#dsbCountdown:before, #dsbCountdown:after {
+#dsbCountdown {
+	margin-bottom: 8px;
+}
+#dsbAnnouncement:after, #dsbCountdown:after {
 	content: "";
 	display: block;
 	width: 100%; height: 1px;
@@ -3507,7 +3511,8 @@ label:hover {
 .btnSwap { /* Container div for the two swap up and botn buttons */
 	display: inline-block;
 	width: 20px; height: 24px;
-	vertical-align: bottom;
+	margin-left: 2px;
+	vertical-align: top;
 }
 .btnSwapUp, .btnSwapDown {
 	display: block;

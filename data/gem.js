@@ -311,7 +311,6 @@ BlackLionWeapon: [
 	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
-	{i: 20761, n: "Air Rider Package", p: {gem: -650}},
 	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},
 	{i: 37190, n: "Consortium Chest", p: {gem: -250}, discount: [[1, 250], [5, 1100]]},
 	{i: 42600, n: "Southsun Supply Crate", p: {gem: -150}, discount: [[1, 150], [10, 1200]]},
@@ -324,6 +323,7 @@ Package: [
 	{i: 43077, n: "Black Lion Introductory Package", p: {gem: 1600}},
 	{i: 68013, n: "Salvager's Supplies", p: {gem: -2720}},
 	{i: 79698, n: "Customer Appreciation Package", p: {gem: -125}},
+	{i: 20761, n: "Air Rider Package", p: {gem: -650}},
 	{i: 79706, n: "Swashbuckler's Package", p: {gem: -900}}
 ],
 Dye: [

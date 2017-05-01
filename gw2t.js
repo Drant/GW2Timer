@@ -2172,7 +2172,8 @@ X = {
 	/*
 	 * Stores text and binds default behavior for a standard set of text fields.
 	 * @param object pChecklistText for storing text in memory and storage.
-	 * @param jqobject pTextFields input or textarea elements to iterate and read text.
+	 * @param jqobject pTextFields input or textarea elements to iterate and read text,
+	 * if the textlists are swappable then provide a string for fresh queries.
 	 * @param string pFieldName name of the text fields for notifying of change.
 	 * @param int pMaxLength of characters in a text field.
 	 * @param jqobject pRestoreButton to reset all text fields, optional.
@@ -2181,7 +2182,7 @@ X = {
 	{
 		// Initialize the pre-written text in the text fields
 		pTextlist.value = [];
-		pTextFields.each(function()
+		$(pTextFields).each(function()
 		{
 			var text = $(this).val();
 			pTextlist.value.push(text);
@@ -2222,7 +2223,7 @@ X = {
 		var updateStoredText = function()
 		{
 			// Read every text fields and rewrite the string of substrings again
-			pTextFields.each(function(iIndex)
+			$(pTextFields).each(function(iIndex)
 			{
 				// Do not allow delimiter in the string to be stored
 				pTextlist.value[iIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
@@ -2231,7 +2232,7 @@ X = {
 		};
 		
 		// Bind text fields behavior
-		pTextFields.each(function(iIndex)
+		$(pTextFields).each(function(iIndex)
 		{
 			$(this).attr("maxlength", pMaxLength); // Set number of characters allowed in the text field
 			$(this).val(pTextlist.value[iIndex]); // Load initialized text
@@ -2253,13 +2254,97 @@ X = {
 			{
 				if (confirm("Reset texts to default?"))
 				{
-					pTextFields.each(function(iIndex)
+					$(pTextFields).each(function(iIndex)
 					{
 						$(this).val(pTextlist.valueDefault[iIndex]).trigger("change");
 					});
 				}
 			});
 		}
+	},
+	
+	/*
+	 * Binds the buttons for swapping text list items.
+	 * @param jqobject pListContainer the list.
+	 * @param jqobject pSwapContainer to append the swap buttons.
+	 * @param boolean pWantButtons whether to append the swap buttons if haven't created, optional.
+	 * @param function pSaveFunction to execute after swapping.
+	 * @pre Container's list items must be sole elements in the hierarchy.
+	 */
+	bindTextlistSwap: function(pListContainer, pSwapContainer, pSaveFunction)
+	{
+		var container = $(pListContainer);
+		var listitems = container.children();
+		var getListItem = function(pChild)
+		{
+			return pChild.closest(".jsSwappable");
+		};
+		
+		// Insert swap buttons
+		var swapcontainer = (pSwapContainer) ? $(pSwapContainer) : listitems;
+		swapcontainer.each(function()
+		{
+			$(this).append("<span class='btnSwap'><button class='btnSwapUp'></button><button class='btnSwapDown'></button></span>");
+		});
+		listitems.each(function()
+		{
+			$(this).addClass("jsSwappable");
+		});
+		
+		// Hovering over the swap buttons highlight the input elements of the swappable row
+		container.find(".btnSwap").each(function()
+		{
+			$(this).hover(
+				function()
+				{
+					getListItem($(this)).find("input[type='text']").addClass("cssInputFocused");
+				},
+				function()
+				{
+					getListItem($(this)).find("input[type='text']").removeClass("cssInputFocused");
+				}
+			);
+		});
+		
+		// Bind swap behavior
+		container.find(".btnSwapUp, .btnSwapDown").click(function()
+		{
+			var listitem = getListItem($(this));
+			if ($(this).hasClass("btnSwapUp"))
+			{
+				var prev = listitem.prev();
+				if (prev.length)
+				{
+					listitem.insertBefore(prev);
+				}
+				else
+				{
+					listitem.insertAfter(container.find(".jsSwappable").last());
+				}
+			}
+			else
+			{
+				var next = listitem.next();
+				if (next.length)
+				{
+					listitem.insertAfter(next);
+				}
+				else
+				{
+					listitem.insertBefore(container.find(".jsSwappable").first());
+				}
+			}
+			// Save after swapping
+			if (pSaveFunction)
+			{
+				pSaveFunction();
+			}
+			else
+			{
+				// Assume the change event was bound for saving
+				listitem.find("input").trigger("change");
+			}
+		});
 	},
 	
 	/*
@@ -2667,31 +2752,35 @@ X = {
 	initializeCustomChecklist: function()
 	{
 		// Generate initial set of checkboxes and textboxes
-		var checkboxhtml = "<li><label><input type='checkbox' />" + I.Symbol.Filler + "</label><input type='text' /></li>";
+		var checkitemhtml = "<li><label><input type='checkbox' />" + I.Symbol.Filler + "</label><input class='chlCustomListText' type='text' /></li>";
+		var dailylist = $("#chlCustomListDaily");
+		var weeklylist = $("#chlCustomListWeekly");
 		for (var i = 0; i < O.Options.int_numChecklistDaily; i++)
 		{
-			$("#chlCustomListDaily").append(checkboxhtml);
+			dailylist.append(checkitemhtml);
 		}
 		for (var i = 0; i < O.Options.int_numChecklistWeekly; i++)
 		{
-			$("#chlCustomListWeekly").append(checkboxhtml);
+			weeklylist.append(checkitemhtml);
 		}
 		
 		var insertSampleList = function(pList)
 		{
-			var samples = $(pList).attr("data-samples").split(I.cTextDelimiterChar);
+			var samples = pList.attr("data-samples").split(I.cTextDelimiterChar);
 			for (var i = 0; i < samples.length; i++)
 			{
-				$(pList + " input[type='text']:eq(" + i + ")").val(samples[i]);
+				pList.find("input[type='text']:eq(" + i + ")").val(samples[i]);
 			}
 		};
-		insertSampleList("#chlCustomListDaily");
-		insertSampleList("#chlCustomListWeekly");
+		insertSampleList(dailylist);
+		insertSampleList(weeklylist);
 		
 		// Bind checkboxes and textboxes behavior
 		var bindCustomChecklistBehavior = function(pChecklist, pTextlist, pListName)
 		{
-			var checkboxes = $("#chlCustomList" + pListName + " input:checkbox");
+			var listid = "#chlCustomList" + pListName;
+			var thislist = $(listid);
+			var checkboxes = thislist.find("input:checkbox");
 			X.initializeChecklist(pChecklist, checkboxes.length);
 
 			checkboxes.each(function(iIndex)
@@ -2722,7 +2811,7 @@ X = {
 			$("#chlCustomUncheck" + pListName).click(function()
 			{
 				X.clearChecklist(pChecklist, X.ChecklistJob.UncheckTheChecked);
-				$("#chlCustomList" + pListName + " input:checkbox").each(function(iIndex)
+				thislist.find("input:checkbox").each(function(iIndex)
 				{
 					if ($(this).prop("checked"))
 					{
@@ -2733,9 +2822,9 @@ X = {
 			});
 
 			// Bind text fields behavior
-			var items = $("#chlCustomList" + pListName + " input:text");
 			var restore = $("#chlCustomRestore" + pListName);
-			X.initializeTextlist(pTextlist, items, "Custom checklist item", 48, restore);
+			X.initializeTextlist(pTextlist, listid + " input:text", null, 48, restore);
+			X.bindTextlistSwap(thislist);
 		};
 		bindCustomChecklistBehavior(X.Checklists.CustomDaily, X.Textlists.CustomTextDaily, "Daily");
 		bindCustomChecklistBehavior(X.Checklists.CustomWeekly, X.Textlists.CustomTextWeekly, "Weekly");
@@ -7976,6 +8065,8 @@ A = {
 			token = tokensarr[i];
 			A.insertTokenRow(token.name, token.key, token.isUsed);
 		}
+		// Swap tokens behavior
+		X.bindTextlistSwap("#accTokenList", "#accTokenList .accTokenButtons", A.saveTokens);
 		A.saveTokens();
 		A.loadToken();
 		
@@ -8181,7 +8272,7 @@ A = {
 	 */
 	insertTokenRow: function(pName, pAPIKey, pIsUsed)
 	{
-		var token = $("<div class='accToken'></div>").appendTo("#accManager");
+		var token = $("<div class='accToken'></div>").appendTo("#accTokenList");
 		var link = $("<img class='accTokenLink curClick' src='img/ui/link.png' title='Get private <dfn>shareable link</dfn>.' />").appendTo(token);
 		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
@@ -8190,9 +8281,6 @@ A = {
 			+ D.getPhrase("this key") + ".<br />" + D.getPhraseOriginal("Double click to audit") + ".'><img src='img/ui/adjust_use.png' /></button>").appendTo(buttons);
 		var del = $("<button class='accTokenDelete' title='<dfn>" + D.getWordCapital("delete") + "</dfn> "
 			+ D.getPhrase("this key") + ".'><img src='img/ui/adjust_del.png' /></button>").appendTo(buttons);
-		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
-		var swapup = $("<button class='btnSwapUp'></button>").appendTo(swap);
-		var swapdown = $("<button class='btnSwapDown'></button>").appendTo(swap);
 		var updateLink = function()
 		{
 			I.updateClipboard(link[0], "http://gw2timer.com#" + U.escapeHTML(U.stripToAlphanumericDash(key.val())));
@@ -8281,37 +8369,15 @@ A = {
 			$(this).hover(
 				function()
 				{
-					name.addClass("accTokenHovered");
-					key.addClass("accTokenHovered");
+					name.addClass("cssInputFocused");
+					key.addClass("cssInputFocused");
 				},
 				function()
 				{
-					name.removeClass("accTokenHovered");
-					key.removeClass("accTokenHovered");
+					name.removeClass("cssInputFocused");
+					key.removeClass("cssInputFocused");
 				}
 			);
-		});
-		// Button to raise or lower the token's row order
-		$([swapup, swapdown]).each(function()
-		{
-			$(this).click(function()
-			{
-				if ($(this).hasClass("btnSwapUp"))
-				{
-					if (token.prev().hasClass("accToken")) // Prevent out of bounds
-					{
-						token.insertBefore(token.prev());
-					}
-				}
-				else
-				{
-					if (token.next().hasClass("accToken"))
-					{
-						token.insertAfter(token.next());
-					}
-				}
-				A.saveTokens();
-			});
 		});
 	},
 	
@@ -13132,17 +13198,17 @@ V = {
 		{
 			table.empty().html(I.cThrobber);
 			// Retrieves the first page of the historical transactions
-			$.getJSON(A.getURL(A.URL.HistoryBuys), function(pData)
+			U.getJSON(A.getURL(A.URL.HistoryBuys), function(pData)
 			{
 				bought = pData;
-				$.getJSON(A.getURL(A.URL.HistorySells), function(pDataInner)
+				U.getJSON(A.getURL(A.URL.HistorySells), function(pDataInner)
 				{
 					sold = pDataInner;
 					fillRecent();
-				}).fail(function(){
+				}, false).fail(function(){
 					dealError();
 				});
-			}).fail(function(){
+			}, false).fail(function(){
 				dealError();
 			});
 		};
@@ -13923,6 +13989,16 @@ B = {
 		slot.data("keywords", $("<div>" + (Settings.aKeywords || Settings.aTooltip || "").toLowerCase() + "</div>").text());
 		slot.data("count", count);
 		return slot;
+	},
+	createBankCard: function(pSlotContainer, pSettings)
+	{
+		// Bank "slots" that are tooltip blocks inserted into the bank
+		var Settings = pSettings || {};
+		var slot = document.createElement("span");
+		slot.innerHTML = Settings.aHTML;
+		slot.className = "bnkCard";
+		pSlotContainer[0].appendChild(slot);
+		return $(slot);
 	},
 	
 	/*
@@ -34058,7 +34134,7 @@ H = {
 		if (announcement)
 		{
 			var annprefix = "<strong>" + D.getWordCapital("new") + ": </strong>";
-			var announcementlinks = $("#dsbAnnouncement").html(annprefix + announcement).find("a");
+			var announcementlinks = $("#dsbAnnouncement").show().html(annprefix + announcement).find("a");
 			U.convertExternalLink(announcementlinks);
 			U.convertInternalLink(announcementlinks);
 			M.bindMapLinks("#dsbAnnouncement");

@@ -946,11 +946,9 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 	margin-left: 8px;
 	margin-bottom: 4px;
 }
-
 #chlCustom input[type="text"].chlCustomTextChecked {
 	color: #ff2200;
 }
-
 #chlCustom label, .trdEntry label {
 	display: inline;
 	padding-top: 4px;
@@ -960,7 +958,6 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 	border: 1px solid transparent;
 	border-radius: 4px;
 }
-
 #chlCustom label:hover, .trdEntry label:hover {
 	border: 1px solid red;
 }

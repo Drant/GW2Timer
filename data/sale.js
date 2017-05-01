@@ -23,6 +23,8 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: 69863, n: "Monk's Outfit", p: {gem: 420}, discount: 700},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 400}, discount: 500},
+	{i: 42584, n: "Mini Jaguar Cub", p: {gem: 400}, Finish: new Date("2017-05-08T16:00:00Z")},
+	{i: 42577, n: "Mini Moa Chick", p: {gem: 400}, Finish: new Date("2017-05-08T16:00:00Z")},
 	{i: 69658, n: "Mini Blue Drake Hatchling", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
 	{i: 42579, n: "Mini Hippo Calf", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
 	{i: 42578, n: "Mini Piglet", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
@@ -35,7 +37,6 @@ GW2T_SALE_DATA = {
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
 	{i: 80981, n: "Hourglass Staff", p: {gem: 600}},
 	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}, Finish: new Date("2017-05-02T16:00:00Z")},
-	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 600}, Finish: new Date("2017-05-01T16:00:00Z")},
 	{i: 37190, n: "Consortium Chest", p: {gem: 250}, discount: [[1, 250], [5, 1100]], Finish: new Date("2017-05-02T16:00:00Z")},
 	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 67028, n: "Chaos weapon skins#Gallery", p: {blticket: 5}}
