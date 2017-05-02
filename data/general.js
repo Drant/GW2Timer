@@ -73,7 +73,8 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1165": "bloodstone",
 	"1175": "ember",
 	"1178": "bitterfrost",
-	"1185": "doric"
+	"1185": "doric",
+	"1195": "draconis"
 };
 var GW2T_LAND_ASSOCIATION = {
 	"38": "eternal",
@@ -896,6 +897,18 @@ var GW2T_ZONE_DATA = {
 	map_rect: [[-46080, -46080], [46080, 46080]],
 	continent_rect: [[4606, 27134], [8446, 30974]]
 },
+"draconis":
+{
+	id: "1185",
+	name_en: "Draconis Mons",
+	name_de: "Draconis Mons",
+	name_es: "Draconis Mons",
+	name_fr: "Mont Draconis",
+	name_zh: "巨龙之山",
+	region: "ring",
+	map_rect: [[-46080, -46080], [46080, 46080]],
+	continent_rect: [[1950, 22900], [5790, 26740]]
+},
 "bloodstone":
 {
 	id: "1165",
@@ -1603,17 +1616,17 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-04-27T20:00:00Z"),
 		Finish: new Date("2017-05-04T20:00:00Z")
-	},
-	{
-		name_en: "Living Story 3: Episode V",
-		name_de: "Lebendigen Geschichte 3: Episode V",
-		name_es: "Historia viviente 3: Episodio V",
-		name_fr: "Histoire vivante 3: Épisode V",
-		name_zh: "第三生活世界：第五集",
-		official: "news/flashpoint-is-live/",
-		Start: new Date("2017-05-02T16:00:00Z"),
-		Finish: new Date("2017-05-03T16:00:00Z")
 	}
+	/*{
+		name_en: "Living Story 3: Episode VI",
+		name_de: "Lebendigen Geschichte 3: Episode VI",
+		name_es: "Historia viviente 3: Episodio VI",
+		name_fr: "Histoire vivante 3: Épisode VI",
+		name_zh: "第三生活世界：第六集",
+		official: "news/flashpoint-is-live/",
+		Start: new Date("2017-08-02T16:00:00Z"),
+		Finish: new Date("2017-08-03T16:00:00Z")
+	}*/
 	]
 },
 
