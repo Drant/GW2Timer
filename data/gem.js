@@ -84,7 +84,8 @@ Outfit: [
 	{i: 79703, n: "Braham's Wolfblood Outfit", p: {gem: 700}},
 	{i: 80049, n: "Ice Encasement Outfit", p: {gem: -700}},
 	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
-	{i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}}
+	{i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}},
+	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: -700}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -122,7 +123,8 @@ Glider: [
 	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: -400}},
 	{i: 80725, n: "Raven's Spirit Glider", p: {gem: -500}},
 	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}},
-	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}}
+	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}},
+	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: -700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
@@ -153,7 +155,8 @@ Back: [
 	{i: 79288, n: "Shining Blade Backpack", p: {gem: -700}},
 	{i: 79523, n: "Mursaat Wings Backpack", p: {gem: 700}},
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: -700}},
-	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: -700}}
+	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: -700}},
+	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: -700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -350,7 +353,7 @@ Dye: [
 	{i: 79354, n: "Bloodstone Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 79695, n: "Vibrant Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80069, n: "Solar and Lunar Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 80974, n: "Primordus Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
@@ -468,7 +471,7 @@ Mini: [
 	{i: 46497, n: "Mini Super Assassin", p: {gem: -500}},
 	{i: 42579, n: "Mini Hippo Calf", p: {gem: -400}},
 	{i: 42591, n: "Mini White Kitten", p: {gem: 400}},
-	{i: 42593, n: "Mini Lion Cub", p: {gem: 400}},
+	{i: 42593, n: "Mini Lion Cub", p: {gem: -400}},
 	{i: 42592, n: "Mini Black Bear Cub", p: {gem: -400}},
 	{i: 42577, n: "Mini Moa Chick", p: {gem: -400}},
 	{i: 43427, n: "Mini Holographic Corrupted Wolf", p: {gem: -166}},

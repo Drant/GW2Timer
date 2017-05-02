@@ -700,24 +700,26 @@ img {
 /*
  * Style for qTip tooltip JS plugin by Craig Erskine.
  */
-#qTip {
-	display: none;
-	position: absolute; z-index: 1000;
-	max-width: 720px;
+.cssTooltip, #qTip {
 	padding: 4px 6px 4px 6px;
 	border: 2px solid #111;
 	border-radius: 2px;
 	text-align: left;
-	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
-	font-size: 15px;
-	font-weight: bold;
-	line-height: normal;
-	color: #eee;
 	background-image: url("img/background/tooltip.png");
 	background-size: cover;
 	text-shadow: 0px 0px 2px black;
 	box-shadow: 0px 0px 2px #555;
 	opacity: 1;
+}
+#qTip {
+	display: none;
+	position: absolute; z-index: 1000;
+	max-width: 720px;
+	line-height: normal;
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	color: #eee;
 	pointer-events: none;
 }
 #qTip dfn { /* Highlight color for emphasis text in tooltip */
@@ -735,10 +737,10 @@ img {
  */
 .itmTooltip {
 	max-width: 380px;
+	line-height: 18px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 16px;
 	font-weight: normal;
-	line-height: 18px;
 	color: white;
 }
 .itmName {

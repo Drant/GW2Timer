@@ -1712,6 +1712,9 @@ input[type="text"].bnkSearchInput:hover {
 .bnkButtonRarity {
 	background-image: url("../img/ui/rarity.png");
 }
+.bnkButtonCard {
+	background-image: url("../img/ui/card.png");
+}
 .bnkButtonCondense {
 	background-image: url("../img/ui/condense.png");
 }
@@ -2126,6 +2129,25 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .bnkSlotZero .bnkSlotIcon { /* Zero stack slots */
 	opacity: 0.2;
 }
+
+.bnkCard { /* A tooltip-like block after each bank slot */
+	display: none;
+	width: 100%;
+	max-width: calc(100% - 88px);
+	height: 60px;
+	overflow: hidden;
+}
+.bnkCondense .bnkCard {
+	max-width: calc(100% - 68px);
+	height: 40px;
+}
+.bnkCarded .bnkCard {
+	display: inline-block;
+}
+.bnkCarded .bnkSlotLabel {
+	display: none;
+}
+
 /*
  * Dyes act as slots in the bank, but behave differently.
  */

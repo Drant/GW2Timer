@@ -1610,9 +1610,9 @@ Countdown: {
 		name_es: "Historia viviente 3: Episodio V",
 		name_fr: "Histoire vivante 3: Épisode V",
 		name_zh: "第三生活世界：第五集",
-		official: "news/watch-the-trailer-for-flashpoint/",
-		Start: new Date("2017-05-02T17:00:00Z"),
-		Finish: new Date("2017-05-03T17:00:00Z")
+		official: "news/flashpoint-is-live/",
+		Start: new Date("2017-05-02T16:00:00Z"),
+		Finish: new Date("2017-05-03T16:00:00Z")
 	}
 	]
 },

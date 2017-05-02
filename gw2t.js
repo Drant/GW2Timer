@@ -6314,16 +6314,20 @@ Z = {
 			U.getScript(scripturl, function()
 			{
 				Z.freeFiles();
-				var data = U.getRecordData(pType);
+				var record = U.getRecordData(pType);
 				var itemids = {};
-				for (var i in data)
+				for (var i in record)
 				{
-					var catarr = data[i];
+					var catarr = record[i];
 					for (var ii = 0; ii < catarr.length; ii++)
 					{
 						if (catarr[ii].i)
 						{
 							itemids[(catarr[ii].i)] = true;
+						}
+						else if (typeof catarr[ii] === "number")
+						{
+							itemids[(catarr[ii])] = true;
 						}
 					}
 				}
@@ -12806,7 +12810,7 @@ V = {
 			var bank = B.getTabsContainer(container);
 			var tab, slotscontainer, slot;
 			var categorizedach = {};
-			var categories = {}, cat, achid, box, ithach, points;
+			var categories = {}, cat, achid, box, ithach, ithunlock, processedach;
 			pData.forEach(function(iCategory)
 			{
 				categories[iCategory.id] = iCategory;
@@ -12827,19 +12831,19 @@ V = {
 					{
 						categorizedach[achid] = true;
 						ithach = box.oData;
-						points = 0;
-						ithach.tiers.forEach(function(iTier)
-						{
-							points += iTier.points;
-						});
+						ithunlock = unlocks[achid];
+						
+						processedach = Q.processAchievement(ithach, ithunlock);
 						slot = B.createPseudoSlot(slotscontainer, {
-							aIsUnlocked: (unlocks[achid]) ? true : false,
+							aIsUnlocked: (ithunlock && ithunlock.done) ? true : false,
 							aName: ithach.name,
-							aIcon: pCategory.icon,
-							aTooltip: Q.analyzeAchievement(ithach),
-							aKeywords: pCategory.name + " " + ithach.name + " " + ithach.description,
 							aLabel: ithach.name,
-							aPayment: {achievement: points}
+							aIcon: pCategory.icon,
+							aPayment: {achievement: processedach.oAPPointCurrent},
+							aPossible: processedach.oAPPointPossible,
+							aCard: Q.analyzeAchievement(ithach, {aAchievement: processedach, aWantCard: true}),
+							aTooltip: Q.analyzeAchievement(ithach, {aAchievement: processedach}),
+							aKeywords: pCategory.name + " " + ithach.name + " " + ithach.requirement
 						});
 					}
 				}
@@ -12888,6 +12892,7 @@ V = {
 			B.createBankDivider(container);
 			B.createBankMenu(bank, {
 				aIsPseudo: true,
+				aWantCard: true,
 				aIsCollapsed: true
 			});
 		};
@@ -13980,10 +13985,15 @@ B = {
 			{
 				B.updateSlotPrice(slot, {
 					aPrice: Settings.aPayment[i],
+					aPossible: Settings.aPossible,
 					aCount: count,
 					aPaymentEnum: i
 				});
 			}
+		}
+		if (Settings.aCard)
+		{
+			slot.after("<span class='bnkCard itmTooltip cssTooltip'>" + Settings.aCard + "</span>");
 		}
 		
 		slot.data("keywords", $("<div>" + (Settings.aKeywords || Settings.aTooltip || "").toLowerCase() + "</div>").text());
@@ -14174,6 +14184,7 @@ B = {
 	 * Updates the price displayed over the bank slot, the bank tab, and bank top.
 	 * @param jqobject pSlot for price label.
 	 * @objparam int or object aPrice amount or processed object by the get price function.
+	 * @objparam int aPossible the max possible price, optional.
 	 * @objparam int aTransactionBuy of a transaction, optional.
 	 * @objparam int aTransactionSell of a transaction, optional.
 	 * @objparam int aCount of items.
@@ -14190,7 +14201,7 @@ B = {
 		var iscollection = container.data("iscollection");
 		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + elementsuffix);
 		
-		var count = Settings.aCount || 1;
+		var count = (Settings.aPossible !== undefined) ? 1 : (Settings.aCount || 1);
 		var prices = (typeof Settings.aPrice === "number") ?
 			((Settings.aPaymentEnum) ? E.createPricePlain(Settings.aPrice, count) : E.createPrice(Settings.aPrice, count))
 			: E.recountPrice(Settings.aPrice, count);
@@ -14258,7 +14269,16 @@ B = {
 				}
 			}; break;
 			default: {
-				pSlot.append("<var class='bnkSlotPrice'>" + E.PaymentFormat[Settings.aPaymentEnum](pricetorecord) + "</var>");
+				var possiblestr = E.PaymentFormat[Settings.aPaymentEnum](pricetorecord);
+				if (Settings.aPossible === 0)
+				{
+					possiblestr = "";
+				}
+				else if (Settings.aPossible > 0 && pricetorecord !== Settings.aPossible)
+				{
+					possiblestr = pricetorecord + " / " + E.PaymentFormat[Settings.aPaymentEnum](Settings.aPossible);
+				}
+				pSlot.append("<var class='bnkSlotPrice'>" + possiblestr + "</var>");
 			}
 		}
 
@@ -14269,7 +14289,15 @@ B = {
 			priceleft = prices.oPriceBuy;
 			priceright = prices.oPriceSell;
 			// Update the display
-			if (Settings.aCount !== 0)
+			if (Settings.aPossible !== undefined)
+			{
+				priceleft = pricetorecord;
+				priceright = Settings.aPossible - pricetorecord;
+				updatePriceDisplay(tabdisplayprice, priceleft, priceright, true);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceleft);
+				updatePriceDisplay(top.find(".bnkPriceValueB_" + elementsuffix), priceright, priceright);
+			}
+			else if (Settings.aCount !== 0)
 			{
 				updatePriceDisplay(tabdisplayprice, prices.oPriceSell, 0, true);
 				updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceright);
@@ -14351,6 +14379,7 @@ B = {
 	 * @param jqobject pBank for insertion.
 	 * @objparam boolean aWantClear whether to wipe the dish menu to recreate the menu, optional.
 	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching, optional.
+	 * @objparam boolean aWantCard whether to allow info elements adjacent to slots.
 	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
 	 * @objparam boolean aIsPseudo if bank contains pseudo slots instead of items.
 	 * @objparam boolean aIsCollapsed whether to initially collapse all the tabs, assuming slots are generated, optional.
@@ -14688,6 +14717,20 @@ B = {
 		if (O.Options.bol_condenseBank)
 		{
 			resizeSlots(raritybutton);
+		}
+		
+		// Button to toggle informational card next to slots
+		if (Settings.aWantCard)
+		{
+			var isbankcard = false;
+			var cardbutton = $("<div class='bnkButtonCard bnkButton curToggle' title='"
+				+ "Toggle info <dfn>cards</dfn>.'></div>")
+				.appendTo(buttoncontainer).click(function()
+			{
+				isbankcard = !isbankcard;
+				pBank.toggleClass("bnkCarded", isbankcard);
+				$(this).toggleClass("bnkButtonFocused");
+			}).trigger("click");
 		}
 		
 		// Button to toggle all tabs
@@ -17895,6 +17938,8 @@ Q = {
 	 * @param object pAchievement details retrieved from API.
 	 * @objparam jqobject aElement to bind tooltip.
 	 * @objparam boolean aWantIcon whether to include achievement's icon.
+	 * @objapram boolean aWantCard whether to format for bank cards.
+	 * @objparam object aAchievement processed object, optional.
 	 * @objparam function aCallback what to do after the tooltip generation.
 	 */
 	analyzeAchievement: function(pAchievement, pSettings)
@@ -17909,9 +17954,6 @@ Q = {
 		var countstr = "";
 		var tierstr = "";
 		var pointsstr = "";
-		var sumcount = 0;
-		var sumpoints = 0;
-		var ithtier;
 		
 		if (Settings.aWantIcon && ach.icon)
 		{
@@ -17929,21 +17971,20 @@ Q = {
 		{
 			reqstr = "<aside class='achRequirement'>" + ach.requirement + "</aside>";
 		}
-		
-		// Sum the tiers for a combined count of achievement requirements
-		if (ach.tiers)
+		if (Settings.aWantCard)
 		{
-			for (var i in ach.tiers)
-			{
-				ithtier = ach.tiers[i];
-				sumcount += ithtier.count;
-				sumpoints += ithtier.points;
-			}
-			var tierword = D.getWordCapital("tier");
-			countstr = "<aside class='achCount'>0 / " + ithtier.count + " " + D.getWordCapital("completion") + "</aside>";
-			tierstr = "<aside class='achTier'>" + tierword + " 1 " + D.getWord("of") + " " + + ach.tiers.length + " " + tierword + "</aside>";
-			pointsstr = "<aside class='achPoints'>" + sumpoints + " <img src='img/ui/ap.png' /></aside";
+			return namestr + reqstr;
 		}
+		
+		var processedach = Settings.aAchievement || Q.processAchievement(pAchievement);
+		var tierword = D.getWordCapital("tier");
+		countstr = "<aside class='achCount'>" + processedach.oAPCountCurrent
+			+ " / " + processedach.oAPCountPossible + " " + D.getWordCapital("completion")
+			+ " (" + U.convertRatioToPercent(processedach.oAPCountCurrent / processedach.oAPCountPossible) + ")</aside>";
+		tierstr = "<aside class='achTier'>" + tierword + " " + processedach.oAPTierCurrent + " "
+			+ D.getWord("of") + " " + processedach.oAPTierPossible + " " + tierword + "</aside>";
+		pointsstr = "<aside class='achPoints'>" + ((processedach.oAPPointPossible > 0) ? (processedach.oAPPointCurrent
+			+ " / " + processedach.oAPPointPossible) : "0") + " <img src='img/ui/ap.png' /></aside";
 		
 		var html = "<div class='itmTooltip " + (Settings.aClass || "") + "'>"
 			+ "<div class='achWrap'>"
@@ -17976,6 +18017,42 @@ Q = {
 		{
 			return html;
 		}
+	},
+	
+	/*
+	 * Gets the computed points, counts, and tiers of an achievement.
+	 * @param object pAchievement
+	 * @param object pAccountAch account unlocks for getting progress, optional.
+	 * @returns object
+	 */
+	processAchievement: function(pAchievement, pAccountAch)
+	{
+		var currentpoints = 0;
+		var possiblepoints = 0;
+		var currentcount = 0;
+		var possiblecount = 0;
+		var currenttier = 0;
+		var possibletiers = pAchievement.tiers.length;
+		pAchievement.tiers.forEach(function(iTier)
+		{
+			if (pAccountAch && pAccountAch.current >= iTier.count)
+			{
+				currenttier++;
+				currentpoints += iTier.points;
+				currentcount += iTier.count;
+			}
+			possiblepoints += iTier.points;
+			possiblecount += iTier.count;
+		});
+		
+		return {
+			oAPPointCurrent: currentpoints,
+			oAPPointPossible: possiblepoints,
+			oAPCountCurrent: currentcount,
+			oAPCountPossible: possiblecount,
+			oAPTierCurrent: currenttier,
+			oAPTierPossible: possibletiers
+		};
 	},
 	
 	/*
@@ -28967,6 +29044,7 @@ G = {
 				X.clearChecklist(X.Checklists.ResourceRegular);
 				X.clearChecklist(X.Checklists.ResourceHotspot);
 			});
+			X.rewrapCheckboxes();
 			
 			// Bind button to refresh TP prices
 			$("#nodRefresh").click(function()
@@ -28977,10 +29055,6 @@ G = {
 			
 			// Map bookmarks
 			G.createDailyBookmarks("#nodBookmarks");
-			
-			// Finally
-			refreshResourcePrices();
-			X.rewrapCheckboxes();
 			// Pre-show specific grades of nodes if requested
 			U.verifyArticle("All", function()
 			{
@@ -28994,6 +29068,12 @@ G = {
 			{
 				$("#nodShowHotspot").trigger("click");
 			});
+			
+			// Initialize prices
+			setTimeout(function()
+			{
+				refreshResourcePrices();
+			}, 1000);
 		});
 	},
 	drawResourceRoute: function()
@@ -29003,10 +29083,7 @@ G = {
 			I.write("Please view the <a data-page='Resource'>Resource Nodes</a> section first.");
 			I.bindConsoleLink();
 		}
-		else
-		{
-			$("#nodRoute").trigger("contextmenu");
-		}
+		$("#nodRoute").trigger("contextmenu");
 	},
 	
 	/*

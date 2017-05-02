@@ -128,6 +128,7 @@ Key: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
 ],
 Token: [
+	{i: 81127, n: "Fire Orchid Blossom", p: {magic: 37}},
 	{i: 80332, n: "Jade Shard", p: {magic: 37}},
 	{i: 79899, n: "Fresh Winterberry", p: {magic: 37}},
 	{i: 79469, n: "Petrified Wood", p: {magic: 37}},
@@ -224,6 +225,7 @@ Contract: [
 	{i: 79456, n: "Ember Bay Portal Scroll", p: {magic: 1000}},
 	{i: 79905, n: "Bitterfrost Frontier Portal Scroll", p: {magic: 1000}},
 	{i: 80238, n: "Lake Doric Portal Scroll", p: {magic: 1000}},
+	{i: 81060, n: "Draconis Mons Portal Scroll", p: {magic: 1000}},
 	{i: 78978, n: "White Mantle Portal Device", p: {magnetite: 1000}}
 ],
 Gathering: [
