@@ -17976,15 +17976,18 @@ Q = {
 			return namestr + reqstr;
 		}
 		
-		var processedach = Settings.aAchievement || Q.processAchievement(pAchievement);
-		var tierword = D.getWordCapital("tier");
-		countstr = "<aside class='achCount'>" + processedach.oAPCountCurrent
-			+ " / " + processedach.oAPCountPossible + " " + D.getWordCapital("completion")
-			+ " (" + U.convertRatioToPercent(processedach.oAPCountCurrent / processedach.oAPCountPossible) + ")</aside>";
-		tierstr = "<aside class='achTier'>" + tierword + " " + processedach.oAPTierCurrent + " "
-			+ D.getWord("of") + " " + processedach.oAPTierPossible + " " + tierword + "</aside>";
-		pointsstr = "<aside class='achPoints'>" + ((processedach.oAPPointPossible > 0) ? (processedach.oAPPointCurrent
-			+ " / " + processedach.oAPPointPossible) : "0") + " <img src='img/ui/ap.png' /></aside";
+		if (pAchievement.tiers)
+		{
+			var processedach = Settings.aAchievement || Q.processAchievement(pAchievement);
+			var tierword = D.getWordCapital("tier");
+			countstr = "<aside class='achCount'>" + processedach.oAPCountCurrent
+				+ " / " + processedach.oAPCountPossible + " " + D.getWordCapital("completion")
+				+ " (" + U.convertRatioToPercent(processedach.oAPCountCurrent / processedach.oAPCountPossible) + ")</aside>";
+			tierstr = "<aside class='achTier'>" + tierword + " " + processedach.oAPTierCurrent + " "
+				+ D.getWord("of") + " " + processedach.oAPTierPossible + " " + tierword + "</aside>";
+			pointsstr = "<aside class='achPoints'>" + ((processedach.oAPPointPossible > 0) ? (processedach.oAPPointCurrent
+				+ " / " + processedach.oAPPointPossible) : "0") + " <img src='img/ui/ap.png' /></aside";
+		}
 		
 		var html = "<div class='itmTooltip " + (Settings.aClass || "") + "'>"
 			+ "<div class='achWrap'>"
