@@ -283,6 +283,7 @@ Converter: [
 	{i: 79197, n: "Sentient Anomaly", p: {achievement: 0}},
 	{i: 79558, n: "Sentient Aberration", p: {achievement: 0}},
 	{i: 80144, n: "Sentient Oddity", p: {achievement: 0}},
+	{i: 81120, n: "Sentient Singularity", p: {achievement: 0}},
 	{i: 79995, n: "Shards of Glory Converter", p: {league: 50}},
 	{i: 49501, n: "Tarrktun Personal Delivery Portal", p: {coin: 888888}},
 	{i: 80672, n: "Magnetite Shard Converter", p: {achievement: 0}},

@@ -411,10 +411,11 @@ var GW2T_ACCOUNT_METADATA = {
 		{en: "Daily", de: "Täglich", es: "Logros diarios", fr: "Quotidien", zh: "日常"},
 		97, // Daily
 		88, // Daily Fractals
-		145, // Daily Ember Bay
 		142, // Daily Bloodstone Fen
+		145, // Daily Ember Bay
 		149, // Daily Bitterfrost Frontier
 		159, // Daily Lake Doric
+		163, // Daily Draconis Mons
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
@@ -435,6 +436,7 @@ var GW2T_ACCOUNT_METADATA = {
 		144, // Rising Flames
 		147, // A Crack in the Ice
 		154, // The Head of the Snake
+		164, // Flashpoint
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons

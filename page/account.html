@@ -45,16 +45,16 @@
 						<h2>Inventory Management</h2>
 						<ul>
 							<li><a data-page="Possessions"><ins class="mnu mnu_possessions"></ins><var>Possessions</var></a> - find all items in my account.</li>
+							<li><a data-page="Catalog"><ins class="mnu mnu_catalog"></ins><var>Catalog</var></a> - view keys, tokens, toys, tonics.</li>
 							<li><a data-page="Cleanup"><ins class="mnu mnu_cleanup"></ins><var>Cleanup</var></a> - clean up my account.</li>
-							<li><a data-page="Bank"><ins class="mnu mnu_bank"></ins><var>Bank</var></a> - open my bank.</li>
-							<li><a data-page="Vault"><ins class="mnu mnu_vault"></ins><var>Vault</var></a> - open the guild bank (req. leader key).</li>
 							<li><a data-page="Inventory"><ins class="mnu mnu_inventory"></ins><var>Inventory</var></a> - open my characters' inventories.</li>
+							<li><a data-page="Bank"><ins class="mnu mnu_bank"></ins><var>Bank</var></a> - open my bank.</li>
 							<li><a data-page="Materials"><ins class="mnu mnu_materials"></ins><var>Materials</var></a> - search the materials storage.</li>
+							<li><a data-page="Vault"><ins class="mnu mnu_vault"></ins><var>Vault</var></a> - open the guild bank (req. leader key).</li>
 							<li><a data-page="Ascended"><ins class="mnu mnu_ascended"></ins><var>Ascended</var></a> - scan for ascended gear.</li>
 						</ul>
 						<h2>Collection Browsing</h2>
 						<ul>
-							<li><a data-page="Catalog"><ins class="mnu mnu_catalog"></ins><var>Catalog</var></a> - view keys, tokens, toys, tonics.</li>
 							<li><a data-page="Wardrobe"><ins class="mnu mnu_wardrobe"></ins><var>Wardrobe</var></a> - unlock a weapon or armor skin.</li>
 							<li><a data-page="Outfits"><ins class="mnu mnu_outfits"></ins><var>Outfits</var></a> - shop for a costume outfit.</li>
 							<li><a data-page="Gliders"><ins class="mnu mnu_gliders"></ins><var>Gliders</var></a> - glance at gliders.</li>
@@ -67,12 +67,10 @@
 							<li><a data-page="Cats"><ins class="mnu mnu_cats"></ins><var>Cats</var></a> - visit home instance cats.</li>
 							<li><a data-page="Recipes"><ins class="mnu mnu_recipes"></ins><var>Recipes</var></a> - see what my characters can craft.</li>
 							<li><a data-page="SAB"><ins class="mnu mnu_sab"></ins><var>SAB</var></a> - check Super Adventure Box progress.</li>
-							<li><a data-page="Masteries"><ins class="mnu mnu_masteries"></ins><var>Masteries</var></a> - learn expansion mastery abilities.</li>
 						</ul>
 						<!--<h2>Account Overview</h2>
 						<ul>
 							<li><a data-page="PVP"><ins class="mnu mnu_pvp"></ins><var>PvP</var></a> - read my PvP history.</li>
-							<li><a data-page="Achievements"><ins class="mnu mnu_achievements"></ins><var>Achievements</var></a> - reflect on my achievements.</li>
 							<li><a data-page="Guild"><ins class="mnu mnu_guild"></ins><var>Guild</var></a> - oversee my guild.</li>
 						</ul>-->
 					</div>
@@ -86,6 +84,8 @@
 							<li><a data-page="Audit"><ins class="mnu mnu_audit"></ins><var>Audit</var></a> - estimate my account's value.</li>
 							<li><a data-page="Characters"><ins class="mnu mnu_characters"></ins><var>Characters</var></a> - analyze my characters and wallet.</li>
 							<li><a data-page="Hero"><ins class="mnu mnu_hero"></ins><var>Hero</var></a> - inspect my characters' build.</li>
+							<li><a data-page="Achievements"><ins class="mnu mnu_achievements"></ins><var>Achievements</var></a> - count my achievement points.</li>
+							<li><a data-page="Masteries"><ins class="mnu mnu_masteries"></ins><var>Masteries</var></a> - learn expansion mastery abilities.</li>
 						</ul>
 						<h2>Watchlists and Checklists</h2>
 						<ul>
@@ -93,7 +93,6 @@
 							<li><a data-page="Gem"><ins class="mnu mnu_gem"></ins><var>Gem</var></a> - subscribe to gem store items for alerts.</li>
 							<li><a data-page="Dungeons"><ins class="mnu mnu_dungeons"></ins><var>Dungeons</var></a> - check dungeons I've done today.</li>
 							<li><a data-page="Raids"><ins class="mnu mnu_raids"></ins><var>Raids</var></a> - check raids I've done this week.</li>
-							<li><a data-page="Achievements"><ins class="mnu mnu_achievements"></ins><var>Achievements</var></a> - count my achievement points.</li>
 						</ul>
 						<h2>Trading Post and Money</h2>
 						<ul>
@@ -124,10 +123,7 @@
 			</div>
 		</div>
 	</article>
-	<article data-section="Bank"></article>
-	<article data-section="Materials"></article>
-	<article data-section="Vault"></article>
-	<article data-section="Achievements" data-islead="true"></article>
+	<article data-section="Achievements"></article>
 	<article data-section="Masteries"></article>
 	<article data-section="Raids" data-islead="true"></article>
 	<article data-section="Dungeons"></article>
@@ -136,14 +132,20 @@
 <section id="accPlatterCharacters">
 	<article data-section="Characters" class="accDishMain"></article>
 	<article data-section="Hero" class="accCharDependent"></article>
-	<article data-section="Inventory" class="accCharDependent"></article>
-	<article data-section="Possessions" class="accCharDependent"></article>
-	<article data-section="Catalog"  class="accCharDependent" data-islead="true"></article>
-	<article data-section="Cleanup" class="accCharDependent"></article>
 	<article data-section="Ascended" class="accCharDependent"></article>
 	<article data-section="Recipes" class="accCharDependent" data-islead="true"></article>
 	<article data-section="SAB" class="accCharDependent" data-islead="true"></article>
 	<!--<article data-section="Crafting" class="accCharDependent"></article>-->
+</section>
+
+<section id="accPlatterInventory">
+	<article data-section="Inventory" class="accDishMain accCharDependent"></article>
+	<article data-section="Bank"></article>
+	<article data-section="Materials"></article>
+	<article data-section="Vault"></article>
+	<article data-section="Possessions" class="accCharDependent" data-islead="true"></article>
+	<article data-section="Catalog" class="accCharDependent"></article>
+	<article data-section="Cleanup" class="accCharDependent"></article>
 </section>
 
 <section id="accPlatterWardrobe">

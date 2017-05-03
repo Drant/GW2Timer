@@ -37169,7 +37169,6 @@ I = {
 			Personal: "Personal",
 			Notepad: "Notepad",
 			Daily: "Dailies",
-			Achievements: "Achievements",
 			Raids: "Raids",
 			Dungeons: "Dungeons"
 		},
@@ -37178,16 +37177,19 @@ I = {
 			Audit: "Audit",
 			Characters: "Characters",
 			Hero: "Hero",
-			Catalog: "Catalog",
-			Cleanup: "Cleanup"
+			Achievements: "Achievements",
+			Masteries: "Masteries",
+			Recipes: "Recipes"
 		},
-		Bank:
+		Inventory:
 		{
 			Possessions: "Possessions",
+			Catalog: "Catalog",
+			Cleanup: "Cleanup",
+			Inventory: "Inventory",
 			Bank: "Bank",
 			Materials: "Materials",
 			Vault: "Vault",
-			Inventory: "Inventory",
 			Ascended: "Ascended"
 		},
 		Wardrobe:
@@ -37202,9 +37204,7 @@ I = {
 			Finishers: "Finishers",
 			Nodes: "Nodes",
 			Cats: "Cats",
-			Recipes: "Recipes",
-			SAB: "SAB",
-			Masteries: "Masteries"
+			SAB: "SAB"
 		},
 		Trading:
 		{
