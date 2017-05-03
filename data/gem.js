@@ -85,7 +85,7 @@ Outfit: [
 	{i: 80049, n: "Ice Encasement Outfit", p: {gem: -700}},
 	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
 	{i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}},
-	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: -700}}
+	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},

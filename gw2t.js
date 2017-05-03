@@ -18887,7 +18887,8 @@ E = {
 		map_bs: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_bs'></ins>"; },
 		map_eb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_eb'></ins>"; },
 		map_bf: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_bf'></ins>"; },
-		map_ld: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ld'></ins>"; }
+		map_ld: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ld'></ins>"; },
+		map_dm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dm'></ins>"; }
 	},
 	PaymentEnum:
 	{
@@ -24782,10 +24783,13 @@ M = {
 		}
 		X.initializeTextlist(X.Textlists["Slot" + pName + that.OptionSuffix], listload.find(".mapContextSlot"), null, 64);
 		X.initializeTextlist(X.Textlists["Slot" + pName + that.OptionSuffix], listsave.find(".mapContextSlot"), null, 64);
-		$(htmlidprefix + "Context" + pName).find(".mapContextSlot").click(function(pEvent)
+		$([listload, listsave]).each(function()
 		{
-			pEvent.stopPropagation();
-			$(this).select();
+			$(this).find(".mapContextSlot").click(function(pEvent)
+			{
+				pEvent.stopPropagation();
+				$(this).select();
+			});
 		});
 		// Bind behavior for the created list items
 		$(htmlidprefix + "ContextSave" + pName + " li").click(function()

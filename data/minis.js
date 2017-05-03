@@ -347,7 +347,17 @@ Special: [
 	{u: 450, i: 80804, n: "Mini Emperor Llama", p: {league: 10}},
 	{u: 449, i: 80833, n: "Mini Fancy Emperor Llama", p: {craft: true}},
 	{u: 453, i: 80738, n: "Mini Elegant Emperor Llama", p: {craft: true}},
-	{u: 451, i: 80709, n: "Mini Lavish Emperor Llama", p: {craft: true}}
+	{u: 451, i: 80709, n: "Mini Lavish Emperor Llama", p: {craft: true}},
+	{u: 467, i: 81009, n: "Mini Dragon's Watch Rox", p: {map_dm: 25}},
+	{u: 469, i: 81188, n: "Mini Lone Wolf Braham", p: {map_dm: 25}},
+	{u: 462, i: 81116, n: "Mini Dragon's Watch Kasmeer", p: {map_dm: 25}},
+	{u: 468, i: 81018, n: "Mini Dragon's Watch Marjory", p: {map_dm: 25}},
+	{u: 465, i: 81104, n: "Mini Dragon's Watch Taimi", p: {map_dm: 25}},
+	{u: 460, i: 81112, n: "Mini Smogscale", p: {karma: 105000}},
+	{u: 461, i: 81037, n: "Mini Hound of Balthazar", p: {karma: 105000}},
+	{u: 463, i: 81166, n: "Mini Nature Spirit", p: {karma: 105000}},
+	{u: 464, i: 81077, n: "Mini G.O.X. 2.1.23", p: {karma: 105000}},
+	{u: 466, i: 81151, n: "Mini M.O.X.", p: {karma: 105000}},
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},
