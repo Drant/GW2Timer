@@ -1277,7 +1277,7 @@ button:active, .cssButton:active, button.btnActive {
 button img {
 	width: 24px; height: 24px;
 }
-input:focus, textarea:focus, button:focus {
+input[type="text"]:focus, textarea:focus, button:focus {
     border: 1px solid rgba(255, 238, 187, 0.8);
 	outline: none;
 }
@@ -1766,6 +1766,7 @@ textarea.jsCopyCode {
 	margin-bottom: 8px;
 }
 #dsbCountdown {
+	display: none;
 	margin-bottom: 8px;
 }
 #dsbAnnouncement:after, #dsbCountdown:after {
@@ -1965,7 +1966,7 @@ textarea.jsCopyCode {
 	position: absolute; z-index: 9;
 	bottom: 12px; left: 12px;
 }
-.mapCoordinatesBar input, .cssInputText {
+.mapCoordinatesBar input[type="text"], .cssInputText {
 	display: inline-block;
 	width: 90px;
 	height: 16px;
@@ -1987,7 +1988,7 @@ textarea.jsCopyCode {
 .mapCoordinatesBar input::selection {
 	background: #66aaff;
 }
-input.mapCoordinatesName {
+#mapCoordinatesName, #wvwCoordinatesName {
 	width: 145px; 
 }
 #mapCoordinatesToggle, #wvwCoordinatesToggle {

@@ -14100,7 +14100,7 @@ B = {
 					aSearch: wikisearch
 				});
 				// Custom label over the slot icon, if available
-				if (Settings.aLabel)
+				if (Settings.aLabel && Settings.aLabel.length)
 				{
 					pSlot.append("<var class='bnkSlotLabel'>" + Settings.aLabel + "</var>");
 				}
@@ -26212,16 +26212,8 @@ M = {
 	 */
 	convertEventCoord: function(pPos, pZone)
 	{
-		var cr = pZone.continent_rect; // 2D float array
+		var cr = pZone.continent_rect_actual || pZone.continent_rect; // 2D float array
 		var mr = pZone.map_rect; // 2D float array
-		/*
-		 * Dry Top's actual (API) continent_rect overlaps Silverwastes, so use
-		 * the actual only when it is to convert Event or GPS coordinates.
-		 */
-		if (pZone.id === "988")
-		{
-			cr = pZone.continent_rect_actual;
-		}
 		
 		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
 		return [
@@ -27137,7 +27129,7 @@ P = {
 			if (pName.indexOf("return") !== -1) return "collect";
 			if (pName.indexOf("retrieve") !== -1) return "collect";
 			if (pName.indexOf("salvage") !== -1) return "collect";
-			if (pName.indexOf("burglar") !== -1) return "fist";
+			if (pName.indexOf("treasure") !== -1) return "fist";
 			return "swords";
 		};
 		var iconURL = {
@@ -34303,6 +34295,7 @@ H = {
 		// Initialize countdown entries
 		if (H.isCountdownEnabled)
 		{
+			$("#dsbCountdown").show();
 			var urlkey = D.getURLKey();
 			var ctd;
 			var countdownname;
@@ -37183,13 +37176,13 @@ I = {
 		},
 		Inventory:
 		{
-			Possessions: "Possessions",
-			Catalog: "Catalog",
-			Cleanup: "Cleanup",
 			Inventory: "Inventory",
 			Bank: "Bank",
 			Materials: "Materials",
 			Vault: "Vault",
+			Possessions: "Possessions",
+			Catalog: "Catalog",
+			Cleanup: "Cleanup",
 			Ascended: "Ascended"
 		},
 		Wardrobe:

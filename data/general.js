@@ -890,6 +890,8 @@ var GW2T_REGION_DATA = {
 
 /*
  * Zones are sorted by how far from the top left corner (0,0) it is.
+ * continent_rect_actual is for zones that have been custom bounded because it
+ * overlaps other zones or its zone rectangle does not look proper.
  */
 var GW2T_ZONE_DATA = {
 "ember":
@@ -1614,16 +1616,26 @@ Countdown: {
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
 	}*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
 		name_fr: "Bonus de carte Gorges glacées",
 		name_zh: "霜谷之音地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-04-27T20:00:00Z"),
-		Finish: new Date("2017-05-04T20:00:00Z")
-	}
+		Start: new Date("2017-06-22T20:00:00Z"),
+		Finish: new Date("2017-06-29T20:00:00Z")
+	}*/
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
+		name_en: "Fireheart Map Rewards",
+		name_de: "Feuerherzhügel Karten-Bonus",
+		name_es: "Bonificación Corazón de Fuego",
+		name_fr: "Bonus de carte Flambecœur",
+		name_zh: "炎心高地地图奖金",
+		url: "https://wiki.guildwars2.com/wiki/Map_bonus_reward/profit",
+		Start: new Date("2017-05-25T20:00:00Z"),
+		Finish: new Date("2017-06-01T20:00:00Z")
+	}*/
 	/*{
 		name_en: "Living Story 3: Episode VI",
 		name_de: "Lebendigen Geschichte 3: Episode VI",
