@@ -29237,11 +29237,11 @@ G = {
 					$(this).prop("checked", stateinstring);
 					if (stateinstring === false)
 					{
-						$(this).parent().prev().removeClass("jpzListNameChecked");
+						X.getCheckboxLabel($(this)).prev().removeClass("jpzListNameChecked");
 					}
 					else
 					{
-						$(this).parent().prev().addClass("jpzListNameChecked");
+						X.getCheckboxLabel($(this)).prev().addClass("jpzListNameChecked");
 						styleJPNode(P.NodeArray.JP[i], true);
 					}
 
@@ -29252,12 +29252,12 @@ G = {
 					var checkboxindex = U.getSubintegerFromHTMLID($(this));
 					if (checkboxstate === X.ChecklistEnum.Unchecked)
 					{
-						$(this).parent().prev().removeClass("jpzListNameChecked");
+						X.getCheckboxLabel($(this)).prev().removeClass("jpzListNameChecked");
 						styleJPNode(P.NodeArray.JP[checkboxindex]);
 					}
 					else
 					{
-						$(this).parent().prev().addClass("jpzListNameChecked");
+						X.getCheckboxLabel($(this)).prev().addClass("jpzListNameChecked");
 						styleJPNode(P.NodeArray.JP[checkboxindex], true);
 					}
 

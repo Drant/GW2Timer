@@ -772,6 +772,7 @@ Legendary: [
 	{i: 79562, n: "Eureka", p: {craft: true}},
 	{i: 72713, n: "HOPE", p: {craft: true}},
 	{i: 79802, n: "Shooshadoo", p: {craft: true}},
+	{i: 81206, n: "Flames of War", p: {craft: true}},
 	{i: 78556, n: "Chuka and Champawat", p: {craft: true}},
 	{i: 80488, n: "The HMS Divinity", p: {craft: true}},
 	{i: 71383, n: "Nevermore", p: {craft: true}},

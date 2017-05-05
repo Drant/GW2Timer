@@ -26,21 +26,19 @@ GW2T_SALE_DATA = {
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}},
 	{i: 49021, n: "Kasmeer's Staff Skin", p: {gem: 600}},
 	{i: 80981, n: "Hourglass Staff", p: {gem: 600}, Finish: new Date("2017-05-09T16:00:00Z")},
+	{i: 67840, n: "Mini Drooburt's Ghost", p: {gem: 350}},
+	{i: 70191, n: "Mini Wyvern", p: {gem: 350}},
 	{i: 47900, n: "Metallurgic Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 67028, n: "Chaos weapon skins#Gallery", p: {blticket: 5}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 79721, n: "Cosmic Harvesting Tool", p: {gem: 1000}},
 	{i: 79472, n: "Cosmic Logging Tool", p: {gem: 1000}},
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}},
-	{i: 42584, n: "Mini Jaguar Cub", p: {gem: 400}, Finish: new Date("2017-05-08T16:00:00Z")},
-	{i: 42577, n: "Mini Moa Chick", p: {gem: 400}, Finish: new Date("2017-05-08T16:00:00Z")},
+	{i: 42584, n: "Mini Jaguar Cub", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
+	{i: 42577, n: "Mini Moa Chick", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
 	{i: 42593, n: "Mini Lion Cub", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
-	{i: 69658, n: "Mini Blue Drake Hatchling", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
-	{i: 42579, n: "Mini Hippo Calf", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
-	{i: 42578, n: "Mini Piglet", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
-	{i: 42592, n: "Mini Black Bear Cub", p: {gem: 400}, Finish: new Date("2017-05-06T16:00:00Z")},
-	{i: 42582, n: "Mini Polar Bear Cub", p: {gem: 400}, Finish: new Date("2017-05-06T16:00:00Z")},
-	{i: 69667, n: "Mini Bear Cub", p: {gem: 400}, Finish: new Date("2017-05-06T16:00:00Z")},
-	{i: 42581, n: "Mini Arctodus Cub", p: {gem: 400}, Finish: new Date("2017-05-06T16:00:00Z")}
+	{i: 69658, n: "Mini Blue Drake Hatchling", p: {gem: 400}, Finish: new Date("2017-05-06T16:00:00Z")},
+	{i: 42579, n: "Mini Hippo Calf", p: {gem: 400}, Finish: new Date("2017-05-06T16:00:00Z")},
+	{i: 42578, n: "Mini Piglet", p: {gem: 400}, Finish: new Date("2017-05-06T16:00:00Z")}
 	]
 };
