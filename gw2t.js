@@ -13905,13 +13905,14 @@ B = {
 			var itemsintab = 0;
 			var tabfill = 0;
 			var tabcapacity = 0;
+			var precount = tab.data("tabcount");
 			var prefill = tab.data("tabfill");
 			var precapacity = tab.data("tabcapacity");
 			
 			if (prefill !== undefined)
 			{
-				itemsintab += prefill;
-				itemsinbank += prefill;
+				itemsintab += precount;
+				itemsinbank += precount;
 				tabfill += prefill;
 				tabcapacity = precapacity;
 			}
@@ -14378,7 +14379,8 @@ B = {
 
 		if (Settings.aIsTab !== false)
 		{
-			pSlot.data("tabfill", (pSlot.data("tabfill") || 0) + Settings.aCount);
+			pSlot.data("tabcount", (pSlot.data("tabcount") || 0) + Settings.aCount);
+			pSlot.data("tabfill", (pSlot.data("tabfill") || 0) + ((Settings.aCount > 0) ? 1 : 0));
 			pSlot.data("tabcapacity", (pSlot.data("tabcapacity") || 0) + 1);
 			// Only add if item actually exists (not a zero stack slot)
 			var priceleft, priceright;
@@ -18065,8 +18067,8 @@ Q = {
 		{
 			var processedach = Settings.aAchievement || Q.processAchievement(pAchievement);
 			var tierword = D.getWordCapital("tier");
-			countstr = "<aside class='achCount'>" + processedach.oAPCountCurrent
-				+ " / " + processedach.oAPCountPossible + " " + D.getWordCapital("completion")
+			countstr = "<aside class='achCount'>" + processedach.oAPCountCurrent.toLocaleString()
+				+ " / " + processedach.oAPCountPossible.toLocaleString() + " " + D.getWordCapital("completion")
 				+ " (" + U.convertRatioToPercent(processedach.oAPCountCurrent / processedach.oAPCountPossible) + ")</aside>";
 			tierstr = "<aside class='achTier'>" + tierword + " " + processedach.oAPTierCurrent + " "
 				+ D.getWord("of") + " " + processedach.oAPTierPossible + " " + tierword + "</aside>";
