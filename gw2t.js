@@ -3429,6 +3429,10 @@ U = {
 	{
 		return "data/" + pName.toLowerCase() + ".js";
 	},
+	getCacheURL: function(pName, pLanguage)
+	{
+		return "cache/" + pName.toLowerCase() + "_" + (pLanguage || D.langPartiallySupported) + I.cJSON;
+	},
 	getRecordHeader: function(pName)
 	{
 		return window["GW2T_" + pName.toUpperCase() + "_HEADERS"];
@@ -5491,7 +5495,7 @@ Z = {
 			}},
 			updatedb: {usage: "Prints an updated database of items. <em>Parameters: bol_wantrebuild (optional).", f: function()
 			{
-				Z.collateItems(args[1] === "true");
+				Z.collateDatabase("items", args[1] === "true");
 			}},
 			subdb: {usage: "Prints a subset database of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
 			{
@@ -6565,34 +6569,46 @@ Z = {
 	},
 	
 	/*
-	 * Downloads items that are missing from the current version of the items
+	 * Downloads API entries that are missing from the current version of the
 	 * database for every available API languages.
+	 * @param string pType of database, such as items or achievements.
+	 * @boolean pIsRebuild whether to redownload all entries.
 	 */
-	collateItems: function(pIsRebuild)
+	collateDatabase: function(pType, pIsRebuild)
 	{
+		var type = pType.toLowerCase();
+		var typeupper = U.toFirstUpperCase(type);
 		var wantrebuild = (pIsRebuild === true);
 		var counter = 0;
 		var newitemslist, newitems, newitemids;
+		var isitemsdb = (type === "items") ? true : false;
+		
 		var updateDBLang = function()
 		{
 			// Stopping condition for this recursive function
 			if (counter >= Z.DatabaseLanguages.length)
 			{
-				I.print("Items database of all languages updated.");
+				I.print(typeupper + " database of all languages updated.");
 				if (newitems && !wantrebuild)
 				{
-					Q.sortItems(newitemids, function(pSortedItems, pSortedIDs)
+					if (isitemsdb)
 					{
-						Z.printRecordEntry(pSortedItems, {
-							aItemIDsKey: "id"
+						Q.sortItems(newitemids, function(pSortedItems, pSortedIDs)
+						{
+							Z.printRecordEntry(pSortedItems, {aItemIDsKey: "id"});
+							Z.collateMuseum(pSortedIDs);
 						});
-						Z.collateMuseum(pSortedIDs);
-					});
+					}
+					else
+					{
+						Z.printRecordEntry(newitems, {aItemIDsKey: "id"});
+					}
 				}
 				return;
 			}
 			var lang = Z.DatabaseLanguages[counter];
-			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
+			var dburl = (isitemsdb) ? U.getItemsDatabaseURL(lang) : U.getCacheURL(type, lang);
+			$.getJSON(dburl, function(pData)
 			{
 				var dbarray = [];
 				var currentitemids = [];
@@ -6609,7 +6625,7 @@ Z = {
 				newitemids = (wantrebuild) ? currentitemids : U.getDifference(newitemslist, currentitemids);
 				if (newitemids.length)
 				{
-					U.fetchAPI(U.URL_API.ItemDetail, newitemids, {
+					U.fetchAPI(U.getAPIURL(type), newitemids, {
 						aLanguage: lang,
 						aCallback: function(pNewItems)
 					{
@@ -6631,7 +6647,7 @@ Z = {
 						}
 						Z.printAPICache(U.TypeEnum.isAssoc, {
 							aWantQuotes: true,
-							aFileName: "items_" + lang + I.cTXT
+							aFileName: type + "_" + lang + ((isitemsdb) ? I.cTXT : I.cJSON)
 						});
 						counter++;
 						updateDBLang();
@@ -6639,14 +6655,14 @@ Z = {
 				}
 				else
 				{
-					I.print("Items database is up-to-date. No difference found in IDs list.");
+					I.print(typeupper + " database is up-to-date. No difference found in IDs list.");
 				}
 			});
 		};
 		
 		// Initial call
-		I.print("Retrieving item indexes...");
-		$.getJSON(U.URL_API.ItemDetail, function(pData)
+		I.print("Retrieving " + type + " indexes...");
+		$.getJSON(U.getAPIURL(type), function(pData)
 		{
 			I.print("Looking for difference...");
 			newitemslist = pData;
@@ -7291,7 +7307,7 @@ Z = {
 	 */
 	collateAchievements: function()
 	{
-		
+		Z.collateDatabase("achievements");
 	},
 	
 	/*
@@ -7920,6 +7936,10 @@ A = {
 								+ "title='<dfn>" + D.getWordCapital(subsectionnamelow) + "</dfn>'></ins>");
 							subbuttons.append(subbutton);
 							A.createDishMenu(subsectionname);
+							if ($(this).hasClass("accCharDependent"))
+							{
+								subbutton.addClass("accCharDependentMenu");
+							}
 							// Create a divider if this button is the beginning of a subtab group
 							if ($(this).attr("data-islead"))
 							{
@@ -10586,7 +10606,7 @@ V = {
 			V.attemptAudit();
 			return;
 		}
-		var menusubsection = $("#accMenu_Characters").find(".accMenuSubtab");
+		var chardependentmenu = $(".accCharDependentMenu");
 		
 		A.Possessions = null;
 		dish.html("<div id='chrSummary'></div>"
@@ -10604,7 +10624,7 @@ V = {
 		+ "</div>");
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
-		I.suspendElement(menusubsection);
+		I.suspendElement(chardependentmenu);
 		dish.prepend(I.cThrobber);
 		
 		// Retrieve characters data
@@ -10639,7 +10659,7 @@ V = {
 				V.generateCharactersSelection(iCharData);
 				charindex++;
 			});
-			I.suspendElement(menusubsection, false);
+			I.suspendElement(chardependentmenu, false);
 			V.generateCharactersStatistics();
 			if (pSection)
 			{
@@ -12673,7 +12693,7 @@ V = {
 		var bank = B.getTabsContainer(container).append(I.cThrobber);
 		var helpmsg = $("#accHelp" + section);
 		var helpstr = (helpmsg.length) ? helpmsg.html() : "";
-		var generateUnlockables = function(pUnlockeds)
+		var doGenerate = function(pUnlockeds)
 		{
 			B.generateUnlockables(bank, {
 				aHeaders: U.getRecordHeader(section),
@@ -12691,7 +12711,7 @@ V = {
 			{
 				Q.loadItemsSubdatabase(section.toLowerCase(), function()
 				{
-					generateUnlockables(pData);
+					doGenerate(pData);
 				});
 			}).fail(function(pRequest, pStatus)
 			{
@@ -12800,6 +12820,7 @@ V = {
 			return;
 		}
 		
+		var section = "Achievements";
 		var unlocks = {};
 		var generateBank = function(pData)
 		{
@@ -12808,7 +12829,7 @@ V = {
 				aIsPseudo: true
 			});
 			var bank = B.getTabsContainer(container);
-			var tab, slotscontainer, slot;
+			var tab, slot;
 			var categorizedach = {};
 			var categories = {}, cat, achid, box, ithach, ithunlock, processedach;
 			pData.forEach(function(iCategory)
@@ -12822,7 +12843,8 @@ V = {
 					aTitle: pCategory.name,
 					aIcon: "<img class='bnkTabIcon' src='" + pCategory.icon + "' />"
 				});
-				slotscontainer = B.getSlotsContainer(tab);
+				
+				// Compute all achievements for showing on the bank and tab tallies
 				for (var ii = 0; ii < pCategory.achievements.length; ii++)
 				{
 					achid = pCategory.achievements[ii];
@@ -12832,21 +12854,50 @@ V = {
 						categorizedach[achid] = true;
 						ithach = box.oData;
 						ithunlock = unlocks[achid];
-						
 						processedach = Q.processAchievement(ithach, ithunlock);
-						slot = B.createPseudoSlot(slotscontainer, {
-							aIsUnlocked: (ithunlock && ithunlock.done) ? true : false,
-							aName: ithach.name,
-							aLabel: ithach.name,
-							aIcon: pCategory.icon,
-							aPayment: {achievement: processedach.oAPPointCurrent},
+						
+						B.updateSlotPrice(tab, {
+							aIsTab: true,
+							aCount: (ithunlock && ithunlock.done) ? 1 : 0,
+							aPrice: processedach.oAPPointCurrent,
 							aPossible: processedach.oAPPointPossible,
-							aCard: Q.analyzeAchievement(ithach, {aAchievement: processedach, aWantCard: true}),
-							aTooltip: Q.analyzeAchievement(ithach, {aAchievement: processedach}),
-							aKeywords: pCategory.name + " " + ithach.name + " " + ithach.requirement
+							aPaymentEnum: "achievement"
 						});
 					}
 				}
+				
+				// Only generate the slots when a tab is expanded
+				(function(iTab)
+				{
+					iTab.find(".bnkTabSeparator").one("click", function()
+					{
+						var slotscontainer = B.getSlotsContainer(iTab);
+						for (var ii = 0; ii < pCategory.achievements.length; ii++)
+						{
+							achid = pCategory.achievements[ii];
+							box = Q.getBoxedAchievement(achid);
+							if (box)
+							{
+								ithach = box.oData;
+								ithunlock = unlocks[achid];
+								processedach = Q.processAchievement(ithach, ithunlock);
+								
+								slot = B.createPseudoSlot(slotscontainer, {
+									aIsUnlocked: (ithunlock && ithunlock.done) ? true : false,
+									aName: ithach.name,
+									aLabel: ithach.name,
+									aIcon: pCategory.icon,
+									aPayment: {achievement: processedach.oAPPointCurrent},
+									aIsTab: false,
+									aPossible: processedach.oAPPointPossible,
+									aCard: Q.analyzeAchievement(ithach, {aAchievement: processedach, aWantCard: true}),
+									aTooltip: Q.analyzeAchievement(ithach, {aAchievement: processedach}),
+									aKeywords: pCategory.name + " " + ithach.name + " " + ithach.requirement
+								});
+							}
+						}
+					});
+				})(tab);
 			};
 			
 			// Create the achievement category tabs in the same order as the game, not the API
@@ -12899,20 +12950,28 @@ V = {
 		
 		dish.prepend(I.cThrobber);
 		// Get account's achievement unlocks
-		U.getJSON(A.getURL(A.URL.Achievements), function(pDataInner)
+		U.getJSON(A.getURL(A.URL.Achievements), function(pAccountAch)
 		{
 			// Convert array into associative array for constant access
-			pDataInner.forEach(function(iUnlock)
+			pAccountAch.forEach(function(iUnlock)
 			{
 				unlocks[iUnlock.id] = iUnlock;
 			});
 			// Get achievement categories
-			U.getJSON(U.getAPI("achievements/categories", true), function(pData)
+			U.getJSON(U.getAPI("achievements/categories", true), function(pCategories)
 			{
 				// Get all possible achievements
-				Q.getAchievements(true, function()
+				U.getJSON(U.getCacheURL(section), function(pAchievements)
 				{
-					generateBank(pData);
+					for (var i in pAchievements)
+					{
+						if (Q.Boxes.Achievements[i] === undefined)
+						{
+							Q.Boxes.Achievements[i] = {};
+						}
+						Q.Boxes.Achievements[i].oData = pAchievements[i];
+					}
+					generateBank(pCategories);
 				});
 			});
 		}).fail(function()
@@ -12959,6 +13018,7 @@ V = {
 							aClass: "itmTooltipMastery",
 							aWantIcon: true
 						}),
+						aCard: Q.analyzeAchievement(ithmastery, {aWantCard: true}),
 						aPayment: {mastery: ithmastery.point_cost}
 					});
 				}
@@ -12966,7 +13026,8 @@ V = {
 			B.tallyBank(container);
 			B.createBankDivider(container);
 			B.createBankMenu(bank, {
-				aIsPseudo: true
+				aIsPseudo: true,
+				aWantCard: true
 			});
 		};
 		
@@ -13350,7 +13411,7 @@ V = {
 			}
 		};
 		
-		var generateUnlockables = function()
+		var doGenerate = function()
 		{
 			// An item is "unlocked" if it is available on the gem store, which is a positive-number gem payment
 			var record = U.getRecordData(section);
@@ -13443,7 +13504,7 @@ V = {
 		{
 			Q.loadItemsSubdatabase(section.toLowerCase(), function()
 			{
-				generateUnlockables();
+				doGenerate();
 			});
 		});
 	},
@@ -13840,24 +13901,38 @@ B = {
 		var bankcapacity = 0;
 		B.getSlotsContainer(pContainer).each(function()
 		{
+			var tab = $(this).parent();
 			var itemsintab = 0;
 			var tabfill = 0;
 			var tabcapacity = 0;
-			var slots = $(this).find(".bnkSlot");
-			slots.each(function()
+			var prefill = tab.data("tabfill");
+			var precapacity = tab.data("tabcapacity");
+			
+			if (prefill !== undefined)
 			{
-				var count = $(this).data("count");
-				if (count)
+				itemsintab += prefill;
+				itemsinbank += prefill;
+				tabfill += prefill;
+				tabcapacity = precapacity;
+			}
+			else
+			{
+				var slots = $(this).find(".bnkSlot");
+				slots.each(function()
 				{
-					// Sum slot
-					itemsintab += count;
-					itemsinbank += count;
-					tabfill++;
-				}
-			});
+					var count = $(this).data("count");
+					if (count)
+					{
+						// Sum slot
+						itemsintab += count;
+						itemsinbank += count;
+						tabfill++;
+					}
+				});
+				tabcapacity = slots.length;
+			}
 			// Tally tab
-			tabcapacity = slots.length;
-			B.updateTabTally($(this).parent(), tabfill, tabcapacity, itemsintab);
+			B.updateTabTally(tab, tabfill, tabcapacity, itemsintab);
 			// Sum tab
 			bankfill += tabfill;
 			bankcapacity += tabcapacity;
@@ -13984,6 +14059,7 @@ B = {
 			for (var i in Settings.aPayment)
 			{
 				B.updateSlotPrice(slot, {
+					aIsTab: Settings.aIsTab,
 					aPrice: Settings.aPayment[i],
 					aPossible: Settings.aPossible,
 					aCount: count,
@@ -14199,7 +14275,7 @@ B = {
 		var container = pSlot.parents(".bnkContainer");
 		var top = container.find(".bnkTop");
 		var iscollection = container.data("iscollection");
-		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + elementsuffix);
+		var tabdisplayprice = ((Settings.aIsTab) ? pSlot : pSlot.parents(".bnkTab")).find(".bnkTabPrice_" + elementsuffix);
 		
 		var count = (Settings.aPossible !== undefined) ? 1 : (Settings.aCount || 1);
 		var prices = (typeof Settings.aPrice === "number") ?
@@ -14246,105 +14322,114 @@ B = {
 		};
 		
 		// Label the slot with the item's or stack's price
-		switch (Settings.aPaymentEnum)
+		if (Settings.aIsTab !== true)
 		{
-			case E.PaymentEnum.Coin: {
-				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinStringSlot(pricetorecord) + "</var>");
-				if (pSlot.data("istradeable"))
-				{
-					var priceone = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, 1) : E.recountPrice(Settings.aPrice, 1);
-					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinStringSlot(priceone.oPriceBuy) + "</var>");
-					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinStringSlot(priceone.oPriceSell) + "</var>");
+			switch (Settings.aPaymentEnum)
+			{
+				case E.PaymentEnum.Coin: {
+					pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinStringSlot(pricetorecord) + "</var>");
+					if (pSlot.data("istradeable"))
+					{
+						var priceone = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, 1) : E.recountPrice(Settings.aPrice, 1);
+						pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinStringSlot(priceone.oPriceBuy) + "</var>");
+						pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinStringSlot(priceone.oPriceSell) + "</var>");
+					}
+				}; break;
+				case E.PaymentEnum.Gem: {
+					pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
+					if (Settings.aCount > 1)
+					{
+						pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(Settings.aPrice, true) + "</var>");
+					}
+					if (Settings.aWantGemConvert)
+					{
+						pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatGemToCoin(pricetorecord) + "</var>");
+					}
+				}; break;
+				default: {
+					var possiblestr = E.PaymentFormat[Settings.aPaymentEnum](pricetorecord);
+					if (Settings.aPossible === 0)
+					{
+						possiblestr = "";
+					}
+					else if (Settings.aPossible > 0 && pricetorecord !== Settings.aPossible)
+					{
+						possiblestr = pricetorecord + " / " + E.PaymentFormat[Settings.aPaymentEnum](Settings.aPossible);
+					}
+					pSlot.append("<var class='bnkSlotPrice'>" + possiblestr + "</var>");
 				}
-			}; break;
-			case E.PaymentEnum.Gem: {
-				pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
-				if (Settings.aCount > 1)
-				{
-					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(Settings.aPrice, true) + "</var>");
-				}
-				if (Settings.aWantGemConvert)
-				{
-					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatGemToCoin(pricetorecord) + "</var>");
-				}
-			}; break;
-			default: {
-				var possiblestr = E.PaymentFormat[Settings.aPaymentEnum](pricetorecord);
-				if (Settings.aPossible === 0)
-				{
-					possiblestr = "";
-				}
-				else if (Settings.aPossible > 0 && pricetorecord !== Settings.aPossible)
-				{
-					possiblestr = pricetorecord + " / " + E.PaymentFormat[Settings.aPaymentEnum](Settings.aPossible);
-				}
-				pSlot.append("<var class='bnkSlotPrice'>" + possiblestr + "</var>");
+			}
+			
+			// Remember coin value for price search
+			if (Settings.aPaymentEnum === E.PaymentEnum.Coin)
+			{
+				pSlot.data("price", pricetorecord);
+				pSlot.data("pricebuy", prices.oPriceBuy);
+				pSlot.data("pricesell", prices.oPriceSell);
+			}
+			else if (Settings.aPaymentEnum === E.PaymentEnum.Gem)
+			{
+				var gemadjusted = pricetorecord * E.Exchange.COPPER_IN_SILVER; // Integers are in silver, so gem was considered copper
+				pSlot.data("price", gemadjusted);
+				pSlot.data("pricebuy", gemadjusted);
+				pSlot.data("pricesell", gemadjusted);
 			}
 		}
 
-		// Only add if item actually exists (not a zero stack slot)
-		var priceleft, priceright;
-		if (iscollection)
+		if (Settings.aIsTab !== false)
 		{
-			priceleft = prices.oPriceBuy;
-			priceright = prices.oPriceSell;
-			// Update the display
-			if (Settings.aPossible !== undefined)
-			{
-				priceleft = pricetorecord;
-				priceright = Settings.aPossible - pricetorecord;
-				updatePriceDisplay(tabdisplayprice, priceleft, priceright, true);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceleft);
-				updatePriceDisplay(top.find(".bnkPriceValueB_" + elementsuffix), priceright, priceright);
-			}
-			else if (Settings.aCount !== 0)
-			{
-				updatePriceDisplay(tabdisplayprice, prices.oPriceSell, 0, true);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceright);
-			}
-			else
-			{
-				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceSell, true);
-				updatePriceDisplay(top.find(".bnkPriceValueB_" + elementsuffix), priceleft, priceright);
-			}
-		}
-		else
-		{
-			if (Settings.aTransactionBuy)
+			pSlot.data("tabfill", (pSlot.data("tabfill") || 0) + Settings.aCount);
+			pSlot.data("tabcapacity", (pSlot.data("tabcapacity") || 0) + 1);
+			// Only add if item actually exists (not a zero stack slot)
+			var priceleft, priceright;
+			if (iscollection)
 			{
 				priceleft = prices.oPriceBuy;
-				priceright = prices.oPriceBuy;
-			}
-			else if (Settings.aTransactionSell)
-			{
-				priceleft = prices.oPriceSell;
-				priceright = prices.oPriceSellTaxed;
+				priceright = prices.oPriceSell;
+				// Update the display
+				if (Settings.aPossible !== undefined)
+				{
+					priceleft = pricetorecord;
+					priceright = Settings.aPossible - pricetorecord;
+					updatePriceDisplay(tabdisplayprice, priceleft, priceright, true);
+					updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceleft);
+					updatePriceDisplay(top.find(".bnkPriceValueB_" + elementsuffix), priceright, priceright);
+				}
+				else if (Settings.aCount !== 0)
+				{
+					updatePriceDisplay(tabdisplayprice, prices.oPriceSell, 0, true);
+					updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceright);
+				}
+				else
+				{
+					updatePriceDisplay(tabdisplayprice, 0, prices.oPriceSell, true);
+					updatePriceDisplay(top.find(".bnkPriceValueB_" + elementsuffix), priceleft, priceright);
+				}
 			}
 			else
 			{
-				priceleft = prices.oPriceBuyTaxed;
-				priceright = prices.oPriceSellTaxed;
+				if (Settings.aTransactionBuy)
+				{
+					priceleft = prices.oPriceBuy;
+					priceright = prices.oPriceBuy;
+				}
+				else if (Settings.aTransactionSell)
+				{
+					priceleft = prices.oPriceSell;
+					priceright = prices.oPriceSellTaxed;
+				}
+				else
+				{
+					priceleft = prices.oPriceBuyTaxed;
+					priceright = prices.oPriceSellTaxed;
+				}
+				// Update the display
+				if (Settings.aCount !== 0)
+				{
+					updatePriceDisplay(tabdisplayprice, priceleft, priceright);
+					updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceright);
+				}
 			}
-			// Update the display
-			if (Settings.aCount !== 0)
-			{
-				updatePriceDisplay(tabdisplayprice, priceleft, priceright);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + elementsuffix), priceleft, priceright);
-			}
-		}
-		// Remember coin value for price search
-		if (Settings.aPaymentEnum === E.PaymentEnum.Coin)
-		{
-			pSlot.data("price", pricetorecord);
-			pSlot.data("pricebuy", prices.oPriceBuy);
-			pSlot.data("pricesell", prices.oPriceSell);
-		}
-		else if (Settings.aPaymentEnum === E.PaymentEnum.Gem)
-		{
-			var gemadjusted = pricetorecord * E.Exchange.COPPER_IN_SILVER; // Integers are in silver, so gem was considered copper
-			pSlot.data("price", gemadjusted);
-			pSlot.data("pricebuy", gemadjusted);
-			pSlot.data("pricesell", gemadjusted);
 		}
 	},
 	
@@ -14730,6 +14815,7 @@ B = {
 				isbankcard = !isbankcard;
 				pBank.toggleClass("bnkCarded", isbankcard);
 				$(this).toggleClass("bnkButtonFocused");
+				A.adjustAccountScrollbar();
 			}).trigger("click");
 		}
 		
@@ -16265,8 +16351,7 @@ Q = {
 		}
 		else
 		{
-			var filepath = "cache/" + pName + "_" + D.langPartiallySupported + I.cJSON;
-			$.getJSON(filepath, function(pData)
+			$.getJSON(U.getCacheURL(pName), function(pData)
 			{
 				Q.RetrievedDatabases[pName] = true;
 				for (var i in pData)
@@ -17973,7 +18058,7 @@ Q = {
 		}
 		if (Settings.aWantCard)
 		{
-			return namestr + reqstr;
+			return namestr + ((ach.instruction) ? instructstr : reqstr);
 		}
 		
 		if (pAchievement.tiers)
@@ -28785,7 +28870,10 @@ G = {
 			for (i in P.Resources)
 			{
 				resource = P.Resources[i];
-				P.Resources[i].price = 0; // Also initialize price property
+				if (P.Resources[i].price === undefined)
+				{
+					P.Resources[i].price = 0; // Also initialize price property
+				}
 				var name = i.toLowerCase();
 				var resourcegrade = resource[grade];
 
@@ -29051,6 +29139,7 @@ G = {
 				refreshResourcePrices();
 				I.write("Prices refreshed.");
 			});
+			refreshResourcePrices();
 			
 			// Map bookmarks
 			G.createDailyBookmarks("#nodBookmarks");
@@ -29067,12 +29156,6 @@ G = {
 			{
 				$("#nodShowHotspot").trigger("click");
 			});
-			
-			// Initialize prices
-			setTimeout(function()
-			{
-				refreshResourcePrices();
-			}, 1000);
 		});
 	},
 	drawResourceRoute: function()
@@ -39756,12 +39839,15 @@ I = {
 		if (I.isProgramEmbedded || I.ModeCurrent === I.ModeEnum.Mobile || I.ModeCurrent === I.ModeEnum.Tile)
 		{
 			I.setInitialPlate(I.PlateEnum.Chains);
-			K.styleClock();
 			if (I.isMapEnabled === false)
 			{
 				// Move the alarm options from the map popup to the app panel
 				$("#mapAlarmPopup").appendTo("#chnAlarm").removeClass("hudPopup").addClass("cntPopup");
 				I.loadImg($("#chnAlarm"));
+			}
+			if (I.ModeCurrent !== I.ModeEnum.Tile)
+			{
+				K.styleClock();
 			}
 		}
 		else
