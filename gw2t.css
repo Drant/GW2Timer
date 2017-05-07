@@ -1191,7 +1191,8 @@ html, body,
 	animation: aniDisplayFadeIn 0.2s;
 }
 
-.cntComposition input[type="text"], .cntComposition textarea, input[type="text"].cntSearch, input[type="number"], .cssText {
+.cntComposition input[type="text"], .cntComposition textarea, input[type="number"], .cssInputText {
+	width: 90px;
 	margin: 0;
 	padding: 2px;
 	overflow: hidden;
@@ -1202,7 +1203,7 @@ html, body,
 	transition: border 0.2s;
 }
 
-.cntComposition input[type="text"]:hover, .cntComposition textarea:hover, input[type="number"]:hover, .cssText:hover {
+.cntComposition input[type="text"]:hover, .cntComposition textarea:hover, input[type="number"]:hover, .cssInputText:hover {
 	border: 1px solid rgba(255, 238, 187, 0.6);
 }
 input[type="text"].cssInputActive {
@@ -1211,6 +1212,15 @@ input[type="text"].cssInputActive {
 }
 input[type="text"].cssInputFocused {
 	border: 1px solid red;
+}
+input[type="text"].cssInputTextLine {
+	border-top: 1px solid transparent;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+}
+input[type="text"]:focus, textarea:focus, button:focus {
+    border: 1px solid rgba(255, 238, 187, 0.8);
+	outline: none;
 }
 
 .cssInputSelect {
@@ -1276,10 +1286,6 @@ button:active, .cssButton:active, button.btnActive {
 }
 button img {
 	width: 24px; height: 24px;
-}
-input[type="text"]:focus, textarea:focus, button:focus {
-    border: 1px solid rgba(255, 238, 187, 0.8);
-	outline: none;
 }
 
 .cssCheckbox {
@@ -1514,8 +1520,9 @@ textarea.jsCopyCode {
 	font-size: 17px;
 	color: white;
 	opacity: 0.6;
-	background: rgba(255, 255, 255, 0.2);
-	border-radius: 4px;
+	background: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+	border-top-left-radius: 16px;
+	border-bottom-left-radius: 16px;
 }
 #itemTimeline .btnWindow {
 	top: -32px;
@@ -1966,21 +1973,21 @@ textarea.jsCopyCode {
 	position: absolute; z-index: 9;
 	bottom: 12px; left: 12px;
 }
-.mapCoordinatesBar input[type="text"], .cssInputText {
+.mapCoordinatesBar input[type="text"] {
 	display: inline-block;
 	width: 90px;
 	height: 16px;
 	padding: 3px 6px 3px 6px;
 	margin-left: 12px;
-	border: none;
-	border-bottom: 1px solid gray;
-	background: black;
+	border-top: 1px solid transparent;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
 	color: #ddff77;
-	opacity: 0.6;
-}
-.cssInputText {
-	margin: 0;
-	padding: 2px;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 }
 .mapContextSlot {
 	width: 180px;

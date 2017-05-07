@@ -794,6 +794,21 @@ JP: {
 		zone: "malchor",
 		description: "Malchor's cave wall climb with mini treasure chests"
 	},
+	"searing": {
+		id: 79,
+		difficulty: 3,
+		name_en: "Searing Ascent",
+		name_de: "Sengender Aufstieg",
+		name_es: "Ascenso abrasador",
+		name_fr: "Ascension brûlante",
+		name_zh: "灼热之坡",
+		coord: [3786, 25277],
+		path: [[4531,25318],[4505,25271],[4136,25286],[4058,25279],[3765,25162],[3786,25277]],
+		img: "http://i.imgur.com/KjWQzni.png",
+		chest: null,
+		zone: "draconis",
+		description: "Draconis volcano climb with limited grappling."
+	},
 	"volcano": {
 		id: 77,
 		difficulty: 3,

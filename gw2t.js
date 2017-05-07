@@ -2619,7 +2619,10 @@ X = {
 		X.initializeDungeonChecklist();
 		X.initializeCustomChecklist();
 		X.initializeRaidChecklist();
-		X.rewrapCheckboxes();
+		setTimeout(function()
+		{
+			X.rewrapCheckboxes();
+		}, 1000);
 	},
 	
 	/*
@@ -2752,7 +2755,7 @@ X = {
 	initializeCustomChecklist: function()
 	{
 		// Generate initial set of checkboxes and textboxes
-		var checkitemhtml = "<li><label><input type='checkbox' />" + I.Symbol.Filler + "</label><input class='chlCustomListText' type='text' /></li>";
+		var checkitemhtml = "<li><label><input type='checkbox' />" + I.Symbol.Filler + "</label><input class='cssInputTextLine' type='text' /></li>";
 		var dailylist = $("#chlCustomListDaily");
 		var weeklylist = $("#chlCustomListWeekly");
 		for (var i = 0; i < O.Options.int_numChecklistDaily; i++)
@@ -4300,6 +4303,11 @@ U = {
 		}
 		return "#" + str;
 	},
+	getRGBToHex: function(pString)
+	{
+		var numbers = pString.split(",");
+		return U.convertRGBToHex([U.stripToNumbers(numbers[0]), U.stripToNumbers(numbers[1]), U.stripToNumbers(numbers[2])]);
+	},
 	convertHexToRGB: function(pHex)
 	{
 		// Source: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
@@ -4309,6 +4317,11 @@ U = {
 		var g = (bigint >> 8) & 255;
 		var b = bigint & 255;
 		return [r, g, b];
+	},
+	getHexToRGB: function(pString)
+	{
+		var rgba = U.convertHexToRGB(pString);
+		return "rgba(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2] + ", 1)";
 	},
 	
 	/*
@@ -5478,6 +5491,14 @@ Z = {
 					I.printFile(U.toCase(argstr, U.CaseEnum.Upper));
 				}
 			}},
+			rgba: {usage: "Converts a hex color to RGBA format. <em>Parameters: str_hex</em>", f: function()
+			{
+				I.print(U.getHexToRGB(argstr));
+			}},
+			hex: {usage: "Converts an RGBA color to hex format. <em>Parameters: str_rgba</em>", f: function()
+			{
+				I.print(U.getRGBToHex(argstr));
+			}},
 			help: {usage: "Prints this help message.", f: function()
 			{
 				I.write("Available console commands:<br />");
@@ -6520,10 +6541,7 @@ Z = {
 						+ U.convertExternalAnchor(U.getWikiLinkDefault(name)) + "'>" + name + "</a>&quot;,<br />";
 				}
 			}
-			entryelm.find(".cssInputText").click(function()
-			{
-				$(this).select();
-			});
+			I.bindInputSelect(entryelm.find(".cssInputText"));
 		}
 		I.print(blackliststr);
 		I.print(entrystrs.join("<br />"));
@@ -12822,6 +12840,7 @@ V = {
 		
 		var section = "Achievements";
 		var unlocks = {};
+		var searchdb = [];
 		var generateBank = function(pData)
 		{
 			I.removeThrobber(dish);
@@ -12832,17 +12851,13 @@ V = {
 			var tab, slot;
 			var categorizedach = {};
 			var categories = {}, cat, achid, box, ithach, ithunlock, processedach;
-			pData.forEach(function(iCategory)
-			{
-				categories[iCategory.id] = iCategory;
-			});
 			
 			var createTab = function(pCategory)
 			{
 				tab = B.createBankTab(bank, {
 					aTitle: pCategory.name,
 					aIcon: "<img class='bnkTabIcon' src='" + pCategory.icon + "' />"
-				});
+				}).attr("id", "achTab_" + pCategory.id);
 				
 				// Compute all achievements for showing on the bank and tab tallies
 				for (var ii = 0; ii < pCategory.achievements.length; ii++)
@@ -12863,10 +12878,19 @@ V = {
 							aPossible: processedach.oAPPointPossible,
 							aPaymentEnum: "achievement"
 						});
+						// Create search database
+						if (ithach.icon === undefined)
+						{
+							ithach.icon = pCategory.icon;
+						}
+						ithach.oCategoryName = pCategory.name;
+						ithach.oCategoryID = pCategory.id;
+						var searchkeywords = ithach.name.toLowerCase() + " " + pCategory.name.toLowerCase();
+						searchdb.push([ithach, searchkeywords]);
 					}
 				}
 				
-				// Only generate the slots when a tab is expanded
+				// Generate the slots on demand when a tab is expanded
 				(function(iTab)
 				{
 					iTab.find(".bnkTabSeparator").one("click", function()
@@ -12894,6 +12918,18 @@ V = {
 									aTooltip: Q.analyzeAchievement(ithach, {aAchievement: processedach}),
 									aKeywords: pCategory.name + " " + ithach.name + " " + ithach.requirement
 								});
+								
+								// Right click achievement slot prints raw data
+								(function(iAchievement, iUnlock, iProcessed)
+								{
+									slot.contextmenu(function(pEvent)
+									{
+										pEvent.preventDefault();
+										I.prettyJSON(iAchievement);
+										I.prettyJSON(iUnlock);
+										I.prettyJSON(iProcessed);
+									});
+								})(ithach, ithunlock, processedach);
 							}
 						}
 					});
@@ -12901,6 +12937,10 @@ V = {
 			};
 			
 			// Create the achievement category tabs in the same order as the game, not the API
+			pData.forEach(function(iCategory)
+			{
+				categories[iCategory.id] = iCategory;
+			});
 			A.Metadata.AchievementCategories.forEach(function(iCategoryID)
 			{
 				if (typeof iCategoryID === "object")
@@ -12939,12 +12979,28 @@ V = {
 				createTab(categories[i]);
 			}
 			
+			// Finish up UI
 			B.tallyBank(container);
 			B.createBankDivider(container);
 			B.createBankMenu(bank, {
 				aIsPseudo: true,
 				aWantCard: true,
 				aIsCollapsed: true
+			});
+			
+			// Piggyback on the bank search bar with custom search for achievements.
+			Q.bindItemSearch(B.getBankSearch(section), {
+				aDatabase: searchdb,
+				aFillerText: null,
+				aAchievements: unlocks,
+				aCallback: function(pAch)
+				{
+					I.prettyJSON(pAch);
+					I.scrollToElement("#achTab_" + pAch.oCategoryID, {
+						aOffset: -$("#accOverhead").height(),
+						aSpeed: "fast"
+					});
+				}
 			});
 		};
 		
@@ -12963,14 +13019,7 @@ V = {
 				// Get all possible achievements
 				U.getJSON(U.getCacheURL(section), function(pAchievements)
 				{
-					for (var i in pAchievements)
-					{
-						if (Q.Boxes.Achievements[i] === undefined)
-						{
-							Q.Boxes.Achievements[i] = {};
-						}
-						Q.Boxes.Achievements[i].oData = pAchievements[i];
-					}
+					Q.initializeBoxes(section, pAchievements);
 					generateBank(pCategories);
 				});
 			});
@@ -13298,10 +13347,7 @@ V = {
 		{
 			V.generateExchange();
 			V.generateRecent();
-			var inputs = dish.find("input").click(function()
-			{
-				$(this).select();
-			});
+			var inputs = I.bindInputSelect(dish.find("input"));
 			I.qTip.init(inputs);
 			dish.data("isloaded", true);
 			X.rewrapCheckboxes();
@@ -14488,6 +14534,27 @@ B = {
 		var tabslots = B.getSlotsContainer(pBank);
 		var tabtoggles = pBank.find(".bnkTabToggle");
 		
+		// Toggles a bank slot and card if available, to be used in iteration
+		var toggleSlot = function(pSlot, pBoolean)
+		{
+			pSlot.toggle(pBoolean);
+			if (Settings.aWantCard)
+			{
+				pSlot.each(function()
+				{
+					var card = $(this).next();
+					if (card.length && card.hasClass("bnkCard"))
+					{
+						card.toggle(pBoolean);
+						if (pBoolean)
+						{
+							card.css({display: ""}); // Showing the card adds a display CSS rule to the element
+						}
+					}
+				});
+			}
+		};
+		
 		/*
 		 * Search bar.
 		 */
@@ -14519,12 +14586,12 @@ B = {
 						var priceslot = $(this).data(pricetype);
 						if (priceslot && ((equality0 === ">" && priceslot >= pricewant) || (equality0 === "<" && priceslot <= pricewant)))
 						{
-							$(this).show();
+							toggleSlot($(this), true);
 							ismatchslots = true;
 						}
 						else
 						{
-							$(this).hide();
+							toggleSlot($(this), false);
 						}
 					});
 				}
@@ -14565,7 +14632,7 @@ B = {
 									// If at least one substring of the search query isn't found, then hide that item
 									if (keywords.indexOf(queries[i]) === -1)
 									{
-										$(this).hide();
+										toggleSlot($(this), false);
 										ismatchkeywords = false;
 										break;
 									}
@@ -14573,7 +14640,7 @@ B = {
 								// The boolean is only true if every substrings were found
 								if (ismatchkeywords)
 								{
-									$(this).show();
+									toggleSlot($(this), true);
 									ismatchslots = true;
 								}
 							}
@@ -14591,7 +14658,7 @@ B = {
 				slots.each(function()
 				{
 					$(this).removeClass("bnkSlotMatch");
-					$(this).show();
+					toggleSlot($(this), true);
 				});
 			}
 			A.adjustAccountScrollbar();
@@ -14648,11 +14715,11 @@ B = {
 					// The style slot function should have initialized the count data for slots without an item
 					if ($(this).data("count") > 0)
 					{
-						$(this).toggle(wantshow);
+						toggleSlot($(this), wantshow);
 					}
 					else
 					{
-						$(this).toggle( ! wantshow);
+						toggleSlot($(this), !wantshow);
 					}
 				});
 				$(this).addClass("bnkButtonFocused");
@@ -14664,18 +14731,18 @@ B = {
 				{
 					if ($(this).data("count") >= Q.ItemLimit.StackSize || $(this).data("ismarked"))
 					{
-						$(this).show();
+						toggleSlot($(this), true);
 					}
 					else
 					{
-						$(this).hide();
+						toggleSlot($(this), false);
 					}
 				});
 				emptyfilterstate++;
 			}
 			else
 			{
-				slots.show();
+				toggleSlot(slots, true);
 				$(this).removeClass("bnkButtonFocused");
 				emptyfilterstate = 0;
 			}
@@ -14696,15 +14763,15 @@ B = {
 					{
 						if ($(this).data("istradeable"))
 						{
-							$(this).toggle(tradefilterstate === 0);
+							toggleSlot($(this), tradefilterstate === 0);
 						}
 						else
 						{
-							$(this).toggle(tradefilterstate === 1);
+							toggleSlot($(this), tradefilterstate === 1);
 						}
 						if ($(this).data("count") === undefined)
 						{
-							$(this).hide();
+							toggleSlot($(this), false);
 						}
 					});
 					$(this).addClass("bnkButtonFocused");
@@ -14713,7 +14780,7 @@ B = {
 				}
 				else
 				{
-					slots.show();
+					toggleSlot(slots, true);
 					$(this).removeClass("bnkButtonFocused");
 					pBank.removeClass("bnkTradeable");
 					tradefilterstate = 0;
@@ -14884,6 +14951,10 @@ B = {
 		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
 		I.qTip.init(buttoncontainer.find(".bnkButton"));
 		A.adjustAccountPanel();
+	},
+	getBankSearch: function(pSection)
+	{
+		return $("#accDishMenu_" + U.toFirstUpperCase(pSection)).find(".bnkSearch .bnkSearchInput").first();
 	},
 	
 	/*
@@ -15481,8 +15552,7 @@ B = {
 			 * Piggyback on the bank search bar (created by the generate unlockables
 			 * function) and make it print the characters who have an item.
 			 */
-			var searchbar = $("#accDishMenu_" + sectionnameupper).find(".bnkSearch .bnkSearchInput").first();
-			Q.bindItemSearch(searchbar, {
+			Q.bindItemSearch(B.getBankSearch(pSection), {
 				aFillerText: null,
 				aCallback: function(pItem)
 				{
@@ -16356,14 +16426,7 @@ Q = {
 			$.getJSON(U.getCacheURL(pName), function(pData)
 			{
 				Q.RetrievedDatabases[pName] = true;
-				for (var i in pData)
-				{
-					if (Q.Boxes.Items[i] === undefined)
-					{
-						Q.Boxes.Items[i] = {};
-					}
-					Q.Boxes.Items[i].oData = pData[i];
-				}
+				Q.initializeBoxes("items", pData);
 			}).always(function()
 			{
 				// Execute callback regardless of success, in case of failed retrieval
@@ -17826,6 +17889,23 @@ Q = {
 	},
 	
 	/*
+	 * Puts all data entries of an API database into boxes.
+	 * @param string pType
+	 */
+	initializeBoxes: function(pType, pDatabase)
+	{
+		var type = U.toFirstUpperCase(pType);
+		for (var i in pDatabase)
+		{
+			if ((Q.Boxes[type])[i] === undefined)
+			{
+				(Q.Boxes[type])[i] = {};
+			}
+			(Q.Boxes[type])[i].oData = pDatabase[i];
+		}
+	},
+	
+	/*
 	 * Macro function to retrieve and cache API data with IDs.
 	 * @param string pType name of the API endpoint.
 	 * @param intarray or int pIDs, or "true" if want fetch of entire API of that type
@@ -18041,6 +18121,7 @@ Q = {
 		var countstr = "";
 		var tierstr = "";
 		var pointsstr = "";
+		var searchpointsstr = "";
 		
 		if (Settings.aWantIcon && ach.icon)
 		{
@@ -18060,7 +18141,7 @@ Q = {
 		}
 		if (Settings.aWantCard)
 		{
-			return namestr + ((ach.instruction) ? instructstr : reqstr);
+			return namestr + ((ach.instruction) ? instructstr : ((reqstr.length) ? reqstr : descstr));
 		}
 		
 		if (pAchievement.tiers)
@@ -18072,8 +18153,10 @@ Q = {
 				+ " (" + U.convertRatioToPercent(processedach.oAPCountCurrent / processedach.oAPCountPossible) + ")</aside>";
 			tierstr = "<aside class='achTier'>" + tierword + " " + processedach.oAPTierCurrent + " "
 				+ D.getWord("of") + " " + processedach.oAPTierPossible + " " + tierword + "</aside>";
-			pointsstr = "<aside class='achPoints'>" + ((processedach.oAPPointPossible > 0) ? (processedach.oAPPointCurrent
-				+ " / " + processedach.oAPPointPossible) : "0") + " <img src='img/ui/ap.png' /></aside";
+			pointsstr = "<aside class='achPoints'>" + ((processedach.oAPPointPossible > 0)
+				? (processedach.oAPPointCurrent + " / " + processedach.oAPPointPossible) : "0") + " <img src='img/ui/ap.png' /></aside";
+			searchpointsstr = "<var class='achSearchPoints'>" + ((processedach.oAPPointPossible > 0)
+				? (processedach.oAPPointCurrent + " / " + E.PaymentFormat.achievement(processedach.oAPPointPossible)) : E.PaymentFormat.achievement(0)) + "</var>";
 		}
 		
 		var html = "<div class='itmTooltip " + (Settings.aClass || "") + "'>"
@@ -18099,6 +18182,7 @@ Q = {
 		}
 		var box = Q.getBoxedAchievement(ach.id) || {};
 		box.oHTML = html;
+		box.oSearchPoints = searchpointsstr; // For displaying in the achievements search results
 		if (Settings.aCallback)
 		{
 			Settings.aCallback(box);
@@ -18117,22 +18201,21 @@ Q = {
 	 */
 	processAchievement: function(pAchievement, pAccountAch)
 	{
+		var tiers = pAchievement.tiers;
 		var currentpoints = 0;
 		var possiblepoints = 0;
-		var currentcount = 0;
-		var possiblecount = 0;
+		var currentcount = (pAccountAch && pAccountAch.current !== undefined) ? pAccountAch.current : 0;
+		var possiblecount = tiers[tiers.length - 1].count;
 		var currenttier = 0;
-		var possibletiers = pAchievement.tiers.length;
-		pAchievement.tiers.forEach(function(iTier)
+		var possibletiers = tiers.length;
+		tiers.forEach(function(iTier)
 		{
 			if (pAccountAch && pAccountAch.current >= iTier.count)
 			{
 				currenttier++;
 				currentpoints += iTier.points;
-				currentcount += iTier.count;
 			}
 			possiblepoints += iTier.points;
-			possiblecount += iTier.count;
 		});
 		
 		return {
@@ -18146,7 +18229,7 @@ Q = {
 	},
 	
 	/*
-	 * Gives tooltip to elemenets with data-ach attribute.
+	 * Gives tooltip to elements with data-ach attribute.
 	 * @param jqobject or string pSelector
 	 */
 	bindAchievement: function(pSelector)
@@ -18513,6 +18596,7 @@ Q = {
 	 * @objparam boolean aIsSelect whether to emulate the <select> functionality, optional.
 	 * @objparam boolean aWantEnter whether to bind the default Enter key event, optional.
 	 * @objparam objarray aDatabase custom search database to use instead of items search, optional.
+	 * @objparam object aAchievements account's achievement unlocks, optional.
 	 * @objparam function aCallback to execute after the user selects an item.
 	 * @pre Input bar has a parent container element in order to position the results list.
 	 * A search database is an array containing subarrays: [resultObject, searchNameString]
@@ -18527,6 +18611,7 @@ Q = {
 		var Settings = pSettings || {};
 		var elm = $(pElement).wrap("<span class='itmSearchContainer'></span>");
 		var queryminchar = D.isLanguageLogographic ? 1 : 2;
+		var queryminitemidlength = 4;
 		var resultslimit = Settings.aResultsLimit || O.Options.int_numTradingResults;
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").insertAfter(elm).hide();
 		var resultsscroll = $("<div class='itmSearchResultScroll cntPopup jsScrollable'></div>").appendTo(resultscontainer);
@@ -18574,6 +18659,20 @@ Q = {
 		});
 		I.qTip.init(searchclose);
 		
+		// Standard behavior when clicked on a search result
+		var bindResultClick = function(pResultsList, pResultEntry, pDataEntry)
+		{
+			pResultEntry.click(function()
+			{
+				if (Settings.aCallback)
+				{
+					Settings.aCallback(pDataEntry);
+					toggleResults(false);
+				}
+				pResultsList.removeData("selectedresult");
+			});
+		};
+		
 		// Fills the results list with downloaded API data for each result item
 		var renderSearch = function(pResults, pQuery)
 		{
@@ -18613,18 +18712,8 @@ Q = {
 								var resultentry = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(item.rarity) + "' data-id='" + itemid + "'>"
 									+ "<img src='" + item.icon + "'>"
 									+ U.highlightSubstring(item.name, pQuery) + "</dfn>").appendTo(resultslist.find(".itmSearchResultLine_" + itemid));
-								(function(iItem)
-								{
-									resultentry.click(function()
-									{
-										if (Settings.aCallback)
-										{
-											Settings.aCallback(iItem);
-											toggleResults(false);
-										}
-										resultslist.removeData("selectedresult");
-									});
-								})(item)
+								bindResultClick(resultslist, resultentry, item);
+								
 								I.updateScrollbar(resultsscroll);
 								// Tooltip for the listed item
 								Q.scanItem(item, {aElement: resultentry});
@@ -18646,19 +18735,27 @@ Q = {
 			{
 				for (var i = 0; i < pResults.length; i++)
 				{
-					(function(iResult)
+					var resultentry = $("<span class='itmSearchResultLine'><dfn class='itmSearchResultEntry'>"
+						+ "<img src='" + pResults[i].icon + "'>"
+						+ U.highlightSubstring(pResults[i].name, pQuery) + "</dfn></span>").appendTo(resultslist);
+					bindResultClick(resultslist, resultentry, pResults[i]);
+					
+					// Custom features for custom database
+					if (Settings.aAchievements)
 					{
-						var resultentry = $("<span class='itmSearchResultLine'><dfn class='itmSearchResultEntry'>"
-							+ "<img src='" + iResult.icon + "'>"
-							+ U.highlightSubstring(iResult.name, pQuery) + "</dfn></span>").appendTo(resultslist);
-						resultentry.click(function()
+						(function(iResult, iEntry)
 						{
-							if (Settings.aCallback)
-							{
-								Settings.aCallback(iResult);
-							}
-						});
-					})(pResults[i]);
+							var achid = iResult.id;
+							Q.analyzeAchievement(iResult, {
+								aAchievement: Q.processAchievement(iResult, Settings.aAchievements[achid]),
+								aElement: iEntry,
+								aCallback: function(pBox)
+								{
+									iEntry.append(pBox.oSearchPoints);
+								}
+							});
+						})(pResults[i], resultentry.find(".itmSearchResultEntry").first());
+					}
 				}
 				I.updateScrollbar(resultsscroll);
 			}
@@ -18705,7 +18802,7 @@ Q = {
 				return;
 			}
 			// If query is an integer, assume it is an item ID
-			if (U.isInteger(query))
+			if (U.isInteger(query) && Settings.aDatabase === undefined && query.length >= queryminitemidlength)
 			{
 				renderSearch([parseInt(query)], query);
 				return;
@@ -20083,10 +20180,7 @@ E = {
 			quantity = $(entry + " .trdQuantity");
 			
 			// Bind click to select all text behavior
-			$(entry + " input").click(function()
-			{
-				$(this).select();
-			});
+			I.bindInputSelect(entry + " input");
 			
 			// Bind search button behavior for ith calculator
 			$(entry + " .trdListings").click(function()
@@ -20677,10 +20771,7 @@ E = {
 		I.qTip.init($("#trdExchange input"));
 		
 		// Bind behavior
-		$("#trdExchange input").click(function()
-		{
-			$(this).select();
-		});
+		I.bindInputSelect("#trdExchange input");
 		
 		cointo.on("input", $.throttle(E.cEXCHANGE_LIMIT, function()
 		{
@@ -25000,6 +25091,7 @@ M = {
 			+ "<h2>Compass Pins Features</h2>"
 			+ "<ul>"
 			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
+			+ "<li><b>Draw a path connecting all compasses of a type: middle click that pin.</li>"
 			+ "<li><b>Export pins for sharing:</b> use the compass export function and copy and output text.</li>"
 			+ "<li><b>Import pins from text:</b> use the compass import function, then paste the compass data text into the adjacent input box.</li>"
 			+ "<li><b>Save/Load pins:</b> the save slots can be named, which can be filtered by the search bar.</li>"
@@ -25672,6 +25764,26 @@ M = {
 	},
 	
 	/*
+	 * Draws a path between a specific type of compass pins.
+	 * @param object pCompass to get its type.
+	 */
+	pathCompasses: function(pCompass)
+	{
+		var that = this;
+		var type = pCompass.options.compassid;
+		var coords = [];
+		that.Layer.CompassCircle.eachLayer(function(iLayer)
+		{
+			var opt = iLayer.options;
+			if (opt.compassid === type)
+			{
+				coords.push(that.convertLCtoGC(iLayer.getLatLng()));
+			}
+		});
+		that.redrawPersonalPath(coords);
+	},
+	
+	/*
 	 * Reconstructs a placement of compasses on the map.
 	 * @param array pCompany of compasses and their location.
 	 * @param array pOffset x and y coordinates offset, optional.
@@ -25848,6 +25960,13 @@ M = {
 					that.movePin(this, that.Map.getCenter());
 				}
 				this.options.circle.setLatLng(this.getLatLng());
+			}
+		});
+		compass.on("mousedown", function(pEvent)
+		{
+			if (pEvent.originalEvent.which === I.ClickEnum.Middle)
+			{
+				that.pathCompasses(this.options.circle);
 			}
 		});
 		this.Layer.CompassIcon.addLayer(compass);
@@ -26642,6 +26761,7 @@ P = {
 	Layer: {
 		ZoneBorder: new L.layerGroup(), // Rectangles colored specific to the zones' region
 		ZoneGateway: new L.layerGroup(), // Interzone and intergate connections
+		ZonePowerup: new L.layerGroup(), // Pick up mobility skills
 		ZoneLaunchpad: new L.layerGroup(), // One direction transports
 		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
 		Chest: new L.layerGroup()
@@ -27679,10 +27799,7 @@ P = {
 			
 			// Output the input boxes containing the chatlinks
 			I.print(html, true);
-			$("#jsWaypointLinks .cssInputText").click(function()
-			{
-				$(this).select();
-			});
+			I.bindInputSelect("#jsWaypointLinks .cssInputText");
 			I.bindConsoleInput();
 		}
 		else
@@ -27984,9 +28101,29 @@ P = {
 				}
 			};
 			
+			var drawPowerups = function(pPowerups, pName)
+			{
+				for (var i in pPowerups)
+				{
+					marker = L.marker(M.convertGCtoLC(pPowerups[i].c), {
+						icon: L.icon(
+						{
+							iconUrl: "img/map/" + pName + I.cPNG,
+							iconSize: [32, 32], // Initial size corresponding to default zoom level
+							iconAnchor: [16, 16]
+						})
+					});
+					M.bindMarkerZoomBehavior(marker, "click");
+					M.bindMarkerZoomBehavior(marker, "contextmenu");
+					P.Layer.ZonePowerup.addLayer(marker);
+					P.Layer.ZoneGateway.addLayer(marker);
+				}
+			};
+			
 			drawGates(connection.interborders, "interborders");
 			drawGates(connection.interzones, "interzones", "purple");
 			drawGates(connection.intrazones, "intrazones", "white");
+			drawPowerups(connection.powerups, "powerup");
 			// One-way "gate" special case
 			launchpads.forEach(function(iLaunchpad)
 			{
@@ -28787,6 +28924,8 @@ G = {
 		var metadata;
 		var opacityclicked = 0.3;
 		var pathcolor = P.getUserPathColor();
+		var inputwaypoint = I.bindInputSelect("#nod_int_coinWaypointAverage");
+		var inputvisit = I.bindInputSelect("#nod_int_secNodeVisitAverage");
 		var getNodeState = function(pMarker)
 		{
 			return X.getChecklistItem(X.Checklists["Resource" + pMarker.options.grade], pMarker.options.index);
@@ -28955,8 +29094,8 @@ G = {
 			var eastmostcoord = Number.POSITIVE_INFINITY;
 			var indexofeastmostcoord;
 
-			var WAYPOINT_COPPER_AVERAGE = $("#nod_int_coinWaypointAverage").val();
-			var TIME_SECOND_AVERAGE = $("#nod_int_secNodeVisitAverage").val();
+			var WAYPOINT_COPPER_AVERAGE = inputwaypoint.val();
+			var TIME_SECOND_AVERAGE = inputvisit.val();
 			var waypointcost = 0;
 			var timecost = 0;
 			var sumprice = 0;
@@ -34978,10 +35117,7 @@ H = {
 		U.convertInternalLink("#dsbPactHistoryLink");
 
 		// Bind buttons
-		var vendorcopy = $("#dsbPactCodes").click(function()
-		{
-			$(this).select();
-		});
+		var vendorcopy = I.bindInputSelect("#dsbPactCodes");
 		I.bindClipboard(vendorcopy, vendorcodes);
 		if (pIsReset)
 		{
@@ -36923,10 +37059,7 @@ K = {
 			K.StopwatchTimerStart = 0;
 			K.stopwatchDown.innerHTML = "";
 		});
-		$("#mapAlarmStopwatchUp input, #mapAlarmStopwatchDown input").click(function()
-		{
-			$(this).select();
-		});
+		I.bindInputSelect("#mapAlarmStopwatchUp input, #mapAlarmStopwatchDown input");
 	},
 	
 	/*
@@ -37892,7 +38025,7 @@ I = {
 	},
 	printFile: function(pString)
 	{
-		$("<textarea class='cssText cslText'></textarea>").appendTo(I.getConsole()).val(pString);
+		$("<textarea class='cssInputText cslText'></textarea>").appendTo(I.getConsole()).val(pString);
 		I.print("");
 		I.bindConsoleInput();
 	},
@@ -37997,7 +38130,7 @@ I = {
 	 */
 	bindConsoleInput: function()
 	{
-		I.getConsole().find(".cssInputText, .cssText").each(function()
+		I.getConsole().find(".cssInputText").each(function()
 		{
 			I.bindClipboard($(this), $(this).val(), false);
 			$(this).unbind("click").click(function()
@@ -38188,7 +38321,7 @@ I = {
 	 */
 	toggleToggleIcon: function(pSelector, pBoolean, pWantAnimation)
 	{
-		if (pWantAnimation || pWantAnimation == undefined)
+		if (pWantAnimation || pWantAnimation === undefined)
 		{
 			if (pBoolean)
 			{
@@ -38457,7 +38590,7 @@ I = {
 	{
 		var container = $(pContainer);
 		var elements = $(pElements);
-		var searchbar = $("<input class='cntSearch' type='text' />").appendTo(container);
+		var searchbar = $("<input class='cntSearch cssInputText' type='text' />").appendTo(container);
 		I.bindInputBarText(searchbar);
 		searchbar.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
@@ -38558,6 +38691,19 @@ I = {
 				$(this).val(fillertext).data("isfiller", true)
 					.removeClass(onclass).addClass(offclass);
 			}
+		});
+	},
+	
+	/*
+	 * Makes an input autoselect its text when clicked on.
+	 * @param jqobject pElement
+	 * @returns jqobject
+	 */
+	bindInputSelect: function(pElement)
+	{
+		return $(pElement).click(function()
+		{
+			$(this).select();
 		});
 	},
 	
@@ -39643,10 +39789,7 @@ I = {
 		$("#plateHelp").append(I.cThrobber).load(U.getPageSrc("help"), function()
 		{
 			I.bindAfterAJAXContent(I.PlateEnum.Help);
-			$(".jsCopyCode").click(function()
-			{
-				$(this).select();
-			});
+			I.bindInputSelect(".jsCopyCode");
 		});
 	},
 	

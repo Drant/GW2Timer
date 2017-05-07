@@ -42,6 +42,6 @@ BastionOfThePenitent: [
 	{u: "cairn", i: 80562, n: "Bastion_of_the_Penitent#Cairn_the_Indomitable", l: "Cairn"},
 	{u: "mursaat_overseer", i: 80224, n: "Bastion_of_the_Penitent#Mursaat_Overseer", l: "Overseer"},
 	{u: "samarog", i: 80218, n: "Bastion_of_the_Penitent#Samarog", l: "Samarog"},
-	{u: "deimos", i: 80222, n: "Bastion_of_the_Penitent#Deimos", l: "Deimos"}
+	{u: "deimos", i: 80327, n: "Bastion_of_the_Penitent#Deimos", l: "Deimos"}
 ]
 };

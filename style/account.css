@@ -2130,7 +2130,10 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	opacity: 0.2;
 }
 
-.bnkCard { /* A tooltip-like block after each bank slot */
+/*
+ * A tooltip-like block after each bank slot.
+ */
+.bnkCard {
 	display: none;
 	width: 100%;
 	max-width: calc(100% - 88px);
@@ -2146,6 +2149,23 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 }
 .bnkCarded .bnkSlotLabel {
 	display: none;
+}
+
+/*
+ * Achievement bank.
+ */
+.bnkCondense .achName {
+	font-size: 14px;
+	line-height: normal;
+}
+.bnkCondense .achRequirement {
+	margin-top: 0;
+	font-size: 12px;
+	line-height: normal;
+}
+.achSearchPoints { /* Displayed in the achievements search bar */
+	margin-left: 8px;
+	color: white;
 }
 
 /*

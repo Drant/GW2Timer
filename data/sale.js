@@ -27,6 +27,8 @@ GW2T_SALE_DATA = {
 	{i: 49021, n: "Kasmeer's Staff Skin", p: {gem: 600}},
 	{i: 80981, n: "Hourglass Staff", p: {gem: 600}, Finish: new Date("2017-05-09T16:00:00Z")},
 	{i: 42960, n: "Mini Scruffy", p: {gem: 500}},
+	{i: 45044, n: "Mini Frostbite", p: {gem: 400}},
+	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}},
 	{i: 67840, n: "Mini Drooburt's Ghost", p: {gem: 350}},
 	{i: 70191, n: "Mini Wyvern", p: {gem: 350}},
 	{i: 69621, n: "Miniature Moose", p: {gem: 350}},
@@ -34,9 +36,6 @@ GW2T_SALE_DATA = {
 	{i: 79721, n: "Cosmic Harvesting Tool", p: {gem: 1000}},
 	{i: 79472, n: "Cosmic Logging Tool", p: {gem: 1000}},
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}},
-	{i: 42584, n: "Mini Jaguar Cub", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
-	{i: 42577, n: "Mini Moa Chick", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
-	{i: 42593, n: "Mini Lion Cub", p: {gem: 400}, Finish: new Date("2017-05-07T16:00:00Z")},
 	{i: 47900, n: "Metallurgic Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 67028, n: "Chaos weapon skins#Gallery", p: {blticket: 5}}
 	]
