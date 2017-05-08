@@ -6495,7 +6495,7 @@ Z = {
 		}
 		else
 		{
-			I.print("No new items added. Record is up to date.");
+			I.print("No new items added. Record is up-to-date.");
 			return;
 		}
 		
@@ -7969,7 +7969,7 @@ A = {
 									$(".accPlatter").hide();
 									$(".accMenuTab").removeClass("accMenuTabFocused").find(".accMenuSubtab").hide();
 									section.show();
-									var menutab = $(this).parents(".accMenuTab").data("iscurrentaccounttab", subsectionname);
+									var menutab = $(this).closest(".accMenuTab").data("iscurrentaccounttab", subsectionname);
 									menutab.find(".accMenuCurrent").removeClass("accMenuCurrent");
 									$(this).addClass("accMenuCurrent");
 									A.DishCurrent = $("#accDish_" + subsectionname);
@@ -8446,7 +8446,7 @@ A = {
 	 */
 	getDishName: function(pElement)
 	{
-		return $(pElement).parents(".accDishContainer").attr("data-section");
+		return $(pElement).closest(".accDishContainer").attr("data-section");
 	},
 	
 	/*
@@ -12984,19 +12984,35 @@ V = {
 				aWantCard: true,
 				aIsCollapsed: true
 			});
+			// Total the account's achievement points
+			$.getJSON(A.getURL(A.URL.Account), function(pData)
+			{
+				var sumap = B.getBankPrice(container);
+				var dailyap = pData.daily_ap;
+				var monthlyap = pData.monthly_ap;
+				container.find(".bnkPrice").append("<div class='achBankTotal'>"
+					+ E.PaymentFormat.achievement(sumap) + " + "
+					+ dailyap.toLocaleString() + "<img class='css24' src='img/account/summary/daily.png' /> + "
+					+ monthlyap.toLocaleString() + "<img class='css24' src='img/account/summary/monthly.png' /> = "
+					+ E.PaymentFormat.achievement(sumap + dailyap + monthlyap)
+				+ "</div>");
+			});
 			
-			// Piggyback on the bank search bar with custom search for achievements.
-			Q.bindItemSearch(B.getBankSearch(section), {
+			// Piggyback on the bank search bar with custom search for achievements
+			var banksearch = B.getBankSearch(section);
+			Q.bindItemSearch(banksearch, {
 				aDatabase: searchdb,
 				aFillerText: null,
 				aAchievements: unlocks,
 				aCallback: function(pAch)
 				{
-					I.prettyJSON(pAch);
-					I.scrollToElement("#achTab_" + pAch.oCategoryID, {
+					// Scroll to the bank tab (category) when clicked on an achievement in the search results
+					var thistab = $("#achTab_" + pAch.oCategoryID);
+					I.scrollToElement(thistab, {
 						aOffset: -$("#accOverhead").height(),
 						aSpeed: "fast"
 					});
+					B.showBankTab(thistab);
 				}
 			});
 		};
@@ -13812,6 +13828,10 @@ B = {
 
 		return container;
 	},
+	getBankContainer: function(pBank)
+	{
+		return pBank.closest(".bnkContainer");
+	},
 	getTabsContainer: function(pContainer)
 	{
 		return pContainer.find(".bnkBank");
@@ -13863,11 +13883,9 @@ B = {
 		var tabtoggle = tabseparator.find(".bnkTabToggle");
 		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
 		
-		tabseparator.click(function(pEvent)
+		tabseparator.click(function()
 		{
-			var state = tabslots.is(":visible");
-			I.toggleToggleIcon(tabtoggle, !state);
-			tabslots.slideToggle("fast");
+			B.toggleBankTab(tab);
 		});
 		if (Settings.aIsCollapsed)
 		{
@@ -13891,6 +13909,48 @@ B = {
 	getSlotsContainer: function(pElement)
 	{
 		return pElement.find(".bnkTabSlots");
+	},
+	
+	/*
+	 * Toggles a bank tab which contains slots.
+	 * @param jqobject pTab a single tab or a bank for toggling all tabs.
+	 * @param boolean pBoolean
+	 * @param boolean pIsExclusive whether to show only one tab at a time, optional.
+	 */
+	toggleBankTab: function(pTab, pBoolean, pIsExclusive)
+	{
+		var tab = (pTab.hasClass("bnkBank")) ? pTab.find(".bnkTab") : pTab;
+		var tabslots = B.getSlotsContainer(tab);
+		var state = (typeof pBoolean === "boolean") ? pBoolean : !(tabslots.is(":visible"));
+		
+		if (state)
+		{
+			if (pIsExclusive)
+			{
+				// One time recursive call to hide all tabs, then show the desired tab
+				B.toggleBankTab(tab.closest(".bnkBank"), false);
+			}
+			tabslots.slideDown("fast", function()
+			{
+				A.adjustAccountScrollbar();
+			});
+		}
+		else
+		{
+			tabslots.slideUp("fast", function()
+			{
+				A.adjustAccountScrollbar();
+			});
+		}
+		// Also change the toggle icon
+		I.toggleToggleIcon(tab.find(".bnkTabToggle"), state);
+	},
+	showBankTab: function(pTab)
+	{
+		if (B.getSlotsContainer(pTab).is(":visible") === false)
+		{
+			pTab.find(".bnkTabSeparator").trigger("click");
+		}
 	},
 	
 	/*
@@ -14318,10 +14378,10 @@ B = {
 		var Settings = pSettings || {};
 		
 		var elementsuffix = (E.PaymentEnum[Settings.aPaymentEnum]) ? Settings.aPaymentEnum : E.PaymentEnum.Coin;
-		var container = pSlot.parents(".bnkContainer");
+		var container = B.getBankContainer(pSlot);
 		var top = container.find(".bnkTop");
 		var iscollection = container.data("iscollection");
-		var tabdisplayprice = ((Settings.aIsTab) ? pSlot : pSlot.parents(".bnkTab")).find(".bnkTabPrice_" + elementsuffix);
+		var tabdisplayprice = ((Settings.aIsTab) ? pSlot : pSlot.closest(".bnkTab")).find(".bnkTabPrice_" + elementsuffix);
 		
 		var count = (Settings.aPossible !== undefined) ? 1 : (Settings.aCount || 1);
 		var prices = (typeof Settings.aPrice === "number") ?
@@ -14479,6 +14539,11 @@ B = {
 			}
 		}
 	},
+	getBankPrice: function(pContainer)
+	{
+		var value = pContainer.find(".bnkPriceValueA_Coin").data("priceleft");
+		return (value !== undefined) ? value : 0;
+	},
 	
 	/*
 	 * Updates the price displayed over a slot with a payment.
@@ -14530,8 +14595,6 @@ B = {
 			dishmenu.empty();
 		}
 		var bankmenu = $("<div class='bnkMenu'></div>").prependTo(dishmenu);
-		var tabslots = B.getSlotsContainer(pBank);
-		var tabtoggles = pBank.find(".bnkTabToggle");
 		
 		// Toggles a bank slot and card if available, to be used in iteration
 		var toggleSlot = function(pSlot, pBoolean)
@@ -14892,26 +14955,7 @@ B = {
 		var collapsebutton = $("<div class='bnkButtonTab bnkButton curToggle' title='Expand/<dfn>Collapse</dfn> all tabs.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
-			// Expand or collapse all tabs
-			if (istabscollapsed)
-			{
-				tabslots.slideDown("fast", function()
-				{
-					A.adjustAccountScrollbar();
-				});
-			}
-			else
-			{
-				tabslots.slideUp("fast", function()
-				{
-					A.adjustAccountScrollbar();
-				});
-			}
-			// Also change the toggle icon
-			tabtoggles.each(function()
-			{
-				I.toggleToggleIcon($(this), istabscollapsed);
-			});
+			B.toggleBankTab(pBank, istabscollapsed);
 			$(this).toggleClass("bnkButtonFocused");
 			istabscollapsed = !istabscollapsed;
 		});
@@ -15294,7 +15338,7 @@ B = {
 			}
 		}
 
-		var container = pBank.parents(".bnkContainer");
+		var container = B.getBankContainer(pBank);
 		var headers = {};
 		var record = {};
 		var tab;
@@ -15619,9 +15663,9 @@ B = {
 		var edit = $("<kbd class='bnkCatalogTabEdit btnWindow' title='Click to <dfn>edit</dfn> this tab.<br />"
 			+ "Click again to stop editing.<br />To edit custom slots, click the slot.'></kbd>").prependTo(pTab).click(function()
 		{
-			var bank = $(this).parents(".bnkBank");
+			var bank = $(this).closest(".bnkBank");
 			var currenttab = $(bank.data("currenttab"));
-			var clickedtab = $(this).parents(".bnkTab").first();
+			var clickedtab = $(this).closest(".bnkTab").first();
 			var tabeditor = bank.data("tabeditor");
 			var tabheader = pTab.find(".bnkTabHeader");
 			bank.find(".bnkTabHeader").removeClass("bnkCatalogTabHighlight");
@@ -15642,7 +15686,7 @@ B = {
 			{
 				// Show the tab editor if clicked edit on a different tab or isn't already editing
 				tabeditor.show();
-				bank.data("currenttab", $(this).parents(".bnkTab"));
+				bank.data("currenttab", $(this).closest(".bnkTab"));
 				tabheader.addClass("bnkCatalogTabHighlight");
 				// Update the name of the tab rename input
 				var tabname = pTab.find(".bnkTabText").text();
@@ -15664,7 +15708,7 @@ B = {
 		pSlot.unbind("click").click(function()
 		{
 			// Set the clicked slot as the current and highlight it
-			var bank = $(this).parents(".bnkBank");
+			var bank = $(this).closest(".bnkBank");
 			bank.find(".bnkCatalogSlotHighlight").removeClass("bnkCatalogSlotHighlight");
 			var currentslot = bank.data("currentslot");
 			var sloteditor = bank.data("sloteditor");
@@ -16094,7 +16138,7 @@ B = {
 			var tabprint = $("<kbd class='bnkTransactionsPrint btnWindow' title='<dfn>Print</dfn> this month of transactions in chronological order.'></kbd>")
 				.prependTo(pTab).click(function()
 			{
-				var clickedtab = $(this).parents(".bnkTab").first();
+				var clickedtab = $(this).closest(".bnkTab").first();
 				var data = clickedtab.data("transactions");
 				// Assume item is already fetched and cached, so the string order is sequential
 				var str = "<div class='bnkTransactionsContainer'>";
@@ -18154,8 +18198,8 @@ Q = {
 				+ D.getWord("of") + " " + processedach.oAPTierPossible + " " + tierword + "</aside>";
 			pointsstr = "<aside class='achPoints'>" + ((processedach.oAPPointPossible > 0)
 				? (processedach.oAPPointCurrent + " / " + processedach.oAPPointPossible) : "0") + " <img src='img/ui/ap.png' /></aside";
-			searchpointsstr = "<var class='achSearchPoints'>" + ((processedach.oAPPointPossible > 0)
-				? (processedach.oAPPointCurrent + " / " + E.PaymentFormat.achievement(processedach.oAPPointPossible)) : E.PaymentFormat.achievement(0)) + "</var>";
+			searchpointsstr = "<var class='achSearchPoints'>" + ((processedach.oAPPointCurrent === processedach.oAPPointPossible)
+				? "" : (processedach.oAPPointCurrent + " / ")) + E.PaymentFormat.achievement(processedach.oAPPointPossible) + "</var>";
 		}
 		
 		var html = "<div class='itmTooltip " + (Settings.aClass || "") + "'>"
@@ -20186,18 +20230,18 @@ E = {
 			{
 				if (I.isConsoleShown() === false)
 				{
-					var id = $(this).parents(".trdEntry").find(".trdItem").val();
+					var id = $(this).closest(".trdEntry").find(".trdItem").val();
 					E.printListings(id);
 				}
 			}).dblclick(function()
 			{
-				var query = $(this).parents(".trdEntry").find(".trdName").val();
+				var query = $(this).closest(".trdEntry").find(".trdName").val();
 				U.openExternalURL(U.getWikiLinkLanguage(query));
 			});
 			$(entry + " .trdSearch").click(function()
 			{
-				var id = $(this).parents(".trdEntry").find(".trdItem").val();
-				var query = $(this).parents(".trdEntry").find(".trdName").val();
+				var id = $(this).closest(".trdEntry").find(".trdItem").val();
+				var query = $(this).closest(".trdEntry").find(".trdName").val();
 				if (id.length === 0)
 				{
 					U.openExternalURL(U.getTradingSearchLink(query));
@@ -20228,7 +20272,7 @@ E = {
 						// Assume the inputs are siblings
 						$(this).prev().val(E.formatCoinString(price + 1)).trigger("change");
 						$(this).next().val(E.formatCoinString(price - 1)).trigger("change");
-						E.updateTradingPrices($(this).parents(".trdEntry"), false);
+						E.updateTradingPrices($(this).closest(".trdEntry"), false);
 						D.stopSpeech();
 					}
 				});
@@ -20238,8 +20282,8 @@ E = {
 			$(entry + " .btnSwap").hover(
 				function()
 				{
-					$(this).parents(".trdEntry").find(".trdName").addClass("trdHovered");
-					E.SwapIndex = U.getSubintegerFromHTMLID($(this).parents(".trdEntry"));
+					$(this).closest(".trdEntry").find(".trdName").addClass("trdHovered");
+					E.SwapIndex = U.getSubintegerFromHTMLID($(this).closest(".trdEntry"));
 				},
 				function()
 				{
@@ -20336,7 +20380,7 @@ E = {
 			$(name).change(function()
 			{
 				var query = $(this).val();
-				var entryinner = $(this).parents(".trdEntry");
+				var entryinner = $(this).closest(".trdEntry");
 				if (query.length < 1)
 				{
 					E.clearCalculator(entryinner);
@@ -35707,6 +35751,9 @@ H = {
 							{
 								pEvent.preventDefault();
 								C.viewChainFinale(iChain);
+							}).dblclick(function()
+							{
+								$("#chnCheck_" + iChain.nexus).trigger("click");
 							});
 							I.preventMapPropagation(bossicon);
 							bossstripe = $("<span class='tmlStripe'>" + D.getObjectName(iChain) + "<span>").insertAfter(bossicon);

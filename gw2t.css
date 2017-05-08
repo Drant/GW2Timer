@@ -3608,6 +3608,12 @@ label:hover {
 .cssHidden {
 	display: none !important;
 }
+.css24 {
+	width: 24px; height: 24px;
+}
+.css16 {
+	width: 16px; height: 16px;
+}
 .cssCopyText {
 	position: fixed;
 	top: -9999px;

@@ -28,6 +28,8 @@ GW2T_SALE_DATA = {
 	{i: 80981, n: "Hourglass Staff", p: {gem: 600}, Finish: new Date("2017-05-09T16:00:00Z")},
 	{i: 42960, n: "Mini Scruffy", p: {gem: 500}},
 	{i: 45044, n: "Mini Frostbite", p: {gem: 400}},
+	{i: 77649, n: "Mini Arrowhead", p: {gem: 400}},
+	{i: 67839, n: "Mini Pact Airship", p: {gem: 350}},
 	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}},
 	{i: 67840, n: "Mini Drooburt's Ghost", p: {gem: 350}},
 	{i: 70191, n: "Mini Wyvern", p: {gem: 350}},

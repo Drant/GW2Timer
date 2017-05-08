@@ -489,7 +489,8 @@ Back: [
 	{u: 7114, i: 80289, n: "Burden", p: {magnetite: 600}},
 	{u: 7200, i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: 700}},
 	{u: 7202, i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: 700}},
-	{u: 7209, i: 81007, n: "Druid Stone", p: {achievement: 0}}
+	{u: 7209, i: 81007, n: "Druid Stone", p: {achievement: 0}},
+	{u: 7216, i: 81089, n: "Living Druid Stone", p: {achievement: 0}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", b: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
