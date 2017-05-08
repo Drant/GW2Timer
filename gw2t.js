@@ -2619,10 +2619,7 @@ X = {
 		X.initializeDungeonChecklist();
 		X.initializeCustomChecklist();
 		X.initializeRaidChecklist();
-		setTimeout(function()
-		{
-			X.rewrapCheckboxes();
-		}, 1000);
+		X.rewrapCheckboxes();
 	},
 	
 	/*
@@ -13088,12 +13085,14 @@ V = {
 			U.getJSON(A.getURL(A.URL.Masteries), function(pDataInner)
 			{
 				/*
-				 * The API gives how far in the mastery track the account has
+				 * The API gives how far in the mastery line the account has
 				 * progressed (array length) rather than the ID of mastery unlocked.
+				 * Level 0 counts as completing the first mastery in the line;
+				 * a line not in the account unlocks means no point was spent on it.
 				 */
 				pDataInner.forEach(function(iLine)
 				{
-					for (var ii = 0; ii < iLine.level; ii++)
+					for (var ii = 0; ii <= iLine.level; ii++)
 					{
 						// Create a custom ID based on mastery line ID and the mastery's array index
 						unlockassoc[iLine.id + "_" + ii] = true;
@@ -21478,7 +21477,7 @@ D = {
 		s_Rare: {en: "Rare", de: "Selten", es: "Excepcional", fr: "Rare", zh: "稀有"},
 		s_Exotic: {en: "Exotic", de: "Exotisch", es: "Exótico", fr: "Exotique", zh: "傀"},
 		s_Ascended: {en: "Ascended", de: "Aufgestiegen", es: "Ascendido", fr: "Élevé", zh: "上升"},
-		s_Legendary: {en: "Legendary", de: "Legendär", es: "Legendario", fr: "Légendaire", zh: "传奇的"},
+		s_Legendary: {en: "Legendary", de: "Legendär", es: "Legendario", fr: "Légendaire", zh: "传奇"},
 		// Item Weight
 		s_Light: {en: "Light", de: "Leicht", es: "Ligero", fr: "Légèr", zh: "轻"},
 		s_Medium: {en: "Medium", de: "Mittel", es: "Medio", fr: "Intermédiaire", zh: "中型"},
@@ -24972,12 +24971,20 @@ M = {
 		// Bind behavior for the created list items
 		$(htmlidprefix + "ContextSave" + pName + " li").click(function()
 		{
+			// Click list item to save
 			pSaveFunction($(this).attr("data-index"));
+		}).find(".mapContextSlot").onEnterKey(function()
+		{
+			// Pressing Enter on the list item's name input box triggers the save
+			$(this).parent().trigger("click");
 		});
 		$(htmlidprefix + "ContextLoad" + pName + " li").click(function()
 		{
 			pLoadFunction($(this).attr("data-index"));
-		});
+		}).find(".mapContextSlot").onEnterKey(function()
+		{
+			$(this).parent().trigger("click");
+		});;
 		// Create server bar
 		I.createSearchBar($("<div class='mapContextSearch'></div>").prependTo(listload), listload.find(".mapContextSlot"), ".mapContextLine");
 		I.createSearchBar($("<div class='mapContextSearch'></div>").prependTo(listsave), listsave.find(".mapContextSlot"), ".mapContextLine");
@@ -25012,6 +25019,7 @@ M = {
 			{
 				obj.value[pIndex] = coords;
 				localStorage[obj.key] = JSON.stringify(obj.value);
+				I.write(coords.length + " pins saved.");
 			}
 			else
 			{
@@ -25691,6 +25699,7 @@ M = {
 			{
 				obj.value[pIndex] = compasses;
 				O.saveCompressedObject(obj.key, obj.value);
+				I.write(compasses.length + " compasses saved.");
 			}
 			else
 			{

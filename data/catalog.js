@@ -7,24 +7,24 @@
  * Category translations.
  */
 var GW2T_CATALOG_HEADERS = {
-	Key: {name_en: "Keys", name_de: "Schlüssel", name_es: "Llaves", name_fr: "Clés"},
-	Token: {name_en: "Tokens", name_de: "Marken", name_es: "Fichas", name_fr: "Jetons"},
-	Dungeon: {name_en: "Dungeon", name_de: "Verlies", name_es: "Mazmorra", name_fr: "Donjon"},
-	Festival: {name_en: "Festival", name_de: "Festival", name_es: "Festival", name_fr: "Festival"},
-	Contract: {name_en: "Permanent Contracts", name_de: "Vertrag permanenten", name_es: "Contrato permanente", name_fr: "Contrat permanent"},
-	Gathering: {name_en: "Gathering Tools", name_de: "Sammelwerkzeug", name_es: "Herramienta de recolección", name_fr: "Outil de récolte"},
-	Salvage: {name_en: "Salvage Kits", name_de: "Wiederverwertungskits", name_es: "Kits de recicla", name_fr: "Nécessaires de recyclage"},
-	Converter: {name_en: "Converters", name_de: "Konverter", name_es: "Conversores", name_fr: "Convertisseurs"},
-	Blueprint: {name_en: "Siege Blueprints", name_de: "Belagerungswaffe Blaupausen", name_es: "Planos arma de asedio", name_fr: "Plans arme de siège"},
-	Toy: {name_en: "Toys and Stations", name_de: "Spielzeuge und Stationen", name_es: "Juguetes y Talleres", name_fr: "Jouets et Ateliers"},
-	Music: {name_en: "Musical Instruments", name_de: "Musikinstrumente", name_es: "Instrumentos musicales", name_fr: "Instruments de musique"},
-	Gem: {name_en: "Gem Store Items", name_de: "Edelsteinshop Gegenstandes", name_es: "Objetos tienda de gemas", name_fr: "Objets boutique aux gemmes"},
-	TonicEndless: {name_en: "Endless Tonics", name_de: "Endloser Trank", name_es: "Tónicos inagotables", name_fr: "Toniques inépuisables"},
-	TonicConsumable: {name_en: "Consumable Tonics", name_de: "Verbrauchsgegenstand Trank", name_es: "Tónicos consumibles", name_fr: "Toniques consommables", iscollapsed: true},
-	Bundle: {name_en: "Bundles", name_de: "Umgebungswaffen", name_es: "Arma ambiental", name_fr: "Arme environnementale", iscollapsed: true},
-	Aura: {name_en: "Cosmetic Auras", name_de: "Kosmetik-Auren", name_es: "Auras cosméticos", name_fr: "Auras cosmétiques", iscollapsed: true},
-	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", iscollapsed: true},
-	Carrier: {name_en: "Mail Carriers", name_de: "Briefboten", name_es: "Carteros", name_fr: "Messagers", iscollapsed: true}
+	Key: {name_en: "Keys", name_de: "Schlüssel", name_es: "Llaves", name_fr: "Clés", name_zh: "钥匙"},
+	Token: {name_en: "Tokens", name_de: "Marken", name_es: "Fichas", name_fr: "Jetons", name_zh: "徽记"},
+	Dungeon: {name_en: "Dungeon", name_de: "Verlies", name_es: "Mazmorra", name_fr: "Donjon", name_zh: "地下城"},
+	Festival: {name_en: "Festival", name_de: "Festival", name_es: "Festival", name_fr: "Festival", name_zh: "节日"},
+	Contract: {name_en: "Permanent Contracts", name_de: "Vertrag permanenten", name_es: "Contrato permanente", name_fr: "Contrat permanent", name_zh: "永久合同"},
+	Gathering: {name_en: "Gathering Tools", name_de: "Sammelwerkzeug", name_es: "Herramienta de recolección", name_fr: "Outil de récolte", name_zh: "采集工具"},
+	Salvage: {name_en: "Salvage Kits", name_de: "Wiederverwertungskits", name_es: "Kits de recicla", name_fr: "Nécessaires de recyclage", name_zh: "拆解工具包"},
+	Converter: {name_en: "Converters", name_de: "Konverter", name_es: "Conversores", name_fr: "Convertisseurs", name_zh: "转换器"},
+	Blueprint: {name_en: "Siege Blueprints", name_de: "Belagerungswaffe Blaupausen", name_es: "Planos arma de asedio", name_fr: "Plans arme de siège", name_zh: "蓝图"},
+	Toy: {name_en: "Toys and Stations", name_de: "Spielzeuge und Stationen", name_es: "Juguetes y Talleres", name_fr: "Jouets et Ateliers", name_zh: "玩具和造站"},
+	Music: {name_en: "Musical Instruments", name_de: "Musikinstrumente", name_es: "Instrumentos musicales", name_fr: "Instruments de musique", name_zh: "乐器"},
+	Gem: {name_en: "Gem Store Items", name_de: "Edelsteinshop Gegenstandes", name_es: "Objetos tienda de gemas", name_fr: "Objets boutique aux gemmes", name_zh: "宝石商店"},
+	TonicEndless: {name_en: "Endless Tonics", name_de: "Endloser Trank", name_es: "Tónicos inagotables", name_fr: "Toniques inépuisables", name_zh: "无尽合剂"},
+	TonicConsumable: {name_en: "Consumable Tonics", name_de: "Verbrauchsgegenstand Trank", name_es: "Tónicos consumibles", name_fr: "Toniques consommables", name_zh: "消耗合剂", iscollapsed: true},
+	Bundle: {name_en: "Bundles", name_de: "Umgebungswaffen", name_es: "Arma ambiental", name_fr: "Arme environnementale", name_zh: "束", iscollapsed: true},
+	Aura: {name_en: "Cosmetic Auras", name_de: "Kosmetik-Auren", name_es: "Auras cosméticos", name_fr: "Auras cosmétiques", name_zh: "光环", iscollapsed: true},
+	Enrichment: {name_en: "Enrichment", name_de: "Anreicherung", name_es: "Enriquecimiento", name_fr: "Enrichissement", name_zh: "法富集", iscollapsed: true},
+	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", name_zh: "设备传奇", iscollapsed: true}
 };
 
 /*
@@ -705,6 +705,13 @@ Bundle: [
 	{i: 79424, n: "Pocket Jade Armor", p: {karma: 3150}},
 	{i: 80080, n: "Visage of the Great Rooster Firework"}
 ],
+Enrichment: [
+	{i: 39330, n: "Experienced Enrichment", p: {laurel: 10}},
+	{i: 39332, n: "Karmic Enrichment", p: {laurel: 10}},
+	{i: 39331, n: "Gilded Enrichment", p: {laurel: 20}},
+	{i: 39333, n: "Magical Enrichment", p: {laurel: 20}},
+	{i: 79926, n: "Koda's Warmth Enrichment", p: {achievement: 0}}
+],
 Aura: [
 	{i: 68440, n: "Preserved Queen Bee"},
 	{i: 77594, n: "Preserved Queen Bee"},
@@ -776,6 +783,24 @@ Legendary: [
 	{i: 78556, n: "Chuka and Champawat", p: {craft: true}},
 	{i: 80488, n: "The HMS Divinity", p: {craft: true}},
 	{i: 71383, n: "Nevermore", p: {craft: true}},
+	{i: 80296, n: "Perfected Envoy Mask", p: {craft: true}},
+	{i: 80145, n: "Perfected Envoy Shoulderpads", p: {craft: true}},
+	{i: 80578, n: "Perfected Envoy Jerkin", p: {craft: true}},
+	{i: 80161, n: "Perfected Envoy Vambraces", p: {craft: true}},
+	{i: 80252, n: "Perfected Envoy Leggings", p: {craft: true}},
+	{i: 80281, n: "Perfected Envoy Boots", p: {craft: true}},
+	{i: 80248, n: "Perfected Envoy Cowl", p: {craft: true}},
+	{i: 80131, n: "Perfected Envoy Mantle", p: {craft: true}},
+	{i: 80190, n: "Perfected Envoy Vestments", p: {craft: true}},
+	{i: 80111, n: "Perfected Envoy Gloves", p: {craft: true}},
+	{i: 80356, n: "Perfected Envoy Pants", p: {craft: true}},
+	{i: 80399, n: "Perfected Envoy Shoes", p: {craft: true}},
+	{i: 80384, n: "Perfected Envoy Helmet", p: {craft: true}},
+	{i: 80435, n: "Perfected Envoy Pauldrons", p: {craft: true}},
+	{i: 80254, n: "Perfected Envoy Breastplate", p: {craft: true}},
+	{i: 80205, n: "Perfected Envoy Gauntlets", p: {craft: true}},
+	{i: 80277, n: "Perfected Envoy Tassets", p: {craft: true}},
+	{i: 80557, n: "Perfected Envoy Greaves", p: {craft: true}},
 	{i: 77474, n: "The Ascension", p: {craft: true}},
 	{i: 74155, n: "Ad Infinitum", p: {craft: true}}
 ]
