@@ -2167,6 +2167,14 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	margin-left: 8px;
 	color: white;
 }
+.achBankTotal {
+	line-height: normal;
+}
+.achBankActual {
+ 	font-family: Menomonia;
+ 	font-size: 28px;
+	color: #dd8800
+}
 
 /*
  * Dyes act as slots in the bank, but behave differently.

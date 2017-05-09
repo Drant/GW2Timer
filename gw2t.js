@@ -1628,6 +1628,7 @@ X = {
 		PumpkinCarving: { key: "str_chlPumpkinCarving", urlkey: "pumpkins"},
 		DonationDrive: { key: "str_chlDonationDrive", urlkey: "orphans"},
 		// Achievements: Heart of Thorns Living Story
+		RockCollector: { key: "str_chlRockCollector", urlkey: "rockcollector"},
 		CinsGoods: { key: "str_chlCinsGoods", urlkey: "cinsgoods"},
 		LettersFromE: { key: "str_chlLettersFromE", urlkey: "lettersfrome"},
 		CaudecusLetters: { key: "str_chlCaudecusLetters", urlkey: "caudecusletters"},
@@ -5208,7 +5209,7 @@ U = {
 				case 8: type = "trait"; break;
 				case 9: type = "recipe"; break;
 				case 10: type = "skin"; break;
-				case 11: type = "outfit"; break;	
+				case 11: type = "outfit"; break;
 			}
 		}
 		catch (e)
@@ -12915,6 +12916,12 @@ V = {
 									aTooltip: Q.analyzeAchievement(ithach, {aAchievement: processedach}),
 									aKeywords: pCategory.name + " " + ithach.name + " " + ithach.requirement
 								});
+								// Include a completion percent if this achievement is partially participated
+								var apratio = processedach.oAPCountCurrent / processedach.oAPCountPossible;
+								if (apratio < 1 && processedach.oAPCountPossible > 1)
+								{
+									slot.append("<var class='bnkSlotCount'>" + processedach.oAPCountCurrent + "/" + processedach.oAPCountPossible + "</var>");
+								}
 								
 								// Right click achievement slot prints raw data
 								(function(iAchievement, iUnlock, iProcessed)
@@ -12987,14 +12994,15 @@ V = {
 			// Total the account's achievement points
 			$.getJSON(A.getURL(A.URL.Account), function(pData)
 			{
-				var sumap = B.getBankPrice(container);
+				var bankap = B.getBankPrice(container);
 				var dailyap = pData.daily_ap;
 				var monthlyap = pData.monthly_ap;
 				container.find(".bnkPrice").append("<div class='achBankTotal'>"
-					+ E.PaymentFormat.achievement(sumap) + " + "
-					+ dailyap.toLocaleString() + "<img class='css24' src='img/account/summary/daily.png' /> + "
-					+ monthlyap.toLocaleString() + "<img class='css24' src='img/account/summary/monthly.png' /> = "
-					+ E.PaymentFormat.achievement(sumap + dailyap + monthlyap)
+					+ E.PaymentFormat.achievement(bankap[0]) + " + "
+					+ dailyap.toLocaleString() + "<img class='css24' src='img/account/summary/daily.png' title='Daily AP' /> + "
+					+ monthlyap.toLocaleString() + "<img class='css24' src='img/account/summary/monthly.png' title='Monthly AP' /> = "
+					+ "<var class='achBankActual'>" + E.PaymentFormat.achievement(bankap[0] + dailyap + monthlyap) + "</var>"
+					+ " / " + E.PaymentFormat.achievement(bankap[0] + bankap[1] + dailyap + monthlyap)
 				+ "</div>");
 			});
 			
@@ -14541,8 +14549,9 @@ B = {
 	},
 	getBankPrice: function(pContainer)
 	{
-		var value = pContainer.find(".bnkPriceValueA_Coin").data("priceleft");
-		return (value !== undefined) ? value : 0;
+		var valueA = pContainer.find(".bnkPriceValueA_Coin").data("priceleft") || 0;
+		var valueB = pContainer.find(".bnkPriceValueB_Coin").data("priceleft") || 0;
+		return [valueA, valueB];
 	},
 	
 	/*
@@ -18703,14 +18712,17 @@ Q = {
 		I.qTip.init(searchclose);
 		
 		// Standard behavior when clicked on a search result
-		var bindResultClick = function(pResultsList, pResultEntry, pDataEntry)
+		var bindResultClick = function(pResultsList, pResultEntry, pDataEntry, pCloseResults)
 		{
 			pResultEntry.click(function()
 			{
 				if (Settings.aCallback)
 				{
 					Settings.aCallback(pDataEntry);
-					toggleResults(false);
+					if (pCloseResults)
+					{
+						toggleResults(false);
+					}
 				}
 				pResultsList.removeData("selectedresult");
 			});
@@ -18755,7 +18767,7 @@ Q = {
 								var resultentry = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(item.rarity) + "' data-id='" + itemid + "'>"
 									+ "<img src='" + item.icon + "'>"
 									+ U.highlightSubstring(item.name, pQuery) + "</dfn>").appendTo(resultslist.find(".itmSearchResultLine_" + itemid));
-								bindResultClick(resultslist, resultentry, item);
+								bindResultClick(resultslist, resultentry, item, true);
 								
 								I.updateScrollbar(resultsscroll);
 								// Tooltip for the listed item
@@ -19871,7 +19883,7 @@ E = {
 				}
 				I.print(E.formatListings(pItem, pListing));
 				I.bindConsoleInput();
-			});	
+			});
 		});
 	},
 	
@@ -25191,23 +25203,26 @@ M = {
 		this.bindMarkerCoordBehavior(marker, "click");
 		marker.on("mousedown", function(pEvent)
 		{
-			if (pEvent.originalEvent.which === I.ClickEnum.Middle)
+			switch (pEvent.originalEvent.which)
 			{
-				// If middle click then set as starting pin
-				that.optimizePersonalPath(index);
-			}
-			else
-			{
-				if (this.options.isMarked === undefined || this.options.isMarked === false)
+				case I.ClickEnum.Left:
 				{
-					this.options.isMarked = true;
-					this.setOpacity(0.3);
-				}
-				else
+					if (this.options.isMarked === undefined || this.options.isMarked === false)
+					{
+						this.options.isMarked = true;
+						this.setOpacity(0.3);
+					}
+					else
+					{
+						this.options.isMarked = false;
+						this.setOpacity(1);
+					}
+				} break;
+				case I.ClickEnum.Middle:
 				{
-					this.options.isMarked = false;
-					this.setOpacity(1);
-				}
+					// If middle click then set as starting pin
+					that.optimizePersonalPath(index);
+				} break;
 			}
 		});
 		// Double click pin: remove itself from map
@@ -29007,22 +29022,25 @@ G = {
 			M.bindMarkerCoordBehavior(pMarker, "click");
 			pMarker.on("mousedown", function(pEvent)
 			{
-				if (pEvent.originalEvent.which === I.ClickEnum.Middle)
+				switch (pEvent.originalEvent.which)
 				{
-					M.createPersonalPin(this.getLatLng(), true);
-				}
-				else
-				{
-					if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
+					case I.ClickEnum.Left:
 					{
-						setNodeState(pMarker, X.ChecklistEnum.Unchecked);
-						this.setOpacity(1);
-					}
-					else
+						if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
+						{
+							setNodeState(pMarker, X.ChecklistEnum.Unchecked);
+							this.setOpacity(1);
+						}
+						else
+						{
+							setNodeState(pMarker, X.ChecklistEnum.Checked);
+							this.setOpacity(opacityclicked);
+						}
+					} break;
+					case I.ClickEnum.Middle:
 					{
-						setNodeState(pMarker, X.ChecklistEnum.Checked);
-						this.setOpacity(opacityclicked);
-					}
+						M.createPersonalPin(this.getLatLng(), true);
+					} break;
 				}
 			});
 		};

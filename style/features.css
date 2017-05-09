@@ -380,16 +380,17 @@ dt.jpzListNameHover {
 
 .mapNeedle0, .mapNeedle1, .mapNeedle2 {
 	border-radius: 50%;
+	line-height: normal;
 	font-family: sans-serif;
-	font-size: 12px;
+	font-size: 14px;
+	font-weight: bold;
 	text-align: center;
 	background: none;
 	text-shadow:
-		1px 1px 0px #000,
-		-1px -1px 0px #000,
-		1px -1px 0px #000,
-		-1px 1px 0px #000,
-		1px 1px 0px #000;
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 	opacity: 0.9;
 }
 .mapNeedle0 { border: 2px solid lime; }

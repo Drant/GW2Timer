@@ -404,6 +404,7 @@ Back: [
 	{u: 2361, i: 46649, n: "King Toad Backpack Cover", p: {achievement: 0}},
 	{u: 2360, i: 46652, n: "Storm Wizard Backpack Cover", p: {achievement: 0}},
 	{u: 6668, i: 78069, n: "Kaiser Snake Backpack Cover", p: {achievement: 0}},
+	{u: 7201, i: 80881, n: "Crimson Assassin Backpack Cover", p: {achievement: 0}},
 	{u: 2359, i: 44735, n: "Plush Moto Backpack", p: {bubble: 20}},
 	{u: 2363, i: 39512, n: "Plush Charr Backpack", p: {gem: 300}},
 	{u: 2364, i: 39508, n: "Tiger Charr Backpack", b: [39508]},
@@ -490,7 +491,8 @@ Back: [
 	{u: 7200, i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: 700}},
 	{u: 7202, i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: 700}},
 	{u: 7209, i: 81007, n: "Druid Stone", p: {achievement: 0}},
-	{u: 7216, i: 81089, n: "Living Druid Stone", p: {achievement: 0}}
+	{u: 7216, i: 81089, n: "Living Druid Stone", p: {achievement: 0}},
+	{u: 7214, i: 81143, n: "Blooming Druid Stone", p: {achievement: 0}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", b: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},

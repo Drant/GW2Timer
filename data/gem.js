@@ -269,7 +269,8 @@ Weapon: [
 	{i: 79386, n: "Dragon Kama Skin", p: {gem: -600}},
 	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: -600}},
 	{i: 80861, n: "Shield of the Goddess", p: {gem: -600}},
-	{i: 80981, n: "Hourglass Staff", p: {gem: -600}}
+	{i: 80981, n: "Hourglass Staff", p: {gem: -600}},
+	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: -600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
