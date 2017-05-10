@@ -308,10 +308,10 @@ BlackLionWeapon: [
 	{i: 78772, n: "Cavalier weapon skins#Gallery", p: {blticket: 3}},
 	{i: 78924, n: "Privateer weapon skins#Gallery", p: {blticket: 1}},
 	{i: 79261, n: "Embellished weapon skins#Gallery", p: {blticket: 3}},
-	{i: 79389, n: "Bloodstone weapon skins#Gallery", p: {blticket: 2}},
-	{i: 79655, n: "Gargoyle weapon skins#Gallery", p: {blticket: 2}},
-	{i: 80041, n: "Frostforged weapon skins#Gallery", p: {blticket: 2}},
-	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 1}},
+	{i: 79389, n: "Bloodstone weapon skins#Gallery", p: {blticket: 3}},
+	{i: 79655, n: "Gargoyle weapon skins#Gallery", p: {blticket: 3}},
+	{i: 80041, n: "Frostforged weapon skins#Gallery", p: {blticket: 3}},
+	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 2}},
 	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [

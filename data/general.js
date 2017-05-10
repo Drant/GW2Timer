@@ -1541,7 +1541,7 @@ Announcement:
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
 		content: "Draconis Mons <a href='http://forum.renaka.com/topic/8097624/'>event times research</a>; appears to be instance based, so timer cannot be created.",
-		Finish: new Date("2017-05-10T16:00:00Z")
+		Finish: new Date("2017-05-16T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",

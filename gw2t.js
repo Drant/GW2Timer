@@ -8148,6 +8148,122 @@ A = {
 	},
 	
 	/*
+	 * Inserts a token (row) into the API key manager.
+	 * @param string pName.
+	 * @param string pAPIKey.
+	 */
+	insertTokenRow: function(pName, pAPIKey, pIsUsed)
+	{
+		var token = $("<div class='accToken'></div>").appendTo("#accTokenList");
+		var link = $("<img class='accTokenLink curClick' src='img/ui/link.png' title='Get private <dfn>shareable link</dfn>.' />").appendTo(token);
+		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
+		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
+		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
+		var use = $("<button class='accTokenUse' title='<dfn>" + D.getWordCapital("use") + "</dfn> "
+			+ D.getPhrase("this key") + ".<br />" + D.getPhraseOriginal("Double click to audit") + ".'><img src='img/ui/adjust_use.png' /></button>").appendTo(buttons);
+		var del = $("<button class='accTokenDelete' title='<dfn>" + D.getWordCapital("delete") + "</dfn> "
+			+ D.getPhrase("this key") + ".'><img src='img/ui/adjust_del.png' /></button>").appendTo(buttons);
+		var updateLink = function()
+		{
+			I.updateClipboard(link[0], "http://gw2timer.com#" + U.escapeHTML(U.stripToAlphanumericDash(key.val())));
+		};
+		
+		// Use the token if specified
+		if (pIsUsed === true)
+		{
+			A.TokenCurrent = U.stripToAlphanumericDash(pAPIKey);
+			name.addClass("cssInputActive");
+			use.addClass("btnActive");
+		}
+		
+		// Button to use this token's API key
+		use.click(function()
+		{
+			var str = key.val();
+			if (str.length > 0)
+			{
+				$(".accTokenName").removeClass("cssInputActive");
+				$(".accTokenUse").removeClass("btnActive");
+				name.addClass("cssInputActive");
+				use.addClass("btnActive").find("img");
+				A.TokenCurrent = U.stripToAlphanumericDash(str);
+				A.loadToken();
+				A.saveTokens();
+			}
+			else
+			{
+				I.write("Please enter a valid API key.");
+			}
+		}).dblclick(function()
+		{
+			U.interpretPage(I.SpecialPageEnum.Audit);
+		});
+		// Entering a new key in the input box triggers the use button
+		key.change(function()
+		{
+			use.trigger("click");
+			updateLink();
+		});
+		// Clicking the link icon gets a shareable URL
+		I.bindClipboard(link);
+		updateLink();
+		// Button to delete this token
+		del.click(function()
+		{
+			var str = key.val();
+			if (O.Utilities.APITokens.value.length > 1)
+			{
+				// Ask for confirmation if key is not empty
+				if (str.length > 0)
+				{
+					if (confirm("Delete this API token?\nNote: Audit history must be manually deleted at gw2timer.com/audit"))
+					{
+						token.remove();
+						A.saveTokens();
+					}
+				}
+				else
+				{
+					token.remove();
+					A.saveTokens();
+				}
+				I.qTip.hide();
+			}
+			else
+			{
+				I.write("Must have at least one API token.");
+			}
+		});
+		// Autoselect the input boxes on click and save on change
+		$([name, key]).each(function()
+		{
+			$(this).click(function()
+			{
+				$(this).select();
+			}).change(function()
+			{
+				A.saveTokens();
+			});
+		});
+		// Highlight the row when hovered on a button
+		$([link, buttons]).each(function()
+		{
+			$(this).hover(
+				function()
+				{
+					name.addClass("cssInputFocused");
+					key.addClass("cssInputFocused");
+				},
+				function()
+				{
+					name.removeClass("cssInputFocused");
+					key.removeClass("cssInputFocused");
+				}
+			);
+		});
+	},
+	
+	/*
 	 * Creates a token object which contains a token's name and the API key string.
 	 * @param string pName.
 	 * @param string pAPIKey.
@@ -8303,122 +8419,6 @@ A = {
 				I.print(A.URL[i]);
 			}
 		}
-	},
-	
-	/*
-	 * Inserts a token (row) into the API key manager.
-	 * @param string pName.
-	 * @param string pAPIKey.
-	 */
-	insertTokenRow: function(pName, pAPIKey, pIsUsed)
-	{
-		var token = $("<div class='accToken'></div>").appendTo("#accTokenList");
-		var link = $("<img class='accTokenLink curClick' src='img/ui/link.png' title='Get private <dfn>shareable link</dfn>.' />").appendTo(token);
-		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
-		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
-		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
-		var use = $("<button class='accTokenUse' title='<dfn>" + D.getWordCapital("use") + "</dfn> "
-			+ D.getPhrase("this key") + ".<br />" + D.getPhraseOriginal("Double click to audit") + ".'><img src='img/ui/adjust_use.png' /></button>").appendTo(buttons);
-		var del = $("<button class='accTokenDelete' title='<dfn>" + D.getWordCapital("delete") + "</dfn> "
-			+ D.getPhrase("this key") + ".'><img src='img/ui/adjust_del.png' /></button>").appendTo(buttons);
-		var updateLink = function()
-		{
-			I.updateClipboard(link[0], "http://gw2timer.com#" + U.escapeHTML(U.stripToAlphanumericDash(key.val())));
-		};
-		
-		// Use the token if specified
-		if (pIsUsed === true)
-		{
-			A.TokenCurrent = U.stripToAlphanumericDash(pAPIKey);
-			name.addClass("cssInputActive");
-			use.addClass("btnActive");
-		}
-		
-		// Button to use this token's API key
-		use.click(function()
-		{
-			var str = key.val();
-			if (str.length > 0)
-			{
-				$(".accTokenName").removeClass("cssInputActive");
-				$(".accTokenUse").removeClass("btnActive");
-				name.addClass("cssInputActive");
-				use.addClass("btnActive").find("img");
-				A.TokenCurrent = U.stripToAlphanumericDash(str);
-				A.loadToken();
-				A.saveTokens();
-			}
-			else
-			{
-				I.write("Please enter a valid API key.");
-			}
-		}).dblclick(function()
-		{
-			U.interpretPage(I.SpecialPageEnum.Audit);
-		});
-		// Entering a new key in the input box triggers the use button
-		key.change(function()
-		{
-			use.trigger("click");
-			updateLink();
-		});
-		// Clicking the link icon gets a shareable URL
-		I.bindClipboard(link);
-		updateLink();
-		// Button to delete this token
-		del.click(function()
-		{
-			var str = key.val();
-			if (O.Utilities.APITokens.value.length > 1)
-			{
-				// Ask for confirmation if key is not empty
-				if (str.length > 0)
-				{
-					if (confirm("Delete this API token?\nNote: Audit history must be manually deleted at gw2timer.com/audit"))
-					{
-						token.remove();
-						A.saveTokens();
-					}
-				}
-				else
-				{
-					token.remove();
-					A.saveTokens();
-				}
-				I.qTip.hide();
-			}
-			else
-			{
-				I.write("Must have at least one API token.");
-			}
-		});
-		// Autoselect the input boxes on click and save on change
-		$([name, key]).each(function()
-		{
-			$(this).click(function()
-			{
-				$(this).select();
-			}).change(function()
-			{
-				A.saveTokens();
-			});
-		});
-		// Highlight the row when hovered on a button
-		$([link, buttons]).each(function()
-		{
-			$(this).hover(
-				function()
-				{
-					name.addClass("cssInputFocused");
-					key.addClass("cssInputFocused");
-				},
-				function()
-				{
-					name.removeClass("cssInputFocused");
-					key.removeClass("cssInputFocused");
-				}
-			);
-		});
 	},
 	
 	/*

@@ -21,12 +21,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	
-	{i: 79531, n: "Mursaat Robes", p: {gem: 490}, discount: 700},
 	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: 640}, discount: 800},
 	{i: 43102, n: "Trickster's Light-Armor Skin", p: {gem: 640}, discount: 800},
-	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 192}, discount: 250},
+	{i: 79531, n: "Mursaat Robes", p: {gem: 490}, discount: 700},
 	{i: 77811, n: "Electromagnetic-Descender Glider", p: {gem: 308}, discount: 400},
+	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 192}, discount: 250},
 	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: 600}},
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
 	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: 700}},
@@ -46,7 +45,6 @@ GW2T_SALE_DATA = {
 	{i: 67840, n: "Mini Drooburt's Ghost", p: {gem: 350}},
 	{i: 70191, n: "Mini Wyvern", p: {gem: 350}},
 	{i: 69621, n: "Miniature Moose", p: {gem: 350}},
-	{i: 47900, n: "Metallurgic Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-05-16T16:00:00Z")},
-	{i: 67028, n: "Chaos weapon skins#Gallery", p: {blticket: 5}}
+	{i: 47900, n: "Metallurgic Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-05-16T16:00:00Z")}
 	]
 };
