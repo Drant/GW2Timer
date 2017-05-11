@@ -1986,7 +1986,8 @@ Armor_Heavy_Gloves: [
 	{u: 5623, i: 80788, n: "Ardent Glorious Gauntlets", p: {glory: 150}},
 	{u: 7121, i: 80335, n: "Gauntlets of the Obedient", p: {magnetite: 600}},
 	{u: 7153, i: 80673, n: "Refined Envoy Gauntlets", p: {craft: true}},
-	{u: 7107, i: 80205, n: "Perfected Envoy Gauntlets", p: {craft: true}}
+	{u: 7107, i: 80205, n: "Perfected Envoy Gauntlets", p: {craft: true}},
+	{u: 1542, i: 80892, n: "Heavy Scale Armguards", p: {pvp: true}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", b: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -3216,7 +3217,8 @@ Weapon_Focus: [
 	{u: 7054, i: 80021, n: "Frostforged Focus", b: [80021]},
 	{u: 7154, i: 80174, n: "Devoted Focus", b: [80174]},
 	{u: 7186, i: 80955, n: "Beastslayer Focus", b: [80955]},
-	{u: 7184, i: 80870, n: "Crimson Assassin Focus", p: {token: 8}}
+	{u: 7184, i: 80870, n: "Crimson Assassin Focus", p: {token: 8}},
+	{u: 7208, i: 81001, n: "Replica Mirror of Lyssa", p: {gem: 600}}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", b: [49344]},

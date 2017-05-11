@@ -4818,7 +4818,7 @@ U = {
 			if (pString === undefined || pString === ".")
 			{
 				// This should be assigned when the website loads for the first time
-				suffixes = (I.ModeCurrent === I.ModeEnum.Website) ? ("?enu_Language=" + lang) : ("?enu_Language=" + lang + "&mode=" + I.ModeCurrent);
+				suffixes = (I.ModeCurrent === I.ModeEnum.Website) ? ("?enu_Language=" + lang) : ("?enu_Language=" + lang + "&mode=" + I.getMode());
 			}
 			else
 			{
