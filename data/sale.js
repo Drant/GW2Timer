@@ -21,6 +21,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
+	{i: "http://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 2000}},
+	{i: 77804, n: "Wings of Love Glider", p: {gem: 400}, Finish: new Date("2017-05-19T16:00:00Z")},
+	{i: 49933, n: "Bouquet of Roses", p: {gem: 250}, Finish: new Date("2017-05-19T16:00:00Z")},
+	{i: 43528, n: "Box of Chocolates", p: {gem: 250}, Finish: new Date("2017-05-19T16:00:00Z")},
+	{i: 41744, n: "Flame Dye Kit", p: {gem: 75}, discount: [[1, 75, 125], [5, 300, 500], [25, 1500, 2500]]},
 	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: 640}, discount: 800},
 	{i: 43102, n: "Trickster's Light-Armor Skin", p: {gem: 640}, discount: 800},
 	{i: 79531, n: "Mursaat Robes", p: {gem: 490}, discount: 700},

@@ -10699,7 +10699,7 @@ V = {
 		pCharacter.oCharElite = icon;
 		pCharacter.oCharProfession = icon;
 		pCharacter.oCharColor = A.Metadata.Profession[icon].color;
-		pCharacter.oCharIsLowLevel = (pCharacter.level < A.Metadata.ProfLevel.Max);
+		pCharacter.oCharIsLowLevel = (pCharacter.level < Q.ItemLimit.LevelMax);
 		if (pCharacter.specializations && pCharacter.specializations.pve)
 		{
 			var specs = pCharacter.specializations.pve;
@@ -11316,7 +11316,7 @@ V = {
 		var formatItemBrief = function(pBox)
 		{
 			var str = "";
-			var levelstr = (pBox.oData.level < A.Metadata.ProfLevel.Max) ? (" (" + pBox.oData.level + ")") : "";
+			var levelstr = (pBox.oData.level < Q.ItemLimit.LevelMax) ? (" (" + pBox.oData.level + ")") : "";
 			str = "<span class='eqpBriefName " + Q.getRarityClass(pBox.oData.rarity) + "'>" + pBox.oData.name + levelstr + "</span><br />";
 			pBox.oInfusions.forEach(function(iInfusion)
 			{
@@ -11993,9 +11993,7 @@ V = {
 					});
 				})(i, A.Possessions[i]);
 			}
-			B.createBankMenu(bank, {
-				aHelpMessage: $("#accHelpPossessions").html()
-			});
+			B.createBankMenu(bank);
 			B.tallyBank(container);
 		};
 		
@@ -12175,7 +12173,6 @@ V = {
 					aRecord: record,
 					aUnlockeds: unlockeds,
 					aIsCollapsed: true,
-					aHelpMessage: $("#accHelpRecipes").html(),
 					aTabIterator: function(pCatName)
 					{
 						var discipline = pCatName.split("_")[0];
@@ -12511,9 +12508,7 @@ V = {
 				// Update tallies
 				B.tallyBank(container);
 				// Create search bar
-				B.createBankMenu(bank, {
-					aHelpMessage: $("#accHelpVault").html()
-				});
+				B.createBankMenu(bank);
 			});
 		};
 		
@@ -12658,7 +12653,6 @@ V = {
 				aRecord: record,
 				aUnlockeds: pUnlockeds,
 				aIsCollapsed: true,
-				aHelpMessage: $("#accHelpWardrobe").html(),
 				aTabIterator: function(pCatName)
 				{
 					var catname = D.getObjectName(headers[pCatName]);
@@ -12707,8 +12701,6 @@ V = {
 			aWantGem: Settings.aWantGem
 		});
 		var bank = B.getTabsContainer(container).append(I.cThrobber);
-		var helpmsg = $("#accHelp" + section);
-		var helpstr = (helpmsg.length) ? helpmsg.html() : "";
 		var doGenerate = function(pUnlockeds)
 		{
 			B.generateUnlockables(bank, {
@@ -12716,7 +12708,6 @@ V = {
 				aRecord: U.getRecordData(section),
 				aUnlockeds: pUnlockeds,
 				aWantPrices: (Settings.aWantPrices !== false) ? true : false,
-				aHelpMessage: helpstr,
 				aCallback: Settings.aCallback
 			});
 		};
@@ -12812,7 +12803,6 @@ V = {
 					aHeaders: GW2T_DYES_HEADERS,
 					aRecord: GW2T_DYES_DATA,
 					aUnlockeds: pData,
-					aHelpMessage: $("#accHelpDyes").html(),
 					aWantDefaultHelp: false,
 					aWantSearchHighlight: false,
 					aIsDyes: true
@@ -12999,8 +12989,8 @@ V = {
 				var monthlyap = pData.monthly_ap;
 				container.find(".bnkPrice").append("<div class='achBankTotal'>"
 					+ E.PaymentFormat.achievement(bankap[0]) + " + "
-					+ dailyap.toLocaleString() + "<img class='css24' src='img/account/summary/daily.png' title='Daily AP' /> + "
-					+ monthlyap.toLocaleString() + "<img class='css24' src='img/account/summary/monthly.png' title='Monthly AP' /> = "
+					+ dailyap.toLocaleString() + "<img class='css24' src='img/account/summary/daily.png' /> + "
+					+ monthlyap.toLocaleString() + "<img class='css24' src='img/account/summary/monthly.png' /> = "
 					+ "<var class='achBankActual'>" + E.PaymentFormat.achievement(bankap[0] + dailyap + monthlyap) + "</var>"
 					+ " / " + E.PaymentFormat.achievement(bankap[0] + bankap[1] + dailyap + monthlyap)
 				+ "</div>");
@@ -13532,7 +13522,6 @@ V = {
 				aWantGemConvert: true,
 				aWantDefaultHelp: false,
 				aWantSearchHighlight: false,
-				aHelpMessage: $("#accHelpGem").html(),
 				aBind: function(pSlot, pItem)
 				{
 					var id = pItem.id;
@@ -13601,8 +13590,7 @@ V = {
 				aRecord: U.getRecordData("Museum"),
 				aIsCollapsed: true,
 				aWantSearchHighlight: false,
-				aWantDefaultHelp: false,
-				aHelpMessage: $("#accHelpMuseum").html()
+				aWantDefaultHelp: false
 			});
 			// Open the first tab, leaving the rest collapsed
 			setTimeout(function()
@@ -13740,8 +13728,7 @@ V = {
 				B.tallyBank(container);
 				// Create search bar
 				B.createBankMenu(bank, {
-					aIsCollection: true,
-					aHelpMessage: $("#accHelpPact").html()
+					aIsCollection: true
 				});
 				generateStatistics();
 			});
@@ -14590,7 +14577,6 @@ B = {
 	 * @objparam boolean aIsPseudo if bank contains pseudo slots instead of items.
 	 * @objparam boolean aIsCollapsed whether to initially collapse all the tabs, assuming slots are generated, optional.
 	 * @objparam jqobject aReloadElement to trigger instead of the default reload, optional.
-	 * @objparam string aHelpMessage HTML of the message to append to the help screen, optional.
 	 * @pre Bank slots were generated.
 	 */
 	createBankMenu: function(pBank, pSettings)
@@ -14762,10 +14748,11 @@ B = {
 		$("<div class='bnkButtonHelp bnkButton curClick' title='Show this bank&apos;s <dfn>help</dfn> message.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
-			var helpmessage = (Settings.aHelpMessage) ? Settings.aHelpMessage : "";
+			var helpelm = $("#accHelp" + sectionname);
+			var helpsec = (helpelm.length) ? helpelm.html() : "";
 			if (isshowinghelp || I.isConsoleShown() === false)
 			{
-				I.help(helpmessage + $("#accHelpBank").html());
+				I.help(helpsec + (Settings.aHelpMessage || "") + $("#accHelpBank").html());
 			}
 			isshowinghelp = !isshowinghelp;
 		});
@@ -15279,7 +15266,6 @@ B = {
 	 * @objparam boolean aWantPrices to prefetch TP prices for all items.
 	 * @objparam boolean aWantSearchHighlight to use search highlight, optional.
 	 * @objparam boolean aWantDefaultHelp to append the unlockables help message, optional.
-	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aCallback to execute after generation.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
 	 * @objparam string aIsCustomCatalog if is the default catalog with custom tabs.
@@ -15482,11 +15468,10 @@ B = {
 			}
 			// Create bank menu
 			var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
-			var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
 			B.createBankMenu(pBank, {
 				aIsCollection: true,
 				aWantSearchHighlight: wantsearchhighlight,
-				aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
+				aHelpMessage: $("#accHelpUnlockables").html(),
 				aIsCustomCatalog: Settings.aIsCustomCatalog
 			});
 			B.updateBankTally(container, numsunlockedtotal, numintabstotal, numacquiredtotal);
@@ -15581,13 +15566,6 @@ B = {
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
-		}
-		
-		// Include help message if available
-		var helpmessage = $("#accHelp" + sectionnameupper);
-		if (helpmessage.length)
-		{
-			Settings.aHelpMessage = helpmessage.html();
 		}
 		
 		var container = B.createBank(dish, {

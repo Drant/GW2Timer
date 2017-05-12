@@ -404,9 +404,6 @@ var GW2T_ACCOUNT_METADATA = {
 		"34": "reaper",
 		"52": "herald"
 	},
-	ProfLevel: {
-		Max: 80
-	},
 	AchievementCategories: [ // Same order as in game, which is different from API
 		{en: "Daily", de: "Täglich", es: "Logros diarios", fr: "Quotidien", zh: "日常"},
 		97, // Daily
