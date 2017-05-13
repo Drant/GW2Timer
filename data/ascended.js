@@ -721,7 +721,8 @@ Back: [
 	{i: 80184, n: "Defender's Burden", p: {magnetite: 600}},
 	{i: 80118, n: "Defender's Burden (Infused)", p: {magnetite: 600}},
 	{i: 80541, n: "Healer's Burden", p: {magnetite: 600}},
-	{i: 80405, n: "Healer's Burden (Infused)", p: {magnetite: 600}}
+	{i: 80405, n: "Healer's Burden (Infused)", p: {magnetite: 600}},
+	{i: 81097, n: "The Wayfarer's Henge", p: {achievement: 0}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
