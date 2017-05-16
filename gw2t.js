@@ -16422,6 +16422,7 @@ Q = {
 	},
 	ItemLimit:
 	{
+		Unknown: 8055, // ID of an "unknown" item
 		FetchAPI: 800, // Max items before a function resorts to on demand downloads
 		TooltipLines: 100, // Text lines in a tooltip window
 		LevelMax: 80,
@@ -18082,7 +18083,12 @@ Q = {
 	},
 	getCachedItem: function(pID)
 	{
-		return Q.getBoxedItem(pID).oData;
+		var box = Q.getBoxedItem(pID);
+		if (box)
+		{
+			return box.oData;
+		}
+		return null;
 	},
 	
 	/*
@@ -35248,7 +35254,7 @@ H = {
 					}
 					else
 					{
-						list.push(43798);
+						list.push(Q.ItemLimit.Unknown);
 					}
 				}
 				updatetime = pData.feed.updated.$t;
