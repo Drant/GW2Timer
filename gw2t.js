@@ -33881,12 +33881,12 @@ T = {
 		// Day string
 		if (seconds >= T.cSECONDS_IN_DAY)
 		{
-			day = ~~(seconds / T.cSECONDS_IN_DAY) % daydivisor;
-			daystr = day + D.getWord("d") + ((seconds < T.cSECONDS_IN_YEAR) ? " " : "");
 			if (pWantShort)
 			{
-				return daystr;
+				return ~~(seconds / T.cSECONDS_IN_DAY) + D.getWord("d");
 			}
+			day = ~~(seconds / T.cSECONDS_IN_DAY) % daydivisor;
+			daystr = day + D.getWord("d") + ((seconds < T.cSECONDS_IN_YEAR) ? " " : "");
 		}
 		// Include hms only if duration is less than a year
 		if (seconds < T.cSECONDS_IN_YEAR)
