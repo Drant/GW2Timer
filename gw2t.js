@@ -6638,7 +6638,7 @@ Z = {
 					currentitemids.push(parseInt(ithitemid));
 				}
 				// Find what item IDs are missing by comparing the API's current list with the one here
-				newitemids = (wantrebuild) ? currentitemids : U.getDifference(newitemslist, currentitemids);
+				newitemids = (wantrebuild) ? currentitemids : ((newitemids === undefined) ? U.getDifference(newitemslist, currentitemids) : newitemids);
 				if (newitemids.length)
 				{
 					U.fetchAPI(U.getAPIURL(type), newitemids, {

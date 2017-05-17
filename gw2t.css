@@ -1776,12 +1776,11 @@ textarea.jsCopyCode {
 	display: none;
 	margin-bottom: 8px;
 }
-#dsbAnnouncement:after, #dsbCountdown:after {
+#dsbCountdown:before, #dsbCountdown:after {
 	content: "";
 	display: block;
 	width: 100%; height: 1px;
 	margin-bottom: 8px;
-	margin-top: 8px;
 	background: linear-gradient(to right, transparent 0%, #333 100%);
 }
 .dsbCountdownEntry {

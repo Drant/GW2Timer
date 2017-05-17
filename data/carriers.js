@@ -36,6 +36,6 @@ Gem: [
 	{u: 11, i: 69628, n: "Aviator Quaggan Mail Carrier", p: {gem: 500}},
 	{u: 12, i: 69715, n: "Revenant Mail Carrier", p: {gem: 350}},
 	{u: 14, i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 0}},
-	{u: 16, i: 81215, n: "Hounds of Balthazar Mail Carrier", p: {gem: 0}},
+	{u: 16, i: 81215, n: "Hounds of Balthazar Mail Carrier", p: {gem: 0}}
 ]
 };

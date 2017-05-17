@@ -313,8 +313,9 @@ BlackLionWeapon: [
 	{i: 79389, n: "Bloodstone weapon skins#Gallery", p: {blticket: 3}},
 	{i: 79655, n: "Gargoyle weapon skins#Gallery", p: {blticket: 3}},
 	{i: 80041, n: "Frostforged weapon skins#Gallery", p: {blticket: 3}},
-	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 2}},
-	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 1}}
+	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 3}},
+	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 2}},
+	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},
@@ -602,7 +603,8 @@ Carrier: [
 	{i: 68682, n: "Sylvari Seed Pod Mail Carrier", p: {gem: 350}},
 	{i: 69628, n: "Aviator Quaggan Mail Carrier", p: {gem: 500}},
 	{i: 69715, n: "Revenant Mail Carrier", p: {gem: 350}},
-	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 0}}
+	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 0}},
+	{i: 81215, n: "Hounds of Balthazar Mail Carrier", p: {gem: 0}}
 ],
 Node: [
 	{i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
