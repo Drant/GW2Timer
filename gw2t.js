@@ -13999,6 +13999,7 @@ B = {
 		var itemsinbank = 0;
 		var bankfill = 0;
 		var bankcapacity = 0;
+		var iscollection = pContainer.data("iscollection");
 		B.getSlotsContainer(pContainer).each(function()
 		{
 			var tab = $(this).parent();
@@ -14032,6 +14033,10 @@ B = {
 				});
 				tabcapacity = slots.length;
 			}
+			if (iscollection)
+			{
+				itemsintab = 0;
+			}
 			// Tally tab
 			B.updateTabTally(tab, tabfill, tabcapacity, itemsintab);
 			// Sum tab
@@ -14039,6 +14044,10 @@ B = {
 			bankcapacity += tabcapacity;
 		});
 		// Tally bank
+		if (iscollection)
+		{
+			itemsinbank = 0;
+		}
 		B.updateBankTally(pContainer, bankfill, bankcapacity, itemsinbank);
 	},
 	
