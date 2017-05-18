@@ -5401,6 +5401,19 @@ Z = {
 				try { Z.APICacheConsole = JSON.parse(argstr); I.print("Parse JSON successful."); }
 				catch (e) { I.print("Parse JSON failed."); }
 			}},
+			url: {usage: "Prints the result of a URL. <em>Parameters: str_url</em>", f: function()
+			{
+				U.getJSON(argstr, function(pData)
+				{
+					if (pData)
+					{
+						I.prettyJSON(pData);
+					}
+				}).fail(function()
+				{
+					I.print("No results from URL.");
+				});
+			}},
 			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, str_querystring (optional)</em>", f: function()
 			{
 				if (args[1])
@@ -35219,6 +35232,7 @@ H = {
 		var animationspeed = 200;
 		var weekdaylocation = H.getDashboardPactWeekday();
 		var table = $("#dsbPactTable");
+		var defaultcoord = H.Pact.Coords[H.Pact.DefaultVendor];
 		
 		var finalizePactTable = function(pUpdateTime)
 		{
@@ -35298,7 +35312,7 @@ H = {
 						"<div class='dsbPactSide0'>"
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbPactIcon_" + i + "' class='dsbPactIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbPactItem_" + i + "' class='dsbPactItem curZoom " + Q.getRarityClass(recipe.rarity)
-								+ "' data-coord='" + (H.Pact.Coords[i])[weekdaylocation] + "'>" + product.name + "</span> "
+								+ "' data-coord='" + (H.Pact.Coords[i] || defaultcoord)[weekdaylocation] + "'>" + product.name + "</span> "
 							+ "</div>"
 						+ "<div class='dsbPactSide1'>"
 							+ "<span class='dsbPactPriceCoin' id='dsbPactPriceCoin_" + i + "'></span> "
@@ -35365,7 +35379,7 @@ H = {
 				for (var i in H.Pact.OffersAssoc)
 				{
 					var elm = $("<dfn id='dsbPactEntry_" + i + "' class='dsbPactEntry' data-coord='"
-						+ (H.Pact.Coords[i])[weekdaylocation] + "'>" + i + "</dfn>").appendTo(table);
+						+ (H.Pact.Coords[i] || defaultcoord)[weekdaylocation] + "'>" + i + "</dfn>").appendTo(table);
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
 			}
