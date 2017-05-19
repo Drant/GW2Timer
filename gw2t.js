@@ -35326,7 +35326,8 @@ H = {
 		var doGenerate = function(pData)
 		{
 			var updatetime;
-			var list = [];
+			var list = {};
+			var iserror = true;
 			try
 			{
 				var data = pData.feed.entry[0];
@@ -35335,17 +35336,18 @@ H = {
 					var id = parseInt(data["gsx$" + i.toLowerCase()].$t);
 					if (H.Pact.Products[id])
 					{
-						list.push(id);
+						list[i] = id;
+						iserror = false;
 					}
-					else
+					else if (id)
 					{
-						list.push(Q.ItemLimit.Unknown);
+						list[i] = Q.ItemLimit.Unknown;
 					}
 				}
 				updatetime = pData.feed.updated.$t;
 			}
 			catch (e) {}
-			if (list.length !== H.Pact.numOffers)
+			if (iserror)
 			{
 				I.removeThrobber(table);
 				I.write("Error parsing external data. Please collaboratively update the list.");
@@ -35355,7 +35357,7 @@ H = {
 			var idstofetch = [];
 			for (var i in H.Pact.OffersAssoc)
 			{
-				var recipeid = list[(H.Pact.OffersAssoc[i])];
+				var recipeid = list[i];
 				var productid = H.Pact.Products[recipeid] || recipeid;
 				idstofetch.push(recipeid);
 				idstofetch.push(productid);
@@ -35364,8 +35366,12 @@ H = {
 			{
 				for (var i in H.Pact.OffersAssoc)
 				{
+					var recipeid = list[i];
+					if (recipeid === undefined)
+					{
+						continue;
+					}
 					table.append("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>");
-					var recipeid = list[(H.Pact.OffersAssoc[i])];
 					var recipe = Q.getCachedItem(recipeid);
 					var productid = H.Pact.Products[recipeid] || recipeid;
 					var product = Q.getCachedItem(productid);
@@ -35390,12 +35396,8 @@ H = {
 					var icon = $("#dsbPactIcon_" + i);
 					icon.attr("src", product.icon);
 					Q.scanItem(product, {aElement: icon});
-					// Finalize the table after every offer has been added
-					if ($(".dsbPactItem").length === H.Pact.numOffers)
-					{
-						finalizePactTable(updatetime);
-					}
 				}
+				finalizePactTable(updatetime);
 			});
 		};
 		
