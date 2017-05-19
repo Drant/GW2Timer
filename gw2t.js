@@ -8055,9 +8055,13 @@ A = {
 		// Put padding between the menu bar and the content
 		if (A.DishCurrent)
 		{
-			A.DishCurrent.parent().find(".accDishPadding").css({height: $("#accOverhead").height() + "px"});
+			A.DishCurrent.parent().find(".accDishPadding").css({height: A.getOverheadHeight() + "px"});
 			A.adjustAccountScrollbar();
 		}
+	},
+	getOverheadHeight: function()
+	{
+		return $("#accOverhead").height();
 	},
 	
 	/*
@@ -12060,7 +12064,8 @@ V = {
 	 */
 	serveRecipes: function()
 	{
-		if (V.requireCharacters("Recipes"))
+		var section = "Recipes";
+		if (V.requireCharacters(section))
 		{
 			return;
 		}
@@ -12091,6 +12096,7 @@ V = {
 			// Merge the record arrays into one lookup table
 			var recipelookup = {}; // Will be used to find a character's unlocked recipe
 			var itemlookup = {}; // Will be used to find a character's unlocked recipe by searching with the item
+			var searchscope = {};
 			var discname, entry, recipeid, itemid;
 			for (var i in record)
 			{
@@ -12098,6 +12104,7 @@ V = {
 				for (var ii = 0; ii < record[i].length; ii++)
 				{
 					entry = (record[i])[ii];
+					searchscope[entry.i] = i;
 					if (recipelookup[entry.u] === undefined)
 					{
 						recipelookup[entry.u] = {
@@ -12192,7 +12199,12 @@ V = {
 						var catname = D.getObjectName(headers[pCatName]);
 						var caticon = "<ins class='bnkTabIcon acc_craft acc_craft_" + discipline.toLowerCase() + "'></ins>"
 							+ "<ins class='bnkTabIcon acc_recipes acc_recipes_" + pCatName.toLowerCase() + "'></ins>";
-						var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
+						var tab = B.createBankTab(bank, {
+							aID: "rcpTab_" + pCatName,
+							aTitle: catname,
+							aIcon: caticon,
+							aIsCollapsed: true
+						});
 						return tab;
 					}
 				});
@@ -12204,6 +12216,7 @@ V = {
 				 */
 				var searchbar = $("#accDishMenu_Recipes").find(".bnkSearch .bnkSearchInput").first();
 				Q.bindItemSearch(searchbar, {
+					aScope: searchscope,
 					aFillerText: null,
 					aCallback: function(pItem)
 					{
@@ -12217,6 +12230,20 @@ V = {
 						{
 							I.write("None of your characters have learned how to craft " + itemname);
 						}
+						// Show the tab the item is in
+						var thistab = $("#rcpTab_" + searchscope[pItem.id]);
+						B.showBankTab(thistab);
+						I.scrollToElement(thistab, {
+							aOffset: -A.getOverheadHeight(),
+							aSpeed: "fast"
+						});
+						setTimeout(function()
+						{
+							I.scrollToElement(thistab, {
+								aOffset: -A.getOverheadHeight()
+							});
+							B.refreshBankSearch(section);
+						}, 2000);
 					}
 				});
 			});
@@ -12856,9 +12883,10 @@ V = {
 			var createTab = function(pCategory)
 			{
 				tab = B.createBankTab(bank, {
+					aID: "achTab_" + pCategory.id,
 					aTitle: pCategory.name,
 					aIcon: "<img class='bnkTabIcon' src='" + pCategory.icon + "' />"
-				}).attr("id", "achTab_" + pCategory.id);
+				});
 				
 				// Compute all achievements for showing on the bank and tab tallies
 				for (var ii = 0; ii < pCategory.achievements.length; ii++)
@@ -12908,6 +12936,7 @@ V = {
 								processedach = Q.processAchievement(ithach, ithunlock);
 								
 								slot = B.createPseudoSlot(slotscontainer, {
+									aID: "achSlot_" + achid,
 									aIsUnlocked: (ithunlock && ithunlock.done) ? true : false,
 									aName: ithach.name,
 									aLabel: ithach.name,
@@ -12991,8 +13020,9 @@ V = {
 			B.createBankDivider(container);
 			B.createBankMenu(bank, {
 				aIsPseudo: true,
+				aIsCollapsed: true,
 				aWantCard: true,
-				aIsCollapsed: true
+				aWantSearchHighlight: true
 			});
 			// Total the account's achievement points
 			$.getJSON(A.getURL(A.URL.Account), function(pData)
@@ -13018,12 +13048,11 @@ V = {
 				aCallback: function(pAch)
 				{
 					// Scroll to the bank tab (category) when clicked on an achievement in the search results
-					var thistab = $("#achTab_" + pAch.oCategoryID);
-					I.scrollToElement(thistab, {
-						aOffset: -$("#accOverhead").height(),
+					B.showBankTab($("#achTab_" + pAch.oCategoryID));
+					I.scrollToElement($("#achSlot_" + pAch.id), {
+						aOffset: -A.getOverheadHeight(),
 						aSpeed: "fast"
 					});
-					B.showBankTab(thistab);
 				}
 			});
 		};
@@ -13895,6 +13924,10 @@ B = {
 		{
 			B.toggleBankTab(tab);
 		});
+		if (Settings.aID)
+		{
+			tab.attr("id", Settings.aID);
+		}
 		if (Settings.aIsCollapsed)
 		{
 			I.toggleToggleIcon(tabtoggle, false);
@@ -14142,6 +14175,10 @@ B = {
 		var slot = B.createBankSlot(pSlotContainer);
 		var count = 0;
 		
+		if (Settings.aID)
+		{
+			slot.attr("id", Settings.aID);
+		}
 		if (Settings.aName)
 		{
 			slot.click(function(pEvent)
@@ -15016,6 +15053,10 @@ B = {
 	getBankSearch: function(pSection)
 	{
 		return $("#accDishMenu_" + U.toFirstUpperCase(pSection)).find(".bnkSearch .bnkSearchInput").first();
+	},
+	refreshBankSearch: function(pSection)
+	{
+		B.getBankSearch(pSection).trigger("input");
 	},
 	
 	/*
@@ -16323,7 +16364,7 @@ Q = {
 	},
 	isBoxedFully: {}, // Whether all data has been stored for that API type
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
-	SearchDatabase: null,
+	SearchDatabase: null, // Search array for all items
 	CleanableFilter: null, // Associative array of cleanable items to be used by the bank filters, not the cleanup tool
 	ItemEnum: // Corresponds to item details type property
 	{
@@ -18653,6 +18694,7 @@ Q = {
 	 * @objparam int aResultsLimit max number of results to show, optional.
 	 * @objparam boolean aIsSelect whether to emulate the <select> functionality, optional.
 	 * @objparam boolean aWantEnter whether to bind the default Enter key event, optional.
+	 * @objparam object aScope associative array of item IDs to limit the search, optional.
 	 * @objparam objarray aDatabase custom search database to use instead of items search, optional.
 	 * @objparam object aAchievements account's achievement unlocks, optional.
 	 * @objparam function aCallback to execute after the user selects an item.
@@ -18676,7 +18718,7 @@ Q = {
 		var resultslist = $("<div class='itmSearchResultList'></div>").appendTo(resultsscroll);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
 		var isitemsearch = (Settings.aDatabase === undefined);
-		var searchindexes = [], isdirectionchanged, searchtimestamp;
+		var itemsearchdb, searchindexes = [], isdirectionchanged, searchtimestamp;
 		
 		if (Settings.aFillerText !== null)
 		{
@@ -18872,7 +18914,7 @@ Q = {
 			// Else proceed with regular search through the database
 			var entry, subqueries, result, searchname, ismatch;
 			var resultsarr = [];
-			var searchdatabase = (isitemsearch) ? Q.SearchDatabase : Settings.aDatabase;
+			var searchdatabase = (isitemsearch) ? itemsearchdb : Settings.aDatabase;
 			
 			for (var i = startingindex; i < searchdatabase.length; i++)
 			{
@@ -18941,6 +18983,26 @@ Q = {
 			resultslist.append(I.cThrobber);
 			var bindSearch = function()
 			{
+				// Initialize the item search if used
+				if (isitemsearch)
+				{
+					if (Settings.aScope)
+					{
+						itemsearchdb = [];
+						for (var i = 0; i < Q.SearchDatabase.length; i++)
+						{
+							if (Settings.aScope[((Q.SearchDatabase[i])[0])])
+							{
+								itemsearchdb.push(Q.SearchDatabase[i]);
+							}
+						}
+					}
+					else
+					{
+						itemsearchdb = Q.SearchDatabase;
+					}
+				}
+				
 				toggleResults(false);
 				// Bind search execution
 				elm.on("input", $.throttle(E.cSEARCH_LIMIT, function()
@@ -35231,8 +35293,8 @@ H = {
 	{
 		var animationspeed = 200;
 		var weekdaylocation = H.getDashboardPactWeekday();
+		var defaultcoords = H.Pact.Coords[H.Pact.DefaultVendor];
 		var table = $("#dsbPactTable");
-		var defaultcoord = H.Pact.Coords[H.Pact.DefaultVendor];
 		
 		var finalizePactTable = function(pUpdateTime)
 		{
@@ -35312,7 +35374,7 @@ H = {
 						"<div class='dsbPactSide0'>"
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbPactIcon_" + i + "' class='dsbPactIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbPactItem_" + i + "' class='dsbPactItem curZoom " + Q.getRarityClass(recipe.rarity)
-								+ "' data-coord='" + (H.Pact.Coords[i] || defaultcoord)[weekdaylocation] + "'>" + product.name + "</span> "
+								+ "' data-coord='" + (H.Pact.Coords[i] || defaultcoords)[weekdaylocation] + "'>" + product.name + "</span> "
 							+ "</div>"
 						+ "<div class='dsbPactSide1'>"
 							+ "<span class='dsbPactPriceCoin' id='dsbPactPriceCoin_" + i + "'></span> "
@@ -35379,7 +35441,7 @@ H = {
 				for (var i in H.Pact.OffersAssoc)
 				{
 					var elm = $("<dfn id='dsbPactEntry_" + i + "' class='dsbPactEntry' data-coord='"
-						+ (H.Pact.Coords[i] || defaultcoord)[weekdaylocation] + "'>" + i + "</dfn>").appendTo(table);
+						+ (H.Pact.Coords[i] || defaultcoords)[weekdaylocation] + "'>" + i + "</dfn>").appendTo(table);
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
 			}

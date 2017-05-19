@@ -318,6 +318,7 @@ BlackLionWeapon: [
 	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
+	//{i: "http://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 2000}},
 	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},
 	{i: 37190, n: "Consortium Chest", p: {gem: -250}, discount: [[1, 250], [5, 1100]]},
 	{i: 42600, n: "Southsun Supply Crate", p: {gem: -150}, discount: [[1, 150], [10, 1200]]},
@@ -520,7 +521,7 @@ Mini: [
 	{i: 67024, n: "Miniature Glowing Bat", p: {gem: -166}},
 	{i: 67026, n: "Mini Mad King Head", p: {gem: -166}},
 	{i: 67837, n: "Miniature Belinda Delaqua", p: {gem: -350}},
-	{i: 67840, n: "Mini Drooburt's Ghost", p: {gem: -350}},
+	{i: 67840, n: "Mini Drooburt's Ghost", p: {gem: 350}},
 	{i: 67839, n: "Mini Pact Airship", p: {gem: -350}},
 	{i: 67838, n: "Mini Sand Giant", p: {gem: -350}},
 	{i: 68432, n: "Mini Festive Lord Faren", p: {gem: -500}},
@@ -540,7 +541,7 @@ Mini: [
 	{i: 73815, n: "Mini Ghoul Legs", p: {gem: -300}},
 	{i: 70300, n: "Mini Bonebreaker", p: {gem: -350}},
 	{i: 70231, n: "Mini Tiger", p: {gem: -350}},
-	{i: 70191, n: "Mini Wyvern", p: {gem: -350}},
+	{i: 70191, n: "Mini Wyvern", p: {gem: 350}},
 	{i: 70234, n: "Mini Angry Chest", p: {gem: -400}},
 	{i: 77339, n: "Mini Sabetha", p: {gem: -350}},
 	{i: 77621, n: "Mini Angry Wintersday Gift", p: {gem: -400}},
