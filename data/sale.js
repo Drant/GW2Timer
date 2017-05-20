@@ -35,15 +35,11 @@ GW2T_SALE_DATA = {
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}, Finish: new Date("2017-05-22T16:00:00Z")},
 	{i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}, Finish: new Date("2017-05-22T16:00:00Z")},
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}, Finish: new Date("2017-05-21T16:00:00Z")},
-	{i: 78006, n: "Ironclad Glider", p: {gem: 500}, Finish: new Date("2017-05-21T16:00:00Z")},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}, Finish: new Date("2017-05-21T16:00:00Z")},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 76236, n: "Exalted Glider", p: {gem: 400}, Finish: new Date("2017-05-21T16:00:00Z")},
-	{i: 42960, n: "Mini Scruffy", p: {gem: 500}},
 	{i: 45044, n: "Mini Frostbite", p: {gem: 400}},
 	{i: 77649, n: "Mini Arrowhead", p: {gem: 400}},
 	{i: 67839, n: "Mini Pact Airship", p: {gem: 350}},
-	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}},
-	{i: 69621, n: "Miniature Moose", p: {gem: 350}}
+	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}}
 	]
 };
