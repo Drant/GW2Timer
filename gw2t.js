@@ -35370,6 +35370,10 @@ H = {
 					var productid = H.Pact.Products[recipeid] || recipeid;
 					var recipe = Q.getCachedItem(recipeid) || Q.getCachedItem(productid);
 					var product = Q.getCachedItem(productid);
+					if (recipe === null)
+					{
+						continue;
+					}
 					var wikiquery = (D.isLanguageDefault) ? recipe.name : recipeid.toString();
 					table.append("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>");
 					$("#dsbPactEntry_" + i).html(
