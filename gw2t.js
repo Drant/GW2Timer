@@ -35334,14 +35334,10 @@ H = {
 				for (var i in H.Pact.OffersAssoc)
 				{
 					var id = parseInt(data["gsx$" + i.toLowerCase()].$t);
-					if (H.Pact.Products[id])
+					if (id || H.Pact.Products[id])
 					{
 						list[i] = id;
 						iserror = false;
-					}
-					else if (id)
-					{
-						list[i] = Q.ItemLimit.Unknown;
 					}
 				}
 				updatetime = pData.feed.updated.$t;
@@ -35371,11 +35367,11 @@ H = {
 					{
 						continue;
 					}
-					table.append("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>");
-					var recipe = Q.getCachedItem(recipeid);
+					var recipe = Q.getCachedItem(recipeid) || Q.getCachedItem(productid);
 					var productid = H.Pact.Products[recipeid] || recipeid;
 					var product = Q.getCachedItem(productid);
 					var wikiquery = (D.isLanguageDefault) ? recipe.name : recipeid.toString();
+					table.append("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>");
 					$("#dsbPactEntry_" + i).html(
 						"<div class='dsbPactSide0'>"
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbPactIcon_" + i + "' class='dsbPactIcon' src='img/ui/placeholder.png' /></a> "
