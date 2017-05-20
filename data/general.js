@@ -1672,8 +1672,8 @@ Countdown: {
 		name_fr: "Bonus de carte Flambecœur",
 		name_zh: "炎心高地地图奖金",
 		url: "https://wiki.guildwars2.com/wiki/Map_bonus_reward/profit",
-		Start: new Date("2017-05-25T20:00:00Z"),
-		Finish: new Date("2017-06-01T20:00:00Z")
+		Start: new Date("2017-05-18T20:00:00Z"),
+		Finish: new Date("2017-05-25T20:00:00Z")
 	}
 	/*{
 		name_en: "Living Story 3: Episode VI",
