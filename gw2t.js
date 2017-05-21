@@ -5343,6 +5343,14 @@ Z = {
 			trace: {usage: "Prints GPS information continuously by toggle (overlay only).", f: function()
 			{
 				P.isGPSPrinting = !P.isGPSPrinting;
+				if (P.isGPSPrinting)
+				{
+					I.print("Trace started.");
+				}
+				else
+				{
+					I.print("Trace stopped.");
+				}
 			}},
 			agent: {usage: "Prints browser's navigator object.", f: function()
 			{
@@ -28757,7 +28765,8 @@ P = {
 				if (P.isGPSPrinting)
 				{
 					I.clear();
-					I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />"
+					I.print("Coord: " + P.formatCoord(coord) + "<br />"
+						+ "Position: " + U.formatJSON(GPSPositionArray) + "<br />"
 						+ "Direction: " + U.formatJSON(GPSDirectionArray) + "<br />"
 						+ "Perspective: " + U.formatJSON(GPSPerspectiveArray) + "<br />"
 						+ "Camera: " + U.formatJSON(GPSCameraArray)
