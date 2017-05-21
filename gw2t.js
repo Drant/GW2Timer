@@ -6347,60 +6347,78 @@ Z = {
 	 * Creates JSON files containing an associative array of item details, for
 	 * use by a specific Account page section.
 	 * @param string pType section.
+	 * @param intarray IDs to include instead of using the section record, optional.
 	 */
-	updateItemsSubdatabase: function(pType)
+	updateItemsSubdatabase: function(pType, pIDs)
 	{
 		var scripturl = U.getDataScriptURL(pType.toLowerCase());
+		var dblang;
+		var itemids = [];
+		var createSubdatabase = function()
+		{
+			itemids = U.getUnique(itemids);
+			for (var i in dblang)
+			{
+				// Reinitialize for ith language
+				Z.APICacheArrayOfObjects = null;
+				Z.APICacheArrayOfObjects = [];
+				var db = dblang[i];
+				var ithid;
+				for (var ii = 0; ii < itemids.length; ii++)
+				{
+					ithid = itemids[ii];
+					if (db[ithid])
+					{
+						Z.APICacheArrayOfObjects.push(db[ithid]);
+					}
+					else if (isNaN(ithid) === false)
+					{
+						I.print("Error looking up item: " + ithid);
+					}
+				}
+				U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
+				var filename = pType.toLowerCase() + "_" + i + I.cJSON;
+				Z.printAPICache(U.TypeEnum.isAssoc, {aWantQuotes: true, aFileName: filename});
+			}
+		};
+		
 		I.print("Loading items database...");
 		Z.loadItemsDatabase(function(pDatabase)
 		{
-			I.print("Loading section record...");
-			U.getScript(scripturl, function()
+			dblang = pDatabase;
+			if (pIDs)
 			{
-				Z.freeFiles();
-				var record = U.getRecordData(pType);
-				var itemids = {};
-				for (var i in record)
+				itemids = pIDs;
+				createSubdatabase();
+			}
+			else
+			{
+				I.print("Loading section record...");
+				U.getScript(scripturl, function()
 				{
-					var catarr = record[i];
-					for (var ii = 0; ii < catarr.length; ii++)
+					Z.freeFiles();
+					var record = U.getRecordData(pType);
+					for (var i in record)
 					{
-						if (catarr[ii].i)
+						var catarr = record[i];
+						for (var ii = 0; ii < catarr.length; ii++)
 						{
-							itemids[(catarr[ii].i)] = true;
-						}
-						else if (typeof catarr[ii] === "number")
-						{
-							itemids[(catarr[ii])] = true;
+							if (catarr[ii].i)
+							{
+								itemids.push(catarr[ii].i);
+							}
+							else if (typeof catarr[ii] === "number")
+							{
+								itemids.push(catarr[ii]);
+							}
 						}
 					}
-				}
-				
-				for (var i in pDatabase)
+					createSubdatabase();
+				}).fail(function()
 				{
-					// Reinitialize for ith language
-					Z.APICacheArrayOfObjects = null;
-					Z.APICacheArrayOfObjects = [];
-					var db = pDatabase[i];
-					for (var ii in itemids)
-					{
-						if (db[ii])
-						{
-							Z.APICacheArrayOfObjects.push(db[ii]);
-						}
-						else if (isNaN(ii) === false)
-						{
-							I.print("Error looking up item: " + ii);
-						}
-					}
-					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
-					var filename = pType.toLowerCase() + "_" + i + I.cJSON;
-					Z.printAPICache(U.TypeEnum.isAssoc, {aWantQuotes: true, aFileName: filename});
-				}
-			}).fail(function()
-			{
-				I.print("Error retrieving script: " + scripturl);
-			});
+					I.print("Error retrieving script: " + scripturl);
+				});
+			}
 		});
 	},
 	
@@ -7562,6 +7580,20 @@ Z = {
 				Z.printUnlockables(record, true, true);
 			});
 		}, false);
+	},
+	
+	/*
+	 * Prints subdatabase of Pact recipes and produced items.
+	 */
+	collatePact: function()
+	{
+		var ids = [];
+		for (var i in H.Pact.Products)
+		{
+			ids.push(i);
+			ids.push(H.Pact.Products[i]);
+		}
+		Z.updateItemsSubdatabase("Pact", ids);
 	},
 	
 	/*
@@ -12104,7 +12136,7 @@ V = {
 			// Merge the record arrays into one lookup table
 			var recipelookup = {}; // Will be used to find a character's unlocked recipe
 			var itemlookup = {}; // Will be used to find a character's unlocked recipe by searching with the item
-			var searchscope = {};
+			var searchsubset = {};
 			var discname, entry, recipeid, itemid;
 			for (var i in record)
 			{
@@ -12112,7 +12144,7 @@ V = {
 				for (var ii = 0; ii < record[i].length; ii++)
 				{
 					entry = (record[i])[ii];
-					searchscope[entry.i] = i;
+					searchsubset[entry.i] = i;
 					if (recipelookup[entry.u] === undefined)
 					{
 						recipelookup[entry.u] = {
@@ -12224,7 +12256,7 @@ V = {
 				 */
 				var searchbar = $("#accDishMenu_Recipes").find(".bnkSearch .bnkSearchInput").first();
 				Q.bindItemSearch(searchbar, {
-					aScope: searchscope,
+					aSubset: searchsubset,
 					aFillerText: null,
 					aCallback: function(pItem)
 					{
@@ -12239,7 +12271,7 @@ V = {
 							I.write("None of your characters have learned how to craft " + itemname);
 						}
 						// Show the tab the item is in
-						var thistab = $("#rcpTab_" + searchscope[pItem.id]);
+						var thistab = $("#rcpTab_" + searchsubset[pItem.id]);
 						B.showBankTab(thistab);
 						I.scrollToElement(thistab, {
 							aOffset: -A.getOverheadHeight(),
@@ -18702,7 +18734,7 @@ Q = {
 	 * @objparam int aResultsLimit max number of results to show, optional.
 	 * @objparam boolean aIsSelect whether to emulate the <select> functionality, optional.
 	 * @objparam boolean aWantEnter whether to bind the default Enter key event, optional.
-	 * @objparam object aScope associative array of item IDs to limit the search, optional.
+	 * @objparam object aSubset associative array of item IDs to limit the search, optional.
 	 * @objparam objarray aDatabase custom search database to use instead of items search, optional.
 	 * @objparam object aAchievements account's achievement unlocks, optional.
 	 * @objparam function aCallback to execute after the user selects an item.
@@ -18994,12 +19026,12 @@ Q = {
 				// Initialize the item search if used
 				if (isitemsearch)
 				{
-					if (Settings.aScope)
+					if (Settings.aSubset)
 					{
 						itemsearchdb = [];
 						for (var i = 0; i < Q.SearchDatabase.length; i++)
 						{
-							if (Settings.aScope[((Q.SearchDatabase[i])[0])])
+							if (Settings.aSubset[((Q.SearchDatabase[i])[0])])
 							{
 								itemsearchdb.push(Q.SearchDatabase[i]);
 							}
