@@ -25,6 +25,7 @@ GW2T_SALE_DATA = {
 	{i: 77811, n: "Electromagnetic-Descender Glider", p: {gem: 308}, discount: 400},
 	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 192}, discount: 250},
 	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: 600}, Finish: new Date("2017-05-23T16:00:00Z")},
+	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}},
 	{i: 78025, n: "Phoenix Glider", p: {gem: 500}},
 	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
 	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
@@ -34,12 +35,8 @@ GW2T_SALE_DATA = {
 	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}, Finish: new Date("2017-05-22T16:00:00Z")},
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}, Finish: new Date("2017-05-22T16:00:00Z")},
 	{i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 79631, n: "Spectral Glider", p: {gem: 500}, Finish: new Date("2017-05-21T16:00:00Z")},
-	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}, Finish: new Date("2017-05-21T16:00:00Z")},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 45044, n: "Mini Frostbite", p: {gem: 400}},
 	{i: 77649, n: "Mini Arrowhead", p: {gem: 400}},
-	{i: 67839, n: "Mini Pact Airship", p: {gem: 350}},
-	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}}
+	{i: 67839, n: "Mini Pact Airship", p: {gem: 350}}
 	]
 };
