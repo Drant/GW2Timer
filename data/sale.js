@@ -21,22 +21,14 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 69607, n: "Balthazar's Regalia Outfit", p: {gem: 490}, discount: 700},
-	{i: 77811, n: "Electromagnetic-Descender Glider", p: {gem: 308}, discount: 400},
-	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 192}, discount: 250},
+	{i: 69607, n: "Balthazar's Regalia Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-05-23T16:00:00Z")},
+	{i: 77811, n: "Electromagnetic-Descender Glider", p: {gem: 308}, discount: 400, Finish: new Date("2017-05-23T16:00:00Z")},
+	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 192}, discount: 250, Finish: new Date("2017-05-23T16:00:00Z")},
 	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: 600}, Finish: new Date("2017-05-23T16:00:00Z")},
+	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}},
 	{i: 78025, n: "Phoenix Glider", p: {gem: 500}},
 	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
-	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 1000}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 69921, n: "Swarm Logging Flute", p: {gem: 1000}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 77821, n: "Classical Glider", p: {gem: 400}, Finish: new Date("2017-05-22T16:00:00Z")},
-	{i: 77649, n: "Mini Arrowhead", p: {gem: 400}},
-	{i: 67839, n: "Mini Pact Airship", p: {gem: 350}}
+	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 	]
 };
