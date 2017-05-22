@@ -1286,6 +1286,57 @@ DonationDrive: {
 	{n: 30, c: [10814, 10446]}
 	]
 },
+LessonsLearned: {
+	name_en: "Lessons Learned",
+	name_de: "Lektionen gelernt",
+	name_es: "Lección aprendida",
+	name_fr: "Des leçons bien apprises",
+	name_zh: "已学知识",
+	category: "achievements",
+	color: "hotpink",
+	view: "draconis",
+	wiki: "https://wiki.guildwars2.com/wiki/Lessons_Learned",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	needles: [
+	{n: 1, c: [3255, 25535], l: 3},
+	{n: 2, c: [3469, 25526], l: 2},
+	{n: 3, c: [3899, 26481], l: 6},
+	{n: 4, c: [4245, 26308], l: 13},
+	{n: 5, c: [4420, 25787], l: 11},
+	{n: 6, c: [4786, 25036], l: 9},
+	{n: 7, c: [4379, 24825], l: 5},
+	{n: 8, c: [4452, 24798], l: 4},
+	{n: 9, c: [4392, 24721], l: 1},
+	{n: 10, c: [4204, 24559], l: 12},
+	{n: 11, c: [4093, 24406], l: 7},
+	{n: 12, c: [3595, 24468], l: 10},
+	{n: 13, c: [3347, 24712], l: 14},
+	{n: 14, c: [3278, 24739], l: 8}
+	]
+},
+PeopleWatching: {
+	name_en: "People Watching",
+	name_de: "Geheime Beschattung",
+	name_es: "Alguien está observando",
+	name_fr: "Des yeux scrutateurs",
+	name_zh: "有人监视",
+	category: "achievements",
+	color: "violet",
+	view: "draconis",
+	wiki: "https://wiki.guildwars2.com/wiki/People_Watching",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	needles: [
+	{n: 1, c: [3338, 25610], l: 1, t: "Find missing golem to learn password."},
+	{n: 2, c: [3312, 24978], l: 2, t: "Find the Whispers agent, give him the password, and obtain the scanners."},
+	{n: 3, c: [3436, 25218], l: 5, t: "This scanner should overlook the Inquest camp."},
+	{n: 4, c: [3453, 25506], l: 7, t: "This scanner should overlook the mercenary submarine."},
+	{n: 5, c: [3757, 25788], l: 4, t: "This scanner should be atop a high tree."},
+	{n: 6, c: [4023, 26026], l: 6, t: "This scanner should watch Tennon and Tinderbough."},
+	{n: 7, c: [4468, 24785], l: 9, t: "This scanner should watch the mercenary leader."},
+	{n: 8, c: [4264, 24709], l: 3, t: "This scanner should overlook the mercenary base."},
+	{n: 9, c: [3642, 24592], l: 8, t: "This scanner should watch the spiders from a stalactite."}
+	]
+},
 RockCollector: {
 	name_en: "Rock Collector",
 	name_de: "Steinsammler",

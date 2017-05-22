@@ -1628,6 +1628,8 @@ X = {
 		PumpkinCarving: { key: "str_chlPumpkinCarving", urlkey: "pumpkins"},
 		DonationDrive: { key: "str_chlDonationDrive", urlkey: "orphans"},
 		// Achievements: Heart of Thorns Living Story
+		LessonsLearned: { key: "str_chlLessonsLearned", urlkey: "lessonslearned"},
+		PeopleWatching: { key: "str_chlPeopleWatching", urlkey: "peoplewatching"},
 		RockCollector: { key: "str_chlRockCollector", urlkey: "rockcollector"},
 		CinsGoods: { key: "str_chlCinsGoods", urlkey: "cinsgoods"},
 		LettersFromE: { key: "str_chlLettersFromE", urlkey: "lettersfrome"},
