@@ -272,7 +272,8 @@ Weapon: [
 	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: -600}},
 	{i: 80861, n: "Shield of the Goddess", p: {gem: -600}},
 	{i: 80981, n: "Hourglass Staff", p: {gem: -600}},
-	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: -600}}
+	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: -600}},
+	{i: 81240, n: "Menzies's Agony", p: {gem: -600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
@@ -437,7 +438,10 @@ Gathering: [
 	{i: 78996, n: "Unbreakable Harvesting Sickle", p: {gem: 800}},
 	{i: 78806, n: "Unbreakable Logging Axe", p: {gem: 800}},
 	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 800}},
-	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: -1000}}
+	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: -1000}},
+	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: -900}},
+	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: -900}},
+	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}}
 ],
 Mini: [
 	{i: 20019, n: "Minis 3-Pack (Set 1)", p: {gem: -300}},

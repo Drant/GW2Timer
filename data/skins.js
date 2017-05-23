@@ -493,6 +493,7 @@ Back: [
 	{u: 7209, i: 81007, n: "Druid Stone", p: {achievement: 0}},
 	{u: 7216, i: 81089, n: "Living Druid Stone", p: {achievement: 0}},
 	{u: 7214, i: 81143, n: "Blooming Druid Stone", p: {achievement: 0}},
+	{u: 7218, i: 81056, n: "The Wayfarer's Henge", p: {achievement: 0}},
 	{u: 7227, i: 81263, n: "Mercenary Backpack", p: {gem: 400}}
 ],
 Armor_Light_Helm: [
@@ -3836,7 +3837,8 @@ Weapon_Greatsword: [
 	{u: 7160, i: 80824, n: "Caladbolg Orchida", p: {achievement: 0}},
 	{u: 7193, i: 80943, n: "Beastslayer Greatsword", b: [80943]},
 	{u: 7188, i: 80921, n: "Crimson Assassin Greatsword", p: {token: 16}},
-	{u: 7229, i: 81249, n: "Keepsake Greatsword", b: [81249]}
+	{u: 7229, i: 81249, n: "Keepsake Greatsword", b: [81249]},
+	{u: 7231, i: 81240, n: "Menzies's Agony", p: {gem: 600}}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", b: [49326]},
