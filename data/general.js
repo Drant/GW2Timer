@@ -1665,16 +1665,16 @@ Countdown: {
 		Start: new Date("2017-06-22T20:00:00Z"),
 		Finish: new Date("2017-06-29T20:00:00Z")
 	}*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Fireheart Map Rewards",
 		name_de: "Feuerherzhügel Karten-Bonus",
 		name_es: "Bonificación Corazón de Fuego",
 		name_fr: "Bonus de carte Flambecœur",
 		name_zh: "炎心高地地图奖金",
 		url: "https://wiki.guildwars2.com/wiki/Map_bonus_reward/profit",
-		Start: new Date("2017-05-18T20:00:00Z"),
-		Finish: new Date("2017-05-25T20:00:00Z")
-	}
+		Start: new Date("2017-07-09T20:00:00Z"),
+		Finish: new Date("2017-07-16T20:00:00Z")
+	}*/
 	/*{
 		name_en: "Living Story 3: Episode VI",
 		name_de: "Lebendigen Geschichte 3: Episode VI",
@@ -1765,6 +1765,6 @@ Pact:
 	PriceDefault: 25200,
 	// Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	Offers: [],
-	OffersAssoc: {All: 0, Mehem: 1, Fox: 2, Derwena: 3, Yana: 4, Katelyn: 5, Verma: 6}
+	OffersAssoc: {Mehem: 0, Fox: 1, Derwena: 2, Yana: 3, Katelyn: 4, Verma: 5}
 }
 };
