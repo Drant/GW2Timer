@@ -21,6 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
+	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 560}, discount: 800},
+	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 560}, discount: 800},
+	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 560}, discount: 800},
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}},
