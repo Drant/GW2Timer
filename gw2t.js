@@ -1023,7 +1023,7 @@ O = {
 				document.location.reload();
 			}
 			
-			$("#mapOptionsCompletion label input").not(".jsIgnore").each(function()
+			$("#mapDisplayCompletion label input").not(".jsIgnore").each(function()
 			{
 				X.setCheckboxEnumState($(this), X.boolToChecklistEnum(O.Options.bol_showWorldCompletion));
 			});
@@ -1036,7 +1036,7 @@ O = {
 				location.reload();
 			}
 			
-			$("#wvwOptionsCompletion label input").each(function()
+			$("#wvwDisplayCompletion label input").each(function()
 			{
 				X.setCheckboxEnumState($(this), X.boolToChecklistEnum(O.Options.bol_showWorldCompletionWvW));
 			});
@@ -1054,7 +1054,7 @@ O = {
 			}
 		});
 		// Trigger zone in and out of current zone to toggle the icon's display
-		$("#mapOptionsCompletion label input").each(function()
+		$("#mapDisplayCompletion label input").each(function()
 		{
 			$(this).change(function()
 			{
@@ -1064,7 +1064,7 @@ O = {
 				}
 			});
 		});
-		$("#wvwOptionsCompletion label input").each(function()
+		$("#wvwDisplayCompletion label input").each(function()
 		{
 			$(this).change(function()
 			{
