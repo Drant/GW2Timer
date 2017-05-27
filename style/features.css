@@ -17,10 +17,8 @@
 }
 
 .dlyBookmarks {
-	display: block;
-	margin: auto;
-	margin-top: 4px;
-	margin-bottom: 8px;
+	margin-top: 4px !important;
+	margin-bottom: 8px !important;
 }
 
 .dlyBox { /* A day */
@@ -67,14 +65,14 @@
 	border-radius: 4px;
 	box-shadow: 0px 0px 8px black;
 }
-.dlyCalendar ins { /* Daily */
+.dlyBox ins { /* Daily */
 	display: inline-block;
 	width: 32px; height: 32px;
 	margin-right: 8px;
 	border: 1px solid transparent;
 	border-radius: 8px;
 }
-.dlyCalendar ins:hover {
+.dlyBox ins:hover {
 	border: 1px solid #ffff66;
 	box-shadow: 0px 0px 4px #ffff66;
 }

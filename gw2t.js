@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170404},
+		programVersion: {key: "int_utlProgramVersion", value: 170527},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -10179,28 +10179,32 @@ A = {
 						}
 					});
 					// Selection to delete an account in the history
-					I.createDropdown(historybuttons, histbook, {
-						aFirst: D.getPhraseOriginal("Delete Storage") + ":",
-						aBind: function(pElm)
+					var searchdb = [];
+					for (var i in histbook)
+					{
+						searchdb.push({name: i});
+					}
+					I.createSearchBar(historybuttons, {
+						aIsSelect: true,
+						aIsInline: true,
+						aFillerText: D.getPhraseOriginal("Delete Storage"),
+						aDatabase: searchdb,
+						aCallback: function(pElm)
 						{
-							pElm.change(function()
+							var acctodelete = pElm.name;
+							if (confirm("Delete account " + acctodelete + " from audit storage?"))
 							{
-								if ($(this)[0].selectedIndex !== 0) // First element is the title
+								if (histbook[acctodelete])
 								{
-									var acctodelete = $(this).val();
-									if (confirm("Delete account " + acctodelete + " from audit storage?"))
-									{
-										pElm.find("option[value='" + acctodelete + "']").remove();
-										if (histbook[acctodelete])
-										{
-											delete histbook[acctodelete];
-											O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
-											I.write(acctodelete + " was deleted from the storage.");
-										}
-									}
-									pElm.find("option:first").attr("selected", "selected");
+									delete histbook[acctodelete];
+									O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
+									I.write(acctodelete + " was deleted from the storage.");
 								}
-							});
+								else
+								{
+									I.write(acctodelete + " was already deleted or not found in history.");
+								}
+							}
 						}
 					});
 					
@@ -11203,7 +11207,7 @@ V = {
 			});
 			
 			// List all unlocked titles as a dropdown menu
-			var titles = [];
+			var searchdb = [];
 			for (var i in A.Data.Titles)
 			{
 				var box = Q.getBoxedTitle(i);
@@ -11212,11 +11216,14 @@ V = {
 					var title = box.oData;
 					// Also append a count next to used titles
 					var count = ((usedtitles[title.id]) ? "(" + usedtitles[title.id] + ") " : "");
-					titles.push(count + title.name);
+					searchdb.push({name: count + title.name});
 				}
 			}
-			I.createDropdown("#chrAccountTitles", titles, {
-				aFirst: titles.length + " " + D.getPhraseOriginal("Titles Unlocked")
+			I.createSearchBar("#chrAccountTitles", {
+				aIsSelect: true,
+				aIsInline: true,
+				aFillerText: searchdb.length + " " + D.getPhraseOriginal("Titles Unlocked"),
+				aDatabase: searchdb
 			});
 		};
 		
@@ -12256,7 +12263,7 @@ V = {
 				 * function) and make it print the characters who have unlocked the
 				 * recipe to create that searched item.
 				 */
-				var searchbar = $("#accDishMenu_Recipes").find(".bnkSearch .bnkSearchInput").first();
+				var searchbar = B.getBankSearch(section);
 				Q.bindItemSearch(searchbar, {
 					aSubset: searchsubset,
 					aFillerText: null,
@@ -12273,19 +12280,7 @@ V = {
 							I.write("None of your characters have learned how to craft " + itemname);
 						}
 						// Show the tab the item is in
-						var thistab = $("#rcpTab_" + searchsubset[pItem.id]);
-						B.showBankTab(thistab);
-						I.scrollToElement(thistab, {
-							aOffset: -A.getOverheadHeight(),
-							aSpeed: "fast"
-						});
-						setTimeout(function()
-						{
-							I.scrollToElement(thistab, {
-								aOffset: -A.getOverheadHeight()
-							});
-							B.refreshBankSearch(section);
-						}, 2000);
+						B.scrollToBankTab("#rcpTab_" + searchsubset[pItem.id]);
 					}
 				});
 			});
@@ -12684,6 +12679,7 @@ V = {
 			return;
 		}
 		
+		var section = "Wardrobe";
 		var headers, galleries, record;
 		var galleryword = D.getWordCapital("gallery");
 		// Macro function to add link to gallery buttons next to the tab separators
@@ -12739,9 +12735,31 @@ V = {
 				{
 					var catname = D.getObjectName(headers[pCatName]);
 					var caticon = "<ins class='bnkTabIcon acc_wardrobe acc_wardrobe_" + pCatName.toLowerCase() + "'></ins>";
-					var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
+					var tab = B.createBankTab(bank, {
+						aID: "wrdTab_" + pCatName,
+						aTitle: catname,
+						aIcon: caticon,
+						aIsCollapsed: true
+					});
 					createGalleryLinks(tab, pCatName);
 					return tab;
+				}
+			});
+			
+			// Piggyback on the bank search bar with custom search for skin items
+			var searchsubset = {};
+			A.iterateRecord(record, function(pEntry, pCatName)
+			{
+				searchsubset[pEntry.i] = pCatName;
+			});
+
+			Q.bindItemSearch(B.getBankSearch(section), {
+				aSubset: searchsubset,
+				aFillerText: null,
+				aCallback: function(pItem)
+				{
+					// Show the tab the item is in
+					B.scrollToBankTab("#wrdTab_" + searchsubset[pItem.id]);
 				}
 			});
 		};
@@ -12956,8 +12974,8 @@ V = {
 						}
 						ithach.oCategoryName = pCategory.name;
 						ithach.oCategoryID = pCategory.id;
-						var searchkeywords = ithach.name.toLowerCase() + " " + pCategory.name.toLowerCase();
-						searchdb.push([ithach, searchkeywords]);
+						ithach.keywords = ithach.name.toLowerCase() + " " + pCategory.name.toLowerCase();
+						searchdb.push(ithach);
 					}
 				}
 				
@@ -13082,8 +13100,7 @@ V = {
 			});
 			
 			// Piggyback on the bank search bar with custom search for achievements
-			var banksearch = B.getBankSearch(section);
-			Q.bindItemSearch(banksearch, {
+			Q.bindItemSearch(B.getBankSearch(section), {
 				aDatabase: searchdb,
 				aFillerText: null,
 				aAchievements: unlocks,
@@ -14034,6 +14051,30 @@ B = {
 		{
 			pTab.find(".bnkTabSeparator").trigger("click");
 		}
+	},
+	
+	/**
+	 * Macro function for bank search bar, to scroll to a tab and refreshes the
+	 * search, assuming an item was found in the search results.
+	 * @param jqobject pTab
+	 */
+	scrollToBankTab: function(pTab)
+	{
+		var tab = $(pTab);
+		B.showBankTab(tab);
+		// First scroll to the tab
+		I.scrollToElement(tab, {
+			aOffset: -A.getOverheadHeight(),
+			aSpeed: "fast"
+		});
+		// Scroll tab again after it's assumed that content have been downloaded and generated
+		setTimeout(function()
+		{
+			I.scrollToElement(tab, {
+				aOffset: -A.getOverheadHeight()
+			});
+			B.refreshBankSearch(A.getDishName(tab));
+		}, 2000);
 	},
 	
 	/*
@@ -18731,27 +18772,28 @@ Q = {
 	/*
 	 * Binds an input bar to search for items (or a database for objects) by name.
 	 * @param jqobject pElement to bind.
-	 * @objparam string aFillerText to display over the input bar, optional.
+	 * @objparam string aFillerText to display over the input bar, provide null for no text, optional.
+	 * @objparam string aInfo search usage, optional.
 	 * @objparam string aResultsClass CSS class for results container element, optional.
 	 * @objparam int aResultsLimit max number of results to show, optional.
-	 * @objparam boolean aIsSelect whether to emulate the <select> functionality, optional.
+	 * @objparam boolean aIsSelect whether to emulate the <select> functionality, requires aDatabase, optional.
+	 * @objparam boolean aIsInline whether the search box does not take all available width, optional.
 	 * @objparam boolean aWantEnter whether to bind the default Enter key event, optional.
+	 * @objparam boolean aWantClose whether to close the search results after clicking, optional.
 	 * @objparam object aSubset associative array of item IDs to limit the search, optional.
 	 * @objparam objarray aDatabase custom search database to use instead of items search, optional.
 	 * @objparam object aAchievements account's achievement unlocks, optional.
 	 * @objparam function aCallback to execute after the user selects an item.
+	 * @objparam function aCancel to execute when user clicks on the close button, optional.
 	 * @pre Input bar has a parent container element in order to position the results list.
-	 * A search database is an array containing subarrays: [resultObject, searchNameString]
-	 * searchNameString is the searchable name of the result in lowercase.
-	 * For item search, resultObject is an integer item ID; for custom databases,
-	 * the object must have a "name" and "icon" property to display in the search
-	 * result; other properties may be assigned so to be used when the user
-	 * chooses a result.
+	 * Item search database format: [[int_itemid, str_keywords], ...]
+	 * Custom search database format: [{name: "", icon: "", keywords: ""}, ...]
+	 * keywords is the searchable name of the result in lowercase.
 	 */
 	bindItemSearch: function(pElement, pSettings)
 	{
 		var Settings = pSettings || {};
-		var elm = $(pElement).wrap("<span class='itmSearchContainer'></span>");
+		var elm = $(pElement).wrap("<span class='itmSearchContainer " + ((Settings.aIsInline) ? "itmSearchInline" : "") + "'></span>");
 		var queryminchar = D.isLanguageLogographic ? 1 : 2;
 		var queryminitemidlength = 4;
 		var resultslimit = Settings.aResultsLimit || O.Options.int_numTradingResults;
@@ -18760,17 +18802,32 @@ Q = {
 		var resultslist = $("<div class='itmSearchResultList'></div>").appendTo(resultsscroll);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
 		var isitemsearch = (Settings.aDatabase === undefined);
-		var itemsearchdb, searchindexes = [], isdirectionchanged, searchtimestamp;
+		var itemsearchdb, customsearchdb = [], searchindexes = [], isdirectionchanged, searchtimestamp;
+		var resultsarrall = [];
 		
 		if (Settings.aFillerText !== null)
 		{
-			I.bindInputBarText(elm, Settings.aFillerText);
+			I.bindInputBarText(elm, (Settings.aIsSelect) ? I.Symbol.TriDown + " " + Settings.aFillerText : Settings.aFillerText);
 		}
 		if (Settings.aResultsClass)
 		{
-			resultscontainer.addClass(Settings.aResultsClass);
+			resultsscroll.addClass(Settings.aResultsClass);
 		}
 		I.bindScrollbar(resultsscroll);
+		// Pseudo <select> element shows the entire database when clicked
+		if (Settings.aIsSelect)
+		{
+			resultsarrall = Settings.aDatabase;
+		}
+		// Initialize custom search database
+		if (Settings.aDatabase)
+		{
+			for (var i in Settings.aDatabase)
+			{
+				var ithobj = Settings.aDatabase[i];
+				customsearchdb.push([ithobj, ithobj.keywords || ithobj.name.toLowerCase()]);
+			}
+		}
 		
 		// Toggles display of the results container popup
 		var resetSearch = function()
@@ -18797,6 +18854,10 @@ Q = {
 			+ "title='<dfn>Close the search results.</dfn>" + searchinfo + "'></ins>")
 			.appendTo(resultscontainer).click(function()
 		{
+			if (Settings.aCancel)
+			{
+				Settings.aCancel();
+			}
 			toggleResults(false);
 		});
 		I.qTip.init(searchclose);
@@ -18809,7 +18870,7 @@ Q = {
 				if (Settings.aCallback)
 				{
 					Settings.aCallback(pDataEntry);
-					if (pCloseResults)
+					if (pCloseResults || Settings.aWantClose)
 					{
 						toggleResults(false);
 					}
@@ -18881,7 +18942,7 @@ Q = {
 				for (var i = 0; i < pResults.length; i++)
 				{
 					var resultentry = $("<span class='itmSearchResultLine'><dfn class='itmSearchResultEntry'>"
-						+ "<img src='" + pResults[i].icon + "'>"
+						+ "<img src='" + (pResults[i].icon || "img/ui/sixteen/bullet.png") + "' />"
 						+ U.highlightSubstring(pResults[i].name, pQuery) + "</dfn></span>").appendTo(resultslist);
 					bindResultClick(resultslist, resultentry, pResults[i]);
 					
@@ -18940,24 +19001,33 @@ Q = {
 		{
 			var startingindex = (pIndex === undefined) ? 0 : pIndex;
 			var query = elm.val().toLowerCase();
-			// If query is empty or below minimum length
-			if (query.length < queryminchar)
+			var entry, subqueries, result, searchname, ismatch;
+			var resultsarr = [];
+			var searchdatabase = (isitemsearch) ? itemsearchdb : customsearchdb;
+			
+			// For emulating the <select> input, show all possible items
+			if (Settings.aIsSelect && !query.length)
 			{
-				toggleResults(false);
+				renderSearch(resultsarrall, "");
 				return;
 			}
-			// If query is an integer, assume it is an item ID
-			if (U.isInteger(query) && Settings.aDatabase === undefined && query.length >= queryminitemidlength)
+			else
 			{
-				renderSearch([parseInt(query)], query);
-				return;
+				// If query is empty or below minimum length
+				if (query.length < queryminchar)
+				{
+					toggleResults(false);
+					return;
+				}
+				// If query is an integer, assume it is an item ID
+				if (U.isInteger(query) && Settings.aDatabase === undefined && query.length >= queryminitemidlength)
+				{
+					renderSearch([parseInt(query)], query);
+					return;
+				}
 			}
 
 			// Else proceed with regular search through the database
-			var entry, subqueries, result, searchname, ismatch;
-			var resultsarr = [];
-			var searchdatabase = (isitemsearch) ? itemsearchdb : Settings.aDatabase;
-			
 			for (var i = startingindex; i < searchdatabase.length; i++)
 			{
 				entry = searchdatabase[i];
@@ -21172,6 +21242,8 @@ D = {
 			cs: "řídicí panel", it: "dashboard", pl: "pulpit nawigacyjny", pt: "painel", ru: "панель мониторинга", zh: "仪表板"},
 		s_leaderboard: {de: "bestenliste", es: "marcador", fr: "classement",
 			cs: "žebříček", it: "classifica", pl: "liderzy sprzedaży", pt: "placar de líderes", ru: "список лидеров", zh: "排行榜"},
+		s_server: {de: "server", es: "servidor", fr: "serveur",
+			cs: "server", it: "server", pl: "serwer", pt: "servidor", ru: "сервер", zh: "服务器"},
 		s_account: {de: "account", es: "cuenta", fr: "compte",
 			cs: "účet", it: "conto", pl: "konto", pt: "conta", ru: "счёт", zh: "帐户"},
 		s_key: {de: "schlüssel", es: "tecla", fr: "clé",
@@ -21318,6 +21390,8 @@ D = {
 			cs: "vybrat", it: "selezionare", pl: "zaznaczyć", pt: "selecionar", ru: "выделить", zh: "选择"},
 		s_use: {de: "benutzen", es: "usar", fr: "utiliser",
 			cs: "použít", it: "usare", pl: "używać", pt: "usar", ru: "использовать", zh: "用"},
+		s_cancel: {de: "abbrechen", es: "cancelar", fr: "annuler",
+			cs: "zrušit", it: "annullare", pl: "anulować", pt: "cancelar", ru: "отменить", zh: "取消"},
 		s_add: {de: "hinzufügen", es: "añadir", fr: "ajouter",
 			cs: "přidat", it: "aggiungere", pl: "dodać", pt: "adicionar", ru: "добавлять", zh: "加"},
 		s_delete: {de: "löschen", es: "eliminar", fr: "supprimer",
@@ -23963,6 +24037,7 @@ M = {
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
 	isMouseOnHUD: false,
+	isMenuOnHUD: false,
 	isUserDragging: false,
 	isZoneLocked: false,
 	isFloorShown: true,
@@ -24159,11 +24234,13 @@ M = {
 			}
 		});
 		// Translate and bind map zones list
-		$(htmlidprefix + "ZoneButton").one("mouseenter", that.bindZoneList(that)).click(function()
+		$(htmlidprefix + "ZoneButton").one("mouseenter", that.bindZoneList(that))
+		.dblclick(function()
 		{
 			that.goToDefault();
-		}).dblclick(function()
+		}).contextmenu(function(pEvent)
 		{
+			pEvent.preventDefault();
 			that.Map.setZoom(that.Map.getZoom() - 1); // Zoom out one level
 		});
 		
@@ -24244,6 +24321,45 @@ M = {
 	{
 		var that = this;
 		var htmlidprefix = "#" + that.MapEnum;
+		
+		/*
+		 * Emulate the click behavior of OS window menus to the HUD buttons.
+		 */
+		var peripheral = $(htmlidprefix + "Peripheral");
+		var peripheralselects = peripheral.find(".hudSelect");
+		var peripheralitems = peripheral.find(".hudItem");
+		var hudpericlass = "hudPeripheralActive";
+		var huditemclass = "hudItemActive";
+		peripheralselects.click(function()
+		{
+			peripheralitems.removeClass(huditemclass);
+			if (that.isMenuOnHUD)
+			{
+				peripheral.removeClass(hudpericlass);
+			}
+			else
+			{
+				peripheral.addClass(hudpericlass);
+				$(this).parent().addClass(huditemclass);
+			}
+			that.isMenuOnHUD = !that.isMenuOnHUD;
+		}).mouseenter(function()
+		{
+			if (that.isMenuOnHUD)
+			{
+				peripheralitems.removeClass(huditemclass);
+				$(this).parent().addClass(huditemclass);
+			}
+		});
+		peripheral.mouseleave(function()
+		{
+			peripheral.removeClass(hudpericlass);
+			if (that.isMenuOnHUD)
+			{
+				peripheralitems.removeClass(huditemclass);
+				that.isMenuOnHUD = false;
+			}
+		});
 		
 		/*
 		 * Shows or hides coordinates bar.
@@ -25152,8 +25268,8 @@ M = {
 			$(this).parent().trigger("click");
 		});;
 		// Create server bar
-		I.createSearchBar($("<div class='mapContextSearch'></div>").prependTo(listload), listload.find(".mapContextSlot"), ".mapContextLine");
-		I.createSearchBar($("<div class='mapContextSearch'></div>").prependTo(listsave), listsave.find(".mapContextSlot"), ".mapContextLine");
+		I.createFilterBar($("<div class='mapContextSearch'></div>").prependTo(listload), listload.find(".mapContextSlot"), ".mapContextLine");
+		I.createFilterBar($("<div class='mapContextSearch'></div>").prependTo(listsave), listsave.find(".mapContextSlot"), ".mapContextLine");
 		I.bindScrollbar(listload);
 		I.bindScrollbar(listsave);
 	},
@@ -26999,10 +27115,10 @@ P = {
 		var object = {
 			name: pName,
 			icon: pIcon,
-			coord: pCoord
+			coord: pCoord,
+			keywords: (pName + " " + pKeywords).toLowerCase()
 		};
-		var searchstr = (pName + " " + pKeywords).toLowerCase();
-		P.LocationsDatabase.push([object, searchstr]);
+		P.LocationsDatabase.push(object);
 	},
 		
 	/*
@@ -28181,7 +28297,7 @@ P = {
 			I.bindConsoleInput();
 			// Create search bar
 			var search = $("<div class='cntSearchContainer'></div>").prependTo(console);
-			I.createSearchBar(search, ".mapEventListEntry");
+			I.createFilterBar(search, ".mapEventListEntry");
 		}
 		else
 		{
@@ -28869,7 +28985,7 @@ G = {
 		var calendar = $(pContainer);
 		var finalizeDailies = function()
 		{
-			calendar.find("div:first").addClass("dlyCurrent").next().addClass("dlyNext");
+			calendar.find(".dlyBox:first").addClass("dlyCurrent").next().addClass("dlyNext");
 			calendar.find(".dlyZoom").each(function()
 			{
 				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky, M.Pin.Program);
@@ -28905,24 +29021,18 @@ G = {
 			return;
 		}
 		
-		I.createDropdown(pContainer, T.Daily.Bookmark, {
-			aClass: "dlyBookmarks",
-			aFirst: D.getModifiedWord("bookmarks", "map", U.CaseEnum.Every),
-			aBind: function(pElm)
+		I.createSearchBar(pContainer, {
+			aIsSelect: true,
+			aBarClass: "dlyBookmarks",
+			aDatabase: T.Daily.Bookmark,
+			aFillerText: D.getModifiedWord("bookmarks", "map", U.CaseEnum.Every),
+			aCallback: function(pObj)
 			{
-				pElm.change(function()
-				{
-					if ($(this)[0].selectedIndex === 0) // First element is the title
-					{
-						M.clearPersonalPins();
-					}
-					else
-					{
-						var coords = T.Daily.Bookmark[$(this).val()];
-						M.redrawPersonalPath(coords);
-					}
-				});
-				I.preventMapPropagation(pElm);
+				M.redrawPersonalPath(pObj.path);
+			},
+			aCancel: function()
+			{
+				M.clearPersonalPins();
 			}
 		});
 	},
@@ -29575,7 +29685,7 @@ G = {
 			P.toggleNodeArray(P.NodeArray.JP, true);
 			M.bindMapLinks(".jpzList");
 			U.convertExternalLink(".jpzList a");
-			I.createSearchBar("#jpzSearch", ".jpzItem");
+			I.createFilterBar("#jpzSearch", ".jpzItem");
 			I.qTip.init(".jpzList dt");
 			X.rewrapCheckboxes();
 
@@ -29871,7 +29981,7 @@ G = {
 			}
 			U.convertExternalLink("#cltList cite a");
 			I.qTip.init(".cltLinks");
-			I.createSearchBar("#cltSearch", ".cltBox");
+			I.createFilterBar("#cltSearch", ".cltBox");
 			X.rewrapCheckboxes();
 			
 			// Create category filter
@@ -30278,7 +30388,7 @@ G = {
 		I.qTip.init(list.find(".cltPetIcon"));
 		// Create search bar
 		var search = $("<div class='cntSearchContainer'></div>").insertBefore(list);
-		I.createSearchBar(search, $(".cltPetBox"));
+		I.createFilterBar(search, $(".cltPetBox"));
 		// Scroll to the list
 		setTimeout(function()
 		{
@@ -30321,7 +30431,7 @@ G = {
 			});
 			// Search bar
 			var search = $("<div class='cntSearchContainer'><div>").prependTo(bookid);
-			I.createSearchBar(search, ".gld" + pBookName);
+			I.createFilterBar(search, ".gld" + pBookName);
 		};
 		
 		var hideGuildMapDrawings = function(pBook)
@@ -31398,32 +31508,36 @@ W = {
 		U.sortObjects(servers);
 		
 		// Write the list
-		var server, servername;
-		var list = $("#wvwServerList");
-		var selected;
-		for (var i in servers)
+		var container = $("#wvwServerListContainer");
+		var searchdb = [];
+		servers.forEach(function(iServer)
 		{
-			server = servers[i];
-			servername = D.getObjectName(server) + ((server.suffix) ? " " + server.suffix : "");
-			selected = (server.id === O.Options.enu_Server) ? "selected" : "";
-			list.append("<option value='" + server.id + "' " + selected + ">" + servername + "</option>");
-		}
-		
-		// Bind server name select function
-		list.change(function()
-		{
-			// Save the server ID
-			var serverid = $(this).val();
-			O.Options.enu_Server = serverid;
-			localStorage["enu_Server"] = O.Options.enu_Server;
-			// Update address bar
-			U.updateQueryString("enu_Server=" + serverid);
-			// Restart the system
-			W.reinitializeServerChange();
+			searchdb.push({
+				name: D.getObjectName(iServer) + ((iServer.suffix) ? " " + iServer.suffix : ""),
+				icon: "img/ui/flags/" + ((iServer.suffix) ? U.stripToAlphanumeric(iServer.suffix).toLowerCase() : "na") + I.cPNG,
+				id: iServer.id
+			});
+		});
+		I.createSearchBar(container, {
+			aBarID: "wvwServerListBar",
+			aResultsClass: "wvwServerListResults",
+			aIsSelect: true,
+			aWantClose: true,
+			aDatabase: searchdb,
+			aFillerText: D.getPhraseOriginal("Select Server"),
+			aCallback: function(pServer)
+			{
+				O.Options.enu_Server = pServer.id;
+				localStorage["enu_Server"] = O.Options.enu_Server;
+				// Update address bar
+				U.updateQueryString("enu_Server=" + pServer.id);
+				// Restart the system
+				W.reinitializeServerChange();
+			}
 		});
 		
 		// Prevent map scroll from interfering when using the list
-		I.preventMapPropagation(list);
+		I.preventMapPropagation(container);
 	},
 	
 	/*
@@ -34807,6 +34921,7 @@ H = {
 	{
 		var item;
 		var gemarray = [];
+		var isdiscounted = false;
 		// Determine price range and whether a discount exists
 		for (var i = 0; i < H.Sale.Items.length; i++)
 		{
@@ -34833,7 +34948,6 @@ H = {
 		+ "</div>").addClass("dsbTabEnabled");
 		$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
 		// Determine if the current sale has price reduction
-		var isdiscounted = false;
 		$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
 		// Bind buttons
 		$("#dsbMenuSale").click(function()
@@ -37406,7 +37520,6 @@ I = {
 		posY: 0
 	},
 	
-	// Content-Plate-Page and Section-Header
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	isProgramExternal: false, // If is embedded in another site rather self-embedded
@@ -37419,6 +37532,7 @@ I = {
 	isSpeechNativeLoaded: false,
 	isProjectionEnabled: false,
 	ModeCurrent: null,
+	// Content-Plate-Page and Section-Header
 	ModeEnum:
 	{
 		Website: "Website",
@@ -38774,7 +38888,7 @@ I = {
 	 * @param string pParentSelector to filter container of elements, optional.
 	 * @pre Each element must have its data "keywords" assigned for the matching.
 	 */
-	createSearchBar: function(pContainer, pElements, pParentSelector)
+	createFilterBar: function(pContainer, pElements, pParentSelector)
 	{
 		var container = $(pContainer);
 		var elements = $(pElements);
@@ -38842,6 +38956,23 @@ I = {
 	},
 	
 	/*
+	 * Creates and binds a search bar.
+	 * @param jqobject pContainer to append the search bar.
+	 * @param object pSettings for the bind search function.
+	 * @objparam string aBarClass class of the search bar, optional.
+	 * @objparam string aBarID ID of the search bar, optional.
+	 * @returns jqobject search bar.
+	 */
+	createSearchBar: function(pContainer, pSettings)
+	{
+		var Settings = pSettings || {};
+		var idstr = (Settings.aBarID) ? "id='" + Settings.aBarID + "'" : "";
+		var searchbar = $("<input " + idstr + " class='cntSearch cssInputText " + (Settings.aBarClass || "") + "' type='text' />").appendTo($(pContainer));
+		Q.bindItemSearch(searchbar, pSettings);
+		return searchbar;
+	},
+	
+	/*
 	 * Binds an input bar to have a "default text" that disappears after the user
 	 * have clicked on it, but reappears after the user clears their input text.
 	 * @param jqobject pInput to bind.
@@ -38893,43 +39024,6 @@ I = {
 		{
 			$(this).select();
 		});
-	},
-	
-	/*
-	 * Creates and populates a dropdown menu list.
-	 * @param jqobject pContainer to insert the list.
-	 * @param array pElements containing strings, numbers; or an associative array with keys.
-	 * @objparam string aID CSS for the select element.
-	 * @objparam string aClass CSS for the select element.
-	 * @objparam string aFirst value for first option, optional.
-	 * @objparam function aBind for event handling.
-	 */
-	createDropdown: function(pContainer, pElements, pSettings)
-	{
-		var Settings = pSettings || {};
-		var container = $(pContainer);
-		var cssclass = Settings.aClass || "";
-		var cssid = Settings.aID || "";
-		var selection = $("<select id='" + cssid + "' class='cssInputSelect " + cssclass + "'></select>").appendTo(container);
-		var first = Settings.aFirst;
-		if (first)
-		{
-			$("<option>" + first + "</option>").val(first).appendTo(selection);
-		}
-		var elms = pElements;
-		if (Array.isArray(elms))
-		{
-			elms = U.getExistAssoc(elms);
-		}
-		for (var i in elms)
-		{
-			$("<option>" + i + "</option>").val(i).appendTo(selection);
-		}
-		// Custom binding such as a selection change event
-		if (Settings.aBind)
-		{
-			Settings.aBind(selection);
-		}
 	},
 	
 	/*

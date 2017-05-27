@@ -15,7 +15,7 @@
 	
 	<!-- Web application files -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20170525"></script>
+	<script type="text/javascript" src="data/general.js?v=20170527"></script>
 	<script type="text/javascript" src="data/sale.js?v=20170523"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
@@ -149,7 +149,7 @@
 				<input id="mapCoordinatesCopy" class="cssInputText" type="text" />
 				<input id="mapCoordinatesName" class="cssInputText mapCoordinatesName" type="text" />
 			</div>
-			<div class="hudPeripheral hudPeripheralNorth">
+			<div id="mapPeripheral" class="hudPeripheral hudPeripheralNorth">
 				<div class="hudItem">
 					<span id="mapAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
 						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_account"></ins></span>
@@ -224,78 +224,82 @@
 						<var class="hudTitle jsTranslate">Alarm</var>
 					</span>
 					<div id="mapAlarmPopup" class="hudPopup cntComposition">
-						<div id="mapAlarmStopwatchUp">
-							<b class="jsTranslate">Stopwatch</b><br />
-							<input id="watOffsetMinutes" type="number" min="0" max="1440" step="1" value="0" title="<dfn>Stopwatch Offset:</dfn> minutes to add to the initial stopwatch time." />&nbsp;:&nbsp;
-							<input id="watOffsetSeconds" type="number" min="0" max="86400" step="1" value="0" title="<dfn>Stopwatch Offset:</dfn> seconds to add to the initial stopwatch time and egg timer." />
-							<span class="watButtons">
-								<kbd id="watStart">▶/◫</kbd><kbd id="watStop">■</kbd><kbd id="watLap">★</kbd>
-							</span>
+						<div id="mapAlarmSide0" class="cssColumn">
+							<div id="mapAlarmChains">
+								<b class="jsTranslate">Boss Alarm</b>
+								<label title="This is based on the prediction. Will alert you when the final event in the unchecked or subscribed chain begins."><input id="opt_bol_alertArrival" type="checkbox" /> Alert arrival of boss finale event</label>
+								<b class="jsTranslate">Checklist Alarm Mode</b>
+								<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> Alert when new chain begins</label>
+								<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> Alert when current boss dies</label>
+								<label title="This is for either times."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if boss is checked off</label>
+								<b class="jsTranslate">Subscription Alarm Mode</b>
+								<label title="Alert X minutes before a subscribed chain starts. Enter 0 to disable."><input id="opt_int_alertSubscribedFirst" type="number" min="0" max="30" step="1" /> First Alarm</label>
+								<label title="Alert X minutes before a subscribed chain starts. Enter 0 to disable."><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
+								<label title="This happens at server reset or timestamp expiration. Alarm must be in Subscription Mode."><input id="opt_bol_alertAutosubscribe" type="checkbox" /> Autosubscribe to daily world boss</label>
+								<label title="This is based on the prediction."><input id="opt_bol_alertUnsubscribe" type="checkbox" /> Unsubscribe from boss after it dies</label>
+							</div>
 						</div>
-						<div id="mapAlarmStopwatchDown">
-							<input id="opt_int_minStopwatchAlert" type="number" min="0" max="1440" step="1" value="15" title="<dfn>Egg Timer:</dfn> minutes from now when you will be alerted." />
-							<input id="opt_str_textStopwatchAlert" type="text" maxlength="128" value="Alert, alert, alert!" title="The text to be spoken when the egg timer finishes." />
-							<span class="watButtons">
-								<kbd id="watTimerStart">▶</kbd><kbd id="watTimerStop">■</kbd>
-							</span>
-						</div>
-						<div id="mapAlarmChain">
-							<b class="jsTranslate">Timers</b>
-							<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> 24:00 / 12AM</label>
-							<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked bosses</label>
-							<label title="Active/orange chain bars."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand events</label>
-							<label title="Inactive/gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse events</label>
-							<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."></button>
-						</div>
-						<div id="mapAlarmBoss">
-							<div id="optChainsToggle"><button id="optChainsExpand">+</button><button id="optChainsCollapse">−</button></div>
-							<fieldset name="int_setAlarm"><legend id="optAlarmLegend" class="jsTranslate">Boss Alarm</legend>
-								<label title="Turn off the boss alarm."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /><var class="jsTranslate">Off</var></label>
-								<label title="Alert you when an unchecked world boss starts.<br />Checkmark a chain by clicking its boss icon (left side)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /><var class="jsTranslate">Checklist</var></label>
-								<label title="Alert you X minutes before a subscribed chain starts.<br />Subscribe to a chain by clicking its time (right side)."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /><var class="jsTranslate">Subscription</var></label>
-							</fieldset>
-							<input id="opt_int_setVolume" type="range" min="0" max="100" step="5" title="Set volume." />
-							<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
-						</div>
-						<div id="mapAlarmOther">
-							<b class="jsTranslate">Info Alarm</b>
-							<label title="Checks https://api.guildwars2.com/v2/build<br />every minute to see if build ID changed."><input id="opt_bol_alertBuild" type="checkbox" /> Alert new game build version</label>
-							<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
-							<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>
-							<label title="Go to <dfn>gw2timer.com/gem</dfn> to subscribe to specific gem store items."><input id="opt_bol_alertGem" type="checkbox" /> Alert Gem Store item sales</label>
-						</div>
-						<div id="mapAlarmChains">
-							<b class="jsTranslate">Boss Alarm</b>
-							<label title="This is based on the prediction. Will alert you when the final event in the unchecked or subscribed chain begins."><input id="opt_bol_alertArrival" type="checkbox" /> Alert arrival of boss finale event</label>
-							<b class="jsTranslate">Checklist Alarm Mode</b>
-							<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> Alert when new chain begins</label>
-							<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> Alert when current boss dies</label>
-							<label title="This is for either times."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if boss is checked off</label>
-							<b class="jsTranslate">Subscription Alarm Mode</b>
-							<label title="Alert X minutes before a subscribed chain starts. Enter 0 to disable."><input id="opt_int_alertSubscribedFirst" type="number" min="0" max="30" step="1" /> First Alarm</label>
-							<label title="Alert X minutes before a subscribed chain starts. Enter 0 to disable."><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
-							<label title="This happens at server reset or timestamp expiration. Alarm must be in Subscription Mode."><input id="opt_bol_alertAutosubscribe" type="checkbox" /> Autosubscribe to today's daily world boss</label>
-							<label title="This is based on the prediction."><input id="opt_bol_alertUnsubscribe" type="checkbox" /> Unsubscribe from boss after it dies</label>
+						<div id="mapAlarmSide1" class="cssColumn">
+							<div id="mapAlarmStopwatchUp">
+								<b class="jsTranslate">Stopwatch</b><br />
+								<input id="watOffsetMinutes" type="number" min="0" max="1440" step="1" value="0" title="<dfn>Stopwatch Offset:</dfn> minutes to add to the initial stopwatch time." />&nbsp;:&nbsp;
+								<input id="watOffsetSeconds" type="number" min="0" max="86400" step="1" value="0" title="<dfn>Stopwatch Offset:</dfn> seconds to add to the initial stopwatch time and egg timer." />
+								<span class="watButtons">
+									<kbd id="watStart">▶/◫</kbd><kbd id="watStop">■</kbd><kbd id="watLap">★</kbd>
+								</span>
+							</div>
+							<div id="mapAlarmStopwatchDown">
+								<input id="opt_int_minStopwatchAlert" type="number" min="0" max="1440" step="1" value="15" title="<dfn>Egg Timer:</dfn> minutes from now when you will be alerted." />
+								<input id="opt_str_textStopwatchAlert" type="text" maxlength="128" value="Alert, alert, alert!" title="The text to be spoken when the egg timer finishes." />
+								<span class="watButtons">
+									<kbd id="watTimerStart">▶</kbd><kbd id="watTimerStop">■</kbd>
+								</span>
+							</div>
+							<div id="mapAlarmChain">
+								<b class="jsTranslate">Timers</b>
+								<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> 24:00 / 12AM</label>
+								<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked bosses</label>
+								<label title="Active/orange chain bars."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand events</label>
+								<label title="Inactive/gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse events</label>
+								<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."></button>
+							</div>
+							<div id="mapAlarmBoss">
+								<div id="optChainsToggle"><button id="optChainsExpand">+</button><button id="optChainsCollapse">−</button></div>
+								<fieldset name="int_setAlarm"><legend id="optAlarmLegend" class="jsTranslate">Boss Alarm</legend>
+									<label title="Turn off the boss alarm."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /><var class="jsTranslate">Off</var></label>
+									<label title="Alert you when an unchecked world boss starts.<br />Checkmark a chain by clicking its boss icon (left side)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /><var class="jsTranslate">Checklist</var></label>
+									<label title="Alert you X minutes before a subscribed chain starts.<br />Subscribe to a chain by clicking its time (right side)."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /><var class="jsTranslate">Subscription</var></label>
+								</fieldset>
+								<input id="opt_int_setVolume" type="range" min="0" max="100" step="5" title="Set volume." />
+								<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
+							</div>
+							<div id="mapAlarmOther">
+								<b class="jsTranslate">Info Alarm</b>
+								<label title="Checks https://api.guildwars2.com/v2/build<br />every minute to see if build ID changed."><input id="opt_bol_alertBuild" type="checkbox" /> Alert new game build version</label>
+								<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
+								<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>
+								<label title="Go to <dfn>gw2timer.com/gem</dfn> to subscribe to specific gem store items."><input id="opt_bol_alertGem" type="checkbox" /> Alert Gem Store item sales</label>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="mapOptions hudItem">
+				<div class="mapDisplay hudItem">
 					<span id="mapViewButton" class="hudSelect">
 						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_display"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
-						<div class="mapOptionsSide0 cssColumn">
+						<div class="mapDisplaySide0 cssColumn">
 							<label title="Show/Hide timeline for zone and world boss events on the HUD."><input id="opt_bol_showTimeline" type="checkbox" /> Show timeline</label>
 							<label title="Only show the timeline HUD when you are on the main page."><input id="opt_bol_hideHUD" type="checkbox" /> Auto-hide timeline</label>
 							<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
 							<label title="Show/Hide the container for Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD</label>
 							<label title="Some map features like right clicking are disabled for touchscreens, check this for normal click behavior. Requires reload."><input id="opt_bol_ignoreTouch" type="checkbox" /> Ignore touchscreens</label>
-							<span id="mapOptionsNotes">Double click on the map to create paths. Right click on the map for path features, completion routes, and marker tool.</span><br />
+							<span id="mapDisplayNotes">Double click on the map to create paths. Right click on the map for path features, completion routes, and marker tool.</span><br />
 						</div>
-						<div class="mapOptionsSide1 cssColumn">
+						<div class="mapDisplaySide1 cssColumn">
 							<label title="Show/Hide all icons listed below."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show Completion</label>
-							<div id="mapOptionsCompletion" class="mapOptionsCompletion">
+							<div id="mapDisplayCompletion" class="mapDisplayCompletion">
 								<label><img data-src="img/ui/question.png" /><input id="opt_bol_showZoneOverview" type="checkbox" /> Zone Overview</label>
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
@@ -304,14 +308,14 @@
 								<label><img data-src="img/map/mastery.png" /><input id="opt_bol_displayMasteries" type="checkbox" /> Mastery Insights</label>
 								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallenges" type="checkbox" /> Hero Challenges</label>
 								<label><img data-src="img/map/heart.png" /><input id="opt_bol_displayHearts" type="checkbox" /> Renown Hearts</label>
-								<div class="mapOptionsCompletionSub">
+								<div class="mapDisplayCompletionSub">
 									<label title="Show/Hide area of participation for Renown Hearts.</br >Requires &quot;Show Completion&quot; option checked."><img data-src="img/map/heart_area.png" /><input id="opt_bol_displayHeartsArea" class="jsIgnore" type="checkbox" /> Heart Areas</label>
 									<label title="Show/Hide area of discovery for sectors within a zone.</br >Requires &quot;Show Completion&quot; option checked."><img data-src="img/map/scope_area.png" /><input id="opt_bol_displaySectorsArea" class="jsIgnore" type="checkbox" /> Sector Areas</label>
 								</div>
 							</div>
 							<label title="Show/Hide possible zone events.<br />Will increase initial site load time if enabled.<br />Most in-game events have a cooldown of 15 minutes.<br />They can become active by simply being near them.<br />Click on the map then type /events to see all the moused zone's event names."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
 						</div>
-						<div class="mapOptionsSide2 cssColumn">
+						<div class="mapDisplaySide2 cssColumn">
 							<label class="cssHidden"><input id="opt_bol_showFloor" type="checkbox" /></label>
 							<label class="cssHidden"><input id="opt_bol_showCoordinatesBar" type="checkbox" /></label>
 							<label class="cssHidden"><input id="opt_bol_condenseTimelineLine" type="checkbox" /></label>
@@ -330,7 +334,7 @@
 					</div>
 				</div>
 				<div class="mapGPS hudItem">
-					<span id="mapGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
+					<span id="mapGPSButton" class="hudSelect">
 						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_gps"></ins><span class="hudArrow"></span></span>
 					</span>
 					<div class="hudPopup cntComposition">
@@ -344,7 +348,7 @@
 					</div>
 				</div>
 				<div class="mapZones hudItem">
-					<span id="mapZoneButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
+					<span id="mapZoneButton" class="hudSelect">
 						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_zone"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>
@@ -511,7 +515,7 @@
 						<kbd id="logOpaque" class="btnWindow logButton btnOpaque logExtra" title="<dfn>Toggle opacity</dfn>"></kbd>
 						<div id="wvwLog" class="cntComposition">
 							<label id="wvwZoom" title="Set initial zoom level for WvW map."><img id="wvwZoomIcon" data-src="img/map/zoom.png" /><input id="wvwZoomInput" class="optSlider" type="range" min="0" max="6" step="1" /></label>
-							<select id="wvwServerList"></select>
+							<div id="wvwServerListContainer"></div>
 							<div id="logOptions">
 								<div id="logFilters">
 									<div id="logFiltersRed"><label><input id="opt_bol_logRedHome" type="checkbox" /></label></div>
@@ -532,7 +536,7 @@
 				<input id="wvwCoordinatesCopy" class="cssInputText" type="text" />
 				<input id="wvwCoordinatesName" class="cssInputText mapCoordinatesName" type="text" />
 			</div>
-			<div class="hudPeripheral hudPeripheralNorth">
+			<div id="wvwPeripheral" class="hudPeripheral hudPeripheralNorth">
 				<div class="hudItem">
 					<span id="wvwAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
 						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_account"></ins></span>
@@ -592,7 +596,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="mapOptions hudItem">
+				<div class="mapDisplay hudItem">
 					<span id="wvwViewButton" class="hudSelect">
 						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_display"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Display</var>
@@ -600,7 +604,7 @@
 					<div class="hudPopup cntComposition">
 						<div class="wvwOptionsSide1 cssColumn">
 							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletionWvW" type="checkbox" /> Show completion</label>
-							<div id="wvwOptionsCompletion" class="mapOptionsCompletion">
+							<div id="wvwOptionsCompletion" class="mapDisplayCompletion">
 								<label><img data-src="img/ui/question.png" /><input id="opt_bol_showZoneOverviewWvW" type="checkbox" /> Zone Overview</label>
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectorsWvW" type="checkbox" /> Sector Names</label>
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypointsWvW" type="checkbox" /> Waypoints</label>
@@ -630,7 +634,7 @@
 					</div>
 				</div>
 				<div class="mapGPS hudItem">
-					<span id="wvwGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
+					<span id="wvwGPSButton" class="hudSelect">
 						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_gps"></ins><span class="hudArrow"></span></span>
 					</span>
 					<div class="hudPopup cntComposition">
@@ -643,7 +647,7 @@
 					</div>
 				</div>
 				<div class="mapZones hudItem">
-					<span id="wvwZoneButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
+					<span id="wvwZoneButton" class="hudSelect">
 						<span class="hudButtonContainer"><ins class="hudButton mnu mnu_zone"></ins><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>

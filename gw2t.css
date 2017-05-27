@@ -912,6 +912,9 @@ img {
 .itmSearchContainer {
 	position: relative;
 }
+.itmSearchInline {
+	display: inline-block;
+}
 .itmSearchResultContainer {
 	position: absolute; z-index: 2;
 	text-align: left;
@@ -1221,21 +1224,6 @@ input[type="text"].cssInputTextLine {
 input[type="text"]:focus, textarea:focus, button:focus {
     border: 1px solid rgba(255, 238, 187, 0.8);
 	outline: none;
-}
-
-.cssInputSelect {
-	border: 1px solid #48423c;
-	background: rgba(0, 0, 0, 0.9);
-	font-family: Trebuchet MS, Menomonia;
-	font-size: 15px;
-	color: #eeeeee;
-}
-.cssInputSelect:hover {
-	border: 1px solid #635a4d;
-}
-.cssInputSelect option:checked {
-	background: #2d2619;
-	color: #ffeebb;
 }
 
 .cntComposition fieldset {
@@ -2023,7 +2011,7 @@ textarea.jsCopyCode {
 	overflow: hidden;
 	top: 4px; right: 12px;
 }
-.hudPeripheralNorth:hover {
+.hudPeripheralActive {
 	height: auto;
 	overflow: visible;
 	min-width: 580px; /* This becomes the maximum width of the HUD popup divs */
@@ -2104,10 +2092,10 @@ textarea.jsCopyCode {
 }
 .hudPopup {
 	display: none;
-}
-.hudItem:hover .hudPopup {
-	display: block;
 	right: 0px;
+}
+.hudItemActive .hudPopup {
+	display: block;
 }
 .hudItem:hover .hudPopupWide {
 	left: 0px;
@@ -2130,7 +2118,7 @@ textarea.jsCopyCode {
 	border-right: 12px solid transparent;
 	border-bottom: 12px solid rgba(17, 17, 17, 0.9);
 }
-.hudItem:hover .hudArrow {
+.hudItemActive .hudArrow {
 	display: block;
 }
 .hudHelp {
@@ -2199,8 +2187,117 @@ textarea.jsCopyCode {
 	margin-left: -16px;
 }
 
-/* Map options */
-#mapOptionsNotes {
+/* Alarm options */
+#mapAlarmSide1 {
+	margin-left: 4px;
+	padding-left: 8px;
+	border-left: 1px solid gray;
+}
+#chnAlarm #mapAlarmPopup {
+	display: none;
+}
+#chnAlarm:hover #mapAlarmPopup {
+	display: block;
+	width: 540px;
+	position: absolute;
+	right: 0;
+	margin: 0;
+	padding: 8px;
+	text-align: left;
+}
+#mapAlarmChain, #mapAlarmBoss {
+	width: 140px;
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
+}
+#mapAlarmBoss {
+	padding-left: 8px;
+	margin-left: 4px;
+	border-left: 1px solid gray;
+}
+#mapAlarmOther {
+	margin-top: 4px;
+	padding-top: 8px;
+	border-top: 1px solid gray;
+	margin-bottom: 4px;
+	padding-bottom: 8px;
+	text-align: left;
+}
+#mapAlarmStopwatchUp, #mapAlarmStopwatchDown {
+	width: 100%;
+	padding-bottom: 8px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid gray;
+	text-align: left;
+}
+#mapAlarmPopup fieldset {
+	min-width: 120px;
+	margin: 0;
+	border: none;
+}
+#optChainsToggle {
+	position: absolute;
+	right: 16px;
+}
+#opt_int_volAlarm, #optMute, #optRestoreAllChains {
+	width: 100%;
+	margin-bottom: 4px;
+}
+
+#itemStopwatch {
+	position: fixed; z-index: 9; /* z-index behind the console */
+	top: 24px;
+	left: 24px;
+	font-family: Consolas, monospace;
+	color: white;
+	text-shadow:
+		1px 1px 4px #000,
+		-1px -1px 4px #000,
+		1px -1px 4px #000,
+		-1px 1px 4px #000,
+		1px 1px 4px #000;
+	pointer-events: none;
+}
+#watToggle {
+	display: none;
+	z-index: 9;
+	top: 12px;
+	left: 12px;
+	position: fixed;
+}
+.watButtons {
+	float: right;
+	margin-left: 16px;
+	font-family: monospace;
+	font-size: 24px;
+}
+#watCustom {
+	width: 64px;
+}
+.watButtons kbd {
+	padding-left: 8px;
+	padding-right: 8px;
+	border-radius: 2px;
+}
+.watButtons kbd:hover {
+	border: 1px solid #ffcc77;
+}
+.watButtons kbd:active {
+	border: 1px solid white;
+}
+#watStart, #watTimerStart {
+	color: #66ff66;
+}
+#watStop, #watTimerStop {
+	color: #cc3322;
+}
+#watLap {
+	color: #ffcc77;
+}
+
+/* Display options */
+#mapDisplayNotes {
 	display: block;
 	width: 120px;
 	margin-top: 8px;
@@ -2210,7 +2307,7 @@ textarea.jsCopyCode {
 	margin-left: 4px;
 	border-left: 1px solid gray;
 }
-.mapOptionsSide1 {
+.mapDisplaySide1 {
 	padding-left: 8px;
 	margin-left: 4px;
 	border-left: 1px solid gray;
@@ -2218,15 +2315,15 @@ textarea.jsCopyCode {
 	margin-right: 4px;
 	border-right: 1px solid gray;
 }
-.mapOptionsCompletion {
+.mapDisplayCompletion {
 	margin-bottom: 8px;
 	border-bottom: 1px solid gray;
 }
-.mapOptionsCompletion label {
+.mapDisplayCompletion label {
 	margin: 0;
 	padding: 0;
 }
-.mapOptionsCompletionSub {
+.mapDisplayCompletionSub {
 	padding-top: 4px;
 	padding-bottom: 4px;
 	border-top: 1px solid gray;
@@ -2986,115 +3083,6 @@ header.jsSection sup {
 }
 #optAlarmIcon {
 	width: 16px; height: 16px;
-}
-#mapAlarmPopup {
-	width: 320px;
-}
-#chnAlarm #mapAlarmPopup {
-	display: none;
-}
-#chnAlarm:hover #mapAlarmPopup {
-	display: block;
-	position: absolute;
-	right: 0;
-	text-align: right;
-	margin: 0;
-	padding: 8px;
-}
-#mapAlarmChain, #mapAlarmBoss {
-	display: inline-block;
-	vertical-align: top;
-	text-align: left;
-}
-#mapAlarmBoss {
-	width: 50%;
-	padding-left: 8px;
-	margin-left: 4px;
-	border-left: 1px solid gray;
-}
-#mapAlarmOther {
-	margin-top: 4px;
-	padding-top: 8px;
-	border-top: 1px solid gray;
-	margin-bottom: 4px;
-	padding-bottom: 8px;
-	border-bottom: 1px solid gray;
-	text-align: left;
-}
-#mapAlarmChains {
-	width: 320px;
-	text-align: left;
-}
-#mapAlarmStopwatchUp, #mapAlarmStopwatchDown {
-	width: 100%;
-	padding-bottom: 8px;
-	margin-bottom: 8px;
-	border-bottom: 1px solid gray;
-	text-align: left;
-}
-#mapAlarmPopup fieldset {
-	min-width: 120px;
-	margin: 0;
-	border: none;
-}
-#optChainsToggle {
-	position: absolute;
-	right: 16px;
-}
-#opt_int_volAlarm, #optMute, #optRestoreAllChains {
-	width: 100%;
-	margin-bottom: 4px;
-}
-
-#itemStopwatch {
-	position: fixed; z-index: 9; /* z-index behind the console */
-	top: 24px;
-	left: 24px;
-	font-family: Consolas, monospace;
-	color: white;
-	text-shadow:
-		1px 1px 4px #000,
-		-1px -1px 4px #000,
-		1px -1px 4px #000,
-		-1px 1px 4px #000,
-		1px 1px 4px #000;
-	pointer-events: none;
-}
-#watToggle {
-	display: none;
-	z-index: 9;
-	top: 12px;
-	left: 12px;
-	position: fixed;
-}
-.watButtons {
-	float: right;
-	margin-left: 16px;
-	font-family: monospace;
-	font-size: 24px;
-}
-#watCustom {
-	width: 64px;
-}
-.watButtons kbd {
-	padding-left: 8px;
-	padding-right: 8px;
-	border-radius: 2px;
-}
-.watButtons kbd:hover {
-	border: 1px solid #ffcc77;
-}
-.watButtons kbd:active {
-	border: 1px solid white;
-}
-#watStart, #watTimerStart {
-	color: #66ff66;
-}
-#watStop, #watTimerStop {
-	color: #cc3322;
-}
-#watLap {
-	color: #ffcc77;
 }
 
 .chnCategoryHeader {
