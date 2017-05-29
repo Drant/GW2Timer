@@ -5,7 +5,7 @@
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2017-05-16T16:00:00Z"),
-	Finish: new Date("2017-05-30T16:00:00Z"),
+	Finish: new Date("2017-06-06T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,16 +21,16 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 560}, discount: 800},
-	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 560}, discount: 800},
-	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 560}, discount: 800},
+	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 560}, discount: 800, Finish: new Date("2017-05-30T16:00:00Z")},
+	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 560}, discount: 800, Finish: new Date("2017-05-30T16:00:00Z")},
+	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 560}, discount: 800, Finish: new Date("2017-05-30T16:00:00Z")},
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}},
 	{i: 81240, n: "Menzies's Agony", p: {gem: 600}},
-	{i: 47907, n: "Scarlet's Champions Mini 3-Pack", p: {gem: 500}},
-	{i: 48817, n: "Scarlet's Grasp", p: {gem: 400}},
-	{i: 48824, n: "Scarlet's Spaulders", p: {gem: 400}},
+	{i: 47907, n: "Scarlet's Champions Mini 3-Pack", p: {gem: 500}, Finish: new Date("2017-05-30T16:00:00Z")},
+	{i: 48817, n: "Scarlet's Grasp", p: {gem: 400}, Finish: new Date("2017-05-30T16:00:00Z")},
+	{i: 48824, n: "Scarlet's Spaulders", p: {gem: 400}, Finish: new Date("2017-05-30T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 308}, discount: 400, Finish: new Date("2017-05-30T16:00:00Z")},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 192}, discount: 250, Finish: new Date("2017-05-30T16:00:00Z")},

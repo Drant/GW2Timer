@@ -597,18 +597,7 @@ var GW2T_EQUIPMENT_DATA = {
 	AttributableSlots: {Helm: 1, Shoulders: 1, Coat: 1, Gloves: 1, Leggings: 1, Boots: 1, WeaponA1: 1, WeaponA2: 1, Backpack: 1, Accessory1: 1, Accessory2: 1, Amulet: 1, Ring1: 1, Ring2: 1},
 	ArmorSlots: {Helm: 1, Shoulders: 1, Coat: 1, Gloves: 1, Leggings: 1, Boots: 1},
 	ToggleableSlots: {Helm: 1, Shoulders: 1, Gloves: 1, Backpack: 1},
-	NumArmorSlots: 6,
-	GatheringCharges: {Foraging: 50, Logging: 100, Mining: 100},
-	SalvageCharges: {
-		"23038": 15, // Crude Salvage Kit
-		"23040": 25, // Basic Salvage Kit
-		"23041": 25, // Fine Salvage Kit
-		"23042": 25, // Journeyman's Salvage Kit
-		"23043": 25, // Master's Salvage Kit
-		"23045": 250, // Mystic Salvage Kit
-		"19986": 25, // Black Lion Salvage Kit
-		"73481": 20 // Ascended Salvage Kit
-	}
+	NumArmorSlots: 6
 };
 
 /*

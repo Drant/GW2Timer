@@ -8999,7 +8999,7 @@ A = {
 					}
 				}
 			});
-			A.assignAccountUpgrades("StorageExpander", Math.ceil(materialcountlargest / Q.ItemLimit.StackSize));
+			A.assignAccountUpgrades("StorageExpander", Math.ceil(materialcountlargest / Q.GameLimit.StackSize));
 			
 			// Add vault contents for all guilds if requested and permitted
 			if (pVaultData)
@@ -10762,7 +10762,7 @@ V = {
 		pCharacter.oCharElite = icon;
 		pCharacter.oCharProfession = icon;
 		pCharacter.oCharColor = A.Metadata.Profession[icon].color;
-		pCharacter.oCharIsLowLevel = (pCharacter.level < Q.ItemLimit.LevelMax);
+		pCharacter.oCharIsLowLevel = (pCharacter.level < Q.GameLimit.LevelMax);
 		if (pCharacter.specializations && pCharacter.specializations.pve)
 		{
 			var specs = pCharacter.specializations.pve;
@@ -11216,14 +11216,21 @@ V = {
 					var title = box.oData;
 					// Also append a count next to used titles
 					var count = ((usedtitles[title.id]) ? "(" + usedtitles[title.id] + ") " : "");
-					searchdb.push({name: count + title.name});
+					searchdb.push({
+						name: count + title.name,
+						wiki: U.getWikiLinkLanguage(title.name)
+					});
 				}
 			}
 			I.createSearchBar("#chrAccountTitles", {
 				aIsSelect: true,
 				aIsInline: true,
 				aFillerText: searchdb.length + " " + D.getPhraseOriginal("Titles Unlocked"),
-				aDatabase: searchdb
+				aDatabase: searchdb,
+				aCallback: function(aTitle)
+				{
+					U.openExternalURL(aTitle.wiki);
+				}
 			});
 		};
 		
@@ -11382,7 +11389,7 @@ V = {
 		var formatItemBrief = function(pBox)
 		{
 			var str = "";
-			var levelstr = (pBox.oData.level < Q.ItemLimit.LevelMax) ? (" (" + pBox.oData.level + ")") : "";
+			var levelstr = (pBox.oData.level < Q.GameLimit.LevelMax) ? (" (" + pBox.oData.level + ")") : "";
 			str = "<span class='eqpBriefName " + Q.getRarityClass(pBox.oData.rarity) + "'>" + pBox.oData.name + levelstr + "</span><br />";
 			pBox.oInfusions.forEach(function(iInfusion)
 			{
@@ -13095,7 +13102,7 @@ V = {
 					+ dailyap.toLocaleString() + "<img class='css24' src='img/account/summary/daily.png' /> + "
 					+ monthlyap.toLocaleString() + "<img class='css24' src='img/account/summary/monthly.png' /> = "
 					+ "<var class='achBankActual'>" + E.PaymentFormat.achievement(bankap[0] + dailyap + monthlyap) + "</var>"
-					+ " / " + E.PaymentFormat.achievement(bankap[0] + bankap[1] + dailyap + monthlyap)
+					+ " / " + E.PaymentFormat.achievement(bankap[0] + bankap[1] + Q.GameLimit.DailyAP)
 				+ "</div>");
 			});
 			
@@ -14427,7 +14434,7 @@ B = {
 				if (count > 1)
 				{
 					// Stack size
-					var countmaxclass = (count % Q.ItemLimit.StackSize === 0) ? "bnkSlotCountMax" : "";
+					var countmaxclass = (count % Q.GameLimit.StackSize === 0) ? "bnkSlotCountMax" : "";
 					pSlot.append("<var class='bnkSlotCount " + countmaxclass + "'>" + count + "</var>");
 				}
 				else if ((Settings.aItem.type === "Tool" || Settings.aItem.type === "Gathering") && Settings.aSlotMeta && Settings.aSlotMeta.charges)
@@ -14903,7 +14910,7 @@ B = {
 		var emptyfilterstate = 0;
 		$("<div class='bnkButtonEmpty bnkButton curToggle' title='"
 			+ "Filter:<br />1st click: non-empty/unlocked <dfn>slots</dfn><br />2nd click: marked or "
-			+ Q.ItemLimit.StackSize + " stack slots<br />3rd click: empty/locked slots<br />4th click: any slot (reset)'></div>")
+			+ Q.GameLimit.StackSize + " stack slots<br />3rd click: empty/locked slots<br />4th click: any slot (reset)'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			var slots = pBank.find(".bnkSlot");
@@ -14929,7 +14936,7 @@ B = {
 			{
 				slots.each(function()
 				{
-					if ($(this).data("count") >= Q.ItemLimit.StackSize || $(this).data("ismarked"))
+					if ($(this).data("count") >= Q.GameLimit.StackSize || $(this).data("ismarked"))
 					{
 						toggleSlot($(this), true);
 					}
@@ -16359,7 +16366,7 @@ B = {
 				+ "</tr>";
 				multitrans.oStamps += transactionstr;
 				// Limit the number of transactions listed in the tooltip
-				if (multitrans.oNumTransactions < Q.ItemLimit.TooltipLines)
+				if (multitrans.oNumTransactions < Q.GameLimit.TooltipLines)
 				{
 					multitrans.oStampsTip += transactionstr;
 				}
@@ -16380,7 +16387,7 @@ B = {
 			Q.getPricedItems(itemids, function()
 			{
 				bank.empty();
-				wantcollapsed = numtofetch > Q.ItemLimit.FetchAPI;
+				wantcollapsed = numtofetch > Q.GameLimit.FetchAPI;
 				var tab, tabtitle, tabcapacity, tabcount, bankcapacity = 0, bankcount = 0;
 				for (var i in calendar)
 				{
@@ -16566,9 +16573,10 @@ Q = {
 		Rare: 4,
 		Exotic: 6
 	},
-	ItemLimit:
+	GameLimit:
 	{
 		Unknown: 8055, // ID of an "unknown" item
+		DailyAP: 15000,
 		FetchAPI: 800, // Max items before a function resorts to on demand downloads
 		TooltipLines: 100, // Text lines in a tooltip window
 		LevelMax: 80,
@@ -17297,7 +17305,7 @@ Q = {
 		{
 			return "Recipe";
 		}
-		if (pItem.rarity === Q.RarityEnum.Rare && pItem.level && pItem.level > Q.ItemLimit.EctoSalvageLevel)
+		if (pItem.rarity === Q.RarityEnum.Rare && pItem.level && pItem.level > Q.GameLimit.EctoSalvageLevel)
 		{
 			if (pItem.type === Q.ItemEnum.Weapon || pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Trinket || pItem.type === Q.ItemEnum.Back)
 			{
@@ -34516,7 +34524,7 @@ T = {
 		{
 			var ithdaily = pObj.pve[i];
 			// Only allow max level and max expansion access dailies
-			if (ithdaily.level.max === Q.ItemLimit.LevelMax)
+			if (ithdaily.level.max === Q.GameLimit.LevelMax)
 			{
 				for (var ii = 0; ii < ithdaily.required_access.length; ii++)
 				{
@@ -40156,6 +40164,7 @@ I = {
 			{
 				I.cPANE_MENU_HEIGHT = 32;
 				I.loadImg("#mapGPSIcon");
+				$(".hudSelect").removeAttr("title");
 				K.styleClock();
 				// Manually assign F5 key browser reload functionality
 				$(document.body).on("keydown", this, function (event)
