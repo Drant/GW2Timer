@@ -214,6 +214,7 @@ O = {
 		bol_displayVistasWvW: true,
 		bol_displayChallengesWvW: true,
 		str_colorPersonalPath: "#ffffff",
+		int_opacityPersonalPath: 40,
 		// WvW
 		int_secWvWRefresh: 10,
 		int_numLogEntries: 128,
@@ -1344,14 +1345,11 @@ O = {
 		},
 		str_colorPersonalPath: function()
 		{
-			if (M.isMapInitialized)
-			{
-				M.drawPersonalPath();
-			}
-			if (W.isMapInitialized)
-			{
-				W.drawPersonalPath();
-			}
+			P.refreshPersonalPath();
+		},
+		int_opacityPersonalPath: function()
+		{
+			P.refreshPersonalPath();
 		},
 		bol_showChainPaths: function()
 		{
@@ -25565,6 +25563,9 @@ M = {
 			pinids.push(P.getLayerId(iPin));
 			length++;
 		});
+		
+		var pathcolor = P.getUserPathColor();
+		var pathopacity = P.getUserPathOpacity();
 		if (length > 1)
 		{
 			this.Layer.PersonalPath.clearLayers();
@@ -25572,8 +25573,8 @@ M = {
 			{
 				// Create a single line connecting next two pins
 				path = L.polyline([latlngs[i], latlngs[i+1]], {
-					color: P.getUserPathColor(),
-					opacity: 0.4,
+					color: pathcolor,
+					opacity: pathopacity,
 					precede: i // Store the index of the preceding pin that connects the path
 				});
 				// Single click path: get the coordinates of all pins
@@ -28181,6 +28182,21 @@ P = {
 	{
 		return U.stripToColorString(O.Options.str_colorPersonalPath);
 	},
+	getUserPathOpacity: function()
+	{
+		return O.Options.int_opacityPersonalPath / 100;
+	},
+	refreshPersonalPath: function()
+	{
+		if (M.isMapInitialized)
+		{
+			M.drawPersonalPath();
+		}
+		if (W.isMapInitialized)
+		{
+			W.drawPersonalPath();
+		}
+	},
 	
 	/*
 	 * Draws a path with each link of increasing or decreasing thickness, to
@@ -29221,6 +29237,7 @@ G = {
 		var metadata;
 		var opacityclicked = 0.3;
 		var pathcolor = P.getUserPathColor();
+		var pathopacity = P.getUserPathOpacity();
 		var inputwaypoint = I.bindInputSelect("#nod_int_coinWaypointAverage");
 		var inputvisit = I.bindInputSelect("#nod_int_secNodeVisitAverage");
 		var getNodeState = function(pMarker)
@@ -29350,7 +29367,7 @@ G = {
 							{
 								color: pathcolor,
 								dashArray: "5,10",
-								opacity: 0.3
+								opacity: pathopacity
 							});
 							layer.addLayer(path);
 						}
@@ -29636,8 +29653,9 @@ G = {
 			P.JPs = GW2T_JP_DATA.JP;
 			X.Checklists.JP.length = U.getObjectLength(P.JPs);
 			P.NodeArray.JP = P.createNodeArray(X.Checklists.JP.length);
-			var jp, jplink, wikilink, marker, path, defaultname, translatedname, keywords;
+			var jp, jplink, marker, path, translatedname, keywords;
 			var pathcolor = P.getUserPathColor();
+			var pathopacity = P.getUserPathOpacity();
 			
 			// Translate headers
 			$(".jpzHeader").each(function()
@@ -29670,7 +29688,7 @@ G = {
 					{
 						color: pathcolor,
 						dashArray: "5,10",
-						opacity: 0.3
+						opacity: pathopacity
 					});
 					P.NodeArray.JP[jp.id].oPath = path;
 				}
