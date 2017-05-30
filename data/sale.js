@@ -21,22 +21,22 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 560}, discount: 800, Finish: new Date("2017-05-30T16:00:00Z")},
-	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 560}, discount: 800, Finish: new Date("2017-05-30T16:00:00Z")},
-	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 560}, discount: 800, Finish: new Date("2017-05-30T16:00:00Z")},
+	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
+	{i: "http://i.imgur.com/o9lTCUW.png", n: "Outlaw Appearance Pack", p: {gem: 2000}},
+	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}},
+	{i: 79089, n: "Lord Caudecus's Sword Skin", p: {gem: 600}},
+	{i: 79179, n: "Lord Caudecus's Pistol Skin", p: {gem: 600}},
+	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
+	{i: "http://i.imgur.com/zhq7M4g.png", n: "Makeover Kit and Transmutation Charges", p: {gem: 350}},
+	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
+	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 308}, discount: 400, Finish: new Date("2017-06-06T16:00:00Z")},
+	{i: 80854, n: "Bloodstone Ascender", p: {gem: 192}, discount: 250, Finish: new Date("2017-06-06T16:00:00Z")},
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}},
 	{i: 81240, n: "Menzies's Agony", p: {gem: 600}},
-	{i: 47907, n: "Scarlet's Champions Mini 3-Pack", p: {gem: 500}, Finish: new Date("2017-05-30T16:00:00Z")},
-	{i: 48817, n: "Scarlet's Grasp", p: {gem: 400}, Finish: new Date("2017-05-30T16:00:00Z")},
-	{i: 48824, n: "Scarlet's Spaulders", p: {gem: 400}, Finish: new Date("2017-05-30T16:00:00Z")},
-	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 308}, discount: 400, Finish: new Date("2017-05-30T16:00:00Z")},
-	{i: 80854, n: "Bloodstone Ascender", p: {gem: 192}, discount: 250, Finish: new Date("2017-05-30T16:00:00Z")},
 	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}},
 	{i: 78025, n: "Phoenix Glider", p: {gem: 500}},
-	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
 	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 	]
 };

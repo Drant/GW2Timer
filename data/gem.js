@@ -85,7 +85,8 @@ Outfit: [
 	{i: 80049, n: "Ice Encasement Outfit", p: {gem: -700}},
 	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
 	{i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}},
-	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}}
+	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
+	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -563,7 +564,8 @@ Mini: [
 	{i: 79693, n: "Mini Bloodstone Rock", p: {gem: 350}},
 	{i: 80044, n: "Mini Festive Aurene", p: {gem: -400}},
 	{i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}},
-	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}}
+	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}},
+	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},
