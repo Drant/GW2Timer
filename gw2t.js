@@ -40334,9 +40334,12 @@ I = {
 		window.clearTimeout(I.SleepTimeout);
 		I.SleepTimeout = setTimeout(function()
 		{
-			var filterclass = (I.isProjectionEnabled) ? ".mapDisplayButton" : "";
-			I.isSleeping = true;
-			$(".jsSleepable, .hudPeripheral, .btnWindow").not(filterclass).addClass("jsSleeped");
+			if (!M.isMouseOnHUD && !W.isMouseOnHUD)
+			{
+				var filterclass = (I.isProjectionEnabled) ? ".mapDisplayButton" : "";
+				I.isSleeping = true;
+				$(".jsSleepable, .hudPeripheral, .btnWindow").not(filterclass).addClass("jsSleeped");
+			}
 		}, I.cMSECONDS_SLEEP);
 	},
 	
