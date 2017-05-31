@@ -37,6 +37,12 @@ GW2T_SALE_DATA = {
 	{i: 81240, n: "Menzies's Agony", p: {gem: 600}},
 	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}},
 	{i: 78025, n: "Phoenix Glider", p: {gem: 500}},
-	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 48967, n: "Dreamthistle weapon skins#Gallery", p: {blticket: 3}, Finish: new Date("2017-06-06T16:00:00Z")},
+	{i: 67046, n: "Tempest weapon skins#Gallery", p: {blticket: 5}, Finish: new Date("2017-06-06T16:00:00Z")},
+	{i: 70027, n: "Gallant weapon skins#Gallery", p: {blticket: 3}, Finish: new Date("2017-06-06T16:00:00Z")},
+	{i: 77790, n: "Soaring weapon skins#Gallery", p: {blticket: 3}, Finish: new Date("2017-06-06T16:00:00Z")},
+	{i: 77898, n: "Dominator weapon skins#Gallery", p: {blticket: 3}, Finish: new Date("2017-06-06T16:00:00Z")},
+	{i: 70197, n: "Dwayna's weapon skins#Gallery", p: {blticket: 3}, Finish: new Date("2017-06-06T16:00:00Z")}
 	]
 };
