@@ -35052,8 +35052,8 @@ H = {
 						// Percent off for bulk discount comes from the price per item in the bulk--divided by the old price for a single (non-bulk) item
 						var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (itemdiscount[0])[2], disc[2]) : getPercentOffString(priceper, (itemdiscount[0])[1]);
 						var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
-						discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
-							+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(disc[1]) + "<br />";
+						discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + " " + E.formatGemToCoin(disc[1]) + I.Symbol.ArrowRight + disc[1] + gemstr + divisorstr + "</span>"
+							+ " " + "<br />";
 					}
 					discountstr += "</span>";
 				}
@@ -35061,15 +35061,15 @@ H = {
 				var pricestr = "";
 				if (item.p["gem"])
 				{
-					pricestr = "<span class='dsbSalePriceCurrent'>" + itemprice + gemstr + "</span>"
-						+ "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(itemprice) + "</span>"
-						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(itemprice) + "</span>";
+					pricestr = "<span class='dsbSalePriceCoin'>" + E.formatGemToCoin(itemprice) + " " + I.Symbol.ArrowRight + " </span>"
+						+ "<span class='dsbSalePriceMoney'>" + E.formatGemToMoney(itemprice) + " = </span>"
+						+ "<span class='dsbSalePriceCurrent'>" + itemprice + gemstr + "</span>";
 					
 				}
 				else if (item.p["coin"])
 				{
-					pricestr = "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(itemprice) + " " + I.Symbol.ArrowLeft + " " + "</span>"
-						+ "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(itemprice)) + "</span>"
+					pricestr = "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(itemprice)) + "</span> " + I.Symbol.ArrowRight + " "
+						+ "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(itemprice) + "</span>"
 						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(itemprice)) + "</span>";
 				}
 				else if (item.p["blticket"])
@@ -35082,13 +35082,16 @@ H = {
 				{
 					idstofetch.push(itemid);
 				}
-				var idprop = (idisimg) ? "" : ("id='dsbSaleItem_" + itemid + "'");
+				var idprop = (idisimg) ? "" : ("id='dsbSaleEntry_" + itemid + "'");
 				var imgsrc = (idisimg) ? itemid : "img/ui/placeholder.png";
-				$("#dsbSaleSide" + side).append("<div class='dsbSaleEntry'>"
-					+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + idprop + " src='" + imgsrc + "' /></a> "
-					+ "<div class='dsbSaleText'>"
-						+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
-						+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
+				$("#dsbSaleSide" + side).append("<div class='dsbSaleEntry' " + idprop + ">"
+					+ "<div class='dsbSaleItem'>"
+						+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' src='" + imgsrc + "' /></a> "
+						+ "<span class='dsbSaleVideo'> <a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a> </span>"
+						+ "<var class='dsbSaleName'>" + itemname + "</var>"
+					+ "</div>"
+					+ "<div class='dsbSaleInfo'>"
+						+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>&nbsp;"
 						+ oldpricestr
 						+ pricestr
 						+ discountstr
@@ -35109,7 +35112,9 @@ H = {
 					var item = Q.getCachedItem(idstofetch[i]);
 					if (item)
 					{
-						Q.scanItem(item, {aElement: $("#dsbSaleItem_" + idstofetch[i]).attr("src", item.icon)});
+						var entry = $("#dsbSaleEntry_" + idstofetch[i]);
+						Q.scanItem(item, {aElement: entry.find(".dsbSaleIcon").attr("src", item.icon)});
+						entry.find(".dsbSaleName").html(item.name).addClass(Q.getRarityClass(item.rarity));
 					}
 				}
 			});
@@ -35481,10 +35486,6 @@ H = {
 		
 		var finalizePactTable = function(pUpdateTime)
 		{
-			$(".dsbPactItem").each(function()
-			{
-				M.bindMapLinkBehavior($(this));
-			});
 			var height = table.height();
 			table.css({height: 0}).animate({height: height}, animationspeed, function()
 			{
@@ -35558,23 +35559,22 @@ H = {
 						continue;
 					}
 					var wikiquery = (D.isLanguageDefault) ? recipe.name : recipeid.toString();
-					table.append("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>");
-					$("#dsbPactEntry_" + i).html(
-						"<div class='dsbPactSide0'>"
+					$("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>").appendTo(table).html(
+						"<div class='dsbPactItem'>"
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbPactIcon_" + i + "' class='dsbPactIcon' src='img/ui/placeholder.png' /></a> "
-							+ "<span id='dsbPactItem_" + i + "' class='dsbPactItem curZoom " + Q.getRarityClass(recipe.rarity)
+							+ "<span id='dsbPactName_" + i + "' class='dsbPactName curZoom " + Q.getRarityClass(recipe.rarity)
 								+ "' data-coord='" + (H.Pact.Coords[i] || defaultcoords)[weekdaylocation] + "'>" + product.name + "</span> "
 							+ "</div>"
-						+ "<div class='dsbPactSide1'>"
+						+ "<div class='dsbPactInfo'>"
 							+ "<span class='dsbPactPriceCoin' id='dsbPactPriceCoin_" + i + "'></span> "
-							+ "<span class='dsbPactName'>" + i + "</span> "
+							+ "<span class='dsbPactVendor'>" + i + "</span> "
 							+ "<span class='dsbPactPriceKarma'>" + E.formatKarmaString(H.Pact.Prices[recipeid] || H.Pact.PriceDefault) + "</span>"
 						+ "</div>");
 					// Get TP prices also
 					var recipeprice = E.getCachedPrice(recipeid);
 					var recipepricestr = (recipeprice) ? (E.formatCoinStringColored(recipeprice.oPriceSell)) : E.formatCoinStringColored(0);
 					$("#dsbPactPriceCoin_" + i).html(recipepricestr);
-					M.bindMapLinkBehavior($("#dsbPactItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
+					M.bindMapLinkBehavior($("#dsbPactName_" + i), M.ZoomEnum.Ground, M.Pin.Program);
 					// Get the product that the recipe crafts
 					var icon = $("#dsbPactIcon_" + i);
 					icon.attr("src", product.icon);
@@ -35625,7 +35625,7 @@ H = {
 			{
 				for (var i in H.Pact.OffersAssoc)
 				{
-					var elm = $("<dfn id='dsbPactEntry_" + i + "' class='dsbPactEntry' data-coord='"
+					var elm = $("<dfn id='dsbPactName_" + i + "' class='dsbPactName' data-coord='"
 						+ (H.Pact.Coords[i] || defaultcoords)[weekdaylocation] + "'>" + i + "</dfn>").appendTo(table);
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
@@ -37694,7 +37694,8 @@ I = {
 			Special: "Special Bosses",
 			Timetable: "Full Timetable",
 			DryTop: "Dry Top",
-			Help: "Boss Guides"
+			Help: "Boss Guides",
+			Forum: "Forum"
 		},
 		Map:
 		{
@@ -37759,7 +37760,7 @@ I = {
 	},
 	DirectoryExternal: // Associative array of URL that opens a new window
 	{
-		
+		Forum: U.URL_META.Forum
 	},
 	DirectoryCompound: // Associative array of compound translation buttons
 	{

@@ -1798,21 +1798,15 @@ textarea.jsCopyCode {
 	display: inline-block;
 	vertical-align: top;
 }
-#dsbSaleSide0 {
-	margin-left: 32px;
-}
-.dsbSaleVertical #dsbSaleSide1 {
-	margin-left: 32px;
-}
 .dsbSaleEntry {
-	width: 256px;
+	position: relative;
+	width: 320px;
 	white-space: nowrap;
 }
-.dsbSaleIcon {
-	width: 32px; height: 32px;
-	border-radius: 4px;
+.dsbSaleName {
+	color: white;
 }
-.dsbPactIcon {
+.dsbSaleIcon, .dsbPactIcon {
 	width: 48px; height: 48px;
 	border-radius: 4px;
 }
@@ -1822,9 +1816,11 @@ textarea.jsCopyCode {
 	border-radius: 8px;
 	box-shadow: 0px 0px 10px #44bbff;
 }
-.dsbSaleText {
-	display: inline;
-	position: relative;
+.dsbSaleInfo, .dsbPactInfo {
+	position: absolute;
+	right: 16px;
+	margin-top: -12px;
+	font-size: 12px;
 }
 .dsbSalePriceMoney {
 	display: none;
@@ -1864,9 +1860,6 @@ textarea.jsCopyCode {
 	display: inline;
 }
 .dsbSaleCountdown {
-	position: absolute;
-	top: 16px;
-	left: 0;
 	font-size: 12px;
 	font-family: monospace;
 	color: #ff4800;
@@ -1885,24 +1878,21 @@ textarea.jsCopyCode {
 .dsbPactPriceKarma {
 	color: white;
 }
-.dsbPactEntry:hover .dsbPactItem {
+.dsbPactEntry {
+	position: relative;
+}
+.dsbPactEntry:hover .dsbPactName {
 	display: inline-block;
 	line-height: 64px;
 	text-decoration: underline;
 }
-.dsbPactName {
+.dsbPactVendor {
 	color: #aaa;
 }
-.dsbPactSide0 {
+.dsbPactItem {
 	white-space: nowrap;
 }
-.dsbPactSide1 {
-	position: absolute;
-	right: 16px;
-	margin-top: -12px;
-	font-size: 12px;
-}
-.dsbPactEntry:hover .dsbPactName {
+.dsbPactEntry:hover .dsbPactVendor {
 	color: #ee55cc;
 }
 #dsbPactNote {
