@@ -91,7 +91,7 @@ Outfit: [
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
 	{i: 70048, n: "Black Feather Wings Glider", p: {gem: -700}},
-	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: -500}},
+	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}},
 	{i: 74684, n: "Bat Wings Glider", p: {gem: -700}},
 	{i: 76236, n: "Exalted Glider", p: {gem: -400}},
 	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: -700}},
