@@ -12,7 +12,7 @@ Bounty: {
 	url_en: "http://wiki.guildwars2.com/wiki/Guild_Bounty",
 	url_de: "http://wiki-de.guildwars2.com/wiki/Gilden-Kopfgeldjagd",
 	url_es: "http://www.guildwars2-spain.com/manuales/627-guía-de-misión-de-clan-cazarrecompensas",
-	url_fr: "http://wiki-fr.guildwars2.com/wiki/Chasseur_de_prime_en_guilde",
+	url_fr: "http://www.lebusmagique.fr/pages/missions-de-guilde/primes-de-guilde.html",
 	data: [
 	{
 		name_en: "Prisoner 1141",
@@ -233,8 +233,8 @@ Trek: {
 	name_fr: "Randonnée de guilde",
 	url_en: "http://wiki.guildwars2.com/wiki/Guild_Trek",
 	url_de: "https://wiki-de.guildwars2.com/wiki/GW2Wiki:Projekte/Gilden-Missionen",
-	url_es: "http://dgea.es/inicio/index.php/component/content/article?id=203:expedicion-de-clan",
-	url_fr: "http://gw2-menestrels.com/guide-des-randonnees/",
+	url_es: "http://www.guildwars2-spain.com/manuales/633-guía-de-misión-de-clan-expedición",
+	url_fr: "http://www.lebusmagique.fr/pages/missions-de-guilde/les-randonnees-de-guilde.html",
 	data: [
 	{
 		name_en: "Altar Brook Lair",
@@ -2105,8 +2105,8 @@ Challenge: {
 	name_fr: "Défi de guilde",
 	url_en: "http://wiki.guildwars2.com/wiki/Guild_Challenge",
 	url_de: "http://www.wartower.de/artikel/artikel.php?id=716",
-	url_es: "http://dgea.es/inicio/index.php/guild-wars-2/clanes/misiones-de-clan/desafio",
-	url_fr: "http://gw2-menestrels.com/guide-des-defis/",
+	url_es: "http://www.guildwars2-spain.com/manuales/655-guía-de-misión-de-clan-desafío",
+	url_fr: "http://www.lebusmagique.fr/pages/missions-de-guilde/les-defis-de-guilde.html",
 	data: [
 	{
 		name_en: "Blightwater Shatterstrike",

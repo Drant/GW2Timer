@@ -1860,7 +1860,7 @@ textarea.jsCopyCode {
 	display: inline;
 }
 .dsbSaleCountdown {
-	font-size: 12px;
+	margin-right: 8px;
 	font-family: monospace;
 	color: #ff4800;
 }

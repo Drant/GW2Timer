@@ -1636,6 +1636,7 @@ X = {
 		MursaatTokens: { key: "str_chlMursaatTokens", urlkey: "mursaattokens"},
 		MursaatTablets: { key: "str_chlMursaatTablets", urlkey: "mursaattablets"},
 		CamiJournals: { key: "str_chlCamiJournals", urlkey: "camijournals"},
+		RiftStabilizer: { key: "str_chlRiftStabilizer", urlkey: "riftstabilizer"},
 		BloodstoneCreatures: { key: "str_chlBloodstoneCreatures", urlkey: "creatures"},
 		BloodstoneSlivers: { key: "str_chlBloodstoneSlivers", urlkey: "slivers"},
 		// Achievements: Heart of Thorns
@@ -30182,7 +30183,7 @@ G = {
 				ithneedle.l = ithneedle.u.toString();
 			}
 
-			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + (ithneedle.l || number)
+			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> " + (ithneedle.l ? (ithneedle.l + " (#" + number + ")") : "#" + number)
 				+ ((collectible.iscushion) ? "<br />" + D.getObjectName(ithneedle) : "");
 			if (ithneedle.s)
 			{
@@ -35091,7 +35092,7 @@ H = {
 						+ "<var class='dsbSaleName'>" + itemname + "</var>"
 					+ "</div>"
 					+ "<div class='dsbSaleInfo'>"
-						+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>&nbsp;"
+						+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
 						+ oldpricestr
 						+ pricestr
 						+ discountstr
@@ -40202,6 +40203,7 @@ I = {
 				$("#itemTimeline").appendTo("#panelApp");
 				$("#itemLanguage").insertAfter("#itemHome");
 				I.readjustSimple();
+				K.styleClock();
 			} break;
 			case I.ModeEnum.Mobile:
 			{
