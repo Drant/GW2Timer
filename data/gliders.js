@@ -49,7 +49,8 @@ Colored: [
 	{u: 35, i: 80018, n: "Infinirarium Glider", l: "", p: {gem: 0}},
 	{u: 36, i: 80066, n: "Celestial Rooster Glider", l: "", p: {gem: 500}},
 	{u: 39, i: 80795, n: "Shattered Bloodstone Glider", l: "", p: {gem: 400}},
-	{u: 41, i: 80919, n: "Super Cloud Glider", l: "", p: {gem: 500}}
+	{u: 41, i: 80919, n: "Super Cloud Glider", l: "", p: {gem: 500}},
+	{u: 44, i: 81291, n: "Magic Carpet Glider", l: "", p: {gem: 400}}
 ],
 Combo: [ // The audit function depends on this named category for ignoring duplicate backpack-glider skin
 	{u: 11, i: 77474, n: "The Ascension Glider", l: "", p: {craft: true}},

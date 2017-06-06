@@ -1601,7 +1601,7 @@ Countdown: {
 		name_es: "Características competitivas",
 		name_fr: "Pack de fonctionnalités compétitives",
 		name_zh: "竞争功能包",
-		official: "news/get-ready-for-the-june-2017-competitive-feature-pack/",
+		official: "news/world-vs-world-updates-are-live/",
 		Start: new Date("2017-06-06T16:00:00Z"),
 		Finish: new Date("2017-06-13T16:00:00Z")
 	}

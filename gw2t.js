@@ -5530,6 +5530,10 @@ Z = {
 				s += "<br />The console also accepts: coordinates, array of coordinates, zone names, and chatcodes.<br />";
 				I.print(s);
 			}},
+			wiki: {usage: "Search the game wiki. <em>Parameters: str_keywords</em>", f: function()
+			{
+				U.openExternalURL(U.getWikiSearchLanguage(argstr));
+			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
 				
