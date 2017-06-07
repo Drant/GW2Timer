@@ -5387,7 +5387,7 @@ Z = {
 			}},
 			link: {usage: "Prints a coordinates URL of the current map view.", f: function()
 			{
-				I.print(I.cSiteURL + that.convertLCtoGC(that.Map.getCenter()), true);
+				I.paste(I.cSiteURL + that.convertLCtoGC(that.Map.getCenter()), true);
 			}},
 			dart: {usage: "Draws personal pins at random map coordinates. <em>Parameters: int_quantity</em>", f: function()
 			{
@@ -5488,7 +5488,7 @@ Z = {
 				{
 					Q.sortItems(JSON.parse(args[1]), function(pItems, pIDs)
 					{
-						I.print(U.lineJSON(pIDs));
+						I.paste(U.lineJSON(pIDs));
 					});
 				}
 				catch (e) {}
@@ -5501,23 +5501,23 @@ Z = {
 			{
 				if (args[1])
 				{
-					I.printFile(U.toCase(argstr, U.CaseEnum.Lower));
+					I.paste(U.toCase(argstr, U.CaseEnum.Lower));
 				}
 			}},
 			upper: {usage: "Converts a string to all upper case. <em>Parameters: str_string</em>", f: function()
 			{
 				if (args[1])
 				{
-					I.printFile(U.toCase(argstr, U.CaseEnum.Upper));
+					I.paste(U.toCase(argstr, U.CaseEnum.Upper));
 				}
 			}},
 			rgba: {usage: "Converts a hex color to RGBA format. <em>Parameters: str_hex</em>", f: function()
 			{
-				I.print(U.getHexToRGB(argstr));
+				I.paste(U.getHexToRGB(argstr));
 			}},
 			hex: {usage: "Converts an RGBA color to hex format. <em>Parameters: str_rgba</em>", f: function()
 			{
-				I.print(U.getRGBToHex(argstr));
+				I.paste(U.getRGBToHex(argstr));
 			}},
 			help: {usage: "Prints this help message.", f: function()
 			{
@@ -5832,7 +5832,7 @@ Z = {
 		}
 		if (pFilename === true)
 		{
-			I.printFile(output);
+			I.paste(output);
 		}
 		Z.createFile(output, pFilename);
 	},
@@ -7169,7 +7169,7 @@ Z = {
 					junkvalue[item.id] = item.vendor_value;
 				}
 			}
-			I.printFile(U.lineJSON(junkvalue));
+			I.paste(U.lineJSON(junkvalue));
 		};
 		
 		// Retrieve data first
@@ -24468,22 +24468,14 @@ M = {
 			if (that.isPersonalPinsLaid(true))
 			{
 				var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
-				I.print(I.cSiteURL + urlmod + that.getPersonalString(), true);
-				setTimeout(function()
-				{
-					I.selectConsole();
-				}, 0);
+				I.paste(I.cSiteURL + urlmod + that.getPersonalString());
 			}
 		});
 		$(htmlidprefix + "ContextURLCoord").click(function()
 		{
 			if (that.ContextLatLng)
 			{
-				I.print(I.cSiteURL + that.convertLCtoGC(that.ContextLatLng), true);
-				setTimeout(function()
-				{
-					I.selectConsole();
-				}, 0);
+				I.paste(I.cSiteURL + that.convertLCtoGC(that.ContextLatLng));
 			}
 		});
 		$(htmlidprefix + "ContextToggleFloor").click(function()
@@ -25951,7 +25943,7 @@ M = {
 				I.print("Saveable File:");
 				Z.createFile(outputstr, "gw2t_compasses.json");
 				I.print("<br />Copyable Text:");
-				I.printFile(outputstr);
+				I.paste(outputstr);
 			}
 		});
 		
@@ -38371,8 +38363,14 @@ I = {
 		console.style.display = "block";
 		content.insertAdjacentHTML("beforeend", pString + breakstr);
 	},
-	printFile: function(pString)
+	
+	/*
+	 * Writes a textarea to the console that autocopies its contents.
+	 * @param string pString
+	 */
+	paste: function(pString)
 	{
+		I.print("Click the box below to auto-copy:");
 		$("<textarea class='cssInputText cslText'></textarea>").appendTo(I.getConsole()).val(pString);
 		I.print("");
 		I.bindConsoleInput();
