@@ -24469,14 +24469,21 @@ M = {
 			{
 				var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
 				I.print(I.cSiteURL + urlmod + that.getPersonalString(), true);
-				I.selectConsole();
+				setTimeout(function()
+				{
+					I.selectConsole();
+				}, 0);
 			}
 		});
 		$(htmlidprefix + "ContextURLCoord").click(function()
 		{
 			if (that.ContextLatLng)
 			{
-				I.print(I.cSiteURL + that.convertLCtoGC(that.ContextLatLng));
+				I.print(I.cSiteURL + that.convertLCtoGC(that.ContextLatLng), true);
+				setTimeout(function()
+				{
+					I.selectConsole();
+				}, 0);
 			}
 		});
 		$(htmlidprefix + "ContextToggleFloor").click(function()
