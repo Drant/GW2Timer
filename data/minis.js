@@ -324,7 +324,7 @@ PvP: [
 	{u: 449, i: 80833, n: "Mini Fancy Emperor Llama", p: {craft: true}},
 	{u: 453, i: 80738, n: "Mini Elegant Emperor Llama", p: {craft: true}},
 	{u: 451, i: 80709, n: "Mini Lavish Emperor Llama", p: {craft: true}},
-	{u: 474, i: 81283, n: "Mini Princess Llama", p: {coin: -0}},
+	{u: 474, i: 81283, n: "Mini Princess Llama", p: {league: 10}},
 	{u: 471, i: 81513, n: "Mini Fancy Princess Llama", p: {craft: true}},
 	{u: 473, i: 81421, n: "Mini Elegant Princess Llama", p: {craft: true}},
 	{u: 472, i: 81507, n: "Mini Lavish Princess Llama", p: {craft: true}}

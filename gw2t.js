@@ -24472,6 +24472,13 @@ M = {
 				I.selectConsole();
 			}
 		});
+		$(htmlidprefix + "ContextURLCoord").click(function()
+		{
+			if (that.ContextLatLng)
+			{
+				I.print(I.cSiteURL + that.convertLCtoGC(that.ContextLatLng));
+			}
+		});
 		$(htmlidprefix + "ContextToggleFloor").click(function()
 		{
 			that.toggleFloor();
