@@ -227,7 +227,7 @@ Special: [
 	{u: 205, i: 48877, n: "Mini Toxic Hybrid"},
 	{u: 203, i: 48743, n: "Mini Holographic Scarlet"},
 	{u: 201, i: 48756, n: "Mini Caithe"},
-	{u: 204, i: 48761, n: "Mini Dolyak", p: {tournament: 200}},
+	{u: 204, i: 48761, n: "Mini Dolyak", p: {skirmish: 200}},
 	{u: 206, i: 48879, n: "Mini Toxic Nimross", p: {laurel: 25}},
 	{u: 217, i: 49724, n: "Mini Cobalt Great Jungle Wurm Head"},
 	{u: 214, i: 49827, n: "Mini Twisted Watchwork Moa"},

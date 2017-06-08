@@ -588,6 +588,10 @@ dt.jpzListNameHover {
 	box-shadow: 0px 0px 4px #444;
 }
 
+#trdButtons {
+	white-space: nowrap;
+	margin-bottom: 16px;
+}
 #trdToggle {
 	width: 96px;
 }

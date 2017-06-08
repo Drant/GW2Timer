@@ -293,7 +293,7 @@ Converter: [
 	{i: 67270, n: "Karmic Converter", p: {achievement: 0}},
 	{i: 72606, n: "Fractal Reliquary", p: {achievement: 0}},
 	{i: 73718, n: "Ley-Energy Matter Converter", p: {achievement: 0}},
-	{i: 81512, n: "Memory Gobbler", p: {tournament: 350}},
+	{i: 81512, n: "Memory Gobbler", p: {skirmish: 350}},
 	{i: 67393, n: "Candy Corn Gobbler", p: {gem: 300}}
 ],
 Blueprint: [
