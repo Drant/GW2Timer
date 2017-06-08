@@ -35103,8 +35103,8 @@ H = {
 					+ "</div>"
 					+ "<div class='dsbSaleInfo'>"
 						+ "<span id='dsbSaleCountdown_" + i + "' class='dsbSaleCountdown'></span>"
-						+ oldpricestr
 						+ pricestr
+						+ oldpricestr
 						+ discountstr
 					+ "</div>"
 				+ "</div>");

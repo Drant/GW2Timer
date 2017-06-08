@@ -30,7 +30,7 @@ GW2T_SALE_DATA = {
 	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}},
 	{i: 79354, n: "Bloodstone Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-09T16:00:00Z")},
 	{i: 43935, n: "Deathly Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-10T16:00:00Z")},
-	{i: 70367, n: "Mad King Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-11T16:00:00Z")},
+	{i: 70367, n: "Mad King Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-11T16:00:00Z")},
 	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 800}, Finish: new Date("2017-06-09T16:00:00Z")},
 	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 800}, Finish: new Date("2017-06-09T16:00:00Z")},
 	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 800}, Finish: new Date("2017-06-09T16:00:00Z")},
