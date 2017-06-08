@@ -2512,13 +2512,15 @@ textarea.jsCopyCode {
 	background: radial-gradient(ellipse at center, #4c4c4c 0%, #444444 50%, #131313 100%);
 }
 
-#paneClockBackground {
+.paneClockBackground {
 	right: 1px;
 	width: 358px; /* To avoid bleeding left edge */
 	filter: blur(1px);
+	background: url('img/background/globe.jpg') no-repeat center;
 	opacity: 0;
 }
-#paneClockFace {
+.paneClockFace {
+	background: url("img/background/face.png") no-repeat center;
 	background-size: 100% 100%;
 	/*opacity: 0.9;*/
 }

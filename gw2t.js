@@ -36231,13 +36231,10 @@ K = {
 			K.isClockStyled = true;
 			//$("#clkWaypoints .cssWaypoint").css({"background-image": "url('img/map/halloween.png')"});
 			//$("#clkWaypoints .cssWaypoint").css({"background-image": "url('img/map/wintersday.png')"});
-			$("#paneClockBackground").css({"background": "url('img/background/globe.jpg') no-repeat center"});
+			$("#paneClockBackground").addClass("paneClockBackground");
 			//$("#paneClockBackground").css({"background": "url('img/background/globe_halloween.jpg') no-repeat center}"});
 			//$("#paneClockBackground").css({"background": "url('img/background/globe_wintersday.jpg') no-repeat center}"});
-			$("#paneClockFace").css({
-				"background": "url('img/background/face.png') no-repeat center",
-				"background-size": "100% 100%;"
-			});
+			$("#paneClockFace").addClass("paneClockFace");
 		}
 	},
 	
