@@ -37557,6 +37557,7 @@ I = {
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	isProgramExternal: false, // If is embedded in another site rather self-embedded
+	isProgramFocused: true, // Whether the user's current browser tab is this site
 	isAPIEnabled: true, // This will be changed asynchronously by the populate map function
 	isMapEnabled: true,
 	isTouchEnabled: false,
@@ -38018,6 +38019,15 @@ I = {
 		{
 			$("head").append("<style>.leaflet-clickable{cursor: url('img/cursor/pointer.cur'), pointer;}</style>");
 		}
+		
+		// Bind browser tab focus
+		$(window).focus(function()
+		{
+			I.isProgramFocused = true;
+		}).blur(function()
+		{
+			I.isProgramFocused = false;
+		});
 		
 		// Bind special popup elements that can be removed if user clicks anywhere not on it
 		$(document).mouseup(function(iEvent)
@@ -38697,6 +38707,10 @@ I = {
 	 */
 	blinkElement: function(pSelector, pDuration, pSpeed)
 	{
+		if (I.isProgramFocused === false)
+		{
+			return;
+		}
 		var times = parseInt(pDuration / pSpeed);
 		// Have to have even numbered times so show and hide equals
 		times = (times % 2 === 0) ? times : times + 1;
@@ -38712,7 +38726,7 @@ I = {
 			}
 			else
 			{
-				elm.css({visibility: "visibile"});
+				elm.css({visibility: "visible"});
 			}
 			isshown = !isshown;
 			if (counter === times)
@@ -38724,6 +38738,10 @@ I = {
 	},
 	bloatElement: function(pSelector, pDuration, pSpeed)
 	{
+		if (I.isProgramFocused === false)
+		{
+			return;
+		}
 		var times = parseInt(pDuration / pSpeed);
 		// Have to have even numbered times so show and hide equals
 		times = (times % 2 === 0) ? times : times + 1;
@@ -38750,6 +38768,10 @@ I = {
 	 */
 	animateNumber: function(pTarget, pStep, pDuration, pEasing)
 	{
+		if (I.isProgramFocused === false)
+		{
+			return;
+		}
 		$({value: 0}).animate({value: T.cPERCENT_100}, {
 			duration: pDuration || 3000,
 			easing: pEasing || "swing",
@@ -38767,6 +38789,10 @@ I = {
 	 */
 	colorizeValue: function(pElement, pValue, pLimit)
 	{
+		if (I.isProgramFocused === false)
+		{
+			return;
+		}
 		var elm = $(pElement);
 		elm.removeClass("cssLimitEqual cssLimitWithin cssLimitExceed");
 		var cssclass;
