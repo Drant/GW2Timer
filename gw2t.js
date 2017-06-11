@@ -38707,10 +38707,6 @@ I = {
 	 */
 	blinkElement: function(pSelector, pDuration, pSpeed)
 	{
-		if (I.isProgramFocused === false)
-		{
-			return;
-		}
 		var times = parseInt(pDuration / pSpeed);
 		// Have to have even numbered times so show and hide equals
 		times = (times % 2 === 0) ? times : times + 1;
@@ -38738,10 +38734,6 @@ I = {
 	},
 	bloatElement: function(pSelector, pDuration, pSpeed)
 	{
-		if (I.isProgramFocused === false)
-		{
-			return;
-		}
 		var times = parseInt(pDuration / pSpeed);
 		// Have to have even numbered times so show and hide equals
 		times = (times % 2 === 0) ? times : times + 1;
@@ -38768,10 +38760,6 @@ I = {
 	 */
 	animateNumber: function(pTarget, pStep, pDuration, pEasing)
 	{
-		if (I.isProgramFocused === false)
-		{
-			return;
-		}
 		$({value: 0}).animate({value: T.cPERCENT_100}, {
 			duration: pDuration || 3000,
 			easing: pEasing || "swing",
@@ -38789,10 +38777,6 @@ I = {
 	 */
 	colorizeValue: function(pElement, pValue, pLimit)
 	{
-		if (I.isProgramFocused === false)
-		{
-			return;
-		}
 		var elm = $(pElement);
 		elm.removeClass("cssLimitEqual cssLimitWithin cssLimitExceed");
 		var cssclass;
