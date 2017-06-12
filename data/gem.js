@@ -191,7 +191,7 @@ Head: [
 	{i: 49157, n: "Mask of the Silent Skin", p: {gem: 500}},
 	{i: 50103, n: "Magnus's Eye Patch", p: {gem: -400}},
 	{i: 63891, n: "Glowing Crimson Mask", p: {gem: -500}},
-	{i: 67038, n: "Glowing Green Mask", p: {gem: 500}},
+	{i: 67038, n: "Glowing Green Mask", p: {gem: -500}},
 	{i: 67857, n: "Glint's Gaze Mask", p: {gem: -500}},
 	{i: 64739, n: "Fuzzy Quaggan Hat", p: {gem: -200}},
 	{i: 64744, n: "Fuzzy Panda Hat", p: {gem: -200}},

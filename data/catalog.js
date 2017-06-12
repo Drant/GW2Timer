@@ -805,7 +805,8 @@ Legendary: [
 	{i: 80205, n: "Perfected Envoy Gauntlets", p: {craft: true}},
 	{i: 80277, n: "Perfected Envoy Tassets", p: {craft: true}},
 	{i: 80557, n: "Perfected Envoy Greaves", p: {craft: true}},
+	{i: 74155, n: "Ad Infinitum", p: {craft: true}},
 	{i: 77474, n: "The Ascension", p: {craft: true}},
-	{i: 74155, n: "Ad Infinitum", p: {craft: true}}
+	{i: 81462, n: "Warbringer", p: {craft: true}}
 ]
 };
