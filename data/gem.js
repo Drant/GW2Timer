@@ -166,7 +166,7 @@ Head: [
 	{i: 65197, n: "Devil Horns", p: {gem: -200}},
 	{i: 65200, n: "Wintersday Earmuffs", p: {gem: -25}},
 	{i: 65202, n: "Festive Hat", p: {gem: -150}},
-	{i: 64742, n: "Aviator Cap", p: {gem: 200}},
+	{i: 64742, n: "Aviator Cap", p: {gem: -200}},
 	{i: 64745, n: "Ringmaster's Hat", p: {gem: 200}},
 	{i: 64749, n: "Sailor's Beanie", p: {gem: -200}},
 	{i: 64750, n: "Top Hat", p: {gem: -200}},
@@ -181,7 +181,7 @@ Head: [
 	{i: 79619, n: "Furrocious Cat Ears", p: {gem: -400}},
 	{i: 44607, n: "Mask of the Jubilee", p: {gem: -400}},
 	{i: 44608, n: "Mask of the Queen", p: {gem: 400}},
-	{i: 44609, n: "Mask of the Crown", p: {gem: 400}},
+	{i: 44609, n: "Mask of the Crown", p: {gem: -400}},
 	{i: 47883, n: "Stag Helm Skin", p: {gem: -500}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: -300}},
 	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
@@ -214,7 +214,8 @@ Shoulder: [
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
-	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}}
+	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
+	{i: 81412, n: "Foefire Mantle", p: {gem: 500}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}},
@@ -222,7 +223,8 @@ Gloves: [
 	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}},
-	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}}
+	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}},
+	{i: 81293, n: "Foefire Wraps", p: {gem: 500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
@@ -361,7 +363,7 @@ Dye: [
 	{i: 79354, n: "Bloodstone Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 79695, n: "Vibrant Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80069, n: "Solar and Lunar Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 80974, n: "Primordus Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},

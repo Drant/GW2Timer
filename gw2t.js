@@ -37700,8 +37700,8 @@ I = {
 		Timers:
 		{
 			Tile: "Timers Only",
-			Special: "Special Bosses",
 			Timetable: "Full Timetable",
+			Special: "Special Bosses",
 			DryTop: "Dry Top",
 			Help: "Boss Guides",
 			Forum: "Forum"
