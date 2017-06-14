@@ -1595,16 +1595,6 @@ Countdown: {
 		Start: new Date("2017-04-11T7:00:00Z"),
 		Finish: new Date("2017-04-12T17:00:00Z")
 	},*/
-	{
-		name_en: "Competitive Feature Pack",
-		name_de: "Wettkampf-Feature-Paket",
-		name_es: "Características competitivas",
-		name_fr: "Pack de fonctionnalités compétitives",
-		name_zh: "竞争功能包",
-		official: "news/world-vs-world-updates-are-live/",
-		Start: new Date("2017-06-06T16:00:00Z"),
-		Finish: new Date("2017-06-13T16:00:00Z")
-	}
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
@@ -1665,7 +1655,7 @@ Countdown: {
 		Start: new Date("2016-12-13T17:00:00Z"),
 		Finish: new Date("2017-01-10T17:00:00Z")
 	}*/
-	/*{ // 8 weeks cycle, repeats 56 days after this event's start
+	{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
@@ -1674,7 +1664,7 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-06-22T20:00:00Z"),
 		Finish: new Date("2017-06-29T20:00:00Z")
-	}*/
+	}
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Fireheart Map Rewards",
 		name_de: "Feuerherzhügel Karten-Bonus",

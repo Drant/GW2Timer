@@ -804,10 +804,11 @@ O = {
 		}
 		
 		// Supplementary event handlers for some inputs
-		I.isTouchEnabled = ((typeof window.ontouchstart !== "undefined")
+		// Temporarily disabled
+		/*I.isTouchEnabled = ((typeof window.ontouchstart !== "undefined")
 			&& O.Options.bol_ignoreTouch === false
 			&& I.ModeCurrent !== I.ModeEnum.Overlay
-		);
+		);*/
 		O.bindOptionsInputs();
 		D.initializeLanguage();
 	},
@@ -40458,10 +40459,6 @@ I = {
 		},
 		init: function(pSelector)
 		{
-			if (I.isTouchEnabled)
-			{
-				return;
-			}
 			var elm, content;
 			$(pSelector).each(function()
 			{
