@@ -184,7 +184,7 @@ Head: [
 	{i: 44609, n: "Mask of the Crown", p: {gem: -400}},
 	{i: 47883, n: "Stag Helm Skin", p: {gem: -500}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: -300}},
-	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
+	{i: 63940, n: "Lawless Helmet Skin", p: {gem: -300}},
 	{i: 47890, n: "Grenth Hood Skin", p: {gem: -500}},
 	{i: 65203, n: "Phantom's Hood", p: {gem: -200}},
 	{i: 48944, n: "Mask of the Wanderer Skin", p: {gem: 500}},
@@ -209,7 +209,7 @@ Head: [
 	{i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}}
 ],
 Shoulder: [
-	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
+	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
 	{i: 48824, n: "Scarlet's Spaulders", p: {gem: -400}},
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
@@ -218,7 +218,7 @@ Shoulder: [
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}}
 ],
 Gloves: [
-	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}},
+	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
 	{i: 48817, n: "Scarlet's Grasp", p: {gem: -400}},
 	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
@@ -227,7 +227,7 @@ Gloves: [
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}}
 ],
 Boots: [
-	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
+	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 300}}
 ],
 Armor: [
@@ -237,9 +237,9 @@ Armor: [
 	{i: 42870, n: "Aetherblade Light Armor Skin", p: {gem: -800}},
 	{i: 42869, n: "Aetherblade Medium Armor Skin", p: {gem: -800}},
 	{i: 42868, n: "Aetherblade Heavy Armor Skin", p: {gem: -800}},
-	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: -800}},
-	{i: 43017, n: "Zodiac Medium Armor Skin", p: {gem: -800}},
-	{i: 43016, n: "Zodiac Heavy Armor Skin", p: {gem: -800}},
+	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: 800}},
+	{i: 43017, n: "Zodiac Medium Armor Skin", p: {gem: 800}},
+	{i: 43016, n: "Zodiac Heavy Armor Skin", p: {gem: 800}},
 	{i: 43102, n: "Trickster's Light-Armor Skin", p: {gem: 800}},
 	{i: 43101, n: "Viper's Medium-Armor Skin", p: {gem: 800}},
 	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 800}},

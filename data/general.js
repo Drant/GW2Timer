@@ -1602,8 +1602,8 @@ Countdown: {
 		name_fr: "JcJ Tournois automatisés",
 		name_zh: "玩家对战自动比赛",
 		official: "news/automated-tournaments-and-changes-in-the-heart-of-the-mists/",
-		Start: new Date("2017-06-20T17:00:00Z"),
-		Finish: new Date("2017-06-27T17:00:00Z")
+		Start: new Date("2017-06-20T16:00:00Z"),
+		Finish: new Date("2017-06-27T16:00:00Z")
 	},
 	/*{
 		name_en: "Lunar Festival",

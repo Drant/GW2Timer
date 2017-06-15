@@ -804,11 +804,6 @@ O = {
 		}
 		
 		// Supplementary event handlers for some inputs
-		// Temporarily disabled
-		/*I.isTouchEnabled = ((typeof window.ontouchstart !== "undefined")
-			&& O.Options.bol_ignoreTouch === false
-			&& I.ModeCurrent !== I.ModeEnum.Overlay
-		);*/
 		O.bindOptionsInputs();
 		D.initializeLanguage();
 	},
@@ -18806,14 +18801,14 @@ Q = {
 	{
 		var Settings = pSettings || {};
 		var elm = $(pElement).wrap("<span class='itmSearchContainer " + ((Settings.aIsInline) ? "itmSearchInline" : "") + "'></span>");
-		var queryminchar = D.isLanguageLogographic ? 1 : 2;
+		var isitemsearch = (Settings.aDatabase === undefined);
+		var queryminchar = (D.isLanguageLogographic || !isitemsearch) ? 1 : 2;
 		var queryminitemidlength = 4;
 		var resultslimit = Settings.aResultsLimit || O.Options.int_numTradingResults;
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").insertAfter(elm).hide();
 		var resultsscroll = $("<div class='itmSearchResultScroll cntPopup jsScrollable'></div>").appendTo(resultscontainer);
 		var resultslist = $("<div class='itmSearchResultList'></div>").appendTo(resultsscroll);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
-		var isitemsearch = (Settings.aDatabase === undefined);
 		var itemsearchdb, customsearchdb = [], searchindexes = [], isdirectionchanged, searchtimestamp;
 		var resultsarrall = [];
 		
@@ -24048,6 +24043,7 @@ M = {
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
+	isTouchEnabled: false,
 	isMouseOnHUD: false,
 	isMenuOnHUD: false,
 	isUserDragging: false,
@@ -24149,15 +24145,7 @@ M = {
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
 		}).setView(this.Continent.CenterInitial, initialzoom); // Out of map boundary so browser doesn't download tiles yet
-		// Because the map will interfere with scrolling the website on touch devices
-		if (I.isTouchEnabled)
-		{
-			this.Map.touchZoom.disable();
-			if (this.Map.tap)
-			{
-				this.Map.tap.disable();
-			}
-		}
+		this.initializeTouch();
 		
 		// Initialize LayerGroup in zones to later hold world completion and dynamic event icons
 		var zone;
@@ -24208,15 +24196,8 @@ M = {
 			} break;
 		}
 		
-		// Bind map click functions for non-touch devices
-		if (I.isTouchEnabled)
-		{
-			this.createTouchMenu();
-		}
-		else
-		{
-			this.bindMapClicks();
-		}
+		// Bind map click functions devices
+		this.bindMapClicks();
 		
 		/*
 		 * Go to the coordinates in the bar when user presses enter.
@@ -24297,32 +24278,54 @@ M = {
 	},
 	
 	/*
-	 * Creates a large menu with map controls for touch devices.
+	 * Initializes touch features and disable some features if the user actually
+	 * touches the screen.
 	 */
-	createTouchMenu: function()
+	initializeTouch: function()
 	{
 		var that = this;
-		var htmlidprefix = "#" + that.MapEnum;
-		var menu = $("<div class='tchMenu'></div>").prependTo(htmlidprefix + "Pane");
-		I.preventMapPropagation(menu);
-		$("<kbd class='tchTogglePanel tchButton'></kbd>").appendTo(menu).click(function()
+		window.addEventListener("touchstart", function()
 		{
-			$("#opt_bol_showPanel").trigger("click");
+			if (O.Options.bol_ignoreTouch || (that.isTouchEnabled && I.isTouchEnabled))
+			{
+				return;
+			}
+			that.isTouchEnabled = true;
+			I.isTouchEnabled = true;
+			
+			// Because the map will interfere with scrolling the website on touch devices
+			if (that.Map.touchZoom)
+			{
+				that.Map.touchZoom.disable();
+			}
+			if (that.Map.tap)
+			{
+				that.Map.tap.disable();
+			}
+			
+			// Create map zoom menu with big buttons
+			var htmlidprefix = "#" + that.MapEnum;
+			var menu = $("<div class='tchMenu'></div>").prependTo(htmlidprefix + "Pane");
+			I.preventMapPropagation(menu);
+			$("<kbd class='tchTogglePanel tchButton'></kbd>").appendTo(menu).click(function()
+			{
+				$("#opt_bol_showPanel").trigger("click");
+			});
+			$("<kbd class='tchToggleMap tchButton'></kbd>").appendTo(menu).click(function()
+			{
+				I.switchMap();
+			});
+			$("<kbd class='tchZoomIn tchButton'></kbd>").appendTo(menu).click(function()
+			{
+				that.Map.zoomIn();
+			});
+			$("<kbd class='tchZoomOut tchButton'></kbd>").appendTo(menu).click(function()
+			{
+				that.Map.zoomOut();
+			});
+
+			menu.css({top: "calc(50% - " + menu.height() + "px)"});
 		});
-		$("<kbd class='tchToggleMap tchButton'></kbd>").appendTo(menu).click(function()
-		{
-			I.switchMap();
-		});
-		$("<kbd class='tchZoomIn tchButton'></kbd>").appendTo(menu).click(function()
-		{
-			that.Map.zoomIn();
-		});
-		$("<kbd class='tchZoomOut tchButton'></kbd>").appendTo(menu).click(function()
-		{
-			that.Map.zoomOut();
-		});
-		
-		menu.css({top: "calc(50% - " + menu.height() + "px)"});
 	},
 	
 	/*
@@ -24464,19 +24467,21 @@ M = {
 				that.optimizePersonalPath();
 			}
 		});
-		$(htmlidprefix + "ContextURLPins").click(function()
+		I.bindClipboard($(htmlidprefix + "ContextURLPins"));
+		$(htmlidprefix + "ContextURLPins").mouseenter(function()
 		{
-			if (that.isPersonalPinsLaid(true))
+			if (that.isPersonalPinsLaid())
 			{
 				var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
-				I.paste(I.cSiteURL + urlmod + that.getPersonalString());
+				I.updateClipboard($(this), I.cSiteURL + urlmod + that.getPersonalString());
 			}
 		});
-		$(htmlidprefix + "ContextURLCoord").click(function()
+		I.bindClipboard($(htmlidprefix + "ContextURLCoord"));
+		$(htmlidprefix + "ContextURLCoord").mouseenter(function()
 		{
 			if (that.ContextLatLng)
 			{
-				I.paste(I.cSiteURL + that.convertLCtoGC(that.ContextLatLng));
+				I.updateClipboard($(this), I.cSiteURL + that.convertLCtoGC(that.ContextLatLng));
 			}
 		});
 		$(htmlidprefix + "ContextToggleFloor").click(function()
@@ -39118,10 +39123,7 @@ I = {
 				I.write(I.cClipboardSuccessText + pEvent.text, 5);
 			});
 		}
-		if (pText)
-		{
-			I.updateClipboard(elm, pText);
-		}
+		I.updateClipboard(elm, pText || "null");
 		return cb;
 	},
 	
