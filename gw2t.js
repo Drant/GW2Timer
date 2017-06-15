@@ -21353,8 +21353,6 @@ D = {
 			cs: "historie", it: "cronologia", pl: "historii", pt: "histórico", ru: "истории", zh: "历史"},
 		s_info: {de: "info", es: "información", fr: "info",
 			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", zh: "资讯"},
-		s_coin: {de: "münze", es: "moneda", fr: "pièce",
-			cs: "mince", it: "moneta", pl: "moneta", pt: "moeda", ru: "монета", zh: "钱币"},
 		s_item: {de: "gegenstand", es: "objeto", fr: "objet",
 			cs: "objekt", it: "oggetto", pl: "obiekt", pt: "objeto", ru: " объект", zh: "物体"},
 		s_items: {de: "gegenstände", es: "objetos", fr: "objets",
