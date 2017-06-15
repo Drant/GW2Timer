@@ -30,7 +30,7 @@ Special: [
 	{u: "petrified_stump", i: 79898, n: "Petrified Wood Node", p: {coin: 500000}},
 	{u: "winterberry_bush", i: 79903, n: "Winterberry Bush Node", p: {coin: 500000}},
 	{u: "jade_fragment", i: 80450, n: "Jade Fragment Node", p: {coin: 500000}},
-	{u: "fire_orchid", i: 81115, n: "Fire Orchid Node", p: {coin: 500000}}
+	{u: "primordial_orchid", i: 81115, n: "Fire Orchid Node", p: {coin: 500000}}
 ],
 Gathering: [
 	{u: "basic_harvesting_nodes", i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
