@@ -42,6 +42,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "Galerie", it: "Raccolta", pl: "Galeria", pt: "Galeria", ru: "Коллекция", zh: "图库"},
 	s_tab: {de: "registerkarte", es: "pestaña", fr: "onglet",
 		cs: "karta", it: "scheda", pl: "karta", pt: "guia", ru: "вкладка", zh: "选项卡"},
+	s_delivery: {de: "warenlager", es: "entregas", fr: "consigne",
+		cs: "dodávka", it: "consegna", pl: "dostawa", pt: "entrega", ru: "доставка", zh: "交货"},
 	s_transactions: {de: "transaktionen", es: "transacciones", fr: "transactions",
 		cs: "transakce", it: "transazioni", pl: "transakcje", pt: "transações", ru: "транзакций", zh: "交易"},
 	s_categories: {de: "kategorien", es: "categorías", fr: "catégories",

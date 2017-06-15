@@ -2430,17 +2430,23 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 /*
  * Recent transactions.
  */
-#trsRecent {
+.trsRecent {
 	box-shadow: 0px 0px 16px black;
 }
-#trsRecentReload {
+.trsRecentReload {
 	width: 100%;
 	margin-bottom: 12px;
 }
-#trsRecentTable td {
+#trsRecentTable td, #trsDeliveryTable td, #trsDeliveryTally {
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 18px;
 	text-align: left;
+}
+#trsDeliveryCount {
+	float: left;
+}
+#trsDeliveryCoin {
+	float: right;
 }
 .trsRecentSlot {
 	display: block;

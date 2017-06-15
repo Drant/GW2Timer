@@ -202,13 +202,24 @@
 					</div>
 				</div>
 				<div class="exgColumnContainer">
-					<div id="trsRecent" class="exgColumn">
-						<div class="exgHeader">
-							<img data-src="img/account/trading/transactions.png" />
-							<var id="trsRecentTitle" class="exgTitle"></var>
+					<div class="trsRecent exgColumn">
+						<div id="trsDelivery">
+							<div class="exgHeader">
+								<img data-src="img/account/trading/delivery.png" />
+								<var id="trsDeliveryTitle" class="exgTitle"></var>
+							</div>
+							<div id="trsDeliveryTally"></div>
+							<button id="trsDeliveryReload" class="trsRecentReload" title="<dfn>Reload</dfn> delivery box."><img data-src="img/ui/refresh.png" /></button>
+							<table id="trsDeliveryTable" class="exgTable"></table>
 						</div>
-						<button id="trsRecentReload" title="<dfn>Reload</dfn> recent transactions."><img data-src="img/ui/refresh.png" /></button>
-						<table id="trsRecentTable" class="exgTable"></table>
+						<div id="trsRecent">
+							<div class="exgHeader">
+								<img data-src="img/account/trading/transactions.png" />
+								<var id="trsRecentTitle" class="exgTitle"></var>
+							</div>
+							<button id="trsRecentReload" class="trsRecentReload" title="<dfn>Reload</dfn> recent transactions."><img data-src="img/ui/refresh.png" /></button>
+							<table id="trsRecentTable" class="exgTable"></table>
+						</div>
 					</div>
 				</div>
 			</div>

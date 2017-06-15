@@ -7702,6 +7702,7 @@ A = {
 		Titles: "account/titles",
 		Recipes: "account/recipes",
 		CharactersSAB: "characters/{0}/sab",
+		Delivery: "commerce/delivery",
 		Transactions: "commerce/transactions",
 		CurrentBuys: "commerce/transactions/current/buys",
 		CurrentSells: "commerce/transactions/current/sells",
@@ -13386,42 +13387,30 @@ V = {
 			table.empty();
 			reloader.removeClass("jsSuspended");
 			A.adjustAccountScrollbar();
-			// Get the first few transactions from the retrieved
-			for (var i = 0; i < bought.length; i++)
-			{
-				bought[i].isBought = true;
-			}
-			combined = bought.concat(sold);
-			U.sortObjects(combined, {aKeyName: "purchased", aIsDescending: true});
-			combined = combined.slice(0, transactionsrecentlimit);
 			
 			combined.forEach(function(iTransaction)
 			{
+				var item = Q.getCachedItem(iTransaction.item_id);
 				var row = $("<tr></tr>").appendTo(table);
-				(function(iTransaction)
-				{
-					Q.getItem(iTransaction.item_id, function(pItem)
-					{
-						var timestamp = (new Date(iTransaction.purchased)).toLocaleString();
-						var type = (iTransaction.isBought) ? boughtword : soldword;
-						var quantitystr = (iTransaction.quantity > 1) ? ("<var class='trsRecentCount'>" + iTransaction.quantity + "</var>") : "";
-						row.html("<td>"
-							+ "<span class='trsRecentItem'>"
-								+ "<span class='trsRecentSlot'><img class='trsRecentIcon' src='" + pItem.icon + "' />" + quantitystr + "</span>"
-								+ "<span class='trsRecentName'><var class='trsRecentType'>" + type
-									+ "</var>: <var class='" + Q.getRarityClass(pItem.rarity) + "'>" + pItem.name + "</var></span>"
-							+ "</span>"
-							+ "<span>"
-								+ "<var class='trsRecentTime' title='" + timestamp + "'>" + T.formatMilliseconds(nowms - (new Date(iTransaction.purchased)).getTime()) + "</var>"
-								+ "<var class='trsRecentPrice'>" + E.formatCoinStringColored(iTransaction.quantity * iTransaction.price) + "</var>"
-							+ "</span>"
-						+ "</td>");
-						var slot = row.find(".trsRecentSlot");
-						I.qTip.init(row.find(".trsRecentTime"));
-						Q.scanItem(pItem, {aElement: slot});
-						Q.bindItemSlotBehavior(slot, {aItem: pItem, aWantClick: true});
-					});
-				})(iTransaction);
+				var timestamp = (new Date(iTransaction.purchased)).toLocaleString();
+				var type = (iTransaction.isBought) ? boughtword : soldword;
+				var quantitystr = (iTransaction.quantity > 1) ? ("<var class='trsRecentCount'>" + iTransaction.quantity + "</var>") : "";
+				row.html("<td>"
+					+ "<span class='trsRecentItem'>"
+						+ "<span class='trsRecentSlot'><img class='trsRecentIcon' src='" + item.icon + "' />" + quantitystr + "</span>"
+						+ "<span class='trsRecentName'>"
+							+ "<var class='trsRecentType'>" + type + "</var>: <var class='" + Q.getRarityClass(item.rarity) + "'>" + item.name + "</var>"
+						+ "</span>"
+					+ "</span>"
+					+ "<span>"
+						+ "<var class='trsRecentTime' title='" + timestamp + "'>" + T.formatMilliseconds(nowms - (new Date(iTransaction.purchased)).getTime()) + "</var>"
+						+ "<var class='trsRecentPrice'>" + E.formatCoinStringColored(iTransaction.quantity * iTransaction.price) + "</var>"
+					+ "</span>"
+				+ "</td>");
+				var slot = row.find(".trsRecentSlot");
+				I.qTip.init(row.find(".trsRecentTime"));
+				Q.scanItem(item, {aElement: slot});
+				Q.bindItemSlotBehavior(slot, {aItem: item, aWantClick: true});
 			});
 		};
 		var dealError = function()
@@ -13439,10 +13428,113 @@ V = {
 				U.getJSON(A.getURL(A.URL.HistorySells), function(pDataInner)
 				{
 					sold = pDataInner;
-					fillRecent();
+					// Get the first few transactions from the retrieved
+					for (var i = 0; i < bought.length; i++)
+					{
+						bought[i].isBought = true;
+					}
+					combined = bought.concat(sold);
+					U.sortObjects(combined, {aKeyName: "purchased", aIsDescending: true});
+					combined = combined.slice(0, transactionsrecentlimit);
+					// Fetch items
+					var ids = [];
+					combined.forEach(function(iTransaction)
+					{
+						ids.push(iTransaction.item_id);
+					});
+					Q.getItems(ids, function()
+					{
+						fillRecent();
+					});
 				}, false).fail(function(){
 					dealError();
 				});
+			}, false).fail(function(){
+				dealError();
+			});
+		};
+		
+		// Initialize
+		retrieveTransactions();
+		reloader.click(function()
+		{
+			retrieveTransactions();
+			$(this).addClass("jsSuspended");
+		});
+	},
+	generateDelivery: function()
+	{
+		$("#trsDeliveryTitle").text(D.getPhraseOriginal("Delivery"));
+		var table = $("#trsDeliveryTable");
+		var tally = $("#trsDeliveryTally");
+		var reloader = $("#trsDeliveryReload");
+		var deliveryitems, coins;
+		
+		var fillDelivery = function()
+		{
+			table.empty();
+			reloader.removeClass("jsSuspended");
+			A.adjustAccountScrollbar();
+			
+			deliveryitems.forEach(function(iDeliveryItem)
+			{
+				var itemid = iDeliveryItem.id;
+				var count = iDeliveryItem.count;
+				var item = Q.getCachedItem(itemid);
+				var priceobj = E.getCachedPrice(itemid);
+				var row = $("<tr></tr>").appendTo(table);
+				var quantitystr = (count > 1) ? ("<var class='trsRecentCount'>" + count + "</var>") : "";
+				row.html("<td>"
+					+ "<span class='trsRecentItem'>"
+						+ "<span class='trsRecentSlot'><img class='trsRecentIcon' src='" + item.icon + "' />" + quantitystr + "</span>"
+						+ "<span class='trsRecentName'><var class='" + Q.getRarityClass(item.rarity) + "'>" + item.name + "</var></span>"
+					+ "</span>"
+					+ "<span>"
+						+ "<var class='trsRecentPrice'>" + I.Symbol.Approx + " " + E.formatCoinStringColored(count * priceobj.oPriceSell) + "</var>"
+					+ "</span>"
+				+ "</td>");
+				var slot = row.find(".trsRecentSlot");
+				Q.scanItem(item, {aElement: slot});
+				Q.bindItemSlotBehavior(slot, {aItem: item, aWantClick: true});
+			});
+			
+			// Coin to pick up
+			tally.html(
+				"<span id='trsDeliveryCount'>" + D.getWordCapital("items") + ": " + deliveryitems.length + "</span>"
+				+ "<span id='trsDeliveryCoin'>" + D.getWordCapital("coin") + ": " + E.formatCoinStringColored(coins) + "</span>"
+			);
+		};
+		var dealError = function()
+		{
+			table.html("<tr><td class='trsRecentError'>" + D.getPhraseOriginal("No delivery items") + ".</td></tr>");
+			reloader.removeClass("jsSuspended");
+		};
+		var retrieveTransactions = function()
+		{
+			table.empty().html(I.cThrobber);
+			tally.empty();
+			// Retrieves the first page of the historical transactions
+			U.getJSON(A.getURL(A.URL.Delivery), function(pData)
+			{
+				deliveryitems = pData.items;
+				coins = pData.coins;
+				if (coins > 0 || deliveryitems.length > 0)
+				{
+					var ids = [];
+					// Fetch items
+					for (var i in deliveryitems)
+					{
+						ids.push(deliveryitems[i].id);
+					}
+					Q.getPricedItems(ids, function()
+					{
+						fillDelivery();
+					});
+				}
+				else
+				{
+					dealError();
+				}
 			}, false).fail(function(){
 				dealError();
 			});
@@ -13467,6 +13559,7 @@ V = {
 		{
 			V.generateExchange();
 			V.generateRecent();
+			V.generateDelivery();
 			var inputs = I.bindInputSelect(dish.find("input"));
 			I.qTip.init(inputs);
 			dish.data("isloaded", true);
@@ -13477,6 +13570,7 @@ V = {
 			// If already loaded but changed account, then reload the recent transactions
 			dish.data("token", A.TokenCurrent);
 			$("#trsRecentReload").trigger("click");
+			$("#trsDeliveryReload").trigger("click");
 		}
 	},
 	
@@ -21259,6 +21353,8 @@ D = {
 			cs: "historie", it: "cronologia", pl: "historii", pt: "histórico", ru: "истории", zh: "历史"},
 		s_info: {de: "info", es: "información", fr: "info",
 			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", zh: "资讯"},
+		s_coin: {de: "münze", es: "moneda", fr: "pièce",
+			cs: "mince", it: "moneta", pl: "moneta", pt: "moeda", ru: "монета", zh: "钱币"},
 		s_item: {de: "gegenstand", es: "objeto", fr: "objet",
 			cs: "objekt", it: "oggetto", pl: "obiekt", pt: "objeto", ru: " объект", zh: "物体"},
 		s_items: {de: "gegenstände", es: "objetos", fr: "objets",
