@@ -13468,7 +13468,7 @@ V = {
 		var table = $("#trsDeliveryTable");
 		var tally = $("#trsDeliveryTally");
 		var reloader = $("#trsDeliveryReload");
-		var deliveryitems, coins;
+		var deliverycount, deliveryitems, coins;
 		
 		var fillDelivery = function()
 		{
@@ -13476,10 +13476,10 @@ V = {
 			reloader.removeClass("jsSuspended");
 			A.adjustAccountScrollbar();
 			
-			deliveryitems.forEach(function(iDeliveryItem)
+			for (var i in deliverycount)
 			{
-				var itemid = iDeliveryItem.id;
-				var count = iDeliveryItem.count;
+				var itemid = i;
+				var count = deliverycount[i];
 				var item = Q.getCachedItem(itemid);
 				var priceobj = E.getCachedPrice(itemid);
 				var row = $("<tr></tr>").appendTo(table);
@@ -13496,11 +13496,11 @@ V = {
 				var slot = row.find(".trsRecentSlot");
 				Q.scanItem(item, {aElement: slot});
 				Q.bindItemSlotBehavior(slot, {aItem: item, aWantClick: true});
-			});
+			}
 			
 			// Coin to pick up
 			tally.html(
-				"<span id='trsDeliveryCount'>" + D.getWordCapital("items") + ": " + deliveryitems.length + "</span>"
+				"<span id='trsDeliveryCount'>" + D.getWordCapital("transactions") + ": " + deliveryitems.length + "</span>"
 				+ "<span id='trsDeliveryCoin'>" + D.getWordCapital("coin") + ": " + E.formatCoinStringColored(coins) + "</span>"
 			);
 		};
@@ -13520,13 +13520,19 @@ V = {
 				coins = pData.coins;
 				if (coins > 0 || deliveryitems.length > 0)
 				{
-					var ids = [];
-					// Fetch items
+					deliverycount = {};
+					// Combine same items into the same count
 					for (var i in deliveryitems)
 					{
-						ids.push(deliveryitems[i].id);
+						var ithid = deliveryitems[i].id;
+						if (deliverycount[ithid] === undefined)
+						{
+							deliverycount[ithid] = 0;
+						}
+						deliverycount[ithid] += deliveryitems[i].count;
 					}
-					Q.getPricedItems(ids, function()
+					// Fetch items using the unique IDs
+					Q.getPricedItems(U.convertAssocToArray(deliverycount), function()
 					{
 						fillDelivery();
 					});
