@@ -7694,6 +7694,7 @@ A = {
 		Cats: "account/home/cats",
 		Achievements: "account/achievements",
 		Masteries: "account/masteries",
+		MasteryPoints: "account/mastery/points",
 		Raids: "account/raids",
 		Dungeons: "account/dungeons",
 		Characters: "characters",
@@ -24567,23 +24568,32 @@ M = {
 				that.optimizePersonalPath();
 			}
 		});
-		I.bindClipboard($(htmlidprefix + "ContextURLPins"));
-		$(htmlidprefix + "ContextURLPins").mouseenter(function()
+		var urlpins = $(htmlidprefix + "ContextURLPins");
+		if (urlpins.length)
 		{
-			if (that.isPersonalPinsLaid())
+			I.bindClipboard(urlpins);
+			urlpins.mouseenter(function()
 			{
-				var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
-				I.updateClipboard($(this), I.cSiteURL + urlmod + that.getPersonalString());
-			}
-		});
-		I.bindClipboard($(htmlidprefix + "ContextURLCoord"));
-		$(htmlidprefix + "ContextURLCoord").mouseenter(function()
+				if (that.isPersonalPinsLaid())
+				{
+					var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
+					I.updateClipboard($(this), I.cSiteURL + urlmod + that.getPersonalString());
+				}
+			});
+		}
+		var urlcoord = $(htmlidprefix + "ContextURLCoord");
+		if (urlcoord.length)
 		{
-			if (that.ContextLatLng)
+			I.bindClipboard(urlcoord);
+			urlcoord.mouseenter(function()
 			{
-				I.updateClipboard($(this), I.cSiteURL + that.convertLCtoGC(that.ContextLatLng));
-			}
-		});
+				if (that.ContextLatLng)
+				{
+					var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
+					I.updateClipboard($(this), I.cSiteURL + urlmod + that.convertLCtoGC(that.ContextLatLng));
+				}
+			});
+		}
 		$(htmlidprefix + "ContextToggleFloor").click(function()
 		{
 			that.toggleFloor();
