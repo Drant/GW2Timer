@@ -203,8 +203,8 @@ Head: [
 	{i: 66309, n: "Wreath of Cooperation", p: {gem: -400}},
 	{i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 400}},
 	{i: 80026, n: "Ice Crown", p: {gem: -400}},
-	{i: 68655, n: "Dragon Mask Skin", p: {gem: 300}},
-	{i: 68656, n: "Lion Mask Skin", p: {gem: 300}},
+	{i: 68655, n: "Dragon Mask Skin", p: {gem: -300}},
+	{i: 68656, n: "Lion Mask Skin", p: {gem: -300}},
 	{i: 79014, n: "Xera's Mask", p: {gem: -400}},
 	{i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}}
 ],
