@@ -29317,29 +29317,49 @@ G = {
 		I.qTip.init(".dlyMonthdayNumber");
 
 		// Insert fractal row
-		var insertFractal = function(pIslands, pIDs, pScaleStr)
+		var fractalmeta = T.Daily.Fractal;
+		var insertFractal = function(pType, pIslands, pIDs, pScaleStr)
 		{
 			dailybox.append("<span class='dlyMode dlyModeFractal'>"
-				+ "<ins class='dly dly_daily_fractal'></ins>"
+				+ "<ins class='dly dly_daily_fractal" + (pType ? "scale" : "island")  + "'></ins>"
 				+ "<ins class='dly chl_fractal chl_" + pIslands[0].toLowerCase() + "' title='" + pIslands[0] + "' " + ((pIDs) ? ("data-ach='" + pIDs[0] + "'") : "") + "></ins>"
 				+ "<ins class='dly chl_fractal chl_" + pIslands[1].toLowerCase() + "' title='" + pIslands[1] + "' " + ((pIDs) ? ("data-ach='" + pIDs[1] + "'") : "") + "></ins>"
 				+ "<ins class='dly chl_fractal chl_" + pIslands[2].toLowerCase() + "' title='" + pIslands[2] + "' " + ((pIDs) ? ("data-ach='" + pIDs[2] + "'") : "") + "></ins>"
-				+ (pScaleStr || "")
+				+ "<a class='dlyFractalScales'" + U.convertExternalAnchor(D.getObjectURL(fractalmeta)) + ">" + pScaleStr + "</a>"
 			+ "</span>");
 			I.qTip.init(dailybox.find("ins"));
 			I.qTip.init(".dlyFractalScales");
 		};
 		
-		// Daily fractal scale numbers
-		var fractalmeta = T.Daily.Fractal;
-		var scaleA = T.DailyAssociation[(fractals[0])]; // The daily scales are located in these API array indexes
-		var scaleB = T.DailyAssociation[(fractals[1])];
-		var scaleC = T.DailyAssociation[(fractals[fractals.length - 1])];
-		var scalestr = "";
+		// Gets the highest scale number from an island name
+		var getMaxScale = function(pIsland)
+		{
+			for (var i = fractalmeta.Scale.length - 1; i > 0; i--)
+			{
+				if (fractalmeta.Scale[i] === pIsland)
+				{
+					return i + 1; // Zero indexed
+				}
+			}
+			return 1;
+		};
+		var getIslandFromScale = function(pScale)
+		{
+			return fractalmeta.Scale[pScale - 1];
+		};
+		
+		// Daily fractal scales
+		var scaleids = [fractals[0], fractals[1], fractals[fractals.length - 1]]; // The daily scales are located in these API array indexes
+		var scaleA = T.DailyAssociation[(scaleids[0])];
+		var scaleB = T.DailyAssociation[(scaleids[1])];
+		var scaleC = T.DailyAssociation[(scaleids[2])];
 		if (scaleA && scaleB && scaleC)
 		{
-			scalestr = "<a class='dlyFractalScales' title='" + D.getObjectName(fractalmeta.Scale) + "' "
-				+ U.convertExternalAnchor(D.getObjectURL(fractalmeta)) + ">" + scaleA + " " + scaleB + " " + scaleC + "</a>";
+			insertFractal(true,
+				[getIslandFromScale(scaleA), getIslandFromScale(scaleB), getIslandFromScale(scaleC)],
+				scaleids,
+				scaleA + " " + scaleB + " " + scaleC
+			);
 		}
 
 		// Daily fractal islands
@@ -29349,7 +29369,11 @@ G = {
 		var islandC = T.DailyAssociation[islandids[2]];
 		if (islandA && islandB && islandC)
 		{
-			insertFractal([islandA, islandB, islandC], islandids, scalestr);
+			insertFractal(false,
+				[islandA, islandB, islandC],
+				islandids,
+				getMaxScale(islandA) + " " + getMaxScale(islandB) + " " + getMaxScale(islandC)
+			);
 		}
 		Q.bindAchievement(".chl_fractal");
 	},

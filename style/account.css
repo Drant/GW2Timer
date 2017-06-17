@@ -2379,6 +2379,7 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	width: 360px;
 	margin-top: 32px;
 	padding: 10px;
+	padding-top: 38px; /* Makes it so the height of this column plus coin column equal the gem column */
 	clear: both;
 	text-align: left;
 	background-image: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 100%);

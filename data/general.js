@@ -475,13 +475,108 @@ Fractal:
 	url_de: "http://wiki-de.guildwars2.com/wiki/Fraktale_der_Nebel#Stufen",
 	url_es: "http://wiki-es.guildwars2.com/wiki/Fractales_de_la_niebla#Niveles_Fractales",
 	url_fr: "http://wiki-fr.guildwars2.com/wiki/Fractales_des_Brumes#Difficult.C3.A9_et_fractales",
-	Scale:
-	{
-		name_en: "Recommended Fractal Scale",
-		name_de: "Empfohlenes Fraktal Schwierigkeitsgrad",
-		name_es: "Fractal recomendado escala",
-		name_fr: "Fractale recommandée de niveau"
-	}
+	Scale: [
+		"Urban", // 1
+		"Swamp", // 2
+		"Aquatic", // 3
+		"Uncategorized", // 4
+		"Snowblind", // 5
+		"Volcanic", // 6
+		"Cliffside", // 7
+		"Underground", // 8
+		"Furnace", // 9
+		"Molten", // 10
+		"Urban", // 11
+		"Uncategorized", // 12
+		"Chaos", // 13
+		"Aetherblade", // 14
+		"Thaumanova", // 15
+		"Snowblind", // 16
+		"Underground", // 17
+		"Maitrin", // 18
+		"Volcanic", // 19
+		"Ocean", // 20
+		"Swamp", // 21
+		"Cliffside", // 22
+		"Furnace", // 23
+		"Aetherblade", // 24
+		"Nightmare", // 25
+		"Aquatic", // 26
+		"Snowblind", // 27
+		"Volcanic", // 28
+		"Underground", // 29
+		"Chaos", // 30
+		"Urban", // 31
+		"Swamp", // 32
+		"Cliffside", // 33
+		"Thaumanova", // 34
+		"Ocean", // 35
+		"Uncategorized", // 36
+		"Snowblind", // 37
+		"Chaos", // 38
+		"Furnace", // 39
+		"Molten", // 40
+		"Swamp", // 41
+		"Maitrin", // 42
+		"Underground", // 43
+		"Uncategorized", // 44
+		"Ocean", // 45
+		"Volcanic", // 46
+		"Cliffside", // 47
+		"Thaumanova", // 48
+		"Aetherblade", // 49
+		"Nightmare", // 50
+		"Snowblind", // 51
+		"Volcanic", // 52
+		"Underground", // 53
+		"Chaos", // 54
+		"Thaumanova", // 55
+		"Swamp", // 56
+		"Urban", // 57
+		"Furnace", // 58
+		"Cliffside", // 59
+		"Ocean", // 60
+		"Aquatic", // 61
+		"Uncategorized", // 62
+		"Chaos", // 63
+		"Thaumanova", // 64
+		"Aetherblade", // 65
+		"Urban", // 66
+		"Swamp", // 67
+		"Underground", // 68
+		"Cliffside", // 69
+		"Molten", // 70
+		"Aetherblade", // 71
+		"Volcanic", // 72
+		"Maitrin", // 73
+		"Snowblind", // 74
+		"Nightmare", // 75
+		"Aquatic", // 76
+		"Swamp", // 77
+		"Urban", // 78
+		"Uncategorized", // 79
+		"Ocean", // 80
+		"Underground", // 81
+		"Cliffside", // 82
+		"Furnace", // 83
+		"Thaumanova", // 84
+		"Urban", // 85
+		"Snowblind", // 86
+		"Volcanic", // 87
+		"Chaos", // 88
+		"Swamp", // 89
+		"Molten", // 90
+		"Uncategorized", // 91
+		"Volcanic", // 92
+		"Snowblind", // 93
+		"Cliffside", // 94
+		"Underground", // 95
+		"Aetherblade", // 96
+		"Thaumanova", // 97
+		"Maitrin", // 98
+		"Chaos", // 99
+		"Nightmare" // 100
+	]
 },
 Bookmark:
 [
