@@ -21,8 +21,8 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 77483, n: "Slayer's Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-06-18T16:00:00Z")},
 	{i: 67038, n: "Glowing Green Mask", p: {gem: 350}, discount: 500, Finish: new Date("2017-06-19T16:00:00Z")},
+	{i: 64742, n: "Aviator Cap", p: {gem: 140}, discount: 200, Finish: new Date("2017-06-20T16:00:00Z")},
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}},
 	{i: 49149, n: "Royal Terrace Pass", p: {gem: 1000}, Finish: new Date("2017-06-20T16:00:00Z")},
@@ -43,7 +43,7 @@ GW2T_SALE_DATA = {
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
 	{i: 64755, n: "Fuzzy Bear Hat", p: {gem: 200}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 78008, n: "Gwen's Attire", p: {gem: 700}, Finish: new Date("2017-06-18T16:00:00Z")},
+	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}, Finish: new Date("2017-06-25T16:00:00Z")},
 	{i: 48944, n: "Mask of the Wanderer Skin", p: {gem: 500}, Finish: new Date("2017-06-23T16:00:00Z")},
 	{i: 49157, n: "Mask of the Silent Skin", p: {gem: 500}, Finish: new Date("2017-06-23T16:00:00Z")},
 	{i: 44609, n: "Mask of the Crown", p: {gem: 400}, Finish: new Date("2017-06-20T16:00:00Z")},
@@ -53,13 +53,12 @@ GW2T_SALE_DATA = {
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}, Finish: new Date("2017-06-22T16:00:00Z")},
 	{i: 68655, n: "Dragon Mask Skin", p: {gem: 300}, Finish: new Date("2017-06-24T16:00:00Z")},
 	{i: 68656, n: "Lion Mask Skin", p: {gem: 300}, Finish: new Date("2017-06-24T16:00:00Z")},
-	{i: 64742, n: "Aviator Cap", p: {gem: 200}, Finish: new Date("2017-06-20T16:00:00Z")},
 	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}, Finish: new Date("2017-06-20T16:00:00Z")},
 	{i: 64747, n: "Inventor's Sunglasses", p: {gem: 150}, Finish: new Date("2017-06-21T16:00:00Z")},
 	{i: 64748, n: "Reading Glasses", p: {gem: 150}, Finish: new Date("2017-06-21T16:00:00Z")},
-	{i: 43078, n: "Lion's Arch Commemorative Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-18T16:00:00Z")},
 	{i: 41745, n: "Frost Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-19T16:00:00Z")},
 	{i: 68005, n: "Glint's Winter Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-20T16:00:00Z")},
-	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-20T16:00:00Z")}
+	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-20T16:00:00Z")},
+	{i: 69934, n: "Lion's Arch Rebuild Dye Kit", p: {gem: 125},  discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-21T16:00:00Z")}
 	]
 };

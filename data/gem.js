@@ -262,7 +262,7 @@ Weapon: [
 	{i: 49015, n: "Marjory's Axe Skin", p: {gem: -600}},
 	{i: 49018, n: "Marjory's Dagger Skin", p: {gem: -600}},
 	{i: 49021, n: "Kasmeer's Staff Skin", p: {gem: -600}},
-	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}},
+	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: -500}},
 	{i: 69664, n: "Elegant Fan Focus Skin", p: {gem: -600}},
 	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: -600}},
 	{i: 79089, n: "Lord Caudecus's Sword Skin", p: {gem: -600}},

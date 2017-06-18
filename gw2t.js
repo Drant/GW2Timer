@@ -33119,7 +33119,6 @@ W = {
 			if (pObjective.prevclaimed_by !== "none")
 			{
 				I.blinkElement(label, 2000, 200);
-				label.css({color: "#ffffff"}).animate({color: prevcolor}, 4000);
 				W.addLogEntryObjective(pObjective, true);
 			}
 		};
