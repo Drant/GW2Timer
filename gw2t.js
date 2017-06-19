@@ -1231,7 +1231,7 @@ O = {
 		},
 		int_setAlarm: function()
 		{
-			var icon = "img/ui/placeholder.png";
+			var icon = U.URL_IMG.Placeholder;
 			switch (O.Options.int_setAlarm)
 			{
 				case O.IntEnum.Alarm.Checklist: icon = "img/ui/check.png"; break;
@@ -2922,6 +2922,7 @@ U = {
 		MatchesFallback: "https://api.guildwars2.com/v1/wvw/matches.json",
 		
 		// Other
+		Root: "https://api.guildwars2.com/v2.json",
 		Support: "https://forum-en.guildwars2.com/forum/community/api",
 		Build: "https://api.guildwars2.com/v2/build",
 		Worlds: "https://api.guildwars2.com/v2/worlds",
@@ -5104,7 +5105,7 @@ U = {
 			var name = U.escapeHTML((pName.split(" ").join("-")).toLowerCase());
 			return "http://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
 		}
-		return "img/ui/placeholder.png";
+		return U.URL_IMG.Placeholder;
 	},
 	
 	/*
@@ -11535,7 +11536,7 @@ V = {
 					{
 						var ithcontainer = $("#eqpContainer_" + char.oCharIndex);
 						var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
-						var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iItem.icon;
+						var slotimg = (iEquipment.skin) ? U.URL_IMG.Placeholder : iItem.icon;
 						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
 						Q.scanItem(iItem, {
 							aElement: slot,
@@ -11657,7 +11658,7 @@ V = {
 					+ "</span>"
 				+ "</span>"
 			+ "</aside>").appendTo(pContainer);
-			specline.find("img").attr("src", "img/ui/placeholder.png");
+			specline.find("img").attr("src", U.URL_IMG.Placeholder);
 			
 			var formatTraitIcon = function(pTraitID)
 			{
@@ -30587,7 +30588,7 @@ G = {
 			var limitstr = (pMission.limit) ? (" - " + pMission.limit) : "";
 			var elmid = "gld" + pBookName + "_" + pIndex;
 			$("<div class='gld" + pBookName + "'><img class='cssWaypoint' " + I.cClipboardAttribute
-				+ "='" + pMission.wp + " " + missiontype + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+				+ "='" + pMission.wp + " " + missiontype + ": " + translatedname + "' src='" + U.URL_IMG.Placeholder + "' /> "
 				+ "<dfn id='" + elmid + "' data-coord='[" + pMission.coord[0] + "," + pMission.coord[1] + "]'>" + translatedname + limitstr + "</dfn> "
 				+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
 				+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
@@ -31128,7 +31129,7 @@ W = {
 							+ "<span class='objProgressContainer'><span id='objProgressBar_" + obj.id
 								+ "' class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
 							+ "<span class='objIconContainer'><img id='objIcon_" + obj.id
-								+ "' class='objIcon' src='img/ui/placeholder.png'/></span>"
+								+ "' class='objIcon' src='" + U.URL_IMG.Placeholder + "'/></span>"
 							+ "<span class='objInfo'><cite id='objClaim_" + obj.id + "' class='objClaim'></cite> <cite id='objAge_" + obj.id + "' class='objAge'></cite></span>"
 						+ "</div>",
 					iconSize: [38, 38],
@@ -35118,7 +35119,7 @@ H = {
 		var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
 		// Create "button" to toggle list of items on sale
 		$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'>"
-			+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
+			+ "<img id='dsbSaleSymbol' src='" + U.URL_IMG.Placeholder + "' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + (H.Sale.Items.length - H.Sale.numPaddingItems) + " " + D.getWordCapital("promotions") + "</var> "
 			+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
 		+ "</div>").addClass("dsbTabEnabled");
@@ -35233,7 +35234,7 @@ H = {
 					idstofetch.push(itemid);
 				}
 				var idprop = (idisimg) ? "" : ("id='dsbSaleEntry_" + itemid + "'");
-				var imgsrc = (idisimg) ? itemid : "img/ui/placeholder.png";
+				var imgsrc = (idisimg) ? itemid : U.URL_IMG.Placeholder;
 				$("#dsbSaleSide" + side).append("<div class='dsbSaleEntry' " + idprop + ">"
 					+ "<div class='dsbSaleItem'>"
 						+ "<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' src='" + imgsrc + "' /></a> "
@@ -35711,7 +35712,7 @@ H = {
 					var wikiquery = (D.isLanguageDefault) ? recipe.name : recipeid.toString();
 					$("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>").appendTo(table).html(
 						"<div class='dsbPactItem'>"
-							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbPactIcon_" + i + "' class='dsbPactIcon' src='img/ui/placeholder.png' /></a> "
+							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbPactIcon_" + i + "' class='dsbPactIcon' src='" + U.URL_IMG.Placeholder + "' /></a> "
 							+ "<span id='dsbPactName_" + i + "' class='dsbPactName curZoom " + Q.getRarityClass(recipe.rarity)
 								+ "' data-coord='" + (H.Pact.Coords[i] || defaultcoords)[weekdaylocation] + "'>" + product.name + "</span> "
 							+ "</div>"

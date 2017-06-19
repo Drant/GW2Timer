@@ -21,7 +21,6 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 67038, n: "Glowing Green Mask", p: {gem: 350}, discount: 500, Finish: new Date("2017-06-19T16:00:00Z")},
 	{i: 64742, n: "Aviator Cap", p: {gem: 140}, discount: 200, Finish: new Date("2017-06-20T16:00:00Z")},
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}},
@@ -39,6 +38,7 @@ GW2T_SALE_DATA = {
 	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 800}},
 	{i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: 700}},
 	{i: 44888, n: "Mist Herald Back Item Skin", p: {gem: 500}},
+	{i: 63891, n: "Glowing Crimson Mask", p: {gem: 500}},
 	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
 	{i: 64755, n: "Fuzzy Bear Hat", p: {gem: 200}},
@@ -56,7 +56,6 @@ GW2T_SALE_DATA = {
 	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}, Finish: new Date("2017-06-20T16:00:00Z")},
 	{i: 64747, n: "Inventor's Sunglasses", p: {gem: 150}, Finish: new Date("2017-06-21T16:00:00Z")},
 	{i: 64748, n: "Reading Glasses", p: {gem: 150}, Finish: new Date("2017-06-21T16:00:00Z")},
-	{i: 41745, n: "Frost Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-19T16:00:00Z")},
 	{i: 68005, n: "Glint's Winter Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-20T16:00:00Z")},
 	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-20T16:00:00Z")},
 	{i: 69934, n: "Lion's Arch Rebuild Dye Kit", p: {gem: 125},  discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-21T16:00:00Z")}
