@@ -125,7 +125,7 @@ Glider: [
 	{i: 80725, n: "Raven's Spirit Glider", p: {gem: -500}},
 	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}},
 	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}},
-	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}},
+	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: -700}},
 	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}}
 ],
 Back: [
@@ -135,7 +135,7 @@ Back: [
 	{i: 39519, n: "Warrior Quaggan Backpack Cover", p: {gem: -300}},
 	{i: 44735, n: "Plush Moto Backpack Cover", p: {gem: -300}},
 	{i: 68612, n: "Plush Ram Backpack", p: {gem: -300}},
-	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: 500}},
+	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: -500}},
 	{i: 78733, n: "Sloth Backpack", p: {gem: 500}},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}},
 	{i: 80019, n: "Scruffy Backpack", p: {gem: 400}},
@@ -158,7 +158,7 @@ Back: [
 	{i: 79523, n: "Mursaat Wings Backpack", p: {gem: 700}},
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: -700}},
 	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: -700}},
-	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: 700}},
+	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: -700}},
 	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}}
 ],
 Head: [
@@ -277,7 +277,9 @@ Weapon: [
 	{i: 80861, n: "Shield of the Goddess", p: {gem: -600}},
 	{i: 80981, n: "Hourglass Staff", p: {gem: -600}},
 	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: -600}},
-	{i: 81240, n: "Menzies's Agony", p: {gem: -600}}
+	{i: 81240, n: "Menzies's Agony", p: {gem: -600}},
+	{i: 81567, n: "God-Slayer Longbow", p: {gem: -350}},
+	{i: 81560, n: "God-Slayer Short Bow", p: {gem: -350}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
@@ -363,7 +365,8 @@ Dye: [
 	{i: 79354, n: "Bloodstone Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 79695, n: "Vibrant Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80069, n: "Solar and Lunar Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 80974, n: "Primordus Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 80974, n: "Primordus Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 81545, n: "Jormag Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
@@ -427,9 +430,9 @@ Gathering: [
 	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: -1000}},
 	{i: 67029, n: "Tireless Logging Minion", p: {gem: -1000}},
 	{i: 48932, n: "Bone Pick", p: {gem: -1000}},
-	{i: 67395, n: "Reap-r-Tron", p: {gem: 1000}},
-	{i: 67394, n: "Log-r-Tron", p: {gem: 1000}},
-	{i: 67396, n: "Mine-r-Tron", p: {gem: 1000}},
+	{i: 67395, n: "Reap-r-Tron", p: {gem: -1000}},
+	{i: 67394, n: "Log-r-Tron", p: {gem: -1000}},
+	{i: 67396, n: "Mine-r-Tron", p: {gem: -1000}},
 	{i: 69478, n: "Mad Scientist's Harvesting Tool", p: {gem: -1000}},
 	{i: 68799, n: "Mad Scientist's Logging Tool", p: {gem: -1000}},
 	{i: 68905, n: "Mad Scientist's Mining Tool", p: {gem: -1000}},
