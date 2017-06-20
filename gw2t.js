@@ -13137,7 +13137,7 @@ V = {
 			// Get achievement categories
 			U.getJSON(U.getAPI("achievements/categories", true), function(pCategories)
 			{
-				// Get all possible achievements
+				// Get cache of all achievements
 				U.getJSON(U.getCacheURL(section), function(pAchievements)
 				{
 					Q.initializeBoxes(section, pAchievements);
@@ -18529,7 +18529,7 @@ Q = {
 		var elms = [];
 		$(pSelector).each(function()
 		{
-			var id = $(this).attr("data-ach");
+			var id = parseInt($(this).attr("data-ach"));
 			if (id)
 			{
 				ids.push(id);
@@ -29190,7 +29190,7 @@ G = {
 	},
 	
 	/*
-	 * Inserts a "day" div into the dailies calendar.
+	 * Inserts a "day" box with all its achievements into a container.
 	 * @param object pDaily daily object from general.js
 	 * @param object pDate of the day.
 	 */

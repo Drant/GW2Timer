@@ -286,6 +286,8 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1867": "Capture",
 	"2816": "Matches",
 	"2817": "Stats",
+	"3449": "Winner",
+	"3450": "Participator",
 	
 	// Profession
 	"2090": "Eng Thief",
