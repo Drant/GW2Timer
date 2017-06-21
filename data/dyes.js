@@ -51,7 +51,8 @@ var GW2T_DYES_HEADERS = {
 	Bloodstone: {id: 79354, name_en: "Bloodstone Dye Kit", name_de: "Blutstein-Farbkit", name_es: "Kit de tintes de hematites", name_fr: "Kit de teintures de pierre de Sang", name_zh: "血石染料包"},
 	Vibrant: {id: 79695, name_en: "Vibrant Dye Kit", name_de: "Lebendige-Farben-Farbkit", name_es: "Kit de tintes vibrantes", name_fr: "Kit de teintures vibrantes", name_zh: "醒目染料包"},
 	Solar: {id: 80069, name_en: "Solar and Lunar Dye Kit", name_de: "Sonne-und-Mond-Farbkit", name_es: "Kit de tintes solares y lunares", name_fr: "Kit de teinture solaire et lunaire", name_zh: "日月染料包"},
-	Primordus: {id: 80974, name_en: "Primordus Dye Kit", name_de: "Primordus-Farbkit", name_es: "Kit de tintes de Primordus", name_fr: "Kit de teintures de Primordius", name_zh: "派莫德斯染料包"}
+	Primordus: {id: 80974, name_en: "Primordus Dye Kit", name_de: "Primordus-Farbkit", name_es: "Kit de tintes de Primordus", name_fr: "Kit de teintures de Primordius", name_zh: "派莫德斯染料包"},
+	Jormag: {id: 81545, name_en: "Jormag Dye Kit", name_de: "Jormag-Farbkit", name_es: "Kit de tintes de Jormag", name_fr: "Kit de teintures de Jormag", name_zh: "卓玛染料包"}
 };
 
 /*
@@ -639,5 +640,13 @@ Primordus: [
 	{u: 1537, i: 80983, n: "Destroyer Orange Dye", c: ["#f05000", "#f05000", "#f05000"], h: "Orange", m: "Vibrant", l: "[&AgFXPAEA]", en: "Destroyer Orange", de: "Zerstörer-Orange", es: "Naranja destructor", fr: "Orange destructeur", zh: "毁灭者橙"},
 	{u: 1541, i: 80976, n: "Scorched Dye", c: ["#ee2500", "#ee2500", "#ee2500"], h: "Orange", m: "Vibrant", l: "[&AgFQPAEA]", en: "Scorched", de: "Versengt", es: "Chamuscado", fr: "Brûlure", zh: "焦灼"},
 	{u: 1539, i: 80986, n: "Incandescent Dye", c: ["#ffec4c", "#ffec4c", "#ffec4c"], h: "Yellow", m: "Vibrant", l: "[&AgFaPAEA]", en: "Incandescent", de: "Weißglut", es: "Incandescente", fr: "Incandescent", zh: "辉耀白"}
+],
+Jormag: [
+	{u: 1553, i: 81571, n: "Permafrost Dye", c: ["#ffffff", "#ffffff", "#ffffff"], h: "Gray", m: "Metal", l: "[&AgGjPgEA]", en: "Permafrost", de: "Permafrost", es: "Permagel", fr: "Permafrost", zh: "永久霜冻"},
+	{u: 1549, i: 81566, n: "Eternal Ice Dye", c: ["#e8e2e1", "#e8e2e1", "#e8e2e1"], h: "Gray", m: "Metal", l: "[&AgGePgEA]", en: "Eternal Ice", de: "Ewiges Eis", es: "Hielo eterno", fr: "Glace éternelle", zh: "永恒之冰"},
+	{u: 1552, i: 81536, n: "Frostbite Green Dye", c: ["#fafffa", "#fafffa", "#fafffa"], h: "Green", m: "Vibrant", l: "[&AgGAPgEA]", en: "Frostbite Green", de: "Erfrierungsgrün", es: "Congelación verde", fr: "Engelure verte", zh: "霜咬绿"},
+	{u: 1554, i: 81590, n: "Frozen Scales Dye", c: ["#77ba83", "#77ba83", "#77ba83"], h: "Green", m: "Vibrant", l: "[&AgG2PgEA]", en: "Frozen Scales", de: "Eisschuppen", es: "Escamas congeladas", fr: "Écailles gelées", zh: "冰冻鳞片"},
+	{u: 1551, i: 81561, n: "Frostbite Blue Dye", c: ["#e8ffff", "#e8ffff", "#e8ffff"], h: "Blue", m: "Vibrant", l: "[&AgGZPgEA]", en: "Frostbite Blue", de: "Erfrierungsblau", es: "Congelación azul", fr: "Engelure bleue", zh: "霜咬蓝"},
+	{u: 1550, i: 81534, n: "Core Ice Dye", c: ["#52abec", "#52abec", "#52abec"], h: "Blue", m: "Vibrant", l: "[&AgF+PgEA]", en: "Core Ice", de: "Kerneis", es: "Núcleo de hielo", fr: "Glace du noyau", zh: "冰核"}
 ]
 };

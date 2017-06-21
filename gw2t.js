@@ -13736,11 +13736,22 @@ V = {
 					var id = pItem.id;
 					var symbol = $("<img class='bnkSlotSymbol curToggle' src='img/ui/menu/alarm.png' />").appendTo(pSlot);
 					toggleSlotSymbol(pSlot, H.isGemSubscribed(id), pItem);
-					symbol.click(function(pEvent)
+					// If on touch device then clicking the slot itself toggles the alarm
+					if (I.isTouchEnabled)
 					{
-						pEvent.stopPropagation();
-						toggleSlotAlarm(pSlot, pItem);
-					});
+						pSlot.unbind("click").click(function()
+						{
+							toggleSlotAlarm(pSlot, pItem);
+						});
+					}
+					else
+					{
+						symbol.click(function(pEvent)
+						{
+							pEvent.stopPropagation();
+							toggleSlotAlarm(pSlot, pItem);
+						});
+					}
 				}
 			});
 			
@@ -15345,6 +15356,18 @@ B = {
 			unlockobj = pCatArr[i];
 			(function(iSlot, iUnlockObj, iUnlockID, iItemID, iWiki, iColors, iHue, iMaterial, iChatlink, iName)
 			{
+				// Include RGB info
+				var irgb;
+				var rgbarr = [];
+				var hslarr = [];
+				iColors.forEach(function(iHex)
+				{
+					irgb = U.convertHexToRGB(iHex);
+					rgbarr.push(irgb);
+					hslarr.push(U.convertRGBToHSL(irgb));
+				});
+				iUnlockObj["rgb"] = rgbarr;
+				iUnlockObj["hsl"] = hslarr;
 				// Color the bank slot as that dye
 				iSlot.find(".bnkSlotIcon").css({background: iColors[0]});
 				// Include name over the slot
@@ -24386,12 +24409,12 @@ M = {
 	initializeTouch: function()
 	{
 		var that = this;
-		window.addEventListener("touchstart", function()
+		if (O.Options.bol_ignoreTouch || (that.isTouchEnabled && I.isTouchEnabled))
 		{
-			if (O.Options.bol_ignoreTouch || (that.isTouchEnabled && I.isTouchEnabled))
-			{
-				return;
-			}
+			return;
+		}
+		if (("ontouchstart" in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0))
+		{
 			that.isTouchEnabled = true;
 			I.isTouchEnabled = true;
 			
@@ -24413,10 +24436,6 @@ M = {
 			{
 				$("#opt_bol_showPanel").trigger("click");
 			});
-			$("<kbd class='tchToggleMap tchButton'></kbd>").appendTo(menu).click(function()
-			{
-				I.switchMap();
-			});
 			$("<kbd class='tchZoomIn tchButton'></kbd>").appendTo(menu).click(function()
 			{
 				that.Map.zoomIn();
@@ -24427,7 +24446,7 @@ M = {
 			});
 
 			menu.css({top: "calc(50% - " + menu.height() + "px)"});
-		});
+		};
 	},
 	
 	/*
@@ -24493,7 +24512,7 @@ M = {
 		 */
 		this.Map.on("click", function(pEvent)
 		{
-			if (that.isMouseOnHUD) { return; }
+			if (that.isMouseOnHUD || that.isTouchEnabled) { return; }
 			var coord = that.convertLCtoGC(pEvent.latlng);
 			that.outputCoordinatesCopy(P.formatCoord(coord));
 		});

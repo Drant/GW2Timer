@@ -494,7 +494,13 @@ Back: [
 	{u: 7216, i: 81089, n: "Living Druid Stone", p: {achievement: 0}},
 	{u: 7214, i: 81143, n: "Blooming Druid Stone", p: {achievement: 0}},
 	{u: 7218, i: 81056, n: "The Wayfarer's Henge", p: {achievement: 0}},
-	{u: 7227, i: 81263, n: "Mercenary Backpack", p: {gem: 400}}
+	{u: 7227, i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
+	{u: 7276, i: 81455, n: "Recruit's Wings of War", p: {skirmish: 350}},
+	{u: 7246, i: 81356, n: "Soldier's Wings of War", p: {skirmish: 525}},
+	{u: 7256, i: 81288, n: "General's Wings of War", p: {skirmish: 700}},
+	{u: 7252, i: 81294, n: "Commander's Wings of War", p: {skirmish: 875}},
+	{u: 7248, i: 81467, n: "Warcry", p: {skirmish: 2450}},
+	{u: 7272, i: 81462, n: "Warbringer", p: {craft: true}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", b: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},

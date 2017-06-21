@@ -39,7 +39,7 @@
 		<kbd id="prjToggleHUD" class="prjToggle curToggle" title="<dfn>Toggle HUD</dfn>"></kbd>
 		<kbd id="prjTogglePanel" class="prjToggle curToggle" title="<dfn>Toggle Panel</dfn>"></kbd>
 	</div>
-	<div id="itemVignette"></div><!-- Ornamental shadow frame for window overlay -->
+	<div id="itemVignette"></div><!-- Ornamental shadow frame for overlay program -->
 	<div id="itemConsole">
 		<div id="cslButtons">
 			<kbd id="cslClose" class="btnWindow btnClose" title="<dfn>Clear Console</dfn><br /><cite>Shortcut: Esc Key</cite>"></kbd>
@@ -295,7 +295,6 @@
 							<label title="Only show the timeline HUD when you are on the main page."><input id="opt_bol_hideHUD" type="checkbox" /> Auto-hide timeline</label>
 							<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
 							<label title="Show/Hide the container for Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD</label>
-							<label title="Some map features like right clicking are disabled for touchscreens, check this for normal click behavior. Requires reload."><input id="opt_bol_ignoreTouch" type="checkbox" /> Ignore touchscreens</label>
 							<span id="mapDisplayNotes">Double click on the map to create paths. Right click on the map for path features, completion routes, and marker tool.</span><br />
 						</div>
 						<div class="mapDisplaySide1 cssColumn">
@@ -909,6 +908,7 @@
 				<div class="cntComposition">
 					<header class="cntHeader jsTranslate">Options</header>
 					<br />
+					<label title="Some map features like right clicking are disabled for touchscreens, check this for normal click behavior. Requires reload."><input id="opt_bol_ignoreTouch" type="checkbox" /> Ignore touchscreens (use mouse)</label>
 					<h2>Timer</h2>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="Statistic to predict (highlight) events of a chain.<br />Auto will use your time of day to choose.<br /><br />Min: for full population map<br />Min-Avg: Min + (Avg - Min)/2<br />Avg: for regular zerg size"><legend>Predictor</legend>

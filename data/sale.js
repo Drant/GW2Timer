@@ -60,9 +60,6 @@ GW2T_SALE_DATA = {
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}, Finish: new Date("2017-06-22T16:00:00Z")},
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}, Finish: new Date("2017-06-22T16:00:00Z")},
 	{i: 68655, n: "Dragon Mask Skin", p: {gem: 300}, Finish: new Date("2017-06-24T16:00:00Z")},
-	{i: 68656, n: "Lion Mask Skin", p: {gem: 300}, Finish: new Date("2017-06-24T16:00:00Z")},
-	{i: 64747, n: "Inventor's Sunglasses", p: {gem: 150}, Finish: new Date("2017-06-21T16:00:00Z")},
-	{i: 64748, n: "Reading Glasses", p: {gem: 150}, Finish: new Date("2017-06-21T16:00:00Z")},
-	{i: 69934, n: "Lion's Arch Rebuild Dye Kit", p: {gem: 125},  discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-06-21T16:00:00Z")}
+	{i: 68656, n: "Lion Mask Skin", p: {gem: 300}, Finish: new Date("2017-06-24T16:00:00Z")}
 	]
 };

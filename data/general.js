@@ -1693,16 +1693,6 @@ Countdown: {
 		Start: new Date("2017-04-11T7:00:00Z"),
 		Finish: new Date("2017-04-12T17:00:00Z")
 	},*/
-	{
-		name_en: "PvP Automated Tournaments",
-		name_de: "PvP Automatisierte Turniere",
-		name_es: "PvP Torneos automatizados",
-		name_fr: "JcJ Tournois automatisés",
-		name_zh: "玩家对战自动比赛",
-		official: "news/automated-tournaments-and-changes-in-the-heart-of-the-mists/",
-		Start: new Date("2017-06-20T16:00:00Z"),
-		Finish: new Date("2017-06-27T16:00:00Z")
-	},
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
