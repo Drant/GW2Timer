@@ -40,7 +40,6 @@ GW2T_SALE_DATA = {
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}},
-	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
 	{i: 64755, n: "Fuzzy Bear Hat", p: {gem: 200}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 67395, n: "Reap-r-Tron", p: {gem: 700}, discount: 1000, Finish: new Date("2017-06-27T16:00:00Z")},
@@ -53,8 +52,6 @@ GW2T_SALE_DATA = {
 	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: 700}, Finish: new Date("2017-06-27T16:00:00Z")},
 	{i: 44888, n: "Mist Herald Back Item Skin", p: {gem: 500}, Finish: new Date("2017-06-27T16:00:00Z")},
 	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: 350}, discount: 500, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}, Finish: new Date("2017-06-25T16:00:00Z")},
-	{i: 68655, n: "Dragon Mask Skin", p: {gem: 300}, Finish: new Date("2017-06-24T16:00:00Z")},
-	{i: 68656, n: "Lion Mask Skin", p: {gem: 300}, Finish: new Date("2017-06-24T16:00:00Z")}
+	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}, Finish: new Date("2017-06-25T16:00:00Z")}
 	]
 };

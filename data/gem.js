@@ -214,7 +214,7 @@ Shoulder: [
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
-	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
+	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}}
 ],
 Gloves: [
