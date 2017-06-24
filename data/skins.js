@@ -654,7 +654,9 @@ Armor_Light_Helm: [
 	{u: 7073, i: 80267, n: "White Mantle Elite Guard Mask", p: {achievement: 0}},
 	{u: 7095, i: 80441, n: "Refined Envoy Cowl", p: {craft: true}},
 	{u: 7087, i: 80248, n: "Perfected Envoy Cowl", p: {craft: true}},
-	{u: 7233, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}}
+	{u: 7233, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
+	{u: 6711, i: 6605, n: "Triumphant Hero's Masque", p: {skirmish: 175}},
+	{u: 7260, i: 81487, n: "Mistforged Triumphant Hero's Masque", p: {skirmish: 350}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", b: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -744,7 +746,10 @@ Armor_Light_Shoulders: [
 	{u: 7071, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
 	{u: 7103, i: 80264, n: "Refined Envoy Mantle", p: {craft: true}},
 	{u: 7116, i: 80131, n: "Perfected Envoy Mantle", p: {craft: true}},
-	{u: 7211, i: 81194, n: "Light Houndskin Mantle", p: {achievement: 0}}
+	{u: 7211, i: 81194, n: "Light Houndskin Mantle", p: {achievement: 0}},
+	{u: 6686, i: 6607, n: "Triumphant Hero's Epaulets", p: {skirmish: 175}},
+	{u: 7249, i: 81482, n: "Mistforged Triumphant Hero's Epaulets", p: {skirmish: 350}},
+	{u: 7267, i: 81412, n: "Foefire Mantle", p: {gem: 500}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", b: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -817,7 +822,9 @@ Armor_Light_Coat: [
 	{u: 6716, i: 78336, n: "Triumphant Raiment", p: {badge: 0}},
 	{u: 6833, i: 78876, n: "Experimental Envoy Vestments", p: {craft: true}},
 	{u: 7127, i: 80120, n: "Refined Envoy Vestments", p: {craft: true}},
-	{u: 7084, i: 80190, n: "Perfected Envoy Vestments", p: {craft: true}}
+	{u: 7084, i: 80190, n: "Perfected Envoy Vestments", p: {craft: true}},
+	{u: 6706, i: 6603, n: "Triumphant Hero's Raiment", p: {skirmish: 350}},
+	{u: 7250, i: 81365, n: "Sublime Mistforged Triumphant Hero's Raiment", p: {skirmish: 700}},
 ],
 Armor_Light_Gloves: [
 	{u: 25, i: 3175, n: "Apprentice Gloves", b: [2975, 2964, 2966, 2970, 2969, 2971, 2973, 2967, 2974, 2978, 2968, 2972, 2977, 2963, 2976, 2965, 3139, 3157, 3121, 3175, 3340, 3339, 3342, 3345, 3344, 3341, 3346, 3355, 3343, 3347, 3348, 3350, 3349, 3351, 3354, 3352, 3353, 3358, 3356, 3357, 5036, 5052, 5070, 5106, 5023, 5088, 5142, 5124, 5160, 5196, 5178, 5214, 5232, 5250, 5286, 5268]},
@@ -903,7 +910,10 @@ Armor_Light_Gloves: [
 	{u: 5629, i: 80840, n: "Ardent Glorious Armguards", p: {glory: 150}},
 	{u: 7077, i: 80668, n: "Gages of the Obedient", p: {magnetite: 600}},
 	{u: 7082, i: 80460, n: "Refined Envoy Gloves", p: {craft: true}},
-	{u: 7126, i: 80111, n: "Perfected Envoy Gloves", p: {craft: true}}
+	{u: 7126, i: 80111, n: "Perfected Envoy Gloves", p: {craft: true}},
+	{u: 6718, i: 6604, n: "Triumphant Hero's Armguards", p: {skirmish: 175}},
+	{u: 7269, i: 81510, n: "Mistforged Triumphant Hero's Armguards", p: {skirmish: 350}},
+	{u: 7275, i: 81293, n: "Foefire Wraps", p: {gem: 500}}
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", b: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -976,7 +986,9 @@ Armor_Light_Leggings: [
 	{u: 6834, i: 78862, n: "Experimental Envoy Pants", p: {craft: true}},
 	{u: 5630, i: 80776, n: "Ardent Glorious Leggings", p: {glory: 200}},
 	{u: 7093, i: 80275, n: "Refined Envoy Pants", p: {craft: true}},
-	{u: 7130, i: 80356, n: "Perfected Envoy Pants", p: {craft: true}}
+	{u: 7130, i: 80356, n: "Perfected Envoy Pants", p: {craft: true}},
+	{u: 6701, i: 6606, n: "Triumphant Hero's Leggings", p: {skirmish: 260}},
+	{u: 7270, i: 81397, n: "Mistforged Triumphant Hero's Leggings", p: {skirmish: 520}}
 ],
 Armor_Light_Boots: [
 	{u: 16, i: 3173, n: "Apprentice Shoes", b: [2932, 2933, 2938, 2936, 2937, 2935, 2941, 2940, 2942, 2945, 2944, 2931, 2946, 2934, 2939, 2943, 3119, 3137, 3155, 3173, 3300, 3317, 3301, 3302, 3303, 3304, 3306, 3308, 3307, 3313, 3312, 3309, 3311, 3299, 3316, 3318, 3305, 3310, 3314, 3315, 5068, 5050, 5122, 5021, 5034, 5104, 5140, 5158, 5086, 5194, 5176, 5230, 5212, 5248, 5266, 5284]},
@@ -1052,7 +1064,9 @@ Armor_Light_Boots: [
 	{u: 6905, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
 	{u: 5602, i: 80739, n: "Ardent Glorious Footgear", p: {glory: 150}},
 	{u: 7150, i: 80583, n: "Refined Envoy Shoes", p: {craft: true}},
-	{u: 7143, i: 80399, n: "Perfected Envoy Shoes", p: {craft: true}}
+	{u: 7143, i: 80399, n: "Perfected Envoy Shoes", p: {craft: true}},
+	{u: 6707, i: 6602, n: "Triumphant Hero's Footgear", p: {skirmish: 175}},
+	{u: 7277, i: 81419, n: "Mistforged Triumphant Hero's Footgear", p: {skirmish: 350}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1201,7 +1215,9 @@ Armor_Medium_Helm: [
 	{u: 7106, i: 80519, n: "White Mantle Elite Guard Mask", p: {achievement: 0}},
 	{u: 7099, i: 80634, n: "Refined Envoy Mask", p: {craft: true}},
 	{u: 7145, i: 80296, n: "Perfected Envoy Mask", p: {craft: true}},
-	{u: 7241, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}}
+	{u: 7241, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
+	{u: 6695, i: 6611, n: "Triumphant Hero's Faceguard", p: {skirmish: 175}},
+	{u: 7264, i: 81325, n: "Mistforged Triumphant Hero's Faceguard", p: {skirmish: 350}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1290,7 +1306,10 @@ Armor_Medium_Shoulders: [
 	{u: 7066, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
 	{u: 7128, i: 80366, n: "Refined Envoy Shoulderpads", p: {craft: true}},
 	{u: 7142, i: 80145, n: "Perfected Envoy Shoulderpads", p: {craft: true}},
-	{u: 7213, i: 81176, n: "Medium Houndskin Mantle", p: {achievement: 0}}
+	{u: 7213, i: 81176, n: "Medium Houndskin Mantle", p: {achievement: 0}},
+	{u: 6694, i: 6613, n: "Triumphant Hero's Shoulderguards", p: {skirmish: 175}},
+	{u: 7247, i: 81471, n: "Mistforged Triumphant Hero's Shoulderguards", p: {skirmish: 350}},
+	{u: 7263, i: 81412, n: "Foefire Mantle", p: {gem: 500}}
 ],
 Armor_Medium_Coat: [
 	{u: 6, i: 41169, n: "Rawhide Vest", p: {badge: 30}},
@@ -1362,7 +1381,9 @@ Armor_Medium_Coat: [
 	{u: 6838, i: 78800, n: "Experimental Envoy Jerkin", p: {craft: true}},
 	{u: 5633, i: 80823, n: "Ardent Glorious Brigandine", p: {glory: 400}},
 	{u: 7141, i: 80607, n: "Refined Envoy Jerkin", p: {craft: true}},
-	{u: 7083, i: 80578, n: "Perfected Envoy Jerkin", p: {craft: true}}
+	{u: 7083, i: 80578, n: "Perfected Envoy Jerkin", p: {craft: true}},
+	{u: 6697, i: 6609, n: "Triumphant Hero's Brigandine", p: {skirmish: 350}},
+	{u: 7255, i: 81483, n: "Sublime Mistforged Triumphant Hero's Brigandine", p: {skirmish: 700}}
 ],
 Armor_Medium_Gloves: [
 	{u: 32, i: 41170, n: "Rawhide Bracers", p: {badge: 10}},
@@ -1447,7 +1468,10 @@ Armor_Medium_Gloves: [
 	{u: 5634, i: 80718, n: "Ardent Glorious Wristplates", p: {glory: 150}},
 	{u: 7115, i: 80142, n: "Gloves of the Obedient", p: {magnetite: 600}},
 	{u: 7123, i: 80658, n: "Refined Envoy Vambraces", p: {craft: true}},
-	{u: 7100, i: 80161, n: "Perfected Envoy Vambraces", p: {craft: true}}
+	{u: 7100, i: 80161, n: "Perfected Envoy Vambraces", p: {craft: true}},
+	{u: 6693, i: 6610, n: "Triumphant Hero's Wristplates", p: {skirmish: 175}},
+	{u: 7254, i: 81286, n: "Mistforged Triumphant Hero's Wristplates", p: {skirmish: 350}},
+	{u: 7251, i: 81293, n: "Foefire Wraps", p: {gem: 500}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1519,7 +1543,9 @@ Armor_Medium_Leggings: [
 	{u: 6829, i: 78896, n: "Experimental Envoy Mask", p: {craft: true}},
 	{u: 5636, i: 80809, n: "Ardent Glorious Legguards", p: {glory: 200}},
 	{u: 7098, i: 80675, n: "Refined Envoy Leggings", p: {craft: true}},
-	{u: 7156, i: 80252, n: "Perfected Envoy Leggings", p: {craft: true}}
+	{u: 7156, i: 80252, n: "Perfected Envoy Leggings", p: {craft: true}},
+	{u: 6690, i: 6612, n: "Triumphant Hero's Legguards", p: {skirmish: 260}},
+	{u: 7274, i: 81527, n: "Mistforged Triumphant Hero's Legguards", p: {skirmish: 520}}
 ],
 Armor_Medium_Boots: [
 	{u: 19, i: 41168, n: "Rawhide Boots", p: {badge: 10}},
@@ -1594,7 +1620,9 @@ Armor_Medium_Boots: [
 	{u: 6916, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
 	{u: 5632, i: 80851, n: "Ardent Glorious Shinplates", p: {glory: 150}},
 	{u: 7120, i: 80177, n: "Refined Envoy Boots", p: {craft: true}},
-	{u: 7085, i: 80281, n: "Perfected Envoy Boots", p: {craft: true}}
+	{u: 7085, i: 80281, n: "Perfected Envoy Boots", p: {craft: true}},
+	{u: 6699, i: 6608, n: "Triumphant Hero's Shinplates", p: {skirmish: 175}},
+	{u: 7259, i: 81422, n: "Mistforged Triumphant Hero's Shinplates", p: {skirmish: 350}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", b: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1743,7 +1771,9 @@ Armor_Heavy_Helm: [
 	{u: 7102, i: 80096, n: "White Mantle Elite Guard Mask", p: {achievement: 0}},
 	{u: 7072, i: 80387, n: "Refined Envoy Helmet", p: {craft: true}},
 	{u: 7108, i: 80384, n: "Perfected Envoy Helmet", p: {craft: true}},
-	{u: 7225, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}}
+	{u: 7225, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
+	{u: 6715, i: 6617, n: "Triumphant Hero's Warhelm", p: {skirmish: 175}},
+	{u: 7268, i: 81498, n: "Mistforged Triumphant Hero's Warhelm", p: {skirmish: 350}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", b: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -1836,7 +1866,10 @@ Armor_Heavy_Shoulders: [
 	{u: 7064, i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
 	{u: 7088, i: 80236, n: "Refined Envoy Pauldrons", p: {craft: true}},
 	{u: 7094, i: 80435, n: "Perfected Envoy Pauldrons", p: {craft: true}},
-	{u: 7210, i: 81049, n: "Heavy Houndskin Mantle", p: {achievement: 0}}
+	{u: 7210, i: 81049, n: "Heavy Houndskin Mantle", p: {achievement: 0}},
+	{u: 6736, i: 6619, n: "Triumphant Hero's Pauldrons", p: {skirmish: 175}},
+	{u: 7261, i: 81375, n: "Mistforged Triumphant Hero's Pauldrons", p: {skirmish: 350}},
+	{u: 7258, i: 81412, n: "Foefire Mantle", p: {gem: 500}}
 ],
 Armor_Heavy_Coat: [
 	{u: 2, i: 3168, n: "Chainmail Chestpiece", b: [2868, 2870, 2869, 2858, 2856, 2857, 2859, 2861, 2860, 2862, 2865, 2864, 2863, 2867, 2866, 2871, 3114, 3132, 3150, 3168, 3207, 3205, 3206, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3208, 3224, 3209, 3210, 3211, 5018, 5045, 5063, 5081, 5099, 5030, 5135, 5117, 5153, 5171, 5189, 5207, 5225, 5243, 5261, 5279]},
@@ -1910,7 +1943,9 @@ Armor_Heavy_Coat: [
 	{u: 6820, i: 78923, n: "Experimental Envoy Breastplate", p: {craft: true}},
 	{u: 5622, i: 80735, n: "Ardent Glorious Breastplate", p: {glory: 400}},
 	{u: 7075, i: 80648, n: "Refined Envoy Breastplate", p: {craft: true}},
-	{u: 7157, i: 80254, n: "Perfected Envoy Breastplate", p: {craft: true}}
+	{u: 7157, i: 80254, n: "Perfected Envoy Breastplate", p: {craft: true}},
+	{u: 6698, i: 6615, n: "Triumphant Hero's Breastplate", p: {skirmish: 350}},
+	{u: 7271, i: 81509, n: "Sublime Mistforged Triumphant Hero's Breastplate", p: {skirmish: 700}}
 ],
 Armor_Heavy_Gloves: [
 	{u: 20, i: 3169, n: "Chainmail Gauntlets", b: [2876, 2877, 2878, 2881, 2874, 2880, 2886, 2885, 2882, 2875, 2873, 2887, 2884, 3115, 2872, 3133, 3151, 2883, 3228, 3231, 3230, 2879, 3169, 3233, 3236, 3232, 3226, 3227, 3244, 3229, 3234, 3237, 3225, 3235, 3238, 3239, 3240, 3241, 3242, 3243, 5064, 5046, 5031, 5082, 5019, 5100, 5118, 5154, 5136, 5262, 5172, 5208, 5190, 5244, 5280, 5226]},
@@ -1998,7 +2033,10 @@ Armor_Heavy_Gloves: [
 	{u: 7121, i: 80335, n: "Gauntlets of the Obedient", p: {magnetite: 600}},
 	{u: 7153, i: 80673, n: "Refined Envoy Gauntlets", p: {craft: true}},
 	{u: 7107, i: 80205, n: "Perfected Envoy Gauntlets", p: {craft: true}},
-	{u: 1542, i: 80892, n: "Heavy Scale Armguards", p: {pvp: true}}
+	{u: 1542, i: 80892, n: "Heavy Scale Armguards", p: {pvp: true}},
+	{u: 6713, i: 6616, n: "Triumphant Hero's Gauntlets", p: {skirmish: 175}},
+	{u: 7245, i: 81458, n: "Mistforged Triumphant Hero's Gauntlets", p: {skirmish: 350}},
+	{u: 7262, i: 81293, n: "Foefire Wraps", p: {gem: 500}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", b: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -2073,7 +2111,9 @@ Armor_Heavy_Leggings: [
 	{u: 6840, i: 78858, n: "Experimental Envoy Tassets", p: {craft: true}},
 	{u: 5625, i: 80757, n: "Ardent Glorious Legplates", p: {glory: 200}},
 	{u: 7110, i: 80427, n: "Refined Envoy Tassets", p: {craft: true}},
-	{u: 7133, i: 80277, n: "Perfected Envoy Tassets", p: {craft: true}}
+	{u: 7133, i: 80277, n: "Perfected Envoy Tassets", p: {craft: true}},
+	{u: 6721, i: 6618, n: "Triumphant Hero's Legplates", p: {skirmish: 260}},
+	{u: 7266, i: 81340, n: "Mistforged Triumphant Hero's Legplates", p: {skirmish: 520}}
 ],
 Armor_Heavy_Boots: [
 	{u: 27, i: 886, n: "Scallywag Greaves", b: [801, 807, 802, 820, 830, 841, 810, 846, 834, 853, 848, 827, 866, 886, 859, 874, 896, 903, 45064, 45136, 876]},
@@ -2150,7 +2190,9 @@ Armor_Heavy_Boots: [
 	{u: 6909, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}},
 	{u: 5621, i: 80801, n: "Ardent Glorious Wargreaves", p: {glory: 150}},
 	{u: 7109, i: 80127, n: "Refined Envoy Greaves", p: {craft: true}},
-	{u: 7136, i: 80557, n: "Perfected Envoy Greaves", p: {craft: true}}
+	{u: 7136, i: 80557, n: "Perfected Envoy Greaves", p: {craft: true}},
+	{u: 6691, i: 6614, n: "Triumphant Hero's Wargreaves", p: {skirmish: 175}},
+	{u: 7273, i: 81437, n: "Mistforged Triumphant Hero's Wargreaves", p: {skirmish: 350}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
@@ -4142,7 +4184,8 @@ Weapon_Longbow: [
 	{u: 7137, i: 80246, n: "Devoted Longbow", b: [80246]},
 	{u: 7189, i: 80964, n: "Beastslayer Longbow", b: [80964]},
 	{u: 7170, i: 80933, n: "Crimson Assassin Longbow", p: {token: 16}},
-	{u: 7235, i: 81269, n: "Keepsake Longbow", b: [81269]}
+	{u: 7235, i: 81269, n: "Keepsake Longbow", b: [81269]},
+	{u: 7284, i: 81567, n: "God-Slayer Longbow", p: {gem: 350}}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", b: [44924]},
@@ -4292,7 +4335,8 @@ Weapon_Shortbow: [
 	{u: 7155, i: 80499, n: "Watchkeeper Trophy Bow", p: {magnetite: 600}},
 	{u: 7180, i: 80945, n: "Beastslayer Short Bow", b: [80945]},
 	{u: 7185, i: 80905, n: "Crimson Assassin Short Bow", p: {token: 16}},
-	{u: 7240, i: 81264, n: "Keepsake Short Bow", b: [81264]}
+	{u: 7240, i: 81264, n: "Keepsake Short Bow", b: [81264]},
+	{u: 7281, i: 81560, n: "God-Slayer Short Bow", p: {gem: 350}}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", b: [49338]},

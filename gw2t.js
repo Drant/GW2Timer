@@ -6718,7 +6718,7 @@ Z = {
 		};
 		
 		// Initial call
-		I.print("Retrieving " + type + " indexes...");
+		I.print("Retrieving " + type + " index...");
 		$.getJSON(U.getAPIURL(type), function(pData)
 		{
 			I.print("Looking for difference...");
