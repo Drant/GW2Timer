@@ -325,6 +325,7 @@ BlackLionWeapon: [
 	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
+	//{i: "http://i.imgur.com/AuYSBAV.png", n: "Crystal Arbiter Appearance Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 2000}},
 	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},
 	{i: 37190, n: "Consortium Chest", p: {gem: -250}, discount: [[1, 250], [5, 1100]]},

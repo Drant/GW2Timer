@@ -28,7 +28,6 @@ GW2T_SALE_DATA = {
 	{i: 81560, n: "God-Slayer Short Bow", p: {gem: 350}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}},
-	{i: "http://i.imgur.com/AuYSBAV.png", n: "Crystal Arbiter Appearance Pack", p: {gem: 2000}},
 	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: 800}},
 	{i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: 800}},
 	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: 800}},
@@ -51,7 +50,6 @@ GW2T_SALE_DATA = {
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}, Finish: new Date("2017-06-27T16:00:00Z")},
 	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: 700}, Finish: new Date("2017-06-27T16:00:00Z")},
 	{i: 44888, n: "Mist Herald Back Item Skin", p: {gem: 500}, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: 350}, discount: 500, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}, Finish: new Date("2017-06-25T16:00:00Z")}
+	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: 350}, discount: 500, Finish: new Date("2017-06-27T16:00:00Z")}
 	]
 };
