@@ -39276,7 +39276,10 @@ I = {
 				I.write(I.cClipboardSuccessText + pEvent.text, 5);
 			});
 		}
-		I.updateClipboard(elm, pText || "null");
+		if (pText)
+		{
+			I.updateClipboard(elm, pText);
+		}
 		return cb;
 	},
 	
