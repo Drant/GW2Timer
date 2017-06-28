@@ -1638,7 +1638,7 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "<a href='https://wiki.guildwars2.com/wiki/Sport_Sunglasses'>Sport Sunglasses</a> are back on the gem store.",
+		content: "",
 		Finish: new Date("2017-06-27T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log

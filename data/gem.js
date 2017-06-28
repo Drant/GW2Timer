@@ -206,7 +206,8 @@ Head: [
 	{i: 68655, n: "Dragon Mask Skin", p: {gem: -300}},
 	{i: 68656, n: "Lion Mask Skin", p: {gem: -300}},
 	{i: 79014, n: "Xera's Mask", p: {gem: -400}},
-	{i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}}
+	{i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
+	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -572,7 +573,8 @@ Mini: [
 	{i: 80044, n: "Mini Festive Aurene", p: {gem: -400}},
 	{i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}},
 	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}},
-	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}}
+	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
+	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},

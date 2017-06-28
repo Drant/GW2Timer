@@ -5,7 +5,7 @@
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2017-06-20T16:00:00Z"),
-	Finish: new Date("2017-06-27T16:00:00Z"),
+	Finish: new Date("2017-07-10T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,6 +21,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
+	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}, Finish: new Date("2017-06-30T16:00:00Z")},
+	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 320}, discount: 400},
+	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
+	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
+	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}},
 	{i: 49323, n: "Tormented weapon skins#Gallery", p: {blticket: 5}},
 	{i: "81545", n: "Jormag Dye Kit", p: {gem: 150}, discount: [[1, 125], [5, 500], [25, 2500]]},
@@ -31,21 +36,10 @@ GW2T_SALE_DATA = {
 	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: 800}},
 	{i: 43017, n: "Zodiac Medium Armor Skin", p: {gem: 800}},
 	{i: 43016, n: "Zodiac Heavy Armor Skin", p: {gem: 800}},
-	{i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: 700}},
 	{i: 63891, n: "Glowing Crimson Mask", p: {gem: 500}},
 	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}},
-	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}},
-	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: 800}, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: 800}, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 67395, n: "Reap-r-Tron", p: {gem: 700}, discount: 1000, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 67394, n: "Log-r-Tron", p: {gem: 700}, discount: 1000, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 67396, n: "Mine-r-Tron", p: {gem: 700}, discount: 1000, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: 700}, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 44888, n: "Mist Herald Back Item Skin", p: {gem: 500}, Finish: new Date("2017-06-27T16:00:00Z")},
-	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: 350}, discount: 500, Finish: new Date("2017-06-27T16:00:00Z")}
+	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}}
 	]
 };

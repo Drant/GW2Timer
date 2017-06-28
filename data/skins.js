@@ -289,7 +289,10 @@ var GW2T_SKINS_BLACKLIST = {
 	"6782": "Guild Cavalier Scepter",
 	"6962": "Cosmic Logging Tool",
 	"7034": "",
-	"7068": ""
+	"7068": "",
+	"7257": "Mistforged Triumphant Hero's Raiment",
+	"7253": "Mistforged Triumphant Hero's Brigandine",
+	"7265": "Mistforged Triumphant Hero's Breastplate"
 };
 
 /*
@@ -656,7 +659,8 @@ Armor_Light_Helm: [
 	{u: 7087, i: 80248, n: "Perfected Envoy Cowl", p: {craft: true}},
 	{u: 7233, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
 	{u: 6711, i: 6605, n: "Triumphant Hero's Masque", p: {skirmish: 175}},
-	{u: 7260, i: 81487, n: "Mistforged Triumphant Hero's Masque", p: {skirmish: 350}}
+	{u: 7260, i: 81487, n: "Mistforged Triumphant Hero's Masque", p: {skirmish: 350}},
+	{u: 7286, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", b: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -824,7 +828,7 @@ Armor_Light_Coat: [
 	{u: 7127, i: 80120, n: "Refined Envoy Vestments", p: {craft: true}},
 	{u: 7084, i: 80190, n: "Perfected Envoy Vestments", p: {craft: true}},
 	{u: 6706, i: 6603, n: "Triumphant Hero's Raiment", p: {skirmish: 350}},
-	{u: 7250, i: 81365, n: "Sublime Mistforged Triumphant Hero's Raiment", p: {skirmish: 700}},
+	{u: 7250, i: 81365, n: "Sublime Mistforged Triumphant Hero's Raiment", p: {skirmish: 700}}
 ],
 Armor_Light_Gloves: [
 	{u: 25, i: 3175, n: "Apprentice Gloves", b: [2975, 2964, 2966, 2970, 2969, 2971, 2973, 2967, 2974, 2978, 2968, 2972, 2977, 2963, 2976, 2965, 3139, 3157, 3121, 3175, 3340, 3339, 3342, 3345, 3344, 3341, 3346, 3355, 3343, 3347, 3348, 3350, 3349, 3351, 3354, 3352, 3353, 3358, 3356, 3357, 5036, 5052, 5070, 5106, 5023, 5088, 5142, 5124, 5160, 5196, 5178, 5214, 5232, 5250, 5286, 5268]},
@@ -1217,7 +1221,8 @@ Armor_Medium_Helm: [
 	{u: 7145, i: 80296, n: "Perfected Envoy Mask", p: {craft: true}},
 	{u: 7241, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
 	{u: 6695, i: 6611, n: "Triumphant Hero's Faceguard", p: {skirmish: 175}},
-	{u: 7264, i: 81325, n: "Mistforged Triumphant Hero's Faceguard", p: {skirmish: 350}}
+	{u: 7264, i: 81325, n: "Mistforged Triumphant Hero's Faceguard", p: {skirmish: 350}},
+	{u: 7280, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1773,7 +1778,8 @@ Armor_Heavy_Helm: [
 	{u: 7108, i: 80384, n: "Perfected Envoy Helmet", p: {craft: true}},
 	{u: 7225, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
 	{u: 6715, i: 6617, n: "Triumphant Hero's Warhelm", p: {skirmish: 175}},
-	{u: 7268, i: 81498, n: "Mistforged Triumphant Hero's Warhelm", p: {skirmish: 350}}
+	{u: 7268, i: 81498, n: "Mistforged Triumphant Hero's Warhelm", p: {skirmish: 350}},
+	{u: 7283, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", b: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},

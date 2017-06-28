@@ -492,6 +492,7 @@ Gem: [
 	{u: 456, i: 80903, n: "Mini Super Frog", p: {gem: 200}},
 	{u: 459, i: 80884, n: "Mini Super Snake", p: {gem: 200}},
 	{u: 458, i: 80915, n: "Mini Super Queen Bee Dog", p: {gem: 600}},
-	{u: 470, i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}}
+	{u: 470, i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
+	{u: 475, i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
 ]
 };
