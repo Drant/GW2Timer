@@ -22,6 +22,7 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}, Finish: new Date("2017-06-30T16:00:00Z")},
+	{i: 47883, n: "Stag Helm Skin", p: {gem: 500}, Finish: new Date("2017-07-01T16:00:00Z")},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 320}, discount: 400},
 	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
 	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
