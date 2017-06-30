@@ -31393,7 +31393,7 @@ W = {
 				outputdate.setUTCFullYear(year + 1);
 				outputdate.setUTCMonth(nextmonth % T.cMONTHS_IN_YEAR);
 			}
-			return T.getWorldRelink(outputdate);
+			return W.getWorldRelink(outputdate);
 		}
 		// If here then that day will occur in this month
 		return outputdate;
