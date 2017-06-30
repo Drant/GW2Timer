@@ -21,7 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
+	{i: 80049, n: "Ice Encasement Outfit", p: {gem: 700}, Finish: new Date("2017-07-03T16:00:00Z")},
 	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}, Finish: new Date("2017-06-30T16:00:00Z")},
+	{i: 77528, n: "Snowflake Glider", p: {gem: 500}, Finish: new Date("2017-07-02T16:00:00Z")},
 	{i: 47883, n: "Stag Helm Skin", p: {gem: 500}, Finish: new Date("2017-07-01T16:00:00Z")},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 320}, discount: 400},
 	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
@@ -32,11 +34,8 @@ GW2T_SALE_DATA = {
 	{i: "81545", n: "Jormag Dye Kit", p: {gem: 150}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 81567, n: "God-Slayer Longbow", p: {gem: 350}},
 	{i: 81560, n: "God-Slayer Short Bow", p: {gem: 350}},
-	{i: 81293, n: "Foefire Wraps", p: {gem: 500}},
-	{i: 81412, n: "Foefire Mantle", p: {gem: 500}},
-	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: 800}},
-	{i: 43017, n: "Zodiac Medium Armor Skin", p: {gem: 800}},
-	{i: 43016, n: "Zodiac Heavy Armor Skin", p: {gem: 800}},
+	{i: 81293, n: "Foefire Wraps", p: {gem: 500}, Finish: new Date("2017-07-04T16:00:00Z")},
+	{i: 81412, n: "Foefire Mantle", p: {gem: 500}, Finish: new Date("2017-07-04T16:00:00Z")},
 	{i: 63891, n: "Glowing Crimson Mask", p: {gem: 500}},
 	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}},
