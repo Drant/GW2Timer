@@ -21,8 +21,8 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
+	{i: "http://i.imgur.com/BvQz2AR.png", n: "Black Lion Keys and Scrap Package", p: {gem: 900}, Finish: new Date("2017-07-03T16:00:00Z")},
 	{i: 80049, n: "Ice Encasement Outfit", p: {gem: 700}, Finish: new Date("2017-07-03T16:00:00Z")},
-	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}, Finish: new Date("2017-06-30T16:00:00Z")},
 	{i: 77528, n: "Snowflake Glider", p: {gem: 500}, Finish: new Date("2017-07-02T16:00:00Z")},
 	{i: 47883, n: "Stag Helm Skin", p: {gem: 500}, Finish: new Date("2017-07-01T16:00:00Z")},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 320}, discount: 400},
@@ -37,7 +37,6 @@ GW2T_SALE_DATA = {
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}, Finish: new Date("2017-07-04T16:00:00Z")},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}, Finish: new Date("2017-07-04T16:00:00Z")},
 	{i: 63891, n: "Glowing Crimson Mask", p: {gem: 500}},
-	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}}
