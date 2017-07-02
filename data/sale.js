@@ -24,7 +24,6 @@ GW2T_SALE_DATA = {
 	{i: "http://i.imgur.com/92cVON9.png", n: "Winter Solstice Appearance Pack", p: {gem: 2000}, Finish: new Date("2017-07-04T16:00:00Z")},
 	{i: "http://i.imgur.com/BvQz2AR.png", n: "Black Lion Keys and Scrap Package", p: {gem: 900}, Finish: new Date("2017-07-03T16:00:00Z")},
 	{i: 80049, n: "Ice Encasement Outfit", p: {gem: 700}, Finish: new Date("2017-07-03T16:00:00Z")},
-	{i: 77528, n: "Snowflake Glider", p: {gem: 500}, Finish: new Date("2017-07-02T16:00:00Z")},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 320}, discount: 400},
 	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
 	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
