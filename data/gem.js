@@ -216,7 +216,7 @@ Shoulder: [
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
-	{i: 81412, n: "Foefire Mantle", p: {gem: 500}}
+	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
@@ -225,7 +225,7 @@ Gloves: [
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}},
-	{i: 81293, n: "Foefire Wraps", p: {gem: 500}}
+	{i: 81293, n: "Foefire Wraps", p: {gem: -500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
@@ -330,7 +330,7 @@ Package: [
 	//{i: "http://i.imgur.com/AuYSBAV.png", n: "Crystal Arbiter Appearance Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/BvQz2AR.png", n: "Black Lion Keys and Scrap Package", p: {gem: 900}},
-	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: 150}, discount: [[1, 150], [10, 1200]]},
+	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: -150}, discount: [[1, 150], [10, 1200]]},
 	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},
 	{i: 37190, n: "Consortium Chest", p: {gem: -250}, discount: [[1, 250], [5, 1100]]},
 	{i: 42600, n: "Southsun Supply Crate", p: {gem: -150}, discount: [[1, 150], [10, 1200]]},

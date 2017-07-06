@@ -22,6 +22,7 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: 0}, discount: [[1, 150], [10, 1200]]},
+	{i: 80044, n: "Mini Festive Aurene", p: {gem: 400}, Finish: new Date("2017-07-08T16:00:00Z")},
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: 700}, Finish: new Date("2017-07-07T16:00:00Z")},
 	{i: 69882, n: "White Feather Wings Backpack", p: {gem: 700}, Finish: new Date("2017-07-07T16:00:00Z")},
 	{i: 80026, n: "Ice Crown", p: {gem: 400}, Finish: new Date("2017-07-06T16:00:00Z")},

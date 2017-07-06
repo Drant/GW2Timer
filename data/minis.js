@@ -391,7 +391,7 @@ Gem: [
 	{u: 109, i: 36319, n: "Mini Spooky Spider", p: {gem: 166}},
 	{u: 111, i: 36323, n: "Chainsaw the Skeleton", p: {gem: 500}},
 	{u: 123, i: 38046, n: "Mini Festive Golem", p: {gem: 100}},
-	{u: 120, i: 38049, n: "Mini Infinirarium", p: {gem: 100}},
+	{u: 120, i: 38049, n: "Mini Infinirarium"},
 	{u: 133, i: 41908, n: "Mini Super Spider", p: {gem: 166}},
 	{u: 134, i: 41909, n: "Mini Super Bee Dog", p: {gem: 166}},
 	{u: 135, i: 41910, n: "Mini Super Monkey", p: {gem: 166}},

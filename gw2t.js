@@ -35229,20 +35229,19 @@ H = {
 				}
 				// Price display
 				var pricestr = "";
-				if (item.p["gem"])
+				if (item.p["gem"] >= 0)
 				{
 					pricestr = "<span class='dsbSalePriceCoin'>" + E.formatGemToCoin(itemprice) + " " + I.Symbol.ArrowRight + " </span>"
 						+ "<span class='dsbSalePriceMoney'>" + E.formatGemToMoney(itemprice) + " = </span>"
 						+ "<span class='dsbSalePriceCurrent'>" + itemprice + gemstr + "</span>";
-					
 				}
-				else if (item.p["coin"])
+				else if (item.p["coin"] >= 0)
 				{
 					pricestr = "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(itemprice)) + "</span> " + I.Symbol.ArrowRight + " "
 						+ "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(itemprice) + "</span>"
 						+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(itemprice)) + "</span>";
 				}
-				else if (item.p["blticket"])
+				else if (item.p["blticket"] >= 0)
 				{
 					pricestr = "<span class='dsbSalePriceCurrent'>" + E.PaymentFormat["blticket"](itemprice) + "</span>";
 				}
