@@ -23,16 +23,13 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: 0}, discount: [[1, 150], [10, 1200]]},
 	{i: 80044, n: "Mini Festive Aurene", p: {gem: 400}, Finish: new Date("2017-07-08T16:00:00Z")},
+	{i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}, Finish: new Date("2017-07-09T16:00:00Z")},
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: 700}, Finish: new Date("2017-07-07T16:00:00Z")},
 	{i: 69882, n: "White Feather Wings Backpack", p: {gem: 700}, Finish: new Date("2017-07-07T16:00:00Z")},
-	{i: 80026, n: "Ice Crown", p: {gem: 400}, Finish: new Date("2017-07-06T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 49323, n: "Tormented weapon skins#Gallery", p: {blticket: 5}},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}, Finish: new Date("2017-07-11T16:00:00Z")},
 	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}, Finish: new Date("2017-07-11T16:00:00Z")},
-	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
-	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}},
-	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}},
-	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}}
+	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}}
 	]
 };

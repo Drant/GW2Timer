@@ -183,7 +183,7 @@ Head: [
 	{i: 44608, n: "Mask of the Queen", p: {gem: 400}},
 	{i: 44609, n: "Mask of the Crown", p: {gem: -400}},
 	{i: 47883, n: "Stag Helm Skin", p: {gem: -500}},
-	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: -300}},
+	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}},
 	{i: 63940, n: "Lawless Helmet Skin", p: {gem: -300}},
 	{i: 47890, n: "Grenth Hood Skin", p: {gem: -500}},
 	{i: 65203, n: "Phantom's Hood", p: {gem: -200}},
@@ -213,7 +213,7 @@ Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
 	{i: 48824, n: "Scarlet's Spaulders", p: {gem: -400}},
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
-	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
+	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
 	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
@@ -222,7 +222,7 @@ Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
 	{i: 48817, n: "Scarlet's Grasp", p: {gem: -400}},
 	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
-	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
+	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}}
