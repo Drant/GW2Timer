@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-06-20T16:00:00Z"),
-	Finish: new Date("2017-07-10T16:00:00Z"),
+	Start: new Date("2017-07-10T16:00:00Z"),
+	Finish: new Date("2017-07-18T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -22,8 +22,7 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: 0}, discount: [[1, 150], [10, 1200]], Finish: new Date("2017-07-11T16:00:00Z")},
-	{i: 80044, n: "Mini Festive Aurene", p: {gem: 400}, Finish: new Date("2017-07-08T16:00:00Z")},
-	{i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}, Finish: new Date("2017-07-09T16:00:00Z")},
+	{i: 80019, n: "Scruffy Backpack", p: {gem: 400}, Finish: new Date("2017-07-17T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 49323, n: "Tormented weapon skins#Gallery", p: {blticket: 5}},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}, Finish: new Date("2017-07-11T16:00:00Z")},

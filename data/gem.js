@@ -138,7 +138,7 @@ Back: [
 	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: -500}},
 	{i: 78733, n: "Sloth Backpack", p: {gem: 500}},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}},
-	{i: 80019, n: "Scruffy Backpack", p: {gem: 400}},
+	{i: 80019, n: "Scruffy Backpack", p: {gem: -400}},
 	{i: 77494, n: "Wintersday Wreath Backpack", p: {gem: -500}},
 	{i: 44888, n: "Mist Herald Back Item Skin", p: {gem: -500}},
 	{i: 42663, n: "Rox's Quiver Backpack Cover", p: {gem: -600}},
