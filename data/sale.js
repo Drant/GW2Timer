@@ -21,12 +21,19 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: 0}, discount: [[1, 150], [10, 1200]], Finish: new Date("2017-07-11T16:00:00Z")},
-	{i: 80019, n: "Scruffy Backpack", p: {gem: 400}, Finish: new Date("2017-07-17T16:00:00Z")},
+	{i: "http://i.imgur.com/nUcEfzX.png", n: "Dynamics Exo-Suit Appearance Pack", p: {gem: 1500}},
+	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
+	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
+	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
+	{i: 80019, n: "Scruffy Backpack", p: {gem: 280}, discount: 400, Finish: new Date("2017-07-17T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 49323, n: "Tormented weapon skins#Gallery", p: {blticket: 5}},
-	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}, Finish: new Date("2017-07-11T16:00:00Z")},
-	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}, Finish: new Date("2017-07-11T16:00:00Z")},
-	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}}
+	{i: 68743, n: "Shadow weapon skins#Gallery", p: {blticket: 5}, Finish: new Date("2017-07-25T16:00:00Z")},
+	{i: 78745, n: "Moth Wings Backpack", p: {gem: 700}, Finish: new Date("2017-07-14T16:00:00Z")},
+	{i: 78768, n: "Moth Wings Glider", p: {gem: 700}, Finish: new Date("2017-07-14T16:00:00Z")},
+	{i: 78007, n: "Bubble Glider", p: {gem: 500}, Finish: new Date("2017-07-15T16:00:00Z")},
+	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}, Finish: new Date("2017-07-16T16:00:00Z")},
+	{i: 80484, n: "Necrotic Glider", p: {gem: 500}, Finish: new Date("2017-07-16T16:00:00Z")},
+	{i: 77738, n: "Phoenix Kite Glider", p: {gem: 400}, Finish: new Date("2017-07-14T16:00:00Z")},
+	{i: 78790, n: "Floral Glider", p: {gem: 400}, Finish: new Date("2017-07-15T16:00:00Z")}
 	]
 };

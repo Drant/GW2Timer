@@ -86,12 +86,13 @@ Outfit: [
 	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
 	{i: 80906, n: "Spring Promenade Outfit", p: {gem: -700}},
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
-	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}}
+	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}},
+	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
 	{i: 70048, n: "Black Feather Wings Glider", p: {gem: -700}},
-	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}},
+	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: -500}},
 	{i: 74684, n: "Bat Wings Glider", p: {gem: -700}},
 	{i: 76236, n: "Exalted Glider", p: {gem: -400}},
 	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: -700}},
@@ -99,17 +100,17 @@ Glider: [
 	{i: 77528, n: "Snowflake Glider", p: {gem: -500}},
 	{i: 77646, n: "Ugly Wool Glider", p: {gem: 0}},
 	{i: 77678, n: "Hawk Wings Glider", p: {gem: -700}},
-	{i: 77738, n: "Phoenix Kite Glider", p: {gem: 400}},
+	{i: 77738, n: "Phoenix Kite Glider", p: {gem: -400}},
 	{i: 77804, n: "Wings of Love Glider", p: {gem: -400}},
 	{i: 77811, n: "Electromagnetic-Descender Glider", p: {gem: -400}},
 	{i: 77821, n: "Classical Glider", p: {gem: -400}},
 	{i: 78006, n: "Ironclad Glider", p: {gem: -500}},
-	{i: 78007, n: "Bubble Glider", p: {gem: 500}},
+	{i: 78007, n: "Bubble Glider", p: {gem: -500}},
 	{i: 78009, n: "Super Adventure Glider", p: {gem: -400}},
 	{i: 78025, n: "Phoenix Glider", p: {gem: -500}},
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: -700}},
-	{i: 78768, n: "Moth Wings Glider", p: {gem: 700}},
-	{i: 78790, n: "Floral Glider", p: {gem: 400}},
+	{i: 78768, n: "Moth Wings Glider", p: {gem: -700}},
+	{i: 78790, n: "Floral Glider", p: {gem: -400}},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: -500}},
 	{i: 79016, n: "White Mantle Glider", p: {gem: 400}},
 	{i: 79084, n: "Shining Blade Glider", p: {gem: -700}},
@@ -120,13 +121,14 @@ Glider: [
 	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: -700}},
 	{i: 80018, n: "Infinirarium Glider", p: {gem: 0}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
-	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
+	{i: 80484, n: "Necrotic Glider", p: {gem: -500}},
 	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: -400}},
 	{i: 80725, n: "Raven's Spirit Glider", p: {gem: -500}},
 	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}},
 	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}},
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: -700}},
-	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}}
+	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}},
+	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
@@ -153,13 +155,14 @@ Back: [
 	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: -700}},
 	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: -700}},
 	{i: 78732, n: "Macaw Wings Backpack", p: {gem: -700}},
-	{i: 78745, n: "Moth Wings Backpack", p: {gem: 700}},
+	{i: 78745, n: "Moth Wings Backpack", p: {gem: -700}},
 	{i: 79288, n: "Shining Blade Backpack", p: {gem: -700}},
 	{i: 79523, n: "Mursaat Wings Backpack", p: {gem: 700}},
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: -700}},
 	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: -700}},
 	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: -700}},
-	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}}
+	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
+	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -326,6 +329,7 @@ BlackLionWeapon: [
 	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
+	//{i: "http://i.imgur.com/nUcEfzX.png", n: "Dynamics Exo-Suit Appearance Pack", p: {gem: 1500}},
 	//{i: "http://i.imgur.com/92cVON9.png", n: "Winter Solstice Appearance Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/AuYSBAV.png", n: "Crystal Arbiter Appearance Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 2000}},

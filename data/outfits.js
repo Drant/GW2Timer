@@ -67,7 +67,8 @@ General: [
 	{u: 47, i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
 	{u: 48, i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}},
 	{u: 49, i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
-	{u: 50, i: 81223, n: "Outlaw Outfit", p: {gem: 700}}
+	{u: 50, i: 81223, n: "Outlaw Outfit", p: {gem: 700}},
+	{u: 51, i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}}
 ],
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},
