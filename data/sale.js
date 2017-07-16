@@ -28,14 +28,16 @@ GW2T_SALE_DATA = {
 	{i: 80019, n: "Scruffy Backpack", p: {gem: 280}, discount: 400, Finish: new Date("2017-07-17T16:00:00Z")},
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}},
 	{i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}},
+	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
+	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
+	{i: 76236, n: "Exalted Glider", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 68743, n: "Shadow weapon skins#Gallery", p: {blticket: 5}, Finish: new Date("2017-07-25T16:00:00Z")},
-	{i: 78007, n: "Bubble Glider", p: {gem: 500}, Finish: new Date("2017-07-15T16:00:00Z")},
-	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}, Finish: new Date("2017-07-16T16:00:00Z")},
-	{i: 80484, n: "Necrotic Glider", p: {gem: 500}, Finish: new Date("2017-07-16T16:00:00Z")},
 	{i: 70095, n: "Butterfly Wings Backpack", p: {gem: 500}, Finish: new Date("2017-07-21T16:00:00Z")},
 	{i: 70277, n: "Glittering Wings Backpack", p: {gem: 500}, Finish: new Date("2017-07-21T16:00:00Z")},
-	{i: 78790, n: "Floral Glider", p: {gem: 400}, Finish: new Date("2017-07-15T16:00:00Z")}
+	{i: 79771, n: "Fire Quiver Backpack", p: {gem: 400}, Finish: new Date("2017-07-23T16:00:00Z")},
+	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}, Finish: new Date("2017-07-23T16:00:00Z")},
+	{i: 39512, n: "Plush Charr Backpack Cover", p: {gem: 300}, Finish: new Date("2017-07-23T16:00:00Z")}
 	]
 };
