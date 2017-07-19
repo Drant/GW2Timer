@@ -1779,7 +1779,7 @@ Countdown: {
 		name_es: "Historia viviente 3: Final",
 		name_fr: "Histoire vivante 3: Dernier",
 		name_zh: "第三生活世界：压轴",
-		official: "news/living-world-season-3-finale-arrives-july-25/",
+		official: "news/watch-the-trailer-for-one-path-ends/",
 		Start: new Date("2017-07-25T16:00:00Z"),
 		Finish: new Date("2017-08-01T16:00:00Z")
 	}

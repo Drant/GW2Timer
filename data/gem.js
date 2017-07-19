@@ -634,7 +634,8 @@ Node: [
 	{i: 66769, n: "Basic Lumber Node Pack", p: {gem: 800}},
 	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
 	{i: 67842, n: "Basic Cloth Rack", p: {gem: 800}},
-	{i: 78019, n: "Basic Leather Rack", p: {gem: 800}}
+	{i: 78019, n: "Basic Leather Rack", p: {gem: 800}},
+	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}}
 ],
 Finisher: [
 	{i: 44068, n: "Permanent Mad King Finisher", p: {gem: -500}},

@@ -50,7 +50,8 @@ Gathering: [
 	{u: "iron_ore_node", i: 79260, n: "Iron Ore Mining Node"},
 	{u: "platinum_ore_node", i: 68097, n: "Platinum Mining Node"},
 	{u: "mithril_ore_node", i: 68098, n: "Mithril Mining Node"},
-	{u: "orichalcum_ore_node", i: 68094, n: "Orichalcum Mining Node"}
+	{u: "orichalcum_ore_node", i: 68094, n: "Orichalcum Mining Node"},
+	{u: "hunters_contract", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}}
 ],
 Chest: [
 	{u: "enchanted_treasure_chest", i: 67234, n: "Enchanted Treasure Chest", p: {achievement: 0}},

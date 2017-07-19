@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-07-10T16:00:00Z"),
-	Finish: new Date("2017-07-18T16:00:00Z"),
+	Start: new Date("2017-07-18T16:00:00Z"),
+	Finish: new Date("2017-08-02T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,11 +21,10 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "http://i.imgur.com/nUcEfzX.png", n: "Dynamics Exo-Suit Appearance Pack", p: {gem: 1500}, Finish: new Date("2017-07-18T16:00:00Z")},
+	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
-	{i: 80019, n: "Scruffy Backpack", p: {gem: 280}, discount: 400, Finish: new Date("2017-07-18T16:00:00Z")},
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}},
 	{i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
