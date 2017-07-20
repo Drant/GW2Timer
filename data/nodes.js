@@ -33,6 +33,7 @@ Special: [
 	{u: "primordial_orchid", i: 81115, n: "Fire Orchid Node", p: {coin: 500000}}
 ],
 Gathering: [
+	{u: "hunters_contract", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{u: "basic_harvesting_nodes", i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
 	{u: "basic_lumber_nodes", i: 66769, n: "Basic Lumber Node Pack", p: {gem: 800}},
 	{u: "basic_ore_nodes", i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
@@ -50,8 +51,7 @@ Gathering: [
 	{u: "iron_ore_node", i: 79260, n: "Iron Ore Mining Node"},
 	{u: "platinum_ore_node", i: 68097, n: "Platinum Mining Node"},
 	{u: "mithril_ore_node", i: 68098, n: "Mithril Mining Node"},
-	{u: "orichalcum_ore_node", i: 68094, n: "Orichalcum Mining Node"},
-	{u: "hunters_contract", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}}
+	{u: "orichalcum_ore_node", i: 68094, n: "Orichalcum Mining Node"}
 ],
 Chest: [
 	{u: "enchanted_treasure_chest", i: 67234, n: "Enchanted Treasure Chest", p: {achievement: 0}},
