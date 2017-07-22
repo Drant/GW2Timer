@@ -333,6 +333,7 @@ Package: [
 	//{i: "http://i.imgur.com/92cVON9.png", n: "Winter Solstice Appearance Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/AuYSBAV.png", n: "Crystal Arbiter Appearance Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 2000}},
+	//{i: "http://i.imgur.com/c37rlEw.png", n: "Salvager's Supplies", p: {gem: 1360}},
 	//{i: "http://i.imgur.com/BvQz2AR.png", n: "Black Lion Keys and Scrap Package", p: {gem: 900}},
 	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: -150}, discount: [[1, 150], [10, 1200]]},
 	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},

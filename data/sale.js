@@ -21,7 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	
+	{i: "http://i.imgur.com/c37rlEw.png", n: "Salvager's Supplies", p: {gem: 1360}, Finish: new Date("2017-07-24T16:00:00Z")},
 	{i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
 	{i: 66769, n: "Basic Lumber Node Pack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
 	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
@@ -29,6 +29,7 @@ GW2T_SALE_DATA = {
 	{i: 78019, n: "Basic Leather Rack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
 	{i: 79771, n: "Fire Quiver Backpack", p: {gem: 320}, discount: 400, Finish: new Date("2017-07-23T16:00:00Z")},
 	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
+	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
@@ -38,7 +39,6 @@ GW2T_SALE_DATA = {
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
 	{i: 76236, n: "Exalted Glider", p: {gem: 400}},
-	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 68743, n: "Shadow weapon skins#Gallery", p: {blticket: 5}, Finish: new Date("2017-07-25T16:00:00Z")},
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}, Finish: new Date("2017-07-23T16:00:00Z")},
 	{i: 39512, n: "Plush Charr Backpack Cover", p: {gem: 300}, Finish: new Date("2017-07-23T16:00:00Z")}
