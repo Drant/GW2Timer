@@ -21,7 +21,13 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 70277, n: "Glittering Wings Backpack", p: {gem: 400}, discount: 500, Finish: new Date("2017-07-21T16:00:00Z")},
+	
+	{i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
+	{i: 66769, n: "Basic Lumber Node Pack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
+	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
+	{i: 67842, n: "Basic Cloth Rack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
+	{i: 78019, n: "Basic Leather Rack", p: {gem: 640}, discount: 800, Finish: new Date("2017-07-24T16:00:00Z")},
+	{i: 79771, n: "Fire Quiver Backpack", p: {gem: 320}, discount: 400, Finish: new Date("2017-07-23T16:00:00Z")},
 	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
@@ -34,8 +40,6 @@ GW2T_SALE_DATA = {
 	{i: 76236, n: "Exalted Glider", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 68743, n: "Shadow weapon skins#Gallery", p: {blticket: 5}, Finish: new Date("2017-07-25T16:00:00Z")},
-	{i: 70095, n: "Butterfly Wings Backpack", p: {gem: 500}, Finish: new Date("2017-07-21T16:00:00Z")},
-	{i: 79771, n: "Fire Quiver Backpack", p: {gem: 400}, Finish: new Date("2017-07-23T16:00:00Z")},
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}, Finish: new Date("2017-07-23T16:00:00Z")},
 	{i: 39512, n: "Plush Charr Backpack Cover", p: {gem: 300}, Finish: new Date("2017-07-23T16:00:00Z")}
 	]

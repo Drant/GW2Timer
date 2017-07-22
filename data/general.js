@@ -1763,16 +1763,16 @@ Countdown: {
 		Start: new Date("2017-08-17T20:00:00Z"),
 		Finish: new Date("2017-08-24T20:00:00Z")
 	}*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Fireheart Map Rewards",
 		name_de: "Feuerherzhügel Karten-Bonus",
 		name_es: "Bonificación Corazón de Fuego",
 		name_fr: "Bonus de carte Flambecœur",
 		name_zh: "炎心高地地图奖金",
 		url: "https://wiki.guildwars2.com/wiki/Map_bonus_reward/profit",
-		Start: new Date("2017-07-13T20:00:00Z"),
-		Finish: new Date("2017-07-20T20:00:00Z")
-	},
+		Start: new Date("2017-09-07T20:00:00Z"),
+		Finish: new Date("2017-09-14T20:00:00Z")
+	},*/
 	{
 		name_en: "Living Story 3: Finale",
 		name_de: "Lebendigen Geschichte 3: Finale",
