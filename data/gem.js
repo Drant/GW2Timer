@@ -128,7 +128,8 @@ Glider: [
 	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}},
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: -700}},
 	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}},
-	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}}
+	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
+	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -162,7 +163,8 @@ Back: [
 	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: -700}},
 	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: -700}},
 	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
-	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}}
+	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
+	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -401,6 +403,7 @@ Consumable: [
 	{i: 50093, n: "Captain's Airship Pass (2 weeks)", p: {gem: 150}},
 	{i: 79270, n: "Noble's Folly Pass (2 weeks)", p: {gem: 150}},
 	{i: 79498, n: "Lava Lounge Pass (2 weeks)", p: {gem: 150}},
+	{i: 81912, n: "Mistlock Sanctuary Passkey (2 weeks)", p: {gem: 150}},
 	{i: 42877, n: "Metabolic Primer", p: {gem: 150}, discount: [[1, 150], [5, 550], [25, 2625]]},
 	{i: 8469, n: "Utility Primer", p: {gem: 150}, discount: [[1, 150], [5, 550], [25, 2625]]},
 	{i: 20005, n: "Heroic Booster", p: {gem: 150}, discount: [[1, 150], [5, 637], [20, 2100]]},
@@ -419,7 +422,8 @@ Pass: [
 	{i: 49149, n: "Royal Terrace Pass", p: {gem: -1000}},
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: -1000}},
 	{i: 79140, n: "Noble's Folly Pass", p: {gem: -1000}},
-	{i: 79500, n: "Lava Lounge Pass", p: {gem: -1000}}
+	{i: 79500, n: "Lava Lounge Pass", p: {gem: -1000}},
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: -1000}}
 	//{n: "Lava Lounge Pass Bundle", p: {gem: -1200}},
 ],
 Gathering: [

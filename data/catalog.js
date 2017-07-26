@@ -128,6 +128,7 @@ Key: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
 ],
 Token: [
+	{i: 81706, n: "Orrian Pearl", p: {magic: 37}},
 	{i: 81127, n: "Fire Orchid Blossom", p: {magic: 37}},
 	{i: 80332, n: "Jade Shard", p: {magic: 37}},
 	{i: 79899, n: "Fresh Winterberry", p: {magic: 37}},
@@ -161,6 +162,7 @@ Token: [
 	{i: 68109, n: "Writ of Experience", p: {achievement: 0}},
 	{i: 36507, n: "Custom Arena Time Token", p: {coin: 20000}},
 	{i: 68110, n: "Potion of PvP Reward", p: {pvp: true}},
+	{i: 81538, n: "Large Potion of PvP Reward", p: {pvp: true}},
 	{i: 78600, n: "Potion of WvW Rewards", p: {badge: 0}}
 ],
 Dungeon: [
@@ -211,6 +213,7 @@ Contract: [
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: 1000}},
 	{i: 79140, n: "Noble's Folly Pass", p: {gem: 1000}},
 	{i: 79500, n: "Lava Lounge Pass", p: {gem: 1000}},
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}},
 	{i: 79744, n: "Exalted Portal Stone", p: {achievement: 0}},
 	{i: 79794, n: "Bitterfrost Vantage Point", p: {gem: 0}},
 	{i: 80328, n: "Noran's Safe Room Pass", p: {gem: 0}},
@@ -226,6 +229,8 @@ Contract: [
 	{i: 79905, n: "Bitterfrost Frontier Portal Scroll", p: {magic: 1000}},
 	{i: 80238, n: "Lake Doric Portal Scroll", p: {magic: 1000}},
 	{i: 81060, n: "Draconis Mons Portal Scroll", p: {magic: 1000}},
+	{i: 81673, n: "Siren's Landing Portal Scroll", p: {magic: 1000}},
+	{i: 81752, n: "Living World Portal Tome", p: {magic: 1000}},
 	{i: 78978, n: "White Mantle Portal Device", p: {magnetite: 1000}}
 ],
 Gathering: [
@@ -287,6 +292,7 @@ Converter: [
 	{i: 79558, n: "Sentient Aberration", p: {achievement: 0}},
 	{i: 80144, n: "Sentient Oddity", p: {achievement: 0}},
 	{i: 81120, n: "Sentient Singularity", p: {achievement: 0}},
+	{i: 81780, n: "Gleam of Sentience", p: {craft: true}},
 	{i: 79995, n: "Shards of Glory Converter", p: {league: 50}},
 	{i: 49501, n: "Tarrktun Personal Delivery Portal", p: {coin: 888888}},
 	{i: 80672, n: "Magnetite Shard Converter", p: {achievement: 0}},
@@ -391,6 +397,7 @@ Gem: [
 	{i: 42877, n: "Metabolic Primer", p: {gem: 105}},
 	{i: 8469, n: "Utility Primer", p: {gem: 105}},
 	{i: 42976, n: "Boost Enchantment Powder", p: {coin: 1000}},
+	{i: 82060, n: "Black Lion Booster", p: {gem: 0}},
 	{i: 20005, n: "Heroic Booster", p: {gem: -105}},
 	{i: 20002, n: "Experience Booster", p: {gem: -80}},
 	{i: 20003, n: "Item Booster", p: {gem: -80}},
@@ -402,6 +409,7 @@ TonicEndless: [
 	{i: 78373, n: "Tiger Den Map", p: {achievement: 0}},
 	{i: 50014, n: "Selfless Potion", p: {achievement: 0}},
 	{i: 50048, n: "Thoughtless Potion", p: {achievement: 0}},
+	{i: 81604, n: "Champion's Crown", p: {pvp: true}},
 	{i: 43956, n: "Ellen Kiel Representation Button"},
 	{i: 43957, n: "Evon Gnashblade Representation Button"},
 	{i: 36192, n: "Endless Dragon Emblem Clothing Tonic", p: {gem: 0}},
@@ -755,7 +763,22 @@ Aura: [
 	{i: 79959, n: "Winter's Heart Infusion"},
 	{i: 79978, n: "Winter's Heart Infusion"},
 	{i: 79994, n: "Winter's Heart Infusion"},
-	{i: 80063, n: "Winter's Heart Infusion"}
+	{i: 80063, n: "Winter's Heart Infusion"},
+	{i: 81877, n: "Poly-luminescent Undulating Infusion (Black)", p: {coin: -1}},
+	{i: 81810, n: "Poly-luminescent Undulating Infusion (Black)", p: {coin: -1}},
+	{i: 82013, n: "Poly-luminescent Undulating Infusion (Black)", p: {coin: -1}},
+	{i: 81678, n: "Poly-luminescent Undulating Infusion (Green)", p: {coin: -1}},
+	{i: 82055, n: "Poly-luminescent Undulating Infusion (Green)", p: {coin: -1}},
+	{i: 81847, n: "Poly-luminescent Undulating Infusion (Orange)", p: {coin: -1}},
+	{i: 81809, n: "Poly-luminescent Undulating Infusion (Orange)", p: {coin: -1}},
+	{i: 81930, n: "Poly-luminescent Undulating Infusion (Orange)", p: {coin: -1}},
+	{i: 81864, n: "Poly-luminescent Undulating Infusion (Orange)", p: {coin: -1}},
+	{i: 81777, n: "Poly-luminescent Undulating Infusion (Teal)", p: {coin: -1}},
+	{i: 81653, n: "Poly-luminescent Undulating Infusion (Teal)", p: {coin: -1}},
+	{i: 81825, n: "Chak Infusion", p: {coin: -1}},
+	{i: 81814, n: "Celestial Infusion (Red)", p: {coin: -1}},
+	{i: 81783, n: "Celestial Infusion (Red)", p: {coin: -1}},
+	{i: 81663, n: "Queen Bee Infusion", p: {coin: -1}},
 ],
 Legendary: [
 	{i: 30684, n: "Frostfang"},

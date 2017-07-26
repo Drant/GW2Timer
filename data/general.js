@@ -1773,7 +1773,7 @@ Countdown: {
 		Start: new Date("2017-09-07T20:00:00Z"),
 		Finish: new Date("2017-09-14T20:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "Living Story 3: Finale",
 		name_de: "Lebendigen Geschichte 3: Finale",
 		name_es: "Historia viviente 3: Final",
@@ -1782,6 +1782,16 @@ Countdown: {
 		official: "news/watch-the-trailer-for-one-path-ends/",
 		Start: new Date("2017-07-25T16:00:00Z"),
 		Finish: new Date("2017-08-01T16:00:00Z")
+	}*/
+	{
+		name_en: "Expansion 2 Announcement",
+		name_de: "Erweiterung 2 Ankündigung",
+		name_es: "Expansión 2 Anuncio",
+		name_fr: "Extension 2 Annonce",
+		name_zh: "扩展2公告",
+		official: "expansion/",
+		Start: new Date("2017-08-01T16:00:00Z"),
+		Finish: new Date("2017-08-01T19:00:00Z")
 	}
 	]
 },
