@@ -327,8 +327,9 @@ BlackLionWeapon: [
 	{i: 79655, n: "Gargoyle weapon skins#Gallery", p: {blticket: 3}},
 	{i: 80041, n: "Frostforged weapon skins#Gallery", p: {blticket: 3}},
 	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 3}},
-	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 2}},
-	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 1}}
+	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 3}},
+	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 2}},
+	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 ],
 Package: [
 	//{i: "http://i.imgur.com/nUcEfzX.png", n: "Dynamics Exo-Suit Appearance Pack", p: {gem: 1500}},

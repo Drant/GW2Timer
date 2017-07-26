@@ -27,6 +27,7 @@ GW2T_SALE_DATA = {
 	{i: 81912, n: "Mistlock Sanctuary Passkey (2 weeks)", p: {gem: 150}},
 	{i: 50093, n: "Captain's Airship Pass (2 weeks)", p: {gem: 150}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
+	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 	{i: 80861, n: "Shield of the Goddess", p: {gem: 600}, Finish: new Date("2017-08-01T16:00:00Z")},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
