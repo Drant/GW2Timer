@@ -74,7 +74,8 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1175": "ember",
 	"1178": "bitterfrost",
 	"1185": "doric",
-	"1195": "draconis"
+	"1195": "draconis",
+	"1203": "siren"
 };
 var GW2T_LAND_ASSOCIATION = {
 	"38": "eternal",
@@ -447,7 +448,11 @@ var GW2T_DAILY_ASSOCIATION = {
 	"3175": "Nightmare",
 	"3177": "Nightmare",
 	"3196": "Nightmare",
-	"3229": "Nightmare"
+	"3229": "Nightmare",
+	"3509": "Observatory",
+	"3478": "Observatory",
+	"3464": "Observatory",
+	"3458": "Observatory"
 };
 
 /*
@@ -501,8 +506,8 @@ Fractal:
 		"Swamp", // 21
 		"Cliffside", // 22
 		"Furnace", // 23
-		"Aetherblade", // 24
-		"Nightmare", // 25
+		"Nightmare", // 24
+		"Observatory", // 25
 		"Aquatic", // 26
 		"Snowblind", // 27
 		"Volcanic", // 28
@@ -523,11 +528,11 @@ Fractal:
 		"Underground", // 43
 		"Uncategorized", // 44
 		"Ocean", // 45
-		"Volcanic", // 46
+		"Aetherblade", // 46
 		"Cliffside", // 47
 		"Thaumanova", // 48
-		"Aetherblade", // 49
-		"Nightmare", // 50
+		"Nightmare", // 49
+		"Observatory", // 50
 		"Snowblind", // 51
 		"Volcanic", // 52
 		"Underground", // 53
@@ -545,14 +550,14 @@ Fractal:
 		"Aetherblade", // 65
 		"Urban", // 66
 		"Swamp", // 67
-		"Underground", // 68
+		"Snowblind", // 68
 		"Cliffside", // 69
 		"Molten", // 70
 		"Aetherblade", // 71
 		"Volcanic", // 72
 		"Maitrin", // 73
-		"Snowblind", // 74
-		"Nightmare", // 75
+		"Nightmare", // 74
+		"Observatory", // 75
 		"Aquatic", // 76
 		"Swamp", // 77
 		"Urban", // 78
@@ -572,12 +577,12 @@ Fractal:
 		"Volcanic", // 92
 		"Snowblind", // 93
 		"Cliffside", // 94
-		"Underground", // 95
+		"Maitrin", // 95
 		"Aetherblade", // 96
 		"Thaumanova", // 97
-		"Maitrin", // 98
-		"Chaos", // 99
-		"Nightmare" // 100
+		"Chaos", // 98
+		"Nightmare", // 99
+		"Observatory" // 100
 	]
 },
 Bookmark:
@@ -1234,6 +1239,18 @@ var GW2T_ZONE_DATA = {
 	region: "orr",
 	map_rect: [[-24576, -49152], [24576, 49152]],
 	continent_rect: [[10112, 25216], [12160, 29312]]
+},
+"siren":
+{
+	id: "1203",
+	name_en: "Siren's Landing",
+	name_de: "Zaubersängerlände",
+	name_es: "Desembarco de la Sirena",
+	name_fr: "Plage des sirènes",
+	name_zh: "海妖平台",
+	region: "orr",
+	map_rect: [[-39936, -15360], [39936, 15360]],
+	continent_rect: [[14234, 25216], [17562, 26496]]
 },
 "divinity":
 {

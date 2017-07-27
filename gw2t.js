@@ -7366,6 +7366,22 @@ Z = {
 	{
 		Z.collateDatabase("achievements");
 	},
+	collateFractals: function()
+	{
+		$.getJSON("test/achievements_en.json", function(pData)
+		{
+			var a = [];
+			for (var i in pData)
+			{
+				var ach = pData[i];
+				if (ach.name.indexOf("Daily Recommended Fractal—Scale") !== -1 && T.DailyAssociation[ach.id] === undefined)
+				{
+					a.push(ach);
+				}
+			}
+			I.print(a);
+		});
+	},
 	
 	/*
 	 * Creates a cache file of Trading Post prices to be used by the account audit function.
