@@ -330,6 +330,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	
 	// Fractal Scales
 	"2362": "1",
+	"2477": "2",
 	"2405": "4",
 	"2316": "5",
 	"2229": "6",
