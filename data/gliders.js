@@ -50,7 +50,8 @@ Colored: [
 	{u: 36, i: 80066, n: "Celestial Rooster Glider", l: "", p: {gem: 500}},
 	{u: 39, i: 80795, n: "Shattered Bloodstone Glider", l: "", p: {gem: 400}},
 	{u: 41, i: 80919, n: "Super Cloud Glider", l: "", p: {gem: 500}},
-	{u: 44, i: 81291, n: "Magic Carpet Glider", l: "", p: {gem: 400}}
+	{u: 44, i: 81291, n: "Magic Carpet Glider", l: "", p: {gem: 400}},	
+	{u: 46, i: 82011, n: "Abaddon's Glider", l: "", p: {gem: 400}},
 ],
 Combo: [ // The audit function depends on this named category for ignoring duplicate backpack-glider skin
 	{u: 11, i: 77474, n: "The Ascension Glider", l: "", p: {craft: true}},
@@ -67,6 +68,7 @@ Combo: [ // The audit function depends on this named category for ignoring dupli
 	{u: 34, i: 79704, n: "Crystalline Dragon Wings Glider", l: "", p: {gem: 700}},
 	{u: 40, i: 80958, n: "Super Adventure Holo-Copter", l: "", p: {gem: 700}},
 	{u: 42, i: 80985, n: "Vine-Touched Destroyer Glider", l: "2", p: {gem: 700}},
-	{u: 45, i: 81547, n: "Dynamics Glider Module", p: {gem: 700}}
+	{u: 45, i: 81547, n: "Dynamics Glider Module", l: "", p: {gem: 700}},
+	{u: 47, i: 81888, n: "Feathers of the Zephyr", l: "", p: {gem: 0}}
 ]
 };

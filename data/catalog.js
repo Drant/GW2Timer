@@ -735,6 +735,8 @@ Aura: [
 	{i: 81701, n: "Queen Bee Infusion", p: {coin: -1}},
 	{i: 72021, n: "Chak Egg Sac"},
 	{i: 76063, n: "Vial of Liquid Aurillium"},
+	{i: 81715, n: "Liquid Aurillium Infusion", p: {coin: -1}},
+	{i: 82006, n: "Liquid Aurillium Infusion", p: {coin: -1}},
 	{i: 79926, n: "Koda's Warmth Enrichment", p: {craft: true}},
 	{i: 77274, n: "Ghostly Infusion"},
 	{i: 77303, n: "Ghostly Infusion"},
@@ -806,6 +808,7 @@ Aura: [
 	{i: 81919, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81991, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81761, n: "Celestial Infusion (Blue)", p: {coin: -1}},
+	{i: 81878, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81663, n: "Queen Bee Infusion", p: {coin: -1}},
 ],
 Legendary: [

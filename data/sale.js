@@ -21,7 +21,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "http://i.imgur.com/c37rlEw.png", n: "Salvager's Supplies", p: {gem: 1360}, Finish: new Date("2017-07-24T16:00:00Z")},
+	{i: 75129, n: "Lyssa's Regalia", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-01T16:00:00Z")},
+	{i: 69806, n: "Dwayna's Regalia Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-01T16:00:00Z")},
+	{i: 79288, n: "Shining Blade Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-01T16:00:00Z")},
+	{i: 79084, n: "Shining Blade Glider", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-01T16:00:00Z")},
+	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}},
 	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}},
 	{i: 81912, n: "Mistlock Sanctuary Passkey (2 weeks)", p: {gem: 150}},
@@ -32,11 +36,8 @@ GW2T_SALE_DATA = {
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
-	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}},
-	{i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
-	{i: 77821, n: "Classical Glider", p: {gem: 400}},
 	{i: 76236, n: "Exalted Glider", p: {gem: 400}}
 	]
 };

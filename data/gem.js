@@ -129,7 +129,8 @@ Glider: [
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: -700}},
 	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
-	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}}
+	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}},
+	{i: 82011, n: "Abaddon's Glider", p: {gem: -400}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},

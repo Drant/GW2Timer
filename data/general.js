@@ -1807,7 +1807,7 @@ Countdown: {
 		name_es: "Expansión 2 Anuncio",
 		name_fr: "Extension 2 Annonce",
 		name_zh: "扩展2公告",
-		official: "expansion/",
+		official: "news/join-us-on-august-1-for-the-guild-wars-2-expansion-announcement/",
 		Start: new Date("2017-08-01T16:00:00Z"),
 		Finish: new Date("2017-08-01T19:00:00Z")
 	}

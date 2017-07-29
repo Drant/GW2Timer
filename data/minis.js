@@ -275,7 +275,9 @@ Special: [
 	{u: 399, i: 78625, n: "Mini Axemaster Hareth"},
 	{u: 400, i: 78161, n: "Mini Pocket Raptor"},
 	{u: 424, i: 79766, n: "Mini Aurene", p: {achievement: 0}},
-	{u: 447, i: 80424, n: "Mini Eye of Janthir"}
+	{u: 447, i: 80424, n: "Mini Eye of Janthir"},
+	{u: 492, i: 81821, n: "Mini Lazarus", p: {achievement: 0}},
+	{u: 494, i: 81980, n: "Mini GL-XC S7S"}
 ],
 Halloween: [
 	{u: 196, i: 48740, n: "Mini Bloody Prince Thorn", p: {cob: 6}},
@@ -327,7 +329,16 @@ PvP: [
 	{u: 474, i: 81283, n: "Mini Princess Llama", p: {league: 10}},
 	{u: 471, i: 81513, n: "Mini Fancy Princess Llama", p: {craft: true}},
 	{u: 473, i: 81421, n: "Mini Elegant Princess Llama", p: {craft: true}},
-	{u: 472, i: 81507, n: "Mini Lavish Princess Llama", p: {craft: true}}
+	{u: 472, i: 81507, n: "Mini Lavish Princess Llama", p: {craft: true}},
+	{u: 476, i: 81559, n: "Mini Bronze Llama", p: {pvp: true}},
+	{u: 479, i: 81535, n: "Mini Fancy Bronze Llama", p: {craft: true}},
+	{u: 483, i: 81551, n: "Mini Elegant Bronze Llama", p: {craft: true}},
+	{u: 485, i: 81576, n: "Mini Lavish Bronze Llama", p: {craft: true}},
+	{u: 478, i: 81532, n: "Mini Silver Llama", p: {pvp: true}},
+	{u: 477, i: 81555, n: "Mini Fancy Silver Llama", p: {craft: true}},
+	{u: 487, i: 81531, n: "Mini Elegant Silver Llama", p: {craft: true}},
+	{u: 486, i: 81587, n: "Mini Gold Llama", p: {pvp: true}},
+	{u: 480, i: 81539, n: "Mini Fancy Gold Llama", p: {craft: true}},
 ],
 Raid: [
 	{u: 371, i: 77370, n: "Mini Red Guardian", p: {magnetite: 300}},
@@ -383,7 +394,13 @@ Zone: [
 	{u: 461, i: 81037, n: "Mini Hound of Balthazar", p: {karma: 105000}},
 	{u: 463, i: 81166, n: "Mini Nature Spirit", p: {karma: 105000}},
 	{u: 464, i: 81077, n: "Mini G.O.X. 2.1.23", p: {karma: 105000}},
-	{u: 466, i: 81151, n: "Mini M.O.X.", p: {karma: 245000}}
+	{u: 466, i: 81151, n: "Mini M.O.X.", p: {karma: 245000}},
+	{u: 488, i: 81801, n: "Mini Dagonet", p: {karma: 105000}},
+	{u: 489, i: 81850, n: "Mini Anise", p: {karma: 105000}},
+	{u: 490, i: 82012, n: "Mini Guardian of Secrets", p: {karma: 105000}},
+	{u: 491, i: 82051, n: "Mini Livia", p: {magic: 5000}},
+	{u: 495, i: 81893, n: "Mini Ley-Line Scavenger", p: {karma: 105000}},
+	{u: 496, i: 81667, n: "Mini Queen Mahtab", p: {karma: 105000}},
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},
@@ -494,5 +511,6 @@ Gem: [
 	{u: 458, i: 80915, n: "Mini Super Queen Bee Dog", p: {gem: 600}},
 	{u: 470, i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
 	{u: 475, i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
+	{u: 493, i: 81901, n: "Mini Dwayna's Messenger", p: {gem: 0}}
 ]
 };
