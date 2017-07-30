@@ -36,8 +36,6 @@ GW2T_SALE_DATA = {
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
-	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
-	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
 	{i: 76236, n: "Exalted Glider", p: {gem: 400}}
 	]
 };

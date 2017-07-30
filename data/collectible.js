@@ -2454,6 +2454,7 @@ HungryCats: {
 	needles: [
 	{c: [16029, 14648], u: 3, t: "Spicy Flank Steak"},
 	{c: [17019, 14540], u: 2, t: "Grilled Poultry"},
+	{c: [16624, 15506], u: 34, t: "Cube of Stabilized Dark Energy<br />Inside Shattered Observatory fractal."},
 	{c: [16636, 16030], u: 23, t: "Masterwork Frog in a Jar<br />Buy the jar then use Feline Communication skill near a Feline Familiar NPC (summoned by Enchanted Broom witch outfit bundle)."},
 	{c: [20781, 13939], u: 26, t: "Super-Hot Poultry and Winter Vegetable Soup<br />Interact with Heart of the Destroyer at Maelstrom's Core to heat the non-Super-Hot food.", p: [[19134, 22998], [20781, 13939]]},
 	{c: [22374, 14562], u: 20, t: "Grumble Cake<br />Requires Profession <img src='img/account/professions/necromancer.png' />"},

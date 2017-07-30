@@ -62,6 +62,7 @@ Special: [
 	{u: 23, i: 23763, n: "Frog in a Jar", l: "#23", t: "Feline Familiar near Raw Candy Corn node.", p: {karma: 721}},
 	{u: 24, i: 79842, n: "Koda's Flame", l: "#24", t: "Snow leopard cub following player.", p: {achievement: 0}},
 	{u: 29, i: 68409, n: "Bowl of Bloodstone Goulash", l: "#29", t: "Lady Wisteria Whiskington near Bloodstone Crystal node.", p: {coin: 8}},
-	{u: 32, i: 36076, n: "Strawberry Ghost", l: "#32 ☽", t: "Ghost cat."}
+	{u: 32, i: 36076, n: "Strawberry Ghost", l: "#32 ☽", t: "Ghost cat."},
+	{u: 34, i: 81743, n: " Cube of Stabilized Dark Energy", l: "#34", t: "Simon celestial cat."}
 ]
 };
