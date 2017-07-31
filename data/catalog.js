@@ -809,7 +809,7 @@ Aura: [
 	{i: 81991, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81761, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81878, n: "Celestial Infusion (Blue)", p: {coin: -1}},
-	{i: 81663, n: "Queen Bee Infusion", p: {coin: -1}},
+	{i: 81663, n: "Queen Bee Infusion", p: {coin: -1}}
 ],
 Legendary: [
 	{i: 30684, n: "Frostfang"},
@@ -835,9 +835,11 @@ Legendary: [
 	{i: 30701, n: "Kraitkin"},
 	{i: 76158, n: "Astralaria", p: {craft: true}},
 	{i: 79562, n: "Eureka", p: {craft: true}},
+	{i: 81957, n: "The Shining Blade", p: {craft: true}},
 	{i: 72713, n: "HOPE", p: {craft: true}},
 	{i: 79802, n: "Shooshadoo", p: {craft: true}},
 	{i: 81206, n: "Flames of War", p: {craft: true}},
+	{i: 81839, n: "Sharur", p: {craft: true}},
 	{i: 78556, n: "Chuka and Champawat", p: {craft: true}},
 	{i: 80488, n: "The HMS Divinity", p: {craft: true}},
 	{i: 71383, n: "Nevermore", p: {craft: true}},
@@ -862,6 +864,6 @@ Legendary: [
 	{i: 74155, n: "Ad Infinitum", p: {craft: true}},
 	{i: 77474, n: "The Ascension", p: {craft: true}},
 	{i: 81462, n: "Warbringer", p: {craft: true}},
-	{i: 81908, n: "Aurora", p: {craft: true}},
+	{i: 81908, n: "Aurora", p: {craft: true}}
 ]
 };

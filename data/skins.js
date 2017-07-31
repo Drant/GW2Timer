@@ -503,7 +503,15 @@ Back: [
 	{u: 7256, i: 81288, n: "General's Wings of War", p: {skirmish: 700}},
 	{u: 7252, i: 81294, n: "Commander's Wings of War", p: {skirmish: 875}},
 	{u: 7248, i: 81467, n: "Warcry", p: {skirmish: 2450}},
-	{u: 7272, i: 81462, n: "Warbringer", p: {craft: true}}
+	{u: 7272, i: 81462, n: "Warbringer", p: {craft: true}},
+	{u: 7285, i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
+	{u: 7308, i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}},
+	{u: 7289, i: 81757, n: "Relic of Balthazar", p: {karma: 310000}},
+	{u: 7296, i: 82010, n: "Relic of Lyssa", p: {karma: 310000}},
+	{u: 7303, i: 81733, n: "Relic of Dwayna", p: {karma: 310000}},
+	{u: 7319, i: 81737, n: "Relic of Abaddon", p: {karma: 310000}},
+	{u: 7321, i: 82061, n: "Relic of Grenth", p: {karma: 310000}},
+	{u: 7323, i: 81869, n: "Relic of Melandru", p: {karma: 310000}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", b: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -1070,7 +1078,8 @@ Armor_Light_Boots: [
 	{u: 7150, i: 80583, n: "Refined Envoy Shoes", p: {craft: true}},
 	{u: 7143, i: 80399, n: "Perfected Envoy Shoes", p: {craft: true}},
 	{u: 6707, i: 6602, n: "Triumphant Hero's Footgear", p: {skirmish: 175}},
-	{u: 7277, i: 81419, n: "Mistforged Triumphant Hero's Footgear", p: {skirmish: 350}}
+	{u: 7277, i: 81419, n: "Mistforged Triumphant Hero's Footgear", p: {skirmish: 350}},
+	{u: 7316, i: 81973, n: "Light Mursaat Brogans", p: {achievement: 0}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1627,7 +1636,8 @@ Armor_Medium_Boots: [
 	{u: 7120, i: 80177, n: "Refined Envoy Boots", p: {craft: true}},
 	{u: 7085, i: 80281, n: "Perfected Envoy Boots", p: {craft: true}},
 	{u: 6699, i: 6608, n: "Triumphant Hero's Shinplates", p: {skirmish: 175}},
-	{u: 7259, i: 81422, n: "Mistforged Triumphant Hero's Shinplates", p: {skirmish: 350}}
+	{u: 7259, i: 81422, n: "Mistforged Triumphant Hero's Shinplates", p: {skirmish: 350}},
+	{u: 7297, i: 81874, n: "Medium Mursaat Brogans", p: {achievement: 0}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", b: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -2198,7 +2208,8 @@ Armor_Heavy_Boots: [
 	{u: 7109, i: 80127, n: "Refined Envoy Greaves", p: {craft: true}},
 	{u: 7136, i: 80557, n: "Perfected Envoy Greaves", p: {craft: true}},
 	{u: 6691, i: 6614, n: "Triumphant Hero's Wargreaves", p: {skirmish: 175}},
-	{u: 7273, i: 81437, n: "Mistforged Triumphant Hero's Wargreaves", p: {skirmish: 350}}
+	{u: 7273, i: 81437, n: "Mistforged Triumphant Hero's Wargreaves", p: {skirmish: 350}},
+	{u: 7299, i: 81849, n: "Heavy Mursaat Brogans", p: {achievement: 0}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
@@ -2371,7 +2382,8 @@ Weapon_Axe: [
 	{u: 7091, i: 80678, n: "Axe of the Unseen", p: {magnetite: 600}},
 	{u: 7191, i: 80916, n: "Beastslayer Axe", b: [80916]},
 	{u: 7179, i: 80959, n: "Crimson Assassin Axe", p: {token: 12}},
-	{u: 7243, i: 81256, n: "Keepsake Axe", b: [81256]}
+	{u: 7243, i: 81256, n: "Keepsake Axe", b: [81256]},
+	{u: 7295, i: 81872, n: "Abaddon Axe", b: [81872]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", b: [49332]},
@@ -2512,7 +2524,8 @@ Weapon_Mace: [
 	{u: 7076, i: 80186, n: "The Virge", p: {magnetite: 600}},
 	{u: 7171, i: 80942, n: "Beastslayer Mace", b: [80942]},
 	{u: 7182, i: 80931, n: "Crimson Assassin Mace", p: {token: 12}},
-	{u: 7223, i: 81213, n: "Keepsake Mace", b: [81213]}
+	{u: 7223, i: 81213, n: "Keepsake Mace", b: [81213]},
+	{u: 7324, i: 81863, n: "Abaddon Mace", b: [81863]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", b: [49353]},
@@ -2676,7 +2689,12 @@ Weapon_Sword: [
 	{u: 6937, i: 79366, n: "Elemental Sword", p: {gem: 0}},
 	{u: 7174, i: 80969, n: "Beastslayer Sword", b: [80969]},
 	{u: 7187, i: 80912, n: "Crimson Assassin Sword", p: {token: 12}},
-	{u: 7232, i: 81236, n: "Keepsake Sword", b: [81236]}
+	{u: 7232, i: 81236, n: "Keepsake Sword", b: [81236]},
+	{u: 7335, i: 81645, n: "Exemplar's Edge", p: {craft: true}},
+	{u: 7315, i: 81855, n: "Vengeance", p: {craft: true}},
+	{u: 7306, i: 81812, n: "Save the Queen", p: {craft: true}},
+	{u: 7300, i: 81957, n: "The Shining Blade", p: {craft: true}},
+	{u: 7338, i: 81797, n: "Abaddon Sword", b: [81797]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", b: [49317]},
@@ -2827,7 +2845,8 @@ Weapon_Dagger: [
 	{u: 7161, i: 80732, n: "Caladbolg Solana", p: {achievement: 0}},
 	{u: 7195, i: 80910, n: "Beastslayer Dagger", b: [80910]},
 	{u: 7198, i: 80968, n: "Crimson Assassin Dagger", p: {token: 12}},
-	{u: 7228, i: 81253, n: "Keepsake Dagger", b: [81253]}
+	{u: 7228, i: 81253, n: "Keepsake Dagger", b: [81253]},
+	{u: 7310, i: 81931, n: "Abaddon Dagger", b: [81931]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", b: [49335]},
@@ -2971,7 +2990,8 @@ Weapon_Pistol: [
 	{u: 7138, i: 80392, n: "Devoted Pistol", b: [80392]},
 	{u: 7181, i: 80891, n: "Beastslayer Pistol", b: [80891]},
 	{u: 7176, i: 80896, n: "Crimson Assassin Pistol", p: {token: 12}},
-	{u: 7226, i: 81219, n: "Keepsake Pistol", b: [81219]}
+	{u: 7226, i: 81219, n: "Keepsake Pistol", b: [81219]},
+	{u: 7287, i: 81880, n: "Abaddon Pistol", b: [81880]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", b: [49341]},
@@ -3119,7 +3139,8 @@ Weapon_Scepter: [
 	{u: 7163, i: 80741, n: "Caladbolg Iridi", p: {achievement: 0}},
 	{u: 7175, i: 80902, n: "Beastslayer Scepter", b: [80902]},
 	{u: 7172, i: 80876, n: "Crimson Assassin Scepter", p: {token: 12}},
-	{u: 7244, i: 81228, n: "Keepsake Scepter", b: [81228]}
+	{u: 7244, i: 81228, n: "Keepsake Scepter", b: [81228]},
+	{u: 7293, i: 81838, n: "Abaddon Scepter", b: [81838]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", b: [44897]},
@@ -3284,7 +3305,8 @@ Weapon_Focus: [
 	{u: 7186, i: 80955, n: "Beastslayer Focus", b: [80955]},
 	{u: 7184, i: 80870, n: "Crimson Assassin Focus", p: {token: 8}},
 	{u: 7208, i: 81001, n: "Replica Mirror of Lyssa", p: {gem: 600}},
-	{u: 7238, i: 81260, n: "Keepsake Focus", b: [81260]}
+	{u: 7238, i: 81260, n: "Keepsake Focus", b: [81260]},
+	{u: 7302, i: 82066, n: "Abaddon Focus", b: [82066]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", b: [49344]},
@@ -3452,7 +3474,8 @@ Weapon_Shield: [
 	{u: 7165, i: 80861, n: "Shield of the Goddess", p: {gem: 600}},
 	{u: 7177, i: 80944, n: "Beastslayer Shield", b: [80944]},
 	{u: 7169, i: 80937, n: "Crimson Assassin Shield", p: {token: 8}},
-	{u: 7234, i: 81208, n: "Keepsake Shield", b: [81208]}
+	{u: 7234, i: 81208, n: "Keepsake Shield", b: [81208]},
+	{u: 7301, i: 81884, n: "Abaddon Shield", b: [81884]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", b: [49356]},
@@ -3594,7 +3617,8 @@ Weapon_Torch: [
 	{u: 7215, i: 81101, n: "Neophyte's Beacon", p: {craft: true}},
 	{u: 7219, i: 81022, n: "Liturgy", p: {craft: true}},
 	{u: 7206, i: 81206, n: "Flames of War", p: {craft: true}},
-	{u: 7237, i: 81248, n: "Keepsake Torch", b: [81248]}
+	{u: 7237, i: 81248, n: "Keepsake Torch", b: [81248]},
+	{u: 7307, i: 81842, n: "Abaddon Torch", b: [81842]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", b: [49359]},
@@ -3733,7 +3757,8 @@ Weapon_Warhorn: [
 	{u: 7147, i: 80482, n: "Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
 	{u: 7183, i: 80911, n: "Beastslayer Warhorn", b: [80911]},
 	{u: 7166, i: 80867, n: "Crimson Assassin Warhorn", p: {token: 8}},
-	{u: 7222, i: 81231, n: "Keepsake Warhorn", b: [81231]}
+	{u: 7222, i: 81231, n: "Keepsake Warhorn", b: [81231]},
+	{u: 7314, i: 81711, n: "Abaddon Warhorn", b: [81711]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", b: [49321, 49323]},
@@ -3892,7 +3917,8 @@ Weapon_Greatsword: [
 	{u: 7193, i: 80943, n: "Beastslayer Greatsword", b: [80943]},
 	{u: 7188, i: 80921, n: "Crimson Assassin Greatsword", p: {token: 16}},
 	{u: 7229, i: 81249, n: "Keepsake Greatsword", b: [81249]},
-	{u: 7231, i: 81240, n: "Menzies's Agony", p: {gem: 600}}
+	{u: 7231, i: 81240, n: "Menzies's Agony", p: {gem: 600}},
+	{u: 7333, i: 81816, n: "Abaddon Greatsword", b: [81816]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", b: [49326]},
@@ -4041,7 +4067,12 @@ Weapon_Hammer: [
 	{u: 7151, i: 80341, n: "The Gavel", p: {magnetite: 600}},
 	{u: 7178, i: 80934, n: "Beastslayer Hammer", b: [80934]},
 	{u: 7196, i: 80894, n: "Crimson Assassin Hammer", p: {token: 16}},
-	{u: 7239, i: 81220, n: "Keepsake Hammer", b: [81220]}
+	{u: 7239, i: 81220, n: "Keepsake Hammer", b: [81220]},
+	{u: 7318, i: 81650, n: "Vizier's Folly", p: {craft: true}},
+	{u: 7298, i: 81754, n: "Reclamation", p: {craft: true}},
+	{u: 7312, i: 81634, n: "Might of Arah", p: {craft: true}},
+	{u: 7337, i: 81839, n: "Sharur", p: {craft: true}},
+	{u: 7311, i: 81937, n: "Abaddon Hammer", b: [81937]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", b: [44906]},
@@ -4191,7 +4222,8 @@ Weapon_Longbow: [
 	{u: 7189, i: 80964, n: "Beastslayer Longbow", b: [80964]},
 	{u: 7170, i: 80933, n: "Crimson Assassin Longbow", p: {token: 16}},
 	{u: 7235, i: 81269, n: "Keepsake Longbow", b: [81269]},
-	{u: 7284, i: 81567, n: "God-Slayer Longbow", p: {gem: 350}}
+	{u: 7284, i: 81567, n: "God-Slayer Longbow", p: {gem: 350}},
+	{u: 7313, i: 82034, n: "Abaddon Longbow", b: [82034]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", b: [44924]},
@@ -4342,7 +4374,8 @@ Weapon_Shortbow: [
 	{u: 7180, i: 80945, n: "Beastslayer Short Bow", b: [80945]},
 	{u: 7185, i: 80905, n: "Crimson Assassin Short Bow", p: {token: 16}},
 	{u: 7240, i: 81264, n: "Keepsake Short Bow", b: [81264]},
-	{u: 7281, i: 81560, n: "God-Slayer Short Bow", p: {gem: 350}}
+	{u: 7281, i: 81560, n: "God-Slayer Short Bow", p: {gem: 350}},
+	{u: 7329, i: 81933, n: "Abaddon Short Bow", b: [81933]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", b: [49338]},
@@ -4491,7 +4524,8 @@ Weapon_Rifle: [
 	{u: 7152, i: 80307, n: "Devoted Rifle", b: [80307]},
 	{u: 7168, i: 80880, n: "Beastslayer Rifle", b: [80880]},
 	{u: 7173, i: 80940, n: "Crimson Assassin Rifle", p: {token: 16}},
-	{u: 7224, i: 81229, n: "Keepsake Rifle", b: [81229]}
+	{u: 7224, i: 81229, n: "Keepsake Rifle", b: [81229]},
+	{u: 7292, i: 81688, n: "Abaddon Rifle", b: [81688]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", b: [49348, 49350]},
@@ -4657,7 +4691,8 @@ Weapon_Staff: [
 	{u: 7197, i: 80926, n: "Beastslayer Staff", b: [80926]},
 	{u: 7194, i: 80963, n: "Crimson Assassin Staff", p: {token: 16}},
 	{u: 7204, i: 80981, n: "Hourglass Staff", p: {gem: 600}},
-	{u: 7230, i: 81259, n: "Keepsake Staff", b: [81259]}
+	{u: 7230, i: 81259, n: "Keepsake Staff", b: [81259]},
+	{u: 7331, i: 81735, n: "Abaddon Staff", b: [81735]}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", b: [63881]},

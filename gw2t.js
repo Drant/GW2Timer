@@ -7046,14 +7046,6 @@ Z = {
 			{
 				return "Legendary";
 			}
-			if (pItem.details && pItem.details.unlock_type)
-			{
-				var unlock = pItem.details.unlock_type;
-				if (unlock === "Content" && name.indexOf("mail") !== -1)
-				{
-					return "Carrier";
-				}
-			}
 			return null;
 		};
 		
@@ -7364,7 +7356,40 @@ Z = {
 	 */
 	collateAchievements: function()
 	{
-		Z.collateDatabase("achievements");
+		U.getJSON(U.getAPI("achievements/categories"), function(pData)
+		{
+			var newcats = [];
+			var cats = A.Metadata.AchievementCategories;
+			for (var i in pData)
+			{
+				var id = pData[i];
+				var isnewcat = false;
+				for (var ii in cats)
+				{
+					if (cats[ii] === id)
+					{
+						isnewcat = true;
+						break;
+					}
+				}
+				if (isnewcat === false)
+				{
+					newcats.push(id);
+				}
+			}
+			if (newcats.length)
+			{
+				U.fetchAPI(U.getAPIURL("achievements/categories"), newcats, {aCallback: function(pData)
+				{
+					I.print("New achievement categories:");
+					pData.forEach(function(iCat)
+					{
+						Q.printItemInfo(iCat);
+					});
+				}});
+			}
+			Z.collateDatabase("achievements");
+		});
 	},
 	collateFractals: function()
 	{
@@ -21439,7 +21464,9 @@ D = {
 		s_boss: {de: "boss", es: "jefe", fr: "chef",
 			cs: "boss", it: "boss", pl: "szef", pt: "chefe", ru: "босс", zh: "头目"},
 		s_event: {de: "event", es: "evento", fr: "événement",
-			cs: "událost", it: "evento", pl: "wydarzenie", pt: "evento", ru: "собы́тие", zh: "事件"},
+			cs: "událost", it: "evento", pl: "wydarzenie", pt: "evento", ru: "событие", zh: "事件"},
+		s_events: {de: "ereignisse", es: "eventos", fr: "événements",
+			cs: "dění", it: "eventi", pl: "wydarzenia", pt: "eventos", ru: "события", zh: "事件"},
 		s_section: {de: "abschnitt", es: "sección", fr: "section",
 			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "раздел", zh: "节"},
 		s_map: {de: "karte", es: "mapa", fr: "carte",
@@ -37871,7 +37898,7 @@ I = {
 			Gem: "Gem Alarm",
 			Options: "Options"
 		},
-		Timers:
+		Events:
 		{
 			Tile: "Timers Only",
 			Timetable: "Full Timetable",

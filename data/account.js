@@ -415,6 +415,7 @@ var GW2T_ACCOUNT_METADATA = {
 		149, // Daily Bitterfrost Frontier
 		159, // Daily Lake Doric
 		163, // Daily Draconis Mons
+		172, // Daily Siren's Landing
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
@@ -436,6 +437,7 @@ var GW2T_ACCOUNT_METADATA = {
 		147, // A Crack in the Ice
 		154, // The Head of the Snake
 		164, // Flashpoint
+		171, // One Path Ends
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons
@@ -451,6 +453,7 @@ var GW2T_ACCOUNT_METADATA = {
 		10, // Community
 		11, // Hall of Monuments
 		14, // Jumping Puzzles
+		169, // Mastery Insights
 		133, // The Shatterer
 		58, // Triple Trouble
 		47, // Tequatl
@@ -490,6 +493,7 @@ var GW2T_ACCOUNT_METADATA = {
 		155, // Bastion of the Penitent
 		{en: "Fractals of the Mists", de: "Fraktale der Nebel", es: "Fractales de la Niebla", fr: "Fractales des Brumes", zh: "迷雾碎层"},
 		148, // Nightmare Fractal
+		170, // Shattered Observatory Fractal
 		136, // Fractals of the Mists
 		30, // Fractals of the Mists
 		{en: "World versus World", de: "Welt gegen Welt", es: "Mundo contra Mundo", fr: "Monde contre Monde", zh: "世界之战"},
@@ -504,6 +508,7 @@ var GW2T_ACCOUNT_METADATA = {
 		114, // Legendary Weapons
 		118, // Legendary Backpacks
 		125, // Legendary Armor
+		173, // Legendary Trinkets
 		76, // Black Lion Collections
 		{en: "Festival", de: "Festlicher", es: "Festivo", fr: "Festival", zh: "传统"},
 		132, // Lunar New Year
