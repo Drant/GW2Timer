@@ -35,7 +35,6 @@ GW2T_SALE_DATA = {
 	{i: 80861, n: "Shield of the Goddess", p: {gem: 600}, Finish: new Date("2017-08-01T16:00:00Z")},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
-	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
-	{i: 76236, n: "Exalted Glider", p: {gem: 400}}
+	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}}
 	]
 };
