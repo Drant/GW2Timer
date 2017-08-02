@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-07-18T16:00:00Z"),
-	Finish: new Date("2017-08-02T16:00:00Z"),
+	Start: new Date("2017-08-01T16:00:00Z"),
+	Finish: new Date("2017-08-15T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,10 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 75129, n: "Lyssa's Regalia", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-01T16:00:00Z")},
-	{i: 69806, n: "Dwayna's Regalia Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-01T16:00:00Z")},
-	{i: 79288, n: "Shining Blade Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-01T16:00:00Z")},
-	{i: 79084, n: "Shining Blade Glider", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-01T16:00:00Z")},
+	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
+	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
+	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}},
 	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}},
 	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}},
@@ -32,7 +31,6 @@ GW2T_SALE_DATA = {
 	{i: 50093, n: "Captain's Airship Pass (2 weeks)", p: {gem: 150}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
-	{i: 80861, n: "Shield of the Goddess", p: {gem: 600}, Finish: new Date("2017-08-01T16:00:00Z")},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}}

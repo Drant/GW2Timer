@@ -1802,14 +1802,16 @@ Countdown: {
 		Finish: new Date("2017-08-01T16:00:00Z")
 	}*/
 	{
-		name_en: "Expansion 2 Announcement",
-		name_de: "Erweiterung 2 Ankündigung",
-		name_es: "Expansión 2 Anuncio",
-		name_fr: "Extension 2 Annonce",
-		name_zh: "扩展2公告",
-		official: "news/join-us-on-august-1-for-the-guild-wars-2-expansion-announcement/",
-		Start: new Date("2017-08-01T16:00:00Z"),
-		Finish: new Date("2017-08-01T19:00:00Z")
+		name: "Path of Fire Demo",
+		official: "news/prepurchase-guild-wars-2-path-of-fire/",
+		Start: new Date("2017-08-11T16:00:00Z"),
+		Finish: new Date("2017-08-13T16:00:00Z")
+	},
+	{
+		name: "Path of Fire Expansion",
+		official: "news/prepurchase-guild-wars-2-path-of-fire/",
+		Start: new Date("2017-09-22T16:00:00Z"),
+		Finish: new Date("2017-09-23T16:00:00Z")
 	}
 	]
 },
