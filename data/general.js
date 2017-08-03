@@ -1741,6 +1741,18 @@ Countdown: {
 		Start: new Date("2018-03-30T16:00:00Z"),
 		Finish: new Date("2018-04-20T16:00:00Z")
 	}*/
+	{
+		name: "Path of Fire Demo",
+		official: "news/prepurchase-guild-wars-2-path-of-fire/",
+		Start: new Date("2017-08-11T16:00:00Z"),
+		Finish: new Date("2017-08-13T16:00:00Z")
+	},
+	{
+		name: "Path of Fire Expansion",
+		official: "path-of-fire/",
+		Start: new Date("2017-09-22T16:00:00Z"),
+		Finish: new Date("2017-09-23T16:00:00Z")
+	}
 	/*{
 		name_en: "Halloween 2017",
 		name_de: "Halloween 2017",
@@ -1801,18 +1813,6 @@ Countdown: {
 		Start: new Date("2017-07-25T16:00:00Z"),
 		Finish: new Date("2017-08-01T16:00:00Z")
 	}*/
-	{
-		name: "Path of Fire Demo",
-		official: "news/prepurchase-guild-wars-2-path-of-fire/",
-		Start: new Date("2017-08-11T16:00:00Z"),
-		Finish: new Date("2017-08-13T16:00:00Z")
-	},
-	{
-		name: "Path of Fire Expansion",
-		official: "news/prepurchase-guild-wars-2-path-of-fire/",
-		Start: new Date("2017-09-22T16:00:00Z"),
-		Finish: new Date("2017-09-23T16:00:00Z")
-	}
 	]
 },
 
