@@ -736,7 +736,19 @@ Back: [
 	{i: 80405, n: "Healer's Burden (Infused)", p: {magnetite: 600}},
 	{i: 81097, n: "The Wayfarer's Henge", p: {achievement: 0}},
 	{i: 81056, n: "The Wayfarer's Henge", p: {craft: true}},
-	{i: 81467, n: "Warcry", p: {skirmish: 2450}}
+	{i: 81467, n: "Warcry", p: {skirmish: 2450}},
+	{i: 81737, n: "Relic of Abaddon", p: {achievement: 0}},
+	{i: 81608, n: "Relic of Abaddon (Infused)", p: {craft: true}},
+	{i: 81669, n: "Relic of Balthazar", p: {karma: 315000}},
+	{i: 81757, n: "Relic of Balthazar (Infused)", p: {craft: true}},
+	{i: 81733, n: "Relic of Dwayna", p: {karma: 315000}},
+	{i: 81705, n: "Relic of Dwayna (Infused)", p: {craft: true}},
+	{i: 81831, n: "Relic of Grenth", p: {karma: 315000}},
+	{i: 82061, n: "Relic of Grenth (Infused)", p: {craft: true}},
+	{i: 82010, n: "Relic of Lyssa", p: {karma: 315000}},
+	{i: 81746, n: "Relic of Lyssa (Infused)", p: {craft: true}},
+	{i: 81768, n: "Relic of Melandru", p: {karma: 315000}},
+	{i: 81869, n: "Relic of Melandru (Infused)", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1037,7 +1049,8 @@ Accessory: [
 	{i: 79444, n: "Sparking Petrified Wood", p: {map_eb: 150}},
 	{i: 79745, n: "Black Ice Earring", p: {map_bf: 300}},
 	{i: 80002, n: "Mist Talisman", p: {glory: 175}},
-	{i: 80028, n: "Mist Talisman", p: {glory: 175}}
+	{i: 80028, n: "Mist Talisman", p: {glory: 175}},
+	{i: 81729, n: "Spark of Sentience", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1106,7 +1119,8 @@ Amulet: [
 	{i: 79980, n: "Mist Pendant", p: {glory: 175}},
 	{i: 79993, n: "Mist Pendant", p: {glory: 175}},
 	{i: 80241, n: "Jade Pendant", p: {map_ld: 125}},
-	{i: 81169, n: "Fire Orchid Garland", p: {map_dm: 125}}
+	{i: 81169, n: "Fire Orchid Garland", p: {map_dm: 125}},
+	{i: 81658, n: "Coral Choker", p: {map_sl: 125}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -2130,7 +2144,8 @@ Sword: [
 	{i: 80197, n: "Healer's Indomitable Gladius", p: {magnetite: 600}},
 	{i: 80512, n: "Thackeray's Gladius", p: {coin: 1200000}},
 	{i: 80710, n: "Caladbolg Rosa", p: {coin: 1200000}},
-	{i: 81376, n: "Mistforged Hero's Sword", p: {coin: 1200000}}
+	{i: 81376, n: "Mistforged Hero's Sword", p: {coin: 1200000}},
+	{i: 81812, n: "Save the Queen", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -2553,7 +2568,8 @@ Hammer: [
 	{i: 80606, n: "Healer's Demon Gavel", p: {magnetite: 600}},
 	{i: 80099, n: "Defender's Demon Gavel", p: {magnetite: 600}},
 	{i: 80522, n: "Thackeray's Crusher", p: {coin: 1100000}},
-	{i: 81374, n: "Mistforged Hero's Hammer", p: {coin: 1100000}}
+	{i: 81374, n: "Mistforged Hero's Hammer", p: {coin: 1100000}},
+	{i: 81634, n: "Might of Arah", p: {coin: 1100000}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
