@@ -485,7 +485,7 @@ TonicEndless: [
 	{i: 79849, n: "Endless Kodan Tonic", p: {karma: 175000}},
 	{i: 80172, n: "Endless Miniature Tonic", p: {karma: 175000}},
 	{i: 80989, n: "Endless Embiggening Tonic", p: {karma: 175000}},
-	{u: 81823, i: 82000, n: "Endless Fury Combat Tonic", p: {karma: 175000}},
+	{u: 81823, i: 82000, n: "Endless Fury Combat Tonic"},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},
@@ -733,6 +733,7 @@ Aura: [
 	{i: 81818, n: "Queen Bee Infusion", p: {coin: -1}},
 	{i: 81897, n: "Queen Bee Infusion", p: {coin: -1}},
 	{i: 81701, n: "Queen Bee Infusion", p: {coin: -1}},
+	{i: 81663, n: "Queen Bee Infusion", p: {coin: -1}},
 	{i: 72021, n: "Chak Egg Sac"},
 	{i: 76063, n: "Vial of Liquid Aurillium"},
 	{i: 81715, n: "Liquid Aurillium Infusion", p: {coin: -1}},
@@ -808,8 +809,7 @@ Aura: [
 	{i: 81919, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81991, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81761, n: "Celestial Infusion (Blue)", p: {coin: -1}},
-	{i: 81878, n: "Celestial Infusion (Blue)", p: {coin: -1}},
-	{i: 81663, n: "Queen Bee Infusion", p: {coin: -1}}
+	{i: 81878, n: "Celestial Infusion (Blue)", p: {coin: -1}}
 ],
 Legendary: [
 	{i: 30684, n: "Frostfang"},
