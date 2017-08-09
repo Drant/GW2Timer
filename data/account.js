@@ -438,6 +438,9 @@ var GW2T_ACCOUNT_METADATA = {
 		154, // The Head of the Snake
 		164, // Flashpoint
 		171, // One Path Ends
+		188, // Path of Fire: Act 1
+		183, // Path of Fire: Act 2
+		187, // Path of Fire: Act 3
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons
@@ -465,6 +468,16 @@ var GW2T_ACCOUNT_METADATA = {
 		109, // Dragon's Stand
 		108, // Mastery Insights
 		110, // Specializations
+		{en: "Path of Fire", de: "Path of Fire", es: "Path of Fire", fr: "Path of Fire", zh: "火焰之路"},
+		179, // Crystal Oasis
+		189, // Mastery Insights
+		178, // Specializations
+		{en: "Side Stories", de: "Side Stories", es: "Side Stories", fr: "Side Stories", zh: "Side Stories"},
+		175, // Knight of the Thorn
+		180, // Conservation of Magic
+		186, // Justice of the Blade
+		177, // Anomalous Occurrences
+		184, // Transfer Chaser
 		{en: "Competitive", de: "Wettkampf", es: "Logros competitivos", fr: "Compétition", zh: "竞技"},
 		143, // Eternal Coliseum
 		152, // Forest of Niflhel
