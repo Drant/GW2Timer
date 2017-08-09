@@ -286,7 +286,9 @@ Weapon: [
 	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: -600}},
 	{i: 81240, n: "Menzies's Agony", p: {gem: -600}},
 	{i: 81567, n: "God-Slayer Longbow", p: {gem: -350}},
-	{i: 81560, n: "God-Slayer Short Bow", p: {gem: -350}}
+	{i: 81560, n: "God-Slayer Short Bow", p: {gem: -350}},
+	{i: 84064, n: "Fiery Blade Axe", p: {gem: -500}},
+	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
@@ -387,6 +389,7 @@ Consumable: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: -500}},
 	{i: 19986, n: "Black Lion Salvage Kit", p: {gem: 300}},
 	{i: 20349, n: "Upgrade Extractor", p: {gem: 250}, discount: [[1, 250], [5, 1100], [25, 5000]]},
+	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: 2000}},
 	{i: 49867, n: "Identity Repair Kit", p: {gem: 1000}},
 	{i: 35989, n: "Name Change Contract", p: {gem: 800}},
 	{i: 35991, n: "Total Makeover Kit", p: {gem: 350}, discount: [[1, 350], [5, 1400]]},

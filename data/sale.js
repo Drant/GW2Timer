@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-08-01T16:00:00Z"),
-	Finish: new Date("2017-08-15T16:00:00Z"),
+	Start: new Date("2017-08-08T16:00:00Z"),
+	Finish: new Date("2017-08-22T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,18 +21,27 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
+	{i: "http://i.imgur.com/g1s48MQ.png", n: "Path of Fire Preparation Pack", p: {gem: 3500}},
+	{i: 84064, n: "Fiery Blade Axe", p: {gem: 500}},
+	{i: 84112, n: "Icy Blade Axe", p: {gem: 500}},
+	{i: 81545, n: "Jormag Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-08-22T16:00:00Z")},
+	{i: 79315, n: "Emissary's Staff", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-10T16:00:00Z")},
+	{i: 79360, n: "Amethyst Aegis", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-10T16:00:00Z")},
+	{i: 79365, n: "Peacock Scepter Skin", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-11T16:00:00Z")},
+	{i: 79386, n: "Dragon Kama Skin", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-11T16:00:00Z")},
+	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-12T16:00:00Z")},
+	{i: 20004, n: "Caithe's Bloom Dagger", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-12T16:00:00Z")},
+	{i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-13T16:00:00Z")},
+	{i: 79310, n: "Storm Bow", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-13T16:00:00Z")},
+	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-14T16:00:00Z")},
+	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-14T16:00:00Z")},
+	{i: 47897, n: "Watchwork Mining Pick", p: {gem: 750}, discount: 1000, Finish: new Date("2017-08-15T16:00:00Z")},
+	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
+	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}, Finish: new Date("2017-08-15T16:00:00Z")},
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}},
-	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}},
-	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
-	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}},
-	{i: 81912, n: "Mistlock Sanctuary Passkey (2 weeks)", p: {gem: 150}},
-	{i: 50093, n: "Captain's Airship Pass (2 weeks)", p: {gem: 150}},
-	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
-	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
-	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
-	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}}
+	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}}
 	]
 };

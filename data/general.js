@@ -1742,8 +1742,18 @@ Countdown: {
 		Finish: new Date("2018-04-20T16:00:00Z")
 	}*/
 	{
+		name_en: "Anniversary Sale",
+		name_de: "Jubiläumsangebote",
+		name_es: "Rebajas de aniversario",
+		name_fr: "Offre spéciale d'anniversaire",
+		name_zh: "周年纪念销售",
+		official: "news/new-items-and-anniversary-sales/",
+		Start: new Date("2017-08-09T16:00:00Z"),
+		Finish: new Date("2017-09-01T16:00:00Z")
+	},
+	{
 		name: "Path of Fire Demo",
-		official: "news/prepurchase-guild-wars-2-path-of-fire/",
+		official: "news/get-ready-for-the-guild-wars-2-path-of-fire-preview-weekend/",
 		Start: new Date("2017-08-11T16:00:00Z"),
 		Finish: new Date("2017-08-13T16:00:00Z")
 	},
