@@ -794,6 +794,21 @@ JP: {
 		zone: "malchor",
 		description: "Malchor's cave wall climb with mini treasure chests"
 	},
+	"abaddon": {
+		id: 80,
+		difficulty: 3,
+		name_en: "Abaddon's Ascent",
+		name_de: "Abaddons Aufstieg",
+		name_es: "Ascenso de Abaddon",
+		name_fr: "Ascension d'Abaddon",
+		name_zh: "攀登阿伯顿",
+		coord: [16851, 25484],
+		path: null,
+		img: "http://i.imgur.com/eDd2Sev.png",
+		chest: null,
+		zone: "siren",
+		description: "Siren upward tower spiral gliding"
+	},
 	"searing": {
 		id: 79,
 		difficulty: 3,
@@ -807,7 +822,7 @@ JP: {
 		img: "http://i.imgur.com/KjWQzni.png",
 		chest: null,
 		zone: "draconis",
-		description: "Draconis volcano climb with limited grappling."
+		description: "Draconis volcano climb with limited grappling"
 	},
 	"volcano": {
 		id: 77,

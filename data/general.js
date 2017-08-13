@@ -1755,7 +1755,7 @@ Countdown: {
 		name: "Path of Fire Demo",
 		official: "news/get-ready-for-the-guild-wars-2-path-of-fire-preview-weekend/",
 		Start: new Date("2017-08-11T16:00:00Z"),
-		Finish: new Date("2017-08-13T16:00:00Z")
+		Finish: new Date("2017-08-14T16:00:00Z")
 	},
 	{
 		name: "Path of Fire Expansion",
