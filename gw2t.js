@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170725},
+		programVersion: {key: "int_utlProgramVersion", value: 170813},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -1607,6 +1607,7 @@ X = {
 	Collectibles:
 	{
 		// Chests
+		WaterloggedChests: { key: "str_chlWaterloggedChests", urlkey: "waterloggedchests"},
 		HarathiStrongboxes: { key: "str_chlHarathiStrongboxes", urlkey: "harathistrongboxes"},
 		IceboundChests: { key: "str_chlIceboundChests", urlkey: "iceboundchests"},
 		SkrittStashes: { key: "str_chlSkrittStashes", urlkey: "skrittstashes"},
@@ -24603,60 +24604,8 @@ M = {
 		});
 		$(htmlidprefix + "ContextPins").one("mouseenter", function()
 		{
-			that.initializePinStorage(that);
+			that.initializePinsPlacer(that);
 		});
-		$(htmlidprefix + "ContextHelpPins").click(function()
-		{
-			that.printPinHelp();
-		});
-		$(htmlidprefix + "ContextUndoPins").click(function()
-		{
-			that.loadBackupPins();
-		});
-		$(htmlidprefix + "ContextClearPins").click(function()
-		{
-			that.clearPersonalPins();
-		});
-		$(htmlidprefix + "ContextChatlinkPins").click(function()
-		{
-			if (that.isPersonalPinsLaid(true))
-			{
-				P.printClosestWaypoints();
-			}
-		});
-		$(htmlidprefix + "ContextOptimizePins").click(function()
-		{
-			if (that.isPersonalPinsLaid(true))
-			{
-				that.optimizePersonalPath();
-			}
-		});
-		var urlpins = $(htmlidprefix + "ContextURLPins");
-		if (urlpins.length)
-		{
-			I.bindClipboard(urlpins);
-			urlpins.mouseenter(function()
-			{
-				if (that.isPersonalPinsLaid())
-				{
-					var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
-					I.updateClipboard($(this), I.cSiteURL + urlmod + that.getPersonalString());
-				}
-			});
-		}
-		var urlcoord = $(htmlidprefix + "ContextURLCoord");
-		if (urlcoord.length)
-		{
-			I.bindClipboard(urlcoord);
-			urlcoord.mouseenter(function()
-			{
-				if (that.ContextLatLng)
-				{
-					var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
-					I.updateClipboard($(this), I.cSiteURL + urlmod + that.convertLCtoGC(that.ContextLatLng));
-				}
-			});
-		}
 		$(htmlidprefix + "ContextToggleFloor").click(function()
 		{
 			that.toggleFloor();
@@ -25577,9 +25526,10 @@ M = {
 			+ "<h2>Compass Pins Features</h2>"
 			+ "<ul>"
 			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
-			+ "<li><b>Draw a path connecting all compasses of a type: middle click that pin.</li>"
+			+ "<li><b>Draw a path connecting all compasses of a type:</b> middle click that pin.</li>"
 			+ "<li><b>Export pins for sharing:</b> use the compass export function and copy and output text.</li>"
 			+ "<li><b>Import pins from text:</b> use the compass import function, then paste the compass data text into the adjacent input box.</li>"
+			+ "<li><b>Import pins from file:</b> use the Choose File button and select a .json or .xml file.</li>"
 			+ "<li><b>Save/Load pins:</b> the save slots can be named, which can be filtered by the search bar.</li>"
 			+ "</ul>";
 		I.help(str);
@@ -25954,6 +25904,66 @@ M = {
 			}
 		});
 		return minmarker;
+	},
+	
+	initializePinsPlacer: function(pMapObject)
+	{
+		var that = pMapObject;
+		var htmlidprefix = "#" + that.MapEnum;
+		
+		$(htmlidprefix + "ContextClearPins").click(function()
+		{
+			that.clearPersonalPins();
+		});
+		that.initializePinStorage(that);
+		$(htmlidprefix + "ContextOptimizePins").click(function()
+		{
+			if (that.isPersonalPinsLaid(true))
+			{
+				that.optimizePersonalPath();
+			}
+		});
+		$(htmlidprefix + "ContextChatlinkPins").click(function()
+		{
+			if (that.isPersonalPinsLaid(true))
+			{
+				P.printClosestWaypoints();
+			}
+		});
+		var urlpins = $(htmlidprefix + "ContextURLPins");
+		if (urlpins.length)
+		{
+			I.bindClipboard(urlpins);
+			urlpins.mouseenter(function()
+			{
+				if (that.isPersonalPinsLaid())
+				{
+					var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
+					I.updateClipboard($(this), I.cSiteURL + urlmod + that.getPersonalString());
+				}
+			});
+		}
+		var urlcoord = $(htmlidprefix + "ContextURLCoord");
+		if (urlcoord.length)
+		{
+			I.bindClipboard(urlcoord);
+			urlcoord.mouseenter(function()
+			{
+				if (that.ContextLatLng)
+				{
+					var urlmod = (P.MapSwitchWebsite === P.MapEnum.Mists) ? "wvw/" : "";
+					I.updateClipboard($(this), I.cSiteURL + urlmod + that.convertLCtoGC(that.ContextLatLng));
+				}
+			});
+		}
+		$(htmlidprefix + "ContextHelpPins").click(function()
+		{
+			that.printPinHelp();
+		});
+		$(htmlidprefix + "ContextUndoPins").click(function()
+		{
+			that.loadBackupPins();
+		});
 	},
 	
 	/*
@@ -26337,18 +26347,83 @@ M = {
 	},
 	parseCompasses: function(pString)
 	{
-		try
+		var that = this;
+		var parseMarkers = function()
 		{
-			var company = JSON.parse(pString);
-			if (Array.isArray(company))
+			var types = {};
+			var counter = 0;
+			var replacements = ["squad_arrow", "squad_circle", "squad_heart", "squad_rectangle", "squad_spiral", "squad_star", "squad_triangle", "squad_x"];
+			var xml = $($.parseXML(pString));
+			var poi, type, zoneid, zone, unrecognizedzones = {}, coord, coords = [], company = [];
+			// Reconstruct each POI with reassigned icons for each type
+			xml.find("POI").each(function()
 			{
-				this.redrawCompasses(company);
+				poi = $(this);
+				type = poi.attr("type");
+				if (types[type] === undefined)
+				{
+					types[type] = {
+						id: replacements[counter]
+					};
+					counter = (counter < replacements.length - 1) ? counter + 1 : 0;
+				}
+				zoneid = poi.attr("MapID");
+				zone = that.getZoneFromID(zoneid);
+				if (zone)
+				{
+					coord = that.convertGPSCoord([poi.attr("xpos"), poi.attr("ypos"), poi.attr("zpos")], zone);
+					coords.push(coord);
+					company.push({
+						id: types[type].id,
+						coord: coord
+					});
+				}
+				else if (unrecognizedzones[zoneid] === undefined)
+				{
+					unrecognizedzones[zoneid] = true;
+					I.print("Unrecognized zone ID: " + zoneid);
+				}
+			});
+			that.redrawCompasses(company);
+			that.redrawPersonalPath(coords);
+			
+			// Print metadata
+			var metadata = "";
+			var category = xml.find("MarkerCategory").first();
+			while (category.length)
+			{
+				metadata += (category.attr("DisplayName") || category.attr("name")) + " ";
+				category = category.find("MarkerCategory").first();
 			}
-		}
-		catch (e)
-		{
-			I.write("Invalid data string for importing Compasses.");
+			I.print(metadata.length ? ("&quot;" + U.escapeHTML(metadata.trim()) + "&quot;") : "Untitled Markers");
 		};
+		
+		if (pString.indexOf("<OverlayData>") !== -1)
+		{
+			try
+			{
+				parseMarkers(pString);
+			}
+			catch (e)
+			{
+				I.write("Invalid marker file for importing Compasses.");
+			};
+		}
+		else
+		{
+			try
+			{
+				var company = JSON.parse(pString);
+				if (Array.isArray(company))
+				{
+					this.redrawCompasses(company);
+				}
+			}
+			catch (e)
+			{
+				I.write("Invalid data string for importing Compasses.");
+			};
+		}
 	},
 	
 	/*

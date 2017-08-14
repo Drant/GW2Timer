@@ -35,6 +35,41 @@ var GW2T_COLLECTIBLE_METADATA = {
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
 
+WaterloggedChests: {
+	name_en: "Waterlogged Chests",
+	name_de: "Wasserdurchtränkte Truhe",
+	name_es: "Cofre inundado",
+	name_fr: "Coffre humide",
+	name_zh: "淹水宝箱",
+	category: "chests",
+	color: "lightseagreen",
+	view: "siren",
+	wiki: "https://wiki.guildwars2.com/wiki/Waterlogged_Chest",
+	credit: "http://tekkitsworkshop.net/index.php/guild-wars-2/zone-guides/136-guild-wars-2-orrian-pearl-farms-oysters-chests-hearts-gamble-coffers",
+	needles: [
+	{n: 1, c: [16428, 26287]},
+	{n: 2, c: [16010, 26418]},
+	{n: 3, c: [15715, 26387]},
+	{n: 4, c: [15671, 26454]},
+	{n: 5, c: [15477, 26390]},
+	{n: 6, c: [15519, 26167]},
+	{n: 7, c: [15378, 26087]},
+	{n: 8, c: [15293, 26138]},
+	{n: 9, c: [15134, 25990]},
+	{n: 10, c: [15229, 25855]},
+	{n: 11, c: [15247, 25899]},
+	{n: 12, c: [15333, 25906]},
+	{n: 13, c: [15520, 25933]},
+	{n: 14, c: [15655, 25782]},
+	{n: 15, c: [15546, 25647]},
+	{n: 16, c: [15312, 25395]},
+	{n: 17, c: [14870, 25592]},
+	{n: 18, c: [16123, 25589]},
+	{n: 19, c: [16765, 25582]},
+	{n: 20, c: [16823, 25667]},
+	{n: 21, c: [16833, 25700]}
+	]
+},
 HarathiStrongboxes: {
 	name_en: "Harathi Strongboxes",
 	name_de: "Harathi-Schatulle",
