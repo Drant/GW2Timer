@@ -534,7 +534,7 @@ Pearloyster: {
 	name_fr: "Perle",
 	name_zh: "欧尔珍珠",
 	type: "Ore",
-	item: "81706",
+	item: "81837",
 	Rich: [
 	
 	],
