@@ -36,6 +36,14 @@ GW2T_SALE_DATA = {
 	{i: 68652, n: "Red Envelope Mail Carrier", p: {gem: 300}, discount: 600, Finish: new Date("2017-08-17T17:00:00Z")},
 	{i: 69715, n: "Revenant Mail Carrier", p: {gem: 175}, discount: 350, Finish: new Date("2017-08-17T17:00:00Z")},
 	{i: 68682, n: "Sylvari Seed Pod Mail Carrier", p: {gem: 175}, discount: 350, Finish: new Date("2017-08-17T17:00:00Z")},
+	{i: 73939, n: "Bat Wings Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2017-08-18T17:00:00Z")},
+	{i: 74684, n: "Bat Wings Glider", p: {gem: 560}, discount: 700, Finish: new Date("2017-08-18T17:00:00Z")},
+	{i: 42932, n: "Storage Expander", p: {gem: 640}, discount: 800, Finish: new Date("2017-08-20T17:00:00Z")},
+	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 560}, discount: 800, Finish: new Date("2017-08-21T17:00:00Z")},
+	{i: 77808, n: "Crystal Savant Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-22T17:00:00Z")},
+	{i: 69623, n: "Exemplar Attire Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-22T17:00:00Z")},
+	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2017-08-22T17:00:00Z")},
+	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 560}, discount: 700, Finish: new Date("2017-08-22T17:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 	{i: "http://i.imgur.com/g1s48MQ.png", n: "Path of Fire Preparation Pack", p: {gem: 3500}},
@@ -44,6 +52,6 @@ GW2T_SALE_DATA = {
 	{i: 84112, n: "Icy Blade Axe", p: {gem: 500}},
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
-	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}},
+	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}}
 	]
 };

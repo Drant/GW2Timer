@@ -1748,13 +1748,13 @@ Countdown: {
 		name_es: "Rebajas de aniversario",
 		name_fr: "Offre spéciale d'anniversaire",
 		name_zh: "周年纪念销售",
-		official: "news/new-items-and-anniversary-sales/",
+		official: "news/turn-back-time-with-abaddons-mask-and-season-1-memory-box/",
 		Start: new Date("2017-08-09T16:00:00Z"),
 		Finish: new Date("2017-09-01T16:00:00Z")
 	},
 	{
 		name: "Path of Fire Demo II",
-		official: "news/get-ready-for-the-guild-wars-2-path-of-fire-preview-weekend/",
+		official: "news/developer-diary-elite-specializations/",
 		Start: new Date("2017-08-18T16:00:00Z"),
 		Finish: new Date("2017-08-21T16:00:00Z")
 	},
