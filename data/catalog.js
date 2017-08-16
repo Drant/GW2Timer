@@ -153,6 +153,7 @@ Token: [
 	{i: 72205, n: "Chak Egg", p: {coin: 0}},
 	{i: 74356, n: "Reclaimed Metal Plate", p: {coin: 0}},
 	{i: 42605, n: "Frozen Exotic Weapon Fragment", p: {coin: 5000}},
+	{i: 84438, n: "Black Lion Commemorative Sprocket", p: {gem: 0}},
 	{i: 70718, n: "Tenebrous Crystal", p: {coin: 0}},
 	{i: 76254, n: "Shimmering Crystal", p: {coin: 0}},
 	{i: 50025, n: "Blade Shard", p: {coin: 0}},
@@ -166,7 +167,6 @@ Token: [
 	{i: 78600, n: "Potion of WvW Rewards", p: {badge: 0}}
 ],
 Dungeon: [
-	
 	{i: 79722, n: "Infinite Mist Omnipotion", p: {fotm_relic: 20500}},
 	{i: 79608, n: "Infinite Mist Offensive Potion", p: {fotm_relic: 8000}},
 	{i: 79515, n: "Infinite Mist Defensive Potion", p: {fotm_relic: 5000}},
@@ -485,6 +485,7 @@ TonicEndless: [
 	{i: 79849, n: "Endless Kodan Tonic", p: {karma: 175000}},
 	{i: 80172, n: "Endless Miniature Tonic", p: {karma: 175000}},
 	{i: 80989, n: "Endless Embiggening Tonic", p: {karma: 175000}},
+	{i: 79049, n: "Endless Anomaly Fragment", p: {achievement: 0}},
 	{u: 81823, i: 82000, n: "Endless Fury Combat Tonic"},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},

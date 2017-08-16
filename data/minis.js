@@ -277,7 +277,10 @@ Special: [
 	{u: 424, i: 79766, n: "Mini Aurene", p: {achievement: 0}},
 	{u: 447, i: 80424, n: "Mini Eye of Janthir"},
 	{u: 492, i: 81821, n: "Mini Lazarus", p: {achievement: 0}},
-	{u: 494, i: 81980, n: "Mini GL-XC S7S"}
+	{u: 494, i: 81980, n: "Mini GL-XC S7S"},
+	{u: 582, i: 83369, n: "Mini Accumulated Ley Energy", p: {achievement: 0}},
+	{u: 543, i: 84489, n: "Mini Yellow Catmander", p: {skirmish: 100}},
+	{u: 571, i: 83820, n: "Mini Blue Catmander", p: {skirmish: 100}}
 ],
 Halloween: [
 	{u: 196, i: 48740, n: "Mini Bloody Prince Thorn", p: {cob: 6}},
@@ -339,6 +342,7 @@ PvP: [
 	{u: 487, i: 81531, n: "Mini Elegant Silver Llama", p: {craft: true}},
 	{u: 486, i: 81587, n: "Mini Gold Llama", p: {pvp: true}},
 	{u: 480, i: 81539, n: "Mini Fancy Gold Llama", p: {craft: true}},
+	{u: 481, i: 81537, n: "Mini Elegant Gold Llama", p: {craft: true}}
 ],
 Raid: [
 	{u: 371, i: 77370, n: "Mini Red Guardian", p: {magnetite: 300}},
@@ -400,7 +404,7 @@ Zone: [
 	{u: 490, i: 82012, n: "Mini Guardian of Secrets", p: {karma: 105000}},
 	{u: 491, i: 82051, n: "Mini Livia", p: {magic: 5000}},
 	{u: 495, i: 81893, n: "Mini Ley-Line Scavenger", p: {karma: 105000}},
-	{u: 496, i: 81667, n: "Mini Queen Mahtab", p: {karma: 105000}},
+	{u: 496, i: 81667, n: "Mini Queen Mahtab", p: {karma: 105000}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},
@@ -511,6 +515,7 @@ Gem: [
 	{u: 458, i: 80915, n: "Mini Super Queen Bee Dog", p: {gem: 600}},
 	{u: 470, i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
 	{u: 475, i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
-	{u: 493, i: 81901, n: "Mini Dwayna's Messenger", p: {gem: 0}}
+	{u: 493, i: 81901, n: "Mini Dwayna's Messenger", p: {gem: 0}},
+	{u: 497, i: 82074, n: "Mini Rogue Balthazar", p: {gem: 0}}
 ]
 };

@@ -130,7 +130,7 @@ Glider: [
 	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}},
-	{i: 82011, n: "Abaddon's Glider", p: {gem: -400}}
+	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -213,7 +213,8 @@ Head: [
 	{i: 68656, n: "Lion Mask Skin", p: {gem: -300}},
 	{i: 79014, n: "Xera's Mask", p: {gem: -400}},
 	{i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
-	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}}
+	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
+	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -341,6 +342,7 @@ Package: [
 	//{i: "http://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/c37rlEw.png", n: "Salvager's Supplies", p: {gem: 1360}},
 	//{i: "http://i.imgur.com/BvQz2AR.png", n: "Black Lion Keys and Scrap Package", p: {gem: 900}},
+	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: -200}, discount: [[1, 200], [10, 1500]]},
 	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: -150}, discount: [[1, 150], [10, 1200]]},
 	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},
 	{i: 37190, n: "Consortium Chest", p: {gem: -250}, discount: [[1, 250], [5, 1100]]},
