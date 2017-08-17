@@ -18862,9 +18862,9 @@ Q = {
 		{
 			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.ItemName));
 		});
-		$("#itmContextWikiSearch").click(function()
+		$("#itmContextYouTube").click(function()
 		{
-			U.openExternalURL(U.getWikiSearchLanguage(Q.Context.ItemSearch));
+			U.openExternalURL(U.getYouTubeLink(Q.Context.ItemSearch));
 		});
 		$("#itmContextTrading").click(function()
 		{
@@ -25500,6 +25500,7 @@ M = {
 			+ "<li><b>Move a pin to center:</b> right click that pin.</li>"
 			+ "<li><b>Zoom to a pin:</b> right click that pin when not in max zoom.</li>"
 			+ "</ul>"
+			+ "<br />"
 			+ "<h2>Path Pins Features</h2>"
 			+ "<ul>"
 			+ "<li><b>Check off a pin:</b> single click that pin.</li>"
@@ -25523,6 +25524,7 @@ M = {
 			+ "<li><b>Move a pin to center:</b> right click that pin.</li>"
 			+ "<li><b>Zoom to a pin:</b> right click that pin when not in max zoom.</li>"
 			+ "</ul>"
+			+ "<br />"
 			+ "<h2>Compass Pins Features</h2>"
 			+ "<ul>"
 			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
@@ -37979,7 +37981,7 @@ I = {
 			Timetable: "Full Timetable",
 			Special: "Special Bosses",
 			DryTop: "Dry Top",
-			Help: "Boss Guides",
+			Help: "Help",
 			Forum: "Forum"
 		},
 		Map:
