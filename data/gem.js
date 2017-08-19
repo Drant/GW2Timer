@@ -634,7 +634,7 @@ Carrier: [
 	{i: 68104, n: "Gifts Mail Delivery", p: {gem: 350}},
 	{i: 68106, n: "Griffon Mail Carrier", p: {gem: 500}},
 	{i: 68652, n: "Red Envelope Mail Carrier", p: {gem: 600}},
-	{i: 68681, n: "Snow Owl Mail Carrier", p: {gem: -350}},
+	{i: 68681, n: "Snow Owl Mail Carrier", p: {gem: 350}},
 	{i: 68682, n: "Sylvari Seed Pod Mail Carrier", p: {gem: 350}},
 	{i: 69628, n: "Aviator Quaggan Mail Carrier", p: {gem: 500}},
 	{i: 69715, n: "Revenant Mail Carrier", p: {gem: 350}},
