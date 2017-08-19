@@ -1657,7 +1657,7 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "<a href='https://wiki.guildwars2.com/wiki/Season_1_Memory_Box_-_Flame_and_Festivals'>Free LS1 items</a> on the gem store (Promotions tab, Season 1 Memory Box, 0 gems first purchase).",
+		content: "Character Slots are 30% off (560 gems). <a href='https://wiki.guildwars2.com/wiki/Season_1_Memory_Box_-_Flame_and_Festivals'>Free LS1 items</a> on the gem store (Promotions tab, Season 1 Memory Box, 0 gems first purchase).",
 		Finish: new Date("2017-08-22T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
