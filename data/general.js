@@ -1657,7 +1657,7 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "Character Slots are 30% off (560 gems). <a href='https://wiki.guildwars2.com/wiki/Season_1_Memory_Box_-_Flame_and_Festivals'>Free LS1 items</a> on the gem store (Promotions tab, Season 1 Memory Box, 0 gems first purchase).",
+		content: "",
 		Finish: new Date("2017-08-22T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
@@ -1743,6 +1743,16 @@ Countdown: {
 		Finish: new Date("2018-04-20T16:00:00Z")
 	}*/
 	{
+		name_en: "PvP League Season 8",
+		name_de: "PvP Liga Saison 8",
+		name_es: "Temporada 8 de liga PvP",
+		name_fr: "Saison 8 de la ligue JcJ",
+		name_zh: "玩家对战第8季",
+		official: "news/pvp-league-season-8-begins-soon/",
+		Start: new Date("2017-08-22T17:00:00Z"),
+		Finish: new Date("2017-08-23T17:00:00Z")
+	},
+	{
 		name_en: "Anniversary Sale",
 		name_de: "Jubiläumsangebote",
 		name_es: "Rebajas de aniversario",
@@ -1784,16 +1794,6 @@ Countdown: {
 		Start: new Date("2017-12-12T17:00:00Z"),
 		Finish: new Date("2018-01-09T17:00:00Z")
 	},*/
-	/*{
-		name_en: "PvP League Season 6",
-		name_de: "PvP Liga Saison 6",
-		name_es: "Temporada 6 de liga PvP",
-		name_fr: "Saison 6 de la ligue JcJ",
-		name_zh: "玩家对战第6季",
-		official: "news/upcoming-changes-for-pvp-league-season-5/",
-		Start: new Date("2016-12-13T17:00:00Z"),
-		Finish: new Date("2017-01-10T17:00:00Z")
-	}*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
