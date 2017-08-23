@@ -32,7 +32,8 @@ Dyeable: [
 	{u: 27, i: 79010, n: "Glide-r-Tron", l: "2", p: {gem: 500}},
 	{u: 31, i: 79631, n: "Spectral Glider", l: "2", p: {gem: 500}},
 	{u: 37, i: 80484, n: "Necrotic Glider", l: "1", p: {gem: 500}},
-	{u: 38, i: 80725, n: "Raven's Spirit Glider", l: "2", p: {gem: 500}}
+	{u: 38, i: 80725, n: "Raven's Spirit Glider", l: "2", p: {gem: 500}},
+	{u: 50, i: 83341, n: "Sheet Music Glider", l: "2", p: {gem: 400}}
 ],
 Colored: [
 	{u: 5, i: 67054, n: "Heart of Thorns Glider", l: "", p: {gem: 0}},

@@ -2984,7 +2984,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 3,
-		path: [[12537,11613]],
+		path: [[12742, 11521]],
 		name_en: "Stop the Reinforcements.",
 		name_de: "Die Verstärkung aufhalten.",
 		name_es: "Detén a los refuerzos.",

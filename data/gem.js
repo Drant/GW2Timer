@@ -87,7 +87,8 @@ Outfit: [
 	{i: 80906, n: "Spring Promenade Outfit", p: {gem: -700}},
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
 	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}},
-	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}}
+	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
+	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -130,7 +131,8 @@ Glider: [
 	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}},
-	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}}
+	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}},
+	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -343,6 +345,7 @@ Package: [
 	//{i: "http://i.imgur.com/c37rlEw.png", n: "Salvager's Supplies", p: {gem: 1360}},
 	//{i: "http://i.imgur.com/BvQz2AR.png", n: "Black Lion Keys and Scrap Package", p: {gem: 900}},
 	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: -200}, discount: [[1, 200], [10, 1500]]},
+	{i: 83517, n: "Season 1 Memory Box - Scarlet vs. Lion's Arch", p: {gem: -200}, discount: [[1, 200], [10, 1500]]},
 	{i: 81582, n: "Winter in Summer Mystery Box", p: {gem: -150}, discount: [[1, 150], [10, 1200]]},
 	{i: 38034, n: "Wintersday Mystery Box", p: {gem: -100}},
 	{i: 37190, n: "Consortium Chest", p: {gem: -250}, discount: [[1, 250], [5, 1100]]},
@@ -391,7 +394,7 @@ Consumable: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: -500}},
 	{i: 19986, n: "Black Lion Salvage Kit", p: {gem: 300}},
 	{i: 20349, n: "Upgrade Extractor", p: {gem: 250}, discount: [[1, 250], [5, 1100], [25, 5000]]},
-	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: 2000}},
+	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: -2000}},
 	{i: 49867, n: "Identity Repair Kit", p: {gem: 1000}},
 	{i: 35989, n: "Name Change Contract", p: {gem: 800}},
 	{i: 35991, n: "Total Makeover Kit", p: {gem: 350}, discount: [[1, 350], [5, 1400]]},

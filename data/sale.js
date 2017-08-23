@@ -21,21 +21,15 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 77808, n: "Crystal Savant Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-22T17:00:00Z")},
-	{i: 69623, n: "Exemplar Attire Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-08-22T17:00:00Z")},
-	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2017-08-22T17:00:00Z")},
-	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 560}, discount: 700, Finish: new Date("2017-08-22T17:00:00Z")},
+	{i: 83517, n: "Season 1 Memory Box - Scarlet vs. Lion's Arch", p: {gem: 0}, discount: [[1, 200], [10, 1500]]},
+	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: 0}, discount: [[1, 200], [10, 1500]], Finish: new Date("2017-08-29T17:00:00Z")},
+	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
+	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
+	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
+	{i: "http://i.imgur.com/GwhNI7D.png", n: "Champion of Tyria Package", p: {gem: 1800}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
-	{i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}, Finish: new Date("2017-08-22T16:00:00Z")},
-	{i: 80919, n: "Super Cloud Glider", p: {gem: 500}, Finish: new Date("2017-08-22T16:00:00Z")},
 	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
-	{i: "http://i.imgur.com/g1s48MQ.png", n: "Path of Fire Preparation Pack", p: {gem: 3500}},
-	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: 2000}},
-	{i: 84064, n: "Fiery Blade Axe", p: {gem: 500}, Finish: new Date("2017-08-22T17:00:00Z")},
-	{i: 84112, n: "Icy Blade Axe", p: {gem: 500}, Finish: new Date("2017-08-22T17:00:00Z")},
-	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}, Finish: new Date("2017-08-22T17:00:00Z")},
-	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}, Finish: new Date("2017-08-22T17:00:00Z")},
-	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}, Finish: new Date("2017-08-22T17:00:00Z")}
+	{i: 68681, n: "Snow Owl Mail Carrier", p: {gem: 350}}
 	]
 };

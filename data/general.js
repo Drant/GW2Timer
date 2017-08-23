@@ -1657,8 +1657,8 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "",
-		Finish: new Date("2017-08-22T16:00:00Z")
+		content: "<a href='https://wiki.guildwars2.com/wiki/Season_1_Memory_Box_-_Scarlet_vs._Lion%27s_Arch'>Free LS1 Items (Again)</a> on gem store, Promotions tab, 0 gem first purchase.",
+		Finish: new Date("2017-08-29T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
@@ -1742,16 +1742,16 @@ Countdown: {
 		Start: new Date("2018-03-30T16:00:00Z"),
 		Finish: new Date("2018-04-20T16:00:00Z")
 	}*/
-	{
+	/*{
 		name_en: "PvP League Season 8",
 		name_de: "PvP Liga Saison 8",
 		name_es: "Temporada 8 de liga PvP",
 		name_fr: "Saison 8 de la ligue JcJ",
 		name_zh: "玩家对战第8季",
 		official: "news/pvp-league-season-8-begins-soon/",
-		Start: new Date("2017-08-22T17:00:00Z"),
-		Finish: new Date("2017-08-23T17:00:00Z")
-	},
+		Start: new Date("2017-08-22T16:00:00Z"),
+		Finish: new Date("2017-08-23T16:00:00Z")
+	},*/
 	{
 		name_en: "Anniversary Sale",
 		name_de: "Jubiläumsangebote",
@@ -1762,12 +1762,12 @@ Countdown: {
 		Start: new Date("2017-08-09T16:00:00Z"),
 		Finish: new Date("2017-09-01T16:00:00Z")
 	},
-	{
+	/*{
 		name: "Path of Fire Demo II",
 		official: "news/developer-diary-elite-specializations/",
 		Start: new Date("2017-08-18T16:00:00Z"),
 		Finish: new Date("2017-08-21T16:00:00Z")
-	},
+	},*/
 	{
 		name: "Path of Fire Expansion",
 		official: "path-of-fire/",

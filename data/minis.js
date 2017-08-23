@@ -404,7 +404,8 @@ Zone: [
 	{u: 490, i: 82012, n: "Mini Guardian of Secrets", p: {karma: 105000}},
 	{u: 491, i: 82051, n: "Mini Livia", p: {magic: 5000}},
 	{u: 495, i: 81893, n: "Mini Ley-Line Scavenger", p: {karma: 105000}},
-	{u: 496, i: 81667, n: "Mini Queen Mahtab", p: {karma: 105000}}
+	{u: 496, i: 81667, n: "Mini Queen Mahtab", p: {karma: 105000}},
+	{u: 537, i: 82341, n: "Mini Zalambur", p: {token: 50}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},
@@ -516,6 +517,7 @@ Gem: [
 	{u: 470, i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
 	{u: 475, i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
 	{u: 493, i: 81901, n: "Mini Dwayna's Messenger", p: {gem: 0}},
-	{u: 497, i: 82074, n: "Mini Rogue Balthazar", p: {gem: 0}}
+	{u: 497, i: 82074, n: "Mini Rogue Balthazar", p: {gem: 0}},
+	{u: 567, i: 84782, n: "Mini Squire Aurene", p: {gem: 400}}
 ]
 };
