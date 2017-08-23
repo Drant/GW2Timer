@@ -1402,7 +1402,7 @@ input[type="text"].cntSearch {
 .itemThrobber em {
 	display: inline-block;
 	width: 64px; height: 64px;
-	background: url("img/ui/favicon.png");
+	background: url("img/ui/throbber.png");
     animation: aniSpin 1s linear infinite;
 }
 

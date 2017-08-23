@@ -10,13 +10,14 @@
 	<meta name="msvalidate.01" content="95E5C0E89A8A24688EC00F2A69986A17" />
 
 	<!-- Stylesheets -->
-	<link rel="shortcut icon" type="image/x-icon" href="img/ui/favicon.png" />
+	<link rel="shortcut icon" type="image/x-icon" href="img/meta/favicon.png" />
 	<link rel="stylesheet" media="screen" href="gw2t.css" />
+	<link rel="manifest" href="manifest.json">
 	
 	<!-- Web application files -->
 	<script type="text/javascript" src="plugins.js?v=20170606"></script>
-	<script type="text/javascript" src="data/general.js?v=20170819"></script>
-	<script type="text/javascript" src="data/sale.js?v=20170818"></script>
+	<script type="text/javascript" src="data/general.js?v=20170822"></script>
+	<script type="text/javascript" src="data/sale.js?v=20170822"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -123,7 +124,8 @@
 							<li id="mapContextToggleCompletion">Toggle world completion</li>
 							<li id="mapContextToggleLock">Toggle zone lock</li>
 							<li id="mapContextToggleFloor">Toggle terrain</li>
-							<li id="mapContextURLCoord">Map URL</li>
+							<li id="mapContextZoneInfo">Print Info</li>
+							<li id="mapContextURLCoord">Print URL</li>
 						</ul>
 					</li>
 				</ul>
@@ -238,6 +240,9 @@
 								<label title="Alert X minutes before a subscribed chain starts. Enter 0 to disable."><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
 								<label title="This happens at server reset or timestamp expiration. Alarm must be in Subscription Mode."><input id="opt_bol_alertAutosubscribe" type="checkbox" /> Autosubscribe to daily world boss</label>
 								<label title="This is based on the prediction."><input id="opt_bol_alertUnsubscribe" type="checkbox" /> Unsubscribe from boss after it dies</label>
+								<br />
+								<b class="jsTranslate">Desktop Notifications</b>
+								<label title="If you enable this option, please click on &quot;Allow&quot; when your browser asks for notification permissions."><input id="opt_bol_alertDesktop" type="checkbox" /> Show notification popups</label>
 							</div>
 						</div>
 						<div id="mapAlarmSide1" class="cssColumn">
@@ -435,7 +440,7 @@
 			<div class="hudPeripheral hudPeripheralSouth">
 				<span class="hudLinks">
 					<a class="linkExternal" title="<dfn>Download the app to run GW2Timer in game!</dfn><br /><div class='mapLoc'><img src='http://i.imgur.com/mZ1Tboj.png' /></div>" href="http://forum.renaka.com/topic/5546166/">
-						<img id="itemLogo" src="img/ui/favicon.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
+						<img id="itemLogo" src="img/meta/favicon.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
 					</a>
 				</span>
 			</div>
@@ -488,7 +493,8 @@
 							<li id="wvwContextToggleCompletion">Toggle world completion</li>
 							<li id="wvwContextToggleLock">Toggle zone lock</li>
 							<li id="wvwContextToggleFloor">Toggle terrain</li>
-							<li id="wvwContextURLCoord">Map URL</li>
+							<li id="wvwContextZoneInfo">Print Info</li>
+							<li id="wvwContextURLCoord">Print URL</li>
 						</ul>
 					</li>
 				</ul>
@@ -614,6 +620,9 @@
 								<label><img data-src="img/map/landmark.png" /><input id="opt_bol_displayPOIsWvW" type="checkbox" /> POIs</label>
 								<label><img data-src="img/map/vista.png" /><input id="opt_bol_displayVistasWvW" type="checkbox" /> Vistas</label>
 								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallengesWvW" type="checkbox" /> Hero Challenges</label>
+								<div class="mapDisplayCompletionSub">
+									<label title="Show/Hide area of discovery for sectors within a zone.</br >Requires &quot;Show Completion&quot; option checked."><img data-src="img/map/scope_area.png" /><input id="opt_bol_displaySectorsAreaWvW" class="jsIgnore" type="checkbox" /> Sector Areas</label>
+								</div>
 							</div>
 							<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						</div>

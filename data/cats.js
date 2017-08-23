@@ -64,7 +64,7 @@ Special: [
 	{u: 29, i: 68409, n: "Bowl of Bloodstone Goulash", l: "#29", t: "Lady Wisteria Whiskington near Bloodstone Crystal node.", p: {coin: 8}},
 	{u: 32, i: 36076, n: "Strawberry Ghost", l: "#32 ☽", t: "Ghost cat."},
 	{u: 35, i: 81743, n: "Cube of Stabilized Dark Energy", l: "#35", t: "Simon celestial cat."},
-	{u: 36, i: 78473, n: "1 Gold", l: "#36", t: "Holographic cat."},
+	{u: 36, i: 78473, n: "2 Gold", l: "#36", t: "Holographic cat."},
 	{u: 37, i: 19678, n: "Gift of Battle", l: "#37", t: "Blue Catmander."},
 	{u: 38, i: 78320, n: "Can of Spicy Meat Chili", l: "#38", t: "Yellow Catmander."}
 ]

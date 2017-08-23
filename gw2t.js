@@ -43,7 +43,7 @@
 	B - Bank generation
 	Q - Quantity items
 	E - Economy Trading Post
-	D - Dictionary for translations
+	D - Dictionary for translations and speech
 	C - Chains events
 	M - Map Leaflet
 	P - Populate map and GPS
@@ -213,6 +213,7 @@ O = {
 		bol_displayPOIsWvW: true,
 		bol_displayVistasWvW: true,
 		bol_displayChallengesWvW: true,
+		bol_displaySectorsAreaWvW: true,
 		str_colorPersonalPath: "#ffffff",
 		int_opacityPersonalPath: 40,
 		// WvW
@@ -251,6 +252,7 @@ O = {
 		// Alarm
 		int_setAlarm: 0,
 		int_setVolume: 75,
+		bol_alertDesktop: false,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
@@ -1228,6 +1230,10 @@ O = {
 		bol_showSecondHand: function()
 		{
 			$("#clkSecondHand").toggle(O.Options.bol_showSecondHand);
+		},
+		bol_alertDesktop: function()
+		{
+			D.askNotifications();
 		},
 		int_setAlarm: function()
 		{
@@ -5327,6 +5333,10 @@ Z = {
 			{
 				D.speak(argstr);
 			}},
+			notify: {usage: "Notifies the given text. <em>Parameters: str_text</em>", f: function()
+			{
+				D.notify(argstr);
+			}},
 			gps: {usage: "Prints GPS location information (overlay only).", f: function()
 			{
 				I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />"
@@ -5604,9 +5614,10 @@ Z = {
 		{
 			try
 			{
-				Z.openTextFile($(this)[0].files[0], function(pString)
+				var file = $(this)[0].files[0];
+				Z.openTextFile(file, function(pString)
 				{
-					pCallback(pString);
+					pCallback(pString, file);
 				});
 			}
 			catch (e)
@@ -22446,6 +22457,67 @@ D = {
 	},
 	
 	/*
+	 * Proceeds with the browser notification permission request if user enabled
+	 * the preliminary option.
+	 */
+	askNotifications: function()
+	{
+		if (O.Options.bol_alertDesktop)
+		{
+			if (!("Notification" in window))
+			{
+				I.print("Your browser does not seem to support web notifications.");
+			}
+			else if (Notification.permission !== "denied")
+			{
+				Notification.requestPermission(function(permission)
+				{
+					D.notify("This is an example of a notification you will receive.");
+				});
+			}
+		}
+	},
+	isNotificationsAllowed: function()
+	{
+		return (O.Options.bol_alertDesktop && "Notification" in window && Notification.permission === "granted");
+	},
+	
+	/*
+	 * Shows notification popup if allowed.
+	 * @param string pString text content.
+	 * @objparam string aTitle header.
+	 * @objparam string aIcon URL of image.
+	 * @objparam int aDelay milliseconds before popup disappears.
+	 */
+	notify: function(pString, pSettings)
+	{
+		if (D.isNotificationsAllowed() === false)
+		{
+			return;
+		}
+		
+		var Settings = $.extend({
+			aTitle: I.cSiteName,
+			aIcon: "img/meta/logo_192x192.png",
+			aDelay: I.getTextDuration(pString)
+		}, pSettings);
+
+		// Create popup
+		var notif = new Notification(Settings.aTitle, {
+			icon: Settings.aIcon,
+			body: pString
+		});
+		// Open the originating browser tab and close the popup when clicked on
+		notif.onclick = function(pEvent)
+		{
+			window.focus();
+			this.close();
+		};
+		// Self close after duration
+		setTimeout(notif.close.bind(notif), Settings.aDelay);
+	},
+	
+	/*
 	 * Plays an audio representation of provided string, using Chrome's TTS
 	 * system if the user is running it. Otherwise loads a TTS sound file
 	 * generated from a TTS web service into a hidden audio tag.
@@ -24996,6 +25068,7 @@ M = {
 					if (O.Options.bol_displayVistasWvW) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
 					if (O.Options.bol_displayChallengesWvW) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
 					if (O.Options.bol_displaySectorsWvW) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
+					if (O.Options.bol_displaySectorsAreaWvW) { this.ZoneCurrent.Layers.SectorArea.addTo(this.Map); }
 				} break;
 			}
 
@@ -25958,6 +26031,21 @@ M = {
 				}
 			});
 		}
+		$(htmlidprefix + "ContextZoneInfo").click(function()
+		{
+			if (that.ZoneCurrent)
+			{
+				for (var i in that.ZoneCurrent)
+				{
+					var data = that.ZoneCurrent[i];
+					I.print(i + ": " + (Array.isArray(data) ? JSON.stringify(data) : data));
+				}
+			}
+			else
+			{
+				I.write("Invalid zone.");
+			}
+		});
 		$(htmlidprefix + "ContextHelpPins").click(function()
 		{
 			that.printPinHelp();
@@ -26112,9 +26200,9 @@ M = {
 			that.parseCompasses(str);
 		});
 		var importfile = $("<input type='file' style='width:128px' />").insertBefore(importbutton);
-		Z.bindFileInput(importfile, function(pString)
+		Z.bindFileInput(importfile, function(pString, file)
 		{
-			that.parseCompasses(pString);
+			that.parseCompasses(pString, file);
 		});
 		// Input: Import input box
 		$("<input id='" + that.MapEnum + "CompassImportText' type='text' value='' maxlength='"
@@ -26347,10 +26435,16 @@ M = {
 			I.write(D.getPhraseOriginal("Compass not available for this" + "."));
 		}
 	},
-	parseCompasses: function(pString)
+	
+	/**
+	 * Parses a standard company of compasses array, or a third party format.
+	 * @param string pString formatted data.
+	 * @param object pFile if imported from file, optional.
+	 */
+	parseCompasses: function(pString, pFile)
 	{
 		var that = this;
-		var parseMarkers = function()
+		var parseTaco = function()
 		{
 			var types = {};
 			var counter = 0;
@@ -26400,11 +26494,50 @@ M = {
 			I.print(metadata.length ? ("&quot;" + U.escapeHTML(metadata.trim()) + "&quot;") : "Untitled Markers");
 		};
 		
+		var parseAug = function(pData)
+		{
+			var commentoffsetY = 10; // In game units
+			var coords = [], company = [];
+			var coord, comment;
+			var nodes = pData["Nodes"];
+			var detachednodes = pData["DetachedNodes"];
+			var zoneid = (pFile.name.split("."))[0];
+			var zone = that.getZoneFromID(zoneid);
+			if (zone)
+			{
+				nodes.forEach(function(iNode)
+				{
+					coords.push(that.convertGPSCoord([iNode["X"], iNode["Y"], iNode["Z"]], zone));
+					comment = iNode["Comment"];
+					if (comment)
+					{
+						detachednodes.push(iNode);
+					}
+				});
+				detachednodes.forEach(function(iNode)
+				{
+					coord = that.convertGPSCoord([iNode["X"], iNode["Y"], iNode["Z"]], zone);
+					coord[1] = coord[1] + commentoffsetY;
+					company.push({
+						id: "comment",
+						coord: coord,
+						comment: iNode["Comment"]
+					});
+				});
+				that.redrawCompasses(company);
+				that.redrawPersonalPath(coords);
+			}
+			else
+			{
+				I.print("Unrecognized zone ID: " + zoneid);
+			}
+		};
+		
 		if (pString.indexOf("<OverlayData>") !== -1)
 		{
 			try
 			{
-				parseMarkers(pString);
+				parseTaco(pString);
 			}
 			catch (e)
 			{
@@ -26413,18 +26546,22 @@ M = {
 		}
 		else
 		{
-			try
-			{
+//			try
+//			{
 				var company = JSON.parse(pString);
 				if (Array.isArray(company))
 				{
 					this.redrawCompasses(company);
 				}
-			}
-			catch (e)
-			{
-				I.write("Invalid data string for importing Compasses.");
-			};
+				else if (company["Nodes"] && pFile)
+				{
+					parseAug(company);
+				}
+//			}
+//			catch (e)
+//			{
+//				I.write("Invalid data string for importing Compasses.");
+//			};
 		}
 	},
 	
@@ -38559,6 +38696,19 @@ I = {
 	},
 	
 	/*
+	 * Gets the human reading duration for a string.
+	 * @param string pString
+	 * @param boolean pWantSeconds
+	 * @returns int milliseconds
+	 */
+	getTextDuration: function(pString, pWantSeconds)
+	{
+		var characterspersecond = 18;
+		var seconds = 3 + parseInt(pString.length / characterspersecond);
+		return pWantSeconds ? seconds : seconds * T.cMSECONDS_IN_SECOND;
+	},
+	
+	/*
 	 * Writes an HTML string to the "console" area in the top left corner of
 	 * the website that disappears after a while.
 	 * @param string pString to write.
@@ -38571,7 +38721,7 @@ I = {
 	{
 		$("#itemConsole").show();
 		var content = $("#cslContent").show();
-		var characterspersecond = 18;
+		
 		
 		if (pString === undefined)
 		{
@@ -38595,11 +38745,7 @@ I = {
 		}
 		if (isFinite(pSeconds) === false)
 		{
-			/*
-			 * If seconds to display was not specified, set display time
-			 * based on how long the string is.
-			 */
-			pSeconds = 3 + parseInt(pString.length / characterspersecond);
+			pSeconds = I.getTextDuration(pString, true);
 		}
 		var breakstr = (pWantBreak !== false) ? "<br />" : "";
 		content.append(pString + breakstr);

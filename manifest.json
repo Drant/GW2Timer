@@ -1,0 +1,38 @@
+{
+	"short_name": "GW2Timer",
+	"name": "GW2Timer.com ArenaNet-Recommended GW2 Tool",
+	"description": "Just about everything you need to explore the world of Guild Wars 2.",
+	"start_url": ".",
+	"gcm_sender_id": "373076599963",
+	"display": "standalone",
+	"background_color": "#222222",
+	"theme_color": "#ffcc77",
+	
+	"icons": [
+	{
+		"src": "img/meta/logo_128x128",
+		"type": "image/png",
+		"sizes": "128x128"
+	},
+	{
+		"src": "img/meta/logo_152x152",
+		"type": "image/png",
+		"sizes": "152x152"
+	},
+	{
+		"src": "img/meta/logo_180x180",
+		"type": "image/png",
+		"sizes": "180x180"
+	},
+	{
+		"src": "img/meta/logo_192x192",
+		"type": "image/png",
+		"sizes": "192x192"
+	},
+	{
+		"src": "img/meta/logo_256x256",
+		"type": "image/png",
+		"sizes": "256x256"
+	}
+	]
+}

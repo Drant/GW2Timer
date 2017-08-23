@@ -1657,7 +1657,7 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "<a href='https://wiki.guildwars2.com/wiki/Season_1_Memory_Box_-_Scarlet_vs._Lion%27s_Arch'>Free LS1 Items (Again)</a> on gem store, Promotions tab, 0 gem first purchase.",
+		content: "<a href='https://www.guildwars2.com/en/news/champion-of-tyria-outfit-mini-squire-aurene-and-sheet-music-glider-now-available/'>Bank Tabs</a> and Shared Slots sale this week. <a href='https://wiki.guildwars2.com/wiki/Season_1_Memory_Box_-_Scarlet_vs._Lion%27s_Arch'>Free LS1 Items (Again)</a> on gem store, Promotions tab, 0 gem first purchase.",
 		Finish: new Date("2017-08-29T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
@@ -1758,7 +1758,7 @@ Countdown: {
 		name_es: "Rebajas de aniversario",
 		name_fr: "Offre spéciale d'anniversaire",
 		name_zh: "周年纪念销售",
-		official: "news/turn-back-time-with-abaddons-mask-and-season-1-memory-box/",
+		official: "news/champion-of-tyria-outfit-mini-squire-aurene-and-sheet-music-glider-now-available/",
 		Start: new Date("2017-08-09T16:00:00Z"),
 		Finish: new Date("2017-09-01T16:00:00Z")
 	},
