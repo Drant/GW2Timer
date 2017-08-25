@@ -1233,7 +1233,7 @@ O = {
 		},
 		bol_alertDesktop: function()
 		{
-			D.askNotifications();
+			I.askNotifications();
 		},
 		int_setAlarm: function()
 		{
@@ -5335,7 +5335,7 @@ Z = {
 			}},
 			notify: {usage: "Notifies the given text. <em>Parameters: str_text</em>", f: function()
 			{
-				D.notify(argstr);
+				I.notify(argstr);
 			}},
 			gps: {usage: "Prints GPS location information (overlay only).", f: function()
 			{
@@ -22457,67 +22457,6 @@ D = {
 	},
 	
 	/*
-	 * Proceeds with the browser notification permission request if user enabled
-	 * the preliminary option.
-	 */
-	askNotifications: function()
-	{
-		if (O.Options.bol_alertDesktop)
-		{
-			if (!("Notification" in window))
-			{
-				I.print("Your browser does not seem to support web notifications.");
-			}
-			else if (Notification.permission !== "denied")
-			{
-				Notification.requestPermission(function(permission)
-				{
-					D.notify("This is an example of a notification you will receive.");
-				});
-			}
-		}
-	},
-	isNotificationsAllowed: function()
-	{
-		return (O.Options.bol_alertDesktop && "Notification" in window && Notification.permission === "granted");
-	},
-	
-	/*
-	 * Shows notification popup if allowed.
-	 * @param string pString text content.
-	 * @objparam string aTitle header.
-	 * @objparam string aIcon URL of image.
-	 * @objparam int aDelay milliseconds before popup disappears.
-	 */
-	notify: function(pString, pSettings)
-	{
-		if (D.isNotificationsAllowed() === false)
-		{
-			return;
-		}
-		
-		var Settings = $.extend({
-			aTitle: I.cSiteName,
-			aIcon: "img/meta/logo_192x192.png",
-			aDelay: I.getTextDuration(pString)
-		}, pSettings);
-
-		// Create popup
-		var notif = new Notification(Settings.aTitle, {
-			icon: Settings.aIcon,
-			body: pString
-		});
-		// Open the originating browser tab and close the popup when clicked on
-		notif.onclick = function(pEvent)
-		{
-			window.focus();
-			this.close();
-		};
-		// Self close after duration
-		setTimeout(notif.close.bind(notif), Settings.aDelay);
-	},
-	
-	/*
 	 * Plays an audio representation of provided string, using Chrome's TTS
 	 * system if the user is running it. Otherwise loads a TTS sound file
 	 * generated from a TTS web service into a hidden audio tag.
@@ -29280,7 +29219,10 @@ P = {
 			if (that.GPSisInstance)
 			{
 				that.GPSisInstance = false;
-				that.changeFloor();
+				if (that.isFloorShown)
+				{
+					that.changeFloor();
+				}
 			}
 		}
 		else if (that.isSubzoneValid(zoneid))
@@ -29313,7 +29255,10 @@ P = {
 			that.GPSPreviousZoneID = zoneid;
 			if (that.GPSisInstance)
 			{
-				that.changeFloor(zone.floors[0]);
+				if (that.isFloorShown)
+				{
+					that.changeFloor(zone.floors[0]);
+				}
 			}
 		}
 		
@@ -35862,6 +35807,9 @@ H = {
 				+ "<img data-src='img/ui/menu/info.png' />" + D.getWordCapital("info") + "</a> "
 			+ "<a id='dsbPactHistoryLink' class='jsTitle' data-page='Pact' title='Previous recipes and frequency statistics.'>"
 				+ "<img data-src='img/ui/tradingpost.png' />" + D.getWordCapital("history") + "</a> "
+			+ "<a id='dsbPactProfitLink' class='jsTitle' " + U.convertExternalAnchor("https://wiki.guildwars2.com/wiki/Map_bonus_reward/profit")
+				+ "title='Map rewards schedule and calculations.'>"
+				+ "<img data-src='img/ui/coin_gold.png' />" + D.getWordCapital("profit") + "</a> "
 			+ "<a class='jsTitle'" + U.convertExternalAnchor(H.Pact.SpreadsheetEdit)
 				+ "title='Update and verify the collaborative daily offers list.'>"
 				+ "<img data-src='img/ui/import.png' />" + D.getWordCapital("update") + "</a>"
@@ -38706,6 +38654,67 @@ I = {
 		var characterspersecond = 18;
 		var seconds = 3 + parseInt(pString.length / characterspersecond);
 		return pWantSeconds ? seconds : seconds * T.cMSECONDS_IN_SECOND;
+	},
+	
+	/*
+	 * Proceeds with the browser notification permission request if user enabled
+	 * the preliminary option.
+	 */
+	askNotifications: function()
+	{
+		if (O.Options.bol_alertDesktop)
+		{
+			if (!("Notification" in window))
+			{
+				I.write("Your browser does not seem to support web notifications.");
+			}
+			else if (Notification.permission !== "denied")
+			{
+				Notification.requestPermission(function(permission)
+				{
+					I.notify("This is an example of a notification you will receive.");
+				});
+			}
+		}
+	},
+	isNotificationsAllowed: function()
+	{
+		return (O.Options.bol_alertDesktop && "Notification" in window && Notification.permission === "granted");
+	},
+	
+	/*
+	 * Shows notification popup if allowed.
+	 * @param string pString text content.
+	 * @objparam string aTitle header.
+	 * @objparam string aIcon URL of image.
+	 * @objparam int aDelay milliseconds before popup disappears.
+	 */
+	notify: function(pString, pSettings)
+	{
+		if (I.isNotificationsAllowed() === false)
+		{
+			return;
+		}
+		
+		var Settings = $.extend({
+			aTitle: I.cSiteName,
+			aIcon: "img/meta/logo_192x192.png",
+			aDelay: I.getTextDuration(pString)
+		}, pSettings);
+
+		// Create popup
+		var notif = new Notification(Settings.aTitle, {
+			icon: Settings.aIcon,
+			body: pString
+		});
+		// Open the originating browser tab and close the popup when clicked on
+		notif.onclick = function(pEvent)
+		{
+			window.focus();
+			this.close();
+		};
+		// Self close after duration
+		setTimeout(notif.close.bind(notif), Settings.aDelay);
 	},
 	
 	/*
