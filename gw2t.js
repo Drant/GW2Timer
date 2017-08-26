@@ -258,6 +258,7 @@ O = {
 		int_setAlarm: 0,
 		int_setVolume: 75,
 		int_secAlertDesktop: 10,
+		bol_alertSpeech: true,
 		bol_alertDesktop: false,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
@@ -22509,6 +22510,11 @@ D = {
 	speechWait: 0, // In milliseconds
 	speak: function(pString, pDuration)
 	{
+		if (O.Options.bol_alertSpeech === false)
+		{
+			return;
+		}
+		
 		var volume = (O.Options.int_setVolume / T.cPERCENT_100).toFixed(2);
 		 /* 
 		  * Chrome-only TTS service, Google Speech Synthesis API:
