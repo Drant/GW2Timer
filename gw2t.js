@@ -143,6 +143,11 @@ O = {
 						+ "GW2 Build ID: " + valA + " " + I.Symbol.ArrowLeft + " " + valB + " Diff: " + (valA - parseInt(valB)) + "<br />"
 						+ T.formatWeektime(new Date(), true) + " - <a href='./?bol_alertBuild=false'>Turn off patch alarm?</a>");
 					D.speak("Alert! " + message);
+					I.notify({
+						aTitle: "New Patch",
+						aBody: message,
+						aIcon: "img/notification/game.png"
+					});
 					localStorage[key] = valA;
 				}
 				else if (valB === undefined || parseInt(valB) !== valA)
@@ -252,6 +257,7 @@ O = {
 		// Alarm
 		int_setAlarm: 0,
 		int_setVolume: 75,
+		int_secAlertDesktop: 10,
 		bol_alertDesktop: false,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
@@ -20388,6 +20394,8 @@ E = {
 		var selllow = E.parseCoinString(selllowelm.val());
 		var sellhigh = E.parseCoinString(sellhighelm.val());
 		var wantcache = (pWantCache !== false) ? true : false;
+		var icon = pEntry.find(".trdIcon");
+		icon = (icon.length && icon.attr("src").length) ? icon.attr("src") : "img/notification/tp.png";
 		
 		if (pEntry.data("istradeable") === false)
 		{
@@ -20432,12 +20440,19 @@ E = {
 			if (X.isChecked(X.Checklists.TradingNotify, pEntry))
 			{
 				nameelm.removeClass("trdMatched");
+				var phrase;
 				
 				if (currentbuy <= buylow && buylow !== 0 && currentbuy !== 0)
 				{
 					nameelm.addClass("trdMatched");
 					buylowelm.addClass("trdMatched");
-					D.speak(D.getPhraseTitle("buy low") + " " + name);
+					phrase = D.getPhraseTitle("buy low") + " " + name;
+					D.speak(phrase);
+					I.notify({
+						aTitle: name,
+						aBody: phrase,
+						aIcon: icon
+					});
 				}
 				else
 				{
@@ -20448,7 +20463,13 @@ E = {
 				{
 					nameelm.addClass("trdMatched");
 					buyhighelm.addClass("trdMatched");
-					D.speak(D.getPhraseTitle("buy high") + " " + name);
+					phrase = D.getPhraseTitle("buy high") + " " + name;
+					D.speak(phrase);
+					I.notify({
+						aTitle: name,
+						aBody: phrase,
+						aIcon: icon
+					});
 				}
 				else
 				{
@@ -20459,7 +20480,13 @@ E = {
 				{
 					nameelm.addClass("trdMatched");
 					selllowelm.addClass("trdMatched");
-					D.speak(D.getPhraseTitle("sell low") + " " + name);
+					phrase = D.getPhraseTitle("sell low") + " " + name;
+					D.speak(phrase);
+					I.notify({
+						aTitle: name,
+						aBody: phrase,
+						aIcon: icon
+					});
 				}
 				else
 				{
@@ -20470,7 +20497,13 @@ E = {
 				{
 					nameelm.addClass("trdMatched");
 					sellhighelm.addClass("trdMatched");
-					D.speak(D.getPhraseTitle("sell high") + " " + name);
+					phrase = D.getPhraseTitle("sell high") + " " + name;
+					D.speak(phrase);
+					I.notify({
+						aTitle: name,
+						aBody: phrase,
+						aIcon: icon
+					});
 				}
 				else
 				{
@@ -21083,7 +21116,12 @@ E = {
 				else if (currentgem >= gemhigh && gemhigh !== 0)
 				{
 					gemhighelm.addClass("trdMatched");
-					D.speak(D.getPhraseTitle("buy gem high"));
+					var phrase = D.getPhraseTitle("buy gem high");
+					D.speak(phrase);
+					I.notify({
+						aTitle: phrase,
+						aIcon: "img/notification/gem.png"
+					});
 				}
 				else
 				{
@@ -21128,7 +21166,12 @@ E = {
 				else if (currentcoin >= coinhigh && coinhigh !== 0)
 				{
 					coinhighelm.addClass("trdMatched");
-					D.speak(D.getPhraseTitle("buy coin high"));
+					var phrase = D.getPhraseTitle("buy coin high");
+					D.speak(phrase);
+					I.notify({
+						aTitle: phrase,
+						aIcon: "img/notification/coin.png"
+					});
 				}
 				else
 				{
@@ -24004,6 +24047,11 @@ C = {
 						&& C.isChainSubscribed(pChain) && C.isChainUnchecked(pChain)))
 				{
 					D.speak(D.getChainPronunciation(pChain) + " " + D.getSpeechWord("arrival predicted"));
+					I.notify({
+						aTitle: D.getObjectName(pChain),
+						aBody: D.getPhraseTitle("arrival predicted"),
+						aIcon: pChain.iconSrc
+					});
 				}
 			}
 		}
@@ -24033,6 +24081,7 @@ C = {
 				var wantsd = U.objToBool(C.NextChainSD1);
 				var wanthc = U.objToBool(C.NextChainHC1);
 				var speech = D.getSpeechWord("next " + D.orderModifier("boss", "world") + " is") + " ";
+				var timephrase = "";
 				
 				if (C.NextChainSD1 && ( ! C.isChainUnchecked(C.NextChainSD1)))
 				{
@@ -24049,6 +24098,7 @@ C = {
 					if (checkedhc.length > 0) { wanthc = false; }
 				}
 				
+				// Voice
 				if (wantsd && wanthc)
 				{
 					D.speak(speech + D.getChainPronunciation(C.NextChainSD1) + checkedsd, 5);
@@ -24065,7 +24115,25 @@ C = {
 				
 				if (wantsd || wanthc)
 				{
-					D.speak(T.getTimeTillChainFormatted(C.NextChainSD1, "speech"), 3);
+					timephrase = T.getTimeTillChainFormatted(C.NextChainSD1, "speech");
+					D.speak(timephrase, 3);
+				}
+				// Popup
+				if (wantsd)
+				{
+					I.notify({
+						aTitle: D.getObjectName(C.NextChainSD1),
+						aBody: timephrase,
+						aIcon: C.NextChainSD1.iconSrc
+					});
+				}
+				if (wanthc)
+				{
+					I.notify({
+						aTitle: D.getObjectName(C.NextChainHC1),
+						aBody: timephrase,
+						aIcon: C.NextChainHC1.iconSrc
+					});
 				}
 			}
 			
@@ -34700,7 +34768,11 @@ T = {
 				// Is transitioning to day
 				if (min === T.cDAYTIME_DAY_START && O.Options.bol_alertDaylight)
 				{
-					D.speak(D.getPhrase("approaching day"));
+					D.speak(D.getPhraseTitle("approaching day"));
+					I.notify({
+						aTitle: D.getWordCapital("day"),
+						aIcon: "img/notification/day.png"
+					});
 				}
 			}
 			else // Night
@@ -34731,6 +34803,10 @@ T = {
 				if (min === T.cDAYTIME_NIGHT_START && O.Options.bol_alertDaylight)
 				{
 					D.speak(D.getPhrase("approaching night"));
+					I.notify({
+						aTitle: D.getWordCapital("night"),
+						aIcon: "img/notification/night.png"
+					});
 				}
 			}
 		}
@@ -35110,6 +35186,10 @@ T = {
 							setTimeout(function()
 							{
 								D.speak(U.toText(dailyspecialstr));
+								I.notify({
+									aTitle: "Daily Forger",
+									aIcon: "img/notification/forge.png"
+								});
 							}, 5000);
 						}
 					}
@@ -35710,6 +35790,11 @@ H = {
 				if (H.isGemSubscribedForAvailable(id) && (isavailableinsale || isavailableinrecord))
 				{
 					I.print(pEntry.n + availablestr + "! " + getUnsubscribeLink(id));
+					I.notify({
+						aTitle: pEntry.n,
+						aBody: availablestr,
+						aIcon: "img/notification/store.png"
+					});
 					isavailable = true;
 				}
 				// Check for discount
@@ -35719,6 +35804,11 @@ H = {
 					{
 						I.print(pEntry.n + discountstr + "! " + E.formatGemString(value) + " − "
 							+ E.formatGemString(value - salevalue) + " = " + E.formatGemString(salevalue) + " " + getUnsubscribeLink(id));
+						I.notify({
+							aTitle: pEntry.n,
+							aBody: discountstr,
+							aIcon: "img/notification/store.png"
+						});
 						isdiscounted = true;
 					}
 					// If item is no longer available, then convert the discount subscription to an availability subscription
@@ -37156,6 +37246,7 @@ K = {
 			var wantms = false;
 			var speechwb = "";
 			var speechms = "";
+			var speechls = "";
 
 			// If alarm minutes is beyond the timeframe range, check the chains beyond
 			if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
@@ -37193,6 +37284,23 @@ K = {
 					}
 					D.speak(speechwb);
 					D.speak(timephrase);
+					
+					if (wantsd)
+					{
+						I.notify({
+							aTitle: D.getObjectName(chainsd),
+							aBody: speechwb + timephrase,
+							aIcon: chainsd.iconSrc
+						});
+					}
+					if (wanthc)
+					{
+						I.notify({
+							aTitle: D.getObjectName(wanthc),
+							aBody: speechwb + timephrase,
+							aIcon: wanthc.iconSrc
+						});
+					}
 				}
 
 				// Miscellaneous chains can happen simultaneously in a timeframe
@@ -37219,14 +37327,25 @@ K = {
 					{
 						speechms += timephrase;
 						D.speak(speechms);
+						I.notify({
+							aTitle: D.getObjectName(chainms),
+							aBody: speechms,
+							aIcon: chainms.iconSrc
+						});
 					}
 				}
 
 				// Living Story chain
 				if (H.isStoryEnabled && wantls)
 				{
-					D.speak(D.getSpeechWord("event", "subscribed") + " " + D.getChainPronunciation(chainls));
-					D.speak(timephrase);
+					speechls = D.getSpeechWord("event", "subscribed") + " " + D.getChainPronunciation(chainls);
+					speechls += timephrase;
+					D.speak(speechls);
+					I.notify({
+						aTitle: D.getObjectName(chainls),
+						aBody: speechls,
+						aIcon: chainls.iconSrc
+					});
 				}
 			}
 		}
@@ -37359,6 +37478,23 @@ K = {
 			{
 				D.speak(speech + D.getChainPronunciation(C.CurrentChainHC) + checkedcurrenthc, 5);
 			}
+			// Popup
+			if (wantcurrentsd)
+			{
+				I.notify({
+					aTitle: D.getObjectName(C.CurrentChainSD),
+					aBody: D.getWordCapital("current"),
+					aIcon: C.CurrentChainSD.iconSrc
+				});
+			}
+			if (wantcurrenthc)
+			{
+				I.notify({
+					aTitle: D.getObjectName(C.CurrentChainHC),
+					aBody: D.getWordCapital("current"),
+					aIcon: C.CurrentChainHC.iconSrc
+				});
+			}
 			
 			// Announce next bosses only if the current has been announced too
 			if (wantcurrentsd || wantcurrenthc)
@@ -37375,6 +37511,23 @@ K = {
 				else if (wantnexthc)
 				{
 					D.speak(D.getSpeechWord("then") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkednexthc, 4);
+				}
+				// Popup
+				if (wantnextsd)
+				{
+					I.notify({
+						aTitle: D.getObjectName(C.NextChainSD1),
+						aBody: D.getWordCapital("next"),
+						aIcon: C.NextChainSD1.iconSrc
+					});
+				}
+				if (wantnexthc)
+				{
+					I.notify({
+						aTitle: D.getObjectName(C.NextChainHC1),
+						aBody: D.getWordCapital("next"),
+						aIcon: C.NextChainHC1.iconSrc
+					});
 				}
 			}
 		}
@@ -37793,6 +37946,11 @@ K = {
 			var speech = O.Options.str_textStopwatchAlert;
 			I.print(now.toLocaleString() + ": " + U.escapeHTML(speech));
 			D.speak(speech);
+			I.notify({
+				aTitle: speech,
+				aIcon: "img/notification/alert.png",
+				aDelay: 60
+			});
 		}
 	},
 	
@@ -38686,26 +38844,30 @@ I = {
 	 * Shows notification popup if allowed.
 	 * @param string pString text content.
 	 * @objparam string aTitle header.
+	 * @objparam string aBody text message.
 	 * @objparam string aIcon URL of image.
 	 * @objparam int aDelay milliseconds before popup disappears.
 	 */
-	notify: function(pString, pSettings)
+	notify: function(pSettings)
 	{
 		if (I.isNotificationsAllowed() === false)
 		{
 			return;
 		}
 		
+		pSettings = (typeof pSettings === "string") ? { aTitle: pSettings } : pSettings;
 		var Settings = $.extend({
 			aTitle: I.cSiteName,
+			aBody: "",
 			aIcon: "img/meta/logo_192x192.png",
-			aDelay: I.getTextDuration(pString)
+			aDelay: O.Options.int_secAlertDesktop
 		}, pSettings);
+		Settings.aDelay *= T.cMSECONDS_IN_SECOND;
 
 		// Create popup
 		var notif = new Notification(Settings.aTitle, {
 			icon: Settings.aIcon,
-			body: pString
+			body: Settings.aBody
 		});
 		// Open the originating browser tab and close the popup when clicked on
 		notif.onclick = function(pEvent)
