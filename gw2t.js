@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170813},
+		programVersion: {key: "int_utlProgramVersion", value: 170826},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -35898,7 +35898,7 @@ H = {
 			+ "<a id='dsbPactHistoryLink' class='jsTitle' data-page='Pact' title='Previous recipes and frequency statistics.'>"
 				+ "<img data-src='img/ui/tradingpost.png' />" + D.getWordCapital("history") + "</a> "
 			+ "<a id='dsbPactProfitLink' class='jsTitle' " + U.convertExternalAnchor("https://wiki.guildwars2.com/wiki/Map_bonus_reward/profit")
-				+ "title='Buy Pact Scout Mapping Materials from vendors and sell on profitable zone weeks.'>"
+				+ "title='Buy Pact Scout Mapping Materials from vendors and consume in profitable zone weeks.'>"
 				+ "<img data-src='img/ui/coin_gold.png' />" + D.getWordCapital("profit") + "</a> "
 			+ "<a class='jsTitle'" + U.convertExternalAnchor(H.Pact.SpreadsheetEdit)
 				+ "title='Update and verify the collaborative daily offers list.'>"
@@ -37261,7 +37261,8 @@ K = {
 			{
 				// Make sure the chain is not null/undefined (if it does not exist in the time slot)
 				var conjunction = " " + D.getSpeechWord("and") + " ";
-				var timephrase = " " + D.getSpeechWord("will start") + D.getPluralTime(minutestill, "minute");
+				var timestr = D.getPluralTime(minutestill, "minute");
+				var timephrase = " " + D.getSpeechWord("will start") + timestr;
 				
 				speechwb = D.getSpeechWord(D.orderModifier(D.orderModifier("boss", "world"), "subscribed")) + " ";
 				wantsd = U.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
@@ -37289,16 +37290,16 @@ K = {
 					{
 						I.notify({
 							aTitle: D.getObjectName(chainsd),
-							aBody: speechwb + timephrase,
+							aBody: timestr,
 							aIcon: chainsd.iconSrc
 						});
 					}
 					if (wanthc)
 					{
 						I.notify({
-							aTitle: D.getObjectName(wanthc),
-							aBody: speechwb + timephrase,
-							aIcon: wanthc.iconSrc
+							aTitle: D.getObjectName(chainhc),
+							aBody: timestr,
+							aIcon: chainhc.iconSrc
 						});
 					}
 				}
