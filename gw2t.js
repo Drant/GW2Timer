@@ -38466,6 +38466,7 @@ I = {
 		I.initializePlateMenu();
 		I.initializeHUD();
 		I.styleContextMenu("#mapContext");
+		I.askNotifications(true);
 		$("#mapHUDContainer").toggle(O.Options.bol_showHUD);
 		// Bind switch map buttons
 		$("#mapSwitchButton").click(function()
@@ -38819,19 +38820,25 @@ I = {
 	 * Proceeds with the browser notification permission request if user enabled
 	 * the preliminary option.
 	 */
-	askNotifications: function()
+	askNotifications: function(pIsInitial)
 	{
 		if (O.Options.bol_alertDesktop)
 		{
 			if (!("Notification" in window))
 			{
-				I.write("Your browser does not seem to support web notifications.");
+				if (!pIsInitial)
+				{
+					I.write("Your browser does not seem to support web notifications.");
+				}
 			}
 			else if (Notification.permission !== "denied")
 			{
 				Notification.requestPermission(function(permission)
 				{
-					I.notify("This is an example of a notification you will receive.");
+					if (!pIsInitial)
+					{
+						I.notify("This is an example of a notification you will receive.");
+					}
 				});
 			}
 		}
