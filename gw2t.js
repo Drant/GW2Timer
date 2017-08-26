@@ -35808,7 +35808,7 @@ H = {
 			+ "<a id='dsbPactHistoryLink' class='jsTitle' data-page='Pact' title='Previous recipes and frequency statistics.'>"
 				+ "<img data-src='img/ui/tradingpost.png' />" + D.getWordCapital("history") + "</a> "
 			+ "<a id='dsbPactProfitLink' class='jsTitle' " + U.convertExternalAnchor("https://wiki.guildwars2.com/wiki/Map_bonus_reward/profit")
-				+ "title='Map rewards schedule and calculations.'>"
+				+ "title='Buy Pact Scout Mapping Materials from vendors and sell on profitable zone weeks.'>"
 				+ "<img data-src='img/ui/coin_gold.png' />" + D.getWordCapital("profit") + "</a> "
 			+ "<a class='jsTitle'" + U.convertExternalAnchor(H.Pact.SpreadsheetEdit)
 				+ "title='Update and verify the collaborative daily offers list.'>"
