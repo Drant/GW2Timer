@@ -411,6 +411,7 @@ TonicEndless: [
 	{i: 50014, n: "Selfless Potion", p: {achievement: 0}},
 	{i: 50048, n: "Thoughtless Potion", p: {achievement: 0}},
 	{i: 81604, n: "Champion's Crown", p: {pvp: true}},
+	{i: 82447, n: "Champion's Sun", p: {pvp: true}},
 	{i: 43956, n: "Ellen Kiel Representation Button"},
 	{i: 43957, n: "Evon Gnashblade Representation Button"},
 	{i: 36192, n: "Endless Dragon Emblem Clothing Tonic", p: {gem: 0}},

@@ -38835,7 +38835,7 @@ I = {
 			{
 				if (!pIsInitial)
 				{
-					I.write("Your browser does not seem to support web notifications.");
+					I.write("Your browser does not seem to support desktop notifications.");
 				}
 			}
 			else if (Notification.permission !== "denied")
