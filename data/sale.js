@@ -23,8 +23,6 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: 83517, n: "Season 1 Memory Box - Scarlet vs. Lion's Arch", p: {gem: 0}, discount: [[1, 200], [10, 1500]]},
 	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: 0}, discount: [[1, 200], [10, 1500]], Finish: new Date("2017-08-29T17:00:00Z")},
-	{i: 19993, n: "Bag Slot Expansion", p: {gem: 280}, discount: 400, Finish: new Date("2017-08-27T17:00:00Z")},
-	{i: 35991, n: "Total Makeover Kit", p: {gem: 105}, discount: [[1, 350], [5, 1400]], Finish: new Date("2017-08-27T17:00:00Z")},
 	{i: 35989, n: "Name Change Contract", p: {gem: 400}, discount: 800, Finish: new Date("2017-08-28T17:00:00Z")},
 	{i: 19995, n: "Bank Tab Expansion", p: {gem: 480}, discount: 600, Finish: new Date("2017-08-29T17:00:00Z")},
 	{i: 19980, n: "Black Lion Chest Key", p: {gem: 93}, discount: [[1, 125], [5, 450], [25, 2100]], Finish: new Date("2017-08-29T17:00:00Z")},

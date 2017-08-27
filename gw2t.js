@@ -24052,10 +24052,11 @@ C = {
 					|| (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription
 						&& C.isChainSubscribed(pChain) && C.isChainUnchecked(pChain)))
 				{
-					D.speak(D.getChainPronunciation(pChain) + " " + D.getSpeechWord("arrival predicted"));
+					var arrivalstr = D.getPhraseOriginal("Arrival predicted");
+					D.speak(D.getChainPronunciation(pChain) + " " + arrivalstr);
 					I.notify({
 						aTitle: D.getObjectName(pChain),
-						aBody: D.getPhraseTitle("arrival predicted"),
+						aBody: arrivalstr,
 						aIcon: pChain.iconSrc
 					});
 				}
