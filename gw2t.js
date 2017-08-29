@@ -36116,10 +36116,9 @@ H = {
 	 */
 	generateDashboardDailyHeader: function(pDate)
 	{
-		var headername = (I.ModeCurrent === I.ModeEnum.Overlay) ? D.getWordCapital("daily") : D.getModifiedWord("achievements", "daily", U.CaseEnum.Every);
 		$("#dsbMenuDaily").empty().append("<div><kbd id='dsbDailyHeader' class='curToggle'>"
 			+ "<img src='img/ui/daily.png' /><img id='dsbDailyToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
-			+ "<var>" + headername + "</var></kbd>"
+			+ "<var>" + D.getModifiedWord("achievements", "daily", U.CaseEnum.Every) + "</var></kbd>"
 		+ "</div>").addClass("dsbTabEnabled").click(function()
 		{
 			H.generateDashboardDaily();
