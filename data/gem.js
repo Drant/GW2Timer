@@ -216,7 +216,8 @@ Head: [
 	{i: 79014, n: "Xera's Mask", p: {gem: -400}},
 	{i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
 	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
-	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}}
+	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
+	{i: 84014, n: "Swaggering Hat", p: {gem: 400}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -338,6 +339,9 @@ BlackLionWeapon: [
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 ],
 Package: [
+	//{i: "http://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1600}},
+	//{i: "http://i.imgur.com/7KQdXAx.png", n: "Marjory's Package", p: {gem: 1600}},
+	//{i: "http://i.imgur.com/GwhNI7D.png", n: "Champion of Tyria Package", p: {gem: 1800}},
 	//{i: "http://i.imgur.com/nUcEfzX.png", n: "Dynamics Exo-Suit Appearance Pack", p: {gem: 1500}},
 	//{i: "http://i.imgur.com/92cVON9.png", n: "Winter Solstice Appearance Pack", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/AuYSBAV.png", n: "Crystal Arbiter Appearance Pack", p: {gem: 2000}},
