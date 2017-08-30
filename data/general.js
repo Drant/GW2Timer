@@ -1758,7 +1758,7 @@ Countdown: {
 		name_es: "Rebajas de aniversario",
 		name_fr: "Offre spéciale d'anniversaire",
 		name_zh: "周年纪念销售",
-		official: "news/champion-of-tyria-outfit-mini-squire-aurene-and-sheet-music-glider-now-available/",
+		official: "news/swaggering-hat-and-marjory-and-kasmeers-packages-are-available-now/",
 		Start: new Date("2017-08-09T16:00:00Z"),
 		Finish: new Date("2017-09-01T16:00:00Z")
 	},
