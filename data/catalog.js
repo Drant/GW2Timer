@@ -523,6 +523,7 @@ TonicConsumable: [
 	{i: 8706, n: "Ogre Pet Tonic", p: {coin: 392}},
 	{i: 8717, n: "Growth Tonic", p: {coin: 304}},
 	{i: 8718, n: "Hazmat Suit Transformation Tonic", p: {coin: 320}},
+	{i: 84676, n: "Mystery Quaggan Tonic", p: {coin: 0}},
 	{i: 8729, n: "Quaggan Tonic", p: {coin: 128}},
 	{i: 8896, n: "Ghostly Tonic"},
 	{i: 8897, n: "Knavish Tonic"},

@@ -27669,6 +27669,7 @@ P = {
 					zoneobj.ispopulated = true; // Mark as populated to avoid duplicate zones
 					apizone = region.maps[zoneid];
 					var zonename = D.getObjectName(zoneobj);
+					var poiname;
 					var numheart = 0;
 					var numwaypoint = 0;
 					var numlandmark = 0;
@@ -27719,8 +27720,9 @@ P = {
 								numvista++;
 								icon = U.URL_IMG.Vista;
 								cssclass = "mapPoi";
-								tooltip = translationvista;
-								P.addMapLocation(poi.coord, zonename + " " + translationvista + " " + poi.poi_id, icon, zonename + " " + translationvista);
+								poiname = poi.name ? (poi.name + " " + translationvista) : translationvista;
+								tooltip = poiname;
+								P.addMapLocation(poi.coord, zonename + " " + poiname + " " + poi.poi_id, icon, zonename + " " + translationvista);
 							} break;
 							
 							default: continue; // Don't create marker if not desired type

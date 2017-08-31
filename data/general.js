@@ -1658,7 +1658,7 @@ Announcement:
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
 		content: "<a href='https://www.reddit.com/r/Guildwars2/comments/6w71do/introducing_desktop_notifications_for_guild_wars/'>Get desktop notifications!</a><br />Free Black Lion Key on the gem store.",
-		Finish: new Date("2017-08-29T16:00:00Z")
+		Finish: new Date("2017-09-06T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
@@ -1752,16 +1752,16 @@ Countdown: {
 		Start: new Date("2017-08-22T16:00:00Z"),
 		Finish: new Date("2017-08-23T16:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "Anniversary Sale",
 		name_de: "Jubiläumsangebote",
 		name_es: "Rebajas de aniversario",
 		name_fr: "Offre spéciale d'anniversaire",
 		name_zh: "周年纪念销售",
 		official: "news/swaggering-hat-and-marjory-and-kasmeers-packages-are-available-now/",
-		Start: new Date("2017-08-09T16:00:00Z"),
-		Finish: new Date("2017-09-01T16:00:00Z")
-	},
+		Start: new Date("2018-08-09T16:00:00Z"),
+		Finish: new Date("2019-09-01T16:00:00Z")
+	},*/
 	/*{
 		name: "Path of Fire Demo II",
 		official: "news/developer-diary-elite-specializations/",
