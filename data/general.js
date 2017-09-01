@@ -1860,6 +1860,20 @@ Faux: [
 		desc_zh: "启一个人物栏位。",
 		type: "Consumable",
 		rarity: "Masterwork"
+	},
+	{
+		name_en: "Free Gem Store Item",
+		name_de: "Kostenlose Edelsteine Gegenstand",
+		name_es: "Objeto de gema gratuito",
+		name_fr: "Objet de gemme gratuit",
+		name_zh: "免费物体宝石",
+		desc_en: "Subscribe to be alerted of free Gem Store items. Use the wishlist at gw2timer.com/gem",
+		desc_de: "Abonnieren um von freier Gem Store-Artikel benachrichtigt zu werden.",
+		desc_es: "Suscríbete para recibir alertas de los artículos gratuitos de Gem Store.",
+		desc_fr: "S'abonner pour être alerté des articles gratuits de Gem Store.",
+		desc_zh: "订阅免费宝石商店物品的提醒。",
+		type: "Consumable",
+		rarity: "Masterwork"
 	}
 ],
 

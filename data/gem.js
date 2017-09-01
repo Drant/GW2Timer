@@ -39,6 +39,7 @@ var GW2T_GEM_HEADERS = {
  */
 var GW2T_GEM_DATA = {
 Outfit: [
+	{i: "free_gem_store_item", n: "Free Gem Store Item", p: {gem: 0}},
 	{i: 65196, n: "Mad King's Outfit", p: {gem: -700}},
 	{i: 65201, n: "Witch's Outfit", p: {gem: -700}},
 	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: -700}},
