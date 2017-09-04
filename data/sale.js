@@ -30,6 +30,8 @@ GW2T_SALE_DATA = {
 	{i: 78008, n: "Gwen's Attire", p: {gem: 700}},
 	{i: 77483, n: "Slayer's Outfit", p: {gem: 700}},
 	{i: 69753, n: "Mad Scientist Outfit", p: {gem: 700}},
+	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}},
+	{i: 78010, n: "Ironclad Outfit", p: {gem: 700}},
 	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
 	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
 	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
@@ -38,14 +40,16 @@ GW2T_SALE_DATA = {
 	{i: 79721, n: "Cosmic Harvesting Tool", p: {gem: 1000}, Finish: new Date("2017-09-04T16:00:00Z")},
 	{i: 79472, n: "Cosmic Logging Tool", p: {gem: 1000}, Finish: new Date("2017-09-04T16:00:00Z")},
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}, Finish: new Date("2017-09-04T16:00:00Z")},
-	{i: 67040, n: "Ceremonial Plated Outfit", p: {gem: 700}, Finish: new Date("2017-09-03T16:00:00Z")},
-	{i: 69662, n: "Daydreamer's Finery Outfit", p: {gem: 700}, Finish: new Date("2017-09-03T16:00:00Z")},
 	{i: 63891, n: "Glowing Crimson Mask", p: {gem: 500}, Finish: new Date("2017-09-08T16:00:00Z")},
 	{i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 400}, Finish: new Date("2017-09-08T16:00:00Z")},
+	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}, Finish: new Date("2017-09-10T16:00:00Z")},
+	{i: 44608, n: "Mask of the Queen", p: {gem: 400}, Finish: new Date("2017-09-10T16:00:00Z")},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}, Finish: new Date("2017-09-09T16:00:00Z")},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}, Finish: new Date("2017-09-09T16:00:00Z")},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}, Finish: new Date("2017-09-09T16:00:00Z")},
 	{i: 64745, n: "Ringmaster's Hat", p: {gem: 200}, Finish: new Date("2017-09-08T16:00:00Z")},
+	{i: 64751, n: "Fuzzy Quaggan Hat with Bow", p: {gem: 200}, Finish: new Date("2017-09-10T16:00:00Z")},
+	{i: 64755, n: "Fuzzy Bear Hat", p: {gem: 200}, Finish: new Date("2017-09-10T16:00:00Z")},
 	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}, Finish: new Date("2017-09-08T16:00:00Z")}
 	]
 };

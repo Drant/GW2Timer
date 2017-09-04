@@ -35757,6 +35757,11 @@ H = {
 					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
 					H.Sale.Values[item.i] = E.getPaymentAmount(item);
 				}
+				// If any item has 0 price then initialize the free faux item
+				if (E.getPaymentAmount(item) === 0 && H.Sale.Values["free_gem_store_item"] === undefined)
+				{
+					H.Sale.Values["free_gem_store_item"] = 0;
+				}
 			}
 			
 			// Execute gem store gallery callback
@@ -35801,7 +35806,7 @@ H = {
 					I.print(pEntry.n + availablestr + "! " + getUnsubscribeLink(id));
 					I.notify({
 						aTitle: pEntry.n,
-						aBody: availablestr,
+						aBody: D.getWordCapital("available"),
 						aIcon: "img/notification/store.png"
 					});
 					isavailable = true;
@@ -35815,7 +35820,7 @@ H = {
 							+ E.formatGemString(value - salevalue) + " = " + E.formatGemString(salevalue) + " " + getUnsubscribeLink(id));
 						I.notify({
 							aTitle: pEntry.n,
-							aBody: discountstr,
+							aBody: D.getWordCapital("discount"),
 							aIcon: "img/notification/store.png"
 						});
 						isdiscounted = true;
