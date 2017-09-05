@@ -35747,20 +35747,22 @@ H = {
 				H.initializeGemSubscription();
 			}
 			// Initialize price assoc
+			var item, amount;
 			var issalecurrent = T.isTimely(H.Sale);
 			for (var i = 0; i < H.Sale.Items.length; i++)
 			{
-				var item = H.Sale.Items[i];
+				item = H.Sale.Items[i];
 				// Allow integer IDs or faux IDs and ignore expired
 				if (item.side === undefined && (T.isTimely(item) || (item.Finish === undefined && issalecurrent)))
 				{
 					// An item may have its own expiration, otherwise the entire sale's expiration is used for comparison
-					H.Sale.Values[item.i] = E.getPaymentAmount(item);
-				}
-				// If any item has 0 price then initialize the free faux item
-				if (E.getPaymentAmount(item) === 0 && H.Sale.Values["free_gem_store_item"] === undefined)
-				{
-					H.Sale.Values["free_gem_store_item"] = 0;
+					amount = E.getPaymentAmount(item);
+					H.Sale.Values[item.i] = amount;
+					// If any item has 0 price then initialize the free faux item
+					if (amount === 0 && H.Sale.Values["free_gem_store_item"] === undefined)
+					{
+						H.Sale.Values["free_gem_store_item"] = 0;
+					}
 				}
 			}
 			
