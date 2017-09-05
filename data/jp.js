@@ -957,7 +957,7 @@ JP: {
 		img: "http://i.imgur.com/S1sYzp0.png",
 		chest: null,
 		zone: "ember",
-		description: "Spikes, steam, and pit traps cave. Interact with the wall-stack of barrels in Noran's basement to enter."
+		description: "Doric traps cave. Interact with the wall-stack of barrels in Noran's basement to enter."
 	},
 	"neighborhood": {
 		id: 46,

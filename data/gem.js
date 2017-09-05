@@ -226,7 +226,7 @@ Shoulder: [
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
-	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}},
+	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
 	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
 ],
 Gloves: [
@@ -235,7 +235,7 @@ Gloves: [
 	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}},
-	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}},
+	{i: 78667, n: "Chaos Gloves Skin", p: {gem: -500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}}
 ],
 Boots: [
@@ -456,9 +456,9 @@ Gathering: [
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: -1000}},
 	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: -1000}},
 	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: -1000}},
-	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: -1000}},
-	{i: 67029, n: "Tireless Logging Minion", p: {gem: -1000}},
-	{i: 48932, n: "Bone Pick", p: {gem: -1000}},
+	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: 1000}},
+	{i: 67029, n: "Tireless Logging Minion", p: {gem: 1000}},
+	{i: 48932, n: "Bone Pick", p: {gem: 1000}},
 	{i: 67395, n: "Reap-r-Tron", p: {gem: -1000}},
 	{i: 67394, n: "Log-r-Tron", p: {gem: -1000}},
 	{i: 67396, n: "Mine-r-Tron", p: {gem: -1000}},
