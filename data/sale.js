@@ -21,8 +21,12 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "http://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1600}},
-	{i: "http://i.imgur.com/7KQdXAx.png", n: "Marjory's Package", p: {gem: 1600}},
+	
+	{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
+	{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 2000}},
+	{i: "http://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1600}, Finish: new Date("2017-09-12T16:00:00Z")},
+	{i: "http://i.imgur.com/7KQdXAx.png", n: "Marjory's Package", p: {gem: 1600}, Finish: new Date("2017-09-12T16:00:00Z")},
+	{i: 82666, n: "Geomancer Glider", p: {gem: 500}},
 	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: 1000}},
 	{i: 67029, n: "Tireless Logging Minion", p: {gem: 1000}},
 	{i: 48932, n: "Bone Pick", p: {gem: 1000}},
@@ -33,9 +37,6 @@ GW2T_SALE_DATA = {
 	{i: 69753, n: "Mad Scientist Outfit", p: {gem: 700}},
 	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}},
 	{i: 78010, n: "Ironclad Outfit", p: {gem: 700}},
-	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
-	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
-	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 	{i: 63891, n: "Glowing Crimson Mask", p: {gem: 500}, Finish: new Date("2017-09-08T16:00:00Z")},

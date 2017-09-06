@@ -133,7 +133,8 @@ Glider: [
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}},
 	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}},
-	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}}
+	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
+	{i: 82666, n: "Geomancer Glider", p: {gem: 500}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -340,6 +341,8 @@ BlackLionWeapon: [
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 ],
 Package: [
+	//{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
+	//{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 2000}},
 	//{i: "http://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1600}},
 	//{i: "http://i.imgur.com/7KQdXAx.png", n: "Marjory's Package", p: {gem: 1600}},
 	//{i: "http://i.imgur.com/GwhNI7D.png", n: "Champion of Tyria Package", p: {gem: 1800}},
@@ -601,7 +604,8 @@ Mini: [
 	{i: 80072, n: "Mini Celestial Rooster", p: {gem: 0}},
 	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}},
 	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
-	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}}
+	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
+	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},
