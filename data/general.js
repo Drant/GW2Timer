@@ -1658,7 +1658,7 @@ Announcement:
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
 		content: "<a href='https://www.reddit.com/r/Guildwars2/comments/6w71do/introducing_desktop_notifications_for_guild_wars/'>Get desktop notifications!</a>",
-		Finish: new Date("2017-09-06T16:00:00Z")
+		Finish: new Date("2017-09-12T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
@@ -1716,7 +1716,7 @@ Countdown: {
 		name: "Path of Fire Stress Test",
 		url: "https://forum-en.guildwars2.com/forum/game/gw2/Path-of-Fire-Stress-Test-September-7/first#post6738728",
 		Start: new Date("2017-09-07T19:00:00Z"),
-		Finish: new Date("2017-09-07T21:00:00Z"),
+		Finish: new Date("2017-09-07T21:00:00Z")
 	},
 	/*{
 		name_en: "Lunar Festival",
