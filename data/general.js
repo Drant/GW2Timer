@@ -1712,12 +1712,6 @@ Countdown: {
 		Start: new Date("2017-04-11T7:00:00Z"),
 		Finish: new Date("2017-04-12T17:00:00Z")
 	},*/
-	{
-		name: "Path of Fire Stress Test",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Path-of-Fire-Stress-Test-September-7/first#post6738728",
-		Start: new Date("2017-09-07T19:00:00Z"),
-		Finish: new Date("2017-09-07T21:00:00Z")
-	},
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",

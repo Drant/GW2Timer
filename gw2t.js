@@ -29617,14 +29617,14 @@ G = {
 
 		// Insert fractal row
 		var fractalmeta = T.Daily.Fractal;
-		var insertFractal = function(pType, pIslands, pIDs, pScaleStr)
+		var insertFractal = function(pType, pIslands, pIDs, pScaleNumbers, pScaleNames)
 		{
 			dailybox.append("<span class='dlyMode dlyModeFractal'>"
 				+ "<ins class='dly dly_daily_fractal" + (pType ? "scale" : "island")  + "'></ins>"
 				+ "<ins class='dly chl_fractal chl_" + pIslands[0].toLowerCase() + "' title='" + pIslands[0] + "' " + ((pIDs) ? ("data-ach='" + pIDs[0] + "'") : "") + "></ins>"
 				+ "<ins class='dly chl_fractal chl_" + pIslands[1].toLowerCase() + "' title='" + pIslands[1] + "' " + ((pIDs) ? ("data-ach='" + pIDs[1] + "'") : "") + "></ins>"
 				+ "<ins class='dly chl_fractal chl_" + pIslands[2].toLowerCase() + "' title='" + pIslands[2] + "' " + ((pIDs) ? ("data-ach='" + pIDs[2] + "'") : "") + "></ins>"
-				+ "<a class='dlyFractalScales'" + U.convertExternalAnchor(D.getObjectURL(fractalmeta)) + ">" + pScaleStr + "</a>"
+				+ "<a class='dlyFractalScales' title='<dfn>" + pScaleNames + "</dfn>'" + U.convertExternalAnchor(D.getObjectURL(fractalmeta)) + ">" + pScaleNumbers + "</a>"
 			+ "</span>");
 			I.qTip.init(dailybox.find("ins"));
 			I.qTip.init(".dlyFractalScales");
@@ -29649,15 +29649,16 @@ G = {
 		
 		// Daily fractal scales
 		var scaleids = [fractals[0], fractals[1], fractals[fractals.length - 1]]; // The daily scales are located in these API array indexes
-		var scaleA = T.DailyAssociation[(scaleids[0])];
-		var scaleB = T.DailyAssociation[(scaleids[1])];
-		var scaleC = T.DailyAssociation[(scaleids[2])];
+		var scaleA = parseInt(T.DailyAssociation[(scaleids[0])]);
+		var scaleB = parseInt(T.DailyAssociation[(scaleids[1])]);
+		var scaleC = parseInt(T.DailyAssociation[(scaleids[2])]);
 		if (scaleA && scaleB && scaleC)
 		{
 			insertFractal(true,
 				[getIslandFromScale(scaleA), getIslandFromScale(scaleB), getIslandFromScale(scaleC)],
 				scaleids,
-				scaleA + " " + scaleB + " " + scaleC
+				scaleA + " " + scaleB + " " + scaleC,
+				fractalmeta.Scale[scaleA - 1] + " | " + fractalmeta.Scale[scaleB - 1] + " | " + fractalmeta.Scale[scaleC - 1]
 			);
 		}
 
@@ -29671,7 +29672,8 @@ G = {
 			insertFractal(false,
 				[islandA, islandB, islandC],
 				islandids,
-				getMaxScale(islandA) + " " + getMaxScale(islandB) + " " + getMaxScale(islandC)
+				getMaxScale(islandA) + " " + getMaxScale(islandB) + " " + getMaxScale(islandC),
+				islandA + " | " + islandB + " | " + islandC
 			);
 		}
 		Q.bindAchievement(".chl_fractal");
