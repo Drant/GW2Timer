@@ -489,6 +489,7 @@ TonicEndless: [
 	{i: 80989, n: "Endless Embiggening Tonic", p: {karma: 175000}},
 	{i: 79049, n: "Endless Anomaly Fragment", p: {achievement: 0}},
 	{u: 81823, i: 82000, n: "Endless Fury Combat Tonic"},
+	{i: 81632, n: "Endless Chaos Combat Tonic", p: {matrix: 300}},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},

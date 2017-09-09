@@ -21,7 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	
+	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
 	{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
 	{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 2000}},
 	{i: "http://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1600}, Finish: new Date("2017-09-12T16:00:00Z")},
@@ -37,6 +37,7 @@ GW2T_SALE_DATA = {
 	{i: 69753, n: "Mad Scientist Outfit", p: {gem: 700}},
 	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}},
 	{i: 78010, n: "Ironclad Outfit", p: {gem: 700}},
+	{i: 64742, n: "Aviator Cap", p: {gem: 200}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}, Finish: new Date("2017-09-14T16:00:00Z")},
@@ -44,18 +45,19 @@ GW2T_SALE_DATA = {
 	{i: 69790, n: "Mini Rock", p: {gem: 350}, Finish: new Date("2017-09-14T16:00:00Z")},
 	{i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}, Finish: new Date("2017-09-14T16:00:00Z")},
 	{i: 80019, n: "Scruffy Backpack", p: {gem: 400}, Finish: new Date("2017-09-14T16:00:00Z")},
-	{i: 63891, n: "Glowing Crimson Mask", p: {gem: 500}, Finish: new Date("2017-09-08T16:00:00Z")},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}, Finish: new Date("2017-09-11T16:00:00Z")},
-	{i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 400}, Finish: new Date("2017-09-08T16:00:00Z")},
 	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}, Finish: new Date("2017-09-10T16:00:00Z")},
 	{i: 44608, n: "Mask of the Queen", p: {gem: 400}, Finish: new Date("2017-09-10T16:00:00Z")},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}, Finish: new Date("2017-09-11T16:00:00Z")},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}, Finish: new Date("2017-09-09T16:00:00Z")},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}, Finish: new Date("2017-09-09T16:00:00Z")},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}, Finish: new Date("2017-09-09T16:00:00Z")},
-	{i: 64745, n: "Ringmaster's Hat", p: {gem: 200}, Finish: new Date("2017-09-08T16:00:00Z")},
 	{i: 64751, n: "Fuzzy Quaggan Hat with Bow", p: {gem: 200}, Finish: new Date("2017-09-10T16:00:00Z")},
 	{i: 64755, n: "Fuzzy Bear Hat", p: {gem: 200}, Finish: new Date("2017-09-10T16:00:00Z")},
-	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}, Finish: new Date("2017-09-08T16:00:00Z")}
+	{i: 77649, n: "Mini Arrowhead", p: {gem: 400}, Finish: new Date("2017-09-15T16:00:00Z")},
+	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}, Finish: new Date("2017-09-15T16:00:00Z")},
+	{i: 69656, n: "Mini Fox Kit", p: {gem: 400}, Finish: new Date("2017-09-15T16:00:00Z")},
+	{i: 70191, n: "Mini Wyvern", p: {gem: 350}, Finish: new Date("2017-09-15T16:00:00Z")},
+	{i: 69621, n: "Miniature Moose", p: {gem: 350}, Finish: new Date("2017-09-15T16:00:00Z")}
 	]
 };
