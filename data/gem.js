@@ -194,7 +194,7 @@ Head: [
 	{i: 44609, n: "Mask of the Crown", p: {gem: -400}},
 	{i: 47883, n: "Stag Helm Skin", p: {gem: -500}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: -300}},
-	{i: 63940, n: "Lawless Helmet Skin", p: {gem: -300}},
+	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
 	{i: 47890, n: "Grenth Hood Skin", p: {gem: -500}},
 	{i: 65203, n: "Phantom's Hood", p: {gem: -200}},
 	{i: 48944, n: "Mask of the Wanderer Skin", p: {gem: -500}},
@@ -222,7 +222,7 @@ Head: [
 	{i: 84014, n: "Swaggering Hat", p: {gem: 400}}
 ],
 Shoulder: [
-	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
+	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
 	{i: 48824, n: "Scarlet's Spaulders", p: {gem: -400}},
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
@@ -231,7 +231,7 @@ Shoulder: [
 	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
 ],
 Gloves: [
-	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
+	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}},
 	{i: 48817, n: "Scarlet's Grasp", p: {gem: -400}},
 	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
@@ -240,7 +240,7 @@ Gloves: [
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}}
 ],
 Boots: [
-	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
+	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 300}}
 ],
 Armor: [
@@ -521,7 +521,7 @@ Mini: [
 	{i: 80884, n: "Mini Super Snake", p: {gem: -200}},
 	{i: 80915, n: "Mini Super Queen Bee Dog", p: {gem: -600}},
 	{i: 42579, n: "Mini Hippo Calf", p: {gem: -400}},
-	{i: 42591, n: "Mini White Kitten", p: {gem: 400}},
+	{i: 42591, n: "Mini White Kitten", p: {gem: -400}},
 	{i: 42593, n: "Mini Lion Cub", p: {gem: -400}},
 	{i: 42592, n: "Mini Black Bear Cub", p: {gem: -400}},
 	{i: 42577, n: "Mini Moa Chick", p: {gem: -400}},
@@ -554,11 +554,11 @@ Mini: [
 	{i: 42958, n: "Miniature Raven", p: {gem: -166}},
 	{i: 42957, n: "Miniature Snow Owl", p: {gem: -166}},
 	{i: 42581, n: "Mini Arctodus Cub", p: {gem: -400}},
-	{i: 42583, n: "Mini Orange Kitten", p: {gem: 400}},
+	{i: 42583, n: "Mini Orange Kitten", p: {gem: -400}},
 	{i: 42582, n: "Mini Polar Bear Cub", p: {gem: -400}},
 	{i: 42578, n: "Mini Piglet", p: {gem: -400}},
 	{i: 42584, n: "Mini Jaguar Cub", p: {gem: -400}},
-	{i: 45044, n: "Mini Frostbite", p: {gem: 400}},
+	{i: 45044, n: "Mini Frostbite", p: {gem: -400}},
 	{i: 66164, n: "Mini Chickenado", p: {gem: -500}},
 	{i: 42960, n: "Mini Scruffy", p: {gem: 500}},
 	{i: 42951, n: "Mini Mordrem Leyleecher", p: {gem: -500}},
@@ -596,7 +596,7 @@ Mini: [
 	{i: 77574, n: "Mini Tizlak", p: {gem: -200}},
 	{i: 77649, n: "Mini Arrowhead", p: {gem: -400}},
 	{i: 77675, n: "Mini Zintl Cavalier", p: {gem: -350}},
-	{i: 79048, n: "Mini Garm", p: {gem: 350}},
+	{i: 79048, n: "Mini Garm", p: {gem: -350}},
 	{i: 79361, n: "Mini Jungle Lord Faren", p: {gem: -350}},
 	{i: 79651, n: "Mini Feline Familiar", p: {gem: -350}},
 	{i: 79693, n: "Mini Bloodstone Rock", p: {gem: 350}},
