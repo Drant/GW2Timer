@@ -9780,7 +9780,7 @@ A = {
 					+ "</samp>";
 				}
 				prefix = (pIsConversion) ? ("<span class='cssLeft'>" + ((auditpayments[i].isappraised) ? I.Symbol.Approx : I.Symbol.ArrowRight) + "</span>") : "";
-				pColumn.append("<div class='audTableCell'>" + prefix + E.PaymentFormat[paymentkey](amount) + barstr + "</div>");
+				pColumn.append("<div class='audTableCell'>" + prefix + E.formatPayment(paymentkey, amount) + barstr + "</div>");
 			}
 		};
 		// Same as original function but shows the hidden payment rows
@@ -13160,11 +13160,11 @@ V = {
 				var dailyap = pData.daily_ap;
 				var monthlyap = pData.monthly_ap;
 				container.find(".bnkPrice").append("<div class='achBankTotal'>"
-					+ E.PaymentFormat.achievement(bankap[0]) + " + "
+					+ E.formatAchievement(bankap[0]) + " + "
 					+ dailyap.toLocaleString() + "<img class='css24' src='img/account/summary/daily.png' /> + "
 					+ monthlyap.toLocaleString() + "<img class='css24' src='img/account/summary/monthly.png' /> = "
-					+ "<var class='achBankActual'>" + E.PaymentFormat.achievement(bankap[0] + dailyap + monthlyap) + "</var>"
-					+ " / " + E.PaymentFormat.achievement(bankap[0] + bankap[1] + Q.GameLimit.DailyAP)
+					+ "<var class='achBankActual'>" + E.formatAchievement(bankap[0] + dailyap + monthlyap) + "</var>"
+					+ " / " + E.formatAchievement(bankap[0] + bankap[1] + Q.GameLimit.DailyAP)
 				+ "</div>");
 			});
 			
@@ -14735,8 +14735,8 @@ B = {
 					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
 				}; break;
 				default: {
-					pricestrleft = E.PaymentFormat[Settings.aPaymentEnum](displaypriceleft, true);
-					pricestrright = E.PaymentFormat[Settings.aPaymentEnum](displaypriceright, true);
+					pricestrleft = E.formatPayment(Settings.aPaymentEnum, displaypriceleft);
+					pricestrright = E.formatPayment(Settings.aPaymentEnum, displaypriceright);
 					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
 				}
 			}
@@ -14769,14 +14769,14 @@ B = {
 					}
 				}; break;
 				default: {
-					var possiblestr = E.PaymentFormat[Settings.aPaymentEnum](pricetorecord);
+					var possiblestr = E.formatPayment(Settings.aPaymentEnum, pricetorecord);
 					if (Settings.aPossible === 0)
 					{
 						possiblestr = "";
 					}
 					else if (Settings.aPossible > 0 && pricetorecord !== Settings.aPossible)
 					{
-						possiblestr = pricetorecord + " / " + E.PaymentFormat[Settings.aPaymentEnum](Settings.aPossible);
+						possiblestr = pricetorecord + " / " + E.formatPayment(Settings.aPaymentEnum, Settings.aPossible);
 					}
 					pSlot.append("<var class='bnkSlotPrice'>" + possiblestr + "</var>");
 				}
@@ -14882,7 +14882,7 @@ B = {
 				paymentvalue *= -1;
 			}
 			pSlot.append("<var class='" + (pSlotClass || "bnkSlotPrice") + " " + priceclass + "'>"
-				+ E.PaymentFormat[paymentkey](paymentvalue * (pCount || 1))
+				+ E.formatPayment(paymentkey, paymentvalue * (pCount || 1))
 			+ "</var>");
 			break;
 		}
@@ -18530,7 +18530,7 @@ Q = {
 			pointsstr = "<aside class='achPoints'>" + ((processedach.oAPPointPossible > 0)
 				? (processedach.oAPPointCurrent + " / " + processedach.oAPPointPossible) : "0") + " <img src='img/ui/ap.png' /></aside";
 			searchpointsstr = "<var class='achSearchPoints'>" + ((processedach.oAPPointCurrent === processedach.oAPPointPossible)
-				? "" : (processedach.oAPPointCurrent + " / ")) + E.PaymentFormat.achievement(processedach.oAPPointPossible) + "</var>";
+				? "" : (processedach.oAPPointCurrent + " / ")) + E.formatAchievement(processedach.oAPPointPossible) + "</var>";
 		}
 		
 		var html = "<div class='itmTooltip " + (Settings.aClass || "") + "'>"
@@ -19506,6 +19506,15 @@ E = {
 		Coin: "Coin",
 		Gem: "Gem"
 	},
+	formatPayment: function(pName, pAmount)
+	{
+		var paymentfunction = E.PaymentFormat[pName];
+		return paymentfunction ? paymentfunction(pAmount) : "unknown";
+	},
+	formatAchievement: function(pAmount)
+	{
+		return E.formatPayment("achievement", pAmount);
+	},	
 	
 	/*
 	 * Gets the first payment amount from an object.
@@ -35536,7 +35545,7 @@ H = {
 				}
 				else if (item.p["blticket"] >= 0)
 				{
-					pricestr = "<span class='dsbSalePriceCurrent'>" + E.PaymentFormat["blticket"](itemprice) + "</span>";
+					pricestr = "<span class='dsbSalePriceCurrent'>" + E.formatPayment("blticket", itemprice) + "</span>";
 				}
 				// Format the presentation of this item
 				var idisimg = isNaN(itemid) && Q.Boxes.Items[itemid] === undefined;
