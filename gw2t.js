@@ -19499,7 +19499,8 @@ E = {
 		map_eb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_eb'></ins>"; },
 		map_bf: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_bf'></ins>"; },
 		map_ld: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ld'></ins>"; },
-		map_dm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dm'></ins>"; }
+		map_dm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dm'></ins>"; },
+		map_sl: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sl'></ins>"; }
 	},
 	PaymentEnum:
 	{
