@@ -342,7 +342,8 @@ PvP: [
 	{u: 487, i: 81531, n: "Mini Elegant Silver Llama", p: {craft: true}},
 	{u: 486, i: 81587, n: "Mini Gold Llama", p: {pvp: true}},
 	{u: 480, i: 81539, n: "Mini Fancy Gold Llama", p: {craft: true}},
-	{u: 481, i: 81537, n: "Mini Elegant Gold Llama", p: {craft: true}}
+	{u: 481, i: 81537, n: "Mini Elegant Gold Llama", p: {craft: true}},
+	{u: 484, i: 81573, n: "Mini Lavish Gold Llama", p: {craft: true}}
 ],
 Raid: [
 	{u: 371, i: 77370, n: "Mini Red Guardian", p: {magnetite: 300}},

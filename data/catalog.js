@@ -816,6 +816,7 @@ Aura: [
 	{i: 81783, n: "Celestial Infusion (Red)", p: {coin: -1}},
 	{i: 81927, n: "Celestial Infusion (Red)", p: {coin: -1}},
 	{i: 81792, n: "Celestial Infusion (Red)", p: {coin: -1}},
+	{i: 82062, n: "Celestial Infusion (Red)", p: {coin: -1}},
 	{i: 81811, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81779, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81919, n: "Celestial Infusion (Blue)", p: {coin: -1}},
