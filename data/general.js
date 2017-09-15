@@ -1658,7 +1658,7 @@ Announcement:
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
 		content: "<a href='https://www.reddit.com/r/Guildwars2/comments/6w71do/introducing_desktop_notifications_for_guild_wars/'>Get desktop notifications!</a>",
-		Finish: new Date("2017-09-12T16:00:00Z")
+		Finish: new Date("2017-09-19T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
@@ -1768,16 +1768,16 @@ Countdown: {
 		Start: new Date("2017-08-18T16:00:00Z"),
 		Finish: new Date("2017-08-21T16:00:00Z")
 	},*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Fireheart Map Rewards",
 		name_de: "Feuerherzhügel Karten-Bonus",
 		name_es: "Bonificación Corazón de Fuego",
 		name_fr: "Bonus de carte Flambecœur",
 		name_zh: "炎心高地地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-09-07T20:00:00Z"),
-		Finish: new Date("2017-09-14T20:00:00Z")
-	},
+		Start: new Date("2017-11-02T20:00:00Z"),
+		Finish: new Date("2017-1-09T20:00:00Z")
+	},*/
 	{
 		name: "Path of Fire Expansion",
 		official: "path-of-fire/",
@@ -1811,8 +1811,8 @@ Countdown: {
 		name_fr: "Bonus de carte Gorges glacées",
 		name_zh: "霜谷之音地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-08-17T20:00:00Z"),
-		Finish: new Date("2017-08-24T20:00:00Z")
+		Start: new Date("2017-10-12T20:00:00Z"),
+		Finish: new Date("2017-10-19T20:00:00Z")
 	}*/
 	/*{
 		name_en: "Living Story 3: Finale",
