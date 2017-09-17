@@ -30,8 +30,6 @@ GW2T_SALE_DATA = {
 	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: 1000}},
 	{i: 67029, n: "Tireless Logging Minion", p: {gem: 1000}},
 	{i: 48932, n: "Bone Pick", p: {gem: 1000}},
-	{i: 77483, n: "Slayer's Outfit", p: {gem: 700}},
-	{i: 69753, n: "Mad Scientist Outfit", p: {gem: 700}},
 	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}},
 	{i: 78010, n: "Ironclad Outfit", p: {gem: 700}},
 	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
@@ -43,6 +41,9 @@ GW2T_SALE_DATA = {
 	{i: 42951, n: "Mini Mordrem Leyleecher", p: {gem: 500}},
 	{i: 77339, n: "Mini Sabetha", p: {gem: 350}},
 	{i: 67838, n: "Mini Sand Giant", p: {gem: 350}},
+	{i: 69690, n: "Mini Beetle", p: {gem: 500}},
+	{i: 77675, n: "Mini Zintl Cavalier", p: {gem: 350}},
+	{i: 70300, n: "Mini Bonebreaker", p: {gem: 350}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}, Finish: new Date("2017-09-17T16:00:00Z")},
@@ -50,10 +51,6 @@ GW2T_SALE_DATA = {
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}, Finish: new Date("2017-09-17T16:00:00Z")},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}, Finish: new Date("2017-09-18T16:00:00Z")},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}, Finish: new Date("2017-09-18T16:00:00Z")},
-	{i: 76236, n: "Exalted Glider", p: {gem: 400}, Finish: new Date("2017-09-18T16:00:00Z")},
-	{i: 45044, n: "Mini Frostbite", p: {gem: 400}, Finish: new Date("2017-09-16T16:00:00Z")},
-	{i: 79048, n: "Mini Garm", p: {gem: 350}, Finish: new Date("2017-09-16T16:00:00Z")},
-	{i: 42583, n: "Mini Orange Kitten", p: {gem: 400}, Finish: new Date("2017-09-16T16:00:00Z")},
-	{i: 42591, n: "Mini White Kitten", p: {gem: 400}, Finish: new Date("2017-09-16T16:00:00Z")}
+	{i: 76236, n: "Exalted Glider", p: {gem: 400}, Finish: new Date("2017-09-18T16:00:00Z")}
 	]
 };

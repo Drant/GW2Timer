@@ -37971,11 +37971,13 @@ K = {
 		{
 			// If negative then timer has finished
 			$("#watTimerStop").trigger("click");
+			var timestr = now.toLocaleString();
 			var speech = O.Options.str_textStopwatchAlert;
-			I.print(now.toLocaleString() + ": " + U.escapeHTML(speech));
+			I.print(timestr + ": " + U.escapeHTML(speech));
 			D.speak(speech);
 			I.notify({
 				aTitle: speech,
+				aBody: timestr,
 				aIcon: "img/notification/alert.png",
 				aDelay: 60
 			});

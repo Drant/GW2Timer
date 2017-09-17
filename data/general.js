@@ -1780,7 +1780,7 @@ Countdown: {
 	},*/
 	{
 		name: "Path of Fire Expansion",
-		official: "path-of-fire/",
+		official: "news/countdown-to-launch/",
 		Start: new Date("2017-09-22T16:00:00Z"),
 		Finish: new Date("2017-09-23T16:00:00Z")
 	}
