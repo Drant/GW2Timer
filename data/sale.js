@@ -21,18 +21,21 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
-	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}},
 	{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}, Finish: new Date("2017-09-19T16:00:00Z")},
 	{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 2000}, Finish: new Date("2017-09-19T16:00:00Z")},
+	{i: 82666, n: "Geomancer Glider", p: {gem: 500}},
+	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
+	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}},
+	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
+	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 	{i: 78006, n: "Ironclad Glider", p: {gem: 500}},
 	{i: 77811, n: "Electromagnetic-Descender Glider", p: {gem: 400}},
 	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 250}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
-	{i: 82666, n: "Geomancer Glider", p: {gem: 500}},
-	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: 1000}},
-	{i: 67029, n: "Tireless Logging Minion", p: {gem: 1000}},
-	{i: 48932, n: "Bone Pick", p: {gem: 1000}},
+	{i: 77678, n: "Hawk Wings Glider", p: {gem: 700}},
+	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: 700}},
+	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
+	{i: 79016, n: "White Mantle Glider", p: {gem: 400}},
 	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}},
@@ -44,11 +47,6 @@ GW2T_SALE_DATA = {
 	{i: 67838, n: "Mini Sand Giant", p: {gem: 350}},
 	{i: 69690, n: "Mini Beetle", p: {gem: 500}},
 	{i: 77675, n: "Mini Zintl Cavalier", p: {gem: 350}},
-	{i: 70300, n: "Mini Bonebreaker", p: {gem: 350}},
-	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
-	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}, Finish: new Date("2017-09-18T16:00:00Z")},
-	{i: 77821, n: "Classical Glider", p: {gem: 400}, Finish: new Date("2017-09-18T16:00:00Z")},
-	{i: 76236, n: "Exalted Glider", p: {gem: 400}, Finish: new Date("2017-09-18T16:00:00Z")}
+	{i: 70300, n: "Mini Bonebreaker", p: {gem: 350}}
 	]
 };

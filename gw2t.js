@@ -2898,7 +2898,7 @@ U = {
 		Forum: "http://forum.renaka.com/forum/368355/",
 		News: "http://forum.renaka.com/topic/5500046/",
 		Overlay: "http://forum.renaka.com/topic/5546166/",
-		BuildNotes: "https://forum-{0}.guildwars2.com/forum/info/updates"
+		BuildNotes: "https://{0}-forum.guildwars2.com/categories/game-release-notes"
 	},
 	ScriptURLs: {}, // Associative array of script URLs, so they are not loaded again
 	APIKey: null,
@@ -2937,7 +2937,7 @@ U = {
 		
 		// Other
 		Root: "https://api.guildwars2.com/v2.json",
-		Support: "https://forum-en.guildwars2.com/forum/community/api",
+		Support: "https://en-forum.guildwars2.com/categories/api-development",
 		Build: "https://api.guildwars2.com/v2/build",
 		Worlds: "https://api.guildwars2.com/v2/worlds",
 		Prefix: "https://api.guildwars2.com/v2/",
