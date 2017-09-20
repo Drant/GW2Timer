@@ -135,7 +135,8 @@ Glider: [
 	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}},
 	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}},
 	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
-	{i: 82666, n: "Geomancer Glider", p: {gem: 500}}
+	{i: 82666, n: "Geomancer Glider", p: {gem: 500}},
+	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -170,7 +171,8 @@ Back: [
 	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: -700}},
 	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
-	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}}
+	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}},
+	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},

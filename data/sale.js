@@ -21,11 +21,15 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}, Finish: new Date("2017-09-19T16:00:00Z")},
-	{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 2000}, Finish: new Date("2017-09-19T16:00:00Z")},
-	{i: 82666, n: "Geomancer Glider", p: {gem: 500}},
+	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
+	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
 	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
 	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}},
+	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-09-21T16:00:00Z")},
+	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 280}, discount: 400, Finish: new Date("2017-09-21T16:00:00Z")},
+	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 210}, discount: 300, Finish: new Date("2017-09-21T16:00:00Z")},
+	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 210}, discount: 300, Finish: new Date("2017-09-21T16:00:00Z")},
+	{i: 79391, n: "Pirate Hook Skin", p: {gem: 210}, discount: 300, Finish: new Date("2017-09-21T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
 	{i: 78006, n: "Ironclad Glider", p: {gem: 500}},
