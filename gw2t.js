@@ -3538,7 +3538,7 @@ U = {
 	 */
 	convertQueryString: function(pString)
 	{
-		var urlargs = pString.substr(1).split("&"); // Skip the "?" at the beginning of the query string
+		var urlargs = pString.substr(1).replace(/&amp;/g, "&").split("&"); // Skip the "?" at the beginning of the query string
 		if (urlargs === "")
 		{
 			return {};
