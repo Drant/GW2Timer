@@ -36234,7 +36234,7 @@ H = {
 					ctd.isTimely = false;
 					countdownhtml.remove();
 				}
-				if (ctd.isIndefinite)
+				if (ctd.isIndefinite !== undefined)
 				{
 					bulletclass = "cssStateWaiting";
 					stamp = I.Symbol.Infinity;

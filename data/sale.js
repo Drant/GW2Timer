@@ -21,6 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
+	{i: "https://i.imgur.com/SBbovrY.png", n: "Outlaw Appearance Pack", p: {gem: 2000}},
+	{i: "https://i.imgur.com/e5G1iUR.png", n: "Elonian Introductory Package", p: {gem: 1800}},
+	{i: "https://i.imgur.com/nUcEfzX.png", n: "Dynamics Exo-Suit Appearance Pack", p: {gem: 1500}},
 	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
 	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
@@ -35,6 +38,8 @@ GW2T_SALE_DATA = {
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
 	{i: 77678, n: "Hawk Wings Glider", p: {gem: 700}},
 	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: 700}},
+	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 700}},
+	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 700}},
 	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
 	{i: 79016, n: "White Mantle Glider", p: {gem: 400}},
 	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
