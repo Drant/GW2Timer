@@ -459,9 +459,9 @@ Gathering: [
 	{i: 78724, n: "Focused Solar Logging Tool", p: {gem: 1000}},
 	{i: 78909, n: "Glitter Bomb Harvesting Tool", p: {gem: 1000}},
 	{i: 80067, n: "Celestial Rooster Harvesting Tool", p: {gem: -1000}},
-	{i: 67032, n: "Fused Molten Sickle", p: {gem: -1000}},
-	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: -1000}},
-	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: -1000}},
+	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
+	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: 1000}},
+	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: 1000}},
 	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: 1000}},
 	{i: 67029, n: "Tireless Logging Minion", p: {gem: 1000}},
 	{i: 48932, n: "Bone Pick", p: {gem: 1000}},
@@ -669,9 +669,9 @@ Finisher: [
 	{i: 44069, n: "Permanent Scarecrow Finisher", p: {gem: -500}},
 	{i: 44724, n: "Permanent Super Explosive Finisher", p: {gem: -600}},
 	{i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: -800}},
-	{i: 49952, n: "Permanent Llama Finisher", p: {gem: -800}},
+	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
 	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: -800}},
-	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: -700}}
+	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}}
 ],
 Upgrade: [
 	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 800}},
