@@ -1712,6 +1712,26 @@ Countdown: {
 		Start: new Date("2017-09-22T7:00:00Z"),
 		Finish: new Date("2017-09-25T17:00:00Z")
 	},
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
+		name_en: "Frostgorge Map Rewards",
+		name_de: "Eisklamm Karten-Bonus",
+		name_es: "Bonificación de mapa Gorjaescarcha",
+		name_fr: "Bonus de carte Gorges glacées",
+		name_zh: "霜谷之音地图奖金",
+		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
+		Start: new Date("2017-10-12T20:00:00Z"),
+		Finish: new Date("2017-10-19T20:00:00Z")
+	}*/
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
+		name_en: "Fireheart Map Rewards",
+		name_de: "Feuerherzhügel Karten-Bonus",
+		name_es: "Bonificación Corazón de Fuego",
+		name_fr: "Bonus de carte Flambecœur",
+		name_zh: "炎心高地地图奖金",
+		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
+		Start: new Date("2017-11-02T20:00:00Z"),
+		Finish: new Date("2017-1-09T20:00:00Z")
+	},*/
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
@@ -1763,28 +1783,6 @@ Countdown: {
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
 	/*{
-		name: "Path of Fire Demo II",
-		official: "news/developer-diary-elite-specializations/",
-		Start: new Date("2017-08-18T16:00:00Z"),
-		Finish: new Date("2017-08-21T16:00:00Z")
-	},*/
-	/*{ // 8 weeks cycle, repeats 56 days after this event's start
-		name_en: "Fireheart Map Rewards",
-		name_de: "Feuerherzhügel Karten-Bonus",
-		name_es: "Bonificación Corazón de Fuego",
-		name_fr: "Bonus de carte Flambecœur",
-		name_zh: "炎心高地地图奖金",
-		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-11-02T20:00:00Z"),
-		Finish: new Date("2017-1-09T20:00:00Z")
-	},*/
-	{
-		name: "Path of Fire Expansion",
-		official: "news/countdown-to-launch/",
-		Start: new Date("2017-09-22T16:00:00Z"),
-		Finish: new Date("2017-09-23T16:00:00Z")
-	}
-	/*{
 		name_en: "Halloween 2017",
 		name_de: "Halloween 2017",
 		name_es: "Halloween 2017",
@@ -1804,16 +1802,6 @@ Countdown: {
 		Start: new Date("2017-12-12T17:00:00Z"),
 		Finish: new Date("2018-01-09T17:00:00Z")
 	},*/
-	/*{ // 8 weeks cycle, repeats 56 days after this event's start
-		name_en: "Frostgorge Map Rewards",
-		name_de: "Eisklamm Karten-Bonus",
-		name_es: "Bonificación de mapa Gorjaescarcha",
-		name_fr: "Bonus de carte Gorges glacées",
-		name_zh: "霜谷之音地图奖金",
-		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-10-12T20:00:00Z"),
-		Finish: new Date("2017-10-19T20:00:00Z")
-	}*/
 	/*{
 		name_en: "Living Story 3: Finale",
 		name_de: "Lebendigen Geschichte 3: Finale",

@@ -341,7 +341,7 @@ BlackLionWeapon: [
 	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 3}},
 	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 3}},
 	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 2}},
-	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 2}},
+	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 3}},
 ],
 Package: [
 	//{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
