@@ -1657,8 +1657,8 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "<a href='https://www.reddit.com/r/Guildwars2/comments/6w71do/introducing_desktop_notifications_for_guild_wars/'>Get desktop notifications!</a>",
-		Finish: new Date("2017-09-19T16:00:00Z")
+		content: "Check out <a data-page='Museum'>new items</a> from Path of Fire.",
+		Finish: new Date("2017-10-03T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
@@ -1705,13 +1705,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
+	/*{
 		name: "ArenaNet API Offline",
 		url: "https://en-forum.guildwars2.com/discussion/3195/api-temporarily-disabled",
 		isIndefinite: false,
 		Start: new Date("2017-09-22T7:00:00Z"),
 		Finish: new Date("2017-09-25T17:00:00Z")
-	},
+	},*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
