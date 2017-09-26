@@ -490,6 +490,7 @@ TonicEndless: [
 	{i: 79049, n: "Endless Anomaly Fragment", p: {achievement: 0}},
 	{u: 81823, i: 82000, n: "Endless Fury Combat Tonic"},
 	{i: 81632, n: "Endless Chaos Combat Tonic", p: {matrix: 300}},
+	{i: 85244, n: "Endless Choya Pinata Tonic", p: {coin: -1}},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},
@@ -594,7 +595,8 @@ TonicConsumable: [
 	{i: 67379, n: "Bottle of Batwing Brew"},
 	{i: 79673, n: "Gargoyle Tonic"},
 	{i: 79677, n: "Shadow Raven Tonic"},
-	{i: 79679, n: "Hellfire Skeleton Tonic"}
+	{i: 79679, n: "Hellfire Skeleton Tonic"},
+	{i: 85114, n: "Choya Pinata Tonic"}
 ],
 Bundle: [
 	{i: 8655, n: "Experimental Teleportation Gun", p: {coin: 32}},
@@ -823,7 +825,8 @@ Aura: [
 	{i: 81919, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81991, n: "Celestial Infusion (Blue)", p: {coin: -1}},
 	{i: 81761, n: "Celestial Infusion (Blue)", p: {coin: -1}},
-	{i: 81878, n: "Celestial Infusion (Blue)", p: {coin: -1}}
+	{i: 81878, n: "Celestial Infusion (Blue)", p: {coin: -1}},
+	{i: 84970, n: "Festive Confetti Infusion", p: {coin: -1}}
 ],
 Legendary: [
 	{i: 30684, n: "Frostfang"},

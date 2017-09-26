@@ -30,6 +30,7 @@ GW2T_SALE_DATA = {
 	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}},
 	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
+	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}},
 	{i: 69799, n: "Scientific weapon skins#Gallery", p: {blticket: 5}},
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
 	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: 1000}},

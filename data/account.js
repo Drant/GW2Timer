@@ -470,6 +470,11 @@ var GW2T_ACCOUNT_METADATA = {
 		110, // Specializations
 		{en: "Path of Fire", de: "Path of Fire", es: "Path of Fire", fr: "Path of Fire", zh: "火焰之路"},
 		179, // Crystal Oasis
+		190, // Desert Highlands
+		182, // Elon Riverlands
+		176, // The Desolation
+		174, // Domain of Vabbi
+		181, // Crystal Desert
 		189, // Mastery Insights
 		178, // Specializations
 		{en: "Side Stories", de: "Side Stories", es: "Side Stories", fr: "Side Stories", zh: "Side Stories"},

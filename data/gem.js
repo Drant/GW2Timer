@@ -90,7 +90,8 @@ Outfit: [
 	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
-	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}}
+	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
+	{i: 85034, n: "Forged Outfit", p: {gem: 700}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -342,6 +343,7 @@ BlackLionWeapon: [
 	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 3}},
 	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 2}},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 3}},
+	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
