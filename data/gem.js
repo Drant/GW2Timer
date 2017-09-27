@@ -298,7 +298,8 @@ Weapon: [
 	{i: 81567, n: "God-Slayer Longbow", p: {gem: -350}},
 	{i: 81560, n: "God-Slayer Short Bow", p: {gem: -350}},
 	{i: 84064, n: "Fiery Blade Axe", p: {gem: -500}},
-	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}}
+	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}},
+	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
@@ -610,7 +611,8 @@ Mini: [
 	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}},
 	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: -400}},
 	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
-	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}}
+	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
+	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},
@@ -664,7 +666,7 @@ Node: [
 	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
 	{i: 67842, n: "Basic Cloth Rack", p: {gem: 800}},
 	{i: 78019, n: "Basic Leather Rack", p: {gem: 800}},
-	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}}
+	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: -1200}}
 ],
 Finisher: [
 	{i: 44068, n: "Permanent Mad King Finisher", p: {gem: -500}},

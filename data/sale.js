@@ -21,9 +21,12 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "https://i.imgur.com/SBbovrY.png", n: "Outlaw Appearance Pack", p: {gem: 2000}},
+	{i: "https://i.imgur.com/SBbovrY.png", n: "Outlaw Appearance Pack", p: {gem: 2000}, Finish: new Date("2017-10-03T16:00:00Z")},
 	{i: "https://i.imgur.com/e5G1iUR.png", n: "Elonian Introductory Package", p: {gem: 1800}},
 	{i: "https://i.imgur.com/nUcEfzX.png", n: "Dynamics Exo-Suit Appearance Pack", p: {gem: 1500}},
+	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: 600}},
+	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
+	{i: 85034, n: "Forged Outfit", p: {gem: 700}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
 	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
@@ -32,6 +35,7 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}},
 	{i: 69799, n: "Scientific weapon skins#Gallery", p: {blticket: 5}},
+	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}, Finish: new Date("2017-10-03T16:00:00Z")},
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
 	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: 1000}},
 	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: 1000}},
