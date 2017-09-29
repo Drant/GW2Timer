@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170826},
+		programVersion: {key: "int_utlProgramVersion", value: 170928},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -28033,6 +28033,7 @@ P = {
 				"stabilize the rift", // Rift events
 				"guild", // Guild missions
 				"subdue", // Guild bounty
+				"bounty", // Path of Fire bounties
 				"hero cha" // Hero challenges
 			];
 			for (var i = 0; i < blacklist.length; i++)

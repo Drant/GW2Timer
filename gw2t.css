@@ -2319,7 +2319,7 @@ textarea.jsCopyCode {
 /* Map zones list */
 .mapZones:hover .mapZonesPopup {
 	min-width: 180px;
-	max-width: 340px;
+	max-width: 580px;
 	padding: 0px 8px 0px 8px;
 }
 .mapZoneList {
@@ -2344,7 +2344,6 @@ textarea.jsCopyCode {
 	margin-top: 8px;
 }
 .mapSearchResults {
-	left: -64px;
 	margin-top: 8px;
 }
 

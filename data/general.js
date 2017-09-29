@@ -75,7 +75,12 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1178": "bitterfrost",
 	"1185": "doric",
 	"1195": "draconis",
-	"1203": "siren"
+	"1203": "siren",
+	"1210": "oasis",
+	"1211": "highlands",
+	"1228": "riverlands",
+	"1226": "desolation",
+	"1248": "vabbi"
 };
 var GW2T_LAND_ASSOCIATION = {
 	"38": "eternal",
@@ -1028,6 +1033,14 @@ var GW2T_REGION_DATA = {
 	name_fr: "Ascalon",
 	name_zh: "阿斯卡隆",
 	color: "orange"
+},
+"desert": {
+	name_en: "Crystal Desert",
+	name_de: "Kristallwüste",
+	name_es: "Desierto de Cristal",
+	name_fr: "Désert de cristal",
+	name_zh: "水晶沙漠",
+	color: "tan"
 }
 };
 
@@ -1565,6 +1578,66 @@ var GW2T_ZONE_DATA = {
 	region: "ascalon",
 	map_rect: [[-24576, -49152], [24576, 49152]],
 	continent_rect: [[29184, 12160], [31232, 16256]]
+},
+"oasis":
+{
+	id: "1210",
+	name_en: "Crystal Oasis",
+	name_de: "Kristalloase",
+	name_es: "Oasis de Cristal",
+	name_fr: "Oasis de cristal",
+	name_zh: "水晶绿洲",
+	region: "desert",
+	map_rect: [[-61440, -30720], [61440, 30720]],
+	continent_rect: [[24488, 25920], [29608, 28480]]
+},
+"highlands":
+{
+	id: "1211",
+	name_en: "Desert Highlands",
+	name_de: "Wüsten-Hochland",
+	name_es: "Tierras Altas del Desierto",
+	name_fr: "Hautes-terres du désert",
+	name_zh: "沙漠高地",
+	region: "desert",
+	map_rect: [[-61440, -30720], [61440, 30720]],
+	continent_rect: [[24488, 23360], [29608, 25920]]
+},
+"riverlands":
+{
+	id: "1228",
+	name_en: "Elon Riverlands",
+	name_de: "Elon-Flusslande",
+	name_es: "La Ribera del Elon",
+	name_fr: "Rives de l'Elon",
+	name_zh: "伊伦河湾",
+	region: "desert",
+	map_rect: [[-43008, -39936], [43008, 43008]],
+	continent_rect: [[25472, 28352], [29056, 31808]]
+},
+"desolation":
+{
+	id: "1226",
+	name_en: "The Desolation",
+	name_de: "Das Ödland",
+	name_es: "La Desolación",
+	name_fr: "La Désolation",
+	name_zh: "荒芜之地",
+	region: "desert",
+	map_rect: [[-43008, -61440], [43008, 61440]],
+	continent_rect: [[25472, 31808], [29056, 36928]]
+},
+"vabbi":
+{
+	id: "1248",
+	name_en: "Domain of Vabbi",
+	name_de: "Domäne Vaabi",
+	name_es: "Dominio de Vabbi",
+	name_fr: "Domaine de Vabbi",
+	name_zh: "瓦比领域",
+	region: "desert",
+	map_rect: [[-58368, -36864], [58368, 39936]],
+	continent_rect: [[30848, 35968], [35712, 39168]]
 }
 };
 
