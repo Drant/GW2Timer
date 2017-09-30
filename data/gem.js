@@ -484,9 +484,9 @@ Gathering: [
 	{i: 78806, n: "Unbreakable Logging Axe", p: {gem: 800}},
 	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 800}},
 	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: -1000}},
-	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
-	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
-	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}}
+	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: -900}},
+	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: -900}},
+	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}}
 ],
 Mini: [
 	{i: 20019, n: "Minis 3-Pack (Set 1)", p: {gem: -300}},
