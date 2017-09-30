@@ -124,7 +124,9 @@ Tailor_Refinement: [
 	{u: 12019, i: 80764, n: "Vial of Might", r: [[24357, 1], [24289, 1], [24351, 1], [24358, 1]]},
 	{u: 12020, i: 80728, n: "Vial of Magic", r: [[24295, 1], [24283, 1], [24300, 1], [24277, 1]]},
 	{u: 12030, i: 80775, n: "Square of Vabbian Silk", r: [[19740, 10], [19742, 5], [19744, 10], [46740, 1]], s: 80731},
-	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]}
+	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
+	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
+	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]}
 ],
 Tailor_Component: [
 	{u: 844, i: 19629, n: "Gift of History", r: [[24310, 100], [19737, 250], [19664, 1], [24277, 250]], s: 9623, p: {coin: 100000}},
@@ -241,7 +243,19 @@ Tailor_Component: [
 	{u: 11616, i: 73217, n: "Oiled Gossamer Helm Padding", r: [[19746, 1], [19790, 1], [73034, 5]]},
 	{u: 11887, i: 79763, n: "Gossamer Stuffing", r: [[19746, 50], [19721, 25], [46740, 1], [24330, 5]], s: 79820},
 	{u: 12016, i: 80857, n: "Grandmaster Tailor's Mark", r: [[80714, 1], [80775, 2], [80723, 1], [80686, 1]], s: 80771},
-	{u: 12024, i: 80686, n: "Bolt of Empowered Silk", r: [[46681, 1], [80764, 1], [80728, 1], [19747, 150]]}
+	{u: 12024, i: 80686, n: "Bolt of Empowered Silk", r: [[46681, 1], [80764, 1], [80728, 1], [19747, 150]]},
+	{u: 12071, i: 82384, n: "Warbeast Gossamer Pant Panel", r: [[19746, 4], [19790, 3], [82796, 2]]},
+	{u: 12090, i: 84012, n: "Warbeast Gossamer Helm Padding", r: [[19746, 1], [19790, 1], [82796, 3]]},
+	{u: 12091, i: 82326, n: "Warbeast Gossamer Epaulet Panel", r: [[19737, 1], [82796, 1]]},
+	{u: 12134, i: 83616, n: "Warbeast Gossamer Pant Lining", r: [[19746, 1], [82796, 3]]},
+	{u: 12145, i: 82117, n: "Warbeast Gossamer Helm Strap", r: [[19746, 1], [19737, 1], [82796, 2]]},
+	{u: 12153, i: 82385, n: "Warbeast Gossamer Glove Panel", r: [[19746, 1], [19737, 1], [82796, 1]]},
+	{u: 12161, i: 83559, n: "Warbeast Gossamer Shoe Sole", r: [[19737, 2], [73034, 5], [82796, 5]]},
+	{u: 12184, i: 82323, n: "Warbeast Gossamer Coat Panel", r: [[19746, 4], [19737, 1], [82796, 3]]},
+	{u: 12257, i: 84277, n: "Warbeast Gossamer Epaulet Padding", r: [[19746, 2], [19790, 1], [82796, 2]]},
+	{u: 12284, i: 82635, n: "Warbeast Gossamer Shoe Upper", r: [[19746, 2], [19790, 1], [82796, 5]]},
+	{u: 12286, i: 84191, n: "Warbeast Gossamer Glove Padding", r: [[19746, 1], [19790, 1], [82796, 2]]},
+	{u: 12304, i: 84623, n: "Warbeast Gossamer Coat Lining", r: [[19746, 1], [82796, 4]]}
 ],
 Tailor_UpgradeComponent: [
 	{u: 2193, i: 24798, n: "Minor Rune of the Elementalist", r: [[19720, 1], [24321, 2]]},
@@ -309,7 +323,15 @@ Tailor_UpgradeComponent: [
 	{u: 11293, i: 71425, n: "Superior Rune of the Berserker", r: [[24821, 1], [68942, 1], [74202, 10]], s: 76615},
 	{u: 11521, i: 70450, n: "Superior Rune of the Druid", r: [[24815, 1], [68942, 1], [74328, 10]], s: 72611},
 	{u: 11634, i: 70829, n: "Superior Rune of the Reaper", r: [[24806, 1], [68942, 1], [74202, 10]], s: 74112},
-	{u: 12047, i: 81091, n: "Superior Rune of Nature's Bounty", r: [[19746, 1], [24315, 1], [81127, 3], [19721, 1]], s: 81159}
+	{u: 12047, i: 81091, n: "Superior Rune of Nature's Bounty", r: [[19746, 1], [24315, 1], [81127, 3], [19721, 1]], s: 81159},
+	{u: 12080, i: 83964, n: "Superior Rune of the Soulbeast", r: [[24815, 1], [68942, 1], [82678, 1]], s: 82760},
+	{u: 12093, i: 84127, n: "Superior Rune of the Mirage", r: [[24803, 1], [68942, 1], [82678, 1]], s: 82625},
+	{u: 12119, i: 84749, n: "Superior Rune of the Spellbreaker", r: [[24821, 1], [68942, 1], [83103, 50]], s: 82694},
+	{u: 12148, i: 83663, n: "Superior Rune of the Scourge", r: [[24806, 1], [68942, 1], [83757, 50]], s: 82713},
+	{u: 12201, i: 83502, n: "Superior Rune of the Renegade", r: [[69370, 1], [68942, 1], [83103, 50]], s: 83361},
+	{u: 12202, i: 83423, n: "Superior Rune of the Weaver", r: [[24800, 1], [68942, 1], [83103, 50]], s: 84572},
+	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
+	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751}
 ],
 Tailor_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -488,7 +510,9 @@ Tailor_Insignia: [
 	{u: 11371, i: 76244, n: "Yassith's Viper's Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [76115, 1]], s: 75162},
 	{u: 11398, i: 75981, n: "Marauder Intricate Gossamer Insignia", r: [[76614, 5], [19721, 5], [74202, 30], [75654, 3]], s: 74396},
 	{u: 11483, i: 76653, n: "Maklain's Minstrel's Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [73227, 1]], s: 76749},
-	{u: 12009, i: 80258, n: "Thackeray's Seraph Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [80181, 1]], s: 80376}
+	{u: 12009, i: 80258, n: "Thackeray's Seraph Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [80181, 1]], s: 80376},
+	{u: 12164, i: 83264, n: "Insignia of the Spearmarshal", r: [[76614, 5], [19721, 5], [83103, 100], [82678, 1]]},
+	{u: 12198, i: 82882, n: "Insignia of the Bounty Hunter", r: [[76614, 5], [19721, 5], [83284, 45], [82678, 3]]}
 ],
 Tailor_Bag: [
 	{u: 2209, i: 9406, n: "8 Slot Jute Bag", r: [[19720, 10]]},
@@ -510,7 +534,18 @@ Tailor_Bag: [
 	{u: 2225, i: 9572, n: "20 Slot Craftsman's Bag", r: [[19746, 10], [13009, 1], [24358, 3]]},
 	{u: 2226, i: 9574, n: "20 Slot Invisible Bag", r: [[19746, 10], [13009, 1], [24277, 3]]},
 	{u: 2840, i: 8939, n: "Ogre Bag", r: [[19740, 5], [13010, 1], [24273, 3]], s: 9609},
-	{u: 10702, i: 74525, n: "20-Slot Equipment Pact Box", r: [[19746, 10], [13009, 1], [24277, 3], [19737, 12]]}
+	{u: 10702, i: 74525, n: "20-Slot Equipment Pact Box", r: [[19746, 10], [13009, 1], [24277, 3], [19737, 12]]},
+	{u: 12131, i: 83186, n: "32-Slot Cowrie League Saddlebag", r: [[84163, 1], [83322, 4], [83410, 12], [83757, 100]]},
+	{u: 12165, i: 82237, n: "24-Slot Marshal's Saddlebag", r: [[74525, 2], [83322, 4], [83410, 1], [83757, 100]]},
+	{u: 12168, i: 83130, n: "28-Slot Courier's Saddlebag", r: [[83297, 1], [83322, 4], [83410, 5], [83757, 100]]},
+	{u: 12173, i: 84420, n: "24-Slot Gossamer Saddlebag", r: [[9571, 2], [83322, 4], [83410, 1], [83757, 100]], s: 84688, b: 84688},
+	{u: 12206, i: 84544, n: "28-Slot Marshal's Saddlebag", r: [[82237, 1], [83322, 4], [83410, 5], [83757, 100]]},
+	{u: 12226, i: 82363, n: "32-Slot Marshal's Saddlebag", r: [[84544, 1], [83322, 4], [83410, 12], [83757, 100]]},
+	{u: 12227, i: 83995, n: "32-Slot Gossamer Saddlebag", r: [[83436, 1], [83322, 4], [83410, 12], [83757, 100]]},
+	{u: 12235, i: 83297, n: "24-Slot Courier's Saddlebag", r: [[9574, 2], [83322, 4], [83410, 1], [83757, 100]]},
+	{u: 12260, i: 83436, n: "28-Slot Gossamer Saddlebag", r: [[84420, 1], [83322, 4], [83410, 5], [83757, 100]]},
+	{u: 12280, i: 83887, n: "24-Slot Cowrie League Saddlebag", r: [[9572, 2], [83322, 4], [83410, 1], [83757, 100]]},
+	{u: 12313, i: 83435, n: "32-Slot Courier's Saddlebag", r: [[83130, 1], [83322, 4], [83410, 12], [83757, 100]]}
 ],
 Tailor_Bulk: [
 	{u: 2716, i: 9156, n: "Satchel of Mighty Embroidered Armor", r: [[24290, 4], [19720, 14], [19792, 8], [19738, 4]], s: 9960, b: 9960},
@@ -840,7 +875,9 @@ Tailor_Helm: [
 	{u: 11621, i: 76834, n: "Pahua's Masque", r: [[49523, 1], [76560, 1], [45896, 1], [45897, 1]], s: 75309, b: 75309},
 	{u: 11920, i: 80661, n: "Thackeray's Masque", r: [[49523, 1], [80258, 1], [45896, 1], [45897, 1]], s: 80293},
 	{u: 11957, i: 80098, n: "Seraph Exalted Masque", r: [[80181, 1], [73217, 1], [73417, 1]], s: 80178},
-	{u: 11904, i: 80441, n: "Refined Envoy Cowl", r: [[49523, 1], [80516, 1], [45896, 1], [45897, 1]], s: 80596, b: 80596}
+	{u: 11904, i: 80441, n: "Refined Envoy Cowl", r: [[49523, 1], [80516, 1], [45896, 1], [45897, 1]], s: 80596, b: 80596},
+	{u: 12077, i: 83355, n: "Marshal's Spearmarshal's Cowl", r: [[83264, 1], [73217, 1], [73417, 1]], s: 83841, b: 83841},
+	{u: 12125, i: 84677, n: "Warbeast Cowl", r: [[82882, 1], [84012, 1], [82117, 1]], s: 83537, b: 83537}
 ],
 Tailor_Shoulders: [
 	{u: 2121, i: 11052, n: "Malign Embroidered Mantle", r: [[19870, 1], [13026, 1], [13025, 1]]},
@@ -1019,7 +1056,10 @@ Tailor_Shoulders: [
 	{u: 11696, i: 75196, n: "Crusader Exalted Mantle", r: [[70766, 1], [13205, 1], [13206, 1]]},
 	{u: 11984, i: 80448, n: "Thackeray's Epaulets", r: [[49523, 1], [80258, 1], [45901, 1], [45893, 1]], s: 80456},
 	{u: 12010, i: 80167, n: "Seraph Exalted Mantle", r: [[80181, 1], [73733, 1], [73980, 1]], s: 80346},
-	{u: 11953, i: 80264, n: "Refined Envoy Mantle", r: [[49523, 1], [80516, 1], [45901, 1], [45893, 1]], s: 80597, b: 80597}
+	{u: 11953, i: 80264, n: "Refined Envoy Mantle", r: [[49523, 1], [80516, 1], [45901, 1], [45893, 1]], s: 80597, b: 80597},
+	{u: 12109, i: 83594, n: "Warbeast Mantle", r: [[82882, 1], [84277, 1], [82326, 1]], s: 83874, b: 83874},
+	{u: 12225, i: 82378, n: "Marshal's Spearmarshal's Mantle", r: [[83264, 1], [73733, 1], [73980, 1]], s: 83154, b: 83154},
+	{u: 12306, i: 82321, n: "Harrier's Bounty Hunter's Mantle", r: [[82882, 1], [73733, 1], [73980, 1]], s: 83351}
 ],
 Tailor_Coat: [
 	{u: 1977, i: 11016, n: "Malign Embroidered Coat", r: [[19870, 1], [13015, 1], [13016, 1]]},
@@ -1200,7 +1240,9 @@ Tailor_Coat: [
 	{u: 11367, i: 72182, n: "Tizlak's Doublet", r: [[46746, 1], [72674, 1], [45891, 1], [45892, 1]], s: 77133, b: 77133},
 	{u: 11966, i: 80168, n: "Seraph Exalted Coat", r: [[80181, 1], [72024, 1], [75696, 1]], s: 80615},
 	{u: 11989, i: 80244, n: "Thackeray's Doublet", r: [[46746, 1], [80258, 1], [45891, 1], [45892, 1]], s: 80412},
-	{u: 11907, i: 80120, n: "Refined Envoy Vestments", r: [[46746, 1], [80516, 1], [45891, 1], [45892, 1]], s: 80431, b: 80431}
+	{u: 11907, i: 80120, n: "Refined Envoy Vestments", r: [[46746, 1], [80516, 1], [45891, 1], [45892, 1]], s: 80431, b: 80431},
+	{u: 12295, i: 84316, n: "Marshal's Spearmarshal's Vestments", r: [[83264, 1], [72024, 1], [75696, 1]], s: 84153, b: 84153},
+	{u: 12296, i: 83239, n: "Warbeast Vestments", r: [[82882, 1], [84623, 1], [82323, 1]], s: 84150, b: 84150}
 ],
 Tailor_Gloves: [
 	{u: 2227, i: 11022, n: "Malign Embroidered Wristguards", r: [[19870, 1], [13017, 1], [13018, 1]]},
@@ -1383,7 +1425,10 @@ Tailor_Gloves: [
 	{u: 11714, i: 72786, n: "Crusader Exalted Gloves", r: [[70766, 1], [13198, 1], [13197, 1]]},
 	{u: 11940, i: 80268, n: "Thackeray's Gloves", r: [[49523, 1], [80258, 1], [45894, 1], [45895, 1]], s: 80315},
 	{u: 11944, i: 80312, n: "Seraph Exalted Gloves", r: [[80181, 1], [76858, 1], [73243, 1]], s: 80621},
-	{u: 11939, i: 80460, n: "Refined Envoy Gloves", r: [[49523, 1], [80516, 1], [45894, 1], [45895, 1]], s: 80153, b: 80153}
+	{u: 11939, i: 80460, n: "Refined Envoy Gloves", r: [[49523, 1], [80516, 1], [45894, 1], [45895, 1]], s: 80153, b: 80153},
+	{u: 12254, i: 83438, n: "Marshal's Spearmarshal's Gloves", r: [[83264, 1], [76858, 1], [73243, 1]], s: 84607, b: 84607},
+	{u: 12275, i: 82603, n: "Harrier's Bounty Hunter's Gloves", r: [[82882, 1], [76858, 1], [73243, 1]], s: 83430},
+	{u: 12300, i: 82590, n: "Warbeast Gloves", r: [[82882, 1], [84191, 1], [82385, 1]], s: 83106, b: 83106}
 ],
 Tailor_Leggings: [
 	{u: 2085, i: 11025, n: "Malign Embroidered Pants", r: [[19870, 1], [13019, 1], [13020, 1]]},
@@ -1564,7 +1609,10 @@ Tailor_Leggings: [
 	{u: 11680, i: 71075, n: "Viper's Exalted Pants", r: [[76115, 1], [72146, 1], [71195, 1]], s: 74183, b: 74183},
 	{u: 11983, i: 80664, n: "Thackeray's Pants", r: [[49523, 1], [80258, 1], [45898, 1], [45899, 1]], s: 80220},
 	{u: 11986, i: 80406, n: "Seraph Exalted Pants", r: [[80181, 1], [72146, 1], [71195, 1]], s: 80632},
-	{u: 11982, i: 80275, n: "Refined Envoy Pants", r: [[49523, 1], [80516, 1], [45898, 1], [45899, 1]], s: 80183, b: 80183}
+	{u: 11982, i: 80275, n: "Refined Envoy Pants", r: [[49523, 1], [80516, 1], [45898, 1], [45899, 1]], s: 80183, b: 80183},
+	{u: 12106, i: 84308, n: "Harrier's Bounty Hunter's Pants", r: [[82882, 1], [72146, 1], [71195, 1]], s: 84247},
+	{u: 12241, i: 82836, n: "Warbeast Pants", r: [[82882, 1], [83616, 1], [82384, 1]], s: 83693, b: 83693},
+	{u: 12263, i: 82771, n: "Marshal's Spearmarshal's Pants", r: [[83264, 1], [72146, 1], [71195, 1]], s: 83101, b: 83101}
 ],
 Tailor_Boots: [
 	{u: 2049, i: 11019, n: "Malign Embroidered Sandals", r: [[19870, 1], [13021, 1], [13022, 2]]},
@@ -1745,7 +1793,9 @@ Tailor_Boots: [
 	{u: 11477, i: 71314, n: "Commander's Exalted Boots", r: [[71262, 1], [70799, 1], [76167, 2]], s: 71322, b: 71322},
 	{u: 11908, i: 80491, n: "Thackeray's Footwear", r: [[49523, 1], [80258, 1], [45900, 1], [45902, 1]], s: 80506},
 	{u: 11975, i: 80535, n: "Seraph Exalted Boots", r: [[80181, 1], [70799, 1], [76167, 2]], s: 80338},
-	{u: 11980, i: 80583, n: "Refined Envoy Shoes", r: [[49523, 1], [80516, 1], [45900, 1], [45902, 1]], s: 80551, b: 80551}
+	{u: 11980, i: 80583, n: "Refined Envoy Shoes", r: [[49523, 1], [80516, 1], [45900, 1], [45902, 1]], s: 80551, b: 80551},
+	{u: 12181, i: 83771, n: "Warbeast Shoes", r: [[82882, 1], [82635, 1], [83559, 2]], s: 82469, b: 82469},
+	{u: 12182, i: 82579, n: "Marshal's Spearmarshal's Shoes", r: [[83264, 1], [70799, 1], [76167, 2]], s: 84221, b: 84221}
 ],
 Leatherworker_Refinement: [
 	{u: 7, i: 19742, n: "Bolt of Cotton", r: [[19741, 2]]},
@@ -1786,7 +1836,9 @@ Leatherworker_Refinement: [
 	{u: 12019, i: 80764, n: "Vial of Might", r: [[24357, 1], [24289, 1], [24351, 1], [24358, 1]]},
 	{u: 12020, i: 80728, n: "Vial of Magic", r: [[24295, 1], [24283, 1], [24300, 1], [24277, 1]]},
 	{u: 12030, i: 80775, n: "Square of Vabbian Silk", r: [[19740, 10], [19742, 5], [19744, 10], [46740, 1]], s: 80731},
-	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]}
+	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
+	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
+	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]}
 ],
 Leatherworker_Component: [
 	{u: 1126, i: 13093, n: "Rawhide Chestguard Padding", r: [[19720, 1], [19792, 2]]},
@@ -1904,7 +1956,19 @@ Leatherworker_Component: [
 	{u: 11571, i: 76933, n: "Fulgurite", r: [[19925, 1], [69434, 1], [69432, 1], [69392, 1]]},
 	{u: 11889, i: 79790, n: "Dragon Hatchling Doll Hide", r: [[19737, 15], [24289, 15], [46747, 50], [24330, 5]], s: 79931},
 	{u: 12027, i: 80799, n: "Grandmaster Leatherworker's Mark", r: [[80714, 1], [80775, 1], [80723, 1], [80743, 1]], s: 80822},
-	{u: 12028, i: 80743, n: "Empowered Cured Thick Leather Square", r: [[46681, 1], [80764, 1], [80728, 1], [19735, 65]]}
+	{u: 12028, i: 80743, n: "Empowered Cured Thick Leather Square", r: [[46681, 1], [80764, 1], [80728, 1], [19735, 65]]},
+	{u: 12087, i: 84403, n: "Warbeast Hardened Boot Upper", r: [[19737, 2], [19790, 1], [82796, 5]]},
+	{u: 12113, i: 83214, n: "Warbeast Hardened Longcoat Panel", r: [[19737, 5], [19790, 1], [82796, 3]]},
+	{u: 12128, i: 83931, n: "Warbeast Hardened Shoulderguard Padding", r: [[19746, 1], [19790, 1], [82796, 2]]},
+	{u: 12150, i: 82205, n: "Warbeast Hardened Trouser Padding", r: [[19746, 1], [19790, 2], [82796, 3]]},
+	{u: 12172, i: 82125, n: "Warbeast Hardened Boot Sole", r: [[19737, 2], [82796, 2]]},
+	{u: 12177, i: 82501, n: "Warbeast Hardened Longcoat Padding", r: [[19746, 1], [19790, 2], [82796, 4]]},
+	{u: 12194, i: 84602, n: "Warbeast Hardened Helmet Padding", r: [[19746, 2], [19790, 1], [82796, 3]]},
+	{u: 12204, i: 82744, n: "Warbeast Hardened Shoulderguard Panel", r: [[19737, 2], [82796, 1]]},
+	{u: 12208, i: 83319, n: "Warbeast Hardened Helmet Strap", r: [[19737, 1], [82796, 2]]},
+	{u: 12237, i: 83916, n: "Warbeast Hardened Trouser Panel", r: [[19737, 4], [19790, 1], [82796, 2]]},
+	{u: 12290, i: 82266, n: "Warbeast Hardened Glove Panel", r: [[19737, 2], [82796, 1]]},
+	{u: 12302, i: 84226, n: "Warbeast Hardened Glove Lining", r: [[19746, 1], [19790, 1], [82796, 2]]}
 ],
 Leatherworker_UpgradeComponent: [
 	{u: 1354, i: 24810, n: "Minor Rune of the Engineer", r: [[19738, 1], [24321, 2], [19699, 1]]},
@@ -1971,7 +2035,15 @@ Leatherworker_UpgradeComponent: [
 	{u: 11293, i: 71425, n: "Superior Rune of the Berserker", r: [[24821, 1], [68942, 1], [74202, 10]], s: 76615},
 	{u: 11521, i: 70450, n: "Superior Rune of the Druid", r: [[24815, 1], [68942, 1], [74328, 10]], s: 72611},
 	{u: 11634, i: 70829, n: "Superior Rune of the Reaper", r: [[24806, 1], [68942, 1], [74202, 10]], s: 74112},
-	{u: 12047, i: 81091, n: "Superior Rune of Nature's Bounty", r: [[19746, 1], [24315, 1], [81127, 3], [19721, 1]], s: 81159}
+	{u: 12047, i: 81091, n: "Superior Rune of Nature's Bounty", r: [[19746, 1], [24315, 1], [81127, 3], [19721, 1]], s: 81159},
+	{u: 12080, i: 83964, n: "Superior Rune of the Soulbeast", r: [[24815, 1], [68942, 1], [82678, 1]], s: 82760},
+	{u: 12093, i: 84127, n: "Superior Rune of the Mirage", r: [[24803, 1], [68942, 1], [82678, 1]], s: 82625},
+	{u: 12119, i: 84749, n: "Superior Rune of the Spellbreaker", r: [[24821, 1], [68942, 1], [83103, 50]], s: 82694},
+	{u: 12148, i: 83663, n: "Superior Rune of the Scourge", r: [[24806, 1], [68942, 1], [83757, 50]], s: 82713},
+	{u: 12201, i: 83502, n: "Superior Rune of the Renegade", r: [[69370, 1], [68942, 1], [83103, 50]], s: 83361},
+	{u: 12202, i: 83423, n: "Superior Rune of the Weaver", r: [[24800, 1], [68942, 1], [83103, 50]], s: 84572},
+	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
+	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751}
 ],
 Leatherworker_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -2150,7 +2222,9 @@ Leatherworker_Insignia: [
 	{u: 11371, i: 76244, n: "Yassith's Viper's Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [76115, 1]], s: 75162},
 	{u: 11398, i: 75981, n: "Marauder Intricate Gossamer Insignia", r: [[76614, 5], [19721, 5], [74202, 30], [75654, 3]], s: 74396},
 	{u: 11483, i: 76653, n: "Maklain's Minstrel's Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [73227, 1]], s: 76749},
-	{u: 12009, i: 80258, n: "Thackeray's Seraph Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [80181, 1]], s: 80376}
+	{u: 12009, i: 80258, n: "Thackeray's Seraph Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [80181, 1]], s: 80376},
+	{u: 12164, i: 83264, n: "Insignia of the Spearmarshal", r: [[76614, 5], [19721, 5], [83103, 100], [82678, 1]]},
+	{u: 12198, i: 82882, n: "Insignia of the Bounty Hunter", r: [[76614, 5], [19721, 5], [83284, 45], [82678, 3]]}
 ],
 Leatherworker_Bag: [
 	{u: 1125, i: 8940, n: "Wrangler's Bag", r: [[13010, 1], [24296, 1], [19738, 3]], s: 9564},
@@ -2172,7 +2246,19 @@ Leatherworker_Bag: [
 	{u: 1384, i: 9581, n: "20 Slot Hardened Leather Pack", r: [[19737, 10], [13009, 1]]},
 	{u: 1385, i: 9584, n: "20 Slot Invisible Pack", r: [[19737, 10], [13009, 1], [24277, 3]]},
 	{u: 1386, i: 9585, n: "20 Slot Oiled Pack", r: [[19737, 10], [13009, 1], [24358, 3]]},
-	{u: 11553, i: 74525, n: "20-Slot Equipment Pact Box", r: [[19737, 22], [13009, 1], [24277, 3]]}
+	{u: 11553, i: 74525, n: "20-Slot Equipment Pact Box", r: [[19737, 22], [13009, 1], [24277, 3]]},
+	{u: 12069, i: 84494, n: "32-Slot Marshal's Pannier", r: [[82888, 1], [83322, 4], [83410, 12], [82678, 1]]},
+	{u: 12076, i: 83109, n: "32-Slot Hamaseen Pannier", r: [[84686, 1], [83322, 4], [83410, 12], [82678, 1]]},
+	{u: 12099, i: 83897, n: "28-Slot Hardened Leather Pannier", r: [[82511, 1], [83322, 4], [83410, 5], [82678, 1]]},
+	{u: 12114, i: 84557, n: "24-Slot Marshal's Pannier", r: [[74525, 2], [83322, 4], [83410, 1], [82678, 1]]},
+	{u: 12205, i: 84686, n: "28-Slot Hamaseen Pannier", r: [[83933, 1], [83322, 4], [83410, 5], [82678, 1]]},
+	{u: 12211, i: 83182, n: "32-Slot Hardened Leather Pannier", r: [[83897, 1], [83322, 4], [83410, 12], [82678, 1]]},
+	{u: 12214, i: 82901, n: "24-Slot Courier's Pannier", r: [[9584, 2], [83322, 4], [83410, 1], [82678, 1]]},
+	{u: 12223, i: 83092, n: "28-Slot Courier's Pannier", r: [[82901, 1], [83322, 4], [83410, 5], [82678, 1]]},
+	{u: 12251, i: 83209, n: "32-Slot Courier's Pannier", r: [[83092, 1], [83322, 4], [83410, 12], [82678, 1]]},
+	{u: 12256, i: 82511, n: "24-Slot Hardened Leather Pannier", r: [[9581, 2], [83322, 4], [83410, 1], [82678, 1]], s: 83261, b: 83261},
+	{u: 12261, i: 83933, n: "24-Slot Hamaseen Pannier", r: [[9585, 2], [83322, 4], [83410, 1], [82678, 1]]},
+	{u: 12311, i: 82888, n: "28-Slot Marshal's Pannier", r: [[84557, 1], [83322, 4], [83410, 5], [82678, 1]]}
 ],
 Leatherworker_Bulk: [
 	{u: 1866, i: 9061, n: "Satchel of Mighty Seeker Armor", r: [[24290, 4], [19738, 15], [19720, 3], [19792, 8]], s: 10159, b: 10159},
@@ -2503,7 +2589,9 @@ Leatherworker_Helm: [
 	{u: 11676, i: 70966, n: "Occam's Leather Breather", r: [[49523, 1], [46715, 1], [71189, 1], [72297, 1]], s: 74438, b: 74438},
 	{u: 11945, i: 80119, n: "Seraph Emblazoned Helm", r: [[80181, 1], [71412, 1], [75978, 1]], s: 80495},
 	{u: 11959, i: 80370, n: "Thackeray's Visage", r: [[49523, 1], [80258, 1], [45860, 1], [45867, 1]], s: 80561},
-	{u: 11998, i: 80634, n: "Refined Envoy Mask", r: [[49523, 1], [80516, 1], [45860, 1], [45867, 1]], s: 80676, b: 80676}
+	{u: 11998, i: 80634, n: "Refined Envoy Mask", r: [[49523, 1], [80516, 1], [45860, 1], [45867, 1]], s: 80676, b: 80676},
+	{u: 12200, i: 82573, n: "Marshal's Spearmarshal's Mask", r: [[83264, 1], [71412, 1], [75978, 1]], s: 82601, b: 82601},
+	{u: 12247, i: 82859, n: "Warbeast Mask", r: [[82882, 1], [84602, 1], [83319, 1]], s: 82474, b: 82474}
 ],
 Leatherworker_Shoulders: [
 	{u: 1123, i: 4246, n: "Bloodsaw Leather Work Shoulderpads", r: [[19800, 1], [19738, 3]], s: 9526},
@@ -2682,7 +2770,10 @@ Leatherworker_Shoulders: [
 	{u: 11651, i: 72259, n: "Yassith's Shoulderguard", r: [[49523, 1], [76244, 1], [45862, 1], [45869, 1]], s: 74309, b: 74309},
 	{u: 11905, i: 80137, n: "Thackeray's Shoulders", r: [[49523, 1], [80258, 1], [45862, 1], [45869, 1]], s: 80160},
 	{u: 11976, i: 80496, n: "Seraph Emblazoned Shoulders", r: [[80181, 1], [75506, 1], [73806, 1]], s: 80309},
-	{u: 12012, i: 80366, n: "Refined Envoy Shoulderpads", r: [[49523, 1], [80516, 1], [45862, 1], [45869, 1]], s: 80556, b: 80556}
+	{u: 12012, i: 80366, n: "Refined Envoy Shoulderpads", r: [[49523, 1], [80516, 1], [45862, 1], [45869, 1]], s: 80556, b: 80556},
+	{u: 12078, i: 82758, n: "Warbeast Shoulderpads", r: [[82882, 1], [83931, 1], [82744, 1]], s: 83337, b: 83337},
+	{u: 12120, i: 82311, n: "Harrier's Bounty Hunter's Shoulderpads", r: [[82882, 1], [75506, 1], [73806, 1]], s: 83433},
+	{u: 12138, i: 84189, n: "Marshal's Spearmarshal's Shoulderpads", r: [[83264, 1], [75506, 1], [73806, 1]], s: 84635, b: 84635}
 ],
 Leatherworker_Coat: [
 	{u: 1119, i: 4242, n: "Bloodsaw Leather Work Coat", r: [[19796, 1], [19738, 12]], s: 9523},
@@ -2862,7 +2953,9 @@ Leatherworker_Coat: [
 	{u: 11534, i: 75912, n: "Ossa's Guise", r: [[46746, 1], [71168, 1], [45861, 1], [45868, 1]], s: 72358},
 	{u: 11969, i: 80317, n: "Seraph Emblazoned Coat", r: [[80181, 1], [71875, 1], [77186, 1]], s: 80152},
 	{u: 11931, i: 80280, n: "Thackeray's Cuirass", r: [[46746, 1], [80258, 1], [45861, 1], [45868, 1]], s: 80663},
-	{u: 11924, i: 80607, n: "Refined Envoy Jerkin", r: [[46746, 1], [80516, 1], [45861, 1], [45868, 1]], s: 80124, b: 80124}
+	{u: 11924, i: 80607, n: "Refined Envoy Jerkin", r: [[46746, 1], [80516, 1], [45861, 1], [45868, 1]], s: 80124, b: 80124},
+	{u: 12176, i: 82773, n: "Warbeast Jerkin", r: [[82882, 1], [82501, 1], [83214, 1]], s: 82470, b: 82470},
+	{u: 12282, i: 82647, n: "Marshal's Spearmarshal's Jerkin", r: [[83264, 1], [71875, 1], [77186, 1]], s: 84070, b: 84070}
 ],
 Leatherworker_Gloves: [
 	{u: 1118, i: 4909, n: "Darkvine Leather Gloves", r: [[24278, 1], [13098, 1], [13095, 1]], s: 9405},
@@ -3043,7 +3136,10 @@ Leatherworker_Gloves: [
 	{u: 10304, i: 73090, n: "Laranthir's Grips", r: [[49523, 1], [72985, 1], [45859, 1], [45866, 1]], s: 72187, b: 72187},
 	{u: 11915, i: 80195, n: "Seraph Emblazoned Gloves", r: [[80181, 1], [70682, 1], [72553, 1]], s: 80339},
 	{u: 11932, i: 80588, n: "Thackeray's Vambraces", r: [[49523, 1], [80258, 1], [45859, 1], [45866, 1]], s: 80428},
-	{u: 11910, i: 80658, n: "Refined Envoy Vambraces", r: [[49523, 1], [80516, 1], [45859, 1], [45866, 1]], s: 80636, b: 80636}
+	{u: 11910, i: 80658, n: "Refined Envoy Vambraces", r: [[49523, 1], [80516, 1], [45859, 1], [45866, 1]], s: 80636, b: 80636},
+	{u: 12123, i: 82887, n: "Marshal's Spearmarshal's Vambraces", r: [[83264, 1], [70682, 1], [72553, 1]], s: 84125, b: 84125},
+	{u: 12222, i: 83709, n: "Harrier's Bounty Hunter's Vambraces", r: [[82882, 1], [70682, 1], [72553, 1]], s: 84136},
+	{u: 12236, i: 83717, n: "Warbeast Vambraces", r: [[82882, 1], [82266, 1], [84226, 1]]}
 ],
 Leatherworker_Leggings: [
 	{u: 1116, i: 4012, n: "Quiet Leather Leggings", r: [[19905, 1], [13217, 1], [13216, 1]], s: 9386},
@@ -3224,7 +3320,10 @@ Leatherworker_Leggings: [
 	{u: 11689, i: 75340, n: "Maklain's Leggings", r: [[49523, 1], [76653, 1], [45863, 1], [45870, 1]], s: 72096, b: 72096},
 	{u: 12001, i: 80419, n: "Seraph Emblazoned Pants", r: [[80181, 1], [72313, 1], [71449, 1]], s: 80489},
 	{u: 12004, i: 80637, n: "Thackeray's Leggings", r: [[49523, 1], [80258, 1], [45863, 1], [45870, 1]], s: 80386},
-	{u: 11964, i: 80675, n: "Refined Envoy Leggings", r: [[49523, 1], [80516, 1], [45863, 1], [45870, 1]], s: 80255, b: 80255}
+	{u: 11964, i: 80675, n: "Refined Envoy Leggings", r: [[49523, 1], [80516, 1], [45863, 1], [45870, 1]], s: 80255, b: 80255},
+	{u: 12083, i: 83392, n: "Warbeast Leggings", r: [[82882, 1], [82205, 1], [83916, 1]], s: 84107, b: 84107},
+	{u: 12152, i: 83741, n: "Harrier's Bounty Hunter's Leggings", r: [[82882, 1], [72313, 1], [71449, 1]], s: 83187},
+	{u: 12238, i: 84406, n: "Marshal's Spearmarshal's Leggings", r: [[83264, 1], [72313, 1], [71449, 1]], s: 83124, b: 83124}
 ],
 Leatherworker_Boots: [
 	{u: 1117, i: 4241, n: "Bloodsaw Leather Work Boots", r: [[19800, 1], [19738, 3]], s: 9522},
@@ -3404,7 +3503,9 @@ Leatherworker_Boots: [
 	{u: 11698, i: 72998, n: "Laranthir's Striders", r: [[49523, 1], [72985, 1], [45864, 1], [45865, 1]], s: 74506, b: 74506},
 	{u: 11913, i: 80467, n: "Seraph Emblazoned Boots", r: [[80181, 1], [72892, 1], [73903, 2]], s: 80544},
 	{u: 12013, i: 80300, n: "Thackeray's Boots", r: [[49523, 1], [80258, 1], [45864, 1], [45865, 1]], s: 80652},
-	{u: 11993, i: 80177, n: "Refined Envoy Boots", r: [[49523, 1], [80516, 1], [45864, 1], [45865, 1]], s: 80287, b: 80287}
+	{u: 11993, i: 80177, n: "Refined Envoy Boots", r: [[49523, 1], [80516, 1], [45864, 1], [45865, 1]], s: 80287, b: 80287},
+	{u: 12149, i: 82150, n: "Warbeast Boots", r: [[82882, 1], [84403, 1], [82125, 2]], s: 84560, b: 84560},
+	{u: 12158, i: 83781, n: "Marshal's Spearmarshal's Boots", r: [[83264, 1], [72892, 1], [73903, 2]], s: 82370, b: 82370}
 ],
 Armorsmith_Refinement: [
 	{u: 7, i: 19742, n: "Bolt of Cotton", r: [[19741, 2]]},
@@ -3453,7 +3554,9 @@ Armorsmith_Refinement: [
 	{u: 12019, i: 80764, n: "Vial of Might", r: [[24357, 1], [24289, 1], [24351, 1], [24358, 1]]},
 	{u: 12020, i: 80728, n: "Vial of Magic", r: [[24295, 1], [24283, 1], [24300, 1], [24277, 1]]},
 	{u: 12030, i: 80775, n: "Square of Vabbian Silk", r: [[19740, 10], [19742, 5], [19744, 10], [46740, 1]], s: 80731},
-	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]}
+	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
+	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
+	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]}
 ],
 Armorsmith_Component: [
 	{u: 255, i: 13108, n: "Bronze Chain Boot Panel", r: [[19679, 2]]},
@@ -3571,7 +3674,19 @@ Armorsmith_Component: [
 	{u: 11571, i: 76933, n: "Fulgurite", r: [[19925, 1], [69434, 1], [69432, 1], [69392, 1]]},
 	{u: 11626, i: 70548, n: "Deldrimor Steel Breather Casing", r: [[46738, 1], [46747, 25], [24277, 5]]},
 	{u: 12029, i: 80831, n: "Empowered Mithril Ingot", r: [[46681, 1], [80764, 1], [80728, 1], [19684, 150]]},
-	{u: 12031, i: 80685, n: "Grandmaster Armorsmith's Mark", r: [[80714, 2], [80775, 1], [80723, 1], [80831, 1]], s: 80760}
+	{u: 12031, i: 80685, n: "Grandmaster Armorsmith's Mark", r: [[80714, 2], [80775, 1], [80723, 1], [80831, 1]], s: 80760},
+	{u: 12067, i: 84197, n: "Warbeast Orichalcum Chestplate Panel", r: [[19685, 5], [82796, 3]]},
+	{u: 12079, i: 83342, n: "Warbeast Orichalcum Gauntlet Plates", r: [[19685, 2], [82796, 1]]},
+	{u: 12097, i: 83005, n: "Warbeast Orichalcum Chestplate Padding", r: [[19746, 1], [19790, 3], [82796, 4]]},
+	{u: 12098, i: 84061, n: "Warbeast Orichalcum Pauldron Casing", r: [[19685, 2], [82796, 2]]},
+	{u: 12108, i: 84210, n: "Warbeast Orichalcum Legging Panel", r: [[19685, 4], [82796, 2]]},
+	{u: 12133, i: 82415, n: "Warbeast Orichalcum Helmet Casing", r: [[19685, 1], [82796, 2]]},
+	{u: 12144, i: 83474, n: "Warbeast Orichalcum Helmet Lining", r: [[19746, 2], [19790, 1], [82796, 3]]},
+	{u: 12157, i: 83813, n: "Warbeast Orichalcum Pauldron Lining", r: [[19746, 1], [19790, 1], [82796, 3]]},
+	{u: 12240, i: 84539, n: "Warbeast Orichalcum Legging Lining", r: [[19746, 1], [19790, 3], [82796, 3]]},
+	{u: 12252, i: 83883, n: "Warbeast Orichalcum Boot Lining", r: [[19746, 1], [19790, 1], [82796, 2]]},
+	{u: 12274, i: 82749, n: "Warbeast Orichalcum Gauntlet Lining", r: [[19746, 1], [19790, 1], [82796, 2]]},
+	{u: 12281, i: 82551, n: "Warbeast Orichalcum Boot Casing", r: [[19685, 2], [82796, 1]]}
 ],
 Armorsmith_UpgradeComponent: [
 	{u: 483, i: 24822, n: "Minor Rune of the Guardian", r: [[19679, 1], [24301, 2]]},
@@ -3640,7 +3755,15 @@ Armorsmith_UpgradeComponent: [
 	{u: 11293, i: 71425, n: "Superior Rune of the Berserker", r: [[24821, 1], [68942, 1], [74202, 10]], s: 76615},
 	{u: 11521, i: 70450, n: "Superior Rune of the Druid", r: [[24815, 1], [68942, 1], [74328, 10]], s: 72611},
 	{u: 11634, i: 70829, n: "Superior Rune of the Reaper", r: [[24806, 1], [68942, 1], [74202, 10]], s: 74112},
-	{u: 12047, i: 81091, n: "Superior Rune of Nature's Bounty", r: [[19746, 1], [24315, 1], [81127, 3], [19721, 1]], s: 81159}
+	{u: 12047, i: 81091, n: "Superior Rune of Nature's Bounty", r: [[19746, 1], [24315, 1], [81127, 3], [19721, 1]], s: 81159},
+	{u: 12080, i: 83964, n: "Superior Rune of the Soulbeast", r: [[24815, 1], [68942, 1], [82678, 1]], s: 82760},
+	{u: 12093, i: 84127, n: "Superior Rune of the Mirage", r: [[24803, 1], [68942, 1], [82678, 1]], s: 82625},
+	{u: 12119, i: 84749, n: "Superior Rune of the Spellbreaker", r: [[24821, 1], [68942, 1], [83103, 50]], s: 82694},
+	{u: 12148, i: 83663, n: "Superior Rune of the Scourge", r: [[24806, 1], [68942, 1], [83757, 50]], s: 82713},
+	{u: 12201, i: 83502, n: "Superior Rune of the Renegade", r: [[69370, 1], [68942, 1], [83103, 50]], s: 83361},
+	{u: 12202, i: 83423, n: "Superior Rune of the Weaver", r: [[24800, 1], [68942, 1], [83103, 50]], s: 84572},
+	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
+	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751}
 ],
 Armorsmith_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -3819,7 +3942,9 @@ Armorsmith_Insignia: [
 	{u: 11371, i: 76244, n: "Yassith's Viper's Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [76115, 1]], s: 75162},
 	{u: 11398, i: 75981, n: "Marauder Intricate Gossamer Insignia", r: [[76614, 5], [19721, 5], [74202, 30], [75654, 3]], s: 74396},
 	{u: 11483, i: 76653, n: "Maklain's Minstrel's Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [73227, 1]], s: 76749},
-	{u: 12009, i: 80258, n: "Thackeray's Seraph Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [80181, 1]], s: 80376}
+	{u: 12009, i: 80258, n: "Thackeray's Seraph Insignia", r: [[46681, 5], [24277, 10], [70992, 3], [80181, 1]], s: 80376},
+	{u: 12164, i: 83264, n: "Insignia of the Spearmarshal", r: [[76614, 5], [19721, 5], [83103, 100], [82678, 1]]},
+	{u: 12198, i: 82882, n: "Insignia of the Bounty Hunter", r: [[76614, 5], [19721, 5], [83284, 45], [82678, 3]]}
 ],
 Armorsmith_Bag: [
 	{u: 499, i: 9420, n: "8 Slot Reinforced Bronze Box", r: [[19679, 10]]},
@@ -3840,7 +3965,19 @@ Armorsmith_Bag: [
 	{u: 514, i: 9591, n: "20 Slot Orichalcum Box", r: [[19685, 10], [13009, 1]]},
 	{u: 515, i: 9593, n: "20 Slot Equipment Box", r: [[19685, 10], [13009, 1], [24289, 3]]},
 	{u: 516, i: 9594, n: "20 Slot Safe Box", r: [[19685, 10], [13009, 1], [24277, 3]]},
-	{u: 11666, i: 74525, n: "20-Slot Equipment Pact Box", r: [[19685, 10], [13009, 1], [24277, 3], [19737, 12]], s: 73199, b: 73199}
+	{u: 11666, i: 74525, n: "20-Slot Equipment Pact Box", r: [[19685, 10], [13009, 1], [24277, 3], [19737, 12]], s: 73199, b: 73199},
+	{u: 12081, i: 84515, n: "24-Slot Nomad's Locker", r: [[9593, 2], [83322, 4], [83410, 1], [82582, 10]]},
+	{u: 12085, i: 83415, n: "24-Slot Courier's Locker", r: [[9594, 2], [83322, 4], [83410, 1], [82582, 10]]},
+	{u: 12102, i: 82277, n: "32-Slot Courier's Locker", r: [[84271, 1], [83322, 4], [83410, 12], [82582, 10]]},
+	{u: 12122, i: 83286, n: "32-Slot Nomad's Locker", r: [[84037, 1], [83322, 4], [83410, 12], [82582, 10]]},
+	{u: 12171, i: 83205, n: "32-Slot Marshal's Locker", r: [[83737, 1], [83322, 4], [83410, 12], [82582, 10]]},
+	{u: 12186, i: 83021, n: "28-Slot Orichalcum Locker", r: [[83155, 1], [83322, 4], [83410, 5], [82582, 10]]},
+	{u: 12220, i: 83218, n: "24-Slot Marshal's Locker", r: [[74525, 2], [83322, 4], [83410, 1], [82582, 10]]},
+	{u: 12272, i: 83155, n: "24-Slot Orichalcum Locker", r: [[9591, 2], [83322, 4], [83410, 1], [82582, 10]], s: 83306, b: 83306},
+	{u: 12276, i: 84037, n: "28-Slot Nomad's Locker", r: [[84515, 1], [83322, 4], [83410, 5], [82582, 10]]},
+	{u: 12288, i: 84271, n: "28-Slot Courier's Locker", r: [[83415, 1], [83322, 4], [83410, 5], [82582, 10]]},
+	{u: 12293, i: 82418, n: "32-Slot Orichalcum Locker", r: [[83021, 1], [83322, 4], [83410, 12], [82582, 10]]},
+	{u: 12301, i: 83737, n: "28-Slot Marshal's Locker", r: [[83218, 1], [83322, 4], [83410, 5], [82582, 10]]}
 ],
 Armorsmith_Bulk: [
 	{u: 996, i: 8957, n: "Box of Simple Mighty Chain Armor", r: [[24290, 7], [19679, 9], [19720, 3], [19792, 13]], s: 10055, b: 10055},
@@ -4172,7 +4309,9 @@ Armorsmith_Helm: [
 	{u: 11733, i: 75954, n: "Ahamid's Metal Breather", r: [[49523, 1], [46728, 1], [72689, 1], [70548, 1]], s: 71190, b: 71190},
 	{u: 11922, i: 80608, n: "Seraph Draconic Helm", r: [[80181, 1], [72195, 1], [71879, 1]], s: 80590},
 	{u: 11938, i: 80451, n: "Thackeray's Barbute", r: [[49523, 1], [80258, 1], [45874, 1], [45880, 1]], s: 80103},
-	{u: 11996, i: 80387, n: "Refined Envoy Helmet", r: [[49523, 1], [80516, 1], [45874, 1], [45880, 1]], s: 80187, b: 80187}
+	{u: 11996, i: 80387, n: "Refined Envoy Helmet", r: [[49523, 1], [80516, 1], [45874, 1], [45880, 1]], s: 80187, b: 80187},
+	{u: 12255, i: 82332, n: "Warbeast Helmet", r: [[82882, 1], [82415, 1], [83474, 1]], s: 83700, b: 83700},
+	{u: 12292, i: 84383, n: "Marshal's Spearmarshal's Helmet", r: [[83264, 1], [72195, 1], [71879, 1]], s: 82900, b: 82900}
 ],
 Armorsmith_Shoulders: [
 	{u: 246, i: 3993, n: "Caer Pauldrons", r: [[24363, 3], [19681, 3], [19744, 3]], s: 9397},
@@ -4351,7 +4490,10 @@ Armorsmith_Shoulders: [
 	{u: 11726, i: 74401, n: "Crusader Draconic Pauldrons", r: [[70766, 1], [13160, 1], [13170, 1]]},
 	{u: 11968, i: 80294, n: "Seraph Draconic Pauldrons", r: [[80181, 1], [71350, 1], [72060, 1]], s: 80112},
 	{u: 11917, i: 80616, n: "Thackeray's Pauldrons", r: [[49523, 1], [80258, 1], [45876, 1], [45882, 1]], s: 80518},
-	{u: 11952, i: 80236, n: "Refined Envoy Pauldrons", r: [[49523, 1], [80516, 1], [45876, 1], [45882, 1]], s: 80667, b: 80667}
+	{u: 11952, i: 80236, n: "Refined Envoy Pauldrons", r: [[49523, 1], [80516, 1], [45876, 1], [45882, 1]], s: 80667, b: 80667},
+	{u: 12233, i: 82990, n: "Marshal's Spearmarshal's Pauldrons", r: [[83264, 1], [71350, 1], [72060, 1]], s: 82274, b: 82274},
+	{u: 12244, i: 82885, n: "Warbeast Pauldrons", r: [[82882, 1], [84061, 1], [83813, 1]], s: 83141, b: 83141},
+	{u: 12262, i: 82571, n: "Harrier's Bounty Hunter's Pauldrons", r: [[82882, 1], [71350, 1], [72060, 1]], s: 82421}
 ],
 Armorsmith_Coat: [
 	{u: 249, i: 4236, n: "Iron Legion's Breastplate", r: [[19679, 8], [19797, 1], [13105, 2]], s: 9517},
@@ -4531,7 +4673,9 @@ Armorsmith_Coat: [
 	{u: 11706, i: 76908, n: "Pahua's Breastplate", r: [[46746, 1], [76560, 1], [45872, 1], [45878, 1]], s: 73763, b: 73763},
 	{u: 11929, i: 80361, n: "Thackeray's Breastplate", r: [[46746, 1], [80258, 1], [45872, 1], [45878, 1]], s: 80265},
 	{u: 11937, i: 80671, n: "Seraph Draconic Coat", r: [[80181, 1], [73056, 1], [75134, 1]], s: 80601},
-	{u: 12011, i: 80648, n: "Refined Envoy Breastplate", r: [[46746, 1], [80516, 1], [45872, 1], [45878, 1]], s: 80533, b: 80533}
+	{u: 12011, i: 80648, n: "Refined Envoy Breastplate", r: [[46746, 1], [80516, 1], [45872, 1], [45878, 1]], s: 80533, b: 80533},
+	{u: 12253, i: 83336, n: "Marshal's Spearmarshal's Breastplate", r: [[83264, 1], [73056, 1], [75134, 1]], s: 83070, b: 83070},
+	{u: 12267, i: 83440, n: "Warbeast Breastplate", r: [[82882, 1], [84197, 1], [83005, 1]], s: 82493, b: 82493}
 ],
 Armorsmith_Gloves: [
 	{u: 248, i: 4907, n: "Darkvine Gauntlets", r: [[24278, 1], [19679, 1], [19720, 1]], s: 9407},
@@ -4712,7 +4856,10 @@ Armorsmith_Gloves: [
 	{u: 11613, i: 76092, n: "Ossa's Warfist", r: [[49523, 1], [71168, 1], [45873, 1], [45879, 1]], s: 77067},
 	{u: 11936, i: 80102, n: "Seraph Draconic Gauntlets", r: [[80181, 1], [75169, 1], [74341, 1]], s: 80256},
 	{u: 12003, i: 80227, n: "Thackeray's Gauntlets", r: [[49523, 1], [80258, 1], [45873, 1], [45879, 1]], s: 80285},
-	{u: 11914, i: 80673, n: "Refined Envoy Gauntlets", r: [[49523, 1], [80516, 1], [45873, 1], [45879, 1]], s: 80344, b: 80344}
+	{u: 11914, i: 80673, n: "Refined Envoy Gauntlets", r: [[49523, 1], [80516, 1], [45873, 1], [45879, 1]], s: 80344, b: 80344},
+	{u: 12191, i: 82822, n: "Marshal's Spearmarshal's Gauntlets", r: [[83264, 1], [75169, 1], [74341, 1]], s: 84744, b: 84744},
+	{u: 12213, i: 84509, n: "Harrier's Bounty Hunter's Gauntlets", r: [[82882, 1], [75169, 1], [74341, 1]], s: 82491},
+	{u: 12234, i: 83792, n: "Warbeast Gauntlets", r: [[82882, 1], [83342, 1], [82749, 1]], s: 82550, b: 82550}
 ],
 Armorsmith_Leggings: [
 	{u: 252, i: 4239, n: "Iron Legion's Leggings", r: [[19679, 8], [19797, 1]], s: 9519},
@@ -4892,7 +5039,10 @@ Armorsmith_Leggings: [
 	{u: 11329, i: 72139, n: "Laranthir's Tassets", r: [[49523, 1], [72985, 1], [45875, 1], [45881, 1]], s: 76992, b: 76992},
 	{u: 11962, i: 80504, n: "Seraph Draconic Legs", r: [[80181, 1], [73665, 1], [70891, 1]], s: 80656},
 	{u: 11947, i: 80274, n: "Thackeray's Tassets", r: [[49523, 1], [80258, 1], [45875, 1], [45881, 1]], s: 80276},
-	{u: 11963, i: 80427, n: "Refined Envoy Tassets", r: [[49523, 1], [80516, 1], [45875, 1], [45881, 1]], s: 80291, b: 80291}
+	{u: 11963, i: 80427, n: "Refined Envoy Tassets", r: [[49523, 1], [80516, 1], [45875, 1], [45881, 1]], s: 80291, b: 80291},
+	{u: 12199, i: 84745, n: "Warbeast Tassets", r: [[82882, 1], [84210, 1], [84539, 1]], s: 83908, b: 83908},
+	{u: 12217, i: 83972, n: "Harrier's Bounty Hunter's Tassets", r: [[82882, 1], [73665, 1], [70891, 1]], s: 83371},
+	{u: 12266, i: 82383, n: "Marshal's Spearmarshal's Tassets", r: [[83264, 1], [73665, 1], [70891, 1]], s: 82688, b: 82688}
 ],
 Armorsmith_Boots: [
 	{u: 247, i: 4235, n: "Iron Legion's Boots", r: [[19679, 4], [19797, 1]], s: 9516},
@@ -5072,7 +5222,9 @@ Armorsmith_Boots: [
 	{u: 11648, i: 70593, n: "Svaard's Greaves", r: [[49523, 1], [71132, 1], [45871, 1], [45877, 1]], s: 73349, b: 73349},
 	{u: 11912, i: 80132, n: "Thackeray's Greaves", r: [[49523, 1], [80258, 1], [45871, 1], [45877, 1]], s: 80521},
 	{u: 11970, i: 80211, n: "Seraph Draconic Boots", r: [[80181, 1], [75606, 1], [70612, 1]], s: 80558},
-	{u: 11946, i: 80127, n: "Refined Envoy Greaves", r: [[49523, 1], [80516, 1], [45871, 1], [45877, 1]], s: 80446, b: 80446}
+	{u: 11946, i: 80127, n: "Refined Envoy Greaves", r: [[49523, 1], [80516, 1], [45871, 1], [45877, 1]], s: 80446, b: 80446},
+	{u: 12072, i: 84131, n: "Marshal's Spearmarshal's Greaves", r: [[83264, 1], [70612, 1], [75606, 1]], s: 84231, b: 84231},
+	{u: 12308, i: 82754, n: "Warbeast Greaves", r: [[82882, 1], [83883, 1], [82551, 1]], s: 82853, b: 82853}
 ],
 Artificer_Refinement: [
 	{u: 1, i: 19713, n: "Soft Wood Plank", r: [[19726, 2]]},
@@ -5523,7 +5675,8 @@ Artificer_Inscription: [
 	{u: 11413, i: 73935, n: "Yassith's Viper's Inscription", r: [[46681, 10], [71453, 1], [73772, 1], [24277, 10]], s: 74123},
 	{u: 11496, i: 76048, n: "Vigilant Orichalcum Imbued Inscription", r: [[12988, 5], [19721, 5], [74202, 30], [74988, 3]], s: 74235},
 	{u: 11498, i: 73772, n: "Viper's Orichalcum Imbued Inscription", r: [[12988, 5], [19721, 5], [74328, 30], [76491, 3]], s: 77137},
-	{u: 11925, i: 80595, n: "Thackeray's Seraph Inscription", r: [[46681, 10], [71453, 1], [80454, 1], [24277, 10]], s: 80216}
+	{u: 11925, i: 80595, n: "Thackeray's Seraph Inscription", r: [[46681, 10], [71453, 1], [80454, 1], [24277, 10]], s: 80216},
+	{u: 12243, i: 83974, n: "Mordant Inscription", r: [[12988, 5], [19721, 5], [83757, 30], [82678, 3]], s: 84288}
 ],
 Artificer_Potion: [
 	{u: 3869, i: 8640, n: "Grawl Snowman Potion", r: [[24277, 3], [24358, 3], [24320, 1]], s: 9549},
@@ -7016,7 +7169,8 @@ Huntsman_Inscription: [
 	{u: 11413, i: 73935, n: "Yassith's Viper's Inscription", r: [[46681, 10], [71453, 1], [73772, 1], [24277, 10]], s: 74123},
 	{u: 11496, i: 76048, n: "Vigilant Orichalcum Imbued Inscription", r: [[12988, 5], [19721, 5], [74202, 30], [74988, 3]], s: 74235},
 	{u: 11498, i: 73772, n: "Viper's Orichalcum Imbued Inscription", r: [[12988, 5], [19721, 5], [74328, 30], [76491, 3]], s: 77137},
-	{u: 11925, i: 80595, n: "Thackeray's Seraph Inscription", r: [[46681, 10], [71453, 1], [80454, 1], [24277, 10]], s: 80216}
+	{u: 11925, i: 80595, n: "Thackeray's Seraph Inscription", r: [[46681, 10], [71453, 1], [80454, 1], [24277, 10]], s: 80216},
+	{u: 12243, i: 83974, n: "Mordant Inscription", r: [[12988, 5], [19721, 5], [83757, 30], [82678, 3]], s: 84288}
 ],
 Huntsman_Consumable: [
 	{u: 4480, i: 9452, n: "Apprentice Maintenance Oil", r: [[24272, 4], [12156, 3]]},
@@ -9009,7 +9163,8 @@ Weaponsmith_Inscription: [
 	{u: 11413, i: 73935, n: "Yassith's Viper's Inscription", r: [[46681, 10], [71453, 1], [73772, 1], [24277, 10]], s: 74123},
 	{u: 11496, i: 76048, n: "Vigilant Orichalcum Imbued Inscription", r: [[12988, 5], [19721, 5], [74202, 30], [74988, 3]], s: 74235},
 	{u: 11498, i: 73772, n: "Viper's Orichalcum Imbued Inscription", r: [[12988, 5], [19721, 5], [74328, 30], [76491, 3]], s: 77137},
-	{u: 11925, i: 80595, n: "Thackeray's Seraph Inscription", r: [[46681, 10], [71453, 1], [80454, 1], [24277, 10]], s: 80216}
+	{u: 11925, i: 80595, n: "Thackeray's Seraph Inscription", r: [[46681, 10], [71453, 1], [80454, 1], [24277, 10]], s: 80216},
+	{u: 12243, i: 83974, n: "Mordant Inscription", r: [[12988, 5], [19721, 5], [83757, 30], [82678, 3]], s: 84288}
 ],
 Weaponsmith_Consumable: [
 	{u: 5396, i: 9431, n: "Rough Sharpening Stone", r: [[24272, 3], [19679, 3]]},
@@ -10788,7 +10943,15 @@ Scribe_Component: [
 	{u: 11681, i: 73964, n: "Journeyman's Ink Set", r: [[70647, 2], [12156, 1], [75694, 3]]},
 	{u: 11692, i: 71938, n: "Fine Book Cover", r: [[19734, 10]]},
 	{u: 11717, i: 70673, n: "Fine Book", r: [[70714, 10], [71938, 1], [19794, 5]]},
-	{u: 11719, i: 75784, n: "Box of Banner Supplies", r: [[19723, 5], [19726, 5], [19727, 5]]}
+	{u: 11719, i: 75784, n: "Box of Banner Supplies", r: [[19723, 5], [19726, 5], [19727, 5]]},
+	{u: 12092, i: 84146, n: "Forged Matrix", r: [[82656, 1], [43772, 1], [82582, 5]]},
+	{u: 12135, i: 84752, n: "Gold Bound Matrix", r: [[82656, 1], [43773, 10], [19682, 5], [75762, 5]]},
+	{u: 12154, i: 82118, n: "Encased Matrix", r: [[82656, 1], [43773, 10], [75762, 10]]},
+	{u: 12179, i: 82239, n: "Putrid Matrix", r: [[82656, 1], [43772, 1], [83757, 20]]},
+	{u: 12219, i: 82761, n: "Ley-Infused Matrix", r: [[82656, 1], [43772, 1], [83284, 5]]},
+	{u: 12250, i: 82428, n: "Branded Matrix", r: [[82656, 1], [43772, 1], [82678, 1]]},
+	{u: 12264, i: 82996, n: "Gleaming Matrix", r: [[82656, 1], [43772, 1], [83103, 20]]},
+	{u: 12270, i: 82523, n: "Embossed Matrix", r: [[82656, 1], [43773, 10], [19682, 5], [19713, 5]]}
 ],
 Scribe_UpgradeComponent: [
 	{u: 9911, i: 72339, n: "Superior Sigil of Concentration", r: [[72925, 1], [19721, 1], [76179, 5]]},
@@ -11138,7 +11301,38 @@ Scribe_GuildDecoration: [
 	{u: 12037, i: 80922, n: "Super Flower", r: [[70926, 1], [19713, 8]]},
 	{u: 12038, i: 80913, n: "Super Mushroom", r: [[70926, 1], [70842, 2]]},
 	{u: 12039, i: 80864, n: "Super Campfire", r: [[70926, 1], [19760, 8]]},
-	{u: 12040, i: 80866, n: "Super Forest House", r: [[70926, 1], [19709, 64]]}
+	{u: 12040, i: 80866, n: "Super Forest House", r: [[70926, 1], [19709, 64]]},
+	{u: 12070, i: 84311, n: "Elonian Wood Table", r: [[70454, 1], [19713, 5], [82523, 1]]},
+	{u: 12073, i: 83599, n: "Awakened Bone Column", r: [[70933, 1], [82239, 1], [24341, 25], [72537, 1]]},
+	{u: 12074, i: 82667, n: "Elonian Tent", r: [[70933, 1], [82761, 1], [19744, 5], [19736, 5]]},
+	{u: 12086, i: 84089, n: "Weathered Elonian Arch", r: [[74768, 1], [72449, 1], [82118, 1]]},
+	{u: 12089, i: 82835, n: "Forged Fire Wall", r: [[70933, 1], [84146, 1], [24314, 5]]},
+	{u: 12095, i: 83630, n: "Elonian Teapot", r: [[70933, 1], [82996, 1], [24522, 1], [19685, 10]]},
+	{u: 12103, i: 84608, n: "Elonian Gong", r: [[70933, 1], [82996, 1], [24515, 1], [19681, 10]]},
+	{u: 12107, i: 84102, n: "Signal Lantern", r: [[70933, 1], [84752, 1], [19721, 10]]},
+	{u: 12112, i: 82163, n: "Round Elonian Windmill", r: [[70933, 1], [82761, 1], [19746, 5], [24303, 2]]},
+	{u: 12116, i: 83161, n: "Forged Pylon", r: [[70933, 1], [84146, 1], [24314, 5]]},
+	{u: 12118, i: 84385, n: "Spiral Elonian Windmill", r: [[70933, 1], [82761, 1], [19746, 5], [24302, 2]]},
+	{u: 12126, i: 83189, n: "Weathered Elonian Obelisk", r: [[74768, 1], [72449, 1], [82118, 1]]},
+	{u: 12127, i: 82297, n: "Branded Crystal", r: [[70933, 1], [82428, 1], [24328, 5]]},
+	{u: 12146, i: 84431, n: "Branded Spire", r: [[70933, 1], [82428, 1], [24329, 5]]},
+	{u: 12147, i: 84553, n: "Elonian Snake Statue", r: [[70489, 1], [72537, 1], [84752, 1]]},
+	{u: 12159, i: 84724, n: "Elonian Vase", r: [[70933, 1], [82996, 1], [24510, 1], [19685, 10]]},
+	{u: 12169, i: 84041, n: "Tall Elonian Column", r: [[74768, 1], [72449, 1], [82118, 1]]},
+	{u: 12178, i: 82629, n: "Elonian Hawk Statue", r: [[70489, 1], [71159, 1], [84752, 1]]},
+	{u: 12190, i: 83116, n: "Weathered Elonian Column", r: [[74768, 1], [72449, 1], [82118, 1]]},
+	{u: 12192, i: 83397, n: "Forged Brazier", r: [[70933, 1], [84146, 1], [24314, 5]]},
+	{u: 12203, i: 82763, n: "Elonian Stone Tower", r: [[70489, 1], [72537, 1], [82118, 1]]},
+	{u: 12212, i: 82669, n: "Elonian Lattice", r: [[71146, 1], [73211, 1], [82523, 1]]},
+	{u: 12221, i: 82459, n: "Elonian Cairn Stones", r: [[70933, 1], [71159, 1], [82118, 1]]},
+	{u: 12224, i: 82919, n: "Elonian Wood Chair", r: [[70454, 1], [19713, 5], [82523, 1]]},
+	{u: 12230, i: 84227, n: "Awakened Tar Pit", r: [[70933, 1], [82239, 1], [24334, 5], [19924, 10]]},
+	{u: 12232, i: 84504, n: "Awakened Tar Drip", r: [[70933, 1], [82239, 1], [24334, 5], [19750, 10]]},
+	{u: 12273, i: 83098, n: "Elonian Incense Stand", r: [[70933, 1], [82996, 1], [24508, 1], [19685, 10]]},
+	{u: 12285, i: 82290, n: "Elonian Railing", r: [[71146, 1], [72129, 1], [82523, 1]]},
+	{u: 12307, i: 84008, n: "Short Elonian Column", r: [[74768, 1], [72449, 1], [82118, 1]]},
+	{u: 12314, i: 82817, n: "Awakened Bone Wall", r: [[70933, 1], [82239, 1], [24358, 5], [71159, 1]]},
+	{u: 12315, i: 84172, n: "Elonian Urn", r: [[70933, 1], [82996, 1], [24520, 1], [19685, 10]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
@@ -11310,7 +11504,9 @@ Chef_IngredientCooking: [
 	{u: 9713, i: 66537, n: "Bowl of Prickly Pear Pie Filling", r: [[66522, 5], [12136, 5], [12138, 2], [12177, 5]]},
 	{u: 10481, i: 75290, n: "Bowl of Mushroom Paste", r: [[12334, 1], [12506, 1], [12241, 1], [12528, 1]]},
 	{u: 10741, i: 74242, n: "Bag of Cassava Flour", r: [[73113, 10], [77256, 5], [76839, 1]], s: 73781},
-	{u: 11876, i: 79902, n: "Jar of Savory Winterberry Sauce", r: [[79899, 5], [12157, 2], [12335, 1], [12155, 1]]}
+	{u: 11876, i: 79902, n: "Jar of Savory Winterberry Sauce", r: [[79899, 5], [12157, 2], [12335, 1], [12155, 1]]},
+	{u: 12068, i: 82527, n: "Dollop of Choya Harissa", r: [[84696, 1], [12278, 2], [77256, 1], [12531, 2]], s: 83256, b: 83256},
+	{u: 12096, i: 82915, n: "Pile of Jacarandere", r: [[83195, 1], [12278, 2], [77256, 1], [12328, 2]], s: 84618, b: 84618}
 ],
 Chef_Snack: [
 	{u: 2841, i: 12233, n: "Handful of Trail Mix", r: [[12338, 1], [12337, 1], [12250, 1], [12255, 1]], s: 9383},
@@ -11401,7 +11597,9 @@ Chef_Snack: [
 	{u: 11883, i: 79793, n: "Bowl of Winterberry Seaweed Salad", r: [[79899, 1], [12509, 1], [12337, 1], [79902, 1]], s: 79720},
 	{u: 11906, i: 80466, n: "((777759))", r: [[74266, 10], [12547, 5], [41571, 2], [12141, 5]], s: 80532},
 	{u: 11928, i: 80373, n: "((778249))", r: [[74266, 10], [12272, 1], [12491, 2], [12508, 5]], s: 80232},
-	{u: 12063, i: 82030, n: "Fried Oysters", r: [[81837, 8], [12474, 1], [12158, 1], [12137, 1]]}
+	{u: 12063, i: 82030, n: "Fried Oysters", r: [[81837, 8], [12474, 1], [12158, 1], [12137, 1]]},
+	{u: 12111, i: 84550, n: "Red-Lentil Saobosa", r: [[82866, 1], [12166, 2], [12156, 2], [12158, 3]], s: 82750, b: 82750},
+	{u: 12271, i: 82642, n: "Cup of Light-Roasted Coffee", r: [[82991, 1], [19750, 2], [12156, 2], [77256, 1]], s: 84562, b: 84562}
 ],
 Chef_Dessert: [
 	{u: 2899, i: 12225, n: "Cinnamon Apple", r: [[12177, 1], [12165, 1]]},
@@ -11587,7 +11785,9 @@ Chef_Soup: [
 	{u: 9909, i: 12482, n: "Bowl of Orrian Truffle Soup", r: [[12300, 1], [12517, 1], [12545, 1]]},
 	{u: 10234, i: 72480, n: "Bowl of Sharkfin Soup", r: [[76822, 5], [12202, 1], [12275, 1], [12267, 1]], s: 71104},
 	{u: 10747, i: 72575, n: "Bowl of Curry Mussel Soup", r: [[12491, 1], [74266, 24], [12542, 1], [12350, 1]], s: 74157},
-	{u: 11620, i: 74777, n: "Bowl of Mussel Soup", r: [[74266, 24], [12268, 1]], s: 71997}
+	{u: 11620, i: 74777, n: "Bowl of Mussel Soup", r: [[74266, 24], [12268, 1]], s: 71997},
+	{u: 12160, i: 83345, n: "Bowl of Spiced Red Lentil Stew", r: [[82866, 3], [12489, 2], [24359, 2], [12267, 1]], s: 83169, b: 83169},
+	{u: 12207, i: 83955, n: "Bowl of Red Lentil Soup", r: [[82866, 3], [12143, 1], [12490, 2], [82915, 1]], s: 84053, b: 84053}
 ],
 Chef_Meal: [
 	{u: 2887, i: 12209, n: "Grilled Poultry", r: [[24360, 1], [12178, 1]]},
@@ -11675,7 +11875,9 @@ Chef_Meal: [
 	{u: 12058, i: 81867, n: "Oysters with Spicy Sauce", r: [[82030, 1], [12157, 1], [12544, 3], [12153, 1]], s: 81618},
 	{u: 12059, i: 81621, n: "Oysters with Pesto Sauce", r: [[82030, 1], [12526, 2]], s: 81989},
 	{u: 12062, i: 81615, n: "Oysters with Cocktail Sauce", r: [[82030, 1], [12141, 1], [12252, 1], [12518, 1]], s: 81749},
-	{u: 12065, i: 81660, n: "Fried Oyster Sandwich", r: [[82030, 1], [76603, 2], [12141, 1], [12238, 1]], s: 81699}
+	{u: 12065, i: 81660, n: "Fried Oyster Sandwich", r: [[82030, 1], [76603, 2], [12141, 1], [12238, 1]], s: 81699},
+	{u: 12140, i: 83622, n: "Plate of Sugar Rib Roast", r: [[82866, 10], [82806, 1], [82527, 3], [82915, 1]], s: 83775, b: 83775},
+	{u: 12289, i: 82541, n: "Bowl of \"Elon Red\"", r: [[12252, 1], [82866, 2], [12158, 1], [12156, 2]], s: 82352, b: 82352}
 ],
 Chef_Feast: [
 	{u: 3167, i: 12555, n: "Tray of Banana Cream Pies", r: [[12230, 10]], s: 9638, b: 9638},
@@ -11859,7 +12061,9 @@ Chef_Feast: [
 	{u: 9707, i: 66533, n: "Feast of Cactus Fruit Salad", r: [[66523, 10]], s: 66450, b: 66450},
 	{u: 9711, i: 66535, n: "Feast of Roasted Cactus", r: [[66536, 10]], s: 66452, b: 66452},
 	{u: 9714, i: 66534, n: "Feast of Black Pepper Cactus Salad", r: [[66529, 10]], s: 66449, b: 66449},
-	{u: 9721, i: 66525, n: "Pot of Sweet and Spicy Beans", r: [[66528, 10]], s: 66453, b: 66453}
+	{u: 9721, i: 66525, n: "Pot of Sweet and Spicy Beans", r: [[66528, 10]], s: 66453, b: 66453},
+	{u: 12084, i: 82657, n: "Red Lentil and Flatbread Feast", r: [[82541, 5], [12406, 5], [82915, 3], [76603, 10]], s: 83317, b: 83317},
+	{u: 12310, i: 83545, n: "Pitcher of Desert-Spiced Coffee", r: [[82642, 10], [82527, 5], [12156, 20], [19750, 5]], s: 84315, b: 84315}
 ],
 Chef_Dye: [
 	{u: 3355, i: 12760, n: "Unidentified Orange Dye", r: [[12142, 25], [12134, 25]]},
