@@ -1730,8 +1730,8 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "Check out <a data-page='Museum'>new items</a> from Path of Fire.",
-		Finish: new Date("2017-10-03T16:00:00Z")
+		content: "Try <a href='http://forum.renaka.com/topic/5546166/'>GW2Navi</a> overlay app with the new .exe launcher if you couldn't use it before. <dfn data-coord='oasis'>Path of Fire</dfn> maps now viewable.",
+		Finish: new Date("2017-10-10T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
