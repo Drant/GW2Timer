@@ -137,7 +137,8 @@ Glider: [
 	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}},
 	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
 	{i: 82666, n: "Geomancer Glider", p: {gem: 500}},
-	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}}
+	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
+	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -173,7 +174,8 @@ Back: [
 	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
 	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}},
-	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}}
+	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
+	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -347,6 +349,8 @@ BlackLionWeapon: [
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
+	//{i: "https://i.imgur.com/SKDviam.png", n: "Central Tyria Waypoint Unlock Package", p: {gem: 2000}},
+	//{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 500}},
 	//{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
 	//{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1600}},
@@ -409,6 +413,7 @@ Consumable: [
 	{i: 19986, n: "Black Lion Salvage Kit", p: {gem: 300}},
 	{i: 20349, n: "Upgrade Extractor", p: {gem: 250}, discount: [[1, 250], [5, 1100], [25, 5000]]},
 	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: -2000}},
+	{i: 67279, n: "Waypoint Unlock Box", p: {gem: 600}},
 	{i: 49867, n: "Identity Repair Kit", p: {gem: 1000}},
 	{i: 35989, n: "Name Change Contract", p: {gem: 800}},
 	{i: 35991, n: "Total Makeover Kit", p: {gem: 350}, discount: [[1, 350], [5, 1400]]},
