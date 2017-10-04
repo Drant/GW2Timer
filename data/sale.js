@@ -40,14 +40,14 @@ GW2T_SALE_DATA = {
 	{i: 43102, n: "Trickster's Light-Armor Skin", p: {gem: 800}, Finish: new Date("2017-10-07T16:00:00Z")},
 	{i: 43101, n: "Viper's Medium-Armor Skin", p: {gem: 800}, Finish: new Date("2017-10-07T16:00:00Z")},
 	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 800}, Finish: new Date("2017-10-07T16:00:00Z")},
-	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: 600}},
+	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: 600}, Finish: new Date("2017-10-10T16:00:00Z")},
 	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
 	{i: 85034, n: "Forged Outfit", p: {gem: 700}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
 	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: 1000}},
 	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: 1000}},
-	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
-	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}}
+	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}, Finish: new Date("2017-10-10T16:00:00Z")},
+	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}, Finish: new Date("2017-10-10T16:00:00Z")}
 	]
 };

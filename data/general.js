@@ -1855,16 +1855,16 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	/*{
+	{
 		name_en: "Halloween 2017",
 		name_de: "Halloween 2017",
 		name_es: "Halloween 2017",
 		name_fr: "Halloween 2017",
 		name_zh: "万圣夜2017",
-		official: "news/shadow-of-the-mad-king-is-live/",
+		official: "news/halloween-is-coming-2/",
 		Start: new Date("2017-10-24T16:00:00Z"),
 		Finish: new Date("2017-11-03T16:00:00Z")
-	},*/
+	}
 	/*{
 		name_en: "Wintersday 2017",
 		name_de: "Wintertag 2017",
