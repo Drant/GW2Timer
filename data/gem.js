@@ -265,9 +265,9 @@ Armor: [
 	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: -800}},
 	{i: 43158, n: "Magitech Medium Armor Skin", p: {gem: -800}},
 	{i: 43157, n: "Braham's Heavy Armor Skin", p: {gem: -800}},
-	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: -800}},
-	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: -800}},
-	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: -800}},
+	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: 800}},
+	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: 800}},
+	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: 800}},
 	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 800}},
 	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: -800}},
 	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: -800}}
@@ -351,6 +351,8 @@ BlackLionWeapon: [
 Package: [
 	//{i: "https://i.imgur.com/SKDviam.png", n: "Central Tyria Waypoint Unlock Package", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 500}},
+	//{i: "https://i.imgur.com/e5G1iUR.png", n: "Elonian Introductory Package", p: {gem: 1800}},
+	//{i: "https://i.imgur.com/DooMduS.png", n: "Ironclad Appearance Pack", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
 	//{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1600}},
