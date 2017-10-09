@@ -19471,8 +19471,11 @@ E = {
 		bubble: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_bubble'></ins>"; },
 		badge: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_badge'></ins>"; },
 		proof: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_proof'></ins>"; },
+		testimony: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_testimony'></ins>"; },
 		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
 		provisioner: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_provisioner'></ins>"; },
+		contract: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_contract'></ins>"; },
+		mosaic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_mosaic'></ins>"; },
 		skirmish: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_skirmish'></ins>"; },
 		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
 		glory: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_glory'></ins>"; },
@@ -39570,9 +39573,10 @@ I = {
 	 * @param jqobject pContainer to create search bar.
 	 * @param jqobject pElements to filter.
 	 * @param string pParentSelector to filter container of elements, optional.
+	 * @param jqobject pHideElements to hide while results exist, optional.
 	 * @pre Each element must have its data "keywords" assigned for the matching.
 	 */
-	createFilterBar: function(pContainer, pElements, pParentSelector)
+	createFilterBar: function(pContainer, pElements, pParentSelector, pHideElements)
 	{
 		var container = $(pContainer);
 		var elements = $(pElements);
@@ -39583,6 +39587,7 @@ I = {
 			var query = $(this).val().toLowerCase();
 			var queries = [];
 			var keywords = "";
+			var isanymatch = false;
 			if (query.length > 0)
 			{
 				queries = query.split(" ");
@@ -39613,10 +39618,18 @@ I = {
 						// The boolean is only true if every substrings were found
 						if (ismatch)
 						{
+							isanymatch = true;
 							$(this).show();
 						}
 					}
 				});
+				if (isanymatch)
+				{
+					if (pHideElements)
+					{
+						$(pHideElements).hide();
+					}
+				}
 			}
 			else
 			{
@@ -39631,6 +39644,10 @@ I = {
 						$(this).show();
 					}
 				});
+				if (pHideElements)
+				{
+					$(pHideElements).show();
+				}
 			}
 		})).click(function(pEvent)
 		{
@@ -39664,37 +39681,8 @@ I = {
 	 */
 	bindInputBarText: function(pInput, pText)
 	{
-		var onclass = "cssSearchActive";
-		var offclass = "cssSearchPassive";
 		var fillertext = pText || D.getWordCapital("search") + "...";
-		var bar = $(pInput).val(fillertext).data("isfiller", true).addClass(offclass);
-		bar.click(function()
-		{
-			if ($(this).data("isfiller"))
-			{
-				$(this).val("")
-					.removeClass(offclass).addClass(onclass);
-			}
-		}).change(function()
-		{
-			if ($(this).val().length === 0)
-			{
-				$(this).val(fillertext).data("isfiller", true)
-					.removeClass(onclass).addClass(offclass);
-			}
-			else
-			{
-				$(this).data("isfiller", false)
-					.removeClass(offclass).addClass(onclass);
-			}
-		}).focusout(function()
-		{
-			if ($(this).val().length === 0)
-			{
-				$(this).val(fillertext).data("isfiller", true)
-					.removeClass(onclass).addClass(offclass);
-			}
-		});
+		$(pInput).attr("placeholder", fillertext);
 	},
 	
 	/*
@@ -40333,7 +40321,7 @@ I = {
 	{
 		var dir = $("#dirContent");
 		var isnondefaultlang = !D.isLanguageDefault;
-		var group, groupname, groupheader, headerclass, grouplist, pagename, pagebutton;
+		var group, groupname, groupstr, groupheader, headerclass, grouplist, pagename, pagestr, pagebutton;
 		var index = 0;
 		// Initialize the checklist storing which directory group was collapsed
 		X.initializeChecklist(X.Checklists.Directory, U.getObjectLength(I.Directory));
@@ -40342,10 +40330,11 @@ I = {
 		{
 			group = $("<div class='dirGroup'></div>").appendTo(dir);
 			groupname = i.toLowerCase();
+			groupstr = ((isnondefaultlang) ? D.getWordCapital(groupname) : i);
 			headerclass = (index === 0) ? "dirHeaderPrimary" : "dirHeaderSecondary curToggle";
 			groupheader = $("<h2 class='dirHeader " + headerclass + "'>"
 				+ "<ins class='dirHeaderIcon mnu mnu_" + groupname + "'></ins><var class='dirHeaderName'>"
-				+ ((isnondefaultlang) ? D.getWordCapital(groupname) : i) + "</var></h2>").appendTo(group);
+				+ groupstr + "</var></h2>").appendTo(group);
 			grouplist = $("<ul id='dirList_" + index + "' class='dirList'></ul>").appendTo(group);
 			// Only create a dashboard container (first group) for mobile, and nothing else
 			if (I.ModeCurrent === I.ModeEnum.Mobile)
@@ -40372,16 +40361,17 @@ I = {
 			{
 				// Page translation
 				pagename = (I.Directory[i])[ii];
+				pagestr = pagename;
 				if (I.DirectoryCompound[ii])
 				{
-					pagename = D.getTranslation(pagename);
+					pagestr = D.getTranslation(pagename);
 				}
 				else if (isnondefaultlang)
 				{
-					pagename = D.getModifiedPhrase(pagename.toLowerCase(), U.CaseEnum.Title);
+					pagestr = D.getModifiedPhrase(pagename.toLowerCase(), U.CaseEnum.Title);
 				}
 				// Page action
-				pagebutton = $("<li class='curClick'>" + pagename + "</li>").appendTo(grouplist);
+				pagebutton = $("<li class='curClick'>" + pagestr + "</li>").appendTo(grouplist).data("keywords", (groupstr + " " + pagestr).toLowerCase());
 				(function(iPage)
 				{
 					pagebutton.click(function(pEvent)
@@ -40414,6 +40404,7 @@ I = {
 		if (I.ModeCurrent !== I.ModeEnum.Tile)
 		{
 			$("#itemDashboard").insertAfter(primaryheader);
+			I.createFilterBar($("<div id='dirSearch'></div>").insertAfter("#dsbContainer"), ".dirGroup .curClick", null, ".dirHeaderSecondary");
 		}
 	},
 	
@@ -40511,6 +40502,8 @@ I = {
 		$(I.cPlateMenuPrefix + "Map").one("click", I.loadMapPlate);
 		// Help plate
 		$(I.cPlateMenuPrefix + "Help").one("click", I.loadHelpPlate);
+		// Options plate
+		$(I.cPlateMenuPrefix + "Options").one("click", I.loadOptionsPlate);
 		
 	}, // End of menu initialization
 	
@@ -40757,6 +40750,18 @@ I = {
 			I.bindAfterAJAXContent(I.PlateEnum.Help);
 			I.bindInputSelect(".jsCopyCode");
 		});
+	},
+	
+	/*
+	 * Initializes extra features on the options page.
+	 */
+	loadOptionsPlate: function()
+	{
+		$("#plateOptions label").each(function()
+		{
+			$(this).data("keywords", $(this).text().toLowerCase());
+		});
+		I.createFilterBar("#optSearch", "#plateOptions label", null, "#plateOptions h2");
 	},
 	
 	/*

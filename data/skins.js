@@ -511,7 +511,14 @@ Back: [
 	{u: 7303, i: 81733, n: "Relic of Dwayna", p: {karma: 310000}},
 	{u: 7319, i: 81737, n: "Relic of Abaddon", p: {karma: 310000}},
 	{u: 7321, i: 82061, n: "Relic of Grenth", p: {karma: 310000}},
-	{u: 7323, i: 81869, n: "Relic of Melandru", p: {karma: 310000}}
+	{u: 7323, i: 81869, n: "Relic of Melandru", p: {karma: 310000}},
+	{u: 7458, i: 84728, n: "Banners of Ancient Elona", p: {achievement: 0}},
+	{u: 7464, i: 83750, n: "Banners of Amnoon", p: {achievement: 0}},
+	{u: 7631, i: 83992, n: "Banners of King Palawa Joko I", p: {achievement: 0}},
+	{u: 7692, i: 82877, n: "Banners of the Sunspear Order", p: {achievement: 0}},
+	{u: 7661, i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
+	{u: 7743, i: 85332, n: "Branded Wing Backpack", p: {gem: 700}},
+	{u: 7755, i: 85326, n: "Jackal Pup Backpack", p: {gem: 0}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", b: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -668,7 +675,15 @@ Armor_Light_Helm: [
 	{u: 7233, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
 	{u: 6711, i: 6605, n: "Triumphant Hero's Masque", p: {skirmish: 175}},
 	{u: 7260, i: 81487, n: "Mistforged Triumphant Hero's Masque", p: {skirmish: 350}},
-	{u: 7286, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}}
+	{u: 7286, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
+	{u: 7336, i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
+	{u: 7381, i: 84014, n: "Swaggering Hat", p: {gem: 400}},
+	{u: 7404, i: 83004, n: "Funerary Cowl", p: {mosaic: 6}},
+	{u: 7411, i: 84447, n: "Mirage's Veil", p: {achievement: 0}},
+	{u: 7455, i: 85080, n: "Bounty Hunter's Cowl", p: {craft: true}},
+	{u: 7512, i: 85142, n: "Elonian Cowl", p: {achievement: 0}},
+	{u: 7578, i: 85287, n: "Warbeast Cowl", b: [82181]},
+	{u: 7592, i: 83553, n: "Spearmarshal's Cowl", b: [83553]}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", b: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -761,7 +776,13 @@ Armor_Light_Shoulders: [
 	{u: 7211, i: 81194, n: "Light Houndskin Mantle", p: {achievement: 0}},
 	{u: 6686, i: 6607, n: "Triumphant Hero's Epaulets", p: {skirmish: 175}},
 	{u: 7249, i: 81482, n: "Mistforged Triumphant Hero's Epaulets", p: {skirmish: 350}},
-	{u: 7267, i: 81412, n: "Foefire Mantle", p: {gem: 500}}
+	{u: 7267, i: 81412, n: "Foefire Mantle", p: {gem: 500}},
+	{u: 7456, i: 83581, n: "Funerary Mantle", p: {mosaic: 12}},
+	{u: 7511, i: 83703, n: "Scourge's Tendrils", p: {achievement: 0}},
+	{u: 7553, i: 84075, n: "Spearmarshal's Mantle", b: [84075]},
+	{u: 7647, i: 85097, n: "Warbeast Mantle", b: [84183]},
+	{u: 7648, i: 85269, n: "Bounty Hunter's Mantle", p: {craft: true}},
+	{u: 7713, i: 85003, n: "Elonian Mantle", p: {achievement: 0}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", b: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -836,7 +857,12 @@ Armor_Light_Coat: [
 	{u: 7127, i: 80120, n: "Refined Envoy Vestments", p: {craft: true}},
 	{u: 7084, i: 80190, n: "Perfected Envoy Vestments", p: {craft: true}},
 	{u: 6706, i: 6603, n: "Triumphant Hero's Raiment", p: {skirmish: 350}},
-	{u: 7250, i: 81365, n: "Sublime Mistforged Triumphant Hero's Raiment", p: {skirmish: 700}}
+	{u: 7250, i: 81365, n: "Sublime Mistforged Triumphant Hero's Raiment", p: {skirmish: 700}},
+	{u: 7431, i: 84316, n: "Spearmarshal's Vestments", b: [83267]},
+	{u: 7448, i: 85204, n: "Warbeast Vestments", b: [83460]},
+	{u: 7530, i: 83247, n: "Funerary Vestments", p: {mosaic: 18}},
+	{u: 7640, i: 84890, n: "Bounty Hunter's Vestments", p: {craft: true}},
+	{u: 7662, i: 85232, n: "Elonian Vestments", p: {achievement: 0}}
 ],
 Armor_Light_Gloves: [
 	{u: 25, i: 3175, n: "Apprentice Gloves", b: [2975, 2964, 2966, 2970, 2969, 2971, 2973, 2967, 2974, 2978, 2968, 2972, 2977, 2963, 2976, 2965, 3139, 3157, 3121, 3175, 3340, 3339, 3342, 3345, 3344, 3341, 3346, 3355, 3343, 3347, 3348, 3350, 3349, 3351, 3354, 3352, 3353, 3358, 3356, 3357, 5036, 5052, 5070, 5106, 5023, 5088, 5142, 5124, 5160, 5196, 5178, 5214, 5232, 5250, 5286, 5268]},
@@ -925,7 +951,13 @@ Armor_Light_Gloves: [
 	{u: 7126, i: 80111, n: "Perfected Envoy Gloves", p: {craft: true}},
 	{u: 6718, i: 6604, n: "Triumphant Hero's Armguards", p: {skirmish: 175}},
 	{u: 7269, i: 81510, n: "Mistforged Triumphant Hero's Armguards", p: {skirmish: 350}},
-	{u: 7275, i: 81293, n: "Foefire Wraps", p: {gem: 500}}
+	{u: 7275, i: 81293, n: "Foefire Wraps", p: {gem: 500}},
+	{u: 7504, i: 84955, n: "Bounty Hunter's Gloves", p: {craft: true}},
+	{u: 7555, i: 84613, n: "Funerary Gloves", p: {mosaic: 6}},
+	{u: 7602, i: 83438, n: "Spearmarshal's Gloves", b: [82638]},
+	{u: 7627, i: 84616, n: "Weaver's Antipodes", p: {achievement: 0}},
+	{u: 7672, i: 84922, n: "Elonian Gloves", p: {achievement: 0}},
+	{u: 7710, i: 85145, n: "Warbeast Gloves", b: [84267]}
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", b: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -1000,7 +1032,12 @@ Armor_Light_Leggings: [
 	{u: 7093, i: 80275, n: "Refined Envoy Pants", p: {craft: true}},
 	{u: 7130, i: 80356, n: "Perfected Envoy Pants", p: {craft: true}},
 	{u: 6701, i: 6606, n: "Triumphant Hero's Leggings", p: {skirmish: 260}},
-	{u: 7270, i: 81397, n: "Mistforged Triumphant Hero's Leggings", p: {skirmish: 520}}
+	{u: 7270, i: 81397, n: "Mistforged Triumphant Hero's Leggings", p: {skirmish: 520}},
+	{u: 7432, i: 85238, n: "Elonian Pants", p: {achievement: 0}},
+	{u: 7519, i: 83590, n: "Funerary Pants", p: {mosaic: 18}},
+	{u: 7619, i: 84120, n: "Spearmarshal's Pants", b: [84120]},
+	{u: 7639, i: 85000, n: "Bounty Hunter's Pants", p: {craft: true}},
+	{u: 7716, i: 84982, n: "Warbeast Pants", b: [82436]}
 ],
 Armor_Light_Boots: [
 	{u: 16, i: 3173, n: "Apprentice Shoes", b: [2932, 2933, 2938, 2936, 2937, 2935, 2941, 2940, 2942, 2945, 2944, 2931, 2946, 2934, 2939, 2943, 3119, 3137, 3155, 3173, 3300, 3317, 3301, 3302, 3303, 3304, 3306, 3308, 3307, 3313, 3312, 3309, 3311, 3299, 3316, 3318, 3305, 3310, 3314, 3315, 5068, 5050, 5122, 5021, 5034, 5104, 5140, 5158, 5086, 5194, 5176, 5230, 5212, 5248, 5266, 5284]},
@@ -1079,7 +1116,12 @@ Armor_Light_Boots: [
 	{u: 7143, i: 80399, n: "Perfected Envoy Shoes", p: {craft: true}},
 	{u: 6707, i: 6602, n: "Triumphant Hero's Footgear", p: {skirmish: 175}},
 	{u: 7277, i: 81419, n: "Mistforged Triumphant Hero's Footgear", p: {skirmish: 350}},
-	{u: 7316, i: 81973, n: "Light Mursaat Brogans", p: {achievement: 0}}
+	{u: 7316, i: 81973, n: "Light Mursaat Brogans", p: {achievement: 0}},
+	{u: 7393, i: 83764, n: "Spearmarshal's Shoes", b: [83764]},
+	{u: 7414, i: 83431, n: "Funerary Shoes", p: {mosaic: 12}},
+	{u: 7467, i: 85215, n: "Bounty Hunter's Shoes", p: {craft: true}},
+	{u: 7473, i: 85177, n: "Warbeast Shoes", b: [83452]},
+	{u: 7486, i: 85198, n: "Elonian Shoes", p: {achievement: 0}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1231,7 +1273,14 @@ Armor_Medium_Helm: [
 	{u: 7241, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
 	{u: 6695, i: 6611, n: "Triumphant Hero's Faceguard", p: {skirmish: 175}},
 	{u: 7264, i: 81325, n: "Mistforged Triumphant Hero's Faceguard", p: {skirmish: 350}},
-	{u: 7280, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}}
+	{u: 7280, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
+	{u: 7309, i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
+	{u: 7358, i: 84014, n: "Swaggering Hat", p: {gem: 400}},
+	{u: 7479, i: 84639, n: "Spearmarshal's Mask", b: [84639]},
+	{u: 7550, i: 85314, n: "Bounty Hunter's Mask", p: {craft: true}},
+	{u: 7594, i: 85275, n: "Warbeast Mask", b: [84240]},
+	{u: 7696, i: 84932, n: "Elonian Mask", p: {achievement: 0}},
+	{u: 7708, i: 84375, n: "Funerary Mask", p: {mosaic: 6}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1323,7 +1372,14 @@ Armor_Medium_Shoulders: [
 	{u: 7213, i: 81176, n: "Medium Houndskin Mantle", p: {achievement: 0}},
 	{u: 6694, i: 6613, n: "Triumphant Hero's Shoulderguards", p: {skirmish: 175}},
 	{u: 7247, i: 81471, n: "Mistforged Triumphant Hero's Shoulderguards", p: {skirmish: 350}},
-	{u: 7263, i: 81412, n: "Foefire Mantle", p: {gem: 500}}
+	{u: 7263, i: 81412, n: "Foefire Mantle", p: {gem: 500}},
+	{u: 7394, i: 84967, n: "Warbeast Shoulderpads", b: [82368]},
+	{u: 7399, i: 84904, n: "Elonian Shoulderpads", p: {achievement: 0}},
+	{u: 7406, i: 84567, n: "Spearmarshal's Shoulderpads", b: [84567]},
+	{u: 7427, i: 82726, n: "Funerary Shoulderpads", p: {mosaic: 12}},
+	{u: 7622, i: 84563, n: "Holosmith's Lucent Vent", p: {achievement: 0}},
+	{u: 7635, i: 84958, n: "Bounty Hunter's Shoulderpads", p: {craft: true}},
+	{u: 7644, i: 84484, n: "Deadeye's Brace", p: {achievement: 0}}
 ],
 Armor_Medium_Coat: [
 	{u: 6, i: 41169, n: "Rawhide Vest", p: {badge: 30}},
@@ -1397,7 +1453,12 @@ Armor_Medium_Coat: [
 	{u: 7141, i: 80607, n: "Refined Envoy Jerkin", p: {craft: true}},
 	{u: 7083, i: 80578, n: "Perfected Envoy Jerkin", p: {craft: true}},
 	{u: 6697, i: 6609, n: "Triumphant Hero's Brigandine", p: {skirmish: 350}},
-	{u: 7255, i: 81483, n: "Sublime Mistforged Triumphant Hero's Brigandine", p: {skirmish: 700}}
+	{u: 7255, i: 81483, n: "Sublime Mistforged Triumphant Hero's Brigandine", p: {skirmish: 700}},
+	{u: 7365, i: 85227, n: "Warbeast Jerkin", b: [83140]},
+	{u: 7396, i: 85020, n: "Elonian Jerkin", p: {achievement: 0}},
+	{u: 7435, i: 84598, n: "Spearmarshal's Jerkin", b: [84598]},
+	{u: 7537, i: 84669, n: "Funerary Jerkin", p: {mosaic: 18}},
+	{u: 7703, i: 85305, n: "Bounty Hunter's Jerkin", p: {craft: true}}
 ],
 Armor_Medium_Gloves: [
 	{u: 32, i: 41170, n: "Rawhide Bracers", p: {badge: 10}},
@@ -1485,7 +1546,13 @@ Armor_Medium_Gloves: [
 	{u: 7100, i: 80161, n: "Perfected Envoy Vambraces", p: {craft: true}},
 	{u: 6693, i: 6610, n: "Triumphant Hero's Wristplates", p: {skirmish: 175}},
 	{u: 7254, i: 81286, n: "Mistforged Triumphant Hero's Wristplates", p: {skirmish: 350}},
-	{u: 7251, i: 81293, n: "Foefire Wraps", p: {gem: 500}}
+	{u: 7251, i: 81293, n: "Foefire Wraps", p: {gem: 500}},
+	{u: 7430, i: 85023, n: "Elonian Vambraces", p: {achievement: 0}},
+	{u: 7441, i: 84638, n: "Soulbeast Pads", p: {achievement: 0}},
+	{u: 7540, i: 84685, n: "Spearmarshal's Vambraces", b: [84685]},
+	{u: 7624, i: 85167, n: "Warbeast Vambraces", b: [83890]},
+	{u: 7675, i: 85032, n: "Bounty Hunter's Vambraces", p: {craft: true}},
+	{u: 7711, i: 83574, n: "Funerary Vambraces", p: {mosaic: 6}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1559,7 +1626,12 @@ Armor_Medium_Leggings: [
 	{u: 7098, i: 80675, n: "Refined Envoy Leggings", p: {craft: true}},
 	{u: 7156, i: 80252, n: "Perfected Envoy Leggings", p: {craft: true}},
 	{u: 6690, i: 6612, n: "Triumphant Hero's Legguards", p: {skirmish: 260}},
-	{u: 7274, i: 81527, n: "Mistforged Triumphant Hero's Legguards", p: {skirmish: 520}}
+	{u: 7274, i: 81527, n: "Mistforged Triumphant Hero's Legguards", p: {skirmish: 520}},
+	{u: 7494, i: 84406, n: "Spearmarshal's Leggings", b: [83449]},
+	{u: 7499, i: 85359, n: "Warbeast Leggings", b: [84466]},
+	{u: 7522, i: 85106, n: "Elonian Leggings", p: {achievement: 0}},
+	{u: 7618, i: 82233, n: "Funerary Leggings", p: {mosaic: 18}},
+	{u: 7653, i: 84979, n: "Bounty Hunter's Leggings", p: {craft: true}}
 ],
 Armor_Medium_Boots: [
 	{u: 19, i: 41168, n: "Rawhide Boots", p: {badge: 10}},
@@ -1637,7 +1709,12 @@ Armor_Medium_Boots: [
 	{u: 7085, i: 80281, n: "Perfected Envoy Boots", p: {craft: true}},
 	{u: 6699, i: 6608, n: "Triumphant Hero's Shinplates", p: {skirmish: 175}},
 	{u: 7259, i: 81422, n: "Mistforged Triumphant Hero's Shinplates", p: {skirmish: 350}},
-	{u: 7297, i: 81874, n: "Medium Mursaat Brogans", p: {achievement: 0}}
+	{u: 7297, i: 81874, n: "Medium Mursaat Brogans", p: {achievement: 0}},
+	{u: 7388, i: 85081, n: "Warbeast Boots", b: [82684]},
+	{u: 7392, i: 84595, n: "Funerary Boots", p: {mosaic: 12}},
+	{u: 7536, i: 85235, n: "Elonian Boots", p: {achievement: 0}},
+	{u: 7557, i: 84410, n: "Spearmarshal's Boots", b: [84410]},
+	{u: 7695, i: 84903, n: "Bounty Hunter's Boots", p: {craft: true}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", b: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1789,7 +1866,16 @@ Armor_Heavy_Helm: [
 	{u: 7225, i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
 	{u: 6715, i: 6617, n: "Triumphant Hero's Warhelm", p: {skirmish: 175}},
 	{u: 7268, i: 81498, n: "Mistforged Triumphant Hero's Warhelm", p: {skirmish: 350}},
-	{u: 7283, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}}
+	{u: 7283, i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
+	{u: 7326, i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
+	{u: 7357, i: 82776, n: "Firebrand's War Miter", p: {achievement: 0}},
+	{u: 7376, i: 82520, n: "Funerary Helmet", p: {mosaic: 6}},
+	{u: 7390, i: 85338, n: "Bounty Hunter's Helmet", p: {craft: true}},
+	{u: 7412, i: 85124, n: "Warbeast Helmet", b: [83357]},
+	{u: 7525, i: 84776, n: "Renegade's Casque", p: {achievement: 0}},
+	{u: 7604, i: 84938, n: "Elonian Helmet", p: {achievement: 0}},
+	{u: 7625, i: 84014, n: "Swaggering Hat", p: {gem: 400}},
+	{u: 7685, i: 84383, n: "Spearmarshal's Helmet", b: [82538]}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", b: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -1885,7 +1971,13 @@ Armor_Heavy_Shoulders: [
 	{u: 7210, i: 81049, n: "Heavy Houndskin Mantle", p: {achievement: 0}},
 	{u: 6736, i: 6619, n: "Triumphant Hero's Pauldrons", p: {skirmish: 175}},
 	{u: 7261, i: 81375, n: "Mistforged Triumphant Hero's Pauldrons", p: {skirmish: 350}},
-	{u: 7258, i: 81412, n: "Foefire Mantle", p: {gem: 500}}
+	{u: 7258, i: 81412, n: "Foefire Mantle", p: {gem: 500}},
+	{u: 7375, i: 85127, n: "Elonian Pauldrons", p: {achievement: 0}},
+	{u: 7509, i: 84863, n: "Bounty Hunter's Pauldrons", p: {craft: true}},
+	{u: 7514, i: 83126, n: "Spearmarshal's Pauldrons", b: [83126]},
+	{u: 7527, i: 84093, n: "Spellbreaker's Redoubt", p: {achievement: 0}},
+	{u: 7623, i: 84980, n: "Warbeast Pauldrons", b: [83480]},
+	{u: 7671, i: 84065, n: "Funerary Pauldrons", p: {mosaic: 12}}
 ],
 Armor_Heavy_Coat: [
 	{u: 2, i: 3168, n: "Chainmail Chestpiece", b: [2868, 2870, 2869, 2858, 2856, 2857, 2859, 2861, 2860, 2862, 2865, 2864, 2863, 2867, 2866, 2871, 3114, 3132, 3150, 3168, 3207, 3205, 3206, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3208, 3224, 3209, 3210, 3211, 5018, 5045, 5063, 5081, 5099, 5030, 5135, 5117, 5153, 5171, 5189, 5207, 5225, 5243, 5261, 5279]},
@@ -1961,7 +2053,12 @@ Armor_Heavy_Coat: [
 	{u: 7075, i: 80648, n: "Refined Envoy Breastplate", p: {craft: true}},
 	{u: 7157, i: 80254, n: "Perfected Envoy Breastplate", p: {craft: true}},
 	{u: 6698, i: 6615, n: "Triumphant Hero's Breastplate", p: {skirmish: 350}},
-	{u: 7271, i: 81509, n: "Sublime Mistforged Triumphant Hero's Breastplate", p: {skirmish: 700}}
+	{u: 7271, i: 81509, n: "Sublime Mistforged Triumphant Hero's Breastplate", p: {skirmish: 700}},
+	{u: 7449, i: 84462, n: "Funerary Breastplate", p: {mosaic: 18}},
+	{u: 7570, i: 85077, n: "Bounty Hunter's Breastplate", p: {craft: true}},
+	{u: 7586, i: 85337, n: "Elonian Breastplate", p: {achievement: 0}},
+	{u: 7587, i: 83382, n: "Spearmarshal's Breastplate", b: [83382]},
+	{u: 7704, i: 85263, n: "Warbeast Breastplate", b: [84788]}
 ],
 Armor_Heavy_Gloves: [
 	{u: 20, i: 3169, n: "Chainmail Gauntlets", b: [2876, 2877, 2878, 2881, 2874, 2880, 2886, 2885, 2882, 2875, 2873, 2887, 2884, 3115, 2872, 3133, 3151, 2883, 3228, 3231, 3230, 2879, 3169, 3233, 3236, 3232, 3226, 3227, 3244, 3229, 3234, 3237, 3225, 3235, 3238, 3239, 3240, 3241, 3242, 3243, 5064, 5046, 5031, 5082, 5019, 5100, 5118, 5154, 5136, 5262, 5172, 5208, 5190, 5244, 5280, 5226]},
@@ -2052,7 +2149,12 @@ Armor_Heavy_Gloves: [
 	{u: 1542, i: 80892, n: "Heavy Scale Armguards", p: {pvp: true}},
 	{u: 6713, i: 6616, n: "Triumphant Hero's Gauntlets", p: {skirmish: 175}},
 	{u: 7245, i: 81458, n: "Mistforged Triumphant Hero's Gauntlets", p: {skirmish: 350}},
-	{u: 7262, i: 81293, n: "Foefire Wraps", p: {gem: 500}}
+	{u: 7262, i: 81293, n: "Foefire Wraps", p: {gem: 500}},
+	{u: 7369, i: 82202, n: "Funerary Gauntlets", p: {mosaic: 6}},
+	{u: 7493, i: 85132, n: "Bounty Hunter's Gauntlets", p: {craft: true}},
+	{u: 7513, i: 85245, n: "Warbeast Gauntlets", b: [84323]},
+	{u: 7541, i: 84874, n: "Elonian Gauntlets", p: {achievement: 0}},
+	{u: 7669, i: 83043, n: "Spearmarshal's Gauntlets", b: [83043]}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", b: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -2129,7 +2231,12 @@ Armor_Heavy_Leggings: [
 	{u: 7110, i: 80427, n: "Refined Envoy Tassets", p: {craft: true}},
 	{u: 7133, i: 80277, n: "Perfected Envoy Tassets", p: {craft: true}},
 	{u: 6721, i: 6618, n: "Triumphant Hero's Legplates", p: {skirmish: 260}},
-	{u: 7266, i: 81340, n: "Mistforged Triumphant Hero's Legplates", p: {skirmish: 520}}
+	{u: 7266, i: 81340, n: "Mistforged Triumphant Hero's Legplates", p: {skirmish: 520}},
+	{u: 7395, i: 84293, n: "Spearmarshal's Tassets", b: [84293]},
+	{u: 7400, i: 85276, n: "Elonian Tassets", p: {achievement: 0}},
+	{u: 7426, i: 85189, n: "Bounty Hunter's Tassets", p: {craft: true}},
+	{u: 7585, i: 82101, n: "Funerary Tassets", p: {mosaic: 18}},
+	{u: 7679, i: 85119, n: "Warbeast Tassets", b: [82138]}
 ],
 Armor_Heavy_Boots: [
 	{u: 27, i: 886, n: "Scallywag Greaves", b: [801, 807, 802, 820, 830, 841, 810, 846, 834, 853, 848, 827, 866, 886, 859, 874, 896, 903, 45064, 45136, 876]},
@@ -2209,7 +2316,12 @@ Armor_Heavy_Boots: [
 	{u: 7136, i: 80557, n: "Perfected Envoy Greaves", p: {craft: true}},
 	{u: 6691, i: 6614, n: "Triumphant Hero's Wargreaves", p: {skirmish: 175}},
 	{u: 7273, i: 81437, n: "Mistforged Triumphant Hero's Wargreaves", p: {skirmish: 350}},
-	{u: 7299, i: 81849, n: "Heavy Mursaat Brogans", p: {achievement: 0}}
+	{u: 7299, i: 81849, n: "Heavy Mursaat Brogans", p: {achievement: 0}},
+	{u: 7405, i: 82406, n: "Funerary Greaves", p: {mosaic: 12}},
+	{u: 7413, i: 84131, n: "Spearmarshal's Greaves", b: [82431]},
+	{u: 7475, i: 84865, n: "Elonian Greaves", p: {achievement: 0}},
+	{u: 7649, i: 85056, n: "Warbeast Greaves", b: [84374]},
+	{u: 7701, i: 85201, n: "Bounty Hunter's Greaves", p: {craft: true}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
@@ -2383,7 +2495,21 @@ Weapon_Axe: [
 	{u: 7191, i: 80916, n: "Beastslayer Axe", b: [80916]},
 	{u: 7179, i: 80959, n: "Crimson Assassin Axe", p: {token: 12}},
 	{u: 7243, i: 81256, n: "Keepsake Axe", b: [81256]},
-	{u: 7295, i: 81872, n: "Abaddon Axe", b: [81872]}
+	{u: 7295, i: 81872, n: "Abaddon Axe", b: [81872]},
+	{u: 7354, i: 82680, n: "Elonian Warsickle", b: [82680]},
+	{u: 7389, i: 83927, n: "Sunspear Warsickle", b: [83927]},
+	{u: 7402, i: 82256, n: "Mirage's Axe", p: {achievement: 0}},
+	{u: 7422, i: 84395, n: "Funerary Axe", p: {mosaic: 36}},
+	{u: 7450, i: 84112, n: "Icy Blade Axe", p: {gem: 500}},
+	{u: 7485, i: 82977, n: "Firebrand's Axe", p: {achievement: 0}},
+	{u: 7497, i: 84564, n: "Mordant Sickle", b: [84564]},
+	{u: 7554, i: 83132, n: "Stonespite Cleaver", b: [83132]},
+	{u: 7599, i: 83445, n: "Expurgation", p: {achievement: 0}},
+	{u: 7633, i: 84137, n: "Awakened Axe", b: [84137]},
+	{u: 7651, i: 84064, n: "Fiery Blade Axe", p: {gem: 500}},
+	{u: 7687, i: 84286, n: "Luminous Labrys", p: {starting: true}},
+	{u: 7719, i: 84687, n: "Veilrender", p: {achievement: 0}},
+	{u: 7750, i: 85247, n: "War God's Axe", b: [85247]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", b: [49332]},
@@ -2525,7 +2651,14 @@ Weapon_Mace: [
 	{u: 7171, i: 80942, n: "Beastslayer Mace", b: [80942]},
 	{u: 7182, i: 80931, n: "Crimson Assassin Mace", p: {token: 12}},
 	{u: 7223, i: 81213, n: "Keepsake Mace", b: [81213]},
-	{u: 7324, i: 81863, n: "Abaddon Mace", b: [81863]}
+	{u: 7324, i: 81863, n: "Abaddon Mace", b: [81863]},
+	{u: 7356, i: 83283, n: "Elonian Thrasher", b: [83283]},
+	{u: 7434, i: 82169, n: "Mordant Warclub", b: [82169]},
+	{u: 7547, i: 84303, n: "Sunspear Thrasher", b: [84303]},
+	{u: 7596, i: 83024, n: "Awakened Mace", b: [83024]},
+	{u: 7597, i: 82942, n: "Luminous Flange", p: {starting: true}},
+	{u: 7666, i: 83483, n: "Funerary Mace", p: {mosaic: 36}},
+	{u: 7720, i: 84898, n: "War God's Mace", b: [84898]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", b: [49353]},
@@ -2694,7 +2827,18 @@ Weapon_Sword: [
 	{u: 7315, i: 81855, n: "Vengeance", p: {craft: true}},
 	{u: 7306, i: 81812, n: "Save the Queen", p: {craft: true}},
 	{u: 7300, i: 81957, n: "The Shining Blade", p: {craft: true}},
-	{u: 7338, i: 81797, n: "Abaddon Sword", b: [81797]}
+	{u: 7338, i: 81797, n: "Abaddon Sword", b: [81797]},
+	{u: 7347, i: 82611, n: "Elonian Cutlass", b: [82611]},
+	{u: 7443, i: 83309, n: "Awakened Sword", b: [83309]},
+	{u: 7477, i: 84660, n: "Mordant Sword", b: [84660]},
+	{u: 7523, i: 83725, n: "Funerary Sword", p: {mosaic: 36}},
+	{u: 7533, i: 82195, n: "Holosmith's Sword", p: {achievement: 0}},
+	{u: 7681, i: 84512, n: "The Cutting Edge", p: {achievement: 0}},
+	{u: 7718, i: 84573, n: "Weaver's Sword", p: {achievement: 0}},
+	{u: 7368, i: 82617, n: "Warpblade", p: {achievement: 0}},
+	{u: 7579, i: 84714, n: "Luminous Saber", p: {starting: true}},
+	{u: 7620, i: 82115, n: "Sunspear Cutlass", b: [82115]},
+	{u: 7731, i: 85125, n: "War God's Sword", b: [85125]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", b: [49317]},
@@ -2846,7 +2990,20 @@ Weapon_Dagger: [
 	{u: 7195, i: 80910, n: "Beastslayer Dagger", b: [80910]},
 	{u: 7198, i: 80968, n: "Crimson Assassin Dagger", p: {token: 12}},
 	{u: 7228, i: 81253, n: "Keepsake Dagger", b: [81253]},
-	{u: 7310, i: 81931, n: "Abaddon Dagger", b: [81931]}
+	{u: 7310, i: 81931, n: "Abaddon Dagger", b: [81931]},
+	{u: 7341, i: 82898, n: "Elonian Carver", b: [82898]},
+	{u: 7370, i: 83037, n: "Soulbeast's Dagger", p: {achievement: 0}},
+	{u: 7593, i: 83923, n: "Fang of Mokèlé", p: {achievement: 0}},
+	{u: 7397, i: 84654, n: "Spellbreaker's Dagger", p: {achievement: 0}},
+	{u: 7569, i: 83902, n: "Silence of a Thousand Years", p: {achievement: 0}},
+	{u: 7383, i: 82594, n: "Funerary Dagger", p: {mosaic: 36}},
+	{u: 7436, i: 83735, n: "Mordant Slicer", p: {craft: true}},
+	{u: 7463, i: 82463, n: "Final Sting", b: [82463]},
+	{u: 7562, i: 82777, n: "Forged Dagger", b: [82777]},
+	{u: 7693, i: 83315, n: "Luminous Dirk", p: {starting: true}},
+	{u: 7697, i: 84068, n: "Sunspear Carver", b: [84068]},
+	{u: 7717, i: 83086, n: "Awakened Dagger", b: [83086]},
+	{u: 7742, i: 84933, n: "War God's Dagger", b: [84933]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", b: [49335]},
@@ -2991,7 +3148,14 @@ Weapon_Pistol: [
 	{u: 7181, i: 80891, n: "Beastslayer Pistol", b: [80891]},
 	{u: 7176, i: 80896, n: "Crimson Assassin Pistol", p: {token: 12}},
 	{u: 7226, i: 81219, n: "Keepsake Pistol", b: [81219]},
-	{u: 7287, i: 81880, n: "Abaddon Pistol", b: [81880]}
+	{u: 7287, i: 81880, n: "Abaddon Pistol", b: [81880]},
+	{u: 7343, i: 83380, n: "Elonian Sidearm", b: [83380]},
+	{u: 7453, i: 83736, n: "Sunspear Sidearm", b: [83736]},
+	{u: 7460, i: 82828, n: "Mordant Revolver", p: {craft: true}},
+	{u: 7465, i: 84750, n: "Awakened Pistol", b: [84750]},
+	{u: 7481, i: 82895, n: "Luminous Shot", p: {starting: true}},
+	{u: 7539, i: 82504, n: "Funerary Pistol", p: {mosaic: 36}},
+	{u: 7733, i: 84981, n: "War God's Pistol", b: [84981]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", b: [49341]},
@@ -3140,7 +3304,14 @@ Weapon_Scepter: [
 	{u: 7175, i: 80902, n: "Beastslayer Scepter", b: [80902]},
 	{u: 7172, i: 80876, n: "Crimson Assassin Scepter", p: {token: 12}},
 	{u: 7244, i: 81228, n: "Keepsake Scepter", b: [81228]},
-	{u: 7293, i: 81838, n: "Abaddon Scepter", b: [81838]}
+	{u: 7293, i: 81838, n: "Abaddon Scepter", b: [81838]},
+	{u: 7346, i: 82103, n: "Elonian Rod", b: [82103]},
+	{u: 7421, i: 82865, n: "Awakened Scepter", b: [82865]},
+	{u: 7583, i: 82838, n: "Luminous Virge", p: {starting: true}},
+	{u: 7595, i: 83667, n: "Decalibrated Feline Holoscepter", p: {coin: 50000}},
+	{u: 7632, i: 83068, n: "Funerary Staff", p: {mosaic: 72}},
+	{u: 7655, i: 82572, n: "Sunspear Rod", b: [82572]},
+	{u: 7730, i: 85261, n: "War God's Scepter", b: [85261]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", b: [44897]},
@@ -3306,7 +3477,14 @@ Weapon_Focus: [
 	{u: 7184, i: 80870, n: "Crimson Assassin Focus", p: {token: 8}},
 	{u: 7208, i: 81001, n: "Replica Mirror of Lyssa", p: {gem: 600}},
 	{u: 7238, i: 81260, n: "Keepsake Focus", b: [81260]},
-	{u: 7302, i: 82066, n: "Abaddon Focus", b: [82066]}
+	{u: 7302, i: 82066, n: "Abaddon Focus", b: [82066]},
+	{u: 7339, i: 83754, n: "Elonian Runestone", b: [83754]},
+	{u: 7386, i: 83446, n: "Mordant Key", b: [83446]},
+	{u: 7403, i: 82880, n: "Funerary Focus", p: {mosaic: 36}},
+	{u: 7461, i: 83534, n: "Sunspear Runestone", b: [83534]},
+	{u: 7520, i: 83596, n: "Awakened Focus", b: [83596]},
+	{u: 7615, i: 83564, n: "Luminous Curio", p: {starting: true}},
+	{u: 7741, i: 84895, n: "War God's Focus", b: [84895]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", b: [49344]},
@@ -3475,7 +3653,15 @@ Weapon_Shield: [
 	{u: 7177, i: 80944, n: "Beastslayer Shield", b: [80944]},
 	{u: 7169, i: 80937, n: "Crimson Assassin Shield", p: {token: 8}},
 	{u: 7234, i: 81208, n: "Keepsake Shield", b: [81208]},
-	{u: 7301, i: 81884, n: "Abaddon Shield", b: [81884]}
+	{u: 7301, i: 81884, n: "Abaddon Shield", b: [81884]},
+	{u: 7355, i: 84101, n: "Elonian Wallshield", b: [84101]},
+	{u: 7361, i: 83761, n: "Gate of Good-Byes", b: [83761]},
+	{u: 7398, i: 82800, n: "Mordant Scutum", b: [82692]},
+	{u: 7418, i: 82279, n: "Awakened Shield", b: [82279]},
+	{u: 7476, i: 82337, n: "Luminous Ward", p: {starting: true}},
+	{u: 7552, i: 84716, n: "Funerary Shield", p: {mosaic: 36}},
+	{u: 7694, i: 84789, n: "Sunspear Wallshield", b: [84789]},
+	{u: 7740, i: 85248, n: "War God's Shield", b: [85248]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", b: [49356]},
@@ -3618,7 +3804,16 @@ Weapon_Torch: [
 	{u: 7219, i: 81022, n: "Liturgy", p: {craft: true}},
 	{u: 7206, i: 81206, n: "Flames of War", p: {craft: true}},
 	{u: 7237, i: 81248, n: "Keepsake Torch", b: [81248]},
-	{u: 7307, i: 81842, n: "Abaddon Torch", b: [81842]}
+	{u: 7307, i: 81842, n: "Abaddon Torch", b: [81842]},
+	{u: 7351, i: 84726, n: "Elonian Firelight", b: [84726]},
+	{u: 7407, i: 82960, n: "Sunspear Firelight", b: [82960]},
+	{u: 7699, i: 82708, n: "Scourge's Torch", p: {achievement: 0}},
+	{u: 7439, i: 82693, n: "Guide for the Lost", p: {achievement: 0}},
+	{u: 7440, i: 83981, n: "Funerary Torch", p: {mosaic: 36}},
+	{u: 7508, i: 84727, n: "Mordant Brazier", b: [84727]},
+	{u: 7581, i: 84343, n: "Awakened Torch", b: [84343]},
+	{u: 7629, i: 83056, n: "Luminous Vigil", p: {starting: true}},
+	{u: 7723, i: 84996, n: "War God's Torch", b: [84996]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", b: [49359]},
@@ -3758,7 +3953,14 @@ Weapon_Warhorn: [
 	{u: 7183, i: 80911, n: "Beastslayer Warhorn", b: [80911]},
 	{u: 7166, i: 80867, n: "Crimson Assassin Warhorn", p: {token: 8}},
 	{u: 7222, i: 81231, n: "Keepsake Warhorn", b: [81231]},
-	{u: 7314, i: 81711, n: "Abaddon Warhorn", b: [81711]}
+	{u: 7314, i: 81711, n: "Abaddon Warhorn", b: [81711]},
+	{u: 7353, i: 84030, n: "Elonian Horn", b: [84030]},
+	{u: 7372, i: 84206, n: "Awakened Warhorn", b: [84206]},
+	{u: 7429, i: 82999, n: "Funerary Warhorn", p: {mosaic: 36}},
+	{u: 7490, i: 82739, n: "Sunspear Horn", b: [82739]},
+	{u: 7517, i: 82832, n: "Luminous Trumpet", p: {starting: true}},
+	{u: 7534, i: 82785, n: "Mordant Trumpet", b: [82176]},
+	{u: 7745, i: 84986, n: "War God's Warhorn", b: [84986]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", b: [49321, 49323]},
@@ -3918,7 +4120,15 @@ Weapon_Greatsword: [
 	{u: 7188, i: 80921, n: "Crimson Assassin Greatsword", p: {token: 16}},
 	{u: 7229, i: 81249, n: "Keepsake Greatsword", b: [81249]},
 	{u: 7231, i: 81240, n: "Menzies's Agony", p: {gem: 600}},
-	{u: 7333, i: 81816, n: "Abaddon Greatsword", b: [81816]}
+	{u: 7333, i: 81816, n: "Abaddon Greatsword", b: [81816]},
+	{u: 7342, i: 84082, n: "Elonian Greatblade", b: [84082]},
+	{u: 7410, i: 84350, n: "Awakened Greatsword", b: [84350]},
+	{u: 7457, i: 84043, n: "Mordant Slayer", b: [84043]},
+	{u: 7470, i: 82727, n: "Forged Greatsword", b: [82727]},
+	{u: 7573, i: 83751, n: "Sunspear Greatblade", b: [83751]},
+	{u: 7668, i: 84523, n: "Funerary Greatsword", p: {mosaic: 72}},
+	{u: 7680, i: 83664, n: "Luminous Claymore", p: {starting: true}},
+	{u: 7744, i: 84963, n: "War God's Greatsword", b: [84963]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", b: [49326]},
@@ -4072,7 +4282,16 @@ Weapon_Hammer: [
 	{u: 7298, i: 81754, n: "Reclamation", p: {craft: true}},
 	{u: 7312, i: 81634, n: "Might of Arah", p: {craft: true}},
 	{u: 7337, i: 81839, n: "Sharur", p: {craft: true}},
-	{u: 7311, i: 81937, n: "Abaddon Hammer", b: [81937]}
+	{u: 7311, i: 81937, n: "Abaddon Hammer", b: [81937]},
+	{u: 7350, i: 82483, n: "Elonian Smasher", b: [82483]},
+	{u: 7466, i: 83727, n: "Funerary Hammer", p: {mosaic: 72}},
+	{u: 7500, i: 82532, n: "Luminous Brunt", p: {starting: true}},
+	{u: 7546, i: 82167, n: "Awakened Hammer", b: [82167]},
+	{u: 7566, i: 82528, n: "Might of the Vindictive", b: [82528]},
+	{u: 7642, i: 83075, n: "Sunspear Smasher", b: [83075]},
+	{u: 7677, i: 82287, n: "Forged Greathammer", b: [82287]},
+	{u: 7746, i: 85192, n: "Trained Choya Hammer", p: {gem: 600}},
+	{u: 7756, i: 84999, n: "War God's Hammer", b: [84999]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", b: [44906]},
@@ -4223,7 +4442,15 @@ Weapon_Longbow: [
 	{u: 7170, i: 80933, n: "Crimson Assassin Longbow", p: {token: 16}},
 	{u: 7235, i: 81269, n: "Keepsake Longbow", b: [81269]},
 	{u: 7284, i: 81567, n: "God-Slayer Longbow", p: {gem: 350}},
-	{u: 7313, i: 82034, n: "Abaddon Longbow", b: [82034]}
+	{u: 7313, i: 82034, n: "Abaddon Longbow", b: [82034]},
+	{u: 7345, i: 84766, n: "Elonian Recurve", b: [84766]},
+	{u: 7420, i: 83907, n: "Funerary Longbow", p: {mosaic: 72}},
+	{u: 7492, i: 83509, n: "Forged Bow", b: [83509]},
+	{u: 7549, i: 84529, n: "Mordant Longbow", b: [84529]},
+	{u: 7598, i: 83274, n: "Awakened Longbow", b: [83274]},
+	{u: 7628, i: 83742, n: "Sunspear Recurve", b: [83742]},
+	{u: 7709, i: 82285, n: "Luminous Arc", p: {starting: true}},
+	{u: 7722, i: 84910, n: "War God's Longbow", b: [84910]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", b: [44924]},
@@ -4375,7 +4602,16 @@ Weapon_Shortbow: [
 	{u: 7185, i: 80905, n: "Crimson Assassin Short Bow", p: {token: 16}},
 	{u: 7240, i: 81264, n: "Keepsake Short Bow", b: [81264]},
 	{u: 7281, i: 81560, n: "God-Slayer Short Bow", p: {gem: 350}},
-	{u: 7329, i: 81933, n: "Abaddon Short Bow", b: [81933]}
+	{u: 7329, i: 81933, n: "Abaddon Short Bow", b: [81933]},
+	{u: 7344, i: 84329, n: "Elonian Pocketbow", b: [84329]},
+	{u: 7362, i: 82794, n: "Guerrilla Arc", p: {achievement: 0}},
+	{u: 7401, i: 84086, n: "Renegade's Short Bow", p: {achievement: 0}},
+	{u: 7484, i: 83044, n: "Funerary Short Bow", p: {mosaic: 72}},
+	{u: 7503, i: 83148, n: "Luminous Repeater", p: {starting: true}},
+	{u: 7603, i: 83134, n: "Sunspear Pocketbow", b: [83134]},
+	{u: 7617, i: 84604, n: "Awakened Short Bow", b: [84604]},
+	{u: 7670, i: 82419, n: "Mordant Infantry Bow", b: [82419]},
+	{u: 7747, i: 85129, n: "War God's Short Bow", b: [85129]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", b: [49338]},
@@ -4525,7 +4761,16 @@ Weapon_Rifle: [
 	{u: 7168, i: 80880, n: "Beastslayer Rifle", b: [80880]},
 	{u: 7173, i: 80940, n: "Crimson Assassin Rifle", p: {token: 16}},
 	{u: 7224, i: 81229, n: "Keepsake Rifle", b: [81229]},
-	{u: 7292, i: 81688, n: "Abaddon Rifle", b: [81688]}
+	{u: 7292, i: 81688, n: "Abaddon Rifle", b: [81688]},
+	{u: 7340, i: 82395, n: "Elonian Matchlock", b: [82395]},
+	{u: 7360, i: 84707, n: "Mordant Bonespitter", b: [83617]},
+	{u: 7433, i: 82755, n: "Deadeye's Rifle", p: {achievement: 0}},
+	{u: 7591, i: 82813, n: "Cursed Flintlock", p: {achievement: 0}},
+	{u: 7529, i: 83896, n: "Sunspear Matchlock", b: [83896]},
+	{u: 7559, i: 82295, n: "Luminous Caliber", p: {starting: true}},
+	{u: 7613, i: 83953, n: "Awakened Rifle", b: [83953]},
+	{u: 7714, i: 83386, n: "Funerary Rifle", p: {mosaic: 72}},
+	{u: 7738, i: 84962, n: "War God's Rifle", b: [84962]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", b: [49348, 49350]},
@@ -4692,7 +4937,17 @@ Weapon_Staff: [
 	{u: 7194, i: 80963, n: "Crimson Assassin Staff", p: {token: 16}},
 	{u: 7204, i: 80981, n: "Hourglass Staff", p: {gem: 600}},
 	{u: 7230, i: 81259, n: "Keepsake Staff", b: [81259]},
-	{u: 7331, i: 81735, n: "Abaddon Staff", b: [81735]}
+	{u: 7331, i: 81735, n: "Abaddon Staff", b: [81735]},
+	{u: 7348, i: 83499, n: "Elonian Standard", b: [83499]},
+	{u: 7374, i: 82907, n: "Awakened Staff", b: [82907]},
+	{u: 7428, i: 83901, n: "Staff of the Lost", b: [83901]},
+	{u: 7480, i: 82577, n: "Funerary Staff", p: {mosaic: 72}},
+	{u: 7561, i: 83089, n: "Mordant Crosier", b: [83089]},
+	{u: 7584, i: 82143, n: "Forged Staff", b: [82143]},
+	{u: 7643, i: 84077, n: "Luminous Pillar", p: {starting: true}},
+	{u: 7665, i: 82407, n: "Sunspear Standard", b: [82407]},
+	{u: 7737, i: 85115, n: "War God's Staff", b: [85115]},
+	{u: 7739, i: 85256, n: "Hydra Staff", p: {gem: 0}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", b: [63881]},

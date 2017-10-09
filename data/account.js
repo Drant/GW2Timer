@@ -119,6 +119,8 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 3, coefficient: 10000, payment: "laurel", name_en: "Laurel", name_de: "Lorbeer", name_es: "Laurel", name_fr: "Laurier", name_zh: "桂冠" },
 			{ id: 16, coefficient: 10000, payment: "commendation", name_en: "Guild Commendation", name_de: "Gilden-Belobigung", name_es: "Mención de clan", name_fr: "Recommandation de guilde", name_zh: "公会奖状" },
 			{ id: 29, coefficient: 5000, payment: "provisioner", name_en: "Provisioner Token", name_de: "Versorger-Marke", name_es: "Vale de suministrador", name_fr: "Coupon de fournisseur", name_zh: "供给官徽记" },
+			{ id: 34, payment: "contract", name_en: "Trade Contract", name_de: "Handelsvertrag", name_es: "Contrato comercial", name_fr: "Contrat commercial", name_zh: "交易合同" },
+			{ id: 35, payment: "mosaic", name_en: "Elegy Mosaic", name_de: "Elegie-Mosaik", name_es: "Mosaico de elegía", name_fr: "Mosaïque d'élégie", name_zh: "挽歌马赛克" },
 			{ id: 23, coefficient: 1000, name_en: "Spirit Shard", name_de: "Geister-Scherbe", name_es: "Esquirla espiritual", name_fr: "Éclat d'esprit", name_zh: "灵魂碎片" },
 			{ id: 18, coefficient: 10000, name_en: "Transmutation Charge", name_de: "Transmutations-Ladung", name_es: "Carga de transmutación", name_fr: "Charge de transmutation", name_zh: "幻化力" }
 		],
@@ -131,6 +133,7 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 32, coefficient: 0.1, payment: "magic", name_en: "Unbound Magic", name_de: "Entfesselte Magie", name_es: "Magia liberada", name_fr: "Magie déliée", name_zh: "未受约束的魔法" },
 			{ id: 15, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "荣誉徽章" },
 			{ id: 31, payment: "proof", name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄证明" },
+			{ id: 36, payment: "testimony", name_en: "Testimony of Heroics", name_de: "Zeugnis von Heldentaten", name_es: "Testimonio de hazañas", name_fr: "Témoignage des actes héroïques", name_zh: "英雄证明" },
 			{ id: 26, coefficient: 10, name_en: "WvW Skirmish Claim Ticket", name_de: "WvW-Gefecht-Ticket", name_es: "Tique de recogida de escaramuzas WvW", name_fr: "Billet de retrait d'escarmouche McM", name_zh: "世界之战突袭兑换劵" },
 			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP联赛兑换券" },
 			{ id: 33, coefficient: 10, payment: "glory", name_en: "Ascended Shards of Glory", name_de: "Aufgestiegene Scherben des Ruhms", name_es: "Esquirlas de gloria ascendidas", name_fr: "Éclats de gloire élevés", name_zh: "升华荣誉碎片" }
