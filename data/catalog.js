@@ -23,8 +23,8 @@ var GW2T_CATALOG_HEADERS = {
 	TonicConsumable: {name_en: "Consumable Tonics", name_de: "Verbrauchsgegenstand Trank", name_es: "Tónicos consumibles", name_fr: "Toniques consommables", name_zh: "消耗合剂", iscollapsed: true},
 	Bundle: {name_en: "Bundles", name_de: "Umgebungswaffen", name_es: "Arma ambiental", name_fr: "Arme environnementale", name_zh: "束", iscollapsed: true},
 	Aura: {name_en: "Cosmetic Auras", name_de: "Kosmetik-Auren", name_es: "Auras cosméticos", name_fr: "Auras cosmétiques", name_zh: "光环", iscollapsed: true},
-	Enrichment: {name_en: "Enrichment", name_de: "Anreicherung", name_es: "Enriquecimiento", name_fr: "Enrichissement", name_zh: "法富集", iscollapsed: true},
-	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", name_zh: "设备传奇", iscollapsed: true}
+	Enrichment: {name_en: "Enrichment", name_de: "Anreicherung", name_es: "Enriquecimiento", name_fr: "Enrichissement", name_zh: "富集", iscollapsed: true},
+	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", name_zh: "传奇装备", iscollapsed: true}
 };
 
 /*
