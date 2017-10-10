@@ -61,7 +61,7 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_weapons: {de: "waffen", es: "armas", fr: "armes",
 		cs: "zbraně", it: "armi", pl: "bronie", pt: "armas", ru: "оружие", zh: "武器"},
 	s_storage: {de: "speicher", es: "almacenamiento", fr: "stockage",
-		cs: "úložiště", it: "memoria", pl: "pamięć", pt: "armazenamento", ru: "хранилище", zh: "存储器"},
+		cs: "úložiště", it: "memoria", pl: "pamięć", pt: "armazenamento", ru: "хранилище", zh: "存储柜"},
 	
 	// Verbs
 	s_include: {de: "einschließen", es: "incluir", fr: "inclure",
