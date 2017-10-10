@@ -7,11 +7,11 @@
  * Category translations.
  */
 var GW2T_SAB_HEADERS = {
-	Infantile: {name_en: "Infantile Completion", name_de: "Kinderleichter", name_es: "Infantil", name_fr: "Infantile", name_zh: "婴儿"},
+	Infantile: {name_en: "Infantile Completion", name_de: "Kinderleichter", name_es: "Infantil", name_fr: "Infantile", name_zh: "简单"},
 	Normal: {name_en: "Normal Completion", name_de: "Normaler", name_es: "Normal", name_fr: "Normal", name_zh: "正常"},
 	Tribulation: {name_en: "Tribulation Completion", name_de: "Bockschwerer", name_es: "Difícil", name_fr: "Tribulation", name_zh: "苦难"},
 	Unlocks: {name_en: "Unlocks", name_de: "Freischaltungen", name_es: "Desbloquearán", name_fr: "Déverrouillés", name_zh: "解锁"},
-	Songs: {name_en: "Songs", name_de: "Lieder", name_es: "Canciones", name_fr: "Chansons", name_zh: "首歌曲"}
+	Songs: {name_en: "Songs", name_de: "Lieder", name_es: "Canciones", name_fr: "Chansons", name_zh: "歌曲"}
 };
 
 /*
