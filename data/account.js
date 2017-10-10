@@ -33,7 +33,7 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_currencies: {de: "währung", es: "monedas", fr: "monnaies",
 		cs: "měny", it: "valute", pl: "waluty", pt: "moedas", ru: "валюта", zh: "货币"},
 	s_tokens: {de: "wertmarke", es: "fichas", fr: "jetons",
-		cs: "žetony", it: "gettoni", pl: "żeton", pt: "fichas", ru: "жетоны", zh: "令牌"},
+		cs: "žetony", it: "gettoni", pl: "żeton", pt: "fichas", ru: "жетоны", zh: "徽记"},
 	s_attributes: {de: "attribute", es: "atributos", fr: "caractéristiques",
 		cs: "atributy", it: "attributi", pl: "atrybuty", pt: "atributos", ru: "атрибуты", zh: "属性"},
 	s_wiki: {de: "wiki", es: "wiki", fr: "wiki",
