@@ -13,7 +13,7 @@ var GW2T_MINIS_HEADERS = {
 	Special: {name_en: "Special", name_de: "Spezial", name_es: "Especial", name_fr: "Spéciales", name_zh: "特殊"},
 	Halloween: {name_en: "Halloween", name_de: "Halloween", name_es: "Halloween", name_fr: "Halloween", name_zh: "万圣"},
 	Wintersday: {name_en: "Wintersday", name_de: "Wintertags", name_es: "Invernal", name_fr: "Hivernel", name_zh: "冬幕"},
-	PvP: {name_en: "PvP", name_de: "PvP", name_es: "JcJ", name_fr: "JcJ", name_zh: "玩家對戰"},
+	PvP: {name_en: "PvP", name_de: "PvP", name_es: "JcJ", name_fr: "JcJ", name_zh: "玩家对战"},
 	Raid: {name_en: "Raid", name_de: "Schlachtzug", name_es: "Incursion", name_fr: "Raid", name_zh: "大型地下城"},
 	Zone: {name_en: "Zone", name_de: "Gebiet", name_es: "Zona", name_fr: "Zone", name_zh: "区"},
 	Gem: {name_en: "Gem Store", name_de: "Edelsteinshop", name_es: "Tienda de gemas", name_fr: "Boutique aux gemmes)", name_zh: "宝石商店"}
