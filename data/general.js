@@ -1885,8 +1885,8 @@ Countdown: {
 		name_es: "Halloween 2017",
 		name_fr: "Halloween 2017",
 		name_zh: "万圣夜2017",
-		official: "news/halloween-is-coming-2/",
-		Start: new Date("2017-10-24T16:00:00Z"),
+		url: "https://twitter.com/GuildWars2/status/917783887526416384",
+		Start: new Date("2017-10-17T16:00:00Z"),
 		Finish: new Date("2017-11-03T16:00:00Z")
 	}
 	/*{
