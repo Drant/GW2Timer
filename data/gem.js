@@ -201,8 +201,8 @@ Head: [
 	{i: 47883, n: "Stag Helm Skin", p: {gem: -500}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: -300}},
 	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
-	{i: 47890, n: "Grenth Hood Skin", p: {gem: -500}},
-	{i: 65203, n: "Phantom's Hood", p: {gem: -200}},
+	{i: 47890, n: "Grenth Hood Skin", p: {gem: 500}},
+	{i: 65203, n: "Phantom's Hood", p: {gem: 200}},
 	{i: 48944, n: "Mask of the Wanderer Skin", p: {gem: -500}},
 	{i: 49157, n: "Mask of the Silent Skin", p: {gem: -500}},
 	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 400}},
@@ -234,7 +234,7 @@ Shoulder: [
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
-	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
+	{i: 81412, n: "Foefire Mantle", p: {gem: 500}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}},
@@ -243,11 +243,12 @@ Gloves: [
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: -500}},
-	{i: 81293, n: "Foefire Wraps", p: {gem: -500}}
+	{i: 81293, n: "Foefire Wraps", p: {gem: 500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
-	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 300}}
+	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 300}},
+	{i: 85282, n: "Foefire Greaves", p: {gem: 500}}
 ],
 Armor: [
 	{i: 20274, n: "Profane Light Armor Skin", p: {gem: 500}},
@@ -398,7 +399,7 @@ Dye: [
 	{i: 67291, n: "Taimi's Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 68005, n: "Glint's Winter Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 68653, n: "Crimson Lion Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 68786, n: "Shadow Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 68786, n: "Shadow Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 69934, n: "Lion's Arch Rebuild Dye Kit", p: {gem: -125},  discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 70367, n: "Mad King Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 77470, n: "Winter Chimes Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
@@ -619,7 +620,8 @@ Mini: [
 	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: -400}},
 	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
 	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
-	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}}
+	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
+	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},
