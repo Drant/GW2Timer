@@ -1664,7 +1664,7 @@ var GW2T_TIMELINE = [
 		zone: "oasis",
 		Segments: [
 			{ time: "00:00", duration: "00:05", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "00:05", duration: "00:20", primacy: 3, name_en: "Casino Blitz", name_de: "Kasino-Blitz", name_es: "Carrera del casino", name_fr: "Casino express", name_zh: "赌场闪电战" },
+			{ time: "00:05", duration: "00:20", primacy: 3, name_en: "Oasis: Casino", name_de: "Kasino-Blitz", name_es: "Carrera del casino", name_fr: "Casino express", name_zh: "赌场闪电战" },
 			{ time: "00:25", duration: "01:35", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
 		]
 	},
@@ -1672,16 +1672,16 @@ var GW2T_TIMELINE = [
 		zone: "highlands",
 		Segments: [
 			{ time: "00:00", duration: "01:00", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Buried Treasure", name_de: "Vergrabenen Schätzen", name_es: "Tesoro enterrado", name_fr: "Trésor enfoui", name_zh: "埋藏的宝藏" },
+			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Highlands: Treasure", name_de: "Vergrabenen Schätzen", name_es: "Tesoro enterrado", name_fr: "Trésor enfoui", name_zh: "埋藏的宝藏" },
 			{ time: "01:20", duration: "00:40", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
 		]
 	},
 	{
 		zone: "vabbi",
 		Segments: [
-			{ time: "00:00", duration: "00:30", primacy: 1, name_en: "Serpents' Ire", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
+			{ time: "00:00", duration: "00:30", primacy: 1, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
 			{ time: "00:30", duration: "00:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Serpents' Ire", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" }
+			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" }
 		]
 	},
 	{
