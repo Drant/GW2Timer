@@ -1661,6 +1661,30 @@ var GW2T_TIMELINE = [
 		]
 	},
 	{
+		zone: "oasis",
+		Segments: [
+			{ time: "00:00", duration: "00:05", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "00:05", duration: "00:20", primacy: 3, name_en: "Casino Blitz", name_de: "Kasino-Blitz", name_es: "Carrera del casino", name_fr: "Casino express", name_zh: "赌场闪电战" },
+			{ time: "00:25", duration: "01:35", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
+		]
+	},
+	{
+		zone: "highlands",
+		Segments: [
+			{ time: "00:00", duration: "01:00", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Buried Treasure", name_de: "Vergrabenen Schätzen", name_es: "Tesoro enterrado", name_fr: "Trésor enfoui", name_zh: "埋藏的宝藏" },
+			{ time: "01:20", duration: "00:40", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
+		]
+	},
+	{
+		zone: "vabbi",
+		Segments: [
+			{ time: "00:00", duration: "00:30", primacy: 1, name_en: "Serpents' Ire", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
+			{ time: "00:30", duration: "00:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Serpents' Ire", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" }
+		]
+	},
+	{
 		zone: "doric",
 		Segments: [
 			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Lumber", name_de: "Holzlager", name_es: "Aserradero", name_fr: "Scierie", name_zh: "伐木场" },
@@ -1730,8 +1754,8 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "Try <a href='http://forum.renaka.com/topic/5546166/'>GW2Navi</a> overlay app with the new .exe launcher if you couldn't use it before. <dfn data-coord='oasis'>Path of Fire</dfn> maps now viewable.",
-		Finish: new Date("2017-10-10T16:00:00Z")
+		content: "<a href='http://forum.renaka.com/topic/8153493/'>Path of Fire timers</a> need verification. Please tell new players about gw2timer.com!",
+		Finish: new Date("2017-10-24T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
