@@ -1682,7 +1682,7 @@ var GW2T_TIMELINE = [
 			{ time: "00:00", duration: "00:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
 			{ time: "00:30", duration: "00:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
 			{ time: "01:00", duration: "00:30", primacy: 3, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
-			{ time: "01:30", duration: "01:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" }
+			{ time: "01:30", duration: "00:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" }
 		]
 	},
 	{
