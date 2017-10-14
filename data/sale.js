@@ -21,18 +21,21 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "https://i.imgur.com/AuYSBAV.png", n: "Crystal Arbiter Appearance Pack", p: {gem: 2000}},
-	{i: "https://i.imgur.com/DooMduS.png", n: "Ironclad Appearance Pack", p: {gem: 2000}},
 	{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 500}},
+	{i: "https://i.imgur.com/c61OMk9.png", n: "Enemies Dye Pack", p: {gem: 500}},
+	{i: "https://i.imgur.com/ch0zrT3.png", n: "Foefire Armor Package", p: {gem: 1300}},
 	{i: "https://i.imgur.com/SKDviam.png", n: "Central Tyria Waypoint Unlock Package", p: {gem: 2000}},
 	{i: 67279, n: "Waypoint Unlock Box", p: {gem: 600}},
-	{i: 68786, n: "Shadow Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 68686, n: "Black Feather Wings Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2017-10-20T16:00:00Z")},
+	{i: 70048, n: "Black Feather Wings Glider", p: {gem: 560}, discount: 700, Finish: new Date("2017-10-20T16:00:00Z")},
+	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}},
+	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}},
+	{i: 67037, n: "Raiment of the Lich", p: {gem: 700}, Finish: new Date("2017-10-20T16:00:00Z")},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}},
 	{i: 85282, n: "Foefire Greaves", p: {gem: 500}},
 	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}},
-	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}},
-	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}},
+	{i: 68786, n: "Shadow Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}},
 	{i: 69799, n: "Scientific weapon skins#Gallery", p: {blticket: 5}},
@@ -44,7 +47,6 @@ GW2T_SALE_DATA = {
 	{i: 20273, n: "Krytan Medium Armor Skin", p: {gem: 500}},
 	{i: 47890, n: "Grenth Hood Skin", p: {gem: 500}},
 	{i: 65203, n: "Phantom's Hood", p: {gem: 200}},
-	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}}
 	]
 };

@@ -350,6 +350,8 @@ BlackLionWeapon: [
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
+	//{i: "https://i.imgur.com/c61OMk9.png", n: "Enemies Dye Pack", p: {gem: 500}},
+	//{i: "https://i.imgur.com/ch0zrT3.png", n: "Foefire Armor Package", p: {gem: 1300}},
 	//{i: "https://i.imgur.com/SKDviam.png", n: "Central Tyria Waypoint Unlock Package", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 500}},
 	//{i: "https://i.imgur.com/e5G1iUR.png", n: "Elonian Introductory Package", p: {gem: 1800}},

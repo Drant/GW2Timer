@@ -1679,9 +1679,10 @@ var GW2T_TIMELINE = [
 	{
 		zone: "vabbi",
 		Segments: [
-			{ time: "00:00", duration: "00:30", primacy: 1, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
-			{ time: "00:30", duration: "00:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" }
+			{ time: "00:00", duration: "00:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
+			{ time: "00:30", duration: "00:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
+			{ time: "01:00", duration: "00:30", primacy: 3, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
+			{ time: "01:30", duration: "01:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" }
 		]
 	},
 	{
@@ -1887,7 +1888,7 @@ Countdown: {
 		name_zh: "万圣夜2017",
 		url: "https://en-forum.guildwars2.com/discussion/9221/the-mad-king-returns/p1",
 		Start: new Date("2017-10-17T16:00:00Z"),
-		Finish: new Date("2017-11-03T16:00:00Z")
+		Finish: new Date("2017-11-07T16:00:00Z")
 	}
 	/*{
 		name_en: "Wintersday 2017",
