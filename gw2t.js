@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 170928},
+		programVersion: {key: "int_utlProgramVersion", value: 171013},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -36003,21 +36003,36 @@ H = {
 				+ "<br />" + expiredstr + "<time id='dsbPactTime'>" + timestamp + "</time></div>");
 		};
 		
+		var getDateNumber = function(pDate)
+		{
+			return pDate.toISOString().split("T")[0].replace(/-/g, "");
+		};
+		
 		var doGenerate = function(pData)
 		{
 			var updatetime;
-			var list = {};
+			var recipelist = {};
+			var timelist = {};
 			var iserror = true;
 			try
 			{
-				var data = pData.feed.entry[0];
+				var ids = pData.feed.entry[0];
+				var times = pData.feed.entry[1];
+				var yesterday = getDateNumber(T.addDaysToDate(new Date(), -1));
 				for (var i in H.Pact.OffersAssoc)
 				{
-					var id = parseInt(data["gsx$" + i.toLowerCase()].$t);
+					var key = "gsx$" + i.toLowerCase();
+					var id = parseInt(ids[key].$t);
+					var time = times[key].$t;
 					if (id || H.Pact.Products[id])
 					{
-						list[i] = id;
+						recipelist[i] = id;
+						timelist[i] = time && (getDateNumber(new Date(time)) <= yesterday);
 						iserror = false;
+					}
+					else
+					{
+						recipelist[i] = Q.GameLimit.Unknown;
 					}
 				}
 				updatetime = pData.feed.updated.$t;
@@ -36033,7 +36048,7 @@ H = {
 			var idstofetch = [];
 			for (var i in H.Pact.OffersAssoc)
 			{
-				var recipeid = list[i];
+				var recipeid = recipelist[i];
 				var productid = H.Pact.Products[recipeid] || recipeid;
 				idstofetch.push(recipeid);
 				idstofetch.push(productid);
@@ -36042,7 +36057,7 @@ H = {
 			{
 				for (var i in H.Pact.OffersAssoc)
 				{
-					var recipeid = list[i];
+					var recipeid = recipelist[i];
 					if (recipeid === undefined)
 					{
 						continue;
@@ -36062,6 +36077,7 @@ H = {
 								+ "' data-coord='" + (H.Pact.Coords[i] || defaultcoords)[weekdaylocation] + "'>" + product.name + "</span> "
 							+ "</div>"
 						+ "<div class='dsbPactInfo'>"
+							+ "<span>" + (timelist[i] ? (D.getWordCapital("expired") + " ") : "") + "</span>"
 							+ "<span class='dsbPactPriceCoin' id='dsbPactPriceCoin_" + i + "'></span> "
 							+ "<span class='dsbPactVendor'>" + i + "</span> "
 							+ "<span class='dsbPactPriceKarma'>" + E.formatKarmaString(H.Pact.Prices[recipeid] || H.Pact.PriceDefault) + "</span>"
