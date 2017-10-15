@@ -36018,7 +36018,7 @@ H = {
 			{
 				var ids = pData.feed.entry[0];
 				var times = pData.feed.entry[1];
-				var yesterday = getDateNumber(T.addDaysToDate(new Date(), -1));
+				var today = getDateNumber(new Date());
 				for (var i in H.Pact.OffersAssoc)
 				{
 					var key = "gsx$" + i.toLowerCase();
@@ -36027,7 +36027,7 @@ H = {
 					if (id || H.Pact.Products[id])
 					{
 						recipelist[i] = id;
-						timelist[i] = time && (getDateNumber(new Date(time)) <= yesterday);
+						timelist[i] = time && (getDateNumber(new Date(time)) < today);
 						iserror = false;
 					}
 					else
