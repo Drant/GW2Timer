@@ -1917,7 +1917,7 @@ Story:
 	name_fr: "Roi Dément a dit",
 	name_zh: "疯王说",
 	url: "https://en-forum.guildwars2.com/discussion/9221/the-mad-king-returns/p1",
-	Start: new Date("2017-10-14T16:00:00Z"),
+	Start: new Date("2017-10-17T16:00:00Z"),
 	Finish: new Date("2017-11-07T16:00:00Z")
 },
 
