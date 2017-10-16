@@ -598,7 +598,7 @@ Bookmark:
 	{name: "Draconis Mons: Orchid", icon: "img/node/orchid.png", path: [[3078,25223],[3201,25405],[3260,25421],[3365,25414],[3451,25392],[3417,25319],[3575,25398],[3599,25496],[3400,25530],[3302,25561],[3249,25529],[3353,25622],[3265,25805],[3570,25962],[3552,26026],[3644,26059],[4457,25647],[4617,25652],[4275,25341],[4298,25122],[4493,24952],[4332,24653],[3798,24588],[3877,24967],[3479,25004],[3323,25012],[3081,24913]]},
 	{name: "Lake Doric: Jade", icon: "img/node/jade.png", path: [[12348,10228],[12382,10328],[12470,10305],[12885,10647],[12575,10795],[12482,11103],[12725,11375],[13074,11547],[13123,11529],[13154,11510],[13190,11500],[13283,10586],[13243,10293],[13282,10302],[13302,9870],[12778,9774]]},
 	{name: "Bitterfrost Frontier: Winterberries", icon: "img/node/winterberry.png", path: [[21325,7462],[20999,7308],[21099,7143],[21122,7048],[21048,6994],[21359,6959],[21650,6882],[21827,6925],[21995,6951],[21765,7080],[21890,7144],[21974,7158],[22061,7219],[21931,7330],[21780,7252],[21713,7352],[21706,7525],[21573,7581],[22376,7990],[23197,7470],[22679,7073]]},
-	{name: "Ember Bay: Petrified", icon: "img/node/petrified.png", path: [[7912,29246],[7340,29422],[7377,29663],[7188,29630],[7132,29897],[6917,29868],[6948,29577],[7141,29418],[6834,28772],[6868,28908],[6742,28893],[6559,29195],[5137,29263]]},
+	{name: "Ember Bay: Petrified", icon: "img/node/petrified.png", path: [[5306,29617],[5137,29263],[5201,28876],[6190,29997],[7069,30775],[7340,29422],[7141,29418],[6948,29577],[6751,29607],[6805,29829],[6917,29868],[7132,29897],[7188,29630],[7377,29663],[7661,29660],[7912,29246],[7866,28756],[7548,29098],[7385,29058],[6834,28772],[6708,28782],[6868,28908],[6742,28893],[6427,29066],[6559,29195]]},
 	{name: "Bloodstone Fen: Rubies", icon: "img/node/bloodstone.png", path: [[2554,14136],[2483,14115],[2425,14213],[2464,14279],[2438,14307],[2497,14377],[2445,14410],[2708,14445],[2903,14533],[2951,14506],[2952,14351],[2871,14335],[2846,14313],[2800,14261],[2826,14234],[2894,14113],[2950,14127],[2956,14147],[2899,14194],[2890,14250],[2989,14303],[3004,14306],[3077,14333],[3122,14311],[3240,14175],[3217,14171],[3147,14104],[3108,14097],[3029,14149],[3138,14205],[3100,14216],[2716,14196],[2671,14214],[2657,14285]]},
 	{name: "Iron and Platinum", icon: "img/node/platinum.png", path: [[6327,15041],[9583,15064],[12697,15954],[12640,15579],[13548,11110],[16935,14020],[18348,13444],[20914,12447],[23758,12739],[24678,9345],[26934,9849],[27751,9674],[29084,9609],[31157,15013],[28961,17355],[20365,15737],[20915,18219],[19167,19252],[20931,22505],[17946,22155],[17293,20362],[15623,20260],[16429,18201]]},
 	{name: "Freshwater Pearl", icon: "img/node/pearlmussel.png", path: [[3671,15271],[3748,15359],[3666,15314],[3543,15299],[3616,15242],[3690,15159],[3689,15051],[3743,14990],[3699,14879],[3651,14958],[3553,14991],[3462,15047],[3393,15109],[2376,15387],[2301,15339],[2255,15384],[2335,15461],[2383,15538],[2396,15669],[2396,15744],[2331,15786],[1707,15112],[1565,15094],[1431,15165],[1325,15179],[1218,15150],[1097,15096],[1680,16828],[1657,17003],[1742,17071],[1860,17122],[1846,17007],[1943,16921],[2012,16867],[2071,16726],[2093,16611],[2021,16547],[2304,17434],[2252,17498],[2228,17651],[2162,17735],[2169,17880],[2248,17929],[2293,17844],[2226,17838],[3854,19860],[3626,19886],[3407,19981],[3222,19986],[3073,20062],[2942,19929],[2943,19844],[2846,19879],[2847,19954],[2911,19969],[3041,20103],[3061,20260],[3200,20393],[3306,20433],[3476,20446],[3565,20370],[3641,20361],[3613,20471],[3695,20555],[3755,20457],[3787,20366],[3872,20382],[3965,20475],[4052,20542],[4083,20660],[4174,20757],[4176,20944],[4053,21026],[3953,21083],[3868,21190],[3723,21294],[3641,21385]]}
@@ -1661,28 +1661,20 @@ var GW2T_TIMELINE = [
 		]
 	},
 	{
-		zone: "oasis",
+		name_en: "Your Mad King says...", name_de: "Der Verrückte König sagt", name_es: "Vuestro Rey Loco dice...", name_fr: "Votre Roi Dément a dit...", name_zh: "疯王说......",
+		Segments: [
+			{ time: "00:00", duration: "00:15", primacy: 3, name_en: "Mad King Says", name_de: "Verrückte König sagt", name_es: "Rey Loco dice", name_fr: "Roi Dément a dit", name_zh: "疯王说" },
+			{ time: "00:15", duration: "01:45", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
+		]
+	},
+	{
+		name_en: "Path of Fire", name_de: "Path of Fire", name_es: "Path of Fire", name_fr: "Path of Fire", name_zh: "Path of Fire",
 		Segments: [
 			{ time: "00:00", duration: "00:05", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
 			{ time: "00:05", duration: "00:20", primacy: 3, name_en: "Oasis: Casino", name_de: "Kasino-Blitz", name_es: "Carrera del casino", name_fr: "Casino express", name_zh: "赌场闪电战" },
-			{ time: "00:25", duration: "01:35", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
-		]
-	},
-	{
-		zone: "highlands",
-		Segments: [
-			{ time: "00:00", duration: "01:00", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "00:25", duration: "00:35", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
 			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Highlands: Treasure", name_de: "Vergrabenen Schätzen", name_es: "Tesoro enterrado", name_fr: "Trésor enfoui", name_zh: "埋藏的宝藏" },
 			{ time: "01:20", duration: "00:40", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
-		]
-	},
-	{
-		zone: "vabbi",
-		Segments: [
-			{ time: "00:00", duration: "00:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
-			{ time: "00:30", duration: "00:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
-			{ time: "01:00", duration: "00:30", primacy: 3, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" },
-			{ time: "01:30", duration: "00:30", primacy: 2, name_en: "Vabbi: Serpents", name_de: "Gebrandmarkten Eiferer", name_es: "Zelote marcado", name_fr: "Dévot stigmatisé", name_zh: "烙印被遗忘者狂徒" }
 		]
 	},
 	{
@@ -1755,7 +1747,7 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-		content: "<a href='http://forum.renaka.com/topic/8153493/'>Path of Fire timers</a> need verification. Please tell new players about gw2timer.com!",
+		content: "<a href='http://forum.renaka.com/topic/8153493/'>Path of Fire timers</a> need verification. <a href='http://gw2timer.com/?mode=Tile'>Serpents' Ire</a> timer has been corrected. Please tell new players about gw2timer.com!",
 		Finish: new Date("2017-10-24T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
@@ -1901,11 +1893,11 @@ Countdown: {
 		Finish: new Date("2018-01-09T17:00:00Z")
 	},*/
 	/*{
-		name_en: "Living Story 3: Finale",
-		name_de: "Lebendigen Geschichte 3: Finale",
-		name_es: "Historia viviente 3: Final",
-		name_fr: "Histoire vivante 3: Dernier",
-		name_zh: "第三生活世界：压轴",
+		name_en: "Living Story 4: Episode I",
+		name_de: "Lebendigen Geschichte 4: Episode I",
+		name_es: "Historia viviente 4: Episodio I",
+		name_fr: "Histoire vivante 4: Épisode I",
+		name_zh: "第四生活世界：第4集",
 		official: "news/watch-the-trailer-for-one-path-ends/",
 		Start: new Date("2017-07-25T16:00:00Z"),
 		Finish: new Date("2017-08-01T16:00:00Z")
@@ -1918,15 +1910,15 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: false,
-	name_en: "",
-	name_de: "",
-	name_es: "",
-	name_fr: "",
-	name_zh: "",
-	url: "",
-	Start: new Date("2016-10-18T16:00:00Z"),
-	Finish: new Date("2016-11-08T16:00:00Z")
+	isEnabled: true,
+	name_en: "Mad King Says",
+	name_de: "Verrückte König sagt",
+	name_es: "Rey Loco dice",
+	name_fr: "Roi Dément a dit",
+	name_zh: "疯王说",
+	url: "https://en-forum.guildwars2.com/discussion/9221/the-mad-king-returns/p1",
+	Start: new Date("2017-10-14T16:00:00Z"),
+	Finish: new Date("2017-11-07T16:00:00Z")
 },
 
 /*

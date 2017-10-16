@@ -1680,7 +1680,7 @@ textarea.jsCopyCode {
 	opacity: 0;
 	transition: opacity 0.2s;
 }
-.tmlLineWB:hover .tmlStripe {
+#itemTimeline:hover .tmlStripe {
 	opacity: 1;
 }
 .tmlSegmentActive .tmlStripe {
@@ -1937,9 +1937,6 @@ textarea.jsCopyCode {
 }
 #dsbStory .chnDetails ol li {
 	overflow: visible;
-}
-#dsbStory .chnDetailsExtra {
-	margin-top: -26px;
 }
 
 /* Bottom left corner: Coordinates bar */
@@ -2511,14 +2508,25 @@ textarea.jsCopyCode {
 .paneClockBackground {
 	right: 1px;
 	width: 358px; /* To avoid bleeding left edge */
-	filter: blur(1px);
 	background: url('img/background/globe.jpg') no-repeat center;
+	filter: blur(1px);
 	opacity: 0;
+}
+.clkHalloween .paneClockBackground {
+	background: url('img/background/globe_halloween.png') no-repeat center;
+}
+.clkWintersday .paneClockBackground {
+	background: url('img/background/globe_wintersday.png') no-repeat center;
 }
 .paneClockFace {
 	background: url("img/background/face.png") no-repeat center;
 	background-size: 100% 100%;
-	/*opacity: 0.9;*/
+}
+.clkHalloween .paneClockFace {
+	opacity: 0.7;
+}
+.clkWintersday .paneClockFace {
+	opacity: 0.8;
 }
 
 .iconHC {
@@ -2588,6 +2596,12 @@ textarea.jsCopyCode {
 	position: absolute;
 	width: 32px; height: 32px;
 	background-size: 32px 32px;
+}
+.clkHalloween .cssWaypoint {
+	background-image: url('img/map/halloween.png');
+}
+.clkWintersday .cssWaypoint {
+	background-image: url('img/map/wintersday.png');
 }
 .cssWaypoint {
 	width: 24px; height: 24px;

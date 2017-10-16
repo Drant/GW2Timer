@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 171013},
+		programVersion: {key: "int_utlProgramVersion", value: 171015},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -7051,6 +7051,13 @@ Z = {
 				if (pItem.type === Q.ItemEnum.Consumable)
 				{
 					return "TonicConsumable";
+				}
+			}
+			if (desc.indexOf("to take out") !== -1)
+			{
+				if (pItem.type === Q.ItemEnum.Gizmo)
+				{
+					return "Toy";
 				}
 			}
 			if (pItem.type === Q.ItemEnum.Gathering && pItem.rarity === Q.RarityEnum.Exotic)
@@ -36729,11 +36736,8 @@ K = {
 		if (K.isClockStyled === false)
 		{
 			K.isClockStyled = true;
-			//$("#clkWaypoints .cssWaypoint").css({"background-image": "url('img/map/halloween.png')"});
-			//$("#clkWaypoints .cssWaypoint").css({"background-image": "url('img/map/wintersday.png')"});
-			$("#paneClockBackground").addClass("paneClockBackground");
-			//$("#paneClockBackground").css({"background": "url('img/background/globe_halloween.jpg') no-repeat center}"});
-			//$("#paneClockBackground").css({"background": "url('img/background/globe_wintersday.jpg') no-repeat center}"});
+			$("#paneClock").addClass("clkHalloween");
+			//$("#paneClock").addClass("clkWintersday");
 			$("#paneClockFace").addClass("paneClockFace");
 		}
 	},
