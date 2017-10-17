@@ -9,7 +9,7 @@
 var GW2T_GLIDERS_HEADERS = {
 	Dyeable: {name_en: "Dyeable", name_de: "Färbbar", name_es: "Teñible", name_fr: "Teinté", name_zh: "可染色"},
 	Colored: {name_en: "Colored", name_de: "Farbig", name_es: "Colorado", name_fr: "Coloré", name_zh: "有色"},
-	Combo: {name_en: "Backpack-Glider", name_de: "Rücken-Gleitschirm", name_es: "Espalda-Planeador", name_fr: "Pièce de dos-Deltaplanes", name_zh: "背部物品皮肤‧滑翔机"}
+	Combo: {name_en: "Backpack-Glider", name_de: "Rücken-Gleitschirm", name_es: "Espalda-Planeador", name_fr: "Pièce de dos-Deltaplanes", name_zh: "背部物品皮肤‧滑翔翼"}
 };
 
 /*

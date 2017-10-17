@@ -3189,13 +3189,13 @@ var GW2T_WVW_METADATA = {
 		nick_en: "N.W.", nick_de: "N.W.", nick_es: "N.O.", nick_fr: "N.O.", nick_tw: "西北", nick_zh: "西北"
 	},
 	Captured: {
-		name_en: "Captured by", name_de: "Erobert von", name_es: "Capturado por", name_fr: "Capturé de", name_zh: "抓住的"
+		name_en: "Captured by", name_de: "Erobert von", name_es: "Capturado por", name_fr: "Capturé de", name_zh: "占领的"
 	},
 	Retaken: {
 		name_en: "Retaken by", name_de: "Zurückerobert von", name_es: "Retomada por", name_fr: "Repris de", name_zh: "夺回的"
 	},
 	Claimed: {
-		name_en: "Claimed by", name_de: "Beansprucht von", name_es: "Reclamado por", name_fr: "Revendication de", name_zh: "声称的"
+		name_en: "Claimed by", name_de: "Beansprucht von", name_es: "Reclamado por", name_fr: "Revendication de", name_zh: "宣夺的"
 	},
 	Us: {
 		name_en: "us", name_de: "uns", name_es: "nosotros", name_fr: "nous", name_zh: "我们"
