@@ -1680,7 +1680,7 @@ textarea.jsCopyCode {
 	opacity: 0;
 	transition: opacity 0.2s;
 }
-#itemTimeline:hover .tmlStripe {
+#itemTimeline:hover .tmlStripe, .tmlOpaque .tmlStripe {
 	opacity: 1;
 }
 .tmlSegmentActive .tmlStripe {
