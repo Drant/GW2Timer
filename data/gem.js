@@ -136,9 +136,9 @@ Glider: [
 	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}},
 	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}},
 	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
-	{i: 82666, n: "Geomancer Glider", p: {gem: 500}},
+	{i: 82666, n: "Geomancer Glider", p: {gem: -500}},
 	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
-	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}}
+	{i: 85220, n: "Branded Wing Glider", p: {gem: -700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -175,7 +175,7 @@ Back: [
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
 	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}},
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
-	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}}
+	{i: 85332, n: "Branded Wing Backpack", p: {gem: -700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -383,7 +383,8 @@ Package: [
 	{i: 68013, n: "Salvager's Supplies", p: {gem: -2720}},
 	{i: 79698, n: "Customer Appreciation Package", p: {gem: -125}},
 	{i: 20761, n: "Air Rider Package", p: {gem: -650}},
-	{i: 79706, n: "Swashbuckler's Package", p: {gem: -900}}
+	{i: 79706, n: "Swashbuckler's Package", p: {gem: -900}},
+	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}}
 ],
 Dye: [
 	{i: 19998, n: "Dye Pack", p: {gem: 200}, discount: [[1, 200], [5, 800], [25, 4000]]},
@@ -401,13 +402,13 @@ Dye: [
 	{i: 67291, n: "Taimi's Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 68005, n: "Glint's Winter Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 68653, n: "Crimson Lion Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 68786, n: "Shadow Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 68786, n: "Shadow Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 69934, n: "Lion's Arch Rebuild Dye Kit", p: {gem: -125},  discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 70367, n: "Mad King Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 77470, n: "Winter Chimes Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 78734, n: "Blue Shift Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 79354, n: "Bloodstone Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 79695, n: "Vibrant Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80069, n: "Solar and Lunar Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80974, n: "Primordus Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 81545, n: "Jormag Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}

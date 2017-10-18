@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-10-03T16:00:00Z"),
-	Finish: new Date("2017-10-17T16:00:00Z"),
+	Start: new Date("2017-10-17T16:00:00Z"),
+	Finish: new Date("2017-11-01T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,32 +21,35 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 500}},
+	{i: 48714, n: "Hallows Fortune Fireworks", p: {gem: 0}, discount: 200},
+	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}},
+	{i: 67406, n: "Candy Corn Gobbler Pack", p: {gem: 300}},
+	{i: 64757, n: "Wizard's Hat", p: {gem: 200}, Finish: new Date("2017-10-24T16:00:00Z")},
+	{i: 82666, n: "Geomancer Glider", p: {gem: 500}, Finish: new Date("2017-10-20T16:00:00Z")},
+	{i: 67037, n: "Raiment of the Lich", p: {gem: 700}, Finish: new Date("2017-10-20T16:00:00Z")},
+	{i: 79671, n: "Ghostly Outfit", p: {gem: 700}, Finish: new Date("2017-10-24T16:00:00Z")},
 	{i: "https://i.imgur.com/c61OMk9.png", n: "Enemies Dye Pack", p: {gem: 500}},
-	{i: 68786, n: "Shadow Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: "https://i.imgur.com/SKDviam.png", n: "Central Tyria Waypoint Unlock Package", p: {gem: 2000}},
-	{i: 67279, n: "Waypoint Unlock Box", p: {gem: 600}},
+	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 68786, n: "Shadow Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-10-24T16:00:00Z")},
 	{i: 68686, n: "Black Feather Wings Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2017-10-20T16:00:00Z")},
 	{i: 70048, n: "Black Feather Wings Glider", p: {gem: 560}, discount: 700, Finish: new Date("2017-10-20T16:00:00Z")},
-	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}},
-	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}},
-	{i: 67037, n: "Raiment of the Lich", p: {gem: 700}, Finish: new Date("2017-10-20T16:00:00Z")},
-	{i: "https://i.imgur.com/ch0zrT3.png", n: "Foefire Armor Package", p: {gem: 1300}},
+	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}, Finish: new Date("2017-10-24T16:00:00Z")},
+	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}, Finish: new Date("2017-10-24T16:00:00Z")},
+	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
+	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}},
+	{i: 69799, n: "Scientific weapon skins#Gallery", p: {blticket: 5}},
+	{i: "https://i.imgur.com/ch0zrT3.png", n: "Foefire Armor Package", p: {gem: 1300}, Finish: new Date("2017-10-24T16:00:00Z")},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}},
 	{i: 85282, n: "Foefire Greaves", p: {gem: 500}},
 	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}},
-	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}},
-	{i: 69799, n: "Scientific weapon skins#Gallery", p: {blticket: 5}},
 	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: 800}},
 	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: 800}},
 	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: 800}},
 	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 800}},
 	{i: 20274, n: "Profane Light Armor Skin", p: {gem: 500}},
 	{i: 20273, n: "Krytan Medium Armor Skin", p: {gem: 500}},
-	{i: 47890, n: "Grenth Hood Skin", p: {gem: 500}},
-	{i: 65203, n: "Phantom's Hood", p: {gem: 200}},
-	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}}
+	{i: 47890, n: "Grenth Hood Skin", p: {gem: 500}, Finish: new Date("2017-10-24T16:00:00Z")},
+	{i: 65203, n: "Phantom's Hood", p: {gem: 200}, Finish: new Date("2017-10-24T16:00:00Z")}
 	]
 };
