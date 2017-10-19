@@ -1879,7 +1879,7 @@ Countdown: {
 		name_es: "Halloween 2017",
 		name_fr: "Halloween 2017",
 		name_zh: "万圣夜2017",
-		url: "https://en-forum.guildwars2.com/discussion/9221/the-mad-king-returns/p1",
+		official: "news/shadow-of-the-mad-king-is-live-2/",
 		Start: new Date("2017-10-17T16:00:00Z"),
 		Finish: new Date("2017-11-07T16:00:00Z")
 	}
@@ -1917,7 +1917,7 @@ Story:
 	name_es: "Rey Loco dice",
 	name_fr: "Roi Dément a dit",
 	name_zh: "疯王说",
-	url: "https://en-forum.guildwars2.com/discussion/9221/the-mad-king-returns/p1",
+	url: "https://www.guildwars2.com/en/the-game/releases/october-17-2017/",
 	Start: new Date("2017-10-16T16:00:00Z"),
 	Finish: new Date("2017-11-07T16:00:00Z")
 },

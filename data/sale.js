@@ -37,7 +37,6 @@ GW2T_SALE_DATA = {
 	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}, Finish: new Date("2017-10-24T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}},
-	{i: 69799, n: "Scientific weapon skins#Gallery", p: {blticket: 5}},
 	{i: "https://i.imgur.com/ch0zrT3.png", n: "Foefire Armor Package", p: {gem: 1300}, Finish: new Date("2017-10-24T16:00:00Z")},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}},
