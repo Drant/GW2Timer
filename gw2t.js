@@ -7042,7 +7042,7 @@ Z = {
 		{
 			var name = pItem.name.toLowerCase();
 			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
-			if (desc.indexOf("to transform") !== -1 || desc.indexOf("to become") !== -1)
+			if (desc.indexOf("to transform") !== -1 || desc.indexOf("transform into") !== -1 || desc.indexOf("to become") !== -1)
 			{
 				if (pItem.type === Q.ItemEnum.Gizmo)
 				{

@@ -499,6 +499,7 @@ TonicEndless: [
 	{u: 81823, i: 82000, n: "Endless Fury Combat Tonic"},
 	{i: 81632, n: "Endless Chaos Combat Tonic", p: {matrix: 300}},
 	{u: 85137, i: 85244, n: "Endless Choya Pinata Tonic", p: {coin: -1}},
+	{i: 85473, n: "Endless Desert Mystery Tonic"},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},
