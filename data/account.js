@@ -422,6 +422,7 @@ var GW2T_ACCOUNT_METADATA = {
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
+		79, // Halloween Daily
 		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
 		68, // Gates of Maguuma
 		70, // Entanglement
@@ -542,6 +543,9 @@ var GW2T_ACCOUNT_METADATA = {
 		146, // Shadow of the Mad King
 		52, // Blood and Madness
 		78, // Blood and Madness
+		191, // Halloween Rituals
+		193, // Shadow of the Mad King
+		192, // Lunatic Wardrobe
 		57, // A Very Merry Wintersday
 		99, // A Very Merry Wintersday
 		131, // A Very Merry Wintersday
