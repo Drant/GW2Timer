@@ -1185,7 +1185,7 @@ html, body,
 	position: absolute;
 	margin: 0;
 	padding: 10px 18px 10px 16px;
-	background: rgba(0, 0, 0, 0.7);
+	background: rgba(0, 0, 0, 0.8);
 	background-image: url("img/background/hud.png");
 	border-top: 4px solid #111;
 	border-bottom: 4px solid #111;

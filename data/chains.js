@@ -3249,7 +3249,7 @@ var GW2T_CHAIN_DATA = [
 	flags: {isExpansion: true},
 	events: [
 	{
-		primacy: 2,
+		primacy: 1,
 		path: [[27611, 25198]],
 		name_en: "Help the explorers search for buried treasure.",
 		name_de: "Helft den Exploratoren, nach vergrabenen Schätzen zu suchen.",
@@ -3268,7 +3268,7 @@ var GW2T_CHAIN_DATA = [
 		max: "20:00"
 	},
 	{
-		primacy: 2,
+		primacy: 1,
 		path: [[27415, 25594]],
 		name_en: "Help the explorers search for buried treasure.",
 		name_de: "Helft den Exploratoren, nach vergrabenen Schätzen zu suchen.",
