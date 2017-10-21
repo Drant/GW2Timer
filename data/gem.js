@@ -161,6 +161,7 @@ Back: [
 	{i: 69737, n: "Daydreamer's Wings Backpack", p: {gem: 500}},
 	{i: 70095, n: "Butterfly Wings Backpack", p: {gem: -500}},
 	{i: 70277, n: "Glittering Wings Backpack", p: {gem: -500}},
+	{i: 71323, n: "Ghoul Backpack", p: {gem: -300}},
 	{i: 73939, n: "Bat Wings Backpack", p: {gem: -700}},
 	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 700}},
 	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: 700}},
