@@ -1803,16 +1803,16 @@ Countdown: {
 		Start: new Date("2017-09-22T7:00:00Z"),
 		Finish: new Date("2017-09-25T17:00:00Z")
 	},*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
 		name_fr: "Bonus de carte Gorges glacées",
 		name_zh: "霜谷之音地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-10-12T20:00:00Z"),
-		Finish: new Date("2017-10-19T20:00:00Z")
-	},
+		Start: new Date("2017-12-07T20:00:00Z"),
+		Finish: new Date("2017-12-14T20:00:00Z")
+	},*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Fireheart Map Rewards",
 		name_de: "Feuerherzhügel Karten-Bonus",

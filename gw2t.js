@@ -16766,7 +16766,7 @@ Q = {
 	},
 	GameLimit:
 	{
-		Unknown: 8055, // ID of an "unknown" item
+		UnknownItem: 8055, // ID of an "unknown" item
 		DailyAP: 15000,
 		FetchAPI: 800, // Max items before a function resorts to on demand downloads
 		TooltipLines: 100, // Text lines in a tooltip window
@@ -17274,10 +17274,11 @@ Q = {
 	 * function. Basically a wrapper for getJSON with item ID function.
 	 * @param int pItemID to get item.
 	 * @param function pCallback to execute after successful retrieval.
+	 * @param int pReplaceID to use instead of item in case of retrieval error.
 	 * @returns jqXHR object.
 	 * @pre Method chaining is at most one level with "fail" function call only.
 	 */
-	getItem: function(pItemID, pCallback)
+	getItem: function(pItemID, pCallback, pReplaceID)
 	{
 		var box = Q.getBoxedItem(pItemID);
 		if (box)
@@ -17294,12 +17295,25 @@ Q = {
 				cache: true,
 				success: function(pItem)
 				{
-					if (Q.Boxes.Items[pItem.id] === undefined)
+					var itemid = pItem.id;
+					// If item does not exist in API, use dummy item as the non-existent item
+					if (pReplaceID && Q.Boxes.Items[Q.GameLimit.UnknownItem] === undefined)
 					{
-						Q.Boxes.Items[pItem.id] = {};
-						Q.Boxes.Items[pItem.id].oData = pItem;
+						itemid = pReplaceID;
+						Q.Boxes.Items[Q.GameLimit.UnknownItem] = {oData: pItem};
+					}
+					if (Q.Boxes.Items[itemid] === undefined)
+					{
+						Q.Boxes.Items[itemid] = {oData: pItem};
 					}
 					pCallback(pItem);
+				},
+				error: function()
+				{
+					if (pReplaceID === undefined)
+					{
+						Q.getItem(Q.GameLimit.UnknownItem, pCallback, pItemID);
+					}
 				}
 			});
 			return jqxhr;
@@ -23728,6 +23742,8 @@ C = {
 		var ii = 0;
 		var chains;
 		var ithchain;
+		var workcounter = 0;
+		var workmax = 999;
 		/*
 		 * Look at the schedule and start with the current active chain; move
 		 * that chain's HTML to the bottom of the HTML chains list, then look at
@@ -23739,6 +23755,12 @@ C = {
 		 */
 		while (numchainssorted < numchainstosort)
 		{
+			workcounter++;
+			if (workcounter > workmax)
+			{
+				I.urge("Chains sort overflow. Check chains file for order and timing logic.");
+				break;
+			}
 			chains = T.getTimeframeChains(i);
 			for (ii in chains)
 			{
@@ -36039,7 +36061,7 @@ H = {
 					}
 					else
 					{
-						recipelist[i] = Q.GameLimit.Unknown;
+						recipelist[i] = Q.GameLimit.UnknownItem;
 					}
 				}
 				updatetime = pData.feed.updated.$t;

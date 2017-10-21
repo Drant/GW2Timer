@@ -2167,7 +2167,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[2314,17658]],
+		path: [[2314, 17658]],
 		name_en: "Enchanted Armor Challenge: Last one standing wins!",
 		name_de: "Herausforderung Verzauberte Rüstung: Der letzte verbliebene Spieler gewinnt!",
 		name_es: "Desafío de armadura encantada: ¡el último que quede en pie gana!",
@@ -2186,7 +2186,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[1751,18431]],
+		path: [[1751, 18431]],
 		name_en: "Enchanted Armor Challenge: Be the first to reach the finish line!",
 		name_de: "Herausforderung Verzauberte Rüstung: Erreicht die Ziellinie vor allen anderen!",
 		name_es: "Desafío de armadura encantada: ¡sé el primero en alcanzar la meta!",
@@ -2319,7 +2319,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 1,
-		path: [[3938,19257]],
+		path: [[3938, 19257]],
 		name_en: "Destroy enough eggs to cause the chak gerent to emerge.",
 		name_de: "Zerstört genug Eier, um den Chak-Potentaten zum Auftauchen zu zwingen.",
 		name_es: "Destruye huevos hasta que aparezca el regente chak.",
@@ -2338,7 +2338,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[3832,19317]],
+		path: [[3832, 19317]],
 		name_en: "Destroy the chak gerent before it reaches the cannon.",
 		name_de: "Vernichtet den Chak-Potentaten, bevor er die Kanone erreicht.",
 		name_es: "Destruye al regente chak antes de que llegue al cañón.",
@@ -2357,7 +2357,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[4083,18714]],
+		path: [[4083, 18714]],
 		name_en: "Release fungal spores to lure out the gerent and control lesser chaks' minds.",
 		name_de: "Setzt Pilzsporen frei, um den Potentaten herauszulocken und den Geist niederer Chak zu beherrschen.",
 		name_es: "Libera esporas fúngicas para atraer al regente y controlar las mentes de los chak inferiores.",
@@ -2376,7 +2376,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[3699,18377]],
+		path: [[3699, 18377]],
 		name_en: "Destroy the chak gerent before it reaches the cannon.",
 		name_de: "Vernichtet den Chak-Potentaten, bevor er die Kanone erreicht.",
 		name_es: "Destruye al regente chak antes de que llegue al cañón.",
@@ -2395,7 +2395,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[4578,18664]],
+		path: [[4578, 18664]],
 		name_en: "Power the golems, forcing the chak gerent to emerge.",
 		name_de: "Versorgt die Golems mit Energie, um den Chak-Potentaten zum Auftauchen zu zwingen.",
 		name_es: "Activa los gólems, obligando a que aparezca el regente chak.",
@@ -2414,7 +2414,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[4578,18664]],
+		path: [[4578, 18664]],
 		name_en: "Destroy the chak gerent before it reaches the cannon.",
 		name_de: "Vernichtet den Chak-Potentaten, bevor er die Kanone erreicht.",
 		name_es: "Destruye al regente chak antes de que llegue al cañón.",
@@ -2433,7 +2433,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[5003,18972]],
+		path: [[5003, 18972]],
 		name_en: "Defend the charr at the Megathumper until it builds up enough sonic energy to force the chak gerent to emerge.",
 		name_de: "Verteidigt die Charr beim Megagroller, bis sich genug Schallenergie angesammelt hat, um den Chak-Potentaten zum Herauskommen zu zwingen.",
 		name_es: "Defiende a los charr en el megaazotador hasta que acumule suficiente energía sónica y obligue al regente chak a aparecer.",
@@ -2452,7 +2452,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 3,
-		path: [[5105,18941]],
+		path: [[5105, 18941]],
 		name_en: "Destroy the chak gerent before it reaches the cannon.",
 		name_de: "Vernichtet den Chak-Potentaten, bevor er die Kanone erreicht.",
 		name_es: "Destruye al regente chak antes de que llegue al cañón.",
@@ -2490,7 +2490,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 1,
-		path: [[3649,19902]],
+		path: [[3649, 19902]],
 		name_en: "Gather around Tactician Jazmei for a head count.",
 		name_de: "Begebt Euch zum Durchzählen zu Taktikerin Jazmei.",
 		name_es: "Acércate a la estratega Jazmei para el recuento.",
@@ -2509,7 +2509,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[3799,20050]],
+		path: [[3799, 20050]],
 		name_en: "Gather around Tactician Dutch for a head count.",
 		name_de: "Begebt Euch zum Durchzählen zu Taktiker Dutsch.",
 		name_es: "Acércate al estratega Dutch para el recuento.",
@@ -2528,7 +2528,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 2,
-		path: [[4148,20273]],
+		path: [[4148, 20273]],
 		name_en: "Gather around Tactician Ranara for a head count.",
 		name_de: "Begebt Euch zum Durchzählen zu Taktikerin Ranara.",
 		name_es: "Acércate a la estratega Ranara para el recuento.",
@@ -2547,7 +2547,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[3357,19980]],
+		path: [[3357, 19980]],
 		name_en: "Escort troops to the Mordrem spitfire.",
 		name_de: "Eskortiert die Truppen zum Mordrem-Feuerspucker.",
 		name_es: "Escolta a las tropas hasta el escupefuego mordrem.",
@@ -2566,7 +2566,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[3613,20237]],
+		path: [[3613, 20237]],
 		name_en: "Escort troops to the Mordrem spitfire.",
 		name_de: "Eskortiert die Truppen zum Mordrem-Feuerspucker.",
 		name_es: "Escolta a las tropas hasta el escupefuego mordrem.",
@@ -2585,7 +2585,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 2,
-		path: [[4115,20488]],
+		path: [[4115, 20488]],
 		name_en: "Escort troops to the Mordrem spitfire.",
 		name_de: "Eskortiert die Truppen zum Mordrem-Feuerspucker.",
 		name_es: "Escolta a las tropas hasta el escupefuego mordrem.",
@@ -2604,7 +2604,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[2602,20636]],
+		path: [[2602, 20636]],
 		name_en: "Escort troops to the Northern Barbed Gate.",
 		name_de: "Eskortiert die Truppen zum Stachel-Nordtor.",
 		name_es: "Escolta a las tropas hacia la puerta con pinchos del norte.",
@@ -2623,7 +2623,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[3166,21117]],
+		path: [[3166, 21117]],
 		name_en: "Escort troops to the Central Barbed Gate.",
 		name_de: "Eskortiert die Truppen zum Stachel-Zentraltor.",
 		name_es: "Escolta a las tropas hasta la puerta con pinchos central.",
@@ -2642,7 +2642,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 2,
-		path: [[3673,21386]],
+		path: [[3673, 21386]],
 		name_en: "Escort troops to the Southern Barbed Gate.",
 		name_de: "Eskortiert die Truppen zum Stachel-Südtor.",
 		name_es: "Escolta a las tropas hacia la puerta con pinchos del sur.",
@@ -2661,7 +2661,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[2212,20846]],
+		path: [[2212, 20846]],
 		name_en: "Defeat Mordremoth's Commander.",
 		name_de: "Besiegt Mordremoths Kommandeur.",
 		name_es: "Derrota al comandante de Mordremoth.",
@@ -2680,7 +2680,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[2968,21418]],
+		path: [[2968, 21418]],
 		name_en: "Defeat Mordremoth's commander.",
 		name_de: "Besiegt Mordremoths Kommandeur.",
 		name_es: "Derrota al comandante de Mordremoth.",
@@ -2699,7 +2699,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 2,
-		path: [[3328,21684]],
+		path: [[3328, 21684]],
 		name_en: "Defeat Axemaster Hareth.",
 		name_de: "Besiegt Axtmeister Hareth.",
 		name_es: "Derrota al maestro del hacha Hareth.",
@@ -2718,7 +2718,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 3,
-		path: [[2167,21608]],
+		path: [[2167, 21608]],
 		name_en: "Defeat Mordremoth.",
 		name_de: "Besiegt Mordremoth!",
 		name_es: "Derrota a Mordremoth.",
@@ -2756,7 +2756,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 1,
-		path: [[12527,9358]],
+		path: [[12527, 9358]],
 		name_en: "Defend Noran's Homestead from White Mantle bombardment.",
 		name_de: "Verteidigt Norans Heimstatt vor der Bombardierung durch den Weißen Mantel.",
 		name_es: "Defiende la Heredad de Noran del bombardeo del Manto Blanco.",
@@ -2775,7 +2775,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[13128,9436]],
+		path: [[13128, 9436]],
 		name_en: "Intercept the White Mantle supply dolyak before it reaches Noran's Homestead.",
 		name_de: "Fangt den Nachschub-Dolyak des Weißen Mantels ab, bevor er Norans Heimstatt erreicht.",
 		name_es: "Intercepta al dolyak con suministros del Manto Blanco antes de que llegue a la Heredad de Noran.",
@@ -2794,7 +2794,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[13091,9453]],
+		path: [[13091, 9453]],
 		name_en: "Defeat Siegemeaster Immelhoof before he reaches the Harvest Cascades.",
 		name_de: "Besiegt Belagerungsmeister Immelhuf, bevor er die Erntekaskaden erreicht.",
 		name_es: "Derrota al maestro de asedio Immelhoof antes de que llegue a las Cascadas de la Cosecha.",
@@ -2813,7 +2813,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 3,
-		path: [[12510,9301]],
+		path: [[12510, 9301]],
 		name_en: "Defeat Siegemaster Immelhoof.",
 		name_de: "Besiegt Belagerungsmeister Immelhuf.",
 		name_es: "Derrota al maestro de asedio Immelhoof.",
@@ -2851,7 +2851,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 1,
-		path: [[12766,10394]],
+		path: [[12766, 10394]],
 		name_en: "Defend Saidra's Haven from White Mantle attackers.",
 		name_de: "Verteidigt Saidras Hafen vor Angreifern des Weißen Mantels.",
 		name_es: "Defiende el Refugio de Saidra contra los atacantes del Manto Blanco.",
@@ -2870,7 +2870,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[13277,10225]],
+		path: [[13277, 10225]],
 		name_en: "Intercept the White Mantle supply dolyak before it reaches Saidra's Haven.",
 		name_de: "Fangt den Nachschub-Dolyak des Weißen Mantels ab, bevor er Saidras Hafen erreicht.",
 		name_es: "Intercepta al dolyak con suministros del Manto Blanco antes de que llegue al Refugio de Saidra.",
@@ -2908,7 +2908,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 3,
-		path: [[12781,10399]],
+		path: [[12781, 10399]],
 		name_en: "Liberate Saidra's Haven from the White Mantle.",
 		name_de: "Befreit Saidras Hafen vom Weißen Mantel.",
 		name_es: "Expulsa al Manto Blanco del Refugio de Saidra.",
@@ -2946,7 +2946,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 1,
-		path: [[12866,11197]],
+		path: [[12866, 11197]],
 		name_en: "Defend New Loamhurst from White Mantle attackers.",
 		name_de: "Verteidigt Neulehmwald vor Angreifern des Weißen Mantels.",
 		name_es: "Defiende Nueva Loamhurst contra los atacantes del Manto Blanco.",
@@ -2965,7 +2965,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 1,
-		path: [[13099,11514]],
+		path: [[13099, 11514]],
 		name_en: "Intercept the White Mantle supply dolyak before it reaches New Loamhurst.",
 		name_de: "Fangt den Nachschub-Dolyak des Weißen Mantels ab, bevor er Neulehmwald erreicht.",
 		name_es: "Intercepta al dolyak con suministros del Manto Blanco antes de que llegue a Nueva Loamhurst.",
@@ -3041,7 +3041,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 2,
-		path: [[34854,36814]],
+		path: [[34854, 36814]],
 		name_en: "Defeat the Branded Forgotten zealots before the Branded crystal detonates.",
 		name_de: "Bezwingt die Gebrandmarkten Vergessenen Eiferer, bevor der Gebrandmarkte Kristall explodiert.",
 		name_es: "Derrota a los zelotes olvidados marcados antes de que se detone el cristal marcado.",
@@ -3076,6 +3076,234 @@ var GW2T_CHAIN_DATA = [
 		avg: "12:00",
 		min: "10:00",
 		max: "15:00"
+	}
+	]
+},
+{
+	series: 4,
+	alias: "Casino",
+	pronunciation: "casino blitz",
+	title: "Casino Blitz",
+	name_en: "Casino Blitz",
+	name_de: "Kasino-Blitz",
+	name_es: "Carrera del Casino",
+	name_fr: "Casino Express",
+	name_zh: "赌场闪电战",
+	zone: "oasis",
+	waypoint: "[&BLsKAAA=]",
+	level: "80",
+	reward: {ecto: "2", loot: "3"},
+	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 0},
+	flags: {minuteDelay: 5, isExpansion: true},
+	events: [
+	{
+		primacy: 1,
+		path: [[25607, 27611]],
+		name_en: "[Round 1] Collect as many casino coins as possible before time runs out!",
+		name_de: "[Runde 1] Sammelt vor Ablauf der Zeit so viele Kasinomünzen wie möglich!",
+		name_es: "[Primera ronda] ¡Consigue tantas monedas del casino como puedas antes de que se acabe el tiempo!",
+		name_fr: "[Manche 1] Récupérez un maximum de pièces du casino avant la fin du temps imparti !",
+		name_zh: "[第1回合]在限定时间内收集尽可能多的赌场代币。",
+		icon: "collect",
+		num: "1A",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "5:00",
+		avg: "5:00",
+		min: "5:00",
+		max: "5:00"
+	},
+	{
+		primacy: 2,
+		path: [[25450, 27663]],
+		name_en: "[Bonus] Clear out the gang of troublemakers to recover stolen coins.",
+		name_de: "[Bonus] Schaltet zur Wiederbeschaffung gestohlener Münzen die Bande von Unruhestiftern aus.",
+		name_es: "[Bonificación] Acaba con la banda problemática para recuperar monedas robadas.",
+		name_fr: "[Bonus] Éliminer le gang de fauteurs de troubles pour récupérer les pièces volées.",
+		name_zh: "[奖励]清理闹事者帮派以收回被偷走的代币。",
+		icon: "swords",
+		num: "1B",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "5:00",
+		avg: "5:00",
+		min: "5:00",
+		max: "5:00"
+	},
+	{
+		primacy: 1,
+		path: [[25620, 27138]],
+		name_en: "[Round 2] Collect as many casino coins as possible before time runs out!",
+		name_de: "[Runde 2] Sammelt so viele Kasinomünzen wie möglich, bevor die Zeit abläuft!",
+		name_es: "[Segunda ronda] ¡Conseguid tantas monedas del casino como podáis antes de que se acabe el tiempo!",
+		name_fr: "[Manche 2] Récupérez un maximum de pièces du casino avant la fin du temps imparti !",
+		name_zh: "[第2回合]在限定时间内收集尽可能多的赌场代币。",
+		icon: "collect",
+		num: "2A",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "5:00",
+		avg: "5:00",
+		min: "5:00",
+		max: "5:00"
+	},
+	{
+		primacy: 2,
+		path: [[25576, 27229]],
+		name_en: "[Bonus] Clear out the gang of troublemakers to recover stolen coins.",
+		name_de: "[Bonus] Schaltet zur Wiederbeschaffung gestohlener Münzen die Bande von Unruhestiftern aus.",
+		name_es: "[Bonificación] Acaba con la banda problemática para recuperar monedas robadas.",
+		name_fr: "[Bonus] Éliminer le gang de fauteurs de troubles pour récupérer les pièces volées.",
+		name_zh: "[奖励]清理闹事者帮派以收回被偷走的代币。",
+		icon: "swords",
+		num: "2B",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "5:00",
+		avg: "5:00",
+		min: "5:00",
+		max: "5:00"
+	},
+	{
+		primacy: 1,
+		path: [[25318, 27081]],
+		name_en: "[Round 3] Collect as many casino coins as possible before time runs out!",
+		name_de: "[Runde 3] Sammelt so viele Kasinomünzen wie möglich, bevor die Zeit abläuft!",
+		name_es: "[Tercera ronda] ¡Consigue tantas monedas del casino como puedas antes de que se acabe el tiempo!",
+		name_fr: "[Manche 3] Récupérez un maximum de pièces du casino avant la fin du temps imparti !",
+		name_zh: "[第3回合]在限定时间内收集尽可能多的赌场代币。",
+		icon: "collect",
+		num: "3A",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "5:00",
+		avg: "5:00",
+		min: "5:00",
+		max: "5:00"
+	},
+	{
+		primacy: 2,
+		path: [[25249, 26983]],
+		name_en: "[Bonus] Clear out the gang of troublemakers to recover stolen coins.",
+		name_de: "[Bonus] Schaltet zur Wiederbeschaffung gestohlener Münzen die Bande von Unruhestiftern aus.",
+		name_es: "[Bonificación] Acaba con la banda problemática para recuperar monedas robadas.",
+		name_fr: "[Bonus] Éliminer le gang de fauteurs de troubles pour récupérer les pièces volées.",
+		name_zh: "[奖励]清理闹事者帮派以收回被偷走的代币。",
+		icon: "swords",
+		num: "3B",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["1:00"],
+		fInterim: "*",
+		lim: "5:00",
+		avg: "5:00",
+		min: "5:00",
+		max: "5:00"
+	},
+	{
+		primacy: 3,
+		path: [[25930, 27363]],
+		name_en: "[Bonus] Stop the choya pinata before it gets away!",
+		name_de: "[Bonus] Haltet die Choya-Piñata auf, bevor sie entkommt!",
+		name_es: "[Bonificación] ¡Detén a la piñata de chumbos antes de que escape!",
+		name_fr: "[Bonus] Arrêter la piñata de choya avant qu'elle disparaisse !",
+		name_zh: "[奖励]阻止丘牙兽彩罐，不要让它跑掉！",
+		icon: "boss",
+		num: "4",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "5:00",
+		avg: "3:00",
+		min: "2:00",
+		max: "4:00"
+	}
+	]
+},
+{
+	series: 4,
+	alias: "Treasure",
+	pronunciation: "buried treasure",
+	title: "The Search for Buried Treasure",
+	name_en: "Buried Treasure",
+	name_de: "Vergrabenen Schätzen",
+	name_es: "Tesoro Enterrado",
+	name_fr: "Trésor Enfoui",
+	name_zh: "寻找埋藏的宝藏",
+	zone: "highlands",
+	waypoint: "[&BGsKAAA=]",
+	level: "80",
+	reward: {ecto: "4", loot: "3"},
+	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 0},
+	flags: {isExpansion: true},
+	events: [
+	{
+		primacy: 2,
+		path: [[27611, 25198]],
+		name_en: "Help the explorers search for buried treasure.",
+		name_de: "Helft den Exploratoren, nach vergrabenen Schätzen zu suchen.",
+		name_es: "Ayuda a los pioneros a buscar el tesoro enterrado.",
+		name_fr: "Aider les explorateurs à chercher un trésor enfoui.",
+		name_zh: "帮助探险者寻找埋藏的宝藏。",
+		icon: "shield",
+		num: "1A",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
+		max: "20:00"
+	},
+	{
+		primacy: 2,
+		path: [[27415, 25594]],
+		name_en: "Help the explorers search for buried treasure.",
+		name_de: "Helft den Exploratoren, nach vergrabenen Schätzen zu suchen.",
+		name_es: "Ayuda a los pioneros a buscar el tesoro enterrado.",
+		name_fr: "Aider les explorateurs à chercher un trésor enfoui.",
+		name_zh: "帮助探险者寻找埋藏的宝藏。",
+		icon: "shield",
+		num: "1B",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
+		max: "20:00"
+	},
+	{
+		primacy: 3,
+		path: [[28082, 25311]],
+		name_en: "Help the explorers search for buried treasure.",
+		name_de: "Helft den Exploratoren, nach vergrabenen Schätzen zu suchen.",
+		name_es: "Ayuda a los pioneros a buscar el tesoro enterrado.",
+		name_fr: "Aider les explorateurs à chercher un trésor enfoui.",
+		name_zh: "帮助探险者寻找埋藏的宝藏。",
+		icon: "shield",
+		num: "1C",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
+		max: "20:00"
 	}
 	]
 },
@@ -5305,10 +5533,10 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "10:00",
+		lim: "15:00",
 		avg: "10:00",
 		min: "10:00",
-		max: "10:00"
+		max: "15:00"
 	}
 	]
 }

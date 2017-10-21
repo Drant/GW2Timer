@@ -683,7 +683,9 @@ Armor_Light_Helm: [
 	{u: 7455, i: 85080, n: "Bounty Hunter's Cowl", p: {craft: true}},
 	{u: 7512, i: 85142, n: "Elonian Cowl", p: {achievement: 0}},
 	{u: 7578, i: 85287, n: "Warbeast Cowl", b: [82181]},
-	{u: 7592, i: 83553, n: "Spearmarshal's Cowl", b: [83553]}
+	{u: 7592, i: 83553, n: "Spearmarshal's Cowl", b: [83553]},
+	{u: 7776, i: 85464, n: "Lunatic Acolyte Mask", p: {achievement: 0}},
+	{u: 7782, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", b: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -782,7 +784,8 @@ Armor_Light_Shoulders: [
 	{u: 7553, i: 84075, n: "Spearmarshal's Mantle", b: [84075]},
 	{u: 7647, i: 85097, n: "Warbeast Mantle", b: [84183]},
 	{u: 7648, i: 85269, n: "Bounty Hunter's Mantle", p: {craft: true}},
-	{u: 7713, i: 85003, n: "Elonian Mantle", p: {achievement: 0}}
+	{u: 7713, i: 85003, n: "Elonian Mantle", p: {achievement: 0}},
+	{u: 7763, i: 85392, n: "Lunatic Acolyte Mantle", p: {achievement: 0}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", b: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -862,7 +865,8 @@ Armor_Light_Coat: [
 	{u: 7448, i: 85204, n: "Warbeast Vestments", b: [83460]},
 	{u: 7530, i: 83247, n: "Funerary Vestments", p: {mosaic: 18}},
 	{u: 7640, i: 84890, n: "Bounty Hunter's Vestments", p: {craft: true}},
-	{u: 7662, i: 85232, n: "Elonian Vestments", p: {achievement: 0}}
+	{u: 7662, i: 85232, n: "Elonian Vestments", p: {achievement: 0}},
+	{u: 7759, i: 85477, n: "Lunatic Acolyte Coat", p: {achievement: 0}}
 ],
 Armor_Light_Gloves: [
 	{u: 25, i: 3175, n: "Apprentice Gloves", b: [2975, 2964, 2966, 2970, 2969, 2971, 2973, 2967, 2974, 2978, 2968, 2972, 2977, 2963, 2976, 2965, 3139, 3157, 3121, 3175, 3340, 3339, 3342, 3345, 3344, 3341, 3346, 3355, 3343, 3347, 3348, 3350, 3349, 3351, 3354, 3352, 3353, 3358, 3356, 3357, 5036, 5052, 5070, 5106, 5023, 5088, 5142, 5124, 5160, 5196, 5178, 5214, 5232, 5250, 5286, 5268]},
@@ -957,7 +961,8 @@ Armor_Light_Gloves: [
 	{u: 7602, i: 83438, n: "Spearmarshal's Gloves", b: [82638]},
 	{u: 7627, i: 84616, n: "Weaver's Antipodes", p: {achievement: 0}},
 	{u: 7672, i: 84922, n: "Elonian Gloves", p: {achievement: 0}},
-	{u: 7710, i: 85145, n: "Warbeast Gloves", b: [84267]}
+	{u: 7710, i: 85145, n: "Warbeast Gloves", b: [84267]},
+	{u: 7792, i: 85503, n: "Lunatic Acolyte Gloves", p: {achievement: 0}}
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", b: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -1037,7 +1042,8 @@ Armor_Light_Leggings: [
 	{u: 7519, i: 83590, n: "Funerary Pants", p: {mosaic: 18}},
 	{u: 7619, i: 84120, n: "Spearmarshal's Pants", b: [84120]},
 	{u: 7639, i: 85000, n: "Bounty Hunter's Pants", p: {craft: true}},
-	{u: 7716, i: 84982, n: "Warbeast Pants", b: [82436]}
+	{u: 7716, i: 84982, n: "Warbeast Pants", b: [82436]},
+	{u: 7780, i: 85490, n: "Lunatic Acolyte Pants", p: {achievement: 0}}
 ],
 Armor_Light_Boots: [
 	{u: 16, i: 3173, n: "Apprentice Shoes", b: [2932, 2933, 2938, 2936, 2937, 2935, 2941, 2940, 2942, 2945, 2944, 2931, 2946, 2934, 2939, 2943, 3119, 3137, 3155, 3173, 3300, 3317, 3301, 3302, 3303, 3304, 3306, 3308, 3307, 3313, 3312, 3309, 3311, 3299, 3316, 3318, 3305, 3310, 3314, 3315, 5068, 5050, 5122, 5021, 5034, 5104, 5140, 5158, 5086, 5194, 5176, 5230, 5212, 5248, 5266, 5284]},
@@ -1121,7 +1127,9 @@ Armor_Light_Boots: [
 	{u: 7414, i: 83431, n: "Funerary Shoes", p: {mosaic: 12}},
 	{u: 7467, i: 85215, n: "Bounty Hunter's Shoes", p: {craft: true}},
 	{u: 7473, i: 85177, n: "Warbeast Shoes", b: [83452]},
-	{u: 7486, i: 85198, n: "Elonian Shoes", p: {achievement: 0}}
+	{u: 7486, i: 85198, n: "Elonian Shoes", p: {achievement: 0}},
+	{u: 7748, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
+	{u: 7793, i: 85385, n: "Lunatic Acolyte Boots", p: {achievement: 0}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1280,7 +1288,9 @@ Armor_Medium_Helm: [
 	{u: 7550, i: 85314, n: "Bounty Hunter's Mask", p: {craft: true}},
 	{u: 7594, i: 85275, n: "Warbeast Mask", b: [84240]},
 	{u: 7696, i: 84932, n: "Elonian Mask", p: {achievement: 0}},
-	{u: 7708, i: 84375, n: "Funerary Mask", p: {mosaic: 6}}
+	{u: 7708, i: 84375, n: "Funerary Mask", p: {mosaic: 6}},
+	{u: 7770, i: 85497, n: "Lunatic Noble Mask", p: {achievement: 0}},
+	{u: 7800, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1458,7 +1468,8 @@ Armor_Medium_Coat: [
 	{u: 7396, i: 85020, n: "Elonian Jerkin", p: {achievement: 0}},
 	{u: 7435, i: 84598, n: "Spearmarshal's Jerkin", b: [84598]},
 	{u: 7537, i: 84669, n: "Funerary Jerkin", p: {mosaic: 18}},
-	{u: 7703, i: 85305, n: "Bounty Hunter's Jerkin", p: {craft: true}}
+	{u: 7703, i: 85305, n: "Bounty Hunter's Jerkin", p: {craft: true}},
+	{u: 7781, i: 85449, n: "Lunatic Noble Coat", p: {achievement: 0}}
 ],
 Armor_Medium_Gloves: [
 	{u: 32, i: 41170, n: "Rawhide Bracers", p: {badge: 10}},
@@ -1552,7 +1563,8 @@ Armor_Medium_Gloves: [
 	{u: 7540, i: 84685, n: "Spearmarshal's Vambraces", b: [84685]},
 	{u: 7624, i: 85167, n: "Warbeast Vambraces", b: [83890]},
 	{u: 7675, i: 85032, n: "Bounty Hunter's Vambraces", p: {craft: true}},
-	{u: 7711, i: 83574, n: "Funerary Vambraces", p: {mosaic: 6}}
+	{u: 7711, i: 83574, n: "Funerary Vambraces", p: {mosaic: 6}},
+	{u: 7799, i: 85407, n: "Lunatic Noble Gloves", p: {achievement: 0}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1631,7 +1643,8 @@ Armor_Medium_Leggings: [
 	{u: 7499, i: 85359, n: "Warbeast Leggings", b: [84466]},
 	{u: 7522, i: 85106, n: "Elonian Leggings", p: {achievement: 0}},
 	{u: 7618, i: 82233, n: "Funerary Leggings", p: {mosaic: 18}},
-	{u: 7653, i: 84979, n: "Bounty Hunter's Leggings", p: {craft: true}}
+	{u: 7653, i: 84979, n: "Bounty Hunter's Leggings", p: {craft: true}},
+	{u: 7774, i: 85420, n: "Lunatic Noble Pants", p: {achievement: 0}}
 ],
 Armor_Medium_Boots: [
 	{u: 19, i: 41168, n: "Rawhide Boots", p: {badge: 10}},
@@ -1714,7 +1727,9 @@ Armor_Medium_Boots: [
 	{u: 7392, i: 84595, n: "Funerary Boots", p: {mosaic: 12}},
 	{u: 7536, i: 85235, n: "Elonian Boots", p: {achievement: 0}},
 	{u: 7557, i: 84410, n: "Spearmarshal's Boots", b: [84410]},
-	{u: 7695, i: 84903, n: "Bounty Hunter's Boots", p: {craft: true}}
+	{u: 7695, i: 84903, n: "Bounty Hunter's Boots", p: {craft: true}},
+	{u: 7725, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
+	{u: 7803, i: 85519, n: "Lunatic Noble Boots", p: {achievement: 0}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", b: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1875,7 +1890,9 @@ Armor_Heavy_Helm: [
 	{u: 7525, i: 84776, n: "Renegade's Casque", p: {achievement: 0}},
 	{u: 7604, i: 84938, n: "Elonian Helmet", p: {achievement: 0}},
 	{u: 7625, i: 84014, n: "Swaggering Hat", p: {gem: 400}},
-	{u: 7685, i: 84383, n: "Spearmarshal's Helmet", b: [82538]}
+	{u: 7685, i: 84383, n: "Spearmarshal's Helmet", b: [82538]},
+	{u: 7773, i: 85445, n: "Lunatic Templar Helm", p: {achievement: 0}},
+	{u: 7804, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", b: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -2058,7 +2075,8 @@ Armor_Heavy_Coat: [
 	{u: 7570, i: 85077, n: "Bounty Hunter's Breastplate", p: {craft: true}},
 	{u: 7586, i: 85337, n: "Elonian Breastplate", p: {achievement: 0}},
 	{u: 7587, i: 83382, n: "Spearmarshal's Breastplate", b: [83382]},
-	{u: 7704, i: 85263, n: "Warbeast Breastplate", b: [84788]}
+	{u: 7704, i: 85263, n: "Warbeast Breastplate", b: [84788]},
+	{u: 7789, i: 85379, n: "Lunatic Templar Breastplate", p: {achievement: 0}}
 ],
 Armor_Heavy_Gloves: [
 	{u: 20, i: 3169, n: "Chainmail Gauntlets", b: [2876, 2877, 2878, 2881, 2874, 2880, 2886, 2885, 2882, 2875, 2873, 2887, 2884, 3115, 2872, 3133, 3151, 2883, 3228, 3231, 3230, 2879, 3169, 3233, 3236, 3232, 3226, 3227, 3244, 3229, 3234, 3237, 3225, 3235, 3238, 3239, 3240, 3241, 3242, 3243, 5064, 5046, 5031, 5082, 5019, 5100, 5118, 5154, 5136, 5262, 5172, 5208, 5190, 5244, 5280, 5226]},
@@ -2154,7 +2172,8 @@ Armor_Heavy_Gloves: [
 	{u: 7493, i: 85132, n: "Bounty Hunter's Gauntlets", p: {craft: true}},
 	{u: 7513, i: 85245, n: "Warbeast Gauntlets", b: [84323]},
 	{u: 7541, i: 84874, n: "Elonian Gauntlets", p: {achievement: 0}},
-	{u: 7669, i: 83043, n: "Spearmarshal's Gauntlets", b: [83043]}
+	{u: 7669, i: 83043, n: "Spearmarshal's Gauntlets", b: [83043]},
+	{u: 7757, i: 85425, n: "Lunatic Templar Gauntlets", p: {achievement: 0}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", b: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -2236,7 +2255,8 @@ Armor_Heavy_Leggings: [
 	{u: 7400, i: 85276, n: "Elonian Tassets", p: {achievement: 0}},
 	{u: 7426, i: 85189, n: "Bounty Hunter's Tassets", p: {craft: true}},
 	{u: 7585, i: 82101, n: "Funerary Tassets", p: {mosaic: 18}},
-	{u: 7679, i: 85119, n: "Warbeast Tassets", b: [82138]}
+	{u: 7679, i: 85119, n: "Warbeast Tassets", b: [82138]},
+	{u: 7768, i: 85411, n: "Lunatic Templar Tassets", p: {achievement: 0}}
 ],
 Armor_Heavy_Boots: [
 	{u: 27, i: 886, n: "Scallywag Greaves", b: [801, 807, 802, 820, 830, 841, 810, 846, 834, 853, 848, 827, 866, 886, 859, 874, 896, 903, 45064, 45136, 876]},
@@ -2321,7 +2341,9 @@ Armor_Heavy_Boots: [
 	{u: 7413, i: 84131, n: "Spearmarshal's Greaves", b: [82431]},
 	{u: 7475, i: 84865, n: "Elonian Greaves", p: {achievement: 0}},
 	{u: 7649, i: 85056, n: "Warbeast Greaves", b: [84374]},
-	{u: 7701, i: 85201, n: "Bounty Hunter's Greaves", p: {craft: true}}
+	{u: 7701, i: 85201, n: "Bounty Hunter's Greaves", p: {craft: true}},
+	{u: 7726, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
+	{u: 7766, i: 85415, n: "Lunatic Templar Greaves", p: {achievement: 0}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
@@ -3813,7 +3835,8 @@ Weapon_Torch: [
 	{u: 7508, i: 84727, n: "Mordant Brazier", b: [84727]},
 	{u: 7581, i: 84343, n: "Awakened Torch", b: [84343]},
 	{u: 7629, i: 83056, n: "Luminous Vigil", p: {starting: true}},
-	{u: 7723, i: 84996, n: "War God's Torch", b: [84996]}
+	{u: 7723, i: 84996, n: "War God's Torch", b: [84996]},
+	{u: 7787, i: 85384, n: "Touch of Madness", b: [85384]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", b: [49359]},
