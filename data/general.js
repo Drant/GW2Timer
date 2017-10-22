@@ -1748,7 +1748,7 @@ Announcement:
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
 		//content: "Please tell new players about gw2timer.com!",
-		content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='http://gw2timer.com/pumpkins'>more</a>. <a href='http://forum.renaka.com/topic/8153493/'>Path of Fire timers</a> need verification. <a href='http://gw2timer.com/?mode=Tile'>Serpents' Ire</a> timer has been corrected.",
+		content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='http://gw2timer.com/pumpkins'>more</a>.",
 		Finish: new Date("2017-10-24T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
