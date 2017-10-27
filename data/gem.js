@@ -138,7 +138,8 @@ Glider: [
 	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
 	{i: 82666, n: "Geomancer Glider", p: {gem: -500}},
 	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
-	{i: 85220, n: "Branded Wing Glider", p: {gem: -700}}
+	{i: 85220, n: "Branded Wing Glider", p: {gem: -700}},
+	{i: 85496, n: "Riding Broom Glider", p: {gem: -500}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -625,7 +626,8 @@ Mini: [
 	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
 	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
 	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
-	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}}
+	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}},
+	{i: 85506, n: "Mini Elonian Familiar", p: {gem: -400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},
