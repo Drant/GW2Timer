@@ -149,7 +149,7 @@ Back: [
 	{i: 44735, n: "Plush Moto Backpack Cover", p: {gem: -300}},
 	{i: 68612, n: "Plush Ram Backpack", p: {gem: -300}},
 	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: -500}},
-	{i: 78733, n: "Sloth Backpack", p: {gem: 500}},
+	{i: 78733, n: "Sloth Backpack", p: {gem: -500}},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}},
 	{i: 80019, n: "Scruffy Backpack", p: {gem: 400}},
 	{i: 77494, n: "Wintersday Wreath Backpack", p: {gem: -500}},
@@ -173,7 +173,7 @@ Back: [
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: -700}},
 	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: -700}},
 	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: -700}},
-	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}},
+	{i: 81263, n: "Mercenary Backpack", p: {gem: -400}},
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
 	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}},
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
@@ -626,7 +626,7 @@ Mini: [
 	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}},
 	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
 	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
-	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}},
+	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: -400}},
 	{i: 85506, n: "Mini Elonian Familiar", p: {gem: -400}}
 ],
 Toy: [
