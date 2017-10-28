@@ -528,7 +528,7 @@ ExaltedChests: {
 	name_de: "Erhabenen-Truhen",
 	name_es: "Cofres exaltados",
 	name_fr: "Coffres exaltés",
-	name_zh: "启赤金盆地",
+	name_zh: "尊者宝箱",
 	category: "chests",
 	color: "peru",
 	view: "auric",
