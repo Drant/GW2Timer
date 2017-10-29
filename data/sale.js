@@ -5,7 +5,7 @@
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2017-10-17T16:00:00Z"),
-	Finish: new Date("2017-11-01T16:00:00Z"),
+	Finish: new Date("2017-11-07T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -39,6 +39,8 @@ GW2T_SALE_DATA = {
 	{i: 47900, n: "Metallurgic Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}, Finish: new Date("2017-11-03T16:00:00Z")},
 	{i: 78733, n: "Sloth Backpack", p: {gem: 500}, Finish: new Date("2017-11-03T16:00:00Z")},
+	{i: 74219, n: "Dread Quiver Backpack", p: {gem: 350}, Finish: new Date("2017-11-05T16:00:00Z")},
+	{i: 69737, n: "Daydreamer's Wings Backpack", p: {gem: 500}, Finish: new Date("2017-11-05T16:00:00Z")},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}, Finish: new Date("2017-10-31T16:00:00Z")},
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}, Finish: new Date("2017-10-31T16:00:00Z")},
 	{i: 85282, n: "Foefire Greaves", p: {gem: 500}, Finish: new Date("2017-10-31T16:00:00Z")}
