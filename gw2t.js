@@ -353,7 +353,9 @@ O = {
 			de: true,
 			cs: true,
 			pl: true,
-			ru: true
+			ru: true,
+			zh: true,
+			tw: true
 		},
 		isLogographic:
 		{
