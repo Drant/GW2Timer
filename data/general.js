@@ -1803,12 +1803,6 @@ Countdown: {
 		Start: new Date("2017-09-22T17:00:00Z"),
 		Finish: new Date("2017-09-25T17:00:00Z")
 	},*/
-	{
-		name: "ArenaNet API Downtime",
-		url: "https://en-forum.guildwars2.com/discussion/12673/api-downtime-oct-30-nov-1",
-		Start: new Date("2017-10-30T22:00:00Z"),
-		Finish: new Date("2017-11-02T02:00:00Z")
-	},
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
@@ -1819,7 +1813,7 @@ Countdown: {
 		Start: new Date("2017-12-07T20:00:00Z"),
 		Finish: new Date("2017-12-14T20:00:00Z")
 	},*/
-	/*{ // 8 weeks cycle, repeats 56 days after this event's start
+	{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Fireheart Map Rewards",
 		name_de: "Feuerherzhügel Karten-Bonus",
 		name_es: "Bonificación Corazón de Fuego",
@@ -1828,7 +1822,7 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-11-02T20:00:00Z"),
 		Finish: new Date("2017-1-09T20:00:00Z")
-	},*/
+	},
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
