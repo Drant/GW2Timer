@@ -25,7 +25,7 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_general: {de: "allgemein", es: "general", fr: "général",
 		cs: "obecné", it: "generale", pl: "ogólne", pt: "geral", ru: "общие", zh: "一般"},
 	s_dungeon: {de: "verlies", es: "mazmorra", fr: "donjon",
-		cs: "žalář", it: "segreta", pl: "loch", pt: "masmorra", ru: "подземелье", zh: "地牢"},
+		cs: "žalář", it: "segreta", pl: "loch", pt: "masmorra", ru: "подземелье", zh: "地下城"},
 	s_wallet: {de: "geldbörse", es: "cartera", fr: "portefeuille",
 		cs: "peněženka", it: "portafoglio", pl: "portfel", pt: "carteira", ru: "бума́жник", zh: "钱包"},
 	s_titles: {de: "titeln", es: "títulos", fr: "titres",
@@ -61,7 +61,7 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_weapons: {de: "waffen", es: "armas", fr: "armes",
 		cs: "zbraně", it: "armi", pl: "bronie", pt: "armas", ru: "оружие", zh: "武器"},
 	s_storage: {de: "speicher", es: "almacenamiento", fr: "stockage",
-		cs: "úložiště", it: "memoria", pl: "pamięć", pt: "armazenamento", ru: "хранилище", zh: "存储柜"},
+		cs: "úložiště", it: "memoria", pl: "pamięć", pt: "armazenamento", ru: "хранилище", zh: "储存空间"},
 	
 	// Verbs
 	s_include: {de: "einschließen", es: "incluir", fr: "inclure",

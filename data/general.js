@@ -1821,7 +1821,7 @@ Countdown: {
 		name_zh: "炎心高地地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2017-11-02T20:00:00Z"),
-		Finish: new Date("2017-1-09T20:00:00Z")
+		Finish: new Date("2017-11-09T20:00:00Z")
 	},
 	/*{
 		name_en: "Lunar Festival",
