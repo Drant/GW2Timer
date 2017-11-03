@@ -91,7 +91,9 @@ Outfit: [
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
-	{i: 85034, n: "Forged Outfit", p: {gem: 700}}
+	{i: 85034, n: "Forged Outfit", p: {gem: 700}},
+	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
+	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -627,7 +629,8 @@ Mini: [
 	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
 	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
 	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: -400}},
-	{i: 85506, n: "Mini Elonian Familiar", p: {gem: -400}}
+	{i: 85506, n: "Mini Elonian Familiar", p: {gem: -400}},
+	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: -400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},

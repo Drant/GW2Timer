@@ -23,6 +23,8 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: 67398, n: "Noble Count Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-11-03T16:00:00Z")},
 	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2017-11-03T16:00:00Z")},
+	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
+	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: 400}, Finish: new Date("2017-11-07T16:00:00Z")},
 	{i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}, Finish: new Date("2017-11-03T16:00:00Z")},
 	{i: 79666, n: "Hovering Mad Mirror", p: {gem: 250}, Finish: new Date("2017-11-03T16:00:00Z")},
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}, Finish: new Date("2017-11-07T16:00:00Z")},
