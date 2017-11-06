@@ -3127,6 +3127,26 @@ RangerPets: {
 		n: 45, i: "tiger", name_en: "Tiger", name_de: "Tiger", name_es: "Tigre", name_fr: "Tigre", name_zh: "猛虎",
 		a: {fury: [1, 10], recharge: 10, targets: 5, radius: 240, range: 400, damage: 1689},
 		c: [[2528,20988],[2575,20955],[2487,20933],[2526,20905]]
+	},{
+		n: 51, i: "cheetah", name_en: "Cheetah", name_de: "Gepard", name_es: "Guepardo", name_fr: "Guépard", name_zh: "猎豹",
+		a: {swiftness: [2, 4], recharge: 30, targets: 5, radius: 240, combo: "Leap", range: 1200, damage: 1520},
+		c: [[28961,30335]]
+	},{
+		n: 52, i: "sandlion", name_en: "Sand Lion", name_de: "Sandlöwe", name_es: "León de arena", name_fr: "Lion des sables", name_zh: "沙漠狮",
+		a: {blind: [3, 2], recharge: 35, targets: 5, range: 300, damage: 1773},
+		c: [[26136,26455],[26360,26642],[27179,27143],[27740,27811]]
+	},{// IBOGA
+		n: 53, i: "fangediboga", name_en: "Fanged Iboga", name_de: "Beißende Iboga", name_es: "Iboga acolmillada", name_fr: "Iboga à crocs", name_zh: "伊波茄",
+		a: {immobilize: [1, 1], recharge: 20, pull: 1200, range: 1200, damage: 338},
+		c: [[26541,24146]]
+	},{// JACARANDA
+		n: 54, i: "jacaranda", name_en: "Jacaranda", name_de: "Jacaranda", name_es: "Jacaranda", name_fr: "Jacaranda", name_zh: "蓝花楹",
+		a: {immobilize: [5, 1], vulnerability: [5, 8], recharge: 20, range: 900, damage: 635},
+		c: [[31189,38396]]
+	},{// ROCK GAZELLE
+		n: 55, i: "rockgazelle", name_en: "Rock Gazelle", name_de: "Felsgazelle", name_es: "Gacela de roca", name_fr: "Gazelle des rochers", name_zh: "岩石瞪羚",
+		a: {launch: 80, recharge: 20, targets: 1, range: 180, damage: 2043},
+		c: [[28082,35851]]
 	},{// AQUATIC // ARMOR FISH
 		n: 46, i: "armorfish", name_en: "Armor Fish", name_de: "Panzerfisch", name_es: "Pez armadura", name_fr: "Poisson cuirassé", name_zh: "装甲鱼",
 		a: {stun: [1, 2], recharge: 40, combo: "Leap", range: 200, damage: 195},

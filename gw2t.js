@@ -11067,11 +11067,22 @@ V = {
 			var hoursperday = T.parseRatio((totalage / accountlifetime) * T.cHOURS_IN_DAY, 2);
 			var commandership = (pData.commander) ? "" : "accTrivial";
 			var wvwtitle = (pData.wvw_rank) ? (" " + getWvWTitle(pData.wvw_rank)) : "";
-			var access = (pData.access) ? "" : "accTrivial";
+			var access = pData.access;
+			var accessstr = "";
+			if (access && access.length)
+			{
+				access.forEach(function(iAccess)
+				{
+					if (Q.AccessEnum[iAccess])
+					{
+						accessstr += "<img src='img/account/summary/access_" + iAccess + ".png' /> ";
+					}
+				});
+			}
 			var accountadditional = "<span id='chrAccountMisc'>"
 				+ "<dfn><a id='chrAccountLink' title='" + U.escapeHTML(pData.id) + "'" + forumlink + ">" + U.escapeHTML(pData.name) + "</a></dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
 				+ "<img class='" + commandership +  "' src='img/account/summary/commander.png' />"
-				+ "<img class='" + access +  "' src='img/account/summary/access_hot.png' /> "
+				+ accessstr
 				+ "<img src='img/account/summary/fractal.png' />" + (pData.fractal_level || "?") + " "
 				+ "<img src='img/account/summary/worldabilitypoint.png' />" + (pData.wvw_rank || "?") + " "
 				+ "<img src='img/account/summary/daily.png' />" + (pData.daily_ap || "?") + " "
@@ -16649,6 +16660,15 @@ Q = {
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	SearchDatabase: null, // Search array for all items
 	CleanableFilter: null, // Associative array of cleanable items to be used by the bank filters, not the cleanup tool
+	AccessEnum:
+	{
+		HeartOfThorns: "HoT",
+		PathOfFire: "PoF",
+		GW2: "GuildWars2",
+		HoT: "HeartOfThorns",
+		PoF: "PathOfFire",
+		Max: "HeartOfThorns"
+	},
 	ItemEnum: // Corresponds to item details type property
 	{
 		Gathering: "Gathering",
@@ -35050,7 +35070,7 @@ T = {
 			{
 				for (var ii = 0; ii < ithdaily.required_access.length; ii++)
 				{
-					if (ithdaily.required_access[ii] === T.Daily.AccessEnum.Max)
+					if (ithdaily.required_access[ii] === Q.AccessEnum.Max)
 					{
 						newpve.push(ithdaily);
 						break;

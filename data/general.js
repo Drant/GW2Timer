@@ -465,12 +465,6 @@ var GW2T_DAILY_ASSOCIATION = {
  * Daily achievements and translations.
  */
 var GW2T_DAILY_DATA = {
-AccessEnum:
-{
-	GW2: "GuildWars2",
-	HoT: "HeartOfThorns",
-	Max: "HeartOfThorns"
-},
 Activity:
 {
 	// Schedule array index correspond to the UTC weekday number, where 0 is Sunday
