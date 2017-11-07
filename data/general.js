@@ -1654,13 +1654,13 @@ var GW2T_TIMELINE = [
 			{ time: "01:45", duration: "00:15", primacy: 2}
 		]
 	},
-	{
+	/*{
 		name_en: "Your Mad King says...", name_de: "Der Verrückte König sagt", name_es: "Vuestro Rey Loco dice...", name_fr: "Votre Roi Dément a dit...", name_zh: "疯王说......",
 		Segments: [
 			{ time: "00:00", duration: "00:15", primacy: 3, name_en: "Mad King Says", name_de: "Verrückte König sagt", name_es: "Rey Loco dice", name_fr: "Roi Dément a dit", name_zh: "疯王说" },
 			{ time: "00:15", duration: "01:45", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
 		]
-	},
+	},*/
 	{
 		name_en: "Path of Fire", name_de: "Path of Fire", name_es: "Path of Fire", name_fr: "Path of Fire", name_zh: "Path of Fire",
 		Segments: [
@@ -1742,8 +1742,9 @@ Announcement:
 	// "<a href='http://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
 		//content: "Please tell new players about gw2timer.com!",
-		content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='http://gw2timer.com/?page=Pumpkins'>more</a>.",
-		Finish: new Date("2017-11-07T16:00:00Z")
+		//content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='http://gw2timer.com/?page=Pumpkins'>more</a>.",
+		content: "Path of Fire <a href='http://gw2timer.com/page=Pets'>rangers pets</a> and <a data-page='minis'>mini pets</a>.",
+		Finish: new Date("2017-11-21T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
@@ -1867,16 +1868,16 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	{
-		name_en: "Halloween 2017",
-		name_de: "Halloween 2017",
-		name_es: "Halloween 2017",
-		name_fr: "Halloween 2017",
-		name_zh: "万圣夜2017",
+	/*{
+		name_en: "Halloween 2018",
+		name_de: "Halloween 2018",
+		name_es: "Halloween 2018",
+		name_fr: "Halloween 2018",
+		name_zh: "万圣夜2018",
 		official: "news/shadow-of-the-mad-king-is-live-2/",
-		Start: new Date("2017-10-17T16:00:00Z"),
-		Finish: new Date("2017-11-07T16:00:00Z")
-	}
+		Start: new Date("2018-10-23T16:00:00Z"),
+		Finish: new Date("2018-11-06T16:00:00Z")
+	},*/
 	/*{
 		name_en: "Wintersday 2017",
 		name_de: "Wintertag 2017",
@@ -1905,7 +1906,7 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: true,
+	isEnabled: false,
 	name_en: "Mad King Says",
 	name_de: "Verrückte König sagt",
 	name_es: "Rey Loco dice",

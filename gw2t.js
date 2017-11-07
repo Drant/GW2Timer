@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 171015},
+		programVersion: {key: "int_utlProgramVersion", value: 171105},
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -36780,7 +36780,7 @@ K = {
 		if (K.isClockStyled === false)
 		{
 			K.isClockStyled = true;
-			$("#paneClock").addClass("clkHalloween");
+			//$("#paneClock").addClass("clkHalloween");
 			//$("#paneClock").addClass("clkWintersday");
 			$("#paneClockFace").addClass("paneClockFace");
 		}
