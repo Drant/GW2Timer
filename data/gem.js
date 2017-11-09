@@ -21,6 +21,7 @@ var GW2T_GEM_HEADERS = {
 	Consumable: {name_en: "Consumables", name_de: "Verbrauchsgegenstand", name_es: "Consumible", name_fr: "Consommable", name_zh: "消耗"},
 	Pass: {name_en: "Passes", name_de: "Passierschein", name_es: "Pase", name_fr: "Laissez-passer", name_zh: "通行证"},
 	Gathering: {name_en: "Gathering Tools", name_de: "Sammelwerkzeug", name_es: "Herramienta de recolección", name_fr: "Outil de récolte", name_zh: "采集工具"},
+	Mount: {name_en: "Mounts", name_de: "Reittier", name_es: "Monturas", name_fr: "Montures", name_zh: "坐骑"},
 	Mini: {name_en: "Miniature Pets", name_de: "Miniatur", name_es: "Miniatura", name_fr: "Miniature", name_zh: "迷你"},
 	Toy: {name_en: "Toys and Stations", name_de: "Spielzeuge und Stationen", name_es: "Juguetes y Talleres", name_fr: "Jouets et Ateliers", name_zh: "玩具和造站"},
 	Music: {name_en: "Musical Instruments", name_de: "Musikinstrumente", name_es: "Instrumentos musicales", name_fr: "Instruments de musique", name_zh: "乐器"},
@@ -389,8 +390,7 @@ Package: [
 	{i: 68013, n: "Salvager's Supplies", p: {gem: -2720}},
 	{i: 79698, n: "Customer Appreciation Package", p: {gem: -125}},
 	{i: 20761, n: "Air Rider Package", p: {gem: -650}},
-	{i: 79706, n: "Swashbuckler's Package", p: {gem: -900}},
-	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}}
+	{i: 79706, n: "Swashbuckler's Package", p: {gem: -900}}
 ],
 Dye: [
 	{i: 19998, n: "Dye Pack", p: {gem: 200}, discount: [[1, 200], [5, 800], [25, 4000]]},
@@ -504,6 +504,11 @@ Gathering: [
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: -900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: -900}},
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}}
+],
+Mount: [
+	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
+	{i: 85580, n: "Mount Adoption License", p: {gem: -400}, discount: [[1, 400], [10, 3400]]},
+	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}}
 ],
 Mini: [
 	{i: 20019, n: "Minis 3-Pack (Set 1)", p: {gem: -300}},

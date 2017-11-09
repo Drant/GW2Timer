@@ -22,6 +22,8 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: "https://i.imgur.com/PuHTFpK.png", n: "Mount Adoption License 30 Pack", p: {gem: 9600}},
+	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]},
+	{i: 85538, n: "Reforged Warhound", p: {gem: 2000}},
 	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
 	{i: 68577, n: "Arcane Outfit", p: {gem: 700}},
 	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: 700}},
