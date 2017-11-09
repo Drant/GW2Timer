@@ -8,6 +8,8 @@
  */
 var GW2T_GEM_HEADERS = {
 	Outfit: {name_en: "Outfits", name_de: "Kleidungssets", name_es: "Atuendos", name_fr: "Tenues", name_zh: "服装"},
+	Mount: {name_en: "Mounts", name_de: "Reittier", name_es: "Monturas", name_fr: "Montures", name_zh: "坐骑"},
+	Glider: {name_en: "Gliders", name_de: "Gleitschirm", name_es: "Planeador", name_fr: "Deltaplane", name_zh: "滑翔翼"},
 	Back: {name_en: "Backpacks", name_de: "Rücken", name_es: "Espalda", name_fr: "Pièce de dos", name_zh: "背部物品皮肤"},
 	Head: {name_en: "Head", name_de: "Kopfbedeckung", name_es: "Cabeza", name_fr: "Couvre-chef", name_zh: "帽甲"},
 	Shoulder: {name_en: "Shoulders", name_de: "Schultern", name_es: "Hombros", name_fr: "Epaulières", name_zh: "护肩"},
@@ -21,14 +23,12 @@ var GW2T_GEM_HEADERS = {
 	Consumable: {name_en: "Consumables", name_de: "Verbrauchsgegenstand", name_es: "Consumible", name_fr: "Consommable", name_zh: "消耗"},
 	Pass: {name_en: "Passes", name_de: "Passierschein", name_es: "Pase", name_fr: "Laissez-passer", name_zh: "通行证"},
 	Gathering: {name_en: "Gathering Tools", name_de: "Sammelwerkzeug", name_es: "Herramienta de recolección", name_fr: "Outil de récolte", name_zh: "采集工具"},
-	Mount: {name_en: "Mounts", name_de: "Reittier", name_es: "Monturas", name_fr: "Montures", name_zh: "坐骑"},
 	Mini: {name_en: "Miniature Pets", name_de: "Miniatur", name_es: "Miniatura", name_fr: "Miniature", name_zh: "迷你"},
 	Toy: {name_en: "Toys and Stations", name_de: "Spielzeuge und Stationen", name_es: "Juguetes y Talleres", name_fr: "Jouets et Ateliers", name_zh: "玩具和造站"},
 	Music: {name_en: "Musical Instruments", name_de: "Musikinstrumente", name_es: "Instrumentos musicales", name_fr: "Instruments de musique", name_zh: "乐器"},
-	Glider: {name_en: "Gliders", name_de: "Gleitschirm", name_es: "Planeador", name_fr: "Deltaplane", name_zh: "滑翔翼"},
 	Carrier: {name_en: "Mail Carriers", name_de: "Briefboten", name_es: "Carteros", name_fr: "Messagers", name_zh: "邮差"},
-	Finisher: {name_en: "Finishers", name_de: "Todesstöße", name_es: "Remates", name_fr: "Coups de grâce", name_zh: "终结者"},
 	Node: {name_en: "Gathering Nodes", name_de: "Knoten", name_es: "Nodos", name_fr: "Zones", name_zh: "节点"},
+	Finisher: {name_en: "Finishers", name_de: "Todesstöße", name_es: "Remates", name_fr: "Coups de grâce", name_zh: "终结者"},
 	Upgrade: {name_en: "Account Upgrades", name_de: "Account Upgrades", name_es: "Mejoras cuenta", name_fr: "Améliorations compte", name_zh: "升级帐户"}
 };
 
@@ -96,6 +96,11 @@ Outfit: [
 	{i: 85034, n: "Forged Outfit", p: {gem: 700}},
 	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
 	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}}
+],
+Mount: [
+	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
+	{i: 85580, n: "Mount Adoption License", p: {gem: -400}, discount: [[1, 400], [10, 3400]]},
+	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -504,11 +509,6 @@ Gathering: [
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: -900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: -900}},
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}}
-],
-Mount: [
-	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
-	{i: 85580, n: "Mount Adoption License", p: {gem: -400}, discount: [[1, 400], [10, 3400]]},
-	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}}
 ],
 Mini: [
 	{i: 20019, n: "Minis 3-Pack (Set 1)", p: {gem: -300}},
