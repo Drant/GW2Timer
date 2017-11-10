@@ -1808,16 +1808,16 @@ Countdown: {
 		Start: new Date("2017-12-07T20:00:00Z"),
 		Finish: new Date("2017-12-14T20:00:00Z")
 	},*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Fireheart Map Rewards",
 		name_de: "Feuerherzhügel Karten-Bonus",
 		name_es: "Bonificación Corazón de Fuego",
 		name_fr: "Bonus de carte Flambecœur",
 		name_zh: "炎心高地地图奖金",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2017-11-02T20:00:00Z"),
-		Finish: new Date("2017-11-09T20:00:00Z")
-	},
+		Start: new Date("2017-12-28T20:00:00Z"),
+		Finish: new Date("2018-01-04T20:00:00Z")
+	},*/
 	/*{
 		name_en: "Lunar Festival",
 		name_de: "Mond Festival",
