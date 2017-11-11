@@ -27,36 +27,43 @@ var GW2T_DUNGEONS_HEADERS = {
  */
 var GW2T_DUNGEONS_DATA = {
 AC: [
+	{u: "ac_story", i: 9256, n: "Ascalonian_Catacombs_(story)", l: "Story", p: {coin: 2600}},
 	{u: "hodgins", i: 16982, n: "Ascalonian_Catacombs_(explorable)#Hodgins.27s_Plan_.28Path_1.29", l: "Hodgins", p: {coin: 7600}},
 	{u: "detha", i: 16982, n: "Ascalonian_Catacombs_(explorable)#Detha.27s_Plan_.28Path_2.29", l: "Detha", p: {coin: 7600}},
 	{u: "tzark", i: 16982, n: "Ascalonian_Catacombs_(explorable)#Tzark.27s_Plan_.28Path_3.29", l: "Tzark", p: {coin: 7600}}
 ],
 CM: [
+	{u: "cm_story", i: 9256, n: "Caudecus's_Manor_(story)", l: "Story", p: {coin: 2600}},
 	{u: "asura", i: 17274, n: "Caudecus's_Manor_(explorable)#Asura_Route_.28Path_1.29", l: "Asura", p: {coin: 6100}},
 	{u: "seraph", i: 17274, n: "Caudecus's_Manor_(explorable)#Seraph_Path_.28Path_2.29", l: "Seraph", p: {coin: 6100}},
 	{u: "butler", i: 17274, n: "Caudecus's_Manor_(explorable)#Butler_Path_.28Path_3.29", l: "Butler", p: {coin: 6100}}
 ],
 TA: [
+	{u: "ta_story", i: 9256, n: "Twilight_Arbor_(story)", l: "Story", p: {coin: 2600}},
 	{u: "leurent", i: 17273, n: "Twilight_Arbor_(explorable)#Leurent.27s_Path_.28up.29", l: "Leurent", p: {coin: 6100}},
 	{u: "vevina", i: 17273, n: "Twilight_Arbor_(explorable)#Vevina.27s_Path_.28forward.29", l: "Vevina", p: {coin: 6100}},
 	{u: "aetherpath", i: 17273, n: "Aetherpath_(Twilight_Arbor)", l: "Aetherpath", p: {coin: 9200}}
 ],
 SE: [
+	{u: "se_story", i: 9256, n: "Sorrow's_Embrace_(story)", l: "Story", p: {coin: 2600}},
 	{u: "fergg", i: 17270, n: "Sorrow's_Embrace_(explorable)#Path_1", l: "Fergg", p: {coin: 6100}},
 	{u: "rasalov", i: 17270, n: "Sorrow's_Embrace_(explorable)#Path_2", l: "Rasalov", p: {coin: 6100}},
 	{u: "koptev", i: 17270, n: "Sorrow's_Embrace_(explorable)#Path_3", l: "Koptev", p: {coin: 6100}}
 ],
 COF: [
+	{u: "cof_story", i: 9256, n: "Citadel_of_Flame_(story)", l: "Story", p: {coin: 2600}},
 	{u: "ferrah", i: 17275, n: "Citadel_of_Flame_(explorable)#Ferrah", l: "Ferrah", p: {coin: 6100}},
 	{u: "magg", i: 17275, n: "Citadel_of_Flame_(explorable)#Magg", l: "Magg", p: {coin: 6100}},
 	{u: "rhiannon", i: 17275, n: "Citadel_of_Flame_(explorable)#Rhiannon", l: "Rhiannon", p: {coin: 6100}}
 ],
 HOTW: [
+	{u: "hotw_story", i: 9256, n: "Honor_of_the_Waves_(story)", l: "Story", p: {coin: 2600}},
 	{u: "butcher", i: 17277, n: "Honor_of_the_Waves_(explorable)#Path_1", l: "Butcher", p: {coin: 6100}},
 	{u: "plunderer", i: 17277, n: "Honor_of_the_Waves_(explorable)#Path_2", l: "Plunderer", p: {coin: 6100}},
 	{u: "zealot", i: 17277, n: "Honor_of_the_Waves_(explorable)#Path_3", l: "Zealot", p: {coin: 6100}}
 ],
 COE: [
+	{u: "coe_story", i: 9256, n: "Crucible_of_Eternity_(story)", l: "Story", p: {coin: 2600}},
 	{u: "submarine", i: 17276, n: "Crucible_of_Eternity_(explorable)#Path_1:_Escape_Using_the_Submarine", l: "Submarine", p: {coin: 6100}},
 	{u: "teleporter", i: 17276, n: "Crucible_of_Eternity_(explorable)#Path_2:_Escape_using_the_Experimental_Teleporter", l: "Teleport", p: {coin: 6100}},
 	{u: "front_door", i: 17276, n: "Crucible_of_Eternity_(explorable)#Path_3:_Escape_through_the_Front_Door", l: "Front", p: {coin: 6100}}
