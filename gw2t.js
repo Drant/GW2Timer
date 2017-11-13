@@ -1622,6 +1622,7 @@ X = {
 	Collectibles:
 	{
 		// Chests
+		BuriedTreasures: { key: "str_chlBuriedTreasures", urlkey: "buriedtreasures"},
 		WaterloggedChests: { key: "str_chlWaterloggedChests", urlkey: "waterloggedchests"},
 		HarathiStrongboxes: { key: "str_chlHarathiStrongboxes", urlkey: "harathistrongboxes"},
 		IceboundChests: { key: "str_chlIceboundChests", urlkey: "iceboundchests"},
