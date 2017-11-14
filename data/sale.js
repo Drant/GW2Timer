@@ -21,7 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "https://i.imgur.com/PuHTFpK.png", n: "Mount Adoption License 30 Pack", p: {gem: 9600}},
+	{i: "https://i.imgur.com/PuHTFpK.png", n: "Mount Adoption License 30 Pack", p: {gem: 9600}, p: {gem: 1800}, Finish: new Date("2017-11-14T16:00:00Z")},
 	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]},
 	{i: 85538, n: "Reforged Warhound", p: {gem: 2000}},
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}, Finish: new Date("2017-11-14T16:00:00Z")},
