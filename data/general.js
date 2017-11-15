@@ -1888,16 +1888,16 @@ Countdown: {
 		Start: new Date("2017-12-12T17:00:00Z"),
 		Finish: new Date("2018-01-09T17:00:00Z")
 	},*/
-	/*{
+	{
 		name_en: "Living Story 4: Episode I",
 		name_de: "Lebendigen Geschichte 4: Episode I",
 		name_es: "Historia viviente 4: Episodio I",
 		name_fr: "Histoire vivante 4: Épisode I",
 		name_zh: "第四生活世界：第4集",
-		official: "news/watch-the-trailer-for-one-path-ends/",
-		Start: new Date("2017-07-25T16:00:00Z"),
-		Finish: new Date("2017-08-01T16:00:00Z")
-	}*/
+		official: "news/living-world-returns-this-november/",
+		Start: new Date("2017-11-28T16:00:00Z"),
+		Finish: new Date("2017-11-29T16:00:00Z")
+	}
 	]
 },
 
