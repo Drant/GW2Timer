@@ -1743,7 +1743,7 @@ Announcement:
 	NewsPVE: { // Shown on main page dashboard
 		//content: "Please tell new players about gw2timer.com!",
 		//content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='http://gw2timer.com/?page=Pumpkins'>more</a>.",
-		content: "Path of Fire <a href='http://gw2timer.com/?page=Pets&go=oasis'>rangers pets</a> and <a data-page='minis'>mini pets</a>.",
+		content: "",
 		Finish: new Date("2017-11-21T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
