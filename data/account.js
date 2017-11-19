@@ -399,6 +399,7 @@ var GW2T_ACCOUNT_METADATA = {
 		"9": "revenant"
 	},
 	ProfElite: { // Corresponds to specializations.json
+		// Heart of Thorns
 		"27": "dragonhunter",
 		"18": "berserker",
 		"43": "scrapper",
@@ -407,7 +408,17 @@ var GW2T_ACCOUNT_METADATA = {
 		"48": "tempest",
 		"40": "chronomancer",
 		"34": "reaper",
-		"52": "herald"
+		"52": "herald",
+		// Path of Fire
+		"62": "firebrand",
+		"61": "spellbreaker",
+		"57": "holosmith",
+		"55": "soulbeast",
+		"58": "deadeye",
+		"56": "weaver",
+		"59": "mirage",
+		"60": "scourge",
+		"63": "renegade"
 	},
 	AchievementCategories: [ // Same order as in game, which is different from API
 		{en: "Daily", de: "Täglich", es: "Logros diarios", fr: "Quotidien", zh: "日常"},
