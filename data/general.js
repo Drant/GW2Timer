@@ -128,6 +128,9 @@ var GW2T_DAILY_ASSOCIATION = {
 	"2912": "Forager Heart [3359,14678]",
 	"2937": "Lumberer Heart [2291,14246]",
 	"2957": "Miner Heart [2974,14229]",
+	"3760": "Forager Desert [25848,27359]", // Placeholder
+	"3880": "Lumberer Desert [25848,27359]", // Placeholder
+	"3888": "Miner Desert [25848,27359]", // Placeholder
 	
 	// Vista
 	"1839": "Vista Kryta [17096,14790]",
@@ -137,11 +140,19 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1937": "Vista Wastes [5615,15302]",
 	"1938": "Vista Ascalon [24403,13856]",
 	"2983": "Vista Heart [3243,14779]",
+	"3721": "Vista Desert [27333,29717]",
 	
 	// Misc
 	"500": "Misc Forger [16260,14499]",
 	"1939": "Misc Activity [16399,14886]",
 	"1989": "Misc Fractal [16624,15506]",
+	
+	// Bounty
+	"3626": "Bounty Oasis [25948,27359]", // Placeholder
+	"3784": "Bounty Highlands [28009,25766]", // Placeholder
+	"3722": "Bounty Riverlands [28407,29197]", // Placeholder
+	"3779": "Bounty Desolation [27413,32021]", // Placeholder
+	"3562": "Bounty Vabbi [32863,37090]", // Placeholder
 	
 	// Adventure
 	"2891": "Adventure FlyingCircus Heart [1524,14830]",
@@ -247,6 +258,9 @@ var GW2T_DAILY_ASSOCIATION = {
 	"2924": "Event Dragon",
 	"2945": "Event Verdant",
 	"2968": "Event Tangled",
+	"3814": "Event Highlands",
+	"3661": "Event Riverlands",
+	"3866": "Event Desolation",
 	
 	// Boss
 	"1930": "Boss FE",
