@@ -29584,13 +29584,13 @@ G = {
 			{
 				return "<ins class='dly dly_pve_" + d2 + " dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + d3 + "'></ins>";
 			}
-			else if (d1 === "jp" || d1 === "adventure")
+			else if (d1 === "jp" || d1 === "adventure" || d1 === "bounty")
 			{
 				return "<ins class='dlyRegion dly_region_" + d3 + "'>"
 					+ "<ins class='dly dly_pve_" + d1 + " dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + d4 + "'></ins>"
 				+ "</ins>";
 			}
-			else if (d1 === "bounty" || d1 === "vista" || d1 === "miner" || d1 === "lumberer" || d1 === "forager")
+			else if (d1 === "vista" || d1 === "miner" || d1 === "lumberer" || d1 === "forager")
 			{
 				return "<ins class='dlyRegion dly_region_" + d2 + "'>"
 					+ "<ins class='dly dly_pve_" + d1 + " dlyZoom curZoom' data-ach='" + d0 + "' data-coord='" + d3 + "'></ins>"

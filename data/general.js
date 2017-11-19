@@ -128,9 +128,9 @@ var GW2T_DAILY_ASSOCIATION = {
 	"2912": "Forager Heart [3359,14678]",
 	"2937": "Lumberer Heart [2291,14246]",
 	"2957": "Miner Heart [2974,14229]",
-	"3760": "Forager Desert [25848,27359]", // Placeholder
-	"3880": "Lumberer Desert [25848,27359]", // Placeholder
-	"3888": "Miner Desert [25848,27359]", // Placeholder
+	"3760": "Forager Desert [25948,27359]", // Placeholder
+	"3880": "Lumberer Desert [25948,27359]", // Placeholder
+	"3888": "Miner Desert [25948,27359]", // Placeholder
 	
 	// Vista
 	"1839": "Vista Kryta [17096,14790]",
@@ -148,11 +148,11 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1989": "Misc Fractal [16624,15506]",
 	
 	// Bounty
-	"3626": "Bounty Oasis [25948,27359]", // Placeholder
-	"3784": "Bounty Highlands [28009,25766]", // Placeholder
-	"3722": "Bounty Riverlands [28407,29197]", // Placeholder
-	"3779": "Bounty Desolation [27413,32021]", // Placeholder
-	"3562": "Bounty Vabbi [32863,37090]", // Placeholder
+	"3626": "Bounty Oasis Desert [25948,27359]", // Placeholder
+	"3784": "Bounty Highlands Desert [28009,25766]", // Placeholder
+	"3722": "Bounty Riverlands Desert [28407,29197]", // Placeholder
+	"3779": "Bounty Desolation Desert [27413,32021]", // Placeholder
+	"3562": "Bounty Vabbi Desert [32863,37090]", // Placeholder
 	
 	// Adventure
 	"2891": "Adventure FlyingCircus Heart [1524,14830]",
