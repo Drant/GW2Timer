@@ -527,7 +527,8 @@ ContainerArmor: [
 	{i: 76893, n: "Viper's Armor Chest", p: {coin: 1200000}},
 	{i: 77219, n: "Wanderer's Armor Chest", p: {coin: 1200000}},
 	{i: 77940, n: "Chest of Sabetha's Armor", p: {coin: 1200000}},
-	{i: 76633, n: "Commander's Armor Chest", p: {coin: 1200000}}
+	{i: 76633, n: "Commander's Armor Chest", p: {coin: 1200000}},
+	{i: 85534, n: "Nadijeh's Royal Armor Cache", p: {coin: 1200000}}
 ],
 ContainerHelm: [
 	{i: 64180, n: "Raider's Chest of Helms", p: {coin: 900000}},
@@ -748,7 +749,11 @@ Back: [
 	{i: 82010, n: "Relic of Lyssa", p: {karma: 315000}},
 	{i: 81746, n: "Relic of Lyssa (Infused)", p: {craft: true}},
 	{i: 81768, n: "Relic of Melandru", p: {karma: 315000}},
-	{i: 81869, n: "Relic of Melandru (Infused)", p: {craft: true}}
+	{i: 81869, n: "Relic of Melandru (Infused)", p: {craft: true}},
+	{i: 82782, n: "Rising Banners of the Sunspear", p: {achievement: 0}},
+	{i: 83029, n: "Sagacious Banners of Dynastic Reckoning", p: {achievement: 0}},
+	{i: 83262, n: "Ensign Banners of Amnoon", p: {achievement: 0}},
+	{i: 83992, n: "Dreaded Banners of King Palawa Joko I", p: {achievement: 0}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -985,7 +990,21 @@ Ring: [
 	{i: 81024, n: "Gilded Orchid Band", p: {map_dm: 100}},
 	{i: 81016, n: "Gilded Orchid Band (Infused)", p: {map_dm: 100}},
 	{i: 81026, n: "Attuned Gilded Orchid Band", p: {map_dm: 100}},
-	{i: 81167, n: "Attuned Gilded Orchid Band (Infused)", p: {map_dm: 100}}
+	{i: 81167, n: "Attuned Gilded Orchid Band (Infused)", p: {map_dm: 100}},
+	{i: 83563, n: "Kole's Tormented Eye", p: {mosaic: 100}},
+	{i: 82585, n: "Kole's Tormented Eye (Infused)", p: {craft: true}},
+	{i: 84212, n: "Attuned Kole's Tormented Eye (Infused)", p: {craft: true}},
+	{i: 82851, n: "Corsair's Ring", p: {contract: 1500}},
+	{i: 84307, n: "Attuned Corsair's Ring", p: {craft: true}},
+	{i: 83675, n: "Attuned Corsair's Ring (Infused)", p: {craft: true}},
+	{i: 84018, n: "Sigil of the Fool", p: {contract: 1500}},
+	{i: 83646, n: "Attuned Sigil of the Fool", p: {craft: true}},
+	{i: 82705, n: "Attuned Sigil of the Fool (Infused)", p: {craft: true}},
+	{i: 84185, n: "Gift of the Hidden Scion", p: {mosaic: 100}},
+	{i: 83525, n: "Gift of the Hidden Scion (Infused)", p: {craft: true}},
+	{i: 84577, n: "Attuned Gift of the Hidden Scion (Infused)", p: {craft: true}},
+	{i: 84095, n: "Nadijeh's Dynastic Signet (Infused)", p: {craft: true}},
+	{i: 83321, n: "Attuned Nadijeh's Dynastic Signet (Infused)", p: {craft: true}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1050,7 +1069,9 @@ Accessory: [
 	{i: 79745, n: "Black Ice Earring", p: {map_bf: 300}},
 	{i: 80002, n: "Mist Talisman", p: {glory: 175}},
 	{i: 80028, n: "Mist Talisman", p: {glory: 175}},
-	{i: 81729, n: "Spark of Sentience", p: {achievement: 0}}
+	{i: 81729, n: "Spark of Sentience", p: {achievement: 0}},
+	{i: 83429, n: "Elonian Transit Pass", p: {contract: 3000}},
+	{i: 84296, n: "Anthem of Liberty", p: {contract: 3000}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1120,7 +1141,10 @@ Amulet: [
 	{i: 79993, n: "Mist Pendant", p: {glory: 175}},
 	{i: 80241, n: "Jade Pendant", p: {map_ld: 125}},
 	{i: 81169, n: "Fire Orchid Garland", p: {map_dm: 125}},
-	{i: 81658, n: "Coral Choker", p: {map_sl: 125}}
+	{i: 81658, n: "Coral Choker", p: {map_sl: 125}},
+	{i: 82599, n: "First Spear's Icon", p: {contract: 2000}},
+	{i: 82769, n: "Goren's Eel-Tooth Charm", p: {contract: 2500}},
+	{i: 82897, n: "Jahnus's Stained Pectoral", p: {mosaic: 125}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1165,7 +1189,11 @@ LightHelm: [
 	{i: 80751, n: "Illustrious Masque", p: {coin: 900000}},
 	{i: 80441, n: "Refined Envoy Cowl", p: {coin: 900000}},
 	{i: 81476, n: "Triumphant Hero's Masque", p: {skirmish: 175}},
-	{i: 81487, n: "Mistforged Triumphant Hero's Masque", p: {skirmish: 350}}
+	{i: 81487, n: "Mistforged Triumphant Hero's Masque", p: {skirmish: 350}},
+	{i: 85128, n: "Illustrious Masque", p: {coin: 900000}},
+	{i: 85161, n: "Zehtuka's Masque", p: {coin: 900000}},
+	{i: 85285, n: "Nadijeh's Masque", p: {coin: 900000}},
+	{i: 85296, n: "The Twins' Masque", p: {coin: 900000}}
 ],
 LightShoulders: [
 	{i: 48101, n: "Ahamid's Epaulets", p: {coin: 900000}},
@@ -1211,7 +1239,11 @@ LightShoulders: [
 	{i: 80855, n: "Illustrious Epaulets", p: {coin: 900000}},
 	{i: 80264, n: "Refined Envoy Mantle", p: {coin: 900000}},
 	{i: 81285, n: "Triumphant Hero's Epaulets", p: {skirmish: 175}},
-	{i: 81482, n: "Mistforged Triumphant Hero's Epaulets", p: {skirmish: 350}}
+	{i: 81482, n: "Mistforged Triumphant Hero's Epaulets", p: {skirmish: 350}},
+	{i: 84918, n: "Illustrious Epaulets", p: {coin: 900000}},
+	{i: 85066, n: "Nadijeh's Epaulets", p: {coin: 900000}},
+	{i: 85089, n: "Zehtuka's Epaulets", p: {coin: 900000}},
+	{i: 85241, n: "The Twins' Epaulets", p: {coin: 900000}}
 ],
 LightCoat: [
 	{i: 48097, n: "Ahamid's Doublet", p: {coin: 1200000}},
@@ -1255,7 +1287,11 @@ LightCoat: [
 	{i: 67118, n: "Ardent Glorious Raiment", p: {coin: 1200000}},
 	{i: 80120, n: "Refined Envoy Vestments", p: {coin: 1200000}},
 	{i: 81338, n: "Triumphant Hero's Raiment", p: {skirmish: 350}},
-	{i: 81365, n: "Sublime Mistforged Triumphant Hero's Raiment", p: {skirmish: 700}}
+	{i: 81365, n: "Sublime Mistforged Triumphant Hero's Raiment", p: {skirmish: 700}},
+	{i: 85098, n: "Zehtuka's Doublet", p: {coin: 1200000}},
+	{i: 85288, n: "Nadijeh's Doublet", p: {coin: 1200000}},
+	{i: 85319, n: "The Twins' Doublet", p: {coin: 1200000}},
+	{i: 85333, n: "Illustrious Doublet", p: {coin: 1200000}}
 ],
 LightGloves: [
 	{i: 48098, n: "Ahamid's Wristguards", p: {coin: 900000}},
@@ -1304,7 +1340,11 @@ LightGloves: [
 	{i: 80838, n: "Illustrious Wristguards", p: {coin: 900000}},
 	{i: 80460, n: "Refined Envoy Gloves", p: {coin: 900000}},
 	{i: 81428, n: "Triumphant Hero's Armguards", p: {skirmish: 175}},
-	{i: 81510, n: "Mistforged Triumphant Hero's Armguards", p: {skirmish: 350}}
+	{i: 81510, n: "Mistforged Triumphant Hero's Armguards", p: {skirmish: 350}},
+	{i: 84866, n: "Nadijeh's Wristguards", p: {coin: 900000}},
+	{i: 85004, n: "Zehtuka's Wristguards", p: {coin: 900000}},
+	{i: 85048, n: "The Twins' Wristguards", p: {coin: 900000}},
+	{i: 85070, n: "Illustrious Wristguards", p: {coin: 900000}}
 ],
 LightLeggings: [
 	{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -1348,7 +1388,11 @@ LightLeggings: [
 	{i: 80755, n: "Illustrious Breeches", p: {coin: 1100000}},
 	{i: 80275, n: "Refined Envoy Pants", p: {coin: 1100000}},
 	{i: 81279, n: "Triumphant Hero's Leggings", p: {skirmish: 260}},
-	{i: 81397, n: "Mistforged Triumphant Hero's Leggings", p: {skirmish: 520}}
+	{i: 81397, n: "Mistforged Triumphant Hero's Leggings", p: {skirmish: 520}},
+	{i: 84926, n: "Zehtuka's Breeches", p: {coin: 1100000}},
+	{i: 85180, n: "Nadijeh's Breeches", p: {coin: 1100000}},
+	{i: 85352, n: "The Twins' Breeches", p: {coin: 1100000}},
+	{i: 85362, n: "Illustrious Breeches", p: {coin: 1100000}}
 ],
 LightBoots: [
 	{i: 48096, n: "Ahamid's Footwear", p: {coin: 1000000}},
@@ -1392,7 +1436,11 @@ LightBoots: [
 	{i: 80815, n: "Illustrious Footwear", p: {coin: 1000000}},
 	{i: 80583, n: "Refined Envoy Shoes", p: {coin: 1000000}},
 	{i: 81500, n: "Triumphant Hero's Footgear", p: {skirmish: 175}},
-	{i: 81419, n: "Mistforged Triumphant Hero's Footgear", p: {skirmish: 350}}
+	{i: 81419, n: "Mistforged Triumphant Hero's Footgear", p: {skirmish: 350}},
+	{i: 85007, n: "The Twins' Footwear", p: {coin: 1000000}},
+	{i: 85141, n: "Illustrious Footwear", p: {coin: 1000000}},
+	{i: 85317, n: "Zehtuka's Footwear", p: {coin: 1000000}},
+	{i: 85342, n: "Nadijeh's Footwear", p: {coin: 1000000}}
 ],
 MediumHelm: [
 	{i: 48105, n: "Ahamid's Visage", p: {coin: 900000}},
@@ -1437,7 +1485,11 @@ MediumHelm: [
 	{i: 80753, n: "Illustrious Visage", p: {coin: 1000000}},
 	{i: 80634, n: "Refined Envoy Mask", p: {coin: 1000000}},
 	{i: 81315, n: "Triumphant Hero's Faceguard", p: {skirmish: 175}},
-	{i: 81325, n: "Mistforged Triumphant Hero's Faceguard", p: {skirmish: 350}}
+	{i: 81325, n: "Mistforged Triumphant Hero's Faceguard", p: {skirmish: 350}},
+	{i: 84862, n: "Illustrious Visage", p: {coin: 1000000}},
+	{i: 84883, n: "Nadijeh's Visage", p: {coin: 1000000}},
+	{i: 85067, n: "The Twins' Visage", p: {coin: 1000000}},
+	{i: 85172, n: "Zehtuka's Visage", p: {coin: 1000000}}
 ],
 MediumShoulders: [
 	{i: 48107, n: "Ahamid's Shoulderguard", p: {coin: 900000}},
@@ -1483,7 +1535,11 @@ MediumShoulders: [
 	{i: 80825, n: "Illustrious Shoulderguard", p: {coin: 1000000}},
 	{i: 80366, n: "Refined Envoy Shoulderpads", p: {coin: 1000000}},
 	{i: 81446, n: "Triumphant Hero's Shoulderguards", p: {skirmish: 175}},
-	{i: 81471, n: "Mistforged Triumphant Hero's Shoulderguards", p: {skirmish: 350}}
+	{i: 81471, n: "Mistforged Triumphant Hero's Shoulderguards", p: {skirmish: 350}},
+	{i: 85054, n: "The Twins' Shoulderguard", p: {coin: 1000000}},
+	{i: 85182, n: "Illustrious Shoulderguard", p: {coin: 1000000}},
+	{i: 85183, n: "Zehtuka's Shoulderguard", p: {coin: 1000000}},
+	{i: 85226, n: "Nadijeh's Shoulderguard", p: {coin: 1000000}}
 ],
 MediumCoat: [
 	{i: 48103, n: "Ahamid's Guise", p: {coin: 1200000}},
@@ -1527,7 +1583,11 @@ MediumCoat: [
 	{i: 80798, n: "Illustrious Guise", p: {coin: 1200000}},
 	{i: 80607, n: "Refined Envoy Jerkin", p: {coin: 1200000}},
 	{i: 81434, n: "Triumphant Hero's Brigandine", p: {skirmish: 350}},
-	{i: 81483, n: "Sublime Mistforged Triumphant Hero's Brigandine", p: {skirmish: 700}}
+	{i: 81483, n: "Sublime Mistforged Triumphant Hero's Brigandine", p: {skirmish: 700}},
+	{i: 84923, n: "Zehtuka's Guise", p: {coin: 1200000}},
+	{i: 84977, n: "Illustrious Guise", p: {coin: 1200000}},
+	{i: 85062, n: "The Twins' Guise", p: {coin: 1200000}},
+	{i: 85083, n: "Nadijeh's Guise", p: {coin: 1200000}}
 ],
 MediumGloves: [
 	{i: 48104, n: "Ahamid's Grips", p: {coin: 900000}},
@@ -1576,7 +1636,11 @@ MediumGloves: [
 	{i: 80689, n: "Illustrious Grips", p: {coin: 900000}},
 	{i: 80658, n: "Refined Envoy Vambraces", p: {coin: 900000}},
 	{i: 81286, n: "Mistforged Triumphant Hero's Wristplates", p: {skirmish: 175}},
-	{i: 81489, n: "Triumphant Hero's Wristplates", p: {skirmish: 350}}
+	{i: 81489, n: "Triumphant Hero's Wristplates", p: {skirmish: 350}},
+	{i: 84983, n: "Zehtuka's Grips", p: {coin: 900000}},
+	{i: 85154, n: "Nadijeh's Grips", p: {coin: 900000}},
+	{i: 85169, n: "Illustrious Grips", p: {coin: 900000}},
+	{i: 85208, n: "The Twins' Grips", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -1620,7 +1684,11 @@ MediumLeggings: [
 	{i: 80812, n: "Illustrious Leggings", p: {coin: 900000}},
 	{i: 80675, n: "Refined Envoy Leggings", p: {coin: 900000}},
 	{i: 81386, n: "Triumphant Hero's Legguards", p: {skirmish: 260}},
-	{i: 81527, n: "Mistforged Triumphant Hero's Legguards", p: {skirmish: 520}}
+	{i: 81527, n: "Mistforged Triumphant Hero's Legguards", p: {skirmish: 520}},
+	{i: 85021, n: "Nadijeh's Leggings", p: {coin: 900000}},
+	{i: 85149, n: "Zehtuka's Leggings", p: {coin: 900000}},
+	{i: 85264, n: "Illustrious Leggings", p: {coin: 900000}},
+	{i: 85324, n: "The Twins' Leggings", p: {coin: 900000}}
 ],
 MediumBoots: [
 	{i: 48102, n: "Ahamid's Striders", p: {coin: 1000000}},
@@ -1664,7 +1732,11 @@ MediumBoots: [
 	{i: 80694, n: "Illustrious Striders", p: {coin: 1000000}},
 	{i: 80177, n: "Refined Envoy Boots", p: {coin: 1000000}},
 	{i: 81420, n: "Triumphant Hero's Shinplates", p: {skirmish: 175}},
-	{i: 81422, n: "Mistforged Triumphant Hero's Shinplates", p: {skirmish: 350}}
+	{i: 81422, n: "Mistforged Triumphant Hero's Shinplates", p: {skirmish: 350}},
+	{i: 84954, n: "Nadijeh's Striders", p: {coin: 1000000}},
+	{i: 85148, n: "Illustrious Striders", p: {coin: 1000000}},
+	{i: 85308, n: "The Twins' Striders", p: {coin: 1000000}},
+	{i: 85343, n: "Zehtuka's Striders", p: {coin: 1000000}}
 ],
 HeavyHelm: [
 	{i: 48093, n: "Ahamid's Visor", p: {coin: 900000}},
@@ -1709,7 +1781,11 @@ HeavyHelm: [
 	{i: 80832, n: "Illustrious Visor", p: {coin: 900000}},
 	{i: 80748, n: "Illustrious Visor", p: {coin: 900000}},
 	{i: 81330, n: "Triumphant Hero's Warhelm", p: {skirmish: 175}},
-	{i: 81498, n: "Mistforged Triumphant Hero's Warhelm", p: {skirmish: 350}}
+	{i: 81498, n: "Mistforged Triumphant Hero's Warhelm", p: {skirmish: 350}},
+	{i: 84879, n: "Zehtuka's Visor", p: {coin: 900000}},
+	{i: 85193, n: "Illustrious Visor", p: {coin: 900000}},
+	{i: 85274, n: "Nadijeh's Visor", p: {coin: 900000}},
+	{i: 85350, n: "The Twins' Visor", p: {coin: 900000}}
 ],
 HeavyShoulders: [
 	{i: 48095, n: "Ahamid's Pauldrons", p: {coin: 900000}},
@@ -1755,7 +1831,11 @@ HeavyShoulders: [
 	{i: 80749, n: "Illustrious Pauldrons", p: {coin: 900000}},
 	{i: 80814, n: "Illustrious Pauldrons", p: {coin: 900000}},
 	{i: 81333, n: "Triumphant Hero's Pauldrons", p: {skirmish: 175}},
-	{i: 81375, n: "Mistforged Triumphant Hero's Pauldrons", p: {skirmish: 350}}
+	{i: 81375, n: "Mistforged Triumphant Hero's Pauldrons", p: {skirmish: 350}},
+	{i: 84875, n: "Illustrious Pauldrons", p: {coin: 900000}},
+	{i: 85286, n: "Zehtuka's Pauldrons", p: {coin: 900000}},
+	{i: 85335, n: "Nadijeh's Pauldrons", p: {coin: 900000}},
+	{i: 85355, n: "The Twins' Pauldrons", p: {coin: 900000}}
 ],
 HeavyCoat: [
 	{i: 48091, n: "Ahamid's Breastplate", p: {coin: 1200000}},
@@ -1799,7 +1879,11 @@ HeavyCoat: [
 	{i: 80715, n: "Illustrious Breastplate", p: {coin: 1200000}},
 	{i: 80818, n: "Illustrious Breastplate", p: {coin: 1200000}},
 	{i: 81304, n: "Triumphant Hero's Breastplate", p: {skirmish: 350}},
-	{i: 81509, n: "Sublime Mistforged Triumphant Hero's Breastplate", p: {skirmish: 700}}
+	{i: 81509, n: "Sublime Mistforged Triumphant Hero's Breastplate", p: {skirmish: 700}},
+	{i: 85042, n: "The Twins' Breastplate", p: {coin: 1200000}},
+	{i: 85084, n: "Illustrious Breastplate", p: {coin: 1200000}},
+	{i: 85126, n: "Zehtuka's Breastplate", p: {coin: 1200000}},
+	{i: 85223, n: "Nadijeh's Breastplate", p: {coin: 1200000}}
 ],
 HeavyGloves: [
 	{i: 48092, n: "Ahamid's Warfists", p: {coin: 900000}},
@@ -1848,7 +1932,11 @@ HeavyGloves: [
 	{i: 80722, n: "Illustrious Warfists", p: {coin: 900000}},
 	{i: 80834, n: "Illustrious Warfists", p: {coin: 900000}},
 	{i: 81349, n: "Triumphant Hero's Gauntlets", p: {skirmish: 175}},
-	{i: 81458, n: "Mistforged Triumphant Hero's Gauntlets", p: {skirmish: 350}}
+	{i: 81458, n: "Mistforged Triumphant Hero's Gauntlets", p: {skirmish: 350}},
+	{i: 85140, n: "Illustrious Warfists", p: {coin: 900000}},
+	{i: 85225, n: "Nadijeh's Warfists", p: {coin: 900000}},
+	{i: 85300, n: "The Twins' Warfists", p: {coin: 900000}},
+	{i: 85330, n: "Zehtuka's Warfist", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -1892,7 +1980,11 @@ HeavyLeggings: [
 	{i: 80713, n: "Illustrious Tassets", p: {coin: 1100000}},
 	{i: 80845, n: "Illustrious Tassets", p: {coin: 1100000}},
 	{i: 81418, n: "Triumphant Hero's Legplates", p: {skirmish: 520}},
-	{i: 81340, n: "Mistforged Triumphant Hero's Legplates", p: {skirmish: 260}}
+	{i: 81340, n: "Mistforged Triumphant Hero's Legplates", p: {skirmish: 260}},
+	{i: 84887, n: "Illustrious Tassets", p: {coin: 1100000}},
+	{i: 84911, n: "The Twins' Tassets", p: {coin: 1100000}},
+	{i: 85024, n: "Zehtuka's Tassets", p: {coin: 1100000}},
+	{i: 85071, n: "Nadijeh's Tassets", p: {coin: 1100000}}
 ],
 HeavyBoots: [
 	{i: 48090, n: "Ahamid's Greaves", p: {coin: 900000}},
@@ -1936,7 +2028,11 @@ HeavyBoots: [
 	{i: 80803, n: "Illustrious Greaves", p: {coin: 900000}},
 	{i: 80808, n: "Illustrious Greaves", p: {coin: 900000}},
 	{i: 81336, n: "Triumphant Hero's Wargreaves", p: {skirmish: 175}},
-	{i: 81437, n: "Mistforged Triumphant Hero's Wargreaves", p: {skirmish: 350}}
+	{i: 81437, n: "Mistforged Triumphant Hero's Wargreaves", p: {skirmish: 350}},
+	{i: 85041, n: "Nadijeh's Greaves", p: {coin: 900000}},
+	{i: 85055, n: "Illustrious Greaves", p: {coin: 900000}},
+	{i: 85093, n: "The Twins' Greaves", p: {coin: 900000}},
+	{i: 85196, n: "Zehtuka's Greaves", p: {coin: 900000}}
 ],
 LightHelmAquatic: [
 	{i: 73723, n: "Ahamid's Cloth Breather", p: {coin: 900000}},
@@ -2051,7 +2147,13 @@ Axe: [
 	{i: 80180, n: "Defender's Axe of the Unseen", p: {magnetite: 600}},
 	{i: 80568, n: "Healer's Axe of the Unseen", p: {magnetite: 600}},
 	{i: 80318, n: "Thackeray's Cleaver", p: {coin: 1100000}},
-	{i: 81321, n: "Mistforged Hero's Axe", p: {coin: 1100000}}
+	{i: 81321, n: "Mistforged Hero's Axe", p: {coin: 1100000}},
+	{i: 83445, n: "Expurgation", p: {coin: 1100000}},
+	{i: 84687, n: "Veilrender", p: {coin: 1100000}},
+	{i: 85047, n: "Zehtuka's Reaver", p: {coin: 1100000}},
+	{i: 85105, n: "Cobalt Antique Reaver", p: {coin: 1100000}},
+	{i: 85233, n: "Nadijeh's Reaver", p: {coin: 1100000}},
+	{i: 85253, n: "The Twins' Reaver", p: {coin: 1100000}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -2097,7 +2199,12 @@ Mace: [
 	{i: 80206, n: "Defender's Demon Virge", p: {magnetite: 600}},
 	{i: 80310, n: "Healer's Demon Virge", p: {magnetite: 600}},
 	{i: 80624, n: "Thackeray's Gavel", p: {coin: 1100000}},
-	{i: 81514, n: "Mistforged Hero's Mace", p: {coin: 1100000}}
+	{i: 81514, n: "Mistforged Hero's Mace", p: {coin: 1100000}},
+	{i: 84912, n: "Zehtuka's Flanged Mace", p: {coin: 1100000}},
+	{i: 85166, n: "Nadijeh's Flanged Mace", p: {coin: 1100000}},
+	{i: 85267, n: "Cobalt Antique Flanged Mace", p: {coin: 1100000}},
+	{i: 85295, n: "The Twins' Flanged Mace", p: {coin: 1100000}},
+	{i: 85406, n: "Sikandar", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2145,7 +2252,13 @@ Sword: [
 	{i: 80512, n: "Thackeray's Gladius", p: {coin: 1200000}},
 	{i: 80710, n: "Caladbolg Rosa", p: {coin: 1200000}},
 	{i: 81376, n: "Mistforged Hero's Sword", p: {coin: 1200000}},
-	{i: 81812, n: "Save the Queen", p: {coin: 1200000}}
+	{i: 81812, n: "Save the Queen", p: {coin: 1200000}},
+	{i: 82617, n: "Warpblade", p: {coin: 1200000}},
+	{i: 84512, n: "The Cutting Edge", p: {coin: 1200000}},
+	{i: 84876, n: "The Twins' Blade", p: {coin: 1200000}},
+	{i: 84939, n: "Zehtuka's Blade", p: {coin: 1200000}},
+	{i: 85008, n: "Nadijeh's Blade", p: {coin: 1200000}},
+	{i: 85250, n: "Cobalt Antique Blade", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -2191,7 +2304,13 @@ Dagger: [
 	{i: 78943, n: "Assaulter's White Mantle Slicer", p: {magnetite: 600}},
 	{i: 80163, n: "Thackeray's Slicer", p: {coin: 1100000}},
 	{i: 80732, n: "Caladbolg Solana", p: {coin: 1100000}},
-	{i: 81451, n: "Mistforged Hero's Dagger", p: {coin: 1100000}}
+	{i: 81451, n: "Mistforged Hero's Dagger", p: {coin: 1100000}},
+	{i: 83902, n: "Silence of a Thousand Years", p: {coin: 1100000}},
+	{i: 83923, n: "Fang of Mokèlé", p: {coin: 1100000}},
+	{i: 84909, n: "Nadijeh's Razor", p: {coin: 1100000}},
+	{i: 84936, n: "The Twins' Razor", p: {coin: 1100000}},
+	{i: 85017, n: "Cobalt Antique Razor", p: {coin: 1100000}},
+	{i: 85051, n: "Zehtuka's Razor", p: {coin: 1100000}}
 ],
 Pistol: [
 	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
@@ -2237,7 +2356,11 @@ Pistol: [
 	{i: 80330, n: "Defender's Indomitable Pistol", p: {magnetite: 600}},
 	{i: 80559, n: "Healer's Indomitable Pistol", p: {magnetite: 600}},
 	{i: 80520, n: "Thackeray's Handcannon", p: {coin: 1100000}},
-	{i: 81270, n: "Mistforged Hero's Pistol", p: {coin: 1100000}}
+	{i: 81270, n: "Mistforged Hero's Pistol", p: {coin: 1100000}},
+	{i: 84878, n: "Zehtuka's Revolver", p: {coin: 1100000}},
+	{i: 84931, n: "The Twins' Revolver", p: {coin: 1100000}},
+	{i: 85010, n: "Cobalt Antique Revolver", p: {coin: 1100000}},
+	{i: 85061, n: "Nadijeh's Revolver", p: {coin: 1100000}}
 ],
 Scepter: [
 	{i: 77441, n: "Chest of Scepters", p: {coin: 1100000}},
@@ -2283,7 +2406,12 @@ Scepter: [
 	{i: 78980, n: "Healer's White Mantle Rod", p: {magnetite: 600}},
 	{i: 80375, n: "Thackeray's Rod", p: {coin: 1100000}},
 	{i: 80741, n: "Caladbolg Iridi", p: {coin: 1100000}},
-	{i: 81400, n: "Mistforged Hero's Scepter", p: {coin: 1100000}}
+	{i: 81400, n: "Mistforged Hero's Scepter", p: {coin: 1100000}},
+	{i: 85027, n: "Zehtuka's Wand", p: {coin: 1100000}},
+	{i: 85076, n: "The Twins' Wand", p: {coin: 1100000}},
+	{i: 85109, n: "Nadijeh's Wand", p: {coin: 1100000}},
+	{i: 85117, n: "Cobalt Antique Wand", p: {coin: 1100000}},
+	{i: 85380, n: "Antonina", p: {coin: 1100000}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -2328,7 +2456,11 @@ Focus: [
 	{i: 78964, n: "Healer's White Mantle Icon", p: {magnetite: 600}},
 	{i: 78991, n: "Malicious White Mantle Icon", p: {magnetite: 600}},
 	{i: 80486, n: "Thackeray's Focus", p: {coin: 1000000}},
-	{i: 81503, n: "Mistforged Hero's Focus", p: {coin: 1000000}}
+	{i: 81503, n: "Mistforged Hero's Focus", p: {coin: 1000000}},
+	{i: 84872, n: "Cobalt Antique Artifact", p: {coin: 1000000}},
+	{i: 85044, n: "The Twins' Artifact", p: {coin: 1000000}},
+	{i: 85224, n: "Nadijeh's Artifact", p: {coin: 1000000}},
+	{i: 85346, n: "Zehtuka's Artifact", p: {coin: 1000000}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -2378,7 +2510,11 @@ Shield: [
 	{i: 79836, n: "Friendship", p: {coin: 1000000}},
 	{i: 80133, n: "Thackeray's Bulwark", p: {coin: 1000000}},
 	{i: 80786, n: "Caladbolg Astera", p: {coin: 1000000}},
-	{i: 81339, n: "Mistforged Hero's Shield", p: {coin: 1000000}}
+	{i: 81339, n: "Mistforged Hero's Shield", p: {coin: 1000000}},
+	{i: 84957, n: "Zehtuka's Bastion", p: {coin: 1000000}},
+	{i: 85266, n: "The Twins' Bastion", p: {coin: 1000000}},
+	{i: 85357, n: "Nadijeh's Bastion", p: {coin: 1000000}},
+	{i: 85360, n: "Cobalt Antique Bastion", p: {coin: 1000000}}
 ],
 Torch: [
 	{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
@@ -2425,7 +2561,12 @@ Torch: [
 	{i: 78986, n: "Assaulter's Keep Construct Torch", p: {magnetite: 600}},
 	{i: 80683, n: "Thackeray's Flame", p: {coin: 1000000}},
 	{i: 81022, n: "Liturgy", p: {coin: 1000000}},
-	{i: 81327, n: "Mistforged Hero's Torch", p: {coin: 1000000}}
+	{i: 81327, n: "Mistforged Hero's Torch", p: {coin: 1000000}},
+	{i: 82693, n: "Guide for the Lost", p: {coin: 1000000}},
+	{i: 85006, n: "The Twins' Brazier", p: {coin: 1000000}},
+	{i: 85013, n: "Zehtuka's Brazier", p: {coin: 1000000}},
+	{i: 85152, n: "Nadijeh's Brazier", p: {coin: 1000000}},
+	{i: 85323, n: "Cobalt Antique Brazier", p: {coin: 1000000}}
 ],
 Warhorn: [
 	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
@@ -2471,7 +2612,11 @@ Warhorn: [
 	{i: 80482, n: "Defender's Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
 	{i: 80537, n: "Healer's Watchkeeper Trophy Warhorn", p: {magnetite: 600}},
 	{i: 80407, n: "Thackeray's Bugle", p: {coin: 1000000}},
-	{i: 81337, n: "Mistforged Hero's Warhorn", p: {coin: 1000000}}
+	{i: 81337, n: "Mistforged Hero's Warhorn", p: {coin: 1000000}},
+	{i: 84973, n: "Zehtuka's Herald", p: {coin: 1000000}},
+	{i: 85074, n: "The Twins' Herald", p: {coin: 1000000}},
+	{i: 85116, n: "Nadijeh's Herald", p: {coin: 1000000}},
+	{i: 85307, n: "Cobalt Antique Herald", p: {coin: 1000000}}
 ],
 Greatsword: [
 	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
@@ -2518,7 +2663,11 @@ Greatsword: [
 	{i: 78059, n: "Kaiser Snake Greatsword", p: {coin: 1200000}},
 	{i: 80226, n: "Thackeray's Crusader", p: {coin: 1200000}},
 	{i: 80824, n: "Caladbolg Orchida", p: {coin: 1200000}},
-	{i: 81309, n: "Mistforged Hero's Greatsword", p: {coin: 1200000}}
+	{i: 81309, n: "Mistforged Hero's Greatsword", p: {coin: 1200000}},
+	{i: 85019, n: "The Twins' Claymore", p: {coin: 1200000}},
+	{i: 85121, n: "Zehtuka's Claymore", p: {coin: 1200000}},
+	{i: 85222, n: "Nadijeh's Claymore", p: {coin: 1200000}},
+	{i: 85251, n: "Cobalt Antique Claymore", p: {coin: 1200000}}
 ],
 Hammer: [
 	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -2569,7 +2718,11 @@ Hammer: [
 	{i: 80099, n: "Defender's Demon Gavel", p: {magnetite: 600}},
 	{i: 80522, n: "Thackeray's Crusher", p: {coin: 1100000}},
 	{i: 81374, n: "Mistforged Hero's Hammer", p: {coin: 1100000}},
-	{i: 81634, n: "Might of Arah", p: {coin: 1100000}}
+	{i: 81634, n: "Might of Arah", p: {coin: 1100000}},
+	{i: 85060, n: "Cobalt Antique Warhammer", p: {coin: 1100000}},
+	{i: 85228, n: "Zehtuka's Warhammer", p: {coin: 1100000}},
+	{i: 85249, n: "The Twins' Warhammer", p: {coin: 1100000}},
+	{i: 85347, n: "Nadijeh's Warhammer", p: {coin: 1100000}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
@@ -2615,7 +2768,11 @@ LongBow: [
 	{i: 80493, n: "Defender's Arbiter Greatbow", p: {magnetite: 600}},
 	{i: 80194, n: "Healer's Arbiter Greatbow", p: {magnetite: 600}},
 	{i: 80402, n: "Thackeray's Greatbow", p: {coin: 1300000}},
-	{i: 81289, n: "Mistforged Hero's Longbow", p: {coin: 1300000}}
+	{i: 81289, n: "Mistforged Hero's Longbow", p: {coin: 1300000}},
+	{i: 84888, n: "Cobalt Antique Greatbow", p: {coin: 1300000}},
+	{i: 85073, n: "Nadijeh's Greatbow", p: {coin: 1300000}},
+	{i: 85111, n: "Zehtuka's Greatbow", p: {coin: 1300000}},
+	{i: 85212, n: "The Twins' Greatbow", p: {coin: 1300000}}
 ],
 ShortBow: [
 	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
@@ -2661,7 +2818,12 @@ ShortBow: [
 	{i: 80333, n: "Healer's Watchkeeper Trophy Bow", p: {magnetite: 600}},
 	{i: 80461, n: "Malicious Watchkeeper Trophy Bow", p: {magnetite: 600}},
 	{i: 80391, n: "Thackeray's Crescent", p: {coin: 1300000}},
-	{i: 81329, n: "Mistforged Hero's Short Bow", p: {coin: 1300000}}
+	{i: 81329, n: "Mistforged Hero's Short Bow", p: {coin: 1300000}},
+	{i: 82794, n: "Guerrilla Arc", p: {coin: 1300000}},
+	{i: 85052, n: "Cobalt Antique Short Bow", p: {coin: 1300000}},
+	{i: 85156, n: "Nadijeh's Short Bow", p: {coin: 1300000}},
+	{i: 85200, n: "Zehtuka's Short Bow", p: {coin: 1300000}},
+	{i: 85242, n: "The Twins' Short Bow", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
@@ -2707,7 +2869,12 @@ Rifle: [
 	{i: 78967, n: "Defender's White Mantle Rifle", p: {magnetite: 600}},
 	{i: 80135, n: "Man o' War", p: {coin: 1200000}},
 	{i: 80116, n: "Thackeray's Rifle", p: {coin: 1200000}},
-	{i: 81528, n: "Mistforged Hero's Rifle", p: {coin: 1200000}}
+	{i: 81528, n: "Mistforged Hero's Rifle", p: {coin: 1200000}},
+	{i: 82813, n: "Cursed Flintlock", p: {coin: 1200000}},
+	{i: 84886, n: "Nadijeh's Musket", p: {coin: 1200000}},
+	{i: 85072, n: "The Twins' Musket", p: {coin: 1200000}},
+	{i: 85262, n: "Cobalt Antique Musket", p: {coin: 1200000}},
+	{i: 85348, n: "Zehtuka's Musket", p: {coin: 1200000}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
@@ -2768,7 +2935,11 @@ Staff: [
 	{i: 80476, n: "Defender's Treasured Bough", p: {magnetite: 600}},
 	{i: 80243, n: "Healer's Treasured Bough", p: {magnetite: 600}},
 	{i: 80158, n: "Thackeray's Pillar", p: {coin: 1200000}},
-	{i: 81382, n: "Mistforged Hero's Staff", p: {coin: 1200000}}
+	{i: 81382, n: "Mistforged Hero's Staff", p: {coin: 1200000}},
+	{i: 85001, n: "The Twins' Spire", p: {coin: 1200000}},
+	{i: 85026, n: "Cobalt Antique Spire", p: {coin: 1200000}},
+	{i: 85112, n: "Zehtuka's Spire", p: {coin: 1200000}},
+	{i: 85356, n: "Nadijeh's Spire", p: {coin: 1200000}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},
@@ -2802,7 +2973,10 @@ Harpoon: [
 	{i: 75413, n: "Ruka's Impaler", p: {coin: 1100000}},
 	{i: 76212, n: "Maklain's Impaler", p: {coin: 1100000}},
 	{i: 80670, n: "Thackeray's Skewer", p: {coin: 1100000}},
-	{i: 81399, n: "Mistforged Hero's Spear", p: {coin: 1100000}}
+	{i: 81399, n: "Mistforged Hero's Spear", p: {coin: 1100000}},
+	{i: 84899, n: "Cobalt Antique Impaler", p: {coin: 1100000}},
+	{i: 85131, n: "Zehtuka's Impaler", p: {coin: 1100000}},
+	{i: 85254, n: "The Twins' Impaler", p: {coin: 1100000}}
 ],
 Speargun: [
 	{i: 77285, n: "Chest of Harpoon Guns", p: {coin: 1300000}},
@@ -2837,7 +3011,10 @@ Speargun: [
 	{i: 76436, n: "Pahua's Harpoon Gun", p: {coin: 1300000}},
 	{i: 76648, n: "Tizlak's Harpoon Gun", p: {coin: 1300000}},
 	{i: 80447, n: "Thackeray's Harpoon Gun", p: {coin: 1300000}},
-	{i: 81358, n: "Mistforged Hero's Harpoon Gun", p: {coin: 1300000}}
+	{i: 81358, n: "Mistforged Hero's Harpoon Gun", p: {coin: 1300000}},
+	{i: 85036, n: "Zehtuka's Harpoon Gun", p: {coin: 1300000}},
+	{i: 85293, n: "Nadijeh's Harpoon Gun", p: {coin: 1300000}},
+	{i: 85341, n: "Cobalt Antique Harpoon Gun", p: {coin: 1300000}}
 ],
 Trident: [
 	{i: 77329, n: "Chest of Tridents", p: {coin: 1000000}},
@@ -2871,6 +3048,10 @@ Trident: [
 	{i: 76207, n: "Pahua's Trident", p: {coin: 1000000}},
 	{i: 76970, n: "Tizlak's Trident", p: {coin: 1000000}},
 	{i: 80618, n: "Thackeray's Spire", p: {coin: 1000000}},
-	{i: 81499, n: "Mistforged Hero's Trident", p: {coin: 1000000}}
+	{i: 81499, n: "Mistforged Hero's Trident", p: {coin: 1000000}},
+	{i: 85094, n: "The Twins' Trident", p: {coin: 1000000}},
+	{i: 85187, n: "Nadijeh's Trident", p: {coin: 1000000}},
+	{i: 85265, n: "Cobalt Antique Trident", p: {coin: 1000000}},
+	{i: 85345, n: "Zehtuka's Trident", p: {coin: 1000000}}
 ]
 };

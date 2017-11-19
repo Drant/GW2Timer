@@ -309,6 +309,8 @@ Back: [
 	{u: 2340, i: 6546, n: "中Universal Multitool Pack", p: {starting: true}},
 	{u: 2336, i: 36397, n: "Mad Memoires", p: {achievement: 0}},
 	{u: 2338, i: 36398, n: "Mad Memoires: Complete Edition", p: {achievement: 0}},
+	{u: 7775, i: 85459, n: "Mad Memoires: Complete Ignition", p: {achievement: 0}},
+	{u: 7760, i: 85479, n: "Mad Memoires: Complete Superstition", p: {achievement: 0}},
 	{u: 2374, i: 38473, n: "Lined Toymaker's Bag", p: {achievement: 0}},
 	{u: 2375, i: 38474, n: "Toymaker's Bag", p: {achievement: 0}},
 	{u: 2377, i: 37054, n: "Prototype Fractal Capacitor", p: {fotm_relic: 1350}},
@@ -518,7 +520,8 @@ Back: [
 	{u: 7692, i: 82877, n: "Banners of the Sunspear Order", p: {achievement: 0}},
 	{u: 7661, i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
 	{u: 7743, i: 85332, n: "Branded Wing Backpack", p: {gem: 700}},
-	{u: 7755, i: 85326, n: "Jackal Pup Backpack", p: {gem: 0}}
+	{u: 7755, i: 85326, n: "Jackal Pup Backpack", p: {gem: 0}},
+	{u: 7811, i: 85593, n: "Wild Magic Backpack", p: {gem: 0}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", b: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -684,7 +687,7 @@ Armor_Light_Helm: [
 	{u: 7512, i: 85142, n: "Elonian Cowl", p: {achievement: 0}},
 	{u: 7578, i: 85287, n: "Warbeast Cowl", b: [82181]},
 	{u: 7592, i: 83553, n: "Spearmarshal's Cowl", b: [83553]},
-	{u: 7776, i: 85464, n: "Lunatic Acolyte Mask", p: {achievement: 0}},
+	{u: 7776, i: 85464, n: "Lunatic Acolyte Mask", p: {craft: true}},
 	{u: 7782, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
 ],
 Armor_Light_Shoulders: [
@@ -785,7 +788,7 @@ Armor_Light_Shoulders: [
 	{u: 7647, i: 85097, n: "Warbeast Mantle", b: [84183]},
 	{u: 7648, i: 85269, n: "Bounty Hunter's Mantle", p: {craft: true}},
 	{u: 7713, i: 85003, n: "Elonian Mantle", p: {achievement: 0}},
-	{u: 7763, i: 85392, n: "Lunatic Acolyte Mantle", p: {achievement: 0}}
+	{u: 7763, i: 85392, n: "Lunatic Acolyte Mantle", p: {craft: true}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", b: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -866,7 +869,7 @@ Armor_Light_Coat: [
 	{u: 7530, i: 83247, n: "Funerary Vestments", p: {mosaic: 18}},
 	{u: 7640, i: 84890, n: "Bounty Hunter's Vestments", p: {craft: true}},
 	{u: 7662, i: 85232, n: "Elonian Vestments", p: {achievement: 0}},
-	{u: 7759, i: 85477, n: "Lunatic Acolyte Coat", p: {achievement: 0}}
+	{u: 7759, i: 85477, n: "Lunatic Acolyte Coat", p: {craft: true}}
 ],
 Armor_Light_Gloves: [
 	{u: 25, i: 3175, n: "Apprentice Gloves", b: [2975, 2964, 2966, 2970, 2969, 2971, 2973, 2967, 2974, 2978, 2968, 2972, 2977, 2963, 2976, 2965, 3139, 3157, 3121, 3175, 3340, 3339, 3342, 3345, 3344, 3341, 3346, 3355, 3343, 3347, 3348, 3350, 3349, 3351, 3354, 3352, 3353, 3358, 3356, 3357, 5036, 5052, 5070, 5106, 5023, 5088, 5142, 5124, 5160, 5196, 5178, 5214, 5232, 5250, 5286, 5268]},
@@ -962,7 +965,7 @@ Armor_Light_Gloves: [
 	{u: 7627, i: 84616, n: "Weaver's Antipodes", p: {achievement: 0}},
 	{u: 7672, i: 84922, n: "Elonian Gloves", p: {achievement: 0}},
 	{u: 7710, i: 85145, n: "Warbeast Gloves", b: [84267]},
-	{u: 7792, i: 85503, n: "Lunatic Acolyte Gloves", p: {achievement: 0}}
+	{u: 7792, i: 85503, n: "Lunatic Acolyte Gloves", p: {craft: true}}
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", b: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -1043,7 +1046,7 @@ Armor_Light_Leggings: [
 	{u: 7619, i: 84120, n: "Spearmarshal's Pants", b: [84120]},
 	{u: 7639, i: 85000, n: "Bounty Hunter's Pants", p: {craft: true}},
 	{u: 7716, i: 84982, n: "Warbeast Pants", b: [82436]},
-	{u: 7780, i: 85490, n: "Lunatic Acolyte Pants", p: {achievement: 0}}
+	{u: 7780, i: 85490, n: "Lunatic Acolyte Pants", p: {craft: true}}
 ],
 Armor_Light_Boots: [
 	{u: 16, i: 3173, n: "Apprentice Shoes", b: [2932, 2933, 2938, 2936, 2937, 2935, 2941, 2940, 2942, 2945, 2944, 2931, 2946, 2934, 2939, 2943, 3119, 3137, 3155, 3173, 3300, 3317, 3301, 3302, 3303, 3304, 3306, 3308, 3307, 3313, 3312, 3309, 3311, 3299, 3316, 3318, 3305, 3310, 3314, 3315, 5068, 5050, 5122, 5021, 5034, 5104, 5140, 5158, 5086, 5194, 5176, 5230, 5212, 5248, 5266, 5284]},
@@ -1129,7 +1132,7 @@ Armor_Light_Boots: [
 	{u: 7473, i: 85177, n: "Warbeast Shoes", b: [83452]},
 	{u: 7486, i: 85198, n: "Elonian Shoes", p: {achievement: 0}},
 	{u: 7748, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
-	{u: 7793, i: 85385, n: "Lunatic Acolyte Boots", p: {achievement: 0}}
+	{u: 7793, i: 85385, n: "Lunatic Acolyte Boots", p: {craft: true}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1289,7 +1292,7 @@ Armor_Medium_Helm: [
 	{u: 7594, i: 85275, n: "Warbeast Mask", b: [84240]},
 	{u: 7696, i: 84932, n: "Elonian Mask", p: {achievement: 0}},
 	{u: 7708, i: 84375, n: "Funerary Mask", p: {mosaic: 6}},
-	{u: 7770, i: 85497, n: "Lunatic Noble Mask", p: {achievement: 0}},
+	{u: 7770, i: 85497, n: "Lunatic Noble Mask", p: {craft: true}},
 	{u: 7800, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
 ],
 Armor_Medium_Shoulders: [
@@ -1389,7 +1392,8 @@ Armor_Medium_Shoulders: [
 	{u: 7427, i: 82726, n: "Funerary Shoulderpads", p: {mosaic: 12}},
 	{u: 7622, i: 84563, n: "Holosmith's Lucent Vent", p: {achievement: 0}},
 	{u: 7635, i: 84958, n: "Bounty Hunter's Shoulderpads", p: {craft: true}},
-	{u: 7644, i: 84484, n: "Deadeye's Brace", p: {achievement: 0}}
+	{u: 7644, i: 84484, n: "Deadeye's Brace", p: {achievement: 0}},
+	{u: 7796, i: 85463, n: "Lunatic Noble Shoulders", p: {craft: true}}
 ],
 Armor_Medium_Coat: [
 	{u: 6, i: 41169, n: "Rawhide Vest", p: {badge: 30}},
@@ -1469,7 +1473,7 @@ Armor_Medium_Coat: [
 	{u: 7435, i: 84598, n: "Spearmarshal's Jerkin", b: [84598]},
 	{u: 7537, i: 84669, n: "Funerary Jerkin", p: {mosaic: 18}},
 	{u: 7703, i: 85305, n: "Bounty Hunter's Jerkin", p: {craft: true}},
-	{u: 7781, i: 85449, n: "Lunatic Noble Coat", p: {achievement: 0}}
+	{u: 7781, i: 85449, n: "Lunatic Noble Coat", p: {craft: true}}
 ],
 Armor_Medium_Gloves: [
 	{u: 32, i: 41170, n: "Rawhide Bracers", p: {badge: 10}},
@@ -1564,7 +1568,7 @@ Armor_Medium_Gloves: [
 	{u: 7624, i: 85167, n: "Warbeast Vambraces", b: [83890]},
 	{u: 7675, i: 85032, n: "Bounty Hunter's Vambraces", p: {craft: true}},
 	{u: 7711, i: 83574, n: "Funerary Vambraces", p: {mosaic: 6}},
-	{u: 7799, i: 85407, n: "Lunatic Noble Gloves", p: {achievement: 0}}
+	{u: 7799, i: 85407, n: "Lunatic Noble Gloves", p: {craft: true}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1644,7 +1648,7 @@ Armor_Medium_Leggings: [
 	{u: 7522, i: 85106, n: "Elonian Leggings", p: {achievement: 0}},
 	{u: 7618, i: 82233, n: "Funerary Leggings", p: {mosaic: 18}},
 	{u: 7653, i: 84979, n: "Bounty Hunter's Leggings", p: {craft: true}},
-	{u: 7774, i: 85420, n: "Lunatic Noble Pants", p: {achievement: 0}}
+	{u: 7774, i: 85420, n: "Lunatic Noble Pants", p: {craft: true}}
 ],
 Armor_Medium_Boots: [
 	{u: 19, i: 41168, n: "Rawhide Boots", p: {badge: 10}},
@@ -1729,7 +1733,7 @@ Armor_Medium_Boots: [
 	{u: 7557, i: 84410, n: "Spearmarshal's Boots", b: [84410]},
 	{u: 7695, i: 84903, n: "Bounty Hunter's Boots", p: {craft: true}},
 	{u: 7725, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
-	{u: 7803, i: 85519, n: "Lunatic Noble Boots", p: {achievement: 0}}
+	{u: 7803, i: 85519, n: "Lunatic Noble Boots", p: {craft: true}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", b: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1891,7 +1895,7 @@ Armor_Heavy_Helm: [
 	{u: 7604, i: 84938, n: "Elonian Helmet", p: {achievement: 0}},
 	{u: 7625, i: 84014, n: "Swaggering Hat", p: {gem: 400}},
 	{u: 7685, i: 84383, n: "Spearmarshal's Helmet", b: [82538]},
-	{u: 7773, i: 85445, n: "Lunatic Templar Helm", p: {achievement: 0}},
+	{u: 7773, i: 85445, n: "Lunatic Templar Helm", p: {craft: true}},
 	{u: 7804, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
 ],
 Armor_Heavy_Shoulders: [
@@ -1994,7 +1998,8 @@ Armor_Heavy_Shoulders: [
 	{u: 7514, i: 83126, n: "Spearmarshal's Pauldrons", b: [83126]},
 	{u: 7527, i: 84093, n: "Spellbreaker's Redoubt", p: {achievement: 0}},
 	{u: 7623, i: 84980, n: "Warbeast Pauldrons", b: [83480]},
-	{u: 7671, i: 84065, n: "Funerary Pauldrons", p: {mosaic: 12}}
+	{u: 7671, i: 84065, n: "Funerary Pauldrons", p: {mosaic: 12}},
+	{u: 7771, i: 85498, n: "Lunatic Templar Pauldrons", p: {craft: true}}
 ],
 Armor_Heavy_Coat: [
 	{u: 2, i: 3168, n: "Chainmail Chestpiece", b: [2868, 2870, 2869, 2858, 2856, 2857, 2859, 2861, 2860, 2862, 2865, 2864, 2863, 2867, 2866, 2871, 3114, 3132, 3150, 3168, 3207, 3205, 3206, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3208, 3224, 3209, 3210, 3211, 5018, 5045, 5063, 5081, 5099, 5030, 5135, 5117, 5153, 5171, 5189, 5207, 5225, 5243, 5261, 5279]},
@@ -2076,7 +2081,7 @@ Armor_Heavy_Coat: [
 	{u: 7586, i: 85337, n: "Elonian Breastplate", p: {achievement: 0}},
 	{u: 7587, i: 83382, n: "Spearmarshal's Breastplate", b: [83382]},
 	{u: 7704, i: 85263, n: "Warbeast Breastplate", b: [84788]},
-	{u: 7789, i: 85379, n: "Lunatic Templar Breastplate", p: {achievement: 0}}
+	{u: 7789, i: 85379, n: "Lunatic Templar Breastplate", p: {craft: true}}
 ],
 Armor_Heavy_Gloves: [
 	{u: 20, i: 3169, n: "Chainmail Gauntlets", b: [2876, 2877, 2878, 2881, 2874, 2880, 2886, 2885, 2882, 2875, 2873, 2887, 2884, 3115, 2872, 3133, 3151, 2883, 3228, 3231, 3230, 2879, 3169, 3233, 3236, 3232, 3226, 3227, 3244, 3229, 3234, 3237, 3225, 3235, 3238, 3239, 3240, 3241, 3242, 3243, 5064, 5046, 5031, 5082, 5019, 5100, 5118, 5154, 5136, 5262, 5172, 5208, 5190, 5244, 5280, 5226]},
@@ -2173,7 +2178,7 @@ Armor_Heavy_Gloves: [
 	{u: 7513, i: 85245, n: "Warbeast Gauntlets", b: [84323]},
 	{u: 7541, i: 84874, n: "Elonian Gauntlets", p: {achievement: 0}},
 	{u: 7669, i: 83043, n: "Spearmarshal's Gauntlets", b: [83043]},
-	{u: 7757, i: 85425, n: "Lunatic Templar Gauntlets", p: {achievement: 0}}
+	{u: 7757, i: 85425, n: "Lunatic Templar Gauntlets", p: {craft: true}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", b: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -2256,7 +2261,7 @@ Armor_Heavy_Leggings: [
 	{u: 7426, i: 85189, n: "Bounty Hunter's Tassets", p: {craft: true}},
 	{u: 7585, i: 82101, n: "Funerary Tassets", p: {mosaic: 18}},
 	{u: 7679, i: 85119, n: "Warbeast Tassets", b: [82138]},
-	{u: 7768, i: 85411, n: "Lunatic Templar Tassets", p: {achievement: 0}}
+	{u: 7768, i: 85411, n: "Lunatic Templar Tassets", p: {craft: true}}
 ],
 Armor_Heavy_Boots: [
 	{u: 27, i: 886, n: "Scallywag Greaves", b: [801, 807, 802, 820, 830, 841, 810, 846, 834, 853, 848, 827, 866, 886, 859, 874, 896, 903, 45064, 45136, 876]},
@@ -2343,7 +2348,7 @@ Armor_Heavy_Boots: [
 	{u: 7649, i: 85056, n: "Warbeast Greaves", b: [84374]},
 	{u: 7701, i: 85201, n: "Bounty Hunter's Greaves", p: {craft: true}},
 	{u: 7726, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
-	{u: 7766, i: 85415, n: "Lunatic Templar Greaves", p: {achievement: 0}}
+	{u: 7766, i: 85415, n: "Lunatic Templar Greaves", p: {craft: true}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
@@ -2531,7 +2536,9 @@ Weapon_Axe: [
 	{u: 7651, i: 84064, n: "Fiery Blade Axe", p: {gem: 500}},
 	{u: 7687, i: 84286, n: "Luminous Labrys", p: {starting: true}},
 	{u: 7719, i: 84687, n: "Veilrender", p: {achievement: 0}},
-	{u: 7750, i: 85247, n: "War God's Axe", b: [85247]}
+	{u: 7750, i: 85247, n: "War God's Axe", b: [85247]},
+	{u: 7785, i: 85398, n: "Haunted Axe", p: {achievement: 0}},
+	{u: 7810, i: 85556, n: "Shifting Sands Axe", b: [85556]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", b: [49332]},
@@ -2680,7 +2687,10 @@ Weapon_Mace: [
 	{u: 7596, i: 83024, n: "Awakened Mace", b: [83024]},
 	{u: 7597, i: 82942, n: "Luminous Flange", p: {starting: true}},
 	{u: 7666, i: 83483, n: "Funerary Mace", p: {mosaic: 36}},
-	{u: 7720, i: 84898, n: "War God's Mace", b: [84898]}
+	{u: 7720, i: 84898, n: "War God's Mace", b: [84898]},
+	{u: 7761, i: 85471, n: "Haunted Mace", p: {achievement: 0}},
+	{u: 7778, i: 85406, n: "Sikandar", p: {craft: true}},
+	{u: 7812, i: 85574, n: "Shifting Sands Mace", b: [85574]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", b: [49353]},
@@ -2860,7 +2870,9 @@ Weapon_Sword: [
 	{u: 7368, i: 82617, n: "Warpblade", p: {achievement: 0}},
 	{u: 7579, i: 84714, n: "Luminous Saber", p: {starting: true}},
 	{u: 7620, i: 82115, n: "Sunspear Cutlass", b: [82115]},
-	{u: 7731, i: 85125, n: "War God's Sword", b: [85125]}
+	{u: 7731, i: 85125, n: "War God's Sword", b: [85125]},
+	{u: 7764, i: 85482, n: "Haunted Sword", p: {achievement: 0}},
+	{u: 7808, i: 85618, n: "Shifting Sands Sword", b: [85618]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", b: [49317]},
@@ -3025,7 +3037,9 @@ Weapon_Dagger: [
 	{u: 7693, i: 83315, n: "Luminous Dirk", p: {starting: true}},
 	{u: 7697, i: 84068, n: "Sunspear Carver", b: [84068]},
 	{u: 7717, i: 83086, n: "Awakened Dagger", b: [83086]},
-	{u: 7742, i: 84933, n: "War God's Dagger", b: [84933]}
+	{u: 7742, i: 84933, n: "War God's Dagger", b: [84933]},
+	{u: 7791, i: 85397, n: "Haunted Dagger", p: {achievement: 0}},
+	{u: 7816, i: 85575, n: "Shifting Sands Dagger", b: [85575]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", b: [49335]},
@@ -3177,7 +3191,9 @@ Weapon_Pistol: [
 	{u: 7465, i: 84750, n: "Awakened Pistol", b: [84750]},
 	{u: 7481, i: 82895, n: "Luminous Shot", p: {starting: true}},
 	{u: 7539, i: 82504, n: "Funerary Pistol", p: {mosaic: 36}},
-	{u: 7733, i: 84981, n: "War God's Pistol", b: [84981]}
+	{u: 7733, i: 84981, n: "War God's Pistol", b: [84981]},
+	{u: 7772, i: 85492, n: "Haunted Pistol", p: {achievement: 0}},
+	{u: 7820, i: 85598, n: "Shifting Sands Pistol", b: [85598]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", b: [49341]},
@@ -3333,7 +3349,10 @@ Weapon_Scepter: [
 	{u: 7595, i: 83667, n: "Decalibrated Feline Holoscepter", p: {coin: 50000}},
 	{u: 7632, i: 83068, n: "Funerary Staff", p: {mosaic: 72}},
 	{u: 7655, i: 82572, n: "Sunspear Rod", b: [82572]},
-	{u: 7730, i: 85261, n: "War God's Scepter", b: [85261]}
+	{u: 7730, i: 85261, n: "War God's Scepter", b: [85261]},
+	{u: 7794, i: 85426, n: "Haunted Scepter", p: {achievement: 0}},
+	{u: 7802, i: 85380, n: "Antonina", p: {craft: true}},
+	{u: 7813, i: 85545, n: "Shifting Sands Scepter", b: [85545]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", b: [44897]},
@@ -3506,7 +3525,9 @@ Weapon_Focus: [
 	{u: 7461, i: 83534, n: "Sunspear Runestone", b: [83534]},
 	{u: 7520, i: 83596, n: "Awakened Focus", b: [83596]},
 	{u: 7615, i: 83564, n: "Luminous Curio", p: {starting: true}},
-	{u: 7741, i: 84895, n: "War God's Focus", b: [84895]}
+	{u: 7741, i: 84895, n: "War God's Focus", b: [84895]},
+	{u: 7795, i: 85377, n: "Haunted Focus", p: {achievement: 0}},
+	{u: 7807, i: 85571, n: "Shifting Sands Focus", b: [85571]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", b: [49344]},
@@ -3683,7 +3704,9 @@ Weapon_Shield: [
 	{u: 7476, i: 82337, n: "Luminous Ward", p: {starting: true}},
 	{u: 7552, i: 84716, n: "Funerary Shield", p: {mosaic: 36}},
 	{u: 7694, i: 84789, n: "Sunspear Wallshield", b: [84789]},
-	{u: 7740, i: 85248, n: "War God's Shield", b: [85248]}
+	{u: 7740, i: 85248, n: "War God's Shield", b: [85248]},
+	{u: 7786, i: 85518, n: "Haunted Shield", p: {achievement: 0}},
+	{u: 7818, i: 85539, n: "Shifting Sands Shield", b: [85539]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", b: [49356]},
@@ -3836,7 +3859,9 @@ Weapon_Torch: [
 	{u: 7581, i: 84343, n: "Awakened Torch", b: [84343]},
 	{u: 7629, i: 83056, n: "Luminous Vigil", p: {starting: true}},
 	{u: 7723, i: 84996, n: "War God's Torch", b: [84996]},
-	{u: 7787, i: 85384, n: "Touch of Madness", b: [85384]}
+	{u: 7787, i: 85384, n: "Touch of Madness", b: [85384]},
+	{u: 7788, i: 85451, n: "Haunted Torch", p: {achievement: 0}},
+	{u: 7824, i: 85548, n: "Shifting Sands Torch", b: [85548]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", b: [49359]},
@@ -3983,7 +4008,9 @@ Weapon_Warhorn: [
 	{u: 7490, i: 82739, n: "Sunspear Horn", b: [82739]},
 	{u: 7517, i: 82832, n: "Luminous Trumpet", p: {starting: true}},
 	{u: 7534, i: 82785, n: "Mordant Trumpet", b: [82176]},
-	{u: 7745, i: 84986, n: "War God's Warhorn", b: [84986]}
+	{u: 7745, i: 84986, n: "War God's Warhorn", b: [84986]},
+	{u: 7779, i: 85446, n: "Haunted Warhorn", p: {achievement: 0}},
+	{u: 7815, i: 85535, n: "Shifting Sands Warhorn", b: [85535]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", b: [49321, 49323]},
@@ -4151,7 +4178,9 @@ Weapon_Greatsword: [
 	{u: 7573, i: 83751, n: "Sunspear Greatblade", b: [83751]},
 	{u: 7668, i: 84523, n: "Funerary Greatsword", p: {mosaic: 72}},
 	{u: 7680, i: 83664, n: "Luminous Claymore", p: {starting: true}},
-	{u: 7744, i: 84963, n: "War God's Greatsword", b: [84963]}
+	{u: 7744, i: 84963, n: "War God's Greatsword", b: [84963]},
+	{u: 7762, i: 85424, n: "Haunted Greatsword", p: {achievement: 0}},
+	{u: 7822, i: 85608, n: "Shifting Sands Greatsword", b: [85608]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", b: [49326]},
@@ -4314,7 +4343,9 @@ Weapon_Hammer: [
 	{u: 7642, i: 83075, n: "Sunspear Smasher", b: [83075]},
 	{u: 7677, i: 82287, n: "Forged Greathammer", b: [82287]},
 	{u: 7746, i: 85192, n: "Trained Choya Hammer", p: {gem: 600}},
-	{u: 7756, i: 84999, n: "War God's Hammer", b: [84999]}
+	{u: 7756, i: 84999, n: "War God's Hammer", b: [84999]},
+	{u: 7767, i: 85460, n: "Haunted Hammer", p: {achievement: 0}},
+	{u: 7826, i: 85604, n: "Shifting Sands Hammer", b: [85604]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", b: [44906]},
@@ -4473,7 +4504,9 @@ Weapon_Longbow: [
 	{u: 7598, i: 83274, n: "Awakened Longbow", b: [83274]},
 	{u: 7628, i: 83742, n: "Sunspear Recurve", b: [83742]},
 	{u: 7709, i: 82285, n: "Luminous Arc", p: {starting: true}},
-	{u: 7722, i: 84910, n: "War God's Longbow", b: [84910]}
+	{u: 7722, i: 84910, n: "War God's Longbow", b: [84910]},
+	{u: 7758, i: 85404, n: "Haunted Longbow", p: {achievement: 0}},
+	{u: 7809, i: 85612, n: "Shifting Sands Longbow", b: [85612]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", b: [44924]},
@@ -4634,7 +4667,9 @@ Weapon_Shortbow: [
 	{u: 7603, i: 83134, n: "Sunspear Pocketbow", b: [83134]},
 	{u: 7617, i: 84604, n: "Awakened Short Bow", b: [84604]},
 	{u: 7670, i: 82419, n: "Mordant Infantry Bow", b: [82419]},
-	{u: 7747, i: 85129, n: "War God's Short Bow", b: [85129]}
+	{u: 7747, i: 85129, n: "War God's Short Bow", b: [85129]},
+	{u: 7777, i: 85510, n: "Haunted Short Bow", p: {achievement: 0}},
+	{u: 7825, i: 85540, n: "Shifting Sands Short Bow", b: [85540]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", b: [49338]},
@@ -4793,7 +4828,9 @@ Weapon_Rifle: [
 	{u: 7559, i: 82295, n: "Luminous Caliber", p: {starting: true}},
 	{u: 7613, i: 83953, n: "Awakened Rifle", b: [83953]},
 	{u: 7714, i: 83386, n: "Funerary Rifle", p: {mosaic: 72}},
-	{u: 7738, i: 84962, n: "War God's Rifle", b: [84962]}
+	{u: 7738, i: 84962, n: "War God's Rifle", b: [84962]},
+	{u: 7769, i: 85495, n: "Haunted Rifle", p: {achievement: 0}},
+	{u: 7805, i: 85592, n: "Shifting Sands Rifle", b: [85592]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", b: [49348, 49350]},
@@ -4970,7 +5007,9 @@ Weapon_Staff: [
 	{u: 7643, i: 84077, n: "Luminous Pillar", p: {starting: true}},
 	{u: 7665, i: 82407, n: "Sunspear Standard", b: [82407]},
 	{u: 7737, i: 85115, n: "War God's Staff", b: [85115]},
-	{u: 7739, i: 85256, n: "Hydra Staff", p: {gem: 0}}
+	{u: 7739, i: 85256, n: "Hydra Staff", p: {gem: 0}},
+	{u: 7801, i: 85455, n: "Haunted Staff", p: {achievement: 0}},
+	{u: 7823, i: 85557, n: "Shifting Sands Staff", b: [85557]}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", b: [63881]},

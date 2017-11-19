@@ -74,6 +74,7 @@ Combo: [ // The audit function depends on this named category for ignoring dupli
 	{u: 45, i: 81547, n: "Dynamics Glider Module", l: "", p: {gem: 700}},
 	{u: 47, i: 81888, n: "Feathers of the Zephyr", l: "", p: {gem: 0}},
 	{u: 48, i: 82671, n: "Largos Fin Glider", l: "2", p: {gem: 700}},
-	{u: 51, i: 85220, n: "Branded Wing Glider", p: {gem: 700}}
+	{u: 51, i: 85220, n: "Branded Wing Glider", l: "", p: {gem: 700}},
+	{u: 54, i: 85595, n: "Wild Magic Glider", l: "", p: {gem: 0}}
 ]
 };
