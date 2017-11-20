@@ -3254,7 +3254,7 @@ RangerPets: {
 		c: [[26541,24146]]
 	},{// JACARANDA
 		n: 54, i: "jacaranda", name_en: "Jacaranda", name_de: "Jacaranda", name_es: "Jacaranda", name_fr: "Jacaranda", name_zh: "蓝花楹",
-		a: {immobilize: [5, 1], vulnerability: [5, 8], recharge: 20, range: 900, damage: 635},
+		a: {immobilize: [5, 1], recharge: 20, vulnerability: [5, 8], range: 900, damage: 635},
 		c: [[31189,38396]]
 	},{// ROCK GAZELLE
 		n: 55, i: "rockgazelle", name_en: "Rock Gazelle", name_de: "Felsgazelle", name_es: "Gacela de roca", name_fr: "Gazelle des rochers", name_zh: "岩石瞪羚",

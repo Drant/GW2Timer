@@ -40,7 +40,7 @@ GW2T_SALE_DATA = {
 	{i: 67291, n: "Taimi's Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-11-21T16:00:00Z")},
 	{i: 77470, n: "Winter Chimes Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-11-21T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}},
+	{i: 85608, n: "Shifting Sands weapons#Gallery", p: {blticket: 1}},
 	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 1000}},
 	{i: 69921, n: "Swarm Logging Flute", p: {gem: 1000}},
 	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}},

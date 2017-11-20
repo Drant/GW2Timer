@@ -356,9 +356,10 @@ BlackLionWeapon: [
 	{i: 80041, n: "Frostforged weapon skins#Gallery", p: {blticket: 3}},
 	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 3}},
 	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 3}},
-	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 2}},
+	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 3}},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 3}},
-	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 1}}
+	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 2}},
+	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/PuHTFpK.png", n: "Mount Adoption License 30 Pack", p: {gem: 9600}},
