@@ -28882,15 +28882,26 @@ P = {
 				return marker;
 			};
 			
-			var drawGates = function(pGates, pName, pPathColor)
+			var drawGates = function(pGates, pName, pPathColor, pIsAngled)
 			{
+				var icon = "img/map/gateway_" + pName + I.cPNG;
 				for (var i in pGates)
 				{
 					// Draw the two gates
-					for (var ii in pGates[i])
+					if (pIsAngled)
 					{
-						marker = createGate((pGates[i])[ii], "img/map/gateway_" + pName + I.cPNG);
+						marker = createGate(pGates[i], icon);
 						P.Layer.ZoneGateway.addLayer(marker);
+						marker = createGate(pGates[i].reverse(), icon);
+						P.Layer.ZoneGateway.addLayer(marker);
+					}
+					else
+					{
+						for (var ii in pGates[i])
+						{
+							marker = createGate((pGates[i])[ii], icon);
+							P.Layer.ZoneGateway.addLayer(marker);
+						}
 					}
 					// Draw the line connecting the gates
 					if (pPathColor)
@@ -28926,7 +28937,7 @@ P = {
 			
 			drawGates(connection.interborders, "interborders");
 			drawGates(connection.interzones, "interzones", "purple");
-			drawGates(connection.intrazones, "intrazones", "white");
+			drawGates(connection.intrazones, "intrazones", "white", true);
 			drawPowerups(connection.powerups, "powerup");
 			// One-way "gate" special case
 			launchpads.forEach(function(iLaunchpad)
