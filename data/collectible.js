@@ -44,7 +44,7 @@ BuriedTreasures: {
 	category: "chests",
 	color: "darkkhaki",
 	view: "highlands",
-	wiki: "https://wiki.guildwars2.com/wiki/Buried_Treasure_(object)",
+	wiki: "https://wiki.guildwars2.com/wiki/The_Search_for_Buried_Treasure",
 	credit: "https://www.reddit.com/r/Guildwars2/comments/7bzxgq/desert_highlands_buried_treasure_map_w_taco/",
 	needles: [
 	{n: 1, c: [26142, 25239]},
