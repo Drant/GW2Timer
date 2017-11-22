@@ -5,7 +5,7 @@
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2017-10-17T16:00:00Z"),
-	Finish: new Date("2017-11-21T16:00:00Z"),
+	Finish: new Date("2017-11-28T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,35 +21,21 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]},
-	{i: 85538, n: "Reforged Warhound", p: {gem: 2000}},
-	{i: 81567, n: "God-Slayer Longbow", p: {gem: 350}, Finish: new Date("2017-11-21T16:00:00Z")},
-	{i: 81560, n: "God-Slayer Short Bow", p: {gem: 350}, Finish: new Date("2017-11-21T16:00:00Z")},
-	{i: 80861, n: "Shield of the Goddess", p: {gem: 600}, Finish: new Date("2017-11-20T16:00:00Z")},
-	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
-	{i: 68577, n: "Arcane Outfit", p: {gem: 700}},
-	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: 700}},
-	{i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
-	{i: 67398, n: "Noble Count Outfit", p: {gem: 700}},
-	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}},
-	{i: 66279, n: "Ancestral Outfit", p: {gem: 700}},
-	{i: 68654, n: "Imperial Outfit", p: {gem: 700}},
-	{i: 68653, n: "Crimson Lion Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-11-21T16:00:00Z")},
-	{i: 81545, n: "Jormag Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-11-21T16:00:00Z")},
-	{i: 80974, n: "Primordus Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-11-21T16:00:00Z")},
-	{i: 67291, n: "Taimi's Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-11-21T16:00:00Z")},
-	{i: 77470, n: "Winter Chimes Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2017-11-21T16:00:00Z")},
+	{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}},
+	{i: "https://i.imgur.com/YwbSAGQ.png", n: "Mini Kormeerkat", p: {gem: 350}},
+	{i: "https://i.imgur.com/XALQHjn.png", n: "Salvaged Forged Gloves", p: {gem: 400}},
+	{i: "https://i.imgur.com/9JsQuB3.png", n: "Salvaged Forged Helm", p: {gem: 400}},
+	{i: 85538, n: "Reforged Warhound", p: {gem: 2000}, Finish: new Date("2017-11-28T16:00:00Z")},
+	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 640}, discount: 800, Finish: new Date("2017-11-28T16:00:00Z")},
+	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: 640}, discount: 800, Finish: new Date("2017-11-28T16:00:00Z")},
+	{i: 43158, n: "Magitech Medium Armor Skin", p: {gem: 640}, discount: 800, Finish: new Date("2017-11-28T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 85608, n: "Shifting Sands weapons#Gallery", p: {blticket: 1}},
 	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 1000}},
 	{i: 69921, n: "Swarm Logging Flute", p: {gem: 1000}},
 	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}},
-	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
-	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
-	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}},
-	{i: 80019, n: "Scruffy Backpack", p: {gem: 400}},
-	{i: 79771, n: "Fire Quiver Backpack", p: {gem: 400}},
-	{i: 68612, n: "Plush Ram Backpack", p: {gem: 300}},
-	{i: 39519, n: "Warrior Quaggan Backpack Cover", p: {gem: 300}}
+	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}, Finish: new Date("2017-11-28T16:00:00Z")},
+	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}, Finish: new Date("2017-11-28T16:00:00Z")},
+	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}, Finish: new Date("2017-11-28T16:00:00Z")}
 	]
 };

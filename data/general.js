@@ -1923,6 +1923,16 @@ Announcement:
  */
 Countdown: {
 	Events: [
+	{
+		name_en: "Black Friday Sale",
+		name_de: "Black Friday Verkauf",
+		name_es: "Rebaja Viernes Negro",
+		name_fr: "Vente Vendredi Noir",
+		name_zh: "黑色星期五",
+		url: "https://wiki.guildwars2.com/wiki/Gem_Store",
+		Start: new Date("2017-11-21T17:00:00Z"),
+		Finish: new Date("2017-11-27T17:00:00Z")
+	},
 	/*{
 		name: "ArenaNet API Offline",
 		url: "https://en-forum.guildwars2.com/discussion/3195/api-temporarily-disabled",
