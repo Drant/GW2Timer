@@ -1929,7 +1929,7 @@ Countdown: {
 		name_es: "Rebaja Viernes Negro",
 		name_fr: "Vente Vendredi Noir",
 		name_zh: "黑色星期五",
-		url: "https://wiki.guildwars2.com/wiki/Gem_Store",
+		url: "https://twitter.com/GuildWars2/status/933410135569059843",
 		Start: new Date("2017-11-21T17:00:00Z"),
 		Finish: new Date("2017-11-27T17:00:00Z")
 	},
