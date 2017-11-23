@@ -2036,7 +2036,7 @@ Countdown: {
 		name_es: "Historia viviente 4: Episodio I",
 		name_fr: "Histoire vivante 4: Épisode I",
 		name_zh: "第四生活世界：第4集",
-		official: "news/living-world-returns-this-november/",
+		official: "news/watch-the-trailer-for-daybreak/",
 		Start: new Date("2017-11-28T16:00:00Z"),
 		Finish: new Date("2017-11-29T16:00:00Z")
 	}
