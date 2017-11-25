@@ -514,6 +514,7 @@ Gathering: [
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}}
 ],
 Mini: [
+	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
 	{i: 20019, n: "Minis 3-Pack (Set 1)", p: {gem: -300}},
 	{i: 44722, n: "Minis 3-Pack (Set 2)", p: {gem: -300}},
 	{i: 63870, n: "Minis 3-Pack (Set 3)", p: {gem: -300}},
