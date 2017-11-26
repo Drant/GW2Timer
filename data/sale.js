@@ -21,16 +21,15 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}, discount: 100, Finish: new Date("2017-11-26T16:00:00Z")},
+	{i: 19996, n: "Revive Orb", p: {gem: 0}, discount: [[1, 250], [5, 900]], Finish: new Date("2017-11-27T16:00:00Z")},
 	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 560}, discount: 700, Finish: new Date("2017-11-27T16:00:00Z")},
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2017-11-27T16:00:00Z")},
 	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 640}, discount: 800, Finish: new Date("2017-11-28T16:00:00Z")},
 	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: 640}, discount: 800, Finish: new Date("2017-11-28T16:00:00Z")},
 	{i: 43158, n: "Magitech Medium Armor Skin", p: {gem: 640}, discount: 800, Finish: new Date("2017-11-28T16:00:00Z")},
-	{i: 42932, n: "Storage Expander", p: {gem: 640}, discount: 800, Finish: new Date("2017-11-26T16:00:00Z")},
 	{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}, Finish: new Date("2017-11-28T16:00:00Z")},
 	{i: "https://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 2000}, Finish: new Date("2017-11-27T16:00:00Z")},
-	{i: "https://i.imgur.com/7KQdXAx.png", n: "Marjory's Package", p: {gem: 1600}, Finish: new Date("2017-11-26T16:00:00Z")},
+	{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}, Finish: new Date("2017-11-28T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 85608, n: "Shifting Sands weapons#Gallery", p: {blticket: 1}},
 	{i: 85538, n: "Reforged Warhound", p: {gem: 2000}, Finish: new Date("2017-11-28T16:00:00Z")},
