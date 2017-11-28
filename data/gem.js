@@ -120,7 +120,7 @@ Glider: [
 	{i: 78006, n: "Ironclad Glider", p: {gem: 500}},
 	{i: 78007, n: "Bubble Glider", p: {gem: -500}},
 	{i: 78009, n: "Super Adventure Glider", p: {gem: -400}},
-	{i: 78025, n: "Phoenix Glider", p: {gem: -500}},
+	{i: 78025, n: "Phoenix Glider", p: {gem: 500}},
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: -700}},
 	{i: 78768, n: "Moth Wings Glider", p: {gem: -700}},
 	{i: 78790, n: "Floral Glider", p: {gem: -400}},

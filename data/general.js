@@ -1923,16 +1923,6 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
-		name_en: "Black Friday Sale",
-		name_de: "Black Friday Verkauf",
-		name_es: "Rebaja Viernes Negro",
-		name_fr: "Vente Vendredi Noir",
-		name_zh: "黑色星期五",
-		url: "https://twitter.com/GuildWars2/status/933410135569059843",
-		Start: new Date("2017-11-21T17:00:00Z"),
-		Finish: new Date("2017-11-27T17:00:00Z")
-	},
 	/*{
 		name: "ArenaNet API Offline",
 		url: "https://en-forum.guildwars2.com/discussion/3195/api-temporarily-disabled",
@@ -2021,14 +2011,14 @@ Countdown: {
 		Finish: new Date("2018-11-06T16:00:00Z")
 	},*/
 	/*{
-		name_en: "Wintersday 2017",
-		name_de: "Wintertag 2017",
-		name_es: "Día Invernal 2017",
-		name_fr: "Hivernel 2017",
-		name_zh: "冬幕节2017",
-		official: "the-game/releases/december-13-2016/",
-		Start: new Date("2017-12-12T17:00:00Z"),
-		Finish: new Date("2018-01-09T17:00:00Z")
+		name_en: "Black Friday Sale",
+		name_de: "Black Friday Verkauf",
+		name_es: "Rebaja Viernes Negro",
+		name_fr: "Vente Vendredi Noir",
+		name_zh: "黑色星期五",
+		url: "https://twitter.com/GuildWars2/status/933410135569059843",
+		Start: new Date("2017-11-21T17:00:00Z"),
+		Finish: new Date("2017-11-27T17:00:00Z")
 	},*/
 	{
 		name_en: "Living Story 4: Episode I",
@@ -2039,6 +2029,16 @@ Countdown: {
 		official: "news/watch-the-trailer-for-daybreak/",
 		Start: new Date("2017-11-28T16:00:00Z"),
 		Finish: new Date("2017-11-29T16:00:00Z")
+	},
+	{
+		name_en: "Wintersday 2017",
+		name_de: "Wintertag 2017",
+		name_es: "Día Invernal 2017",
+		name_fr: "Hivernel 2017",
+		name_zh: "冬幕节2017",
+		official: "the-game/releases/december-13-2016/",
+		Start: new Date("2017-12-12T17:00:00Z"),
+		Finish: new Date("2018-01-09T17:00:00Z")
 	}
 	]
 },
