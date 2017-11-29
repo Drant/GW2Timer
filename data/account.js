@@ -430,6 +430,7 @@ var GW2T_ACCOUNT_METADATA = {
 		159, // Daily Lake Doric
 		163, // Daily Draconis Mons
 		172, // Daily Siren's Landing
+		194, // Daily Domain of Istan
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
@@ -456,6 +457,7 @@ var GW2T_ACCOUNT_METADATA = {
 		188, // Path of Fire: Act 1
 		183, // Path of Fire: Act 2
 		187, // Path of Fire: Act 3
+		196, // Daybreak
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons
@@ -524,6 +526,7 @@ var GW2T_ACCOUNT_METADATA = {
 		134, // Salvation Pass
 		138, // Stronghold of the Faithful
 		155, // Bastion of the Penitent
+		195, // Hall of Chains
 		{en: "Fractals of the Mists", de: "Fraktale der Nebel", es: "Fractales de la Niebla", fr: "Fractales des Brumes", zh: "迷雾碎层"},
 		148, // Nightmare Fractal
 		170, // Shattered Observatory Fractal

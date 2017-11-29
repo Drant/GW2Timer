@@ -332,7 +332,8 @@ Tailor_UpgradeComponent: [
 	{u: 12202, i: 83423, n: "Superior Rune of the Weaver", r: [[24800, 1], [68942, 1], [83103, 50]], s: 84572},
 	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
 	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751},
-	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725}
+	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725},
+	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834}
 ],
 Tailor_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -887,7 +888,8 @@ Tailor_Helm: [
 	{u: 12448, i: 85464, n: "Lunatic Acolyte Mask", r: [[85405, 1], [13204, 1], [13203, 1], [19721, 5]], s: 85520},
 	{u: 12231, i: 83471, n: "Harrier's Bounty Hunter's Cowl", r: [[82882, 1], [73217, 1], [73417, 1]], s: 83450},
 	{u: 12326, i: 85161, n: "Zehtuka's Masque", r: [[49523, 1], [85252, 1], [45896, 1], [45897, 1]], s: 84906, b: 84906},
-	{u: 12398, i: 85285, n: "Nadijeh's Masque", r: [[49523, 1], [85221, 1], [45896, 1], [45897, 1]], s: 84907, b: 84907}
+	{u: 12398, i: 85285, n: "Nadijeh's Masque", r: [[49523, 1], [85221, 1], [45896, 1], [45897, 1]], s: 84907, b: 84907},
+	{u: 12401, i: 85296, n: "The Twins' Masque", r: [[49523, 1], [85092, 1], [45896, 1], [45897, 1]], s: 85179, b: 85179}
 ],
 Tailor_Shoulders: [
 	{u: 2121, i: 11052, n: "Malign Embroidered Mantle", r: [[19870, 1], [13026, 1], [13025, 1]]},
@@ -2074,7 +2076,8 @@ Leatherworker_UpgradeComponent: [
 	{u: 12202, i: 83423, n: "Superior Rune of the Weaver", r: [[24800, 1], [68942, 1], [83103, 50]], s: 84572},
 	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
 	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751},
-	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725}
+	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725},
+	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834}
 ],
 Leatherworker_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -2815,7 +2818,8 @@ Leatherworker_Shoulders: [
 	{u: 12120, i: 82311, n: "Harrier's Bounty Hunter's Shoulderpads", r: [[82882, 1], [75506, 1], [73806, 1]], s: 83433},
 	{u: 12138, i: 84189, n: "Marshal's Spearmarshal's Shoulderpads", r: [[83264, 1], [75506, 1], [73806, 1]], s: 84635, b: 84635},
 	{u: 12440, i: 85463, n: "Lunatic Noble Shoulders", r: [[85405, 1], [13242, 1], [13232, 1], [19721, 5]], s: 85382},
-	{u: 12324, i: 85183, n: "Zehtuka's Shoulderguard", r: [[49523, 1], [85252, 1], [45862, 1], [45869, 1]], s: 85040, b: 85040}
+	{u: 12324, i: 85183, n: "Zehtuka's Shoulderguard", r: [[49523, 1], [85252, 1], [45862, 1], [45869, 1]], s: 85040, b: 85040},
+	{u: 12334, i: 85226, n: "Nadijeh's Shoulderguard", r: [[49523, 1], [85221, 1], [45862, 1], [45869, 1]], s: 85185, b: 85185}
 ],
 Leatherworker_Coat: [
 	{u: 1119, i: 4242, n: "Bloodsaw Leather Work Coat", r: [[19796, 1], [19738, 12]], s: 9523},
@@ -3188,7 +3192,8 @@ Leatherworker_Gloves: [
 	{u: 12222, i: 83709, n: "Harrier's Bounty Hunter's Vambraces", r: [[82882, 1], [70682, 1], [72553, 1]], s: 84136},
 	{u: 12236, i: 83717, n: "Warbeast Vambraces", r: [[82882, 1], [82266, 1], [84226, 1]]},
 	{u: 12433, i: 85407, n: "Lunatic Noble Gloves", r: [[85405, 1], [13236, 1], [13237, 1], [19721, 5]], s: 85389},
-	{u: 12317, i: 85208, n: "The Twins' Grips", r: [[49523, 1], [85092, 1], [45859, 1], [45866, 1]], s: 84913, b: 84913}
+	{u: 12317, i: 85208, n: "The Twins' Grips", r: [[49523, 1], [85092, 1], [45859, 1], [45866, 1]], s: 84913, b: 84913},
+	{u: 12404, i: 84983, n: "Zehtuka's Grips", r: [[49523, 1], [85252, 1], [45859, 1], [45866, 1]], s: 85164, b: 85164}
 ],
 Leatherworker_Leggings: [
 	{u: 1116, i: 4012, n: "Quiet Leather Leggings", r: [[19905, 1], [13217, 1], [13216, 1]], s: 9386},
@@ -3821,7 +3826,8 @@ Armorsmith_UpgradeComponent: [
 	{u: 12202, i: 83423, n: "Superior Rune of the Weaver", r: [[24800, 1], [68942, 1], [83103, 50]], s: 84572},
 	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
 	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751},
-	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725}
+	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725},
+	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834}
 ],
 Armorsmith_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -4377,7 +4383,8 @@ Armorsmith_Helm: [
 	{u: 12445, i: 85445, n: "Lunatic Templar Helm", r: [[85405, 1], [13167, 1], [13166, 1], [19721, 5]], s: 85500},
 	{u: 12162, i: 83391, n: "Harrier's Bounty Hunter's Helmet", r: [[82882, 1], [72195, 1], [71879, 1]], s: 82273},
 	{u: 12333, i: 84879, n: "Zehtuka's Visor", r: [[49523, 1], [85252, 1], [45874, 1], [45880, 1]], s: 85103, b: 85103},
-	{u: 12387, i: 85350, n: "The Twins' Visor", r: [[49523, 1], [85092, 1], [45874, 1], [45880, 1]], s: 84869, b: 84869}
+	{u: 12387, i: 85350, n: "The Twins' Visor", r: [[49523, 1], [85092, 1], [45874, 1], [45880, 1]], s: 84869, b: 84869},
+	{u: 12323, i: 85274, n: "Nadijeh's Visor", r: [[49523, 1], [85221, 1], [45874, 1], [45880, 1]], s: 84965, b: 84965}
 ],
 Armorsmith_Shoulders: [
 	{u: 246, i: 3993, n: "Caer Pauldrons", r: [[24363, 3], [19681, 3], [19744, 3]], s: 9397},
@@ -4936,7 +4943,8 @@ Armorsmith_Gloves: [
 	{u: 12234, i: 83792, n: "Warbeast Gauntlets", r: [[82882, 1], [83342, 1], [82749, 1]], s: 82550, b: 82550},
 	{u: 12455, i: 85425, n: "Lunatic Templar Gauntlets", r: [[85405, 1], [13165, 1], [13164, 1], [19721, 5]], s: 85427},
 	{u: 12391, i: 85300, n: "The Twins' Warfists", r: [[49523, 1], [85092, 1], [45873, 1], [45879, 1]], s: 85075, b: 85075},
-	{u: 12424, i: 85330, n: "Zehtuka's Warfist", r: [[49523, 1], [85252, 1], [45873, 1], [45879, 1]], s: 84893, b: 84893}
+	{u: 12424, i: 85330, n: "Zehtuka's Warfist", r: [[49523, 1], [85252, 1], [45873, 1], [45879, 1]], s: 84893, b: 84893},
+	{u: 12345, i: 85225, n: "Nadijeh's Warfists", r: [[49523, 1], [85221, 1], [45873, 1], [45879, 1]], s: 85291, b: 85291}
 ],
 Armorsmith_Leggings: [
 	{u: 252, i: 4239, n: "Iron Legion's Leggings", r: [[19679, 8], [19797, 1]], s: 9519},
@@ -5122,7 +5130,8 @@ Armorsmith_Leggings: [
 	{u: 12266, i: 82383, n: "Marshal's Spearmarshal's Tassets", r: [[83264, 1], [73665, 1], [70891, 1]], s: 82688, b: 82688},
 	{u: 12443, i: 85411, n: "Lunatic Templar Tassets", r: [[85405, 1], [13169, 1], [13168, 1], [19721, 5]], s: 85486},
 	{u: 12363, i: 85024, n: "Zehtuka's Tassets", r: [[49523, 1], [85252, 1], [45875, 1], [45881, 1]], s: 85258, b: 85258},
-	{u: 12406, i: 85071, n: "Nadijeh's Tassets", r: [[49523, 1], [85221, 1], [45875, 1], [45881, 1]], s: 85354, b: 85354}
+	{u: 12406, i: 85071, n: "Nadijeh's Tassets", r: [[49523, 1], [85221, 1], [45875, 1], [45881, 1]], s: 85354, b: 85354},
+	{u: 12397, i: 84911, n: "The Twins' Tassets", r: [[49523, 1], [85092, 1], [45875, 1], [45881, 1]], s: 85025, b: 85025}
 ],
 Armorsmith_Boots: [
 	{u: 247, i: 4235, n: "Iron Legion's Boots", r: [[19679, 4], [19797, 1]], s: 9516},
@@ -5508,7 +5517,8 @@ Artificer_UpgradeComponent: [
 	{u: 9797, i: 67341, n: "Superior Sigil of Cruelty", r: [[19685, 1], [24357, 2], [19721, 1], [24351, 2]], s: 67181, b: 67181},
 	{u: 9798, i: 67343, n: "Superior Sigil of Incapacitation", r: [[19685, 1], [24283, 2], [19721, 1], [24358, 2]], s: 67179, b: 67179},
 	{u: 9902, i: 67913, n: "Superior Sigil of Blight", r: [[19685, 1], [67832, 1], [19721, 1], [24335, 1]], s: 68483, b: 68483},
-	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177}
+	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177},
+	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902}
 ],
 Artificer_LegendaryComponent: [
 	{u: 10042, i: 76000, n: "Jar of Yellow Paint", r: [[76076, 1], [75288, 1], [73596, 10], [71952, 30]], s: 75114},
@@ -5595,7 +5605,11 @@ Artificer_LegendaryComponent: [
 	{u: 11852, i: 79410, n: "Mystic Curio", r: [[24341, 35], [19684, 15], [19709, 10]]},
 	{u: 11854, i: 79410, n: "Mystic Curio", r: [[24282, 35], [19684, 15], [19709, 10]]},
 	{u: 11867, i: 79410, n: "Mystic Curio", r: [[24299, 35], [19684, 15], [19709, 10]]},
-	{u: 11987, i: 80503, n: "Visionary Inscription", r: [[72261, 1], [46746, 1]]}
+	{u: 11987, i: 80503, n: "Visionary Inscription", r: [[72261, 1], [46746, 1]]},
+	{u: 12466, i: 86064, n: "Mark of the Unnamed", r: [[86120, 30], [75049, 1], [75123, 1], [74852, 6]], s: 86372},
+	{u: 12483, i: 86120, n: "Shard of the Dark Arts", r: [[86266, 1], [79410, 1], [19684, 20], [19709, 10]]},
+	{u: 12490, i: 86188, n: "The True Name", r: [[74852, 13], [86120, 60], [75049, 1], [75123, 1]], s: 85959},
+	{u: 12497, i: 86097, n: "Ars Goetia", r: [[80503, 1], [86120, 100], [45883, 1], [45884, 1]], s: 85754}
 ],
 Artificer_Inscription: [
 	{u: 118, i: 19887, n: "Malign Green Inscription", r: [[19758, 1], [24278, 3]]},
@@ -5764,7 +5778,8 @@ Artificer_Inscription: [
 	{u: 12243, i: 83974, n: "Mordant Inscription", r: [[12988, 5], [19721, 5], [83757, 30], [82678, 3]], s: 84288},
 	{u: 12094, i: 83926, n: "Inscription of the Spearmarshal", r: [[12988, 5], [19721, 5], [83103, 50], [82678, 2]]},
 	{u: 12371, i: 84930, n: "Zehtuka's Harrier Inscription", r: [[46681, 10], [45832, 1], [83974, 1], [24277, 10]], s: 85230, b: 85230},
-	{u: 12428, i: 85104, n: "Nadijeh's Marshal Inscription", r: [[46681, 10], [45832, 1], [83926, 1], [24277, 10]], s: 85209}
+	{u: 12428, i: 85104, n: "Nadijeh's Marshal Inscription", r: [[46681, 10], [45832, 1], [83926, 1], [24277, 10]], s: 85209},
+	{u: 12344, i: 85113, n: "The Twins' Grieving Inscription", r: [[46681, 10], [45832, 1], [85039, 1], [24277, 10]], s: 85205}
 ],
 Artificer_Potion: [
 	{u: 3869, i: 8640, n: "Grawl Snowman Potion", r: [[24277, 3], [24358, 3], [24320, 1]], s: 9549},
@@ -5913,7 +5928,8 @@ Artificer_Consumable: [
 	{u: 9897, i: 67524, n: "Furious Tuning Crystal", r: [[24357, 1], [67832, 1], [24277, 2]], s: 67963, b: 67963},
 	{u: 9901, i: 67522, n: "Bountiful Tuning Crystal", r: [[24773, 3], [67832, 1], [24277, 2]], s: 67961, b: 67961},
 	{u: 11749, i: 77567, n: "Tuning Icicle", r: [[24277, 5], [77651, 25]], s: 77610, b: 77610},
-	{u: 12049, i: 81079, n: "Magnanimous Tuning Crystal", r: [[24277, 5], [81127, 5], [46733, 100]], s: 81055}
+	{u: 12049, i: 81079, n: "Magnanimous Tuning Crystal", r: [[24277, 5], [81127, 5], [46733, 100]], s: 81055},
+	{u: 12485, i: 86287, n: "Corsair Tuning Crystal", r: [[24277, 3], [86069, 25], [46733, 100]], s: 86315}
 ],
 Artificer_Feast: [
 	{u: 8457, i: 50022, n: "Tuning Crystal Station", r: [[46730, 1], [24277, 30], [46736, 5]], s: 50023, p: {karma: 25200}}
@@ -6952,7 +6968,8 @@ Huntsman_UpgradeComponent: [
 	{u: 9797, i: 67341, n: "Superior Sigil of Cruelty", r: [[19685, 1], [24357, 2], [19721, 1], [24351, 2]], s: 67181, b: 67181},
 	{u: 9798, i: 67343, n: "Superior Sigil of Incapacitation", r: [[19685, 1], [24283, 2], [19721, 1], [24358, 2]], s: 67179, b: 67179},
 	{u: 9902, i: 67913, n: "Superior Sigil of Blight", r: [[19685, 1], [67832, 1], [19721, 1], [24335, 1]], s: 68483, b: 68483},
-	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177}
+	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177},
+	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902}
 ],
 Huntsman_LegendaryComponent: [
 	{u: 9937, i: 29172, n: "Leaf of Kudzu", r: [[76405, 1], [76249, 1], [73966, 1], [72849, 1]], s: 71448},
@@ -7271,7 +7288,8 @@ Huntsman_Inscription: [
 	{u: 12243, i: 83974, n: "Mordant Inscription", r: [[12988, 5], [19721, 5], [83757, 30], [82678, 3]], s: 84288},
 	{u: 12094, i: 83926, n: "Inscription of the Spearmarshal", r: [[12988, 5], [19721, 5], [83103, 50], [82678, 2]]},
 	{u: 12371, i: 84930, n: "Zehtuka's Harrier Inscription", r: [[46681, 10], [45832, 1], [83974, 1], [24277, 10]], s: 85230, b: 85230},
-	{u: 12428, i: 85104, n: "Nadijeh's Marshal Inscription", r: [[46681, 10], [45832, 1], [83926, 1], [24277, 10]], s: 85209}
+	{u: 12428, i: 85104, n: "Nadijeh's Marshal Inscription", r: [[46681, 10], [45832, 1], [83926, 1], [24277, 10]], s: 85209},
+	{u: 12344, i: 85113, n: "The Twins' Grieving Inscription", r: [[46681, 10], [45832, 1], [85039, 1], [24277, 10]], s: 85205}
 ],
 Huntsman_Consumable: [
 	{u: 4480, i: 9452, n: "Apprentice Maintenance Oil", r: [[24272, 4], [12156, 3]]},
@@ -7287,7 +7305,8 @@ Huntsman_Consumable: [
 	{u: 9899, i: 67529, n: "Furious Maintenance Oil", r: [[24357, 1], [67832, 1], [12156, 20]], s: 67964, b: 67964},
 	{u: 9900, i: 67528, n: "Bountiful Maintenance Oil", r: [[24773, 3], [67832, 1], [12156, 20]], s: 67966, b: 67966},
 	{u: 11748, i: 77632, n: "Peppermint Oil", r: [[24277, 3], [12156, 20], [77651, 25]], s: 77653, b: 77653},
-	{u: 12045, i: 81157, n: "Magnanimous Maintenance Oil", r: [[24277, 5], [81127, 5], [46731, 100]], s: 81117}
+	{u: 12045, i: 81157, n: "Magnanimous Maintenance Oil", r: [[24277, 5], [81127, 5], [46731, 100]], s: 81117},
+	{u: 12510, i: 86016, n: "Corsair Maintenance Oil", r: [[24277, 3], [86069, 25], [46731, 100]], s: 85866}
 ],
 Huntsman_Feast: [
 	{u: 8458, i: 50018, n: "Maintenance Oil Station", r: [[46730, 1], [24277, 30], [46739, 5]], s: 50019, p: {karma: 25200}}
@@ -7711,7 +7730,8 @@ Huntsman_Torch: [
 	{u: 11967, i: 80683, n: "Thackeray's Flame", r: [[80595, 1], [45838, 1], [45836, 1], [46746, 1]], s: 80212},
 	{u: 12130, i: 83146, n: "Mordant Brazier", r: [[83974, 1], [75321, 1], [70750, 1]], s: 83944},
 	{u: 12331, i: 85013, n: "Zehtuka's Brazier", r: [[84930, 1], [45838, 1], [45836, 1], [46746, 1]], s: 85312, b: 85312},
-	{u: 12409, i: 85006, n: "The Twins' Brazier", r: [[85113, 1], [45838, 1], [45836, 1], [46746, 1]], s: 84884, b: 84884}
+	{u: 12409, i: 85006, n: "The Twins' Brazier", r: [[85113, 1], [45838, 1], [45836, 1], [46746, 1]], s: 84884, b: 84884},
+	{u: 12377, i: 85152, n: "Nadijeh's Brazier", r: [[85104, 1], [45838, 1], [45836, 1], [46746, 1]], s: 85195, b: 85195}
 ],
 Huntsman_Warhorn: [
 	{u: 4477, i: 30682, n: "Packmaster's Warhorn", r: [[24296, 1], [19679, 3]], s: 9415},
@@ -8538,7 +8558,8 @@ Huntsman_Rifle: [
 	{u: 11994, i: 80585, n: "Seraph Pearl Blunderbuss", r: [[80454, 1], [73874, 1], [73555, 1]], s: 80379},
 	{u: 12303, i: 84707, n: "Mordant Bonespitter", r: [[83974, 1], [73874, 1], [73555, 1]], s: 84454},
 	{u: 12393, i: 85072, n: "The Twins' Musket", r: [[85113, 1], [45834, 1], [45843, 1], [46746, 1]], s: 85079, b: 85079},
-	{u: 12427, i: 84886, n: "Nadijeh's Musket", r: [[85104, 1], [45834, 1], [45843, 1], [46746, 1]], s: 85202, b: 85202}
+	{u: 12427, i: 84886, n: "Nadijeh's Musket", r: [[85104, 1], [45834, 1], [45843, 1], [46746, 1]], s: 85202, b: 85202},
+	{u: 12355, i: 85348, n: "Zehtuka's Musket", r: [[84930, 1], [45834, 1], [45843, 1], [46746, 1]], s: 84994, b: 84994}
 ],
 Huntsman_Speargun: [
 	{u: 4501, i: 30000, n: "Charr Speargun", r: [[19710, 4], [19767, 1]], s: 9514},
@@ -8949,7 +8970,8 @@ Weaponsmith_UpgradeComponent: [
 	{u: 9797, i: 67341, n: "Superior Sigil of Cruelty", r: [[19685, 1], [24357, 2], [19721, 1], [24351, 2]], s: 67181, b: 67181},
 	{u: 9798, i: 67343, n: "Superior Sigil of Incapacitation", r: [[19685, 1], [24283, 2], [19721, 1], [24358, 2]], s: 67179, b: 67179},
 	{u: 9902, i: 67913, n: "Superior Sigil of Blight", r: [[19685, 1], [67832, 1], [19721, 1], [24335, 1]], s: 68483, b: 68483},
-	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177}
+	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177},
+	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902}
 ],
 Weaponsmith_LegendaryComponent: [
 	{u: 9936, i: 76117, n: "Experimental Sword Blade", r: [[46738, 15], [71581, 50], [70820, 50]]},
@@ -9285,7 +9307,8 @@ Weaponsmith_Inscription: [
 	{u: 12243, i: 83974, n: "Mordant Inscription", r: [[12988, 5], [19721, 5], [83757, 30], [82678, 3]], s: 84288},
 	{u: 12094, i: 83926, n: "Inscription of the Spearmarshal", r: [[12988, 5], [19721, 5], [83103, 50], [82678, 2]]},
 	{u: 12371, i: 84930, n: "Zehtuka's Harrier Inscription", r: [[46681, 10], [45832, 1], [83974, 1], [24277, 10]], s: 85230, b: 85230},
-	{u: 12428, i: 85104, n: "Nadijeh's Marshal Inscription", r: [[46681, 10], [45832, 1], [83926, 1], [24277, 10]], s: 85209}
+	{u: 12428, i: 85104, n: "Nadijeh's Marshal Inscription", r: [[46681, 10], [45832, 1], [83926, 1], [24277, 10]], s: 85209},
+	{u: 12344, i: 85113, n: "The Twins' Grieving Inscription", r: [[46681, 10], [45832, 1], [85039, 1], [24277, 10]], s: 85205}
 ],
 Weaponsmith_Consumable: [
 	{u: 5396, i: 9431, n: "Rough Sharpening Stone", r: [[24272, 3], [19679, 3]]},
@@ -9301,7 +9324,8 @@ Weaponsmith_Consumable: [
 	{u: 9896, i: 67530, n: "Furious Sharpening Stone", r: [[24357, 1], [67832, 1], [19685, 1]], s: 67965, b: 67965},
 	{u: 9898, i: 67531, n: "Bountiful Sharpening Stone", r: [[24773, 3], [67832, 1], [19685, 1]], s: 67962, b: 67962},
 	{u: 11745, i: 77569, n: "Tin of Fruitcake", r: [[24277, 3], [19685, 1], [77651, 25]], s: 77619, b: 77619},
-	{u: 12041, i: 81034, n: "Magnanimous Sharpening Stone", r: [[24277, 5], [81127, 5], [46735, 100]], s: 81071}
+	{u: 12041, i: 81034, n: "Magnanimous Sharpening Stone", r: [[24277, 5], [81127, 5], [46735, 100]], s: 81071},
+	{u: 12503, i: 86378, n: "Corsair Sharpening Stone", r: [[24277, 3], [86069, 25], [46735, 100]], s: 85844}
 ],
 Weaponsmith_Feast: [
 	{u: 8456, i: 50020, n: "Sharpening Stone Station", r: [[46730, 1], [24277, 30], [46738, 5]], s: 50021, p: {karma: 25200}}
@@ -10143,7 +10167,8 @@ Weaponsmith_Dagger: [
 	{u: 11977, i: 80139, n: "Seraph Pearl Carver", r: [[80454, 1], [71331, 1], [76826, 1]], s: 80411},
 	{u: 12258, i: 83735, n: "Mordant Slicer", r: [[83974, 1], [71331, 1], [76826, 1]], s: 82961},
 	{u: 12392, i: 84936, n: "The Twins' Razor", r: [[85113, 1], [45846, 1], [45854, 1], [46746, 1]], s: 85327, b: 85327},
-	{u: 12412, i: 84909, n: "Nadijeh's Razor", r: [[85104, 1], [45846, 1], [45854, 1], [46746, 1]], s: 85146, b: 85146}
+	{u: 12412, i: 84909, n: "Nadijeh's Razor", r: [[85104, 1], [45846, 1], [45854, 1], [46746, 1]], s: 85146, b: 85146},
+	{u: 12320, i: 85051, n: "Zehtuka's Razor", r: [[84930, 1], [45846, 1], [45854, 1], [46746, 1]], s: 85363, b: 85363}
 ],
 Weaponsmith_Shield: [
 	{u: 5328, i: 29450, n: "Crusader's Shield", r: [[12907, 1], [12913, 1], [24345, 5]], s: 9391},
@@ -10348,7 +10373,8 @@ Weaponsmith_Shield: [
 	{u: 11909, i: 80133, n: "Thackeray's Bulwark", r: [[80595, 1], [45857, 1], [45858, 1], [46746, 1]], s: 80439},
 	{u: 12005, i: 80154, n: "Seraph Pearl Shell", r: [[76048, 1], [74335, 1], [70522, 1]], s: 80351},
 	{u: 12104, i: 82800, n: "Mordant Scutum", r: [[83974, 1], [74335, 1], [70522, 1]], s: 82668},
-	{u: 12390, i: 84957, n: "Zehtuka's Bastion", r: [[84930, 1], [45857, 1], [45858, 1], [46746, 1]], s: 85280, b: 85280}
+	{u: 12390, i: 84957, n: "Zehtuka's Bastion", r: [[84930, 1], [45857, 1], [45858, 1], [46746, 1]], s: 85280, b: 85280},
+	{u: 12352, i: 85357, n: "Nadijeh's Bastion", r: [[85104, 1], [45857, 1], [45858, 1], [46746, 1]], s: 84934, b: 84934}
 ],
 Weaponsmith_Greatsword: [
 	{u: 5417, i: 29990, n: "Charr Greatsword", r: [[19767, 1], [19679, 6]], s: 9505},
@@ -10945,7 +10971,8 @@ Weaponsmith_Harpoon: [
 	{u: 10805, i: 72090, n: "Vigilant Pearl Impaler", r: [[76048, 1], [71098, 1], [74091, 1]], s: 75517, b: 75517},
 	{u: 11596, i: 71014, n: "Tizlak's Impaler", r: [[72902, 1], [45853, 1], [45849, 1], [46746, 1]], s: 73130, b: 73130},
 	{u: 11950, i: 80670, n: "Thackeray's Skewer", r: [[80595, 1], [45853, 1], [45849, 1], [46746, 1]], s: 80479},
-	{u: 11985, i: 80295, n: "Seraph Pearl Impaler", r: [[80454, 1], [71098, 1], [74091, 1]], s: 80122}
+	{u: 11985, i: 80295, n: "Seraph Pearl Impaler", r: [[80454, 1], [71098, 1], [74091, 1]], s: 80122},
+	{u: 12410, i: 85364, n: "Nadijeh's Impaler", r: [[85104, 1], [45853, 1], [45849, 1], [46746, 1]], s: 85163, b: 85163}
 ],
 Scribe_Refinement: [
 	{u: 1, i: 19713, n: "Soft Wood Plank", r: [[19726, 2]]},
@@ -12588,7 +12615,8 @@ Jeweler_Amulet: [
 	{u: 10992, i: 76401, n: "Flax Blossom Orichalcum Amulet", r: [[76385, 5], [12821, 1], [12815, 1]], s: 73277, b: 73277},
 	{u: 11315, i: 72968, n: "Maguuma Lily Orichalcum Amulet", r: [[75965, 5], [12821, 1], [12815, 1]], s: 76915, b: 76915},
 	{u: 12259, i: 83687, n: "Monstrous Amulet", r: [[84581, 5], [12821, 1], [12815, 1]], s: 83569},
-	{u: 12183, i: 84320, n: "Brandspark Amulet", r: [[84765, 5], [12821, 1], [12815, 1]], s: 82829}
+	{u: 12183, i: 84320, n: "Brandspark Amulet", r: [[84765, 5], [12821, 1], [12815, 1]], s: 82829},
+	{u: 12461, i: 82339, n: "Mournstone Amulet", r: [[82495, 5], [12821, 1], [12815, 1]], s: 85627, b: 85627}
 ],
 Jeweler_Ring: [
 	{u: 3469, i: 23311, n: "Deldrimor Ring Replica", r: [[19683, 5]], s: 9548},
@@ -12728,7 +12756,8 @@ Jeweler_Ring: [
 	{u: 11444, i: 75953, n: "Moonstone Orichalcum Ring", r: [[71725, 5], [12827, 1], [12815, 1]], s: 77214, b: 77214},
 	{u: 11607, i: 73224, n: "Agate Orichalcum Ring", r: [[75435, 5], [12827, 1], [12815, 1]]},
 	{u: 12277, i: 82598, n: "Monstrous Ring", r: [[84581, 5], [12827, 1], [12815, 1]], s: 84049},
-	{u: 12279, i: 83293, n: "Brandspark Ring", r: [[84765, 5], [12827, 1], [12815, 1]], s: 82429}
+	{u: 12279, i: 83293, n: "Brandspark Ring", r: [[84765, 5], [12827, 1], [12815, 1]], s: 82429},
+	{u: 12460, i: 82896, n: "Mournstone Ring", r: [[82495, 5], [12827, 1], [12815, 1]], s: 85558, b: 85558}
 ],
 Jeweler_Earring: [
 	{u: 3507, i: 13373, n: "Topaz Silver Earring", r: [[12811, 1], [12817, 1], [24535, 1]]},
@@ -12867,7 +12896,8 @@ Jeweler_Earring: [
 	{u: 11139, i: 72686, n: "Ebony Orichalcum Earring", r: [[76765, 5], [12809, 1], [12815, 1]]},
 	{u: 12228, i: 84500, n: "Sunset Earring", r: [[84581, 5], [12809, 1], [12815, 1]], s: 82386},
 	{u: 6526, i: 36578, n: "Shukov's Launch Codes", r: [[12809, 1], [12815, 1], [44540, 1]], s: 36618},
-	{u: 12210, i: 84416, n: "Brandspark Earring", r: [[84765, 5], [12809, 1], [12815, 1]], s: 84441}
+	{u: 12210, i: 84416, n: "Brandspark Earring", r: [[84765, 5], [12809, 1], [12815, 1]], s: 84441},
+	{u: 12458, i: 82478, n: "Mournstone Earring", r: [[82495, 5], [12809, 1], [12815, 1]], s: 85526, b: 85526}
 ],
 Jeweler_Backpack: [
 	{u: 9274, i: 62913, n: "Elegant Jeweler's Backpack", r: [[62984, 1], [62909, 1], [19721, 3]]},

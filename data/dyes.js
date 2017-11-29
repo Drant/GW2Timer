@@ -52,7 +52,8 @@ var GW2T_DYES_HEADERS = {
 	Vibrant: {id: 79695, name_en: "Vibrant Dye Kit", name_de: "Lebendige-Farben-Farbkit", name_es: "Kit de tintes vibrantes", name_fr: "Kit de teintures vibrantes", name_zh: "醒目染料包"},
 	Solar: {id: 80069, name_en: "Solar and Lunar Dye Kit", name_de: "Sonne-und-Mond-Farbkit", name_es: "Kit de tintes solares y lunares", name_fr: "Kit de teinture solaire et lunaire", name_zh: "日月染料包"},
 	Primordus: {id: 80974, name_en: "Primordus Dye Kit", name_de: "Primordus-Farbkit", name_es: "Kit de tintes de Primordus", name_fr: "Kit de teintures de Primordius", name_zh: "派莫德斯染料包"},
-	Jormag: {id: 81545, name_en: "Jormag Dye Kit", name_de: "Jormag-Farbkit", name_es: "Kit de tintes de Jormag", name_fr: "Kit de teintures de Jormag", name_zh: "卓玛染料包"}
+	Jormag: {id: 81545, name_en: "Jormag Dye Kit", name_de: "Jormag-Farbkit", name_es: "Kit de tintes de Jormag", name_fr: "Kit de teintures de Jormag", name_zh: "卓玛染料包"},
+	Elonian: {id: 86163, name_en: "Elonian Landscape Dye Kit", name_de: "Elonische Landschaft-Farbkit", name_es: "Kit de tintes de paisaje eloniano", name_fr: "Kit de teinture de paysage élonien", name_zh: "伊伦娜风景染料包"}
 };
 
 /*
@@ -648,5 +649,13 @@ Jormag: [
 	{u: 1554, i: 81590, n: "Frozen Scales Dye", c: ["#77ba83", "#77ba83", "#77ba83"], h: "Green", m: "Vibrant", l: "[&AgG2PgEA]", en: "Frozen Scales", de: "Eisschuppen", es: "Escamas congeladas", fr: "Écailles gelées", zh: "冰冻鳞片"},
 	{u: 1551, i: 81561, n: "Frostbite Blue Dye", c: ["#e8ffff", "#e8ffff", "#e8ffff"], h: "Blue", m: "Vibrant", l: "[&AgGZPgEA]", en: "Frostbite Blue", de: "Erfrierungsblau", es: "Congelación azul", fr: "Engelure bleue", zh: "霜咬蓝"},
 	{u: 1550, i: 81534, n: "Core Ice Dye", c: ["#52abec", "#52abec", "#52abec"], h: "Blue", m: "Vibrant", l: "[&AgF+PgEA]", en: "Core Ice", de: "Kerneis", es: "Núcleo de hielo", fr: "Glace du noyau", zh: "冰核"}
+],
+Elonian: [
+	{u: 1579, i: 86145, n: "Sandstorm Dye", c: ["#c8aa82", "#c8aa82", "#ebc591"], h: "Brown", m: "Vibrant", l: "[&AgGBUAEA]", en: "Sandstorm", de: "Sandsturm", es: "Tormenta de arena", fr: "Tempête de sable", zh: "沙尘暴"},
+	{u: 1573, i: 86022, n: "Mesa Dye", c: ["#714737", "#714737", "#875d4d"], h: "Brown", m: "Leather", l: "[&AgEGUAEA]", en: "Mesa", de: "Hochebene", es: "Meseta", fr: "Plateau", zh: "台地"},
+	{u: 1576, i: 86089, n: "Ruin Dye", c: ["#2d231f", "#2d231f", "#2d231f"], h: "Blue", m: "Leather", l: "[&AgFJUAEA]", en: "Ruin", de: "Ruine", es: "Ruina", fr: "Ruine", zh: "废墟"},
+	{u: 1575, i: 85690, n: "Sulfur Dye", c: ["#fbc940", "#fbc940", "#ffd84f"], h: "Yellow", m: "Vibrant", l: "[&AgG6TgEA]", en: "Sulfur", de: "Schwefel", es: "Azufre", fr: "Soufre", zh: "硫磺"},
+	{u: 1574, i: 86054, n: "Highland Dye", c: ["#4d5420", "#4d5420", "#4d5420"], h: "Green", m: "Vibrant", l: "[&AgEmUAEA]", en: "Highlands", de: "Hochland", es: "Tierras altas", fr: "Hautes-terres", zh: "高地"},
+	{u: 1577, i: 85630, n: "Oasis Dye", c: ["#28aeae", "#28aeae", "#28aeae"], h: "Blue", m: "Vibrant", l: "[&AgF+TgEA]", en: "Oasis", de: "Oase", es: "Oasis", fr: "Oasis", zh: "绿洲"}
 ]
 };

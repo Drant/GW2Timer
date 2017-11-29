@@ -2020,16 +2020,16 @@ Countdown: {
 		Start: new Date("2017-11-21T17:00:00Z"),
 		Finish: new Date("2017-11-27T17:00:00Z")
 	},*/
-	{
-		name_en: "Living Story 4: Episode I",
-		name_de: "Lebendigen Geschichte 4: Episode I",
-		name_es: "Historia viviente 4: Episodio I",
-		name_fr: "Histoire vivante 4: Épisode I",
+	/*{
+		name_en: "Living Story 4: Episode II",
+		name_de: "Lebendigen Geschichte 4: Episode II",
+		name_es: "Historia viviente 4: Episodio II",
+		name_fr: "Histoire vivante 4: Épisode II",
 		name_zh: "第四生活世界：第4集",
 		official: "news/watch-the-trailer-for-daybreak/",
 		Start: new Date("2017-11-28T16:00:00Z"),
 		Finish: new Date("2017-11-29T16:00:00Z")
-	},
+	},*/
 	{
 		name_en: "Wintersday 2017",
 		name_de: "Wintertag 2017",

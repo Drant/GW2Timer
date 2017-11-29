@@ -43,13 +43,13 @@ Outfit: [
 	{i: "free_gem_store_item", n: "Free Gem Store Item", p: {gem: 0}},
 	{i: 65196, n: "Mad King's Outfit", p: {gem: -700}},
 	{i: 65201, n: "Witch's Outfit", p: {gem: -700}},
-	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 700}},
+	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: -700}},
 	{i: 65194, n: "Executioner's Outfit", p: {gem: -700}},
 	{i: 67037, n: "Raiment of the Lich", p: {gem: -700}},
 	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: -700}},
 	{i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
 	{i: 77595, n: "Winter Solstice Outfit", p: {gem: -700}},
-	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}},
+	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: -700}},
 	{i: 64756, n: "Cook's Outfit", p: {gem: -700}},
 	{i: 66279, n: "Ancestral Outfit", p: {gem: 700}},
 	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}},
@@ -64,20 +64,20 @@ Outfit: [
 	{i: 69607, n: "Balthazar's Regalia Outfit", p: {gem: 700}},
 	{i: 69623, n: "Exemplar Attire Outfit", p: {gem: -700}},
 	{i: 69662, n: "Daydreamer's Finery Outfit", p: {gem: -700}},
-	{i: 69753, n: "Mad Scientist Outfit", p: {gem: 700}},
+	{i: 69753, n: "Mad Scientist Outfit", p: {gem: -700}},
 	{i: 69806, n: "Dwayna's Regalia Outfit", p: {gem: 700}},
 	{i: 69863, n: "Monk's Outfit", p: {gem: -700}},
 	{i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: -700}},
-	{i: 70253, n: "Wedding Attire Outfit", p: {gem: 1000}},
+	{i: 70253, n: "Wedding Attire Outfit", p: {gem: -1000}},
 	{i: 75129, n: "Lyssa's Regalia", p: {gem: 700}},
 	{i: 76905, n: "Crystal Arbiter Outfit", p: {gem: 700}},
 	{i: 77282, n: "Bandit Sniper's Outfit", p: {gem: 700}},
-	{i: 77483, n: "Slayer's Outfit", p: {gem: 700}},
-	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}},
+	{i: 77483, n: "Slayer's Outfit", p: {gem: -700}},
+	{i: 77676, n: "Nature's Oath Outfit", p: {gem: -700}},
 	{i: 77808, n: "Crystal Savant Outfit", p: {gem: -700}},
 	{i: 78011, n: "White Mantle Outfit", p: {gem: 700}},
-	{i: 78008, n: "Gwen's Attire", p: {gem: 700}},
-	{i: 78010, n: "Ironclad Outfit", p: {gem: 700}},
+	{i: 78008, n: "Gwen's Attire", p: {gem: -700}},
+	{i: 78010, n: "Ironclad Outfit", p: {gem: -700}},
 	{i: 78574, n: "Sentinel Outfit", p: {gem: 700}},
 	{i: 79220, n: "Verdant Executor Outfit", p: {gem: 700}},
 	{i: 79531, n: "Mursaat Robes", p: {gem: 700}},
@@ -89,7 +89,7 @@ Outfit: [
 	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
 	{i: 80906, n: "Spring Promenade Outfit", p: {gem: -700}},
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
-	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}},
+	{i: 81223, n: "Outlaw Outfit", p: {gem: -700}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
 	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
@@ -100,7 +100,8 @@ Outfit: [
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
 	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]},
-	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}}
+	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}},
+	{i: 85491, n: "Resplendent Avialan", p: {gem: -2000}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -120,7 +121,7 @@ Glider: [
 	{i: 78006, n: "Ironclad Glider", p: {gem: 500}},
 	{i: 78007, n: "Bubble Glider", p: {gem: -500}},
 	{i: 78009, n: "Super Adventure Glider", p: {gem: -400}},
-	{i: 78025, n: "Phoenix Glider", p: {gem: 500}},
+	{i: 78025, n: "Phoenix Glider", p: {gem: -500}},
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: -700}},
 	{i: 78768, n: "Moth Wings Glider", p: {gem: -700}},
 	{i: 78790, n: "Floral Glider", p: {gem: -400}},
@@ -236,7 +237,8 @@ Head: [
 	{i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
 	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
 	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
-	{i: 84014, n: "Swaggering Hat", p: {gem: 400}}
+	{i: 84014, n: "Swaggering Hat", p: {gem: 400}},
+	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
@@ -245,7 +247,7 @@ Shoulder: [
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
-	{i: 81412, n: "Foefire Mantle", p: {gem: 500}}
+	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}},
@@ -254,7 +256,8 @@ Gloves: [
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: -500}},
-	{i: 81293, n: "Foefire Wraps", p: {gem: 500}}
+	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
+	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
@@ -371,6 +374,7 @@ Package: [
 	//{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 500}},
 	//{i: "https://i.imgur.com/e5G1iUR.png", n: "Elonian Introductory Package", p: {gem: 1800}},
 	//{i: "https://i.imgur.com/DooMduS.png", n: "Ironclad Appearance Pack", p: {gem: 2000}},
+	//{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
 	//{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1600}},
@@ -425,7 +429,8 @@ Dye: [
 	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80069, n: "Solar and Lunar Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80974, n: "Primordus Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 81545, n: "Jormag Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 81545, n: "Jormag Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
@@ -641,7 +646,8 @@ Mini: [
 	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
 	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: -400}},
 	{i: 85506, n: "Mini Elonian Familiar", p: {gem: -400}},
-	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: -400}}
+	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: -400}},
+	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},

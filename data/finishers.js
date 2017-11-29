@@ -87,7 +87,8 @@ General: [
 	{u: 51, i: 67862, n: "Chickenado Finisher"},
 	{u: 57, i: 68573, n: "Permanent Pact Fleet Finisher"},
 	{u: 59, i: 69786, n: "Permanent Honor Guard Finisher"},
-	{u: 62, i: 70243, n: "Permanent Birthday Finisher", p: {starting: true}}
+	{u: 62, i: 70243, n: "Permanent Birthday Finisher", p: {starting: true}},
+	{u: 72, i: 83722, n: "Realm Portal Spike Finisher", p: {token: 200}}
 ],
 Gem: [
 	{u: 18, i: 44068, n: "Permanent Mad King Finisher", p: {gem: 500}},
