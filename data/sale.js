@@ -36,6 +36,11 @@ GW2T_SALE_DATA = {
 	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}, Finish: new Date("2017-12-01T16:00:00Z")},
 	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 700}, Finish: new Date("2017-12-02T16:00:00Z")},
 	{i: 77483, n: "Slayer's Outfit", p: {gem: 700}, Finish: new Date("2017-12-02T16:00:00Z")},
-	{i: 70253, n: "Wedding Attire Outfit", p: {gem: 1000}, Finish: new Date("2017-12-02T16:00:00Z")}
+	{i: 70253, n: "Wedding Attire Outfit", p: {gem: 1000}, Finish: new Date("2017-12-02T16:00:00Z")},
+	{i: 82011, n: "Abaddon's Glider", p: {gem: 400}, Finish: new Date("2017-12-06T16:00:00Z")},
+	{i: 78006, n: "Ironclad Glider", p: {gem: 500}, Finish: new Date("2017-12-06T16:00:00Z")},
+	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}, Finish: new Date("2017-12-06T16:00:00Z")},
+	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: 700}, Finish: new Date("2017-12-06T16:00:00Z")},
+	{i: 77678, n: "Hawk Wings Glider", p: {gem: 700}, Finish: new Date("2017-12-06T16:00:00Z")}
 	]
 };
