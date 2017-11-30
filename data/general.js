@@ -80,7 +80,8 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1211": "highlands",
 	"1228": "riverlands",
 	"1226": "desolation",
-	"1248": "vabbi"
+	"1248": "vabbi",
+	"1263": "istan"
 };
 var GW2T_LAND_ASSOCIATION = {
 	"38": "eternal",
@@ -1764,6 +1765,18 @@ var GW2T_ZONE_DATA = {
 	region: "desert",
 	map_rect: [[-58368, -36864], [58368, 39936]],
 	continent_rect: [[30848, 35968], [35712, 39168]]
+},
+"istan":
+{
+	id: "1263",
+	name_en: "Domain of Istan",
+	name_de: "Domäne Istan",
+	name_es: "Dominio de Istan",
+	name_fr: "Domaine d'Istan",
+	name_zh: "伊斯坦领域",
+	region: "desert",
+	map_rect: [[-46080, -46080], [46080, 46080]],
+	continent_rect: [[22550, 43532], [26390, 47372]]
 }
 };
 
