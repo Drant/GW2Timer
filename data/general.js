@@ -473,7 +473,11 @@ var GW2T_DAILY_ASSOCIATION = {
 	"3509": "Observatory",
 	"3478": "Observatory",
 	"3464": "Observatory",
-	"3458": "Observatory"
+	"3458": "Observatory",
+	"4028": "Oasis",
+	"4006": "Oasis",
+	"4030": "Oasis",
+	"3973": "Oasis"
 };
 
 /*
@@ -498,13 +502,13 @@ Fractal:
 	url_es: "http://wiki-es.guildwars2.com/wiki/Fractales_de_la_niebla#Niveles_Fractales",
 	url_fr: "http://wiki-fr.guildwars2.com/wiki/Fractales_des_Brumes#Difficult.C3.A9_et_fractales",
 	Scale: [
-		"Urban", // 1
-		"Swamp", // 2
-		"Aquatic", // 3
-		"Uncategorized", // 4
-		"Snowblind", // 5
-		"Volcanic", // 6
-		"Cliffside", // 7
+		"Volcanic", // 1
+		"Uncategorized", // 2
+		"Snowblind", // 3
+		"Urban", // 4
+		"Swamp", // 5
+		"Cliffside", // 6
+		"Aquatic", // 7
 		"Underground", // 8
 		"Furnace", // 9
 		"Molten", // 10
@@ -513,14 +517,14 @@ Fractal:
 		"Chaos", // 13
 		"Aetherblade", // 14
 		"Thaumanova", // 15
-		"Snowblind", // 16
+		"Oasis", // 16
 		"Underground", // 17
 		"Maitrin", // 18
 		"Volcanic", // 19
 		"Ocean", // 20
 		"Swamp", // 21
 		"Cliffside", // 22
-		"Furnace", // 23
+		"Molten", // 23
 		"Nightmare", // 24
 		"Observatory", // 25
 		"Aquatic", // 26
@@ -538,7 +542,7 @@ Fractal:
 		"Chaos", // 38
 		"Furnace", // 39
 		"Molten", // 40
-		"Swamp", // 41
+		"Oasis", // 41
 		"Maitrin", // 42
 		"Underground", // 43
 		"Uncategorized", // 44
@@ -556,7 +560,7 @@ Fractal:
 		"Swamp", // 56
 		"Urban", // 57
 		"Furnace", // 58
-		"Cliffside", // 59
+		"Oasis", // 59
 		"Ocean", // 60
 		"Aquatic", // 61
 		"Uncategorized", // 62
@@ -580,11 +584,11 @@ Fractal:
 		"Ocean", // 80
 		"Underground", // 81
 		"Cliffside", // 82
-		"Furnace", // 83
+		"Molten", // 83
 		"Thaumanova", // 84
 		"Urban", // 85
 		"Snowblind", // 86
-		"Volcanic", // 87
+		"Oasis", // 87
 		"Chaos", // 88
 		"Swamp", // 89
 		"Molten", // 90
@@ -597,7 +601,7 @@ Fractal:
 		"Thaumanova", // 97
 		"Chaos", // 98
 		"Nightmare", // 99
-		"Observatory" // 100
+		"Observatory"// 100
 	]
 },
 Bookmark:
@@ -1811,7 +1815,8 @@ var GW2T_TIMELINE = [
 		Segments: [
 			{ time: "00:00", duration: "00:05", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
 			{ time: "00:05", duration: "00:20", primacy: 3, name_en: "Oasis: Casino", name_de: "Kasino-Blitz", name_es: "Carrera del casino", name_fr: "Casino express", name_zh: "赌场闪电战" },
-			{ time: "00:25", duration: "00:35", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "00:25", duration: "00:20", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "00:45", duration: "00:15", primacy: 3, name_en: "Istan: Palawadan", name_de: "Istan: Palawadan", name_es: "Istan: Palawadan", name_fr: "", name_zh: "Istan: Palawadan" },
 			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Highlands: Treasure", name_de: "Vergrabenen Schätzen", name_es: "Tesoro enterrado", name_fr: "Trésor enfoui", name_zh: "埋藏的宝藏" },
 			{ time: "01:20", duration: "00:40", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
 		]
