@@ -27,6 +27,7 @@ GW2T_SALE_DATA = {
 	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 85608, n: "Shifting Sands weapons#Gallery", p: {blticket: 1}},
+	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}},
 	{i: 68577, n: "Arcane Outfit", p: {gem: 700}},
 	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: 700}},
 	{i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
@@ -34,10 +35,6 @@ GW2T_SALE_DATA = {
 	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 250}, Finish: new Date("2017-12-07T16:00:00Z")},
 	{i: 80484, n: "Necrotic Glider", p: {gem: 500}, Finish: new Date("2017-12-07T16:00:00Z")},
 	{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}},
-	{i: 69753, n: "Mad Scientist Outfit", p: {gem: 700}, Finish: new Date("2017-12-01T16:00:00Z")},
-	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}, Finish: new Date("2017-12-01T16:00:00Z")},
-	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}, Finish: new Date("2017-12-01T16:00:00Z")},
-	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}, Finish: new Date("2017-12-01T16:00:00Z")},
 	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 700}, Finish: new Date("2017-12-02T16:00:00Z")},
 	{i: 77483, n: "Slayer's Outfit", p: {gem: 700}, Finish: new Date("2017-12-02T16:00:00Z")},
 	{i: 70253, n: "Wedding Attire Outfit", p: {gem: 1000}, Finish: new Date("2017-12-02T16:00:00Z")},
@@ -45,6 +42,10 @@ GW2T_SALE_DATA = {
 	{i: 78006, n: "Ironclad Glider", p: {gem: 500}, Finish: new Date("2017-12-06T16:00:00Z")},
 	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}, Finish: new Date("2017-12-06T16:00:00Z")},
 	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: 700}, Finish: new Date("2017-12-06T16:00:00Z")},
-	{i: 77678, n: "Hawk Wings Glider", p: {gem: 700}, Finish: new Date("2017-12-06T16:00:00Z")}
+	{i: 77678, n: "Hawk Wings Glider", p: {gem: 700}, Finish: new Date("2017-12-06T16:00:00Z")},
+	{i: 64742, n: "Aviator Cap", p: {gem: 200}, Finish: new Date("2017-12-08T16:00:00Z")},
+	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}, Finish: new Date("2017-12-08T16:00:00Z")},
+	{i: 64758, n: "Fuzzy Cat Hat", p: {gem: 200}, Finish: new Date("2017-12-08T16:00:00Z")},
+	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}, Finish: new Date("2017-12-08T16:00:00Z")}
 	]
 };
