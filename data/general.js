@@ -1815,10 +1815,10 @@ var GW2T_TIMELINE = [
 		Segments: [
 			{ time: "00:00", duration: "00:05", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
 			{ time: "00:05", duration: "00:20", primacy: 3, name_en: "Oasis: Casino", name_de: "Kasino-Blitz", name_es: "Carrera del casino", name_fr: "Casino express", name_zh: "赌场闪电战" },
-			{ time: "00:25", duration: "00:20", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "00:45", duration: "00:15", primacy: 3, name_en: "Istan: Palawadan", name_de: "Istan: Palawadan", name_es: "Istan: Palawadan", name_fr: "", name_zh: "Istan: Palawadan" },
+			{ time: "00:25", duration: "00:35", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
 			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Highlands: Treasure", name_de: "Vergrabenen Schätzen", name_es: "Tesoro enterrado", name_fr: "Trésor enfoui", name_zh: "埋藏的宝藏" },
-			{ time: "01:20", duration: "00:40", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
+			{ time: "01:20", duration: "00:25", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:45", duration: "00:15", primacy: 3, name_en: "Istan: Palawadan", name_de: "Istan: Palawadan", name_es: "Istan: Palawadan", name_fr: "", name_zh: "Istan: Palawadan" }
 		]
 	},
 	{
