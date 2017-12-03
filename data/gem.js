@@ -198,7 +198,7 @@ Head: [
 	{i: 64749, n: "Sailor's Beanie", p: {gem: -200}},
 	{i: 64750, n: "Top Hat", p: {gem: -200}},
 	{i: 64757, n: "Wizard's Hat", p: {gem: -200}},
-	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 300}},
+	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: -300}},
 	{i: 64740, n: "Aviator Sunglasses", p: {gem: -150}},
 	{i: 64743, n: "Sport Sunglasses", p: {gem: -150}},
 	{i: 64748, n: "Reading Glasses", p: {gem: -150}},
@@ -216,7 +216,7 @@ Head: [
 	{i: 65203, n: "Phantom's Hood", p: {gem: 200}},
 	{i: 48944, n: "Mask of the Wanderer Skin", p: {gem: -500}},
 	{i: 49157, n: "Mask of the Silent Skin", p: {gem: -500}},
-	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 400}},
+	{i: 50103, n: "Magnus's Eye Patch", p: {gem: -400}},
 	{i: 63891, n: "Glowing Crimson Mask", p: {gem: -500}},
 	{i: 67038, n: "Glowing Green Mask", p: {gem: -500}},
 	{i: 67857, n: "Glint's Gaze Mask", p: {gem: -500}},
@@ -253,14 +253,14 @@ Gloves: [
 	{i: 48817, n: "Scarlet's Grasp", p: {gem: -400}},
 	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
-	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}},
+	{i: 79391, n: "Pirate Hook Skin", p: {gem: -300}},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: -500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
 	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
-	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 300}},
+	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: -300}},
 	{i: 85282, n: "Foefire Greaves", p: {gem: 500}}
 ],
 Armor: [
