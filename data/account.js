@@ -541,6 +541,7 @@ var GW2T_ACCOUNT_METADATA = {
 		77, // Basic Collections
 		75, // Rare Collections
 		117, // Specialization Collections
+		185, // Crystal Desert Weapon Collections
 		114, // Legendary Weapons
 		118, // Legendary Backpacks
 		125, // Legendary Armor
