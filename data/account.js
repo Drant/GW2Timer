@@ -110,7 +110,8 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 6, payment: "dungeon_arah", name_en: "Shard of Zhaitan", name_de: "Scherbe des Zhaitan", name_es: "Esquirla de Zhaitan", name_fr: "Eclat de Zhaïtan", name_zh: "泽坦碎片" },
 			{ id: 7, payment: "fotm_relic", name_en: "Fractal Relic", name_de: "Fraktal-Relikt", name_es: "Reliquia fractal", name_fr: "Relique fractale", name_zh: "碎层古物" },
 			{ id: 24, coefficient: 15, payment: "fotm_pristine", name_en: "Pristine Fractal Relic", name_de: "Makelloses Fraktal-Relikt", name_es: "Reliquia fractal prístina", name_fr: "Relique fractale immaculée", name_zh: "原始碎层古物" },
-			{ id: 28, coefficient: 10, payment: "magnetite", name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁铁碎块" }
+			{ id: 28, coefficient: 10, payment: "magnetite", name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁铁碎块" },
+			{ id: 39, coefficient: 10, payment: "gaeting", name_en: "Gaeting Crystal", name_de: "Gaets-Kristall", name_es: "Cristal de Gaets", name_fr: "Cristal de Gaets", name_zh: "盖廷水晶" }
 		],
 		General: [
 			{ id: 1, coefficient: 1, name_en: "Coin", name_de: "Münze", name_es: "Moneda", name_fr: "Pièce", name_zh: "钱币" },
@@ -120,23 +121,33 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 16, coefficient: 10000, payment: "commendation", name_en: "Guild Commendation", name_de: "Gilden-Belobigung", name_es: "Mención de clan", name_fr: "Recommandation de guilde", name_zh: "公会奖状" },
 			{ id: 29, coefficient: 5000, payment: "provisioner", name_en: "Provisioner Token", name_de: "Versorger-Marke", name_es: "Vale de suministrador", name_fr: "Coupon de fournisseur", name_zh: "供给官徽记" },
 			{ id: 34, payment: "contract", name_en: "Trade Contract", name_de: "Handelsvertrag", name_es: "Contrato comercial", name_fr: "Contrat commercial", name_zh: "交易合同" },
+			{ id: 44, payment: "trader", name_en: "Trader's Key", name_de: "Schlüssel des Händlers", name_es: "Llave del Comerciante", name_fr: "Clé de marchand", name_zh: "商人钥匙" },
 			{ id: 35, payment: "mosaic", name_en: "Elegy Mosaic", name_de: "Elegie-Mosaik", name_es: "Mosaico de elegía", name_fr: "Mosaïque d'élégie", name_zh: "挽歌马赛克" },
 			{ id: 23, coefficient: 1000, name_en: "Spirit Shard", name_de: "Geister-Scherbe", name_es: "Esquirla espiritual", name_fr: "Éclat d'esprit", name_zh: "灵魂碎片" },
 			{ id: 18, coefficient: 10000, name_en: "Transmutation Charge", name_de: "Transmutations-Ladung", name_es: "Carga de transmutación", name_fr: "Charge de transmutation", name_zh: "幻化力" }
 		],
 		Map: [
 			{ id: 25, payment: "map_dt", name_en: "Geode", name_de: "Geode", name_es: "Geoda", name_fr: "Géode", name_zh: "晶块" },
+			{ id: 43, payment: "key_dt", name_en: "Zephyrite Lockpick", name_de: "Zephyriten-Dietrich", name_es: "Ganzúa cefirita", name_fr: "Crochet zéphyrite", name_zh: "风裔开锁器" },
 			{ id: 27, payment: "map_sw", name_en: "Bandit Crest", name_de: "Banditen-Wappen", name_es: "Enseña de bandido", name_fr: "Écu de bandit", name_zh: "强盗徽饰" },
+			{ id: 40, payment: "key_sw", name_en: "Bandit Skeleton Key", name_de: "Banditen-Dietrich", name_es: "Llave maestra de bandido", name_fr: "Passe-partout de bandit", name_zh: "强盗骷髅钥匙" },
 			{ id: 19, payment: "map_vb", name_en: "Airship Part", name_de: "Luftschiff-Teil", name_es: "Pieza de aeronave", name_fr: "Pièce d'aéronef", name_zh: "飞船部件" },
+			{ id: 41, payment: "key_vb", name_en: "Pact Crowbar", name_de: "Pakt-Brechstange", name_es: "Palanca del Pacto", name_fr: "Pied-de-biche du Pacte", name_zh: "契约团撬棍" },
 			{ id: 22, payment: "map_ab", name_en: "Lump of Aurillium", name_de: "Aurilliumklumpen", name_es: "Trozo de aurilio", name_fr: "Bloc d'aurillium", name_zh: "块状赤金元素" },
+			{ id: 37, payment: "key_ab", name_en: "Exalted Key", name_de: "Erhabenen-Schlüssel", name_es: "Llave exaltada", name_fr: "Clé exaltée", name_zh: "尊者钥匙" },
 			{ id: 20, payment: "map_td", name_en: "Ley Line Crystal", name_de: "Ley-Linien-Kristall", name_es: "Cristal de línea ley", name_fr: "Cristal des lignes de force", name_zh: "魔径水晶" },
+			{ id: 42, payment: "key_td", name_en: "Vial of Chak Acid", name_de: "Phiole Chak-Säure", name_es: "Vial de ácido chak", name_fr: "Fiole d'acide chak", name_zh: "瓶装查克虫酸液" },
+			{ id: 38, payment: "key_ds", name_en: "Machete", name_de: "Machete", name_es: "Machete", name_fr: "Machette", name_zh: "大砍刀" },
 			{ id: 32, coefficient: 0.1, payment: "magic", name_en: "Unbound Magic", name_de: "Entfesselte Magie", name_es: "Magia liberada", name_fr: "Magie déliée", name_zh: "未受约束的魔法" },
+			{ id: 45, coefficient: 10, payment: "volatile", name_en: "Volatile Magic", name_de: "Flüchtige Magie", name_es: "Magia volátil", name_fr: "Magie volatile", name_zh: "烈性魔法" }
+		],
+		PvP: [
 			{ id: 15, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "荣誉徽章" },
 			{ id: 31, payment: "proof", name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄证明" },
 			{ id: 36, payment: "testimony", name_en: "Testimony of Heroics", name_de: "Zeugnis von Heldentaten", name_es: "Testimonio de hazañas", name_fr: "Témoignage des actes héroïques", name_zh: "英雄证明" },
 			{ id: 26, coefficient: 10, name_en: "WvW Skirmish Claim Ticket", name_de: "WvW-Gefecht-Ticket", name_es: "Tique de recogida de escaramuzas WvW", name_fr: "Billet de retrait d'escarmouche McM", name_zh: "世界之战突袭兑换劵" },
 			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP联赛兑换券" },
-			{ id: 33, coefficient: 10, payment: "glory", name_en: "Ascended Shards of Glory", name_de: "Aufgestiegene Scherben des Ruhms", name_es: "Esquirlas de gloria ascendidas", name_fr: "Éclats de gloire élevés", name_zh: "升华荣誉碎片" }
+			{ id: 33, coefficient: 10, payment: "glory", name_en: "Ascended Shards of Glory", name_de: "Aufgestiegene Scherben des Ruhms", name_es: "Esquirlas de gloria ascendidas", name_fr: "Éclats de gloire élevés", name_zh: "升华荣誉碎片" },
 		]
 	},
 	AuditWallet: {}, // Will contain a flattened version of the wallet object

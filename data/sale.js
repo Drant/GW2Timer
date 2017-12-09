@@ -45,14 +45,14 @@ GW2T_SALE_DATA = {
 	{i: 68654, n: "Imperial Outfit", p: {gem: 700}},
 	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: 700}},
 	{i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
+	{i: 67857, n: "Glint's Gaze Mask", p: {gem: 500}},
+	{i: 64744, n: "Fuzzy Panda Hat", p: {gem: 200}},
+	{i: 64746, n: "Fuzzy Leopard Hat", p: {gem: 200}},
+	{i: 64749, n: "Sailor's Beanie", p: {gem: 200}},
 	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 400}, Finish: new Date("2017-12-10T16:00:00Z")},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 300}, Finish: new Date("2017-12-10T16:00:00Z")},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}, Finish: new Date("2017-12-10T16:00:00Z")},
 	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 300}, Finish: new Date("2017-12-10T16:00:00Z")},
-	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}, Finish: new Date("2017-12-09T16:00:00Z")},
-	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}, Finish: new Date("2017-12-09T16:00:00Z")},
-	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}, Finish: new Date("2017-12-09T16:00:00Z")},
-	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}, Finish: new Date("2017-12-09T16:00:00Z")},
 	{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}}
 	]
 };

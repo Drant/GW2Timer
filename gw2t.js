@@ -11185,6 +11185,7 @@ V = {
 				case "General": header = D.getModifiedWord("currencies", "general", U.CaseEnum.Every); break;
 				case "Dungeon": header = D.getModifiedWord("tokens", "dungeon", U.CaseEnum.Every); break;
 				case "Map": header = D.getModifiedWord("tokens", "map", U.CaseEnum.Every); break;
+				case "PvP": header = D.getModifiedWord("currencies", "pvp", U.CaseEnum.Every); break;
 			}
 			wallet.append("<li class='chrHeader'><var class='chrHeaderLeft curClick'>" + header + "</var></li>");
 			I.bindSortableTable(wallet, {aIsList: true});
@@ -19519,6 +19520,7 @@ E = {
 		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
 		provisioner: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_provisioner'></ins>"; },
 		contract: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_contract'></ins>"; },
+		trader: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_trader'></ins>"; },
 		mosaic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_mosaic'></ins>"; },
 		skirmish: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_skirmish'></ins>"; },
 		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
@@ -19535,19 +19537,28 @@ E = {
 		fotm_pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_pristine'></ins>"; },
 		matrix: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_matrix'></ins>"; },
 		magnetite: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_magnetite'></ins>"; },
+		gaeting: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_gaeting'></ins>"; },
 		map_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dt'></ins>"; },
+		key_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_key_dt'></ins>"; },
 		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sw'></ins>"; },
+		key_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_key_sw'></ins>"; },
 		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_vb'></ins>"; },
+		key_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_key_vb'></ins>"; },
 		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ab'></ins>"; },
+		key_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_key_ab'></ins>"; },
 		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_td'></ins>"; },
+		key_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_key_td'></ins>"; },
 		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ds'></ins>"; },
+		key_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_key_ds'></ins>"; },
 		magic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_magic'></ins>"; },
 		map_bs: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_bs'></ins>"; },
 		map_eb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_eb'></ins>"; },
 		map_bf: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_bf'></ins>"; },
 		map_ld: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ld'></ins>"; },
 		map_dm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dm'></ins>"; },
-		map_sl: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sl'></ins>"; }
+		map_sl: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sl'></ins>"; },
+		volatile: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_volatile'></ins>"; },
+		map_di: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_di'></ins>"; }
 	},
 	PaymentEnum:
 	{
@@ -28042,6 +28053,13 @@ P = {
 			}
 		};
 		
+		// Temporary use of cache until PoF zones are added back by Anet
+		$.getJSON(U.URL_DATA.Maps, function(pBackup)
+		{
+			doPopulate(pBackup);
+			finalizePopulate(true);
+		});
+		return;
 		/*
 		 * Retrieve map data from API.
 		 */

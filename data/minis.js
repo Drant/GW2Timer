@@ -344,6 +344,7 @@ PoF: [
 	{u: 570, i: 84603, n: "Mini Awakened Villager", p: {contract: 100}},
 	{u: 585, i: 83175, n: "Mini Awakened Archer", p: {contract: 50}},
 	{u: 579, i: 83689, n: "Mini Awakened Abomination"},
+	{u: 539, i: 84358, n: "Mini Awakened Canid Champion"},
 	{u: 516, i: 82973, n: "Mini Dunkoro", p: {contract: 100}},
 	{u: 518, i: 83708, n: "Mini Firebrand Roni Gehianu"},
 	{u: 522, i: 84097, n: "Mini Zaishen Zealot"},
@@ -415,7 +416,12 @@ Zone: [
 	{u: 490, i: 82012, n: "Mini Guardian of Secrets", p: {karma: 105000}},
 	{u: 491, i: 82051, n: "Mini Livia", p: {map_sl: 25}},
 	{u: 495, i: 81893, n: "Mini Ley-Line Scavenger", p: {karma: 105000}},
-	{u: 496, i: 81667, n: "Mini Queen Mahtab", p: {karma: 105000}}
+	{u: 496, i: 81667, n: "Mini Queen Mahtab", p: {karma: 105000}},
+	{u: 617, i: 86070, n: "Mini Sayida", p: {karma: 105000}},
+	{u: 618, i: 86357, n: "Mini Branded Wyvern", p: {map_di: 125}},
+	{u: 619, i: 85799, n: "Mini Adolescent Aurene", p: {map_di: 125}},
+	{u: 620, i: 85934, n: "Mini Tar Elemental", p: {karma: 105000}},
+	{u: 624, i: 85917, n: "Mini Koss", p: {karma: 105000}}
 ],
 SAB: [
 	{u: 133, i: 41908, n: "Mini Super Spider", p: {gem: 166}},
@@ -513,6 +519,7 @@ PvP: [
 	{u: 478, i: 81532, n: "Mini Silver Llama", p: {pvp: true}},
 	{u: 477, i: 81555, n: "Mini Fancy Silver Llama", p: {craft: true}},
 	{u: 487, i: 81531, n: "Mini Elegant Silver Llama", p: {craft: true}},
+	{u: 482, i: 81544, n: "Mini Lavish Silver Llama", p: {craft: true}},
 	{u: 486, i: 81587, n: "Mini Gold Llama", p: {pvp: true}},
 	{u: 480, i: 81539, n: "Mini Fancy Gold Llama", p: {craft: true}},
 	{u: 481, i: 81537, n: "Mini Elegant Gold Llama", p: {craft: true}},
@@ -551,7 +558,10 @@ Raid: [
 	{u: 440, i: 80545, n: "Mini White Mantle Figurehead", p: {magnetite: 300}},
 	{u: 441, i: 80562, n: "Mini Cairn the Indomitable", p: {magnetite: 300}},
 	{u: 438, i: 80224, n: "Mini Mursaat Overseer", p: {magnetite: 300}},
-	{u: 442, i: 80218, n: "Mini Samarog", p: {magnetite: 300}}
+	{u: 442, i: 80218, n: "Mini Samarog", p: {magnetite: 300}},
+	{u: 621, i: 85667, n: "Mini Broken King", p: {gaeting: 300}},
+	{u: 622, i: 86076, n: "Mini Desmina", p: {gaeting: 300}},
+	{u: 623, i: 85998, n: "Mini Dhuum", p: {gaeting: 300}}
 ],
 Gem: [
 	{u: 139, i: 42579, n: "Mini Hippo Calf", p: {gem: 400}},
@@ -641,6 +651,7 @@ Gem: [
 	{u: 497, i: 82074, n: "Mini Rogue Balthazar", p: {gem: 0}},
 	{u: 567, i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
 	{u: 594, i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}},
-	{u: 597, i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}}
+	{u: 597, i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
+	{u: 602, i: 85517, n: "Mini Kormeerkat", p: {gem: 350}}
 ]
 };

@@ -129,6 +129,7 @@ Key: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
 ],
 Token: [
+	{i: 86069, n: "Kralkatite Ore", p: {volatile: 4}},
 	{i: 81706, n: "Orrian Pearl", p: {magic: 37}},
 	{i: 81127, n: "Fire Orchid Blossom", p: {magic: 37}},
 	{i: 80332, n: "Jade Shard", p: {magic: 37}},
