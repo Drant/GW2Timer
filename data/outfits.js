@@ -74,7 +74,8 @@ General: [
 	{u: 54, i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
 	{u: 56, i: 85034, n: "Forged Outfit", p: {gem: 700}},
 	{u: 57, i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
-	{u: 58, i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}}
+	{u: 58, i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
+	{u: 72, i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}}
 ],
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},

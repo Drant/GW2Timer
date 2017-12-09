@@ -94,7 +94,8 @@ Outfit: [
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
 	{i: 85034, n: "Forged Outfit", p: {gem: 700}},
 	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
-	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}}
+	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
+	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -191,12 +192,12 @@ Back: [
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
 	{i: 65197, n: "Devil Horns", p: {gem: -200}},
-	{i: 65200, n: "Wintersday Earmuffs", p: {gem: -25}},
+	{i: 65200, n: "Wintersday Earmuffs", p: {gem: 25}},
 	{i: 65202, n: "Festive Hat", p: {gem: -150}},
 	{i: 64742, n: "Aviator Cap", p: {gem: -200}},
 	{i: 64745, n: "Ringmaster's Hat", p: {gem: -200}},
 	{i: 64749, n: "Sailor's Beanie", p: {gem: -200}},
-	{i: 64750, n: "Top Hat", p: {gem: -200}},
+	{i: 64750, n: "Top Hat", p: {gem: 200}},
 	{i: 64757, n: "Wizard's Hat", p: {gem: -200}},
 	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: -300}},
 	{i: 64740, n: "Aviator Sunglasses", p: {gem: -150}},
@@ -229,7 +230,7 @@ Head: [
 	{i: 64759, n: "Fuzzy Hylek Hat", p: {gem: -200}},
 	{i: 66309, n: "Wreath of Cooperation", p: {gem: -400}},
 	{i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: -400}},
-	{i: 80026, n: "Ice Crown", p: {gem: -400}},
+	{i: 80026, n: "Ice Crown", p: {gem: 400}},
 	{i: 68655, n: "Dragon Mask Skin", p: {gem: -300}},
 	{i: 68656, n: "Lion Mask Skin", p: {gem: -300}},
 	{i: 79014, n: "Xera's Mask", p: {gem: -400}},
@@ -244,7 +245,7 @@ Shoulder: [
 	{i: 48824, n: "Scarlet's Spaulders", p: {gem: -400}},
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
-	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
+	{i: 67887, n: "Shoulder Scarf", p: {gem: 400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
 	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
 ],
@@ -709,7 +710,8 @@ Finisher: [
 	{i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: -800}},
 	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
 	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: -800}},
-	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}}
+	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}},
+	{i: 85757, n: "Permanent Choya Finisher", p: {gem: 700}}
 ],
 Upgrade: [
 	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 800}},

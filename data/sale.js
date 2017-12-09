@@ -22,12 +22,16 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}},
-	{i: "https://i.imgur.com/4YYM6mG.png", n: "First Follower Desmina Outfit", p: {gem: 700}},
-	{i: "https://i.imgur.com/Wh8idMc.png", n: "Permanent Choya Finisher", p: {gem: 700}},
+	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
+	{i: 85757, n: "Permanent Choya Finisher", p: {gem: 700}},
 	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}},
 	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 77528, n: "Snowflake Glider", p: {gem: 500}},
 	{i: 80044, n: "Mini Festive Aurene", p: {gem: 400}},
+	{i: 80026, n: "Ice Crown", p: {gem: 400}},
+	{i: 67887, n: "Shoulder Scarf", p: {gem: 400}},
+	{i: 64750, n: "Top Hat", p: {gem: 200}},
+	{i: 65200, n: "Wintersday Earmuffs", p: {gem: 25}},
 	{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 375}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 85608, n: "Shifting Sands weapons#Gallery", p: {blticket: 1}},
@@ -49,10 +53,6 @@ GW2T_SALE_DATA = {
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}, Finish: new Date("2017-12-09T16:00:00Z")},
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: 300}, Finish: new Date("2017-12-09T16:00:00Z")},
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}, Finish: new Date("2017-12-09T16:00:00Z")},
-	{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}},
-	{i: 64742, n: "Aviator Cap", p: {gem: 200}, Finish: new Date("2017-12-08T16:00:00Z")},
-	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}, Finish: new Date("2017-12-08T16:00:00Z")},
-	{i: 64758, n: "Fuzzy Cat Hat", p: {gem: 200}, Finish: new Date("2017-12-08T16:00:00Z")},
-	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}, Finish: new Date("2017-12-08T16:00:00Z")}
+	{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}}
 	]
 };
