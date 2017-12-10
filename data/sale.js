@@ -46,13 +46,12 @@ GW2T_SALE_DATA = {
 	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: 700}},
 	{i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
 	{i: 67857, n: "Glint's Gaze Mask", p: {gem: 500}},
+	{i: 79014, n: "Xera's Mask", p: {gem: 400}},
+	{i: 68655, n: "Dragon Mask Skin", p: {gem: 300}},
+	{i: 68656, n: "Lion Mask Skin", p: {gem: 300}},
 	{i: 64744, n: "Fuzzy Panda Hat", p: {gem: 200}},
 	{i: 64746, n: "Fuzzy Leopard Hat", p: {gem: 200}},
 	{i: 64749, n: "Sailor's Beanie", p: {gem: 200}},
-	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 400}, Finish: new Date("2017-12-10T16:00:00Z")},
-	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 300}, Finish: new Date("2017-12-10T16:00:00Z")},
-	{i: 79391, n: "Pirate Hook Skin", p: {gem: 300}, Finish: new Date("2017-12-10T16:00:00Z")},
-	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 300}, Finish: new Date("2017-12-10T16:00:00Z")},
-	{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}}
+	{i: 64748, n: "Reading Glasses", p: {gem: 150}}
 	]
 };
