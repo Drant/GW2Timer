@@ -31,7 +31,8 @@ Special: [
 	{u: "winterberry_bush", i: 79903, n: "Winterberry Bush Node", p: {coin: 500000}},
 	{u: "jade_fragment", i: 80450, n: "Jade Fragment Node", p: {coin: 500000}},
 	{u: "primordial_orchid", i: 81115, n: "Fire Orchid Node", p: {coin: 500000}},
-	{u: "orrian_oyster", i: 81696, n: "Orrian Oyster Node", p: {coin: 500000}}
+	{u: "orrian_oyster", i: 81696, n: "Orrian Oyster Node", p: {coin: 500000}},
+	{u: "brandstone_node", i: 86297, n: "Brandstone Node", p: {coin: 500000}}
 ],
 Gathering: [
 	{u: "hunters_contract", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},

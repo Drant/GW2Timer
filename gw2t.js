@@ -36811,7 +36811,7 @@ K = {
 		{
 			K.isClockStyled = true;
 			//$("#paneClock").addClass("clkHalloween");
-			//$("#paneClock").addClass("clkWintersday");
+			$("#paneClock").addClass("clkWintersday");
 			$("#paneClockFace").addClass("paneClockFace");
 		}
 	},
@@ -38087,7 +38087,6 @@ K = {
 	 */
 	refreshFestival: function()
 	{
-		return;
 		var numsnowflakes = 144;
 		var canvas = document.getElementById("paneClockCanvas");
 		var context = canvas.getContext("2d");
