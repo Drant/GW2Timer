@@ -1896,8 +1896,9 @@ Announcement:
 	NewsPVE: { // Shown on main page dashboard
 		//content: "Please tell new players about gw2timer.com!",
 		//content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='http://gw2timer.com/?page=Pumpkins'>more</a>.",
-		content: "",
-		Finish: new Date("2017-11-21T16:00:00Z")
+		content: "<a href='http://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
+		//content: "",
+		Finish: new Date("2018-01-02T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
