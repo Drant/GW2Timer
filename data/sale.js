@@ -21,7 +21,10 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}},
+	{i: 49149, n: "Royal Terrace Pass", p: {gem: 700}, discount: 1000},
+	{i: "https://i.imgur.com/gAiNPeZ.png", n: "Path of Fire Survival Package", p: {gem: 2000}, Finish: new Date("2017-12-19T16:00:00Z")},
+	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}},
+	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}, Finish: new Date("2017-12-19T16:00:00Z")},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
 	{i: 85757, n: "Permanent Choya Finisher", p: {gem: 700}},
 	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}},
@@ -31,6 +34,7 @@ GW2T_SALE_DATA = {
 	{i: 80026, n: "Ice Crown", p: {gem: 400}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: 400}},
 	{i: 64750, n: "Top Hat", p: {gem: 200}},
+	{i: 65202, n: "Festive Hat", p: {gem: 150}},
 	{i: 65200, n: "Wintersday Earmuffs", p: {gem: 25}},
 	{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 375}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},

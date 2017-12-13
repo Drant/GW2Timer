@@ -365,6 +365,8 @@ BlackLionWeapon: [
 	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
+	//{i: "https://i.imgur.com/gAiNPeZ.png", n: "Path of Fire Survival Package", p: {gem: 2000}},
+	//{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}},
 	//{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 375}},
 	//{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}},
 	//{i: "https://i.imgur.com/PuHTFpK.png", n: "Mount Adoption License 30 Pack", p: {gem: 9600}},
