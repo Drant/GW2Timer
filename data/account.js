@@ -446,6 +446,7 @@ var GW2T_ACCOUNT_METADATA = {
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
 		79, // Halloween Daily
+		98, // Wintersday Daily
 		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
 		68, // Gates of Maguuma
 		70, // Entanglement
@@ -576,6 +577,8 @@ var GW2T_ACCOUNT_METADATA = {
 		99, // A Very Merry Wintersday
 		131, // A Very Merry Wintersday
 		150, // A Very Merry Wintersday
+		197, // Wintersday Traditions
+		198, // Winter's Presence
 		{en: "Living Story", de: "Lebendigen Geschichte", es: "Historia viviente", fr: "Histoire vivante", zh: "世界动"},
 		23, // Secret of Southsun
 		25, // Dragon Bash

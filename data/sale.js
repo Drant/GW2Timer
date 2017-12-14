@@ -21,7 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 49149, n: "Royal Terrace Pass", p: {gem: 700}, discount: 1000},
+	{i: 49149, n: "Royal Terrace Pass", p: {gem: 700}, discount: 1000, Finish: new Date("2017-12-19T16:00:00Z")},
 	{i: "https://i.imgur.com/gAiNPeZ.png", n: "Path of Fire Survival Package", p: {gem: 2000}, Finish: new Date("2017-12-19T16:00:00Z")},
 	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}},
 	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}, Finish: new Date("2017-12-19T16:00:00Z")},
@@ -36,9 +36,9 @@ GW2T_SALE_DATA = {
 	{i: 64750, n: "Top Hat", p: {gem: 200}},
 	{i: 65202, n: "Festive Hat", p: {gem: 150}},
 	{i: 65200, n: "Wintersday Earmuffs", p: {gem: 25}},
-	{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 375}},
+	{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 375}, Finish: new Date("2017-12-19T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
-	{i: 85608, n: "Shifting Sands weapons#Gallery", p: {blticket: 1}},
+	{i: 86675, n: "Glacial weapons#Gallery", p: {blticket: 1}},
 	{i: 74684, n: "Bat Wings Glider", p: {gem: 700}},
 	{i: 73939, n: "Bat Wings Backpack", p: {gem: 700}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},

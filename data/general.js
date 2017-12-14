@@ -2058,7 +2058,7 @@ Countdown: {
 		name_es: "Día Invernal 2017",
 		name_fr: "Hivernel 2017",
 		name_zh: "冬幕节2017",
-		url: "https://twitter.com/GuildWars2/status/938096277337845766",
+		official: "news/wintersday-2017-is-here/",
 		Start: new Date("2017-12-12T17:00:00Z"),
 		Finish: new Date("2018-01-02T17:00:00Z")
 	}

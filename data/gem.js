@@ -362,7 +362,8 @@ BlackLionWeapon: [
 	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 3}},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 3}},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 2}},
-	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 1}}
+	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 2}},
+	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/gAiNPeZ.png", n: "Path of Fire Survival Package", p: {gem: 2000}},
