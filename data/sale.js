@@ -27,8 +27,6 @@ GW2T_SALE_DATA = {
 	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}, Finish: new Date("2017-12-19T16:00:00Z")},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
 	{i: 85757, n: "Permanent Choya Finisher", p: {gem: 700}},
-	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}},
-	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 77528, n: "Snowflake Glider", p: {gem: 500}},
 	{i: 80044, n: "Mini Festive Aurene", p: {gem: 400}},
 	{i: 80026, n: "Ice Crown", p: {gem: 400}},

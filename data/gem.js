@@ -433,7 +433,7 @@ Dye: [
 	{i: 80069, n: "Solar and Lunar Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80974, n: "Primordus Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 81545, n: "Jormag Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
