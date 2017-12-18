@@ -7,8 +7,9 @@
  * Category translations.
  */
 var GW2T_OUTFITS_HEADERS = {
-	General: {name_en: "General", name_de: "General", name_es: "General", name_fr: "Général"},
-	Festival: {name_en: "Festival", name_de: "Festival", name_es: "Festival", name_fr: "Festival"}
+	General: {name_en: "General", name_de: "General", name_es: "General", name_fr: "Général", name_zh: "一般"},
+	Town: {name_en: "Town", name_de: "Stadtkleidung", name_es: "Ciudad", name_fr: "Ville", name_zh: "城镇服装"},
+	Festival: {name_en: "Festival", name_de: "Festival", name_es: "Festival", name_fr: "Festival", name_zh: "节"}
 };
 
 /*
@@ -87,5 +88,21 @@ Festival: [
 	{u: 28, i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}},
 	{u: 7, i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
 	{u: 33, i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}}
+],
+Town: [
+	{u: 60, i: 36179, n: "Common Clothing Outfit"},
+	{u: 59, i: 36189, n: "Cherry Blossom Clothing Outfit"},
+	{u: 64, i: 36190, n: "Country Lace Clothing Outfit"},
+	{u: 67, i: 36191, n: "Ornate Clothing Outfit"},
+	{u: 61, i: 36185, n: "Silk Brocade Outfit"},
+	{u: 62, i: 36184, n: "Leather Hoodie Clothing Outfit"},
+	{u: 63, i: 36187, n: "Casual Clothing Outfit"},
+	{u: 66, i: 36200, n: "Casual Hoodie Clothing Outfit"},
+	{u: 68, i: 36186, n: "Layered Vest Clothing Outfit"},
+	{u: 69, i: 36188, n: "Striped Silk Clothing Outfit"},
+	{u: 70, i: 36183, n: "Designer Hoodie Clothing Outfit"},
+	{u: 65, i: 36176, n: "Riding Clothes Outfit"},
+	{u: 71, i: 36180, n: "Khaki Clothing Outfit"},
+	{u: 73, i: 36192, n: "Dragon Emblem Clothing Outfit"}
 ]
 };

@@ -958,7 +958,7 @@ BanditChests: {
 	color: "wheat",
 	view: "silverwastes",
 	wiki: "http://wiki.guildwars2.com/wiki/Lost_Bandit_Chest",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [5806, 15562]},
 	{n: 2, c: [5783, 15613]},
@@ -1092,7 +1092,7 @@ MatrixCubeKey: {
 	color: "greenyellow",
 	view: "[7588, 17619]",
 	wiki: "http://wiki.guildwars2.com/wiki/Matrix_Cube_Key",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [7723, 17561]},
 	{n: 2, c: [7688, 17509]},
@@ -1264,7 +1264,7 @@ PumpkinCarving: {
 	color: "orange",
 	view: "lion",
 	wiki: "https://wiki.guildwars2.com/wiki/Carving_Pumpkin",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [16459, 14575]},
 	{n: 2, c: [16369, 14555]},
@@ -1469,7 +1469,7 @@ LessonsLearned: {
 	color: "hotpink",
 	view: "draconis",
 	wiki: "https://wiki.guildwars2.com/wiki/Lessons_Learned",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [3255, 25535], l: 3},
 	{n: 2, c: [3469, 25526], l: 2},
@@ -1497,7 +1497,7 @@ PeopleWatching: {
 	color: "violet",
 	view: "draconis",
 	wiki: "https://wiki.guildwars2.com/wiki/People_Watching",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [3338, 25610], l: 1, t: "Find missing golem to learn password."},
 	{n: 2, c: [3312, 24978], l: 2, t: "Find the Whispers agent, give him the password, and obtain the scanners."},
@@ -1520,7 +1520,7 @@ RockCollector: {
 	color: "red",
 	view: "draconis",
 	wiki: "https://wiki.guildwars2.com/wiki/Rock_Collector",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [3214, 25828], l: 1, t: "Mariner Landing: In a nook high along the western wall."},
 	{n: 2, c: [3329, 25496], l: 2, t: "Mariner Landing: In plain view near Sub Landing."},
@@ -1713,7 +1713,7 @@ MursaatTokens: {
 	color: "orangered",
 	view: "ember",
 	wiki: "https://wiki.guildwars2.com/wiki/Token_Collector_(Mursaat_Token)",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [6393, 29806]},
 	{n: 2, c: [6948, 30137]},
@@ -1767,7 +1767,7 @@ MursaatTablets: {
 	color: "tomato",
 	view: "[5196, 29163]",
 	wiki: "https://wiki.guildwars2.com/wiki/Tablets_of_the_Unseen",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [5196, 29163]},
 	{n: 2, c: [5242, 29107]},
@@ -1791,7 +1791,7 @@ CamiJournals: {
 	color: "coral",
 	view: "ember",
 	wiki: "https://wiki.guildwars2.com/wiki/Rising_Flames_(achievements)",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [6234, 30251]},
 	{n: 2, c: [5388, 29690]},
@@ -1812,7 +1812,7 @@ RiftStabilizer: {
 	color: "white",
 	view: "default",
 	wiki: "https://wiki.guildwars2.com/wiki/Class_I_Rift_Stabilizer",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [30791, 16917], l: "I + I"},
 	{n: 2, c: [31035, 17677], l: "VIII + X"},
@@ -1967,7 +1967,7 @@ BloodstoneSlivers: {
 	color: "red",
 	view: "default",
 	wiki: "https://wiki.guildwars2.com/wiki/Bloodstone_Harvest",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [6112, 20746], t: "Outside surface of Rata Sum, climb vine near waypoint"},
 	{n: 2, c: [2848, 15087], t: "Near Levvi's device"},
@@ -1991,7 +1991,7 @@ PaperScraps: {
 	color: "lemonchiffon",
 	view: "bloodstone",
 	wiki: "https://wiki.guildwars2.com/wiki/Conspiracy_of_Dunces",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [2406, 14136], t: "Kasandra: 12 Colossus, 1327 AE (Air)"},
 	{n: 2, c: [2501, 14205], t: "Bauer: 7 Scion, 1325 AE (Air)"},
@@ -2047,7 +2047,7 @@ TigerSpirit: {
 	color: "orange",
 	view: "default",
 	wiki: "http://wiki.guildwars2.com/wiki/Spirit_of_the_Tiger_(achievement)",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [2655, 14842]},
 	{n: 2, c: [3134, 19905]},
@@ -2623,7 +2623,7 @@ HungryCats: {
 	color: "sandybrown",
 	view: "default",
 	wiki: "https://wiki.guildwars2.com/wiki/Hungry_cat_scavenger_hunt",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	needles: [
 	{c: [16029, 14648], u: 3, t: "Spicy Flank Steak"},
 	{c: [17019, 14540], u: 2, t: "Grilled Poultry"},
@@ -3080,7 +3080,7 @@ RangerPets: {
 	color: "chartreuse",
 	view: "default",
 	wiki: "http://wiki.guildwars2.com/wiki/Pet",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/GW2/Manual/Manual.html",
 	iscushion: true,
 	iconsize: 96,
 	ringsize: 48,
