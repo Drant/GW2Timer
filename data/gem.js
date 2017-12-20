@@ -366,6 +366,7 @@ BlackLionWeapon: [
 	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
+	//{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/gAiNPeZ.png", n: "Path of Fire Survival Package", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}},
 	//{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 375}},
@@ -709,6 +710,9 @@ Node: [
 Finisher: [
 	{i: 44068, n: "Permanent Mad King Finisher", p: {gem: -500}},
 	{i: 44069, n: "Permanent Scarecrow Finisher", p: {gem: -500}},
+	{i: 44070, n: "Permanent Gift Finisher", p: {gem: -600}},
+	{i: 44071, n: "Permanent Snowman Finisher", p: {gem: -700}},
+	{i: 47896, n: "Permanent Snow Globe Finisher", p: {gem: -700}},
 	{i: 44724, n: "Permanent Super Explosive Finisher", p: {gem: -600}},
 	{i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: -800}},
 	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
