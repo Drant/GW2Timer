@@ -87,7 +87,8 @@ Festival: [
 	{u: 11, i: 67037, n: "Raiment of the Lich", p: {gem: 700}},
 	{u: 28, i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}},
 	{u: 7, i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
-	{u: 33, i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}}
+	{u: 33, i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}},
+	{u: 74, i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}}
 ],
 Town: [
 	{u: 60, i: 36179, n: "Common Clothing Outfit"},
