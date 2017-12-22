@@ -21,6 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
+	{i: 70009, n: "White Feather Wings Glider", p: {gem: 560}, discount: 700, Finish: new Date("2017-12-29T16:00:00Z")},
+	{i: 69882, n: "White Feather Wings Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2017-12-29T16:00:00Z")},
+	{i: 77494, n: "Wintersday Wreath Backpack", p: {gem: 350}, discount: 500, Finish: new Date("2017-12-29T16:00:00Z")},
 	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}},
 	{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},
 	{i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}},
