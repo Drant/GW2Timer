@@ -112,7 +112,7 @@ Glider: [
 	{i: 76236, n: "Exalted Glider", p: {gem: -400}},
 	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 700}},
 	{i: 77291, n: "Soul River Glider", p: {gem: 500}},
-	{i: 77528, n: "Snowflake Glider", p: {gem: 500}},
+	{i: 77528, n: "Snowflake Glider", p: {gem: -500}},
 	{i: 77646, n: "Ugly Wool Glider", p: {gem: 0}},
 	{i: 77678, n: "Hawk Wings Glider", p: {gem: -700}},
 	{i: 77738, n: "Phoenix Kite Glider", p: {gem: -400}},
