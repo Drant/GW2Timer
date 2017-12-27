@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-12-11T16:00:00Z"),
-	Finish: new Date("2017-12-26T16:00:00Z"),
+	Start: new Date("2017-12-26T16:00:00Z"),
+	Finish: new Date("2018-01-09T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -24,18 +24,19 @@ GW2T_SALE_DATA = {
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: 560}, discount: 700, Finish: new Date("2017-12-29T16:00:00Z")},
 	{i: 69882, n: "White Feather Wings Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2017-12-29T16:00:00Z")},
 	{i: 77494, n: "Wintersday Wreath Backpack", p: {gem: 350}, discount: 500, Finish: new Date("2017-12-29T16:00:00Z")},
-	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}, discount: 500, Finish: new Date("2017-12-29T16:00:00Z")},
-	{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},
+	{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}, Finish: new Date("2018-01-02T16:00:00Z")},
+	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}, Finish: new Date("2017-12-29T16:00:00Z")},
+	{i: "https://i.imgur.com/QG8L0UM.png", n: "Umbral Demon Skimmer Skin", p: {gem: 1600}, Finish: new Date("2018-01-02T16:00:00Z")},
+	{i: "https://i.imgur.com/8UI3lQs.png", n: "Freezie Crown", p: {gem: 350}, Finish: new Date("2018-01-02T16:00:00Z")},
+	{i: 42978, n: "Wintersday Minis 3-Pack", p: {gem: 500}, Finish: new Date("2018-01-02T16:00:00Z")},
 	{i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}},
+	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}},
 	{i: 86715, n: "Glacial Glider", p: {gem: 500}},
-	{i: 80049, n: "Ice Encasement Outfit", p: {gem: 700}},
-	{i: 80044, n: "Mini Festive Aurene", p: {gem: 400}},
-	{i: 65202, n: "Festive Hat", p: {gem: 150}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 86675, n: "Glacial weapons#Gallery", p: {blticket: 1}},
-	{i: 77528, n: "Snowflake Glider", p: {gem: 500}, Finish: new Date("2017-12-26T16:00:00Z")},
-	{i: 44070, n: "Permanent Gift Finisher", p: {gem: 600}, Finish: new Date("2017-12-26T16:00:00Z")},
-	{i: 44071, n: "Permanent Snowman Finisher", p: {gem: 700}, Finish: new Date("2017-12-26T16:00:00Z")},
-	{i: 47896, n: "Permanent Snow Globe Finisher", p: {gem: 700}, Finish: new Date("2017-12-26T16:00:00Z")}
+	{i: 80049, n: "Ice Encasement Outfit", p: {gem: 700}, Finish: new Date("2017-12-29T16:00:00Z")},
+	{i: 80044, n: "Mini Festive Aurene", p: {gem: 400}, Finish: new Date("2018-01-02T16:00:00Z")},
+	{i: 85757, n: "Permanent Choya Finisher", p: {gem: 700}, Finish: new Date("2018-01-02T16:00:00Z")},
+	{i: 65202, n: "Festive Hat", p: {gem: 150}, Finish: new Date("2018-01-02T16:00:00Z")}
 	]
 };

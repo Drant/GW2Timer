@@ -54,7 +54,7 @@ Outfit: [
 	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}},
 	{i: 67040, n: "Ceremonial Plated Outfit", p: {gem: -700}},
 	{i: 67398, n: "Noble Count Outfit", p: {gem: 700}},
-	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: -700}},
+	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}},
 	{i: 67990, n: "Jungle Explorer Outfit", p: {gem: -700}},
 	{i: 68577, n: "Arcane Outfit", p: {gem: 700}},
 	{i: 66279, n: "Ancestral Outfit", p: {gem: 700}},
@@ -720,7 +720,7 @@ Finisher: [
 	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
 	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: -800}},
 	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}},
-	{i: 85757, n: "Permanent Choya Finisher", p: {gem: 700}}
+	{i: 85757, n: "Permanent Choya Finisher", p: {gem: -700}}
 ],
 Upgrade: [
 	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 800}},
