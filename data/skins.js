@@ -688,7 +688,11 @@ Armor_Light_Helm: [
 	{u: 7578, i: 85287, n: "Warbeast Cowl", b: [82181]},
 	{u: 7592, i: 83553, n: "Spearmarshal's Cowl", b: [83553]},
 	{u: 7776, i: 85464, n: "Lunatic Acolyte Mask", p: {craft: true}},
-	{u: 7782, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
+	{u: 7782, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}},
+	{u: 7821, i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
+	{u: 7836, i: 86334, n: "Light Corsair Turban", p: {achievement: 0}},
+	{u: 7872, i: 86121, n: "Skullcap of Dhuum", p: {gaeting: 600}},
+	{u: 7991, i: 86538, n: "Eggnog Helmet", p: {craft: true}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", b: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -788,7 +792,8 @@ Armor_Light_Shoulders: [
 	{u: 7647, i: 85097, n: "Warbeast Mantle", b: [84183]},
 	{u: 7648, i: 85269, n: "Bounty Hunter's Mantle", p: {craft: true}},
 	{u: 7713, i: 85003, n: "Elonian Mantle", p: {achievement: 0}},
-	{u: 7763, i: 85392, n: "Lunatic Acolyte Mantle", p: {craft: true}}
+	{u: 7763, i: 85392, n: "Lunatic Acolyte Mantle", p: {craft: true}},
+	{u: 7911, i: 86345, n: "Mantle of Dhuum", p: {gaeting: 600}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", b: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -965,7 +970,10 @@ Armor_Light_Gloves: [
 	{u: 7627, i: 84616, n: "Weaver's Antipodes", p: {achievement: 0}},
 	{u: 7672, i: 84922, n: "Elonian Gloves", p: {achievement: 0}},
 	{u: 7710, i: 85145, n: "Warbeast Gloves", b: [84267]},
-	{u: 7792, i: 85503, n: "Lunatic Acolyte Gloves", p: {craft: true}}
+	{u: 7792, i: 85503, n: "Lunatic Acolyte Gloves", p: {craft: true}},
+	{u: 7817, i: 85615, n: "Salvaged Forged Gloves", p: {gem: 400}},
+	{u: 7848, i: 85879, n: "Gloves of Dhuum", p: {gaeting: 600}},
+	{u: 7985, i: 86683, n: "Svanir Gauntlets", p: {gem: 0}}
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", b: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -1132,7 +1140,8 @@ Armor_Light_Boots: [
 	{u: 7473, i: 85177, n: "Warbeast Shoes", b: [83452]},
 	{u: 7486, i: 85198, n: "Elonian Shoes", p: {achievement: 0}},
 	{u: 7748, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
-	{u: 7793, i: 85385, n: "Lunatic Acolyte Boots", p: {craft: true}}
+	{u: 7793, i: 85385, n: "Lunatic Acolyte Boots", p: {craft: true}},
+	{u: 7887, i: 86037, n: "Slippers of Dhuum", p: {gaeting: 600}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1293,7 +1302,11 @@ Armor_Medium_Helm: [
 	{u: 7696, i: 84932, n: "Elonian Mask", p: {achievement: 0}},
 	{u: 7708, i: 84375, n: "Funerary Mask", p: {mosaic: 6}},
 	{u: 7770, i: 85497, n: "Lunatic Noble Mask", p: {craft: true}},
-	{u: 7800, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
+	{u: 7800, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}},
+	{u: 7806, i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
+	{u: 7873, i: 86008, n: "Medium Corsair Turban", p: {achievement: 0}},
+	{u: 7889, i: 86152, n: "Shako of Dhuum", p: {gaeting: 600}},
+	{u: 7966, i: 86652, n: "Eggnog Helmet", p: {craft: true}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1393,7 +1406,8 @@ Armor_Medium_Shoulders: [
 	{u: 7622, i: 84563, n: "Holosmith's Lucent Vent", p: {achievement: 0}},
 	{u: 7635, i: 84958, n: "Bounty Hunter's Shoulderpads", p: {craft: true}},
 	{u: 7644, i: 84484, n: "Deadeye's Brace", p: {achievement: 0}},
-	{u: 7796, i: 85463, n: "Lunatic Noble Shoulders", p: {craft: true}}
+	{u: 7796, i: 85463, n: "Lunatic Noble Shoulders", p: {craft: true}},
+	{u: 7895, i: 85654, n: "Shoulderguards of Dhuum", p: {gaeting: 600}}
 ],
 Armor_Medium_Coat: [
 	{u: 6, i: 41169, n: "Rawhide Vest", p: {badge: 30}},
@@ -1568,7 +1582,10 @@ Armor_Medium_Gloves: [
 	{u: 7624, i: 85167, n: "Warbeast Vambraces", b: [83890]},
 	{u: 7675, i: 85032, n: "Bounty Hunter's Vambraces", p: {craft: true}},
 	{u: 7711, i: 83574, n: "Funerary Vambraces", p: {mosaic: 6}},
-	{u: 7799, i: 85407, n: "Lunatic Noble Gloves", p: {craft: true}}
+	{u: 7799, i: 85407, n: "Lunatic Noble Gloves", p: {craft: true}},
+	{u: 7819, i: 85615, n: "Salvaged Forged Gloves", p: {gem: 400}},
+	{u: 7874, i: 86044, n: "Handguards of Dhuum", p: {gaeting: 600}},
+	{u: 7975, i: 86683, n: "Svanir Gauntlets", p: {gem: 0}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1733,7 +1750,8 @@ Armor_Medium_Boots: [
 	{u: 7557, i: 84410, n: "Spearmarshal's Boots", b: [84410]},
 	{u: 7695, i: 84903, n: "Bounty Hunter's Boots", p: {craft: true}},
 	{u: 7725, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
-	{u: 7803, i: 85519, n: "Lunatic Noble Boots", p: {craft: true}}
+	{u: 7803, i: 85519, n: "Lunatic Noble Boots", p: {craft: true}},
+	{u: 7855, i: 86147, n: "Boots of Dhuum", p: {gaeting: 600}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", b: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1896,7 +1914,11 @@ Armor_Heavy_Helm: [
 	{u: 7625, i: 84014, n: "Swaggering Hat", p: {gem: 400}},
 	{u: 7685, i: 84383, n: "Spearmarshal's Helmet", b: [82538]},
 	{u: 7773, i: 85445, n: "Lunatic Templar Helm", p: {craft: true}},
-	{u: 7804, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}}
+	{u: 7804, i: 85396, n: "Fallen Balthazar Helm", p: {gem: 0}},
+	{u: 7814, i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
+	{u: 7844, i: 85882, n: "Heavy Corsair Turban", p: {achievement: 0}},
+	{u: 7905, i: 86038, n: "Helm of Dhuum", p: {gaeting: 600}},
+	{u: 7970, i: 86461, n: "Eggnog Helmet", p: {craft: true}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", b: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -1999,7 +2021,8 @@ Armor_Heavy_Shoulders: [
 	{u: 7527, i: 84093, n: "Spellbreaker's Redoubt", p: {achievement: 0}},
 	{u: 7623, i: 84980, n: "Warbeast Pauldrons", b: [83480]},
 	{u: 7671, i: 84065, n: "Funerary Pauldrons", p: {mosaic: 12}},
-	{u: 7771, i: 85498, n: "Lunatic Templar Pauldrons", p: {craft: true}}
+	{u: 7771, i: 85498, n: "Lunatic Templar Pauldrons", p: {craft: true}},
+	{u: 7871, i: 86259, n: "Pauldrons of Dhuum", p: {gaeting: 600}}
 ],
 Armor_Heavy_Coat: [
 	{u: 2, i: 3168, n: "Chainmail Chestpiece", b: [2868, 2870, 2869, 2858, 2856, 2857, 2859, 2861, 2860, 2862, 2865, 2864, 2863, 2867, 2866, 2871, 3114, 3132, 3150, 3168, 3207, 3205, 3206, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3208, 3224, 3209, 3210, 3211, 5018, 5045, 5063, 5081, 5099, 5030, 5135, 5117, 5153, 5171, 5189, 5207, 5225, 5243, 5261, 5279]},
@@ -2178,7 +2201,10 @@ Armor_Heavy_Gloves: [
 	{u: 7513, i: 85245, n: "Warbeast Gauntlets", b: [84323]},
 	{u: 7541, i: 84874, n: "Elonian Gauntlets", p: {achievement: 0}},
 	{u: 7669, i: 83043, n: "Spearmarshal's Gauntlets", b: [83043]},
-	{u: 7757, i: 85425, n: "Lunatic Templar Gauntlets", p: {craft: true}}
+	{u: 7757, i: 85425, n: "Lunatic Templar Gauntlets", p: {craft: true}},
+	{u: 7827, i: 85615, n: "Salvaged Forged Gloves", p: {gem: 400}},
+	{u: 7854, i: 85832, n: "Gauntlets of Dhuum", p: {gaeting: 600}},
+	{u: 7941, i: 86683, n: "Svanir Gauntlets", p: {gem: 0}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", b: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -2348,7 +2374,8 @@ Armor_Heavy_Boots: [
 	{u: 7649, i: 85056, n: "Warbeast Greaves", b: [84374]},
 	{u: 7701, i: 85201, n: "Bounty Hunter's Greaves", p: {craft: true}},
 	{u: 7726, i: 85282, n: "Foefire Greaves", p: {gem: 500}},
-	{u: 7766, i: 85415, n: "Lunatic Templar Greaves", p: {craft: true}}
+	{u: 7766, i: 85415, n: "Lunatic Templar Greaves", p: {craft: true}},
+	{u: 7868, i: 86161, n: "Greaves of Dhuum", p: {gaeting: 600}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
@@ -2538,7 +2565,13 @@ Weapon_Axe: [
 	{u: 7719, i: 84687, n: "Veilrender", p: {achievement: 0}},
 	{u: 7750, i: 85247, n: "War God's Axe", b: [85247]},
 	{u: 7785, i: 85398, n: "Haunted Axe", p: {achievement: 0}},
-	{u: 7810, i: 85556, n: "Shifting Sands Axe", b: [85556]}
+	{u: 7810, i: 85556, n: "Shifting Sands Axe", b: [85556]},
+	{u: 7840, i: 85760, n: "Astral Cleaver", p: {craft: true}},
+	{u: 7841, i: 85870, n: "Randa's Eviscerator", b: [85870]},
+	{u: 7853, i: 86178, n: "Stellar Cleaver", p: {craft: true}},
+	{u: 7909, i: 86363, n: "Flesh and Sinew", p: {gaeting: 600}},
+	{u: 7929, i: 86415, n: "Glacial Axe", b: [86415]},
+	{u: 7989, i: 86553, n: "Wrapped Axe", p: {achievement: 0}}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", b: [49332]},
@@ -2690,7 +2723,11 @@ Weapon_Mace: [
 	{u: 7720, i: 84898, n: "War God's Mace", b: [84898]},
 	{u: 7761, i: 85471, n: "Haunted Mace", p: {achievement: 0}},
 	{u: 7778, i: 85406, n: "Sikandar", p: {craft: true}},
-	{u: 7812, i: 85574, n: "Shifting Sands Mace", b: [85574]}
+	{u: 7812, i: 85574, n: "Shifting Sands Mace", b: [85574]},
+	{u: 7838, i: 86376, n: "Astral Knobkerrie", p: {craft: true}},
+	{u: 7866, i: 85862, n: "Stellar Knobkerrie", p: {craft: true}},
+	{u: 7939, i: 86647, n: "Glacial Mace", b: [86647]},
+	{u: 7952, i: 86469, n: "Wrapped Mace", p: {achievement: 0}}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", b: [49353]},
@@ -2872,7 +2909,11 @@ Weapon_Sword: [
 	{u: 7620, i: 82115, n: "Sunspear Cutlass", b: [82115]},
 	{u: 7731, i: 85125, n: "War God's Sword", b: [85125]},
 	{u: 7764, i: 85482, n: "Haunted Sword", p: {achievement: 0}},
-	{u: 7808, i: 85618, n: "Shifting Sands Sword", b: [85618]}
+	{u: 7808, i: 85618, n: "Shifting Sands Sword", b: [85618]},
+	{u: 7843, i: 86348, n: "Stellar Khopesh", p: {craft: true}},
+	{u: 7859, i: 86066, n: "Astral Khopesh", p: {craft: true}},
+	{u: 7863, i: 85962, n: "The Ender of All", p: {gaeting: 600}},
+	{u: 7972, i: 86442, n: "Glacial Sword", b: [86442]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", b: [49317]},
@@ -3039,7 +3080,14 @@ Weapon_Dagger: [
 	{u: 7717, i: 83086, n: "Awakened Dagger", b: [83086]},
 	{u: 7742, i: 84933, n: "War God's Dagger", b: [84933]},
 	{u: 7791, i: 85397, n: "Haunted Dagger", p: {achievement: 0}},
-	{u: 7816, i: 85575, n: "Shifting Sands Dagger", b: [85575]}
+	{u: 7816, i: 85575, n: "Shifting Sands Dagger", b: [85575]},
+	{u: 7852, i: 86085, n: "Stellar Razor", p: {craft: true}},
+	{u: 7867, i: 86206, n: "Touch of Dhuum", p: {gaeting: 600}},
+	{u: 7903, i: 85804, n: "Astral Razor", p: {craft: true}},
+	{u: 7921, i: 86503, n: "Obsidian Dagger", p: {skirmish: 350}},
+	{u: 7948, i: 86712, n: "Wrapped Dagger", p: {achievement: 0}},
+	{u: 7974, i: 86641, n: "Mistforged Obsidian Dagger", p: {skirmish: 350}},
+	{u: 7981, i: 86465, n: "Glacial Dagger", b: [86465]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", b: [49335]},
@@ -3193,7 +3241,11 @@ Weapon_Pistol: [
 	{u: 7539, i: 82504, n: "Funerary Pistol", p: {mosaic: 36}},
 	{u: 7733, i: 84981, n: "War God's Pistol", b: [84981]},
 	{u: 7772, i: 85492, n: "Haunted Pistol", p: {achievement: 0}},
-	{u: 7820, i: 85598, n: "Shifting Sands Pistol", b: [85598]}
+	{u: 7820, i: 85598, n: "Shifting Sands Pistol", b: [85598]},
+	{u: 7883, i: 85642, n: "Astral Revolver", p: {craft: true}},
+	{u: 7915, i: 86300, n: "Stellar Revolver", p: {craft: true}},
+	{u: 7959, i: 86540, n: "Wrapped Pistol", p: {achievement: 0}},
+	{u: 7967, i: 86433, n: "Glacial Pistol", b: [86433]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", b: [49341]},
@@ -3352,7 +3404,10 @@ Weapon_Scepter: [
 	{u: 7730, i: 85261, n: "War God's Scepter", b: [85261]},
 	{u: 7794, i: 85426, n: "Haunted Scepter", p: {achievement: 0}},
 	{u: 7802, i: 85380, n: "Antonina", p: {craft: true}},
-	{u: 7813, i: 85545, n: "Shifting Sands Scepter", b: [85545]}
+	{u: 7813, i: 85545, n: "Shifting Sands Scepter", b: [85545]},
+	{u: 7830, i: 85794, n: "Stellar Scepter", p: {craft: true}},
+	{u: 7837, i: 86355, n: "Astral Scepter", p: {craft: true}},
+	{u: 7955, i: 86418, n: "Glacial Scepter", b: [86418]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", b: [44897]},
@@ -3527,7 +3582,16 @@ Weapon_Focus: [
 	{u: 7615, i: 83564, n: "Luminous Curio", p: {starting: true}},
 	{u: 7741, i: 84895, n: "War God's Focus", b: [84895]},
 	{u: 7795, i: 85377, n: "Haunted Focus", p: {achievement: 0}},
-	{u: 7807, i: 85571, n: "Shifting Sands Focus", b: [85571]}
+	{u: 7807, i: 85571, n: "Shifting Sands Focus", b: [85571]},
+	{u: 7832, i: 86279, n: "Stellar Apparatus", p: {craft: true}},
+	{u: 7857, i: 86064, n: "Mark of the Unnamed", p: {craft: true}},
+	{u: 7860, i: 86188, n: "The True Name", p: {craft: true}},
+	{u: 7850, i: 86097, n: "Ars Goetia", p: {craft: true}},
+	{u: 7907, i: 86098, n: "The Binding of Ipos", p: {craft: true}},
+	{u: 7875, i: 86250, n: "Astral Apparatus", p: {craft: true}},
+	{u: 7878, i: 86260, n: "Asef's Brew", b: [86260]},
+	{u: 7957, i: 86487, n: "Glacial Focus", b: [86487]},
+	{u: 7988, i: 86515, n: "Wrapped Focus", p: {achievement: 0}}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", b: [49344]},
@@ -3706,7 +3770,13 @@ Weapon_Shield: [
 	{u: 7694, i: 84789, n: "Sunspear Wallshield", b: [84789]},
 	{u: 7740, i: 85248, n: "War God's Shield", b: [85248]},
 	{u: 7786, i: 85518, n: "Haunted Shield", p: {achievement: 0}},
-	{u: 7818, i: 85539, n: "Shifting Sands Shield", b: [85539]}
+	{u: 7818, i: 85539, n: "Shifting Sands Shield", b: [85539]},
+	{u: 7842, i: 86337, n: "Astral Disk", p: {craft: true}},
+	{u: 7845, i: 86179, n: "The Voice in the Void", p: {gaeting: 600}},
+	{u: 7890, i: 86026, n: "Stellar Disk", p: {craft: true}},
+	{u: 7918, i: 86705, n: "Obsidian Shield", p: {skirmish: 350}},
+	{u: 7923, i: 86527, n: "Mistforged Obsidian Shield", p: {skirmish: 350}},
+	{u: 7968, i: 86479, n: "Glacial Shield", b: [86479]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", b: [49356]},
@@ -3861,7 +3931,13 @@ Weapon_Torch: [
 	{u: 7723, i: 84996, n: "War God's Torch", b: [84996]},
 	{u: 7787, i: 85384, n: "Touch of Madness", b: [85384]},
 	{u: 7788, i: 85451, n: "Haunted Torch", p: {achievement: 0}},
-	{u: 7824, i: 85548, n: "Shifting Sands Torch", b: [85548]}
+	{u: 7824, i: 85548, n: "Shifting Sands Torch", b: [85548]},
+	{u: 7864, i: 85788, n: "Astral Beacon", p: {craft: true}},
+	{u: 7912, i: 86007, n: "Stellar Beacon", p: {craft: true}},
+	{u: 7933, i: 86397, n: "Obsidian Torch", p: {skirmish: 350}},
+	{u: 7983, i: 86436, n: "Wrapped Torch", p: {achievement: 0}},
+	{u: 7984, i: 86725, n: "Glacial Torch", b: [86725]},
+	{u: 7993, i: 86423, n: "Mistforged Obsidian Torch", p: {skirmish: 350}}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", b: [49359]},
@@ -4010,7 +4086,11 @@ Weapon_Warhorn: [
 	{u: 7534, i: 82785, n: "Mordant Trumpet", b: [82176]},
 	{u: 7745, i: 84986, n: "War God's Warhorn", b: [84986]},
 	{u: 7779, i: 85446, n: "Haunted Warhorn", p: {achievement: 0}},
-	{u: 7815, i: 85535, n: "Shifting Sands Warhorn", b: [85535]}
+	{u: 7815, i: 85535, n: "Shifting Sands Warhorn", b: [85535]},
+	{u: 7880, i: 86092, n: "Astral Harbinger", p: {craft: true}},
+	{u: 7906, i: 85695, n: "Stellar Harbinger", p: {craft: true}},
+	{u: 7920, i: 86472, n: "Wrapped Warhorn", p: {achievement: 0}},
+	{u: 7986, i: 86543, n: "Glacial Warhorn", b: [86543]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", b: [49321, 49323]},
@@ -4180,7 +4260,11 @@ Weapon_Greatsword: [
 	{u: 7680, i: 83664, n: "Luminous Claymore", p: {starting: true}},
 	{u: 7744, i: 84963, n: "War God's Greatsword", b: [84963]},
 	{u: 7762, i: 85424, n: "Haunted Greatsword", p: {achievement: 0}},
-	{u: 7822, i: 85608, n: "Shifting Sands Greatsword", b: [85608]}
+	{u: 7822, i: 85608, n: "Shifting Sands Greatsword", b: [85608]},
+	{u: 7877, i: 86203, n: "Astral Avenger", p: {craft: true}},
+	{u: 7896, i: 85755, n: "Stellar Avenger", p: {craft: true}},
+	{u: 7910, i: 86176, n: "Final Death", p: {gaeting: 600}},
+	{u: 7937, i: 86675, n: "Glacial Greatsword", b: [86675]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", b: [49326]},
@@ -4345,7 +4429,12 @@ Weapon_Hammer: [
 	{u: 7746, i: 85192, n: "Trained Choya Hammer", p: {gem: 600}},
 	{u: 7756, i: 84999, n: "War God's Hammer", b: [84999]},
 	{u: 7767, i: 85460, n: "Haunted Hammer", p: {achievement: 0}},
-	{u: 7826, i: 85604, n: "Shifting Sands Hammer", b: [85604]}
+	{u: 7826, i: 85604, n: "Shifting Sands Hammer", b: [85604]},
+	{u: 7876, i: 86354, n: "Stellar Orrery", p: {craft: true}},
+	{u: 7893, i: 86105, n: "Astral Orrery", p: {craft: true}},
+	{u: 7894, i: 85782, n: "Sledge of the Red Witch", p: {gaeting: 600}},
+	{u: 7938, i: 86592, n: "Glacial Hammer", b: [86592]},
+	{u: 7943, i: 86555, n: "Wrapped Hammer", p: {achievement: 0}}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", b: [44906]},
@@ -4506,7 +4595,11 @@ Weapon_Longbow: [
 	{u: 7709, i: 82285, n: "Luminous Arc", p: {starting: true}},
 	{u: 7722, i: 84910, n: "War God's Longbow", b: [84910]},
 	{u: 7758, i: 85404, n: "Haunted Longbow", p: {achievement: 0}},
-	{u: 7809, i: 85612, n: "Shifting Sands Longbow", b: [85612]}
+	{u: 7809, i: 85612, n: "Shifting Sands Longbow", b: [85612]},
+	{u: 7829, i: 86233, n: "Stellar Longbow", p: {craft: true}},
+	{u: 7891, i: 85919, n: "Astral Longbow", p: {craft: true}},
+	{u: 7927, i: 86578, n: "Wrapped Longbow", p: {achievement: 0}},
+	{u: 7990, i: 86539, n: "Glacial Longbow", b: [86539]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", b: [44924]},
@@ -4669,7 +4762,11 @@ Weapon_Shortbow: [
 	{u: 7670, i: 82419, n: "Mordant Infantry Bow", b: [82419]},
 	{u: 7747, i: 85129, n: "War God's Short Bow", b: [85129]},
 	{u: 7777, i: 85510, n: "Haunted Short Bow", p: {achievement: 0}},
-	{u: 7825, i: 85540, n: "Shifting Sands Short Bow", b: [85540]}
+	{u: 7825, i: 85540, n: "Shifting Sands Short Bow", b: [85540]},
+	{u: 7856, i: 85857, n: "Astral Short Bow", p: {craft: true}},
+	{u: 7908, i: 86074, n: "Stellar Short Bow", p: {craft: true}},
+	{u: 7925, i: 86613, n: "Wrapped Short Bow", p: {achievement: 0}},
+	{u: 7942, i: 86598, n: "Glacial Short Bow", b: [86598]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", b: [49338]},
@@ -4830,7 +4927,12 @@ Weapon_Rifle: [
 	{u: 7714, i: 83386, n: "Funerary Rifle", p: {mosaic: 72}},
 	{u: 7738, i: 84962, n: "War God's Rifle", b: [84962]},
 	{u: 7769, i: 85495, n: "Haunted Rifle", p: {achievement: 0}},
-	{u: 7805, i: 85592, n: "Shifting Sands Rifle", b: [85592]}
+	{u: 7805, i: 85592, n: "Shifting Sands Rifle", b: [85592]},
+	{u: 7851, i: 86317, n: "Astral Cannon", p: {craft: true}},
+	{u: 7892, i: 85967, n: "Barud's Blunderbuss", b: [85967]},
+	{u: 7899, i: 85946, n: "Stellar Cannon", p: {craft: true}},
+	{u: 7917, i: 86596, n: "Wrapped Rifle", p: {achievement: 0}},
+	{u: 7944, i: 86409, n: "Glacial Rifle", b: [86409]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", b: [49348, 49350]},
@@ -5009,7 +5111,16 @@ Weapon_Staff: [
 	{u: 7737, i: 85115, n: "War God's Staff", b: [85115]},
 	{u: 7739, i: 85256, n: "Hydra Staff", p: {gem: 0}},
 	{u: 7801, i: 85455, n: "Haunted Staff", p: {achievement: 0}},
-	{u: 7823, i: 85557, n: "Shifting Sands Staff", b: [85557]}
+	{u: 7823, i: 85557, n: "Shifting Sands Staff", b: [85557]},
+	{u: 7862, i: 86189, n: "Sunspear", b: [86189]},
+	{u: 7865, i: 85926, n: "Stellar Spire", p: {craft: true}},
+	{u: 7881, i: 86301, n: "Oblivion", p: {gaeting: 600}},
+	{u: 7888, i: 85894, n: "Darkspear", b: [85894]},
+	{u: 7901, i: 86012, n: "Astral Spire", p: {craft: true}},
+	{u: 7913, i: 86200, n: "Sunscythe", b: [86200]},
+	{u: 7947, i: 86663, n: "Glacial Staff", b: [86663]},
+	{u: 7949, i: 86514, n: "Obsidian Staff", p: {skirmish: 350}},
+	{u: 7977, i: 86651, n: "Mistforged Obsidian Staff", p: {skirmish: 350}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", b: [63881]},

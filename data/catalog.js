@@ -867,6 +867,7 @@ Legendary: [
 	{i: 79562, n: "Eureka", p: {craft: true}},
 	{i: 81957, n: "The Shining Blade", p: {craft: true}},
 	{i: 72713, n: "HOPE", p: {craft: true}},
+	{i: 86098, n: "The Binding of Ipos", p: {craft: true}},
 	{i: 79802, n: "Shooshadoo", p: {craft: true}},
 	{i: 81206, n: "Flames of War", p: {craft: true}},
 	{i: 81839, n: "Sharur", p: {craft: true}},

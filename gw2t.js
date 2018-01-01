@@ -7071,7 +7071,7 @@ Z = {
 			{
 				return "Aura";
 			}
-			if (pItem.rarity === Q.RarityEnum.Legendary && pItem.type === Q.ItemEnum.Weapon)
+			if (pItem.rarity === Q.RarityEnum.Legendary && (pItem.type === Q.ItemEnum.Weapon || pItem.type === Q.ItemEnum.Armor || pItem.type === Q.ItemEnum.Trinket))
 			{
 				return "Legendary";
 			}
@@ -35427,6 +35427,15 @@ H = {
 				{
 					ctd.Anchor = "<a" + U.convertExternalAnchor(url) + ">" + countdownname + "</a>";
 				}
+				// Activate festival switches for those countdowns
+				if (ctd.isHalloween)
+				{
+					K.isHalloween = true;
+				}
+				if (ctd.isWintersday)
+				{
+					K.isWintersday = true;
+				}
 				
 				/*
 				 * code: the colored bullet point for activity status
@@ -36708,6 +36717,8 @@ K = {
 	currentDaytimeText: "",
 	oldQuadrantAngle: 0,
 	paneSizePrevious: 0,
+	isHalloween: false,
+	isWintersday: false,
 	
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
@@ -36810,8 +36821,14 @@ K = {
 		if (K.isClockStyled === false)
 		{
 			K.isClockStyled = true;
-			//$("#paneClock").addClass("clkHalloween");
-			$("#paneClock").addClass("clkWintersday");
+			if (K.isHalloween)
+			{
+				$("#paneClock").addClass("clkHalloween");
+			}
+			if (K.isWintersday)
+			{
+				$("#paneClock").addClass("clkWintersday");
+			}
 			$("#paneClockFace").addClass("paneClockFace");
 		}
 	},
@@ -38087,19 +38104,22 @@ K = {
 	 */
 	refreshFestival: function()
 	{
-		var numsnowflakes = 144;
-		var canvas = document.getElementById("paneClockCanvas");
-		var context = canvas.getContext("2d");
-		// Erase previous snowflakes
-		context.clearRect(0, 0, canvas.width, canvas.height);
-		// Sprinkle new snowflakes
-		var x, y;
-		for (var i = 0; i < numsnowflakes; i++)
+		if (K.isWintersday)
 		{
-			x = T.getRandomIntRange(0, canvas.width);
-			y = T.getRandomIntRange(0, canvas.height);
-			context.fillStyle = "rgba(255,255,255,255)";
-			context.fillRect(x, y, 1, 1);
+			var numsnowflakes = 144;
+			var canvas = document.getElementById("paneClockCanvas");
+			var context = canvas.getContext("2d");
+			// Erase previous snowflakes
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			// Sprinkle new snowflakes
+			var x, y;
+			for (var i = 0; i < numsnowflakes; i++)
+			{
+				x = T.getRandomIntRange(0, canvas.width);
+				y = T.getRandomIntRange(0, canvas.height);
+				context.fillStyle = "rgba(255,255,255,255)";
+				context.fillRect(x, y, 1, 1);
+			}
 		}
 	}
 };

@@ -21,7 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 67071, n: "Shared Inventory Slot", p: {gem: 560}, discount: [[1, 560, 700], [3, 1512, 2100], [5, 2240, 3500]]},
+	{i: 67071, n: "Shared Inventory Slot", p: {gem: 560}, discount: [[1, 560, 700], [3, 1512, 2100], [5, 2240, 3500]], Finish: new Date("2018-01-02T16:00:00Z")},
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 600}, discount: 800, Finish: new Date("2018-01-01T16:00:00Z")},
 	{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}, Finish: new Date("2018-01-02T16:00:00Z")},
 	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}},

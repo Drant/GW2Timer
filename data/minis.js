@@ -378,7 +378,8 @@ PoF: [
 	{u: 607, i: 85511, n: "Mini Failed Attempt", p: {craft: true}},
 	{u: 601, i: 85452, n: "Mini Forgal"},
 	{u: 606, i: 85462, n: "Mini Sieran"},
-	{u: 612, i: 85509, n: "Mini Trahearne"}
+	{u: 612, i: 85509, n: "Mini Trahearne"},
+	{u: 572, i: 83551, n: "Mini Air Djinn"}
 ],
 Zone: [
 	{u: 406, i: 79227, n: "Mini Ghostly Justiciar Hablion", p: {magic: 2000}},
@@ -490,7 +491,18 @@ Wintersday: [
 	{u: 380, i: 77581, n: "Mini Snow Flurry Dragon", p: {gem: 500}},
 	{u: 434, i: 80059, n: "Mini Tiny Snowball"},
 	{u: 433, i: 80053, n: "Mini Snowball", p: {craft: true}},
-	{u: 428, i: 79981, n: "Mini Large Snowball", p: {craft: true}}
+	{u: 428, i: 79981, n: "Mini Large Snowball", p: {craft: true}},
+	{u: 626, i: 86733, n: "Mini Tiny Angry Snowball"},
+	{u: 634, i: 86528, n: "Mini Angry Snowball", p: {craft: true}},
+	{u: 628, i: 86494, n: "Mini Large Angry Snowball", p: {craft: true}},
+	{u: 632, i: 86438, n: "Mini Tixx", p: {karma: 21000}},
+	{u: 625, i: 86388, n: "Mini Toxx"},
+	{u: 636, i: 86579, n: "Mini Gift Box Gourdon", p: {achievement: 0}},
+	{u: 627, i: 85524, n: "Cozy Wintersday Raptor", p: {gem: 0}},
+	{u: 629, i: 85567, n: "Cozy Wintersday Springer", p: {gem: 0}},
+	{u: 631, i: 85564, n: "Cozy Wintersday Skimmer", p: {gem: 0}},
+	{u: 633, i: 85600, n: "Cozy Wintersday Jackal", p: {gem: 0}},
+	{u: 635, i: 85541, n: "Cozy Wintersday Griffon", p: {gem: 0}}
 ],
 PvP: [
 	{u: 228, i: 63872, n: "Mini Llama", p: {league: 10}},

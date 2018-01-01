@@ -2024,6 +2024,7 @@ Countdown: {
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
 	/*{
+		isHalloween: true,
 		name_en: "Halloween 2018",
 		name_de: "Halloween 2018",
 		name_es: "Halloween 2018",
@@ -2054,6 +2055,7 @@ Countdown: {
 		Finish: new Date("2017-11-29T16:00:00Z")
 	},*/
 	{
+		isWintersday: true,
 		name_en: "Wintersday 2017",
 		name_de: "Wintertag 2017",
 		name_es: "Día Invernal 2017",
