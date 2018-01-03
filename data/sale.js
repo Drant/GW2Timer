@@ -21,22 +21,21 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: 67071, n: "Shared Inventory Slot", p: {gem: 560}, discount: [[1, 560, 700], [3, 1512, 2100], [5, 2240, 3500]], Finish: new Date("2018-01-02T16:00:00Z")},
 	{i: 79721, n: "Cosmic Harvesting Tool", p: {gem: 700}, discount: 1000, Finish: new Date("2018-01-03T16:00:00Z")},
 	{i: 79472, n: "Cosmic Logging Tool", p: {gem: 700}, discount: 1000, Finish: new Date("2018-01-03T16:00:00Z")},
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 700}, discount: 1000, Finish: new Date("2018-01-03T16:00:00Z")},
-	{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}, Finish: new Date("2018-01-02T16:00:00Z")},
-	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}},
-	{i: "https://i.imgur.com/QG8L0UM.png", n: "Umbral Demon Skimmer Skin", p: {gem: 1600}, Finish: new Date("2018-01-02T16:00:00Z")},
-	{i: "https://i.imgur.com/8UI3lQs.png", n: "Freezie Crown", p: {gem: 350}, Finish: new Date("2018-01-02T16:00:00Z")},
-	{i: 42978, n: "Wintersday Minis 3-Pack", p: {gem: 500}, Finish: new Date("2018-01-02T16:00:00Z")},
+	{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}},
+	{i: "https://i.imgur.com/Hn9Wxu6.png", n: "Mini Frozen Tik'Teek", p: {gem: 400}},
+	{i: 77581, n: "Mini Snow Flurry Dragon", p: {gem: 500}, Finish: new Date("2018-01-09T16:00:00Z")},
+	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-01-09T16:00:00Z")},
+	{i: "https://i.imgur.com/QG8L0UM.png", n: "Umbral Demon Skimmer Skin", p: {gem: 1600}, Finish: new Date("2018-01-09T16:00:00Z")},
+	{i: "https://i.imgur.com/8UI3lQs.png", n: "Freezie Crown", p: {gem: 350}, Finish: new Date("2018-01-09T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 86675, n: "Glacial weapons#Gallery", p: {blticket: 1}},
+	{i: "https://i.imgur.com/92cVON9.png", n: "Winter Solstice Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-01-09T16:00:00Z")},
+	{i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}, Finish: new Date("2018-01-09T16:00:00Z")},
 	{i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}},
-	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}},
+	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}, Finish: new Date("2018-01-09T16:00:00Z")},
 	{i: 86715, n: "Glacial Glider", p: {gem: 500}},
-	{i: 80044, n: "Mini Festive Aurene", p: {gem: 400}, Finish: new Date("2018-01-02T16:00:00Z")},
-	{i: 85757, n: "Permanent Choya Finisher", p: {gem: 700}, Finish: new Date("2018-01-02T16:00:00Z")},
-	{i: 65202, n: "Festive Hat", p: {gem: 150}, Finish: new Date("2018-01-02T16:00:00Z")}
 	]
 };
