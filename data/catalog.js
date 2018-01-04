@@ -422,6 +422,7 @@ TonicEndless: [
 	{i: 82447, n: "Champion's Sun", p: {pvp: true}},
 	{i: 84260, n: "Champion's Moon", p: {pvp: true}},
 	{i: 85504, n: "Champion's Mad King", p: {pvp: true}},
+	{i: 86560, n: "Champion's Winter Crown", p: {pvp: true}},
 	{i: 43956, n: "Ellen Kiel Representation Button"},
 	{i: 43957, n: "Evon Gnashblade Representation Button"},
 	{i: 36192, n: "Endless Dragon Emblem Clothing Tonic", p: {gem: 0}},

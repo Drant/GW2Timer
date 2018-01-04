@@ -102,7 +102,8 @@ Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
 	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]},
 	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}},
-	{i: 85491, n: "Resplendent Avialan", p: {gem: -2000}}
+	{i: 85491, n: "Resplendent Avialan", p: {gem: -2000}},
+	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -240,7 +241,8 @@ Head: [
 	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
 	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
 	{i: 84014, n: "Swaggering Hat", p: {gem: 400}},
-	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}}
+	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
+	{i: 86516, n: "Freezie Crown", p: {gem: 350}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -653,7 +655,8 @@ Mini: [
 	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: -400}},
 	{i: 85506, n: "Mini Elonian Familiar", p: {gem: -400}},
 	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: -400}},
-	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}}
+	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}},
+	{i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: 400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},

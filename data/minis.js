@@ -664,6 +664,7 @@ Gem: [
 	{u: 567, i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
 	{u: 594, i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}},
 	{u: 597, i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
-	{u: 602, i: 85517, n: "Mini Kormeerkat", p: {gem: 350}}
+	{u: 602, i: 85517, n: "Mini Kormeerkat", p: {gem: 350}},
+	{u: 630, i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: 400}}
 ]
 };

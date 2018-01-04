@@ -2054,7 +2054,7 @@ Countdown: {
 		Start: new Date("2017-11-28T16:00:00Z"),
 		Finish: new Date("2017-11-29T16:00:00Z")
 	},*/
-	{
+	/*{
 		isWintersday: true,
 		name_en: "Wintersday 2017",
 		name_de: "Wintertag 2017",
@@ -2062,9 +2062,9 @@ Countdown: {
 		name_fr: "Hivernel 2017",
 		name_zh: "冬幕节2017",
 		official: "news/wintersday-2017-is-here/",
-		Start: new Date("2017-12-12T17:00:00Z"),
-		Finish: new Date("2018-01-02T17:00:00Z")
-	}
+		Start: new Date("2018-12-17T17:00:00Z"),
+		Finish: new Date("2019-01-08T17:00:00Z")
+	}*/
 	]
 },
 
