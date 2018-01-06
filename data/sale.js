@@ -22,6 +22,7 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
 	{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}},
+	{i: "https://i.imgur.com/BvQz2AR.png", n: "Black Lion Keys and Scrap Package", p: {gem: 900}, Finish: new Date("2018-01-09T16:00:00Z")},
 	{i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: 400}},
 	{i: 77581, n: "Mini Snow Flurry Dragon", p: {gem: 500}, Finish: new Date("2018-01-09T16:00:00Z")},
 	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-01-09T16:00:00Z")},
