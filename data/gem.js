@@ -266,7 +266,7 @@ Gloves: [
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: -300}},
-	{i: 85282, n: "Foefire Greaves", p: {gem: 500}}
+	{i: 85282, n: "Foefire Greaves", p: {gem: -500}}
 ],
 Armor: [
 	{i: 20274, n: "Profane Light Armor Skin", p: {gem: 500}},
@@ -720,9 +720,9 @@ Finisher: [
 	{i: 47896, n: "Permanent Snow Globe Finisher", p: {gem: -700}},
 	{i: 44724, n: "Permanent Super Explosive Finisher", p: {gem: -600}},
 	{i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: -800}},
-	{i: 49952, n: "Permanent Llama Finisher", p: {gem: 800}},
+	{i: 49952, n: "Permanent Llama Finisher", p: {gem: -800}},
 	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: -800}},
-	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}},
+	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: -700}},
 	{i: 85757, n: "Permanent Choya Finisher", p: {gem: -700}}
 ],
 Upgrade: [
