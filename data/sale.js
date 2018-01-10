@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2017-12-26T16:00:00Z"),
-	Finish: new Date("2018-01-09T16:00:00Z"),
+	Start: new Date("2018-01-09T16:00:00Z"),
+	Finish: new Date("2018-01-23T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,19 +21,15 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "http://gw2timer.com/?page=Gem", side: 0},
-	{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}},
-	{i: "https://i.imgur.com/BvQz2AR.png", n: "Black Lion Keys and Scrap Package", p: {gem: 900}, Finish: new Date("2018-01-09T16:00:00Z")},
-	{i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: 400}},
-	{i: 77581, n: "Mini Snow Flurry Dragon", p: {gem: 500}, Finish: new Date("2018-01-09T16:00:00Z")},
-	{i: "https://i.imgur.com/G0wZ34L.png", n: "Cozy Wintersday Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-01-09T16:00:00Z")},
-	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: 1600}, Finish: new Date("2018-01-09T16:00:00Z")},
-	{i: 86516, n: "Freezie Crown", p: {gem: 350}, Finish: new Date("2018-01-09T16:00:00Z")},
+	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
+	{i: 79698, n: "Customer Appreciation Package", p: {gem: 0}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "http://gw2timer.com/?page=Trading", side: 1},
 	{i: 86675, n: "Glacial weapons#Gallery", p: {blticket: 1}},
-	{i: "https://i.imgur.com/92cVON9.png", n: "Winter Solstice Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-01-09T16:00:00Z")},
-	{i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}, Finish: new Date("2018-01-09T16:00:00Z")},
-	{i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}},
-	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}, Finish: new Date("2018-01-09T16:00:00Z")},
-	{i: 86715, n: "Glacial Glider", p: {gem: 500}},
+	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: 1600}, Finish: new Date("2018-01-16T16:00:00Z")},
+	{i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}, Finish: new Date("2018-01-16T16:00:00Z")},
+	{i: 77581, n: "Mini Snow Flurry Dragon", p: {gem: 500}, Finish: new Date("2018-01-16T16:00:00Z")},
+	{i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: 400}, Finish: new Date("2018-01-16T16:00:00Z")},
+	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}, Finish: new Date("2018-01-16T16:00:00Z")},
+	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}, Finish: new Date("2018-01-16T16:00:00Z")}
 	]
 };

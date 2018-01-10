@@ -96,7 +96,7 @@ Outfit: [
 	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
 	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
-	{i: 86637, n: "Winter Monarch Outfit", p: {gem: -700}}
+	{i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -152,7 +152,7 @@ Glider: [
 	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
 	{i: 85220, n: "Branded Wing Glider", p: {gem: -700}},
 	{i: 85496, n: "Riding Broom Glider", p: {gem: -500}},
-	{i: 86715, n: "Glacial Glider", p: {gem: -500}}
+	{i: 86715, n: "Glacial Glider", p: {gem: 500}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -710,7 +710,8 @@ Node: [
 	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
 	{i: 67842, n: "Basic Cloth Rack", p: {gem: 800}},
 	{i: 78019, n: "Basic Leather Rack", p: {gem: 800}},
-	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: -1200}}
+	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: -1200}},
+	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}}
 ],
 Finisher: [
 	{i: 44068, n: "Permanent Mad King Finisher", p: {gem: -500}},
