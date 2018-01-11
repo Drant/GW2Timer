@@ -120,6 +120,7 @@ var GW2T_ASCENDED_METADATA = {
 		35984, // Permanent Bank Access Express
 		38507, // Permanent Self-Style Hair Kit
 		78455, // Endless Repair Canister
+		86497, // Endless Upgrade Extractor
 		35728, // Mystic Forge Conduit
 		70010, // Mystic Forge Conduit
 		30684, // Frostfang

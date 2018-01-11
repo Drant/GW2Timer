@@ -126,7 +126,9 @@ Key: [
 	{i: 20316, n: "Black Lion Chest"},
 	{i: 43992, n: "Black Lion Claim Ticket", p: {gem: 0}},
 	{i: 43998, n: "Black Lion Claim Ticket Scrap", p: {gem: 0}},
-	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
+	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}},
+	{i: 84438, n: "Black Lion Commemorative Sprocket", p: {gem: 0}},
+	{i: 86694, n: "Black Lion Statuette", p: {gem: 0}}
 ],
 Token: [
 	{i: 86069, n: "Kralkatite Ore", p: {volatile: 4}},
@@ -155,7 +157,6 @@ Token: [
 	{i: 72205, n: "Chak Egg", p: {coin: 0}},
 	{i: 74356, n: "Reclaimed Metal Plate", p: {coin: 0}},
 	{i: 42605, n: "Frozen Exotic Weapon Fragment", p: {coin: 5000}},
-	{i: 84438, n: "Black Lion Commemorative Sprocket", p: {gem: 0}},
 	{i: 70718, n: "Tenebrous Crystal", p: {coin: 0}},
 	{i: 76254, n: "Shimmering Crystal", p: {coin: 0}},
 	{i: 50025, n: "Blade Shard", p: {coin: 0}},
@@ -206,6 +207,7 @@ Contract: [
 	{u: 35984, i: 35978, n: "Permanent Bank Access Express"},
 	{u: 38507, i: 38506, n: "Permanent Self-Style Hair Kit"},
 	{u: 78455, i: 78217, n: "Endless Repair Canister"},
+	{u: 86497, i: 86549, n: "Endless Upgrade Extractor"},
 	{i: 35728, n: "Mystic Forge Conduit"},
 	{u: 70010, i: 70013, n: "Mystic Forge Conduit"},
 	{i: 78177, n: "Permanent Portable Provisioner", p: {coin: 10000}},
