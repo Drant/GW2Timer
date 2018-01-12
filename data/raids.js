@@ -10,7 +10,8 @@ var GW2T_RAIDS_HEADERS = {
 	SpiritVale: {name_en: "Spirit Vale", name_de: "Geistertal", name_es: "Valle Espiritual", name_fr: "Vallée des esprits", name_zh: "灵魂山谷"},
 	SalvationPass: {name_en: "Salvation Pass", name_de: "Erlösungspass", name_es: "Paso de la Salvación", name_fr: "Passage de la rédemption", name_zh: "救赎小道"},
 	StrongholdOfTheFaithful: {name_en: "Stronghold of the Faithful", name_de: "Festung der Treuen", name_es: "Fortaleza de los Fieles", name_fr: "Forteresse des Fidèles", name_zh: "信仰要塞"},
-	BastionOfThePenitent: {name_en: "Bastion of the Penitent", name_de: "Bastion der Bußfertigen", name_es: "Bastión del Penitente", name_fr: "Bastion du pénitent", name_zh: "忏悔者堡垒"}
+	BastionOfThePenitent: {name_en: "Bastion of the Penitent", name_de: "Bastion der Bußfertigen", name_es: "Bastión del Penitente", name_fr: "Bastion du pénitent", name_zh: "忏悔者堡垒"},
+	HallOfChains: {name_en: "Hall of Chains", name_de: "Halle der Ketten", name_es: "Sala de las Cadenas", name_fr: "Salle des chaînes", name_zh: "锁链殿堂"}
 };
 
 /*
@@ -43,5 +44,11 @@ BastionOfThePenitent: [
 	{u: "mursaat_overseer", i: 80224, n: "Bastion_of_the_Penitent#Mursaat_Overseer", l: "Overseer"},
 	{u: "samarog", i: 80218, n: "Bastion_of_the_Penitent#Samarog", l: "Samarog"},
 	{u: "deimos", i: 80327, n: "Bastion_of_the_Penitent#Deimos", l: "Deimos"}
+],
+HallOfChains: [
+	{u: "soulless_horror", i: 86076, n: "Hall_of_Chains#Soulless_Horror", l: "Horror"},
+	{u: "river_of_souls", i: 77291, n: "Hall_of_Chains#River_of_Souls", l: "River"},
+	{u: "statues_of_grenth", i: 85667, n: "Hall_of_Chains#Statues_of_Grenth", l: "Statues"},
+	{u: "voice_in_the_void", i: 85998, n: "Hall_of_Chains#The_Voice_in_the_Void", l: "Voice"}
 ]
 };
