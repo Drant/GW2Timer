@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/recipes
+ * This file is used by gw2timer.com/recipes
  * Record of crafting recipes categorized by disciplines.
  */
 

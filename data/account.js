@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/account
+ * This file is used by gw2timer.com/account
  * Contains collated API data and supplemental metadata.
  */
 

@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/collectible
+ * This file is used by gw2timer.com/collectible
  * Open world collectible items map data.
  * COLLECTIBLE PROPERTIES:
  * category: for filtering collectibles

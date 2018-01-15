@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/gliders
+ * This file is used by gw2timer.com/gliders
  * Cache association of the glider to its proper item and category.
  */
 

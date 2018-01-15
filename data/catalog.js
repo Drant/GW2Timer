@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/catalog
+ * This file is used by gw2timer.com/catalog
  * Catalog of gizmos and consumables inventory items.
  */
 

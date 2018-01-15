@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/dyes
+ * This file is used by gw2timer.com/dyes
  * Cache association of the color to its proper dye and category.
  */
 

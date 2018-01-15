@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/finishers
+ * This file is used by gw2timer.com/finishers
  * Cache association of the finisher to its proper item and category.
  */
 

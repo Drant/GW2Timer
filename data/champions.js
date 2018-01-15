@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/champions
+ * This file is used by gw2timer.com/champions
  * Cache association of the PvP Mist Champion to its proper item and category.
  */
 

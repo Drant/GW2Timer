@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/wardrobe
+ * This file is used by gw2timer.com/wardrobe
  * Pre-categorized cache of the skins API and associated item.
  */
 
@@ -7,66 +7,66 @@
  * Links to galleries.
  */
 var GW2T_SKINS_GALLERIES = {
-	Back: "http://wiki.guildwars2.com/wiki/Gallery_of_back_items",
+	Back: "https://wiki.guildwars2.com/wiki/Gallery_of_back_items",
 	
 	Armor_Light: {
-		Asura_Female: "http://wiki.guildwars2.com/wiki/Asura_female_light_armor",
-		Asura_Male: "http://wiki.guildwars2.com/wiki/Asura_male_light_armor",
-		Charr_Female: "http://wiki.guildwars2.com/wiki/Charr_female_light_armor",
-		Charr_Male: "http://wiki.guildwars2.com/wiki/Charr_male_light_armor",
-		Human_Female: "http://wiki.guildwars2.com/wiki/Human_female_light_armor",
-		Human_Male: "http://wiki.guildwars2.com/wiki/Human_male_light_armor",
-		Norn_Female: "http://wiki.guildwars2.com/wiki/Norn_female_light_armor",
-		Norn_Male: "http://wiki.guildwars2.com/wiki/Norn_male_light_armor",
-		Sylvari_Female: "http://wiki.guildwars2.com/wiki/Sylvari_female_light_armor",
-		Sylvari_Male: "http://wiki.guildwars2.com/wiki/Sylvari_male_light_armor"
+		Asura_Female: "https://wiki.guildwars2.com/wiki/Asura_female_light_armor",
+		Asura_Male: "https://wiki.guildwars2.com/wiki/Asura_male_light_armor",
+		Charr_Female: "https://wiki.guildwars2.com/wiki/Charr_female_light_armor",
+		Charr_Male: "https://wiki.guildwars2.com/wiki/Charr_male_light_armor",
+		Human_Female: "https://wiki.guildwars2.com/wiki/Human_female_light_armor",
+		Human_Male: "https://wiki.guildwars2.com/wiki/Human_male_light_armor",
+		Norn_Female: "https://wiki.guildwars2.com/wiki/Norn_female_light_armor",
+		Norn_Male: "https://wiki.guildwars2.com/wiki/Norn_male_light_armor",
+		Sylvari_Female: "https://wiki.guildwars2.com/wiki/Sylvari_female_light_armor",
+		Sylvari_Male: "https://wiki.guildwars2.com/wiki/Sylvari_male_light_armor"
 	},
 	
 	Armor_Medium: {
-		Asura_Female: "http://wiki.guildwars2.com/wiki/Asura_female_medium_armor",
-		Asura_Male: "http://wiki.guildwars2.com/wiki/Asura_male_medium_armor",
-		Charr_Female: "http://wiki.guildwars2.com/wiki/Charr_female_medium_armor",
-		Charr_Male: "http://wiki.guildwars2.com/wiki/Charr_male_medium_armor",
-		Human_Female: "http://wiki.guildwars2.com/wiki/Human_female_medium_armor",
-		Human_Male: "http://wiki.guildwars2.com/wiki/Human_male_medium_armor",
-		Norn_Female: "http://wiki.guildwars2.com/wiki/Norn_female_medium_armor",
-		Norn_Male: "http://wiki.guildwars2.com/wiki/Norn_male_medium_armor",
-		Sylvari_Female: "http://wiki.guildwars2.com/wiki/Sylvari_female_medium_armor",
-		Sylvari_Male: "http://wiki.guildwars2.com/wiki/Sylvari_male_medium_armor"
+		Asura_Female: "https://wiki.guildwars2.com/wiki/Asura_female_medium_armor",
+		Asura_Male: "https://wiki.guildwars2.com/wiki/Asura_male_medium_armor",
+		Charr_Female: "https://wiki.guildwars2.com/wiki/Charr_female_medium_armor",
+		Charr_Male: "https://wiki.guildwars2.com/wiki/Charr_male_medium_armor",
+		Human_Female: "https://wiki.guildwars2.com/wiki/Human_female_medium_armor",
+		Human_Male: "https://wiki.guildwars2.com/wiki/Human_male_medium_armor",
+		Norn_Female: "https://wiki.guildwars2.com/wiki/Norn_female_medium_armor",
+		Norn_Male: "https://wiki.guildwars2.com/wiki/Norn_male_medium_armor",
+		Sylvari_Female: "https://wiki.guildwars2.com/wiki/Sylvari_female_medium_armor",
+		Sylvari_Male: "https://wiki.guildwars2.com/wiki/Sylvari_male_medium_armor"
 	},
 	
 	Armor_Heavy: {
-		Asura_Female: "http://wiki.guildwars2.com/wiki/Asura_female_heavy_armor",
-		Asura_Male: "http://wiki.guildwars2.com/wiki/Asura_male_heavy_armor",
-		Charr_Female: "http://wiki.guildwars2.com/wiki/Charr_female_heavy_armor",
-		Charr_Male: "http://wiki.guildwars2.com/wiki/Charr_male_heavy_armor",
-		Human_Female: "http://wiki.guildwars2.com/wiki/Human_female_heavy_armor",
-		Human_Male: "http://wiki.guildwars2.com/wiki/Human_male_heavy_armor",
-		Norn_Female: "http://wiki.guildwars2.com/wiki/Norn_female_heavy_armor",
-		Norn_Male: "http://wiki.guildwars2.com/wiki/Norn_male_heavy_armor",
-		Sylvari_Female: "http://wiki.guildwars2.com/wiki/Sylvari_female_heavy_armor",
-		Sylvari_Male: "http://wiki.guildwars2.com/wiki/Sylvari_male_heavy_armor"
+		Asura_Female: "https://wiki.guildwars2.com/wiki/Asura_female_heavy_armor",
+		Asura_Male: "https://wiki.guildwars2.com/wiki/Asura_male_heavy_armor",
+		Charr_Female: "https://wiki.guildwars2.com/wiki/Charr_female_heavy_armor",
+		Charr_Male: "https://wiki.guildwars2.com/wiki/Charr_male_heavy_armor",
+		Human_Female: "https://wiki.guildwars2.com/wiki/Human_female_heavy_armor",
+		Human_Male: "https://wiki.guildwars2.com/wiki/Human_male_heavy_armor",
+		Norn_Female: "https://wiki.guildwars2.com/wiki/Norn_female_heavy_armor",
+		Norn_Male: "https://wiki.guildwars2.com/wiki/Norn_male_heavy_armor",
+		Sylvari_Female: "https://wiki.guildwars2.com/wiki/Sylvari_female_heavy_armor",
+		Sylvari_Male: "https://wiki.guildwars2.com/wiki/Sylvari_male_heavy_armor"
 	},
 
-	Weapon_Axe: "http://wiki.guildwars2.com/wiki/Gallery_of_axes",
-	Weapon_Mace: "http://wiki.guildwars2.com/wiki/Gallery_of_maces",
-	Weapon_Sword: "http://wiki.guildwars2.com/wiki/Gallery_of_swords",
-	Weapon_Dagger: "http://wiki.guildwars2.com/wiki/Gallery_of_daggers",
-	Weapon_Pistol: "http://wiki.guildwars2.com/wiki/Gallery_of_pistols",
-	Weapon_Scepter: "http://wiki.guildwars2.com/wiki/Gallery_of_scepters",
-	Weapon_Focus: "http://wiki.guildwars2.com/wiki/Gallery_of_foci",
-	Weapon_Shield: "http://wiki.guildwars2.com/wiki/Gallery_of_shields",
-	Weapon_Torch: "http://wiki.guildwars2.com/wiki/Gallery_of_torches",
-	Weapon_Warhorn: "http://wiki.guildwars2.com/wiki/Gallery_of_warhorns",
-	Weapon_Greatsword: "http://wiki.guildwars2.com/wiki/Gallery_of_greatswords",
-	Weapon_Hammer: "http://wiki.guildwars2.com/wiki/Gallery_of_hammers",
-	Weapon_Longbow: "http://wiki.guildwars2.com/wiki/Gallery_of_longbows",
-	Weapon_Shortbow: "http://wiki.guildwars2.com/wiki/Gallery_of_short_bows",
-	Weapon_Rifle: "http://wiki.guildwars2.com/wiki/Gallery_of_rifles",
-	Weapon_Staff: "http://wiki.guildwars2.com/wiki/Gallery_of_staves",
-	Weapon_Harpoon: "http://wiki.guildwars2.com/wiki/Gallery_of_spears",
-	Weapon_Speargun: "http://wiki.guildwars2.com/wiki/Gallery_of_harpoon_guns",
-	Weapon_Trident: "http://wiki.guildwars2.com/wiki/Gallery_of_tridents"
+	Weapon_Axe: "https://wiki.guildwars2.com/wiki/Gallery_of_axes",
+	Weapon_Mace: "https://wiki.guildwars2.com/wiki/Gallery_of_maces",
+	Weapon_Sword: "https://wiki.guildwars2.com/wiki/Gallery_of_swords",
+	Weapon_Dagger: "https://wiki.guildwars2.com/wiki/Gallery_of_daggers",
+	Weapon_Pistol: "https://wiki.guildwars2.com/wiki/Gallery_of_pistols",
+	Weapon_Scepter: "https://wiki.guildwars2.com/wiki/Gallery_of_scepters",
+	Weapon_Focus: "https://wiki.guildwars2.com/wiki/Gallery_of_foci",
+	Weapon_Shield: "https://wiki.guildwars2.com/wiki/Gallery_of_shields",
+	Weapon_Torch: "https://wiki.guildwars2.com/wiki/Gallery_of_torches",
+	Weapon_Warhorn: "https://wiki.guildwars2.com/wiki/Gallery_of_warhorns",
+	Weapon_Greatsword: "https://wiki.guildwars2.com/wiki/Gallery_of_greatswords",
+	Weapon_Hammer: "https://wiki.guildwars2.com/wiki/Gallery_of_hammers",
+	Weapon_Longbow: "https://wiki.guildwars2.com/wiki/Gallery_of_longbows",
+	Weapon_Shortbow: "https://wiki.guildwars2.com/wiki/Gallery_of_short_bows",
+	Weapon_Rifle: "https://wiki.guildwars2.com/wiki/Gallery_of_rifles",
+	Weapon_Staff: "https://wiki.guildwars2.com/wiki/Gallery_of_staves",
+	Weapon_Harpoon: "https://wiki.guildwars2.com/wiki/Gallery_of_spears",
+	Weapon_Speargun: "https://wiki.guildwars2.com/wiki/Gallery_of_harpoon_guns",
+	Weapon_Trident: "https://wiki.guildwars2.com/wiki/Gallery_of_tridents"
 };
 
 /*

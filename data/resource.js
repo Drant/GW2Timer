@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/resource
+ * This file is used by gw2timer.com/resource
  * Resource nodes map data. Node properties:
  * c: coordinates
  * p: path (optional)

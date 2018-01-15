@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/gem
+ * This file is used by gw2timer.com/gem
  * Catalog of gem store items.
  */
 

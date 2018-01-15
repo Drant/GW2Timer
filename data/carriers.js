@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/carriers
+ * This file is used by gw2timer.com/carriers
  * Cache association of the mail carrier to its proper item and category.
  */
 

@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/dungeons
+ * This file is used by gw2timer.com/dungeons
  * Cache association of account daily dungeon completion.
  */
 

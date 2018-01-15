@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/museum
+ * This file is used by gw2timer.com/museum
  * History of newly added API items.
  */
 

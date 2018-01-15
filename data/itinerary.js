@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com
+ * This file is used by gw2timer.com/
  * World completion route path map data.
  * Based on http://www.ehmry.com/topic/2221-tour-de-waypoint/
  * and http://www.ownedcore.com/forums/mmo/guild-wars-2/402066-guide-exploring-world-optimized-way-all-areas.html

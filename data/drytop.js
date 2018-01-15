@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/drytop
+ * This file is used by gw2timer.com/drytop
  * Dry Top event data. Used for placing event nickname and time labels on the map.
  */
 

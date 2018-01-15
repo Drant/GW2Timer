@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/ascended
+ * This file is used by gw2timer.com/ascended
  * Catalog of ascended armor, weapons, trinkets.
  */
 

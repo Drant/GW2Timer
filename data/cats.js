@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/cats
+ * This file is used by gw2timer.com/cats
  * Cache association of home instance cats to their proper item and category.
  */
 

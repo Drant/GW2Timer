@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/cleanup
+ * This file is used by gw2timer.com/cleanup
  * Catalog of junk and trophy items, used collections items, and containers bags and chests.
  */
 

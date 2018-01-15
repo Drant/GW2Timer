@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/raids
+ * This file is used by gw2timer.com/raids
  * Cache association of account weekly raid completion.
  */
 

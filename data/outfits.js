@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/outfits
+ * This file is used by gw2timer.com/outfits
  * Cache association of the outfit to its proper item and category.
  */
 

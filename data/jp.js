@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/jp
+ * This file is used by gw2timer.com/jp
  * Jumping puzzle data. id property corresponds to checklist index and is sorted
  * by how far from the west it is; new JPs will be assigned higher id regardless
  * of location. JP order here will be as presented in HTML.

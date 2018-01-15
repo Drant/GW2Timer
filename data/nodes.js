@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/nodes
+ * This file is used by gw2timer.com/nodes
  * Cache association of home instance nodes to their proper item and category.
  */
 

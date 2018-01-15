@@ -1,5 +1,5 @@
 /*
- * This file is used by http://gw2timer.com/sab
+ * This file is used by gw2timer.com/sab
  * ID association of Super Adventure Box character progression.
  */
 
