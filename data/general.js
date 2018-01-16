@@ -898,38 +898,38 @@ var GW2T_GATEWAY_CONNECTION = {
 	{c: [[23146, 7517], [23492, 6934]]},
 	{c: [[23380, 7561], [23025, 8129]]},
 	{c: [[23632, 8070], [23575, 8061]]},
-	{c: [[13794, 10161], [14125, 9839]], i: "http://i.imgur.com/05EZy40.png"}, // harathi
-	{c: [[14628, 10642], [14684, 10351]], i: "http://i.imgur.com/pzi7QqB.png"}, // harathi
-	{c: [[16123, 11449], [15715, 11526]], i: "http://i.imgur.com/LtlKlMd.png"}, // harathi
-	{c: [[16719, 16097], [16790, 16379]], i: "http://i.imgur.com/4knjPzn.png"}, // bloodtide
-	{c: [[17394, 16907], [17059, 17134]], i: "http://i.imgur.com/o9TKLre.png"}, // bloodtide
-	{c: [[16395, 16847], [16271, 17151]], i: "http://i.imgur.com/mf84t3E.png"}, // bloodtide
-	{c: [[16345, 20165], [15920, 20071]], i: "http://i.imgur.com/Ofvznoc.png"}, // sparkfly
-	{c: [[16984, 21336], [17092, 21633]], i: "http://i.imgur.com/CKADrul.png"}, // sparkfly
-	{c: [[15758, 20762], [16036, 21031]], i: "http://i.imgur.com/89HbHei.png"}, // sparkfly
-	{c: [[20441, 23215], [20508, 23478]], i: "http://i.imgur.com/lsoFXtG.png"}, // maelstrom
-	{c: [[21148, 22756], [21201, 22504]], i: "http://i.imgur.com/psc19cs.png"}, // maelstrom
-	{c: [[29462, 18297], [29698, 18042]], i: "http://i.imgur.com/TBMgUBK.png"}, // fields
-	{c: [[29637, 16740], [29530, 16996]], i: "http://i.imgur.com/wq10slX.png"}, // fields
-	{c: [[31074, 16994], [30857, 17040]], i: "http://i.imgur.com/7VtKUTz.png"}, // fields
-	{c: [[27655, 9992], [27820, 10306]], i: "http://i.imgur.com/bQcI0ZB.png"}, // marches
-	{c: [[27688, 11471], [27813, 11056]], i: "http://i.imgur.com/G7KbiUs.png"}, // marches
-	{c: [[28217, 11546], [28558, 11524]], i: "http://i.imgur.com/V02byvU.png"}, // marches
-	{c: [[29771, 12832], [29751, 12716]], i: "http://i.imgur.com/XeC45o6.png"}, // blazeridge
-	{c: [[29819, 12798], [29781, 12708]], i: "http://i.imgur.com/kYq3kVL.png"}, // blazeridge
-	{c: [[29900, 12775], [29800, 12687]], i: "http://i.imgur.com/XvjUu86.png"}, // blazeridge
-	{c: [[29646, 15191], [29645, 14997]], i: "http://i.imgur.com/vWiOGvt.png"}, // blazeridge
-	{c: [[29839, 15255], [29689, 15497]], i: "http://i.imgur.com/pEE4dSa.png"}, // blazeridge
-	{c: [[30527, 15382], [30258, 15615]], i: "http://i.imgur.com/OYwI6Tr.png"}, // blazeridge
-	{c: [[25738, 10887], [25989, 10794]], i: "http://i.imgur.com/nLHpAY1.png"}, // fireheart
-	{c: [[24256, 10327], [24486, 10547]], i: "http://i.imgur.com/Mw5RlZo.png"}, // fireheart
-	{c: [[15224, 24113], [15138, 24433]], i: "http://i.imgur.com/Juve33P.png"}, // straits
-	{c: [[13922, 24269], [13706, 24364]], i: "http://i.imgur.com/muYx0K5.png"}, // malchor
-	{c: [[12708, 24331], [12352, 24504]], i: "http://i.imgur.com/20aN2Kl.png"}, // malchor
-	{c: [[11912, 24958], [12203, 24781]], i: "http://i.imgur.com/v2nRrzR.png"}, // malchor
-	{c: [[11248, 25762], [10899, 25948]], i: "http://i.imgur.com/Vkb74AG.png"}, // cursed
-	{c: [[11122, 27381], [11248, 27635]], i: "http://i.imgur.com/20U6Gts.png"}, // cursed
-	{c: [[11049, 27979], [11328, 27915]], i: "http://i.imgur.com/Yx0LBxP.png"} // cursed
+	{c: [[13794, 10161], [14125, 9839]], i: "https://i.imgur.com/05EZy40.png"}, // harathi
+	{c: [[14628, 10642], [14684, 10351]], i: "https://i.imgur.com/pzi7QqB.png"}, // harathi
+	{c: [[16123, 11449], [15715, 11526]], i: "https://i.imgur.com/LtlKlMd.png"}, // harathi
+	{c: [[16719, 16097], [16790, 16379]], i: "https://i.imgur.com/4knjPzn.png"}, // bloodtide
+	{c: [[17394, 16907], [17059, 17134]], i: "https://i.imgur.com/o9TKLre.png"}, // bloodtide
+	{c: [[16395, 16847], [16271, 17151]], i: "https://i.imgur.com/mf84t3E.png"}, // bloodtide
+	{c: [[16345, 20165], [15920, 20071]], i: "https://i.imgur.com/Ofvznoc.png"}, // sparkfly
+	{c: [[16984, 21336], [17092, 21633]], i: "https://i.imgur.com/CKADrul.png"}, // sparkfly
+	{c: [[15758, 20762], [16036, 21031]], i: "https://i.imgur.com/89HbHei.png"}, // sparkfly
+	{c: [[20441, 23215], [20508, 23478]], i: "https://i.imgur.com/lsoFXtG.png"}, // maelstrom
+	{c: [[21148, 22756], [21201, 22504]], i: "https://i.imgur.com/psc19cs.png"}, // maelstrom
+	{c: [[29462, 18297], [29698, 18042]], i: "https://i.imgur.com/TBMgUBK.png"}, // fields
+	{c: [[29637, 16740], [29530, 16996]], i: "https://i.imgur.com/wq10slX.png"}, // fields
+	{c: [[31074, 16994], [30857, 17040]], i: "https://i.imgur.com/7VtKUTz.png"}, // fields
+	{c: [[27655, 9992], [27820, 10306]], i: "https://i.imgur.com/bQcI0ZB.png"}, // marches
+	{c: [[27688, 11471], [27813, 11056]], i: "https://i.imgur.com/G7KbiUs.png"}, // marches
+	{c: [[28217, 11546], [28558, 11524]], i: "https://i.imgur.com/V02byvU.png"}, // marches
+	{c: [[29771, 12832], [29751, 12716]], i: "https://i.imgur.com/XeC45o6.png"}, // blazeridge
+	{c: [[29819, 12798], [29781, 12708]], i: "https://i.imgur.com/kYq3kVL.png"}, // blazeridge
+	{c: [[29900, 12775], [29800, 12687]], i: "https://i.imgur.com/XvjUu86.png"}, // blazeridge
+	{c: [[29646, 15191], [29645, 14997]], i: "https://i.imgur.com/vWiOGvt.png"}, // blazeridge
+	{c: [[29839, 15255], [29689, 15497]], i: "https://i.imgur.com/pEE4dSa.png"}, // blazeridge
+	{c: [[30527, 15382], [30258, 15615]], i: "https://i.imgur.com/OYwI6Tr.png"}, // blazeridge
+	{c: [[25738, 10887], [25989, 10794]], i: "https://i.imgur.com/nLHpAY1.png"}, // fireheart
+	{c: [[24256, 10327], [24486, 10547]], i: "https://i.imgur.com/Mw5RlZo.png"}, // fireheart
+	{c: [[15224, 24113], [15138, 24433]], i: "https://i.imgur.com/Juve33P.png"}, // straits
+	{c: [[13922, 24269], [13706, 24364]], i: "https://i.imgur.com/muYx0K5.png"}, // malchor
+	{c: [[12708, 24331], [12352, 24504]], i: "https://i.imgur.com/20aN2Kl.png"}, // malchor
+	{c: [[11912, 24958], [12203, 24781]], i: "https://i.imgur.com/v2nRrzR.png"}, // malchor
+	{c: [[11248, 25762], [10899, 25948]], i: "https://i.imgur.com/Vkb74AG.png"}, // cursed
+	{c: [[11122, 27381], [11248, 27635]], i: "https://i.imgur.com/20U6Gts.png"}, // cursed
+	{c: [[11049, 27979], [11328, 27915]], i: "https://i.imgur.com/Yx0LBxP.png"} // cursed
 	],
 	// Jump crystals, Oakheart's Essence, and other powerups that gives mobility skills
 	powerups: [
@@ -1055,47 +1055,47 @@ wait: {}
  */
 var GW2T_SUBMAP_DATA = {
 angvarstrove: {
-	img: "http://i.imgur.com/LuiwbAK.png", 
+	img: "https://i.imgur.com/LuiwbAK.png", 
 	bounds: [[17660, 11230], [18610, 11930]]
 },
 bonerattlercaverns: {
-	img: "http://i.imgur.com/TyGZI9H.png", 
+	img: "https://i.imgur.com/TyGZI9H.png", 
 	bounds: [[13482, 11605], [15032, 12205]]
 },
 brandedmine: {
-	img: "http://i.imgur.com/XdXqXTL.png",
+	img: "https://i.imgur.com/XdXqXTL.png",
 	bounds: [[28674, 16701], [28984, 16951]]
 },
 dostoevskypeak: {
-	img: "http://i.imgur.com/l0PyKxS.png", 
+	img: "https://i.imgur.com/l0PyKxS.png", 
 	bounds: [[20120, 16395], [20920, 17195]]
 },
 fionnghualascratch: {
-	img: "http://i.imgur.com/6ELssZW.png",
+	img: "https://i.imgur.com/6ELssZW.png",
 	bounds: [[19718, 19035], [20268, 19785]]
 },
 highdencaves: {
-	img: "http://i.imgur.com/V71MHb1.png", 
+	img: "https://i.imgur.com/V71MHb1.png", 
 	bounds: [[31230, 16900], [31730, 17700]]
 },
 langmarestate: {
-	img: "http://i.imgur.com/KUMY9HD.png", 
+	img: "https://i.imgur.com/KUMY9HD.png", 
 	bounds: [[25054, 14859], [25804, 15659]]
 },
 posternuscaverns: {
-	img: "http://i.imgur.com/rFdG4jD.png", 
+	img: "https://i.imgur.com/rFdG4jD.png", 
 	bounds: [[17665, 14295], [18065, 15115]]
 },
 proxemicslab: {
-	img: "http://i.imgur.com/shk8IVE.png", 
+	img: "https://i.imgur.com/shk8IVE.png", 
 	bounds: [[5880, 14440], [6230, 15290]]
 },
 sawtoothbaycaves: {
-	img: "http://i.imgur.com/SnaczAR.png", 
+	img: "https://i.imgur.com/SnaczAR.png", 
 	bounds: [[13245, 19980], [13445, 20180]]
 },
 spidernestcavern: {
-	img: "http://i.imgur.com/XCSCoDD.png", 
+	img: "https://i.imgur.com/XCSCoDD.png", 
 	bounds: [[25141, 11313], [25641, 11753]]
 }
 };

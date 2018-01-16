@@ -24,7 +24,7 @@ JP: {
 		name_zh: "树间除虫",
 		coord: [3682, 14925],
 		path: [[3692,15267],[3666,15242],[3684,14943]],
-		img: "http://i.imgur.com/tTlNj8e.png",
+		img: "https://i.imgur.com/tTlNj8e.png",
 		chest: null,
 		zone: "verdant",
 		description: "☀ Verdant fireflies collection using updrafts"
@@ -39,7 +39,7 @@ JP: {
 		name_zh: "燃烧蔓藤",
 		coord: [3665, 15722],
 		path: [[3712,15296],[3652,15518],[3667,15703]],
-		img: "http://i.imgur.com/tRf45xf.png",
+		img: "https://i.imgur.com/tRf45xf.png",
 		chest: null,
 		zone: "verdant",
 		description: "☀ Verdant flamethrower burn down tendril infestation"
@@ -54,7 +54,7 @@ JP: {
 		name_zh: "废料抢救",
 		coord: [3136, 15967],
 		path: [[2807,15999],[2886,16014],[2951,15961],[3116,15962]],
-		img: "http://i.imgur.com/Sm0U0oL.png",
+		img: "https://i.imgur.com/Sm0U0oL.png",
 		chest: null,
 		zone: "verdant",
 		description: "☀ Verdant collect disks and avoid spitting tendrils"
@@ -69,7 +69,7 @@ JP: {
 		name_zh: "打靶训练",
 		coord: [2040, 15974],
 		path: [[1313,15846],[1327,15875],[1412,15893],[1463,15898],[1617,15858],[2017,15962]],
-		img: "http://i.imgur.com/bNyzALa.png",
+		img: "https://i.imgur.com/bNyzALa.png",
 		chest: null,
 		zone: "verdant",
 		description: "☽ Verdant rifle shoot dummies around camp. Requires secured outpost"
@@ -84,7 +84,7 @@ JP: {
 		name_zh: "飞行马戏团",
 		coord: [1524, 14830],
 		path: [[1716,15089],[1579,14996],[1525,14937],[1521,14853]],
-		img: "http://i.imgur.com/EP5x8bS.png",
+		img: "https://i.imgur.com/EP5x8bS.png",
 		chest: null,
 		zone: "verdant",
 		description: "☀ Verdant gliding aerial obstacle course rings"
@@ -99,7 +99,7 @@ JP: {
 		name_zh: "熔岩采集",
 		coord: [610, 16691],
 		path: [[891,16454],[776,16715],[727,16700],[680,16754],[621,16713]],
-		img: "http://i.imgur.com/2HyO00K.png",
+		img: "https://i.imgur.com/2HyO00K.png",
 		chest: null,
 		zone: "auric",
 		description: "Auric mushroom hopping avoid poison ground"
@@ -114,7 +114,7 @@ JP: {
 		name_zh: "逝者面具",
 		coord: [1210, 17092],
 		path: [[1529,17555],[1415,17527],[1236,17439],[1311,17348],[1288,17314],[1243,17264],[1185,17134],[1199,17111]],
-		img: "http://i.imgur.com/jqSlry5.png",
+		img: "https://i.imgur.com/jqSlry5.png",
 		chest: null,
 		zone: "auric",
 		description: "Auric bouncing on layered platforms. Requires <a href='http://wiki.guildwars2.com/wiki/Exalted_Acceptance'>Exalted Acceptance</a> mastery"
@@ -129,7 +129,7 @@ JP: {
 		name_zh: "金翼翱翔",
 		coord: [1830, 17389],
 		path: [[1546,17557],[1536,17254],[1537,17195],[1556,17179],[1615,17203],[1673,17280],[1722,17340],[1846,17394]],
-		img: "http://i.imgur.com/NBaBYX8.png",
+		img: "https://i.imgur.com/NBaBYX8.png",
 		chest: null,
 		zone: "auric",
 		description: "Auric gliding collection using updrafts"
@@ -144,7 +144,7 @@ JP: {
 		name_zh: "圣所攀高",
 		coord: [1763, 18027],
 		path: [[1560,17560],[1585,17501],[1631,17464],[1678,17473],[1684,17516],[1674,17584],[1609,17672],[1640,17694],[1654,17706],[1779,17805],[1761,18004]],
-		img: "http://i.imgur.com/NLUxpNr.png",
+		img: "https://i.imgur.com/NLUxpNr.png",
 		chest: null,
 		zone: "auric",
 		description: "Auric aspect abilities spiral ascent climb"
@@ -159,7 +159,7 @@ JP: {
 		name_zh: "菌菇群落",
 		coord: [1018, 18374],
 		path: [[1442,18220],[1360,18297],[1262,18223],[1247,18198],[1221,18212],[1152,18283],[1020,18400],[979,18423],[996,18436],[1011,18418],[1021,18400],[1026,18347]],
-		img: "http://i.imgur.com/p2661xR.png",
+		img: "https://i.imgur.com/p2661xR.png",
 		chest: null,
 		zone: "auric",
 		description: "Auric fungus transformation hopping course"
@@ -174,7 +174,7 @@ JP: {
 		name_zh: "魔径竞速",
 		coord: [3488, 19229],
 		path: [[4452,19136],[4312,19164],[4277,19183],[3841,19326],[3726,19324],[3548,19261],[3514,19237]],
-		img: "http://i.imgur.com/HwOOtiY.png",
+		img: "https://i.imgur.com/HwOOtiY.png",
 		chest: null,
 		zone: "tangled",
 		description: "Tangled spark transformation floating rocks leaps"
@@ -189,7 +189,7 @@ JP: {
 		name_zh: "大战暴走自动拳击手",
 		coord: [4493, 18553],
 		path: [[4495,19116],[4528,19056],[4648,18864],[4564,18800],[4530,18565],[4508,18557]],
-		img: "http://i.imgur.com/1Tt9vwP.png",
+		img: "https://i.imgur.com/1Tt9vwP.png",
 		chest: null,
 		zone: "tangled",
 		description: "Tangled golem transformation Chak punching rampage. Requires <a href='http://wiki.guildwars2.com/wiki/Exalted_Assistance'>Exalted Assistance</a> mastery."
@@ -204,7 +204,7 @@ JP: {
 		name_zh: "甲虫盛宴",
 		coord: [4548, 17730],
 		path: [[4285,17938],[4295,17954],[4245,18021],[4278,18039],[4288,17963],[4351,17761],[4464,17746],[4509,17709],[4535,17724]],
-		img: "http://i.imgur.com/wuu8g7J.png",
+		img: "https://i.imgur.com/wuu8g7J.png",
 		chest: null,
 		zone: "tangled",
 		description: "Tangled beetle transformation mushroom collection"
@@ -219,7 +219,7 @@ JP: {
 		name_zh: "废料步枪战地测试",
 		coord: [5402, 18917],
 		path: [[5196,19095],[5193,19067],[5246,19026],[5314,19103],[5429,19092],[5437,19025],[5410,18938]],
-		img: "http://i.imgur.com/AikKwS6.png",
+		img: "https://i.imgur.com/AikKwS6.png",
 		chest: null,
 		zone: "tangled",
 		description: "Tangled rifle bundle Chak blasting"
@@ -234,7 +234,7 @@ JP: {
 		name_zh: "机车竞速",
 		coord: [5391, 19461],
 		path: [[5207,19135],[5287,19247],[5482,19221],[5526,19426],[5414,19459]],
-		img: "http://i.imgur.com/myFj66F.png",
+		img: "https://i.imgur.com/myFj66F.png",
 		chest: null,
 		zone: "tangled",
 		description: "Tangled motorcycle transformation lethal race course"
@@ -249,7 +249,7 @@ JP: {
 		name_zh: "乌玛格的秘密",
 		coord: [17399, 14591],
 		path: null,
-		img: "http://i.imgur.com/yjaAbBF.png",
+		img: "https://i.imgur.com/yjaAbBF.png",
 		chest: null,
 		zone: "lion",
 		description: "LA short climbs up cave cliff"
@@ -264,7 +264,7 @@ JP: {
 		name_zh: "魔蛆矿坑",
 		coord: [13202, 13674],
 		path: null,
-		img: "http://i.imgur.com/Bme6j1E.png",
+		img: "https://i.imgur.com/Bme6j1E.png",
 		chest: "splendid gold",
 		zone: "queensdale",
 		description: "Queensdale small cave with grubs and skelks"
@@ -279,7 +279,7 @@ JP: {
 		name_zh: "崩塌的观测站",
 		coord: [12781, 15876],
 		path: null,
-		img: "http://i.imgur.com/4JUI2Ba.png",
+		img: "https://i.imgur.com/4JUI2Ba.png",
 		chest: null,
 		zone: "kessex",
 		description: "Kessex cave ruins behind a river"
@@ -294,7 +294,7 @@ JP: {
 		name_zh: "更换物业",
 		coord: [13884, 20428],
 		path: null,
-		img: "http://i.imgur.com/omyJBSk.png",
+		img: "https://i.imgur.com/omyJBSk.png",
 		chest: null,
 		zone: "southsun",
 		description: "Southsun short climb up the Consortium building"
@@ -309,7 +309,7 @@ JP: {
 		name_zh: "探险洞窟",
 		coord: [10635, 20000],
 		path: null,
-		img: "http://i.imgur.com/SkOg8q8.png",
+		img: "https://i.imgur.com/SkOg8q8.png",
 		chest: null,
 		zone: "caledon",
 		description: "Caledon giant mushrooms water cavern. Entrance is an underground hole covered by shrubs"
@@ -324,7 +324,7 @@ JP: {
 		name_zh: "萨满巢窟",
 		coord: [22074, 13584],
 		path: null,
-		img: "http://i.imgur.com/0vGbgNn.png",
+		img: "https://i.imgur.com/0vGbgNn.png",
 		chest: null,
 		zone: "wayfarer",
 		description: "Wayfarer raven knockbacks from rock pillars"
@@ -339,7 +339,7 @@ JP: {
 		name_zh: "加里斯国王的避难所",
 		coord: [21490, 12271],
 		path: null,
-		img: "http://i.imgur.com/y7bmCXv.png",
+		img: "https://i.imgur.com/y7bmCXv.png",
 		chest: null,
 		zone: "snowden",
 		description: "Snowden Priory site with looters"
@@ -354,10 +354,10 @@ JP: {
 		name_zh: "溺爱海湾",
 		coord: [20756, 20878],
 		path: null,
-		img: "http://i.imgur.com/iWXzOXM.png",
+		img: "https://i.imgur.com/iWXzOXM.png",
 		chest: null,
 		zone: "timberline",
-		description: "Timberline skip jump over quaggan lanterns. Entrance is underwater. <dfn data-coord='[20685, 21217]'>Inner cove</dfn> <a href='http://i.imgur.com/1CRkPDo.png'>entrance note</a>"
+		description: "Timberline skip jump over quaggan lanterns. Entrance is underwater. <dfn data-coord='[20685, 21217]'>Inner cove</dfn> <a href='https://i.imgur.com/1CRkPDo.png'>entrance note</a>"
 	},
 	"shattered": {
 		id: 30,
@@ -369,7 +369,7 @@ JP: {
 		name_zh: "碎冰遗迹",
 		coord: [22075, 9112],
 		path: null,
-		img: "http://i.imgur.com/sV7XcGd.png",
+		img: "https://i.imgur.com/sV7XcGd.png",
 		chest: null,
 		zone: "frostgorge",
 		description: "Frostgorge ice cave with trolls skelks oozes"
@@ -384,7 +384,7 @@ JP: {
 		name_zh: "猩红高地",
 		coord: [26258, 13026],
 		path: null,
-		img: "http://i.imgur.com/CETyR64.png",
+		img: "https://i.imgur.com/CETyR64.png",
 		chest: null,
 		zone: "diessa",
 		description: "Diessa grawl plateau with rocks and ruins"
@@ -399,7 +399,7 @@ JP: {
 		name_zh: "格兰蒂冒险",
 		coord: [25136, 12227],
 		path: null,
-		img: "http://i.imgur.com/7Qxd1Wx.png",
+		img: "https://i.imgur.com/7Qxd1Wx.png",
 		chest: null,
 		zone: "diessa",
 		description: "Diessa ruined Ascalonian stone tower climb"
@@ -414,7 +414,7 @@ JP: {
 		name_zh: "断墙闪电战",
 		coord: [25530, 13388],
 		path: null,
-		img: "http://i.imgur.com/c8sAP6V.png",
+		img: "https://i.imgur.com/c8sAP6V.png",
 		chest: null,
 		zone: "diessa",
 		description: "Diessa long Ascalonian wall with vista at end"
@@ -429,7 +429,7 @@ JP: {
 		name_zh: "贝亨试炼场",
 		coord: [31116, 15198],
 		path: null,
-		img: "http://i.imgur.com/5AOBdga.png",
+		img: "https://i.imgur.com/5AOBdga.png",
 		chest: null,
 		zone: "blazeridge",
 		description: "Blazeridge deep spider bat cave"
@@ -444,7 +444,7 @@ JP: {
 		name_zh: "生铁采矿场",
 		coord: [25986, 10719],
 		path: null,
-		img: "http://i.imgur.com/0RIGbvR.png",
+		img: "https://i.imgur.com/0RIGbvR.png",
 		chest: null,
 		zone: "fireheart",
 		description: "Fireheart suspended carts high over two hills"
@@ -459,7 +459,7 @@ JP: {
 		name_zh: "维齐尔塔",
 		coord: [16325, 24485],
 		path: null,
-		img: "http://i.imgur.com/1whVJrb.png",
+		img: "https://i.imgur.com/1whVJrb.png",
 		chest: null,
 		zone: "straits",
 		description: "Straits coral climb up a plateau tower"
@@ -474,7 +474,7 @@ JP: {
 		name_zh: "尘封档案室",
 		coord: [11078, 29012],
 		path: null,
-		img: "http://i.imgur.com/5AAMpcO.png",
+		img: "https://i.imgur.com/5AAMpcO.png",
 		chest: null,
 		zone: "cursed",
 		description: "Cursed wall coral jump through risens eagles"
@@ -489,7 +489,7 @@ JP: {
 		name_zh: "龙蛋护使",
 		coord: [1756, 18035],
 		path: null,
-		img: "http://i.imgur.com/op1dSqz.png",
+		img: "https://i.imgur.com/op1dSqz.png",
 		chest: null,
 		zone: "auric",
 		description: "Auric chamber spiral ascent climb"
@@ -505,7 +505,7 @@ JP: {
 		coord: [774, 18130],
 		path: [[905,17159],[932,17266],[790,17409],[773,17648],[1152,17827],[1136,17800],[1159,17718],[1048,17586],[847,17613],[733,17622],[577,17817],[635,17967],[635,18049],[727,18175],[752,18126]],
 		chest: null,
-		img: "http://i.imgur.com/fNXvACj.png",
+		img: "https://i.imgur.com/fNXvACj.png",
 		zone: "auric",
 		description: "Auric mushroom cave leyline gliding. <a href='http://wiki.guildwars2.com/wiki/Ancient_Golem_Part'>Access routes</a>"
 	},
@@ -519,7 +519,7 @@ JP: {
 		name_zh: "远景山谷坠毁点攀爬者",
 		coord: [5380, 16514],
 		path: null,
-		img: "http://i.imgur.com/5QS6dN2.png",
+		img: "https://i.imgur.com/5QS6dN2.png",
 		chest: "grand",
 		zone: "dry",
 		description: "Dry Top aspect crystal jump on bamboo beams to top plateau"
@@ -534,7 +534,7 @@ JP: {
 		name_zh: "魏安特的复仇",
 		coord: [17210, 15481],
 		path: null,
-		img: "http://i.imgur.com/Asnph3I.png",
+		img: "https://i.imgur.com/Asnph3I.png",
 		chest: null,
 		zone: "lion",
 		description: "LA huge pirate themed cave"
@@ -549,7 +549,7 @@ JP: {
 		name_zh: "亡命峡湾",
 		coord: [16670, 14183],
 		path: null,
-		img: "http://i.imgur.com/19dLq1S.png",
+		img: "https://i.imgur.com/19dLq1S.png",
 		chest: null,
 		zone: "gendarran",
 		description: "Gendarran light torches and swim in time. <dfn data-coord='[16510, 14221]'>Cave entrance</dfn> faces east"
@@ -564,7 +564,7 @@ JP: {
 		name_zh: "佛赛特的宝藏",
 		coord: [14330, 9653],
 		path: null,
-		img: "http://i.imgur.com/vHwaBOm.png",
+		img: "https://i.imgur.com/vHwaBOm.png",
 		chest: null,
 		zone: "harathi",
 		description: "Harathi pirate ship in underground lake"
@@ -579,7 +579,7 @@ JP: {
 		name_zh: "波特马特教授的实验室",
 		coord: [15726, 16423],
 		path: null,
-		img: "http://i.imgur.com/3uEgh6s.png",
+		img: "https://i.imgur.com/3uEgh6s.png",
 		chest: null,
 		zone: "bloodtide",
 		description: "Bloodtide underwater number puzzle force fields"
@@ -594,7 +594,7 @@ JP: {
 		name_zh: "摩根之跃",
 		coord: [11020, 19349],
 		path: null,
-		img: "http://i.imgur.com/vJ9pk02.png",
+		img: "https://i.imgur.com/vJ9pk02.png",
 		chest: null,
 		zone: "caledon",
 		description: "Caledon spiral tree and floating rocks in the sky. Escort <dfn data-coord='[10696, 19663]'>Brugh</dfn> to regrow the leaf stairs"
@@ -609,7 +609,7 @@ JP: {
 		name_zh: "斯派克斯的研究所",
 		coord: [9492, 18652],
 		path: null,
-		img: "http://i.imgur.com/wiRtb7r.png",
+		img: "https://i.imgur.com/wiRtb7r.png",
 		chest: null,
 		zone: "caledon",
 		description: "Caledon asuran light platforms with lava below"
@@ -624,7 +624,7 @@ JP: {
 		name_zh: "方块谜阵",
 		coord: [17958, 21624],
 		path: null,
-		img: "http://i.imgur.com/xE1n8zJ.png",
+		img: "https://i.imgur.com/xE1n8zJ.png",
 		chest: null,
 		zone: "maelstrom",
 		description: "Maelstrom floating cubes and electricity"
@@ -639,7 +639,7 @@ JP: {
 		name_zh: "隐秘花园",
 		coord: [21357, 21885],
 		path: null,
-		img: "http://i.imgur.com/ZgnQGFR.png",
+		img: "https://i.imgur.com/ZgnQGFR.png",
 		chest: null,
 		zone: "maelstrom",
 		description: "Maelstrom unlock four element cantles. Keeper portal to JP locations: <dfn data-coord='[18335, 22125]'>Earth</dfn>, <dfn data-coord='[19514, 22714]'>Light</dfn>, <dfn data-coord='[20143, 22209]'>Waves</dfn>, <dfn data-coord='[20770, 23385]'>Winds</dfn>. Cantals are at sky and ground level of the center, southeast waterfalls, and north lake"
@@ -654,7 +654,7 @@ JP: {
 		name_zh: "解封禁术工厂",
 		coord: [17545, 21917],
 		path: null,
-		img: "http://i.imgur.com/LlN43yV.png",
+		img: "https://i.imgur.com/LlN43yV.png",
 		chest: null,
 		zone: "sparkfly",
 		description: "Sparkfly destroyed Inquest facility"
@@ -669,10 +669,10 @@ JP: {
 		name_zh: "狮鹫喙峡",
 		coord: [18077, 17118],
 		path: null,
-		img: "http://i.imgur.com/fR9doXu.png",
+		img: "https://i.imgur.com/fR9doXu.png",
 		chest: null,
 		zone: "lornar",
-		description: "Lornar's steep griffons rock pillars. <a href='http://i.imgur.com/rJk97wh.png'>Entrance note</a>"
+		description: "Lornar's steep griffons rock pillars. <a href='https://i.imgur.com/rJk97wh.png'>Entrance note</a>"
 	},
 	"scaffolding": {
 		id: 24,
@@ -684,7 +684,7 @@ JP: {
 		name_zh: "苦难岩架",
 		coord: [19819, 17950],
 		path: null,
-		img: "http://i.imgur.com/2XMfX13.png",
+		img: "https://i.imgur.com/2XMfX13.png",
 		chest: null,
 		zone: "dredgehaunt",
 		description: "Dredgehaunt tall tower scaffold planks"
@@ -699,7 +699,7 @@ JP: {
 		name_zh: "苦难山洞",
 		coord: [19718, 17986],
 		path: null,
-		img: "http://i.imgur.com/2jLd6zm.png",
+		img: "https://i.imgur.com/2jLd6zm.png",
 		chest: null,
 		zone: "dredgehaunt",
 		description: "Dredgehaunt ice cave after the scaffold JP"
@@ -714,7 +714,7 @@ JP: {
 		name_zh: "扎尔探秘",
 		coord: [21062, 18805],
 		path: null,
-		img: "http://i.imgur.com/jG5uLNJ.png",
+		img: "https://i.imgur.com/jG5uLNJ.png",
 		chest: null,
 		zone: "timberline",
 		description: "Timberline ice cave then lava dredge/destroyer mine. You have to kill a champ at the end to get credit"
@@ -729,7 +729,7 @@ JP: {
 		name_zh: "钳爪岩地",
 		coord: [28465, 15425],
 		path: null,
-		img: "http://i.imgur.com/dtnDiEQ.png",
+		img: "https://i.imgur.com/dtnDiEQ.png",
 		chest: null,
 		zone: "plains",
 		description: "Plains water cavern Ascalonian ruins with traps"
@@ -744,7 +744,7 @@ JP: {
 		name_zh: "烙印矿洞",
 		coord: [28948, 16834],
 		path: null,
-		img: "http://i.imgur.com/QATS0uY.png",
+		img: "https://i.imgur.com/QATS0uY.png",
 		chest: null,
 		zone: "fields",
 		description: "Fields metal platforms jaggedly hung on chains"
@@ -759,10 +759,10 @@ JP: {
 		name_zh: "混乱晶窟",
 		coord: [27345, 13106],
 		path: null,
-		img: "http://i.imgur.com/S0JZgxG.png",
+		img: "https://i.imgur.com/S0JZgxG.png",
 		chest: null,
 		zone: "marches",
-		description: "Marches skip rocks jumps with character transformations. <a href='http://i.imgur.com/hQKO6Mi.png'>Shortcut note</a>"
+		description: "Marches skip rocks jumps with character transformations. <a href='https://i.imgur.com/hQKO6Mi.png'>Shortcut note</a>"
 	},
 	"folly": {
 		id: 38,
@@ -774,10 +774,10 @@ JP: {
 		name_zh: "疯雷泽的愚行",
 		coord: [30901, 12471],
 		path: null,
-		img: "http://i.imgur.com/2Q5FzbJ.png",
+		img: "https://i.imgur.com/2Q5FzbJ.png",
 		chest: null,
 		zone: "blazeridge",
-		description: "Blazeridge Separatists hideout and troll cave. <a href='http://i.imgur.com/WNCAQlk.png'>Grand Chest note</a>"
+		description: "Blazeridge Separatists hideout and troll cave. <a href='https://i.imgur.com/WNCAQlk.png'>Grand Chest note</a>"
 	},
 	"antre": {
 		id: 9,
@@ -789,7 +789,7 @@ JP: {
 		name_zh: "度假秘窟",
 		coord: [13598, 24798],
 		path: null,
-		img: "http://i.imgur.com/JlHp1Jb.png",
+		img: "https://i.imgur.com/JlHp1Jb.png",
 		chest: null,
 		zone: "malchor",
 		description: "Malchor's cave wall climb with mini treasure chests"
@@ -804,7 +804,7 @@ JP: {
 		name_zh: "攀登阿伯顿",
 		coord: [16851, 25484],
 		path: null,
-		img: "http://i.imgur.com/eDd2Sev.png",
+		img: "https://i.imgur.com/eDd2Sev.png",
 		chest: null,
 		zone: "siren",
 		description: "Siren upward tower spiral gliding"
@@ -819,7 +819,7 @@ JP: {
 		name_zh: "灼热之坡",
 		coord: [3786, 25277],
 		path: [[4531,25318],[4505,25271],[4136,25286],[4058,25279],[3765,25162],[3786,25277]],
-		img: "http://i.imgur.com/KjWQzni.png",
+		img: "https://i.imgur.com/KjWQzni.png",
 		chest: null,
 		zone: "draconis",
 		description: "Draconis volcano climb with limited grappling"
@@ -834,7 +834,7 @@ JP: {
 		name_zh: "跳过火山",
 		coord: [5582, 28957],
 		path: null,
-		img: "http://i.imgur.com/Dl7rjSo.png",
+		img: "https://i.imgur.com/Dl7rjSo.png",
 		chest: null,
 		zone: "ember",
 		description: "Ember volcano climb with checkpoints. Glide right of the vista into the lavafall's mouth for the entrance"
@@ -849,7 +849,7 @@ JP: {
 		name_zh: "旱坞地洞",
 		coord: [5850, 14793],
 		path: null,
-		img: "http://i.imgur.com/iWbwwAY.png",
+		img: "https://i.imgur.com/iWbwwAY.png",
 		chest: null,
 		zone: "silverwastes",
 		description: "Silverwastes map-size desert JP with checkpoints. <dfn data-coord='[5257, 14952]'>Inner entrance</dfn> is left side of the ship's roof"
@@ -864,7 +864,7 @@ JP: {
 		name_zh: "巨魔复仇之路",
 		coord: [16611, 15124],
 		path: null,
-		img: "http://i.imgur.com/zho486P.png",
+		img: "https://i.imgur.com/zho486P.png",
 		chest: null,
 		zone: "lion",
 		description: "LA city-wide rooftop jumps. Open four mini-chests to open final chest"
@@ -879,7 +879,7 @@ JP: {
 		name_zh: "轻松揭密",
 		coord: [15379, 14282],
 		path: null,
-		img: "http://i.imgur.com/wEG8PMR.png",
+		img: "https://i.imgur.com/wEG8PMR.png",
 		chest: null,
 		zone: "gendarran",
 		description: "Gendarran aetherblade hideout with trampolines"
@@ -894,7 +894,7 @@ JP: {
 		name_zh: "格姆的实验室",
 		coord: [9235, 18967],
 		path: null,
-		img: "http://i.imgur.com/782GdE5.png",
+		img: "https://i.imgur.com/782GdE5.png",
 		chest: null,
 		zone: "metrica",
 		description: "Metrica floating landmasses in the sky as asura weather stations"
@@ -909,7 +909,7 @@ JP: {
 		name_zh: "黑暗狂欢",
 		coord: [10963, 19197],
 		path: null,
-		img: "http://i.imgur.com/KcUE585.png",
+		img: "https://i.imgur.com/KcUE585.png",
 		chest: null,
 		zone: "caledon",
 		description: "Caledon nightmare court blue hideout after Morgan's Spiral"
@@ -924,7 +924,7 @@ JP: {
 		name_zh: "趵突泉",
 		coord: [12780, 19377],
 		path: null,
-		img: "http://i.imgur.com/dxTDLqJ.png",
+		img: "https://i.imgur.com/dxTDLqJ.png",
 		chest: null,
 		zone: "southsun",
 		description: "Southsun stones gushed up by geysers"
@@ -939,7 +939,7 @@ JP: {
 		name_zh: "拾荒者峡谷",
 		coord: [13610, 25044],
 		path: null,
-		img: "http://i.imgur.com/kDX7ZEq.png",
+		img: "https://i.imgur.com/kDX7ZEq.png",
 		chest: null,
 		zone: "malchor",
 		description: "Malchor's convoluted orrian ruins cave collecting 12 orbs"
@@ -954,7 +954,7 @@ JP: {
 		name_zh: "那是个陷阱",
 		coord: [12505, 9294],
 		path: [[12535,9315],[12533,9274],[12515,9267],[12514,9293],[12499,9295]],
-		img: "http://i.imgur.com/S1sYzp0.png",
+		img: "https://i.imgur.com/S1sYzp0.png",
 		chest: null,
 		zone: "ember",
 		description: "Doric traps cave. Interact with the wall-stack of barrels in Noran's basement to enter."
@@ -969,7 +969,7 @@ JP: {
 		name_zh: "恶劣邻居",
 		coord: [11717, 11915],
 		path: null,
-		img: "http://i.imgur.com/UAuY5zY.png",
+		img: "https://i.imgur.com/UAuY5zY.png",
 		chest: "splendid krytan",
 		zone: "queensdale",
 		description: "Queensdale bandit headquarter cave (Easy)"
@@ -984,7 +984,7 @@ JP: {
 		name_zh: "高夫的赃物",
 		coord: [11481, 14335],
 		path: null,
-		img: "http://i.imgur.com/oziFIK5.png",
+		img: "https://i.imgur.com/oziFIK5.png",
 		chest: "splendid wood",
 		zone: "kessex",
 		description: "Kessex bandit cave camp with imprisoned trolls (Easy)"
@@ -999,7 +999,7 @@ JP: {
 		name_zh: "誓言地穴",
 		coord: [15433, 12539],
 		path: null,
-		img: "http://i.imgur.com/j5PK9V7.png",
+		img: "https://i.imgur.com/j5PK9V7.png",
 		chest: null,
 		zone: "gendarran",
 		description: "Gendarran traps and spiders crypt (Easy)"
@@ -1014,7 +1014,7 @@ JP: {
 		name_zh: "不许碰亮晶晶",
 		coord: [10126, 17694],
 		path: null,
-		img: "http://i.imgur.com/2bWLIdI.png",
+		img: "https://i.imgur.com/2bWLIdI.png",
 		chest: "splendid asura",
 		zone: "caledon",
 		description: "Caledon skritt junk cave with golem room. Take the electric sphere from the glass container and throw it at the shanty gate to enter (Easy)"
@@ -1029,7 +1029,7 @@ JP: {
 		name_zh: "天幕洞穴",
 		coord: [15583, 20191],
 		path: null,
-		img: "http://i.imgur.com/PJVbyuO.png",
+		img: "https://i.imgur.com/PJVbyuO.png",
 		chest: "wood",
 		zone: "sparkfly",
 		description: "Sparkfly ruined tomb. Follow the cave <dfn data-coord='[15647, 19631]'>path</dfn> to the cliff vista, then jump down south from the vista where the boars are for the entrance (Easy)"
@@ -1044,7 +1044,7 @@ JP: {
 		name_zh: "叛军藏匿地",
 		coord: [26906, 9674],
 		path: null,
-		img: "http://i.imgur.com/l1CIJGo.png",
+		img: "https://i.imgur.com/l1CIJGo.png",
 		chest: "splendid sphere",
 		zone: "fireheart",
 		description: "Fireheart bandit camp and Ascalonian ghosts ruins (Easy)"
@@ -1059,7 +1059,7 @@ JP: {
 		name_zh: "饥肠辘辘",
 		coord: [17764, 16379],
 		path: null,
-		img: "http://i.imgur.com/H3HoEZk.png",
+		img: "https://i.imgur.com/H3HoEZk.png",
 		chest: null,
 		zone: "lornar",
 		description: "Lornar feed griffon ogre pet. Same area as <dfn data-coord='[18077, 17118]'>Griffonrook</dfn> JP. No chest here, just the achievement (Easy)"
@@ -1074,7 +1074,7 @@ JP: {
 		name_zh: "乌拉的实验室",
 		coord: [9194, 19062],
 		path: null,
-		img: "http://i.imgur.com/leOMSRn.png",
+		img: "https://i.imgur.com/leOMSRn.png",
 		chest: null,
 		zone: "metrica",
 		description: "Metrica asura lab with security golems. Requires an <a href='http://wiki.guildwars2.com/wiki/Energy_Crystal'>Energy Crystal</a> (random loot) to open the outside gate (Medium)"
@@ -1089,7 +1089,7 @@ JP: {
 		name_zh: "悲伤托之泪",
 		coord: [9516, 17345],
 		path: null,
-		img: "http://i.imgur.com/d5b4LYG.png",
+		img: "https://i.imgur.com/d5b4LYG.png",
 		chest: "sylvari",
 		zone: "caledon",
 		description: "Caledon hylek village with pattern puzzle. Pick up a nearby boulder and throw at the gong right side of the gate to enter (Medium)"
@@ -1104,7 +1104,7 @@ JP: {
 		name_zh: "薇克萨的实验室",
 		coord: [26066, 9837],
 		path: null,
-		img: "http://i.imgur.com/7LGnLCr.png",
+		img: "https://i.imgur.com/7LGnLCr.png",
 		chest: null,
 		zone: "fireheart",
 		description: "Fireheart asura laboratory with Escher stairs. Boss Vexa (Medium)"
@@ -1119,7 +1119,7 @@ JP: {
 		name_zh: "风洞财宝",
 		coord: [18322, 14297],
 		path: null,
-		img: "http://i.imgur.com/zHnC5RR.png",
+		img: "https://i.imgur.com/zHnC5RR.png",
 		chest: "grand dwarven",
 		zone: "lornar",
 		description: "Lornar knockdown winds cavern with shadow imps (Medium)"
@@ -1134,7 +1134,7 @@ JP: {
 		name_zh: "麦哲伦遗物",
 		coord: [23434, 10877],
 		path: null,
-		img: "http://i.imgur.com/6ZOrmQ0.png",
+		img: "https://i.imgur.com/6ZOrmQ0.png",
 		chest: "grand dwarven",
 		zone: "frostgorge",
 		description: "Frostgorge grawl cave. Chest is guarded by champ ooze (Medium)"
@@ -1149,7 +1149,7 @@ JP: {
 		name_zh: "悲伤之船",
 		coord: [15044, 22718],
 		path: null,
-		img: "http://i.imgur.com/Y5DhRbx.png",
+		img: "https://i.imgur.com/Y5DhRbx.png",
 		chest: "grand asura",
 		zone: "straits",
 		description: "Straits shipwreck filled with underwater risens (Medium)"
@@ -1164,7 +1164,7 @@ JP: {
 		name_zh: "失落溪流",
 		coord: [11415, 26582],
 		path: null,
-		img: "http://i.imgur.com/IhAjhKN.png",
+		img: "https://i.imgur.com/IhAjhKN.png",
 		chest: "orrian",
 		zone: "cursed",
 		description: "Cursed heavily guarded orrian cavern (Medium)"
@@ -1179,7 +1179,7 @@ JP: {
 		name_zh: "禁船探险",
 		coord: [11656, 28757],
 		path: null,
-		img: "http://i.imgur.com/ZznRVR5.png",
+		img: "https://i.imgur.com/ZznRVR5.png",
 		chest: "grand orrian",
 		zone: "cursed",
 		description: "Cursed beached shipwreck. Chest is guarded by champ risen (Medium)"
@@ -1194,7 +1194,7 @@ JP: {
 		name_zh: "烈焰神殿墓场",
 		coord: [26936, 11437],
 		path: null,
-		img: "http://i.imgur.com/pjRqPyE.png",
+		img: "https://i.imgur.com/pjRqPyE.png",
 		chest: null,
 		zone: "diessa",
 		description: "Diessa Flame Legion booby-trapped water dungeon. Boss Rhendak (Hard)"
@@ -1209,7 +1209,7 @@ JP: {
 		name_zh: "凄凉财宝",
 		coord: [19658, 15653],
 		path: null,
-		img: "http://i.imgur.com/zYpFis4.png",
+		img: "https://i.imgur.com/zYpFis4.png",
 		chest: "grand dwarven",
 		zone: "dredgehaunt",
 		description: "Dredgehaunt pitch black dwarven ruin. Talk to <dfn data-coord='[20045, 15356]'>Gerrvid</dfn> and the books to start the event to open the gate (Hard)"
@@ -1224,7 +1224,7 @@ JP: {
 		name_zh: "漫漫长路",
 		coord: [16527, 23647],
 		path: null,
-		img: "http://i.imgur.com/ZDCGMmY.png",
+		img: "https://i.imgur.com/ZDCGMmY.png",
 		chest: null,
 		zone: "straits",
 		description: "Straits dodge risen hands projectiles to deactivate datapads (Hard)"
