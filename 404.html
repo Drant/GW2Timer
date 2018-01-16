@@ -30,8 +30,8 @@
 	/*
 	 * Converts directory style URL to site base URL with query string to content.
 	 * Example:
-	 * http://gw2timer.com/map/collectible/372,44,27 becomes
-	 * http://gw2timer.com/?page=Map&section=Collectible&go=372,44,27
+	 * https://gw2timer.com/map/collectible/372,44,27 becomes
+	 * https://gw2timer.com/?page=Map&section=Collectible&go=372,44,27
 	 * This works because this 404 page is displayed for non-existent directories,
 	 * and it is assumed the requested URL directories do not exist.
 	 * @returns string of new location.
@@ -40,7 +40,7 @@
 	{
 		var loc = document.location.toString();
 		var newloc = "";
-		var base = "http://gw2timer.com/";
+		var base = "https://gw2timer.com/";
 		var primer = "gw2timer.com/";
 		var primerindex = loc.indexOf(primer);
 

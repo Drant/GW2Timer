@@ -1897,25 +1897,25 @@ Announcement:
 	NewsPVE: { // Shown on main page dashboard
 		//content: "Please tell new players about gw2timer.com!",
 		//content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='https://gw2timer.com/?page=Pumpkins'>more</a>.",
-		content: "Please <a href='http://forum.renaka.com/topic/8193412#post609040'>backup/restore</a> your site settings if on the HTTPS version of the site.",
+		content: "Please <a href='http://forum.renaka.com/topic/8193412#post-609039'>backup/restore</a> your site settings if on the HTTPS version of the site.",
 		//content: "",
 		Finish: new Date("2018-02-01T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
-		Finish: new Date("2017-04-20T16:00:00Z")
+		Finish: new Date("2018-04-20T16:00:00Z")
 	},
 	UrgentPVE: { // Shown on console
-		content: "",
-		Finish: new Date("2017-01-01T16:00:00Z")
+		content: "Please <a href='http://forum.renaka.com/topic/8193412#post-609039'>backup/restore</a> your site settings if on the HTTPS version of the site.",
+		Finish: new Date("2018-02-01T16:00:00Z")
 	},
 	UrgentWVW: { // Shown on console
 		content: "",
-		Finish: new Date("2017-04-17T16:00:00Z")
+		Finish: new Date("2018-04-17T16:00:00Z")
 	},
 	UrgentAccount: { // Shown on console
 		content: "",
-		Finish: new Date("2017-01-01T16:00:00Z")
+		Finish: new Date("2018-01-01T16:00:00Z")
 	},
 	Messages: // Greeting messages shown upon site load
 	{

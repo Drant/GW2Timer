@@ -6,7 +6,7 @@
 	Version: see int_utlProgramVersion - 2014.04.18 created
 
 	LIBRARIES:
-	Below are inline libraries, for the rest, see http://gw2timer.com/plugins.js
+	Below are inline libraries, for the rest, see https://gw2timer.com/plugins.js
 	Vladimir Agafonkin - LeafletJS map library
 	Craig Erskine - qTip tooltip
 	David Flanagan - SVG clock based on example from "JavaScript The Definitive Guide 6e"
@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 171202},
+		programVersion: {key: "int_utlProgramVersion", value: 180114}, // 171202 is before https transition
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -3469,7 +3469,7 @@ U = {
 	/*
 	 * URLArguments (Args) may contain Options object's variables. In the form of:
 	 * http://example.com/?ExampleKey=ExampleValue&MoreExampleKey=MoreExampleValue
-	 * so http://gw2timer.com/?bol_showPanel=false will hide the side panel
+	 * so https://gw2timer.com/?bol_showPanel=false will hide the side panel
 	 * regardless of previous localStorage or the defaults here.
 	 * Note that "bol_showPanel" matches exactly as in the Options, otherwise
 	 * it would have not overridden any Options variable. Values used apart from
@@ -3623,7 +3623,7 @@ U = {
 		 * The page key could've been written by the 404 webpage, which converts
 		 * forward slash (/) separated directories into query strings, with
 		 * the first argument as the page value. So if a user goes to the URL
-		 * http://gw2timer.com/navi they will be redirected to http://gw2timer.com/?page=Navi
+		 * https://gw2timer.com/navi they will be redirected to https://gw2timer.com/?page=Navi
 		 * These special pages must have unique names from the content pages.
 		 */
 		var i, ii;
@@ -3990,7 +3990,7 @@ U = {
 	
 	/*
 	 * Sanitizes URLArguments value part before overriding. For example:
-	 * http://gw2timer.com/?bol_showPanel=falsse "falsse" defaults to "true"
+	 * https://gw2timer.com/?bol_showPanel=falsse "falsse" defaults to "true"
 	 * @param string pKey of an option.
 	 * @param string pValue of that option.
 	 * @returns string sanitized value.
@@ -4323,7 +4323,7 @@ U = {
 	},
 	convertHexToRGB: function(pHex)
 	{
-		// Source: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+		// Source: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 		var hex = (typeof pHex === "string" && pHex.charAt(0) === "#") ? pHex.substring(1, pHex.length) : pHex;
 		var bigint = parseInt(hex, 16);
 		var r = (bigint >> 16) & 255;
@@ -4341,7 +4341,7 @@ U = {
 	 * Converts an RGB array to Hue Saturation Lightness array.
 	 * @param intarray pRGB.
 	 * @returns array.
-	 * Source: http://stackoverflow.com/questions/11923659/javascript-sort-rgb-values
+	 * Source: https://stackoverflow.com/questions/11923659/javascript-sort-rgb-values
 	 */
 	convertRGBToHSL: function(pRGB)
 	{
@@ -5032,12 +5032,12 @@ U = {
 	getWikiLinkDefault: function(pString)
 	{
 		pString = pString.replace(/ /g, "_"); // Replace spaces with underscores
-		return "http://wiki.guildwars2.com/wiki/" + U.encodeURL(pString);
+		return "https://wiki.guildwars2.com/wiki/" + U.encodeURL(pString);
 	},
 	getWikiLinkLanguage: function(pString)
 	{
 		pString = pString.replace(/ /g, "_");
-		return "http://wiki-" + D.langFullySupported + ".guildwars2.com/wiki/" + U.encodeURL(pString);
+		return "https://wiki-" + D.langFullySupported + ".guildwars2.com/wiki/" + U.encodeURL(pString);
 	},
 	getWikiLinkObject: function(pObject)
 	{
@@ -5057,7 +5057,7 @@ U = {
 	getWikiSearchLanguage: function(pString)
 	{
 		pString = pString.replace(/ /g, "_");
-		return "http://wiki-" + D.langFullySupported + ".guildwars2.com/index.php?search=" + U.encodeURL(pString);
+		return "https://wiki-" + D.langFullySupported + ".guildwars2.com/index.php?search=" + U.encodeURL(pString);
 	},
 	getWikiItemDefault: function(pItem)
 	{
@@ -5086,7 +5086,7 @@ U = {
 	 */
 	getYouTubeLink: function(pString)
 	{
-		return "http://www.youtube.com/results?search_query=" + U.encodeURL(pString + " " + I.cGameNick);
+		return "https://www.youtube.com/results?search_query=" + U.encodeURL(pString + " " + I.cGameNick);
 	},
 	
 	/*
@@ -5120,7 +5120,7 @@ U = {
 		if (pName)
 		{
 			var name = U.escapeHTML((pName.split(" ").join("-")).toLowerCase());
-			return "http://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
+			return "https://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
 		}
 		return U.URL_IMG.Placeholder;
 	},
@@ -5164,7 +5164,7 @@ U = {
 	
 	/*
 	 * Converts an item id from items.json to a valid chatlink.
-	 * Code from http://redd.it/zy8gb
+	 * Code from https://redd.it/zy8gb
 	 * @param int pID of the item.
 	 * @returns string chatlink.
 	 */ 
@@ -5185,7 +5185,7 @@ U = {
 	 * @param string pChatlink.
 	 * @param boolean pWantType if to return the type of the ID also, optional.
 	 * @returns int number or null if invalid.
-	 * Code from http://wiki.guildwars2.com/wiki/MediaWiki:ChatLinkSearch.js
+	 * Code from https://wiki.guildwars2.com/wiki/MediaWiki:ChatLinkSearch.js
 	 */
 	getGameIDFromChatlink: function(pChatlink, pWantType)
 	{
@@ -8296,7 +8296,7 @@ A = {
 			+ D.getPhrase("this key") + ".'><img src='img/ui/adjust_del.png' /></button>").appendTo(buttons);
 		var updateLink = function()
 		{
-			I.updateClipboard(link[0], "http://gw2timer.com#" + U.escapeHTML(U.stripToAlphanumericDash(key.val())));
+			I.updateClipboard(link[0], "https://gw2timer.com#" + U.escapeHTML(U.stripToAlphanumericDash(key.val())));
 		};
 		
 		// Use the token if specified
@@ -22805,7 +22805,7 @@ C = {
  * @@Chains of events
  * ========================================================================== */
 	/*
-	 * http://gw2timer.com/data/chains.js initially holds an array of scheduled
+	 * https://gw2timer.com/data/chains.js initially holds an array of scheduled
 	 * meta event chain objects, which themselves contain an array of their events.
 	 * This is referred to by the variable "C.Chains". It will be added with
 	 * unscheduled chains when the user opens that section on the chains page.
@@ -24348,7 +24348,7 @@ M = {
  * ========================================================================== */
 
 	/*
-	 * http://gw2timer.com/data/general.js contains zone (e.g. Queensdale, LA)
+	 * https://gw2timer.com/data/general.js contains zone (e.g. Queensdale, LA)
 	 * objects with their rectangular coordinates.
 	 * This is referred to by the variable "Zones".
 	 * Each zone will be assigned with LayerGroup of world completion markers,
@@ -27040,7 +27040,7 @@ M = {
 	
 	/*
 	 * Views the map at the given URL coordinates if exist.
-	 * URL should be in the form of http://gw2timer.com/?go=4874,16436,1
+	 * URL should be in the form of https://gw2timer.com/?go=4874,16436,1
 	 * @param string pArguments of location to view.
 	 * @param enum pZoom level, optional.
 	 * @param object pPin pin, optional.
@@ -27551,7 +27551,7 @@ P = {
 	},
 	TempSubmap: {
 		submap: {},
-		img: "http://i.imgur.com/cTSJUvZ.jpg", 
+		img: "https://i.imgur.com/cTSJUvZ.jpg", 
 		bounds: [[20736, 6656], [23808, 8192]]
 	},
 	
@@ -34385,7 +34385,7 @@ T = {
 
 	/*
 	 * The DST global integer is added to the server hour, which is incremented if
-	 * DST is in effect. The code is from http://javascript.about.com/library/bldst.htm
+	 * DST is in effect. The code is from https://javascript.about.com/library/bldst.htm
 	 */
 	checkDST: function()
 	{
@@ -35014,7 +35014,7 @@ T = {
 	 * Gets the number of days in a month.
 	 * @param object pDate
 	 * @returns int days
-	 * Source: http://stackoverflow.com/questions/1184334/get-number-days-in-a-specified-month-using-javascript
+	 * Source: https://stackoverflow.com/questions/1184334/get-number-days-in-a-specified-month-using-javascript
 	 */
 	getDaysInMonth: function(pDate)
 	{
@@ -35973,7 +35973,7 @@ H = {
 			{
 				I.print("<a data-page='Gem'>" + D.getPhraseOriginal("View Gem Wishlist") + "</a> - "
 					+ "<a id='dsbGemPause_" + T.TIMESTAMP_UNIX_SECONDS + "'>" + D.getPhraseOriginal("Pause alarm") + "</a> - "
-					+ "<a href='http://gw2timer.com/?bol_alertGem=false'>" + D.getPhraseOriginal("Disable alarm") + "</a>");
+					+ "<a href='https://gw2timer.com/?bol_alertGem=false'>" + D.getPhraseOriginal("Disable alarm") + "</a>");
 				I.bindConsoleLink();
 				$("#dsbGemPause_" + T.TIMESTAMP_UNIX_SECONDS).click(function()
 				{
@@ -36014,7 +36014,7 @@ H = {
 			+ "<img data-src='img/map/waypoint.png' style='width:32px;height:32px;' /><input id='dsbPactCodes' class='cssInputText jsTitle' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
 			+ ((I.isMapEnabled) ? "<img data-src='img/map/path.png' /><dfn class='curZoom' id='dsbPactDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</dfn> " : "")
-			+ "<a class='jsTitle'" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+			+ "<a class='jsTitle'" + U.convertExternalAnchor("https://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>"
 				+ "<img data-src='img/ui/menu/info.png' />" + D.getWordCapital("info") + "</a> "
 			+ "<a id='dsbPactHistoryLink' class='jsTitle' data-page='Pact' title='Previous recipes and frequency statistics.'>"
@@ -38130,10 +38130,10 @@ I = {
 
 	cSiteName: "GW2Timer.com",
 	cSiteLink: "gw2timer.com/",
-	cSiteURL: "http://gw2timer.com/",
-	cSiteExternal: "http://gw2timer.com/out/?u=",
+	cSiteURL: "https://gw2timer.com/",
+	cSiteExternal: "https://gw2timer.com/out/?u=",
 	cSiteTitle: "",
-	cImageHost: "http://i.imgur.com/",
+	cImageHost: "https://i.imgur.com/",
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
 	cErrorAPI: "ArenaNet API server may be down.",
@@ -40952,7 +40952,7 @@ I = {
 		{
 			case I.ModeEnum.Website:
 			{
-				$("head").append("<link rel='alternate' media='only screen and (max-width: 640px)' href='http://gw2timer.com/?mode=Mobile'>");
+				$("head").append("<link rel='alternate' media='only screen and (max-width: 640px)' href='https://gw2timer.com/?mode=Mobile'>");
 			} break;
 			case I.ModeEnum.Overlay:
 			{
@@ -40985,7 +40985,7 @@ I = {
 				I.isCustomScrollEnabled = false;
 				I.showHomeLink();
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
-					.append("<link rel='canonical' href='http://gw2timer.com' />");
+					.append("<link rel='canonical' href='https://gw2timer.com' />");
 				$("#itemLanguage").insertAfter("#itemHome");
 			} break;
 			case I.ModeEnum.Tile:
