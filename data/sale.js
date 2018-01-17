@@ -22,14 +22,19 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
 	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
-	{i: 79698, n: "Customer Appreciation Package", p: {gem: 0}},
+	{i: "https://i.imgur.com/5vSfc1Q.png", n: "Permanent Sandshark Finisher", p: {gem: 600}, Finish: new Date("2018-01-19T16:00:00Z")},
+	{i: "https://i.imgur.com/oYrYMJz.png", n: "Summit Chevron Springer Mount", p: {gem: 2000}, Finish: new Date("2018-01-19T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 86675, n: "Glacial weapons#Gallery", p: {blticket: 1}},
-	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: 1600}, Finish: new Date("2018-01-16T16:00:00Z")},
-	{i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}, Finish: new Date("2018-01-16T16:00:00Z")},
-	{i: 77581, n: "Mini Snow Flurry Dragon", p: {gem: 500}, Finish: new Date("2018-01-16T16:00:00Z")},
-	{i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: 400}, Finish: new Date("2018-01-16T16:00:00Z")},
-	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}, Finish: new Date("2018-01-16T16:00:00Z")},
-	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}, Finish: new Date("2018-01-16T16:00:00Z")}
+	{i: "https://i.imgur.com/nUcEfzX.png", n: "Dynamics Exo-Suit Appearance Pack", p: {gem: 1500}, Finish: new Date("2018-01-19T16:00:00Z")},
+	{i: "https://i.imgur.com/WCB4gGK.png", n: "Outlaw Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-01-19T16:00:00Z")},
+	{i: "https://i.imgur.com/RoBhHfY.png", n: "White Mantle Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-01-19T16:00:00Z")},
+	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 1000}, Finish: new Date("2018-01-23T16:00:00Z")},
+	{i: 69921, n: "Swarm Logging Flute", p: {gem: 1000}, Finish: new Date("2018-01-23T16:00:00Z")},
+	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}, Finish: new Date("2018-01-23T16:00:00Z")},
+	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}, Finish: new Date("2018-01-23T16:00:00Z")},
+	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: 700}, Finish: new Date("2018-01-23T16:00:00Z")},
+	{i: 86715, n: "Glacial Glider", p: {gem: 500}, Finish: new Date("2018-01-23T16:00:00Z")},
+	{i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}, Finish: new Date("2018-01-23T16:00:00Z")}
 	]
 };

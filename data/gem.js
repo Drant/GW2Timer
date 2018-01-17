@@ -96,7 +96,7 @@ Outfit: [
 	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
 	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
-	{i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}}
+	{i: 86637, n: "Winter Monarch Outfit", p: {gem: -700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -152,7 +152,7 @@ Glider: [
 	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
 	{i: 85220, n: "Branded Wing Glider", p: {gem: -700}},
 	{i: 85496, n: "Riding Broom Glider", p: {gem: -500}},
-	{i: 86715, n: "Glacial Glider", p: {gem: 500}}
+	{i: 86715, n: "Glacial Glider", p: {gem: -500}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -381,6 +381,8 @@ Package: [
 	//{i: "https://i.imgur.com/SKDviam.png", n: "Central Tyria Waypoint Unlock Package", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 500}},
 	//{i: "https://i.imgur.com/e5G1iUR.png", n: "Elonian Introductory Package", p: {gem: 1800}},
+	//{i: "https://i.imgur.com/WCB4gGK.png", n: "Outlaw Appearance Pack", p: {gem: 2000}},
+	//{i: "https://i.imgur.com/RoBhHfY.png", n: "White Mantle Appearance Pack", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/DooMduS.png", n: "Ironclad Appearance Pack", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}},
 	//{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1600}},
@@ -512,9 +514,9 @@ Gathering: [
 	{i: 69478, n: "Mad Scientist's Harvesting Tool", p: {gem: -1000}},
 	{i: 68799, n: "Mad Scientist's Logging Tool", p: {gem: -1000}},
 	{i: 68905, n: "Mad Scientist's Mining Tool", p: {gem: -1000}},
-	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 1000}},
-	{i: 69921, n: "Swarm Logging Flute", p: {gem: 1000}},
-	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}},
+	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: -1000}},
+	{i: 69921, n: "Swarm Logging Flute", p: {gem: -1000}},
+	{i: 69958, n: "Firefly Mining Flute", p: {gem: -1000}},
 	{i: 79721, n: "Cosmic Harvesting Tool", p: {gem: -1000}},
 	{i: 79472, n: "Cosmic Logging Tool", p: {gem: -1000}},
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: -1000}},
