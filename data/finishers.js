@@ -99,6 +99,7 @@ Gem: [
 	{u: 40, i: 63941, n: "Permanent Minstrel Finisher", p: {gem: 800}},
 	{u: 60, i: 68107, n: "Revenant Finisher", p: {gem: 0}},
 	{u: 58, i: 69616, n: "Permanent Unicorn Finisher", p: {gem: 700}},
-	{u: 73, i: 85757, n: "Choya Finisher", p: {gem: 700}}
+	{u: 73, i: 85757, n: "Choya Finisher", p: {gem: 700}},
+	{u: 74, i: 86834, n: "Sandshark Finisher", p: {gem: 600}}
 ]
 };

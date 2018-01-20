@@ -103,7 +103,8 @@ Mount: [
 	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]},
 	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}},
 	{i: 85491, n: "Resplendent Avialan", p: {gem: -2000}},
-	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}}
+	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}},
+	{i: 86766, n: "Summit Chevon Springer Skin", p: {gem: -2000}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -726,7 +727,8 @@ Finisher: [
 	{i: 49952, n: "Permanent Llama Finisher", p: {gem: -800}},
 	{i: 63941, n: "Permanent Minstrel Finisher", p: {gem: -800}},
 	{i: 69616, n: "Permanent Unicorn Finisher", p: {gem: -700}},
-	{i: 85757, n: "Permanent Choya Finisher", p: {gem: -700}}
+	{i: 85757, n: "Permanent Choya Finisher", p: {gem: -700}},
+	{i: 86834, n: "Permanent Sandshark Finisher", p: {gem: -600}}
 ],
 Upgrade: [
 	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 800}},
