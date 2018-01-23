@@ -34795,7 +34795,7 @@ T = {
 	
 	/*
 	 * Checks a time sensitive object if its Start and Finish date objects fits
-	 * the provided time instant.
+	 * the provided time range.
 	 * @param object pObject to check.
 	 * @param Date pDate time to compare with, such as now.
 	 * @param int pGracePeriod seconds to add to the finish time, optional.
