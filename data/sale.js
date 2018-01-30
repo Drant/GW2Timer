@@ -5,7 +5,7 @@
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2018-01-23T16:00:00Z"),
-	Finish: new Date("2018-02-01T16:00:00Z"),
+	Finish: new Date("2018-02-08T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -27,6 +27,8 @@ GW2T_SALE_DATA = {
 	{i: 42868, n: "Aetherblade Heavy Armor Skin", p: {gem: 640}, discount: 800, Finish: new Date("2018-01-26T16:00:00Z")},
 	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
+	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}},
+	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: 500}},
 	{i: 79089, n: "Lord Caudecus's Sword Skin", p: {gem: 600}, Finish: new Date("2018-01-27T16:00:00Z")},
 	{i: 79179, n: "Lord Caudecus's Pistol Skin", p: {gem: 600}, Finish: new Date("2018-01-27T16:00:00Z")},
 	{i: "https://i.imgur.com/AuYSBAV.png", n: "Crystal Arbiter Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-01-26T16:00:00Z")},

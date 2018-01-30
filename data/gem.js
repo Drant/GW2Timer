@@ -262,12 +262,14 @@ Gloves: [
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: -300}},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: -500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
-	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}}
+	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}},
+	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: -500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: -300}},
-	{i: 85282, n: "Foefire Greaves", p: {gem: -500}}
+	{i: 85282, n: "Foefire Greaves", p: {gem: -500}},
+	{i: 86897, n: "Jackal Rune Greaves", p: {gem: -500}}
 ],
 Armor: [
 	{i: 20274, n: "Profane Light Armor Skin", p: {gem: 500}},
@@ -441,7 +443,8 @@ Dye: [
 	{i: 80069, n: "Solar and Lunar Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 80974, n: "Primordus Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 81545, n: "Jormag Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 86898, n: "Zhaitan Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},

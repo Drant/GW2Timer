@@ -53,7 +53,8 @@ var GW2T_DYES_HEADERS = {
 	Solar: {id: 80069, name_en: "Solar and Lunar Dye Kit", name_de: "Sonne-und-Mond-Farbkit", name_es: "Kit de tintes solares y lunares", name_fr: "Kit de teinture solaire et lunaire", name_zh: "日月染料包"},
 	Primordus: {id: 80974, name_en: "Primordus Dye Kit", name_de: "Primordus-Farbkit", name_es: "Kit de tintes de Primordus", name_fr: "Kit de teintures de Primordius", name_zh: "派莫德斯染料包"},
 	Jormag: {id: 81545, name_en: "Jormag Dye Kit", name_de: "Jormag-Farbkit", name_es: "Kit de tintes de Jormag", name_fr: "Kit de teintures de Jormag", name_zh: "卓玛染料包"},
-	Elonian: {id: 86163, name_en: "Elonian Landscape Dye Kit", name_de: "Elonische Landschaft-Farbkit", name_es: "Kit de tintes de paisaje eloniano", name_fr: "Kit de teinture de paysage élonien", name_zh: "伊伦娜风景染料包"}
+	Elonian: {id: 86163, name_en: "Elonian Landscape Dye Kit", name_de: "Elonische Landschaft-Farbkit", name_es: "Kit de tintes de paisaje eloniano", name_fr: "Kit de teinture de paysage élonien", name_zh: "伊伦娜风景染料包"},
+	Zhaitan: {id: 86898, name_en: "Zhaitan Dye Kit", name_de: "Zhaitan-Farbkit", name_es: "Kit de tintes de Zhaitan", name_fr: "Kit de teintures de Zhaïtan", name_zh: "泽坦染料包"}
 };
 
 /*
@@ -657,5 +658,13 @@ Elonian: [
 	{u: 1575, i: 85690, n: "Sulfur Dye", c: ["#fbc940", "#fbc940", "#ffd84f"], h: "Yellow", m: "Vibrant", l: "[&AgG6TgEA]", en: "Sulfur", de: "Schwefel", es: "Azufre", fr: "Soufre", zh: "硫磺"},
 	{u: 1574, i: 86054, n: "Highland Dye", c: ["#4d5420", "#4d5420", "#4d5420"], h: "Green", m: "Vibrant", l: "[&AgEmUAEA]", en: "Highlands", de: "Hochland", es: "Tierras altas", fr: "Hautes-terres", zh: "高地"},
 	{u: 1577, i: 85630, n: "Oasis Dye", c: ["#28aeae", "#28aeae", "#28aeae"], h: "Blue", m: "Vibrant", l: "[&AgF+TgEA]", en: "Oasis", de: "Oase", es: "Oasis", fr: "Oasis", zh: "绿洲"}
+],
+Zhaitan: [
+	{u: 1581, i: 86903, n: "Risen Dye", c: ["#738983", "#738983", "#738983"], h: "Gray", m: "Metal", l: "[&AgF3UwEA]", en: "Risen", de: "Auferstanden", es: "Resurgido", fr: "Trépassé", zh: "复生"},
+	{u: 1585, i: 86902, n: "Darkness Dye", c: ["#343434", "#343434", "#343434"], h: "Gray", m: "Metal", l: "[&AgF2UwEA]", en: "Darkness", de: "Dunkelheit", es: "Oscuridad", fr: "Ténèbres", zh: "黑暗"},
+	{u: 1582, i: 86896, n: "Grave Dye", c: ["#262626", "#262626", "#3a3a3a"], h: "Gray", m: "Metal", l: "[&AgFwUwEA]", en: "Grave", de: "Grab", es: "Tumba", fr: "Tombe", zh: "坟墓"},
+	{u: 1584, i: 86901, n: "Worn Bone Dye", c: ["#b2a99d", "#b2a99d", "#c6bdb1"], h: "Brown", m: "Leather", l: "[&AgF1UwEA]", en: "Worn Bone", de: "Abgenutzte Knochen", es: "Hueso desgastado", fr: "Os abîmé", zh: "朽骨"},
+	{u: 1583, i: 86900, n: "Decay Dye", c: ["#543831", "#543831", "#543831"], h: "Brown", m: "Leather", l: "[&AgF0UwEA]", en: "Decay", de: "Verfall", es: "Decadencia", fr: "Pourriture", zh: "腐败"},
+	{u: 1580, i: 86905, n: "Abyssal Sea Dye", c: ["#000000", "#000000", "#000000"], h: "Blue", m: "Vibrant", l: "[&AgF5UwEA]", en: "Abyssal Sea", de: "Abgrundmeer", es: "Mar del abismo", fr: "Mer abyssale", zh: "地狱海"}
 ]
 };
