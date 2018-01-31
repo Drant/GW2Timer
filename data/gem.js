@@ -89,8 +89,8 @@ Outfit: [
 	{i: 80906, n: "Spring Promenade Outfit", p: {gem: -700}},
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
 	{i: 81223, n: "Outlaw Outfit", p: {gem: -700}},
-	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}},
-	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
+	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: -700}},
+	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: -700}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
 	{i: 85034, n: "Forged Outfit", p: {gem: 700}},
 	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
@@ -104,7 +104,8 @@ Mount: [
 	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}},
 	{i: 85491, n: "Resplendent Avialan", p: {gem: -2000}},
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}},
-	{i: 86766, n: "Summit Chevon Springer Skin", p: {gem: -2000}}
+	{i: 86766, n: "Summit Chevon Springer Skin", p: {gem: -2000}},
+	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -323,7 +324,8 @@ Weapon: [
 	{i: 81560, n: "God-Slayer Short Bow", p: {gem: -350}},
 	{i: 84064, n: "Fiery Blade Axe", p: {gem: -500}},
 	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}},
-	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}}
+	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}},
+	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: -600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
