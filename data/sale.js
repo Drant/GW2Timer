@@ -21,6 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: "https://i.imgur.com/c37rlEw.png", n: "Salvager's Supplies", p: {gem: 1360}},
 	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: 2000}},
 	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: 600}},
 	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}},
@@ -33,9 +34,6 @@ GW2T_SALE_DATA = {
 	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}, Finish: new Date("2018-02-06T16:00:00Z")},
 	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}, Finish: new Date("2018-02-06T16:00:00Z")},
-	{i: 49021, n: "Kasmeer's Staff Skin", p: {gem: 600}, Finish: new Date("2018-01-31T16:00:00Z")},
-	{i: 49015, n: "Marjory's Axe Skin", p: {gem: 600}, Finish: new Date("2018-02-01T16:00:00Z")},
-	{i: 49018, n: "Marjory's Dagger Skin", p: {gem: 600}, Finish: new Date("2018-02-01T16:00:00Z")},
 	{i: 20004, n: "Caithe's Bloom Dagger", p: {gem: 600}, Finish: new Date("2018-02-03T16:00:00Z")},
 	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}, Finish: new Date("2018-02-04T16:00:00Z")},
 	{i: 42659, n: "Rox's Short Bow Skin", p: {gem: 600}, Finish: new Date("2018-02-06T16:00:00Z")},
