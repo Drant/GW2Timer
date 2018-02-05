@@ -1899,14 +1899,14 @@ Announcement:
 		//content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='https://gw2timer.com/?page=Pumpkins'>more</a>.",
 		content: "Please <a href='http://forum.renaka.com/topic/8193412#post-609039'>backup/restore</a> your site settings if on the HTTPS version of the site.",
 		//content: "",
-		Finish: new Date("2018-02-01T16:00:00Z")
+		Finish: new Date("2018-03-01T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
 		Finish: new Date("2018-04-20T16:00:00Z")
 	},
 	UrgentPVE: { // Shown on console
-		content: "Please <a href='http://forum.renaka.com/topic/8193412#post-609039'>backup/restore</a> your site settings if on the HTTPS version of the site.",
+		content: "",
 		Finish: new Date("2018-02-01T16:00:00Z")
 	},
 	UrgentWVW: { // Shown on console
