@@ -371,8 +371,9 @@ BlackLionWeapon: [
 	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 3}},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 3}},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 3}},
-	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 2}},
-	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 1}}
+	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 3}},
+	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 2}},
+	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},
@@ -532,7 +533,8 @@ Gathering: [
 	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: -1000}},
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: -900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: -900}},
-	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}}
+	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}},
+	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: -1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
@@ -664,7 +666,7 @@ Mini: [
 	{i: 85506, n: "Mini Elonian Familiar", p: {gem: -400}},
 	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: -400}},
 	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}},
-	{i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: 400}}
+	{i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: -400}},
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},

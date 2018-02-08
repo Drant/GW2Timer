@@ -275,7 +275,8 @@ Gathering: [
 	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: 1000}},
 	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}},
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}},
-	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}}
+	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}},
+	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}}
 ],
 Salvage: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
