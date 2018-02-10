@@ -21,6 +21,8 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 68654, n: "Imperial Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2018-02-16T16:00:00Z")},
+	{i: 68612, n: "Plush Ram Backpack", p: {gem: 210}, discount: 300, Finish: new Date("2018-02-16T16:00:00Z")},
 	{i: "https://i.imgur.com/c37rlEw.png", n: "Salvager's Supplies", p: {gem: 1360}, Finish: new Date("2018-02-09T16:00:00Z")},
 	{i: 86927, n: "Mini Grand Lion Griffon", p: {gem: 2000}, Finish: new Date("2018-02-13T16:00:00Z")},
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}},
@@ -30,13 +32,11 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 1}},
 	{i: 66279, n: "Ancestral Outfit", p: {gem: 700}},
-	{i: 68654, n: "Imperial Outfit", p: {gem: 700}},
 	{i: 86834, n: "Permanent Sandshark Finisher", p: {gem: 600}, Finish: new Date("2018-02-13T16:00:00Z")},
 	{i: 68652, n: "Red Envelope Mail Carrier", p: {gem: 600}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
 	{i: 68655, n: "Dragon Mask Skin", p: {gem: 300}},
 	{i: 68656, n: "Lion Mask Skin", p: {gem: 300}},
-	{i: 68612, n: "Plush Ram Backpack", p: {gem: 300}},
 	{i: 68650, n: "Ram Balloon", p: {gem: 250}, Finish: new Date("2018-02-13T16:00:00Z")}
 	]
 };
