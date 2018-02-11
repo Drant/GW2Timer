@@ -36,6 +36,7 @@ Special: [
 ],
 Gathering: [
 	{u: "hunters_contract", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
+	{u: "garden_plot_deed", i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
 	{u: "basic_harvesting_nodes", i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
 	{u: "basic_lumber_nodes", i: 66769, n: "Basic Lumber Node Pack", p: {gem: 800}},
 	{u: "basic_ore_nodes", i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
