@@ -96,7 +96,8 @@ Outfit: [
 	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
 	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
-	{i: 86637, n: "Winter Monarch Outfit", p: {gem: -700}}
+	{i: 86637, n: "Winter Monarch Outfit", p: {gem: -700}},
+	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
