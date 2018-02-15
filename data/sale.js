@@ -21,6 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 68104, n: "Gifts Mail Delivery", p: {gem: 280}, discount: 350, Finish: new Date("2018-02-21T16:00:00Z")},
 	{i: 49933, n: "Bouquet of Roses", p: {gem: 250}, Finish: new Date("2018-02-20T16:00:00Z")},
 	{i: 43528, n: "Box of Chocolates", p: {gem: 250}, Finish: new Date("2018-02-20T16:00:00Z")},
 	{i: 77804, n: "Wings of Love Glider", p: {gem: 400}, Finish: new Date("2018-02-20T16:00:00Z")},
