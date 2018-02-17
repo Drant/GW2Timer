@@ -21,6 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 320}, discount: 400, Finish: new Date("2018-02-23T16:00:00Z")},
+	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 320}, discount: 400, Finish: new Date("2018-02-23T16:00:00Z")},
+	{i: 68652, n: "Red Envelope Mail Carrier", p: {gem: 480}, discount: 600, Finish: new Date("2018-02-23T16:00:00Z")},
 	{i: 68104, n: "Gifts Mail Delivery", p: {gem: 280}, discount: 350, Finish: new Date("2018-02-21T16:00:00Z")},
 	{i: 49933, n: "Bouquet of Roses", p: {gem: 250}, Finish: new Date("2018-02-20T16:00:00Z")},
 	{i: 43528, n: "Box of Chocolates", p: {gem: 250}, Finish: new Date("2018-02-20T16:00:00Z")},
