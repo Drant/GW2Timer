@@ -326,7 +326,7 @@ Weapon: [
 	{i: 84064, n: "Fiery Blade Axe", p: {gem: -500}},
 	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}},
 	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}},
-	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: -600}}
+	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: 600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
@@ -367,7 +367,7 @@ BlackLionWeapon: [
 	{i: 79389, n: "Bloodstone weapon skins#Gallery", p: {blticket: 3}},
 	{i: 79655, n: "Gargoyle weapon skins#Gallery", p: {blticket: 3}},
 	{i: 80041, n: "Frostforged weapon skins#Gallery", p: {blticket: 3}},
-	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 3}},
+	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: -3}},
 	{i: 80943, n: "Beastslayer weapon skins#Gallery", p: {blticket: 3}},
 	{i: 81249, n: "Keepsake weapon skins#Gallery", p: {blticket: 3}},
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 3}},
@@ -668,6 +668,7 @@ Mini: [
 	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: -400}},
 	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}},
 	{i: 86507, n: "Mini Frozen Tik'Teek", p: {gem: -400}},
+	{i: 86958, n: "Mini Lucky Lantern Puppy", p: {gem: -400}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},

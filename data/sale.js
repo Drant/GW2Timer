@@ -5,7 +5,7 @@
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2018-02-13T16:00:00Z"),
-	Finish: new Date("2018-02-20T16:00:00Z"),
+	Finish: new Date("2018-02-27T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,23 +21,26 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 77738, n: "Phoenix Kite Glider", p: {gem: 280}, discount: 400, Finish: new Date("2018-02-27T16:00:00Z")},
+	{i: 68655, n: "Dragon Mask Skin", p: {gem: 210}, discount: 300, Finish: new Date("2018-02-27T16:00:00Z")},
+	{i: 68656, n: "Lion Mask Skin", p: {gem: 210}, discount: 300, Finish: new Date("2018-02-27T16:00:00Z")},
+	{i: 68614, n: "Red Lantern", p: {gem: 250}, Finish: new Date("2018-02-27T16:00:00Z")},
 	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 320}, discount: 400, Finish: new Date("2018-02-23T16:00:00Z")},
 	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 320}, discount: 400, Finish: new Date("2018-02-23T16:00:00Z")},
 	{i: 68652, n: "Red Envelope Mail Carrier", p: {gem: 480}, discount: 600, Finish: new Date("2018-02-23T16:00:00Z")},
 	{i: 68104, n: "Gifts Mail Delivery", p: {gem: 280}, discount: 350, Finish: new Date("2018-02-21T16:00:00Z")},
-	{i: 49933, n: "Bouquet of Roses", p: {gem: 250}, Finish: new Date("2018-02-20T16:00:00Z")},
-	{i: 43528, n: "Box of Chocolates", p: {gem: 250}, Finish: new Date("2018-02-20T16:00:00Z")},
-	{i: 77804, n: "Wings of Love Glider", p: {gem: 400}, Finish: new Date("2018-02-20T16:00:00Z")},
-	{i: 80067, n: "Celestial Rooster Harvesting Tool", p: {gem: 800}, discount: 1000, Finish: new Date("2018-02-20T16:00:00Z")},
+	{i: 86958, n: "Mini Lucky Lantern Puppy", p: {gem: 400}},
 	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}},
-	{i: 68654, n: "Imperial Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2018-02-16T16:00:00Z")},
-	{i: 68612, n: "Plush Ram Backpack", p: {gem: 210}, discount: 300, Finish: new Date("2018-02-16T16:00:00Z")},
-	{i: "https://i.imgur.com/c37rlEw.png", n: "Salvager's Supplies", p: {gem: 1360}, Finish: new Date("2018-02-09T16:00:00Z")},
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}},
-	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: 600}},	
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 1}},
+	{i: 44839, n: "Zodiac weapon skins#Gallery", p: {blticket: 5}, Finish: new Date("2018-02-27T16:00:00Z")},
+	{i: 80179, n: "Devoted weapon skins#Gallery", p: {blticket: 3}, Finish: new Date("2018-02-27T16:00:00Z")},
+	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 900}, Finish: new Date("2018-02-27T16:00:00Z")},
+	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 900}, Finish: new Date("2018-02-27T16:00:00Z")},
+	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 900}, Finish: new Date("2018-02-27T16:00:00Z")},
 	{i: 66279, n: "Ancestral Outfit", p: {gem: 700}},
+	{i: 68654, n: "Imperial Outfit", p: {gem: 700}},
 	{i: 68652, n: "Red Envelope Mail Carrier", p: {gem: 600}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}},
 	{i: 68655, n: "Dragon Mask Skin", p: {gem: 300}},
