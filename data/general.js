@@ -1953,7 +1953,7 @@ Countdown: {
 		Start: new Date("2017-09-22T17:00:00Z"),
 		Finish: new Date("2017-09-25T17:00:00Z")
 	},*/
-	{ // 8 weeks cycle, repeats 56 days after this event's start
+	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
@@ -1962,7 +1962,7 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2018-02-01T20:00:00Z"),
 		Finish: new Date("2018-02-08T20:00:00Z")
-	}
+	}*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Fireheart Map Rewards",
 		name_de: "Feuerherzhügel Karten-Bonus",
@@ -1983,16 +1983,16 @@ Countdown: {
 		Start: new Date("2018-02-06T17:00:00Z"),
 		Finish: new Date("2018-02-20T17:00:00Z")
 	},*/
-	/*{
+	{
 		name_en: "March Gem Store Sale",
 		name_de: "März Edelsteinshop Angebote",
 		name_es: "Marzo tienda rebajas",
 		name_fr: "Mars boutique promotions",
 		name_zh: "宝石店三月促销",
-		url: "https://wiki.guildwars2.com/wiki/Gem_Store/March_Sale#March_Sale.2C_2017",
-		Start: new Date("2018-03-03T16:00:00Z"),
+		official: "news/march-daily-sales-in-the-gem-store-2018/",
+		Start: new Date("2018-03-01T16:00:00Z"),
 		Finish: new Date("2018-03-31T16:00:00Z")
-	},*/
+	},
 	/*{
 		name_en: "Super Adventure Festival",
 		name_de: "Super Adventure Festival",
@@ -2044,16 +2044,16 @@ Countdown: {
 		Start: new Date("2017-11-21T17:00:00Z"),
 		Finish: new Date("2017-11-27T17:00:00Z")
 	},*/
-	/*{
+	{
 		name_en: "Living Story 4: Episode II",
 		name_de: "Lebendigen Geschichte 4: Episode II",
 		name_es: "Historia viviente 4: Episodio II",
 		name_fr: "Histoire vivante 4: Épisode II",
 		name_zh: "第四生活世界：第4集",
-		official: "news/watch-the-trailer-for-daybreak/",
-		Start: new Date("2017-11-28T16:00:00Z"),
-		Finish: new Date("2017-11-29T16:00:00Z")
-	},*/
+		official: "news/living-world-season-4-continues-next-week/",
+		Start: new Date("2018-03-06T16:00:00Z"),
+		Finish: new Date("2018-03-07T16:00:00Z")
+	}
 	/*{
 		isWintersday: true,
 		name_en: "Wintersday 2017",

@@ -153,7 +153,7 @@ Glider: [
 	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}},
 	{i: 82666, n: "Geomancer Glider", p: {gem: -500}},
 	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
-	{i: 85220, n: "Branded Wing Glider", p: {gem: -700}},
+	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}},
 	{i: 85496, n: "Riding Broom Glider", p: {gem: -500}},
 	{i: 86715, n: "Glacial Glider", p: {gem: -500}}
 ],
@@ -193,7 +193,7 @@ Back: [
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
 	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}},
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
-	{i: 85332, n: "Branded Wing Backpack", p: {gem: -700}}
+	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -326,7 +326,7 @@ Weapon: [
 	{i: 84064, n: "Fiery Blade Axe", p: {gem: -500}},
 	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}},
 	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}},
-	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: 600}}
+	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: -600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
