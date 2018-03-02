@@ -35,7 +35,7 @@ GW2T_SALE_DATA = {
 	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 1}},
 	{i: 77291, n: "Soul River Glider", p: {gem: 375}, discount: 500, Finish: new Date("2018-03-03T16:00:00Z")},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 375}, discount: 500, Finish: new Date("2018-03-03T16:00:00Z")},
-	{i: 79380, n: "Taimi Outfit", p: {gem: 560}, discount: 700, Finish: new Date("2018-03-04T16:00:00Z")},
+	{i: 79380, n: "Taimi's Outfit", p: {gem: 560}, discount: 700, Finish: new Date("2018-03-04T16:00:00Z")},
 	{i: 79705, n: "Marjory's Shrouded Outfit", p: {gem: 560}, discount: 700, Finish: new Date("2018-03-04T16:00:00Z")},
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 560}, discount: 700, Finish: new Date("2018-03-04T16:00:00Z")},
 	{i: "https://i.imgur.com/e5G1iUR.png", n: "Elonian Introductory Package", p: {gem: 1530}, discount: 1800, Finish: new Date("2018-03-05T16:00:00Z")},

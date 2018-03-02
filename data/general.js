@@ -747,6 +747,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[26996, 25586], [27070, 25537]], // highlands
 	[[27955, 24186], [27849, 24145]], // highlands
 	[[26995, 25104], [26904, 25076]], // highlands
+	[[26480, 25079], [26483, 25326]], // highlands
 	[[26882, 24629], [26867, 24859]], // highlands
 	[[27666, 24713], [27515, 24585]], // highlands
 	[[28523, 24586], [28529, 24497]], // highlands
@@ -842,6 +843,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[32024, 36810], [31958, 36785]], // vabbi
 	[[32413, 36905], [32349, 36996]], // vabbi
 	[[35412, 37727], [35324, 37795]], // vabbi
+	[[35317, 38728], [35358, 38909]], // vabbi
 	[[30887, 38739], [31005, 38997]], // vabbi
 	[[35503, 37828], [35543, 37798]], // vabbi
 	[[32235, 37601], [32052, 37585]] // vabbi
@@ -1897,8 +1899,7 @@ Announcement:
 	NewsPVE: { // Shown on main page dashboard
 		//content: "Please tell new players about gw2timer.com!",
 		//content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='https://gw2timer.com/?page=Pumpkins'>more</a>.",
-		content: "Please <a href='http://forum.renaka.com/topic/8193412#post-609039'>backup/restore</a> your site settings if on the HTTPS version of the site.",
-		//content: "",
+		content: "",
 		Finish: new Date("2018-03-01T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log

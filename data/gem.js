@@ -80,7 +80,7 @@ Outfit: [
 	{i: 78574, n: "Sentinel Outfit", p: {gem: 700}},
 	{i: 79220, n: "Verdant Executor Outfit", p: {gem: 700}},
 	{i: 79531, n: "Mursaat Robes", p: {gem: 700}},
-	{i: 79380, n: "Taimi Outfit", p: {gem: 700}},
+	{i: 79380, n: "Taimi's Outfit", p: {gem: 700}},
 	{i: 79671, n: "Ghostly Outfit", p: {gem: -700}},
 	{i: 79705, n: "Marjory's Shrouded Outfit", p: {gem: 700}},
 	{i: 79703, n: "Braham's Wolfblood Outfit", p: {gem: 700}},
