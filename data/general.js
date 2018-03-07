@@ -1787,6 +1787,18 @@ var GW2T_ZONE_DATA = {
 	region: "desert",
 	map_rect: [[-46080, -46080], [46080, 46080]],
 	continent_rect: [[22550, 43532], [26390, 47372]]
+},
+"sandswept":
+{
+	id: "1271",
+	name_en: "Sandswept Isles",
+	name_de: "Sandgepeitschte Inseln",
+	name_es: "Islas Arenosas",
+	name_fr: "Îles de Ventesable",
+	name_zh: "沙掠群岛",
+	region: "desert",
+	map_rect: [[-36864, -52224], [39936, 52224]],
+	continent_rect: [[19226, 39018], [22426, 43370]]
 }
 };
 
@@ -1990,7 +2002,7 @@ Countdown: {
 		name_es: "Marzo tienda rebajas",
 		name_fr: "Mars boutique promotions",
 		name_zh: "宝石店三月促销",
-		official: "news/march-daily-sales-in-the-gem-store-2018/",
+		official: "news/give-your-mounts-a-sinister-sparkle-with-the-branded-mounts-pack/",
 		Start: new Date("2018-03-01T16:00:00Z"),
 		Finish: new Date("2018-03-31T16:00:00Z")
 	},

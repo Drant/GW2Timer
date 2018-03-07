@@ -442,11 +442,14 @@ var GW2T_ACCOUNT_METADATA = {
 		163, // Daily Draconis Mons
 		172, // Daily Siren's Landing
 		194, // Daily Domain of Istan
+		204, // Daily Sandswept Isles
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
 		79, // Halloween Daily
 		98, // Wintersday Daily
+		199, // Dragon Ball
+		201, // Daily Lunar New Year
 		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
 		68, // Gates of Maguuma
 		70, // Entanglement
@@ -470,6 +473,7 @@ var GW2T_ACCOUNT_METADATA = {
 		183, // Path of Fire: Act 2
 		187, // Path of Fire: Act 3
 		196, // Daybreak
+		203, // A Bug in the System
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons
@@ -562,6 +566,8 @@ var GW2T_ACCOUNT_METADATA = {
 		{en: "Festival", de: "Festlicher", es: "Festivo", fr: "Festival", zh: "传统"},
 		132, // Lunar New Year
 		151, // Lunar New Year
+		200, // New Year's Customs
+		202, // Lunar New Year
 		22, // Super Adventure Box: World 1
 		45, // Super Adventure Box: World 2
 		46, // Super Adventure Box: Tribulation Mode
