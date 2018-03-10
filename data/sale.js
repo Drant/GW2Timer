@@ -67,6 +67,9 @@ GW2T_SALE_DATA = {
 	{i: 65200, n: "Wintersday Earmuffs", p: {gem: 25}, Finish: new Date("2018-03-10T16:00:00Z")},
 	{i: 85496, n: "Riding Broom Glider", p: {gem: 500}, Finish: new Date("2018-03-12T16:00:00Z")},
 	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}, Finish: new Date("2018-03-13T16:00:00Z")},
+	{i: 79771, n: "Fire Quiver Backpack", p: {gem: 400}, Finish: new Date("2018-03-16T16:00:00Z")},
+	{i: 68612, n: "Plush Ram Backpack", p: {gem: 300}, Finish: new Date("2018-03-16T16:00:00Z")},
+	{i: 39519, n: "Warrior Quaggan Backpack Cover", p: {gem: 300}, Finish: new Date("2018-03-16T16:00:00Z")},
 	{i: 86898, n: "Zhaitan Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-03-13T16:00:00Z")}
 	]
 };
