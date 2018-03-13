@@ -16975,7 +16975,11 @@ Q = {
 					return;
 				}
 				runepieces = Settings.aRuneSets[Settings.aItem.id].numslotted;
-				length = runepieces;
+				if (runepieces < length)
+				{
+					// For example if equipped three runes of same type, but only two possible effects
+					length = runepieces;
+				}
 			}
 			
 			for (var i = 0; i < length; i++)
