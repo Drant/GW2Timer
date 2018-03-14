@@ -77,7 +77,8 @@ General: [
 	{u: 57, i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
 	{u: 58, i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
 	{u: 72, i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
-	{u: 55, i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}}
+	{u: 55, i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}},
+	{u: 75, i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}}
 ],
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},

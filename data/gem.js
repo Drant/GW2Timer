@@ -97,7 +97,8 @@ Outfit: [
 	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
 	{i: 86637, n: "Winter Monarch Outfit", p: {gem: -700}},
-	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}}
+	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}},
+	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -251,7 +252,7 @@ Head: [
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
 	{i: 48824, n: "Scarlet's Spaulders", p: {gem: -400}},
-	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
+	{i: 49024, n: "Toxic Mantle Skin", p: {gem: 400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
@@ -260,7 +261,7 @@ Shoulder: [
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
 	{i: 48817, n: "Scarlet's Grasp", p: {gem: -400}},
-	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
+	{i: 49031, n: "Toxic Gloves Skin", p: {gem: 400}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: -300}},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: -500}},
