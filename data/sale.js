@@ -21,6 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 600}, discount: 800, Finish: new Date("2018-03-17T16:00:00Z")},
 	{i: "https://i.imgur.com/c61OMk9.png", n: "Enemies Dye Pack", p: {gem: 400}},
 	{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 400}},
 	{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 400}},
@@ -38,6 +39,15 @@ GW2T_SALE_DATA = {
 	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}, Finish: new Date("2018-03-21T16:00:00Z")},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}, Finish: new Date("2018-03-22T16:00:00Z")},
 	{i: 77291, n: "Soul River Glider", p: {gem: 500}, Finish: new Date("2018-03-22T16:00:00Z")},
+	{i: 70095, n: "Butterfly Wings Backpack", p: {gem: 500}},
+	{i: 70277, n: "Glittering Wings Backpack", p: {gem: 500}},
+	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
+	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: 500}},
+	{i: 68577, n: "Arcane Outfit", p: {gem: 700}, Finish: new Date("2018-03-23T16:00:00Z")},
+	{i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}, Finish: new Date("2018-03-23T16:00:00Z")},
+	{i: 85034, n: "Forged Outfit", p: {gem: 700}, Finish: new Date("2018-03-23T16:00:00Z")},
+	{i: 68654, n: "Imperial Outfit", p: {gem: 700}, Finish: new Date("2018-03-23T16:00:00Z")},
+	{i: 79531, n: "Mursaat Robes", p: {gem: 700}, Finish: new Date("2018-03-23T16:00:00Z")},
 	{i: 64759, n: "Fuzzy Hylek Hat", p: {gem: 200}},
 	{i: 64739, n: "Fuzzy Quaggan Hat", p: {gem: 200}},
 	{i: 66309, n: "Wreath of Cooperation", p: {gem: 400}},
