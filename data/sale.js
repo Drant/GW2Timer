@@ -21,19 +21,22 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 600}, discount: 800, Finish: new Date("2018-03-17T16:00:00Z")},
+	{i: 19993, n: "Bag Slot Expansion", p: {gem: 280}, discount: 400, Finish: new Date("2018-03-18T16:00:00Z")},
 	{i: "https://i.imgur.com/c61OMk9.png", n: "Enemies Dye Pack", p: {gem: 400}},
 	{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 400}},
 	{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 400}},
-	{i: 81263, n: "Mercenary Backpack", p: {gem: 300}, discount: 400, Finish: new Date("2018-03-16T16:00:00Z")},
-	{i: 80019, n: "Scruffy Backpack", p: {gem: 300}, discount: 400, Finish: new Date("2018-03-16T16:00:00Z")},
-	{i: 79771, n: "Fire Quiver Backpack", p: {gem: 300}, discount: 400, Finish: new Date("2018-03-16T16:00:00Z")},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
 	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
 	{i: 87202, n: "Mini Branded Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-03-20T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 1}},
+	{i: 74684, n: "Bat Wings Glider", p: {gem: 700}, Finish: new Date("2018-03-24T16:00:00Z")},
+	{i: 73939, n: "Bat Wings Backpack", p: {gem: 700}, Finish: new Date("2018-03-24T16:00:00Z")},
+	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}, Finish: new Date("2018-03-24T16:00:00Z")},
+	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}, Finish: new Date("2018-03-24T16:00:00Z")},
+	{i: 79663, n: "Bloodstone Glider", p: {gem: 500}, Finish: new Date("2018-03-24T16:00:00Z")},
+	{i: 83341, n: "Sheet Music Glider", p: {gem: 400}, Finish: new Date("2018-03-24T16:00:00Z")},
 	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: 700}, Finish: new Date("2018-03-21T16:00:00Z")},
 	{i: 67398, n: "Noble Count Outfit", p: {gem: 700}, Finish: new Date("2018-03-21T16:00:00Z")},
 	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}, Finish: new Date("2018-03-21T16:00:00Z")},
@@ -52,8 +55,6 @@ GW2T_SALE_DATA = {
 	{i: 64739, n: "Fuzzy Quaggan Hat", p: {gem: 200}},
 	{i: 66309, n: "Wreath of Cooperation", p: {gem: 400}},
 	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
-	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
-	{i: 68612, n: "Plush Ram Backpack", p: {gem: 300}, Finish: new Date("2018-03-16T16:00:00Z")},
-	{i: 39519, n: "Warrior Quaggan Backpack Cover", p: {gem: 300}, Finish: new Date("2018-03-16T16:00:00Z")}
+	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")}
 	]
 };
