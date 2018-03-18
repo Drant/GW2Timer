@@ -21,10 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 19993, n: "Bag Slot Expansion", p: {gem: 280}, discount: 400, Finish: new Date("2018-03-18T16:00:00Z")},
-	{i: "https://i.imgur.com/c61OMk9.png", n: "Enemies Dye Pack", p: {gem: 400}},
-	{i: "https://i.imgur.com/IEbqAQ1.png", n: "Heroes Dye Pack", p: {gem: 400}},
-	{i: "https://i.imgur.com/od18Djw.png", n: "Dragon's Watch Dye Pack", p: {gem: 400}},
+	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: 1600}, discount: 2000, Finish: new Date("2018-03-19T16:00:00Z")},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
 	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
