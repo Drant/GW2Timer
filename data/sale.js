@@ -21,7 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: 1600}, discount: 2000, Finish: new Date("2018-03-19T16:00:00Z")},
+	{i: "https://i.imgur.com/SKDviam.png", n: "Central Tyria Waypoint Unlock Package", p: {gem: 1500}, discount: 2000, Finish: new Date("2018-03-20T16:00:00Z")},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
 	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
