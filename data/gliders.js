@@ -34,7 +34,8 @@ Dyeable: [
 	{u: 37, i: 80484, n: "Necrotic Glider", l: "1", p: {gem: 500}},
 	{u: 38, i: 80725, n: "Raven's Spirit Glider", l: "2", p: {gem: 500}},
 	{u: 50, i: 83341, n: "Sheet Music Glider", l: "2", p: {gem: 400}},
-	{u: 53, i: 85496, n: "Riding Broom Glider", l: "2", p: {gem: 500}}
+	{u: 53, i: 85496, n: "Riding Broom Glider", l: "2", p: {gem: 500}},
+	{u: 57, i: 87070, n: "Forged Glider", l: "2", p: {gem: 0}}
 ],
 Colored: [
 	{u: 5, i: 67054, n: "Heart of Thorns Glider", l: "", p: {gem: 0}},
@@ -55,7 +56,7 @@ Colored: [
 	{u: 44, i: 81291, n: "Magic Carpet Glider", l: "", p: {gem: 400}},	
 	{u: 46, i: 82011, n: "Abaddon's Glider", l: "", p: {gem: 400}},
 	{u: 49, i: 82666, n: "Geomancer Glider", l: "", p: {gem: 500}},
-	{u: 55, i: 86715, n: "Glacial Glider", p: {gem: 500}}
+	{u: 55, i: 86715, n: "Glacial Glider", l: "", p: {gem: 500}}
 ],
 Combo: [ // The audit function depends on this named category for ignoring duplicate backpack-glider skin
 	{u: 11, i: 77474, n: "The Ascension Glider", l: "", p: {craft: true}},
@@ -76,6 +77,7 @@ Combo: [ // The audit function depends on this named category for ignoring dupli
 	{u: 47, i: 81888, n: "Feathers of the Zephyr", l: "", p: {gem: 0}},
 	{u: 48, i: 82671, n: "Largos Fin Glider", l: "2", p: {gem: 700}},
 	{u: 51, i: 85220, n: "Branded Wing Glider", l: "", p: {gem: 700}},
-	{u: 54, i: 85595, n: "Wild Magic Glider", l: "", p: {gem: 0}}
+	{u: 54, i: 85595, n: "Wild Magic Glider", l: "", p: {gem: 0}},
+	{u: 56, i: 86813, n: "Griffon Hatchling Glider", l: "",  p: {gem: 0}}
 ]
 };

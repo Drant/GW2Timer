@@ -22,10 +22,10 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
 	{i: "https://i.imgur.com/SKDviam.png", n: "Central Tyria Waypoint Unlock Package", p: {gem: 1500}, discount: 2000, Finish: new Date("2018-03-20T16:00:00Z")},
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 800}, discount: 1000, Finish: new Date("2018-03-21T16:00:00Z")},
+	{i: 87021, n: "Forged Wing Backpack", p: {gem: 700}},
+	{i: 87070, n: "Forged Glider", p: {gem: 700}},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
-	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
-	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
-	{i: 87202, n: "Mini Branded Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-03-20T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 1}},
 	{i: 74684, n: "Bat Wings Glider", p: {gem: 700}, Finish: new Date("2018-03-24T16:00:00Z")},
@@ -37,6 +37,9 @@ GW2T_SALE_DATA = {
 	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: 700}, Finish: new Date("2018-03-21T16:00:00Z")},
 	{i: 67398, n: "Noble Count Outfit", p: {gem: 700}, Finish: new Date("2018-03-21T16:00:00Z")},
 	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}, Finish: new Date("2018-03-21T16:00:00Z")},
+	{i: 69623, n: "Exemplar Attire Outfit", p: {gem: 700}},
+	{i: 67990, n: "Jungle Explorer Outfit", p: {gem: 700}},
+	{i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}, Finish: new Date("2018-03-22T16:00:00Z")},
 	{i: 77291, n: "Soul River Glider", p: {gem: 500}, Finish: new Date("2018-03-22T16:00:00Z")},
 	{i: 70095, n: "Butterfly Wings Backpack", p: {gem: 500}},
@@ -50,8 +53,6 @@ GW2T_SALE_DATA = {
 	{i: 79531, n: "Mursaat Robes", p: {gem: 700}, Finish: new Date("2018-03-23T16:00:00Z")},
 	{i: 64759, n: "Fuzzy Hylek Hat", p: {gem: 200}},
 	{i: 64739, n: "Fuzzy Quaggan Hat", p: {gem: 200}},
-	{i: 66309, n: "Wreath of Cooperation", p: {gem: 400}},
-	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")},
-	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}, Finish: new Date("2018-03-20T16:00:00Z")}
+	{i: 66309, n: "Wreath of Cooperation", p: {gem: 400}}
 	]
 };

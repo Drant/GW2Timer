@@ -55,13 +55,13 @@ Outfit: [
 	{i: 67040, n: "Ceremonial Plated Outfit", p: {gem: -700}},
 	{i: 67398, n: "Noble Count Outfit", p: {gem: -700}},
 	{i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}},
-	{i: 67990, n: "Jungle Explorer Outfit", p: {gem: -700}},
+	{i: 67990, n: "Jungle Explorer Outfit", p: {gem: 700}},
 	{i: 68577, n: "Arcane Outfit", p: {gem: -700}},
 	{i: 66279, n: "Ancestral Outfit", p: {gem: 700}},
 	{i: 68654, n: "Imperial Outfit", p: {gem: -700}},
 	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: -700}},
 	{i: 69607, n: "Balthazar's Regalia Outfit", p: {gem: 700}},
-	{i: 69623, n: "Exemplar Attire Outfit", p: {gem: -700}},
+	{i: 69623, n: "Exemplar Attire Outfit", p: {gem: 700}},
 	{i: 69662, n: "Daydreamer's Finery Outfit", p: {gem: -700}},
 	{i: 69753, n: "Mad Scientist Outfit", p: {gem: -700}},
 	{i: 69806, n: "Dwayna's Regalia Outfit", p: {gem: 700}},
@@ -86,7 +86,7 @@ Outfit: [
 	{i: 79703, n: "Braham's Wolfblood Outfit", p: {gem: 700}},
 	{i: 80049, n: "Ice Encasement Outfit", p: {gem: 700}},
 	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
-	{i: 80906, n: "Spring Promenade Outfit", p: {gem: -700}},
+	{i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}},
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
 	{i: 81223, n: "Outlaw Outfit", p: {gem: -700}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: -700}},
@@ -158,7 +158,8 @@ Glider: [
 	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}},
 	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}},
 	{i: 85496, n: "Riding Broom Glider", p: {gem: -500}},
-	{i: 86715, n: "Glacial Glider", p: {gem: -500}}
+	{i: 86715, n: "Glacial Glider", p: {gem: -500}},
+	{i: 87070, n: "Forged Glider", p: {gem: 700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
@@ -196,7 +197,8 @@ Back: [
 	{i: 81557, n: "Dynamics Projector Module", p: {gem: 700}},
 	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}},
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}},
-	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}}
+	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}},
+	{i: 87021, n: "Forged Wing Backpack", p: {gem: 700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
