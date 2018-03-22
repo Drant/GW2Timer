@@ -88,7 +88,7 @@ Outfit: [
 	{i: 80077, n: "Rox's Pathfinder Outfit", p: {gem: 700}},
 	{i: 80906, n: "Spring Promenade Outfit", p: {gem: 700}},
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
-	{i: 81223, n: "Outlaw Outfit", p: {gem: -700}},
+	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: -700}},
 	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: -700}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
