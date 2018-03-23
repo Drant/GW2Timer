@@ -21,12 +21,8 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 42888, n: "Marriner's Horn", p: {gem: 480}, discount: 800, Finish: new Date("2018-03-22T16:00:00Z")},
-	{i: 42973, n: "Flute", p: {gem: 480}, discount: 800, Finish: new Date("2018-03-22T16:00:00Z")},
-	{i: 36174, n: "Musical Bass Guitar", p: {gem: 480}, discount: 800, Finish: new Date("2018-03-22T16:00:00Z")},
-	{i: 43526, n: "Musical Frame Drum", p: {gem: 480}, discount: 800, Finish: new Date("2018-03-22T16:00:00Z")},
-	{i: 44883, n: "Musical Harp", p: {gem: 480}, discount: 800, Finish: new Date("2018-03-22T16:00:00Z")},
-	{i: 66323, n: "Musical Lute", p: {gem: 480}, discount: 800, Finish: new Date("2018-03-22T16:00:00Z")},
+	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 490}, discount: 700, Finish: new Date("2018-03-23T16:00:00Z")},
+	{i: 79523, n: "Mursaat Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-03-23T16:00:00Z")},
 	{i: 87021, n: "Forged Wing Backpack", p: {gem: 700}},
 	{i: 87070, n: "Forged Glider", p: {gem: 700}},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
