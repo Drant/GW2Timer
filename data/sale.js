@@ -21,9 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 80987, n: "Unbound Magic Harvesting Blast", p: {gem: 720}, discount: 900, Finish: new Date("2018-03-24T16:00:00Z")},
-	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: 720}, discount: 900, Finish: new Date("2018-03-24T16:00:00Z")},
-	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: 720}, discount: 900, Finish: new Date("2018-03-24T16:00:00Z")},
+	{i: 19980, n: "Black Lion Chest Key", p: {gem: 100}, discount: [[1, 100, 125], [5, 359, 450], [25, 1680, 2100]]},
 	{i: 87021, n: "Forged Wing Backpack", p: {gem: 700}},
 	{i: 87070, n: "Forged Glider", p: {gem: 700}},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
