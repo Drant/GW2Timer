@@ -54,7 +54,8 @@ var GW2T_DYES_HEADERS = {
 	Primordus: {id: 80974, name_en: "Primordus Dye Kit", name_de: "Primordus-Farbkit", name_es: "Kit de tintes de Primordus", name_fr: "Kit de teintures de Primordius", name_zh: "派莫德斯染料包"},
 	Jormag: {id: 81545, name_en: "Jormag Dye Kit", name_de: "Jormag-Farbkit", name_es: "Kit de tintes de Jormag", name_fr: "Kit de teintures de Jormag", name_zh: "卓玛染料包"},
 	Elonian: {id: 86163, name_en: "Elonian Landscape Dye Kit", name_de: "Elonische Landschaft-Farbkit", name_es: "Kit de tintes de paisaje eloniano", name_fr: "Kit de teinture de paysage élonien", name_zh: "伊伦娜风景染料包"},
-	Zhaitan: {id: 86898, name_en: "Zhaitan Dye Kit", name_de: "Zhaitan-Farbkit", name_es: "Kit de tintes de Zhaitan", name_fr: "Kit de teintures de Zhaïtan", name_zh: "泽坦染料包"}
+	Zhaitan: {id: 86898, name_en: "Zhaitan Dye Kit", name_de: "Zhaitan-Farbkit", name_es: "Kit de tintes de Zhaitan", name_fr: "Kit de teintures de Zhaïtan", name_zh: "泽坦染料包"},
+	Beasts: {id: 85628, name_en: "Elonian Beasts Dye Kit", name_de: "Elonische Bestien-Farbkit", name_es: "Kit de tintes de bestias elonianas", name_fr: "Kit de teinture vide", name_zh: "伊伦娜野兽染料包"}
 };
 
 /*
@@ -666,5 +667,13 @@ Zhaitan: [
 	{u: 1584, i: 86901, n: "Worn Bone Dye", c: ["#b2a99d", "#b2a99d", "#c6bdb1"], h: "Brown", m: "Leather", l: "[&AgF1UwEA]", en: "Worn Bone", de: "Abgenutzte Knochen", es: "Hueso desgastado", fr: "Os abîmé", zh: "朽骨"},
 	{u: 1583, i: 86900, n: "Decay Dye", c: ["#543831", "#543831", "#543831"], h: "Brown", m: "Leather", l: "[&AgF0UwEA]", en: "Decay", de: "Verfall", es: "Decadencia", fr: "Pourriture", zh: "腐败"},
 	{u: 1580, i: 86905, n: "Abyssal Sea Dye", c: ["#000000", "#000000", "#000000"], h: "Blue", m: "Vibrant", l: "[&AgF5UwEA]", en: "Abyssal Sea", de: "Abgrundmeer", es: "Mar del abismo", fr: "Mer abyssale", zh: "地狱海"}
+],
+Beasts: [
+	{u: 1594, i: 87364, n: "Hydra Dye", c: ["#330202", "#330202", "#330202"], h: "Red", m: "Vibrant", l: "[&AgFEVQEA]", en: "Hydra", de: "Hydra", es: "Hidra", fr: "Hydre", zh: "九头蛇"},
+	{u: 1596, i: 87313, n: "Iboga Dye", c: ["#d4f058", "#d4f058", "#d4f058"], h: "Yellow", m: "Vibrant", l: "[&AgERVQEA]", en: "Iboga", de: "Iboga", es: "Iboga", fr: "Iboga", zh: "伊波茄"},
+	{u: 1592, i: 87349, n: "Choya Dye", c: ["#326b35", "#3e7741", "#538c56"], h: "Green", m: "Vibrant", l: "[&AgE1VQEA]", en: "Choya", de: "Choya", es: "Chumbo", fr: "Choya", zh: "丘牙兽"},
+	{u: 1578, i: 87383, n: "Jacaranda Dye", c: ["#2c2400", "#211700", "#4b4000"], h: "Green", m: "Leather", l: "[&AgFXVQEA]", en: "Jacaranda", de: "Jacaranda", es: "Jacaranda", fr: "Jacaranda", zh: "蓝花楹"},
+	{u: 1595, i: 87312, n: "Sand Shark Dye", c: ["#1a8ac5", "#1a8ac5", "#41b1ed"], h: "Blue", m: "Vibrant", l: "[&AgEQVQEA]", en: "Sand Shark", de: "Sandhai", es: "Tiburón de arena", fr: "Requin des sables", zh: "沙漠鲨鱼"},
+	{u: 1593, i: 87355, n: "Desert Harpy Dye", c: ["#303d62", "#303d62", "#465378"], h: "Blue", m: "Vibrant", l: "[&AgE7VQEA]", en: "Desert Harpy", de: "Wüsten-Harpyie", es: "Arpía del desierto", fr: "Harpie du désert", zh: "沙漠鹰身女妖"}
 ]
 };
