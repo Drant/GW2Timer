@@ -299,9 +299,9 @@ Armor: [
 	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: -800}},
 	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: -800}},
 	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: -800}},
-	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: -800}},
-	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: -800}},
-	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: -800}}
+	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 800}},
+	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 800}},
+	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 800}}
 ],
 Weapon: [
 	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: -600}},
