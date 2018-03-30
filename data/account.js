@@ -571,6 +571,7 @@ var GW2T_ACCOUNT_METADATA = {
 		22, // Super Adventure Box: World 1
 		45, // Super Adventure Box: World 2
 		46, // Super Adventure Box: Tribulation Mode
+		205, // Super Adventure Box: Nostalgia
 		29, // Shadow of the Mad King
 		119, // Shadow of the Mad King
 		146, // Shadow of the Mad King
