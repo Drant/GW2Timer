@@ -21,7 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 70234, n: "Mini Angry Chest", p: {gem: 280}, discount: 400, Finish: new Date("2018-03-30T16:00:00Z")},
+	{i: 19995, n: "Bank Tab Expansion", p: {gem: 480}, discount: 600, Finish: new Date("2018-03-31T16:00:00Z")},
+	{i: 41911, n: "Super Adventure Box o' Fun", p: {gem: 0}, discount: [[1, 125], [5, 400]]},
+	{i: 67881, n: "Aviator's Memory Box", p: {gem: 160}, discount: 400, Finish: new Date("2018-03-31T16:00:00Z")},
 	{i: 87368, n: "Istani Isles—Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [5, 1800]]},
 	{i: 87360, n: "Istani Isles—Mount Select License", p: {gem: 1200}},
 	{i: 44724, n: "Permanent Super Explosive Finisher", p: {gem: 600}},
