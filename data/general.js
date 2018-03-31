@@ -1996,7 +1996,7 @@ Countdown: {
 		Start: new Date("2018-02-06T17:00:00Z"),
 		Finish: new Date("2018-02-20T17:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "March Gem Store Sale",
 		name_de: "März Edelsteinshop Angebote",
 		name_es: "Marzo tienda rebajas",
@@ -2005,17 +2005,17 @@ Countdown: {
 		official: "news/give-your-mounts-a-sinister-sparkle-with-the-branded-mounts-pack/",
 		Start: new Date("2018-03-01T16:00:00Z"),
 		Finish: new Date("2018-03-31T16:00:00Z")
-	},
-	/*{
+	},*/
+	{
 		name_en: "Super Adventure Festival",
 		name_de: "Super Adventure Festival",
 		name_es: "Festival Super Adventure",
 		name_fr: "Festival de la Super Adventure",
 		name_zh: "超级冒险盒",
-		official: "the-game/releases/march-30-2017/",
-		Start: new Date("2018-03-30T16:00:00Z"),
-		Finish: new Date("2018-04-20T16:00:00Z")
-	}*/
+		official: "the-game/releases/march-29-2018/",
+		Start: new Date("2018-03-29T16:00:00Z"),
+		Finish: new Date("2018-04-19T16:00:00Z")
+	}
 	/*{
 		name_en: "PvP League Season 8",
 		name_de: "PvP Liga Saison 8",
@@ -2057,7 +2057,7 @@ Countdown: {
 		Start: new Date("2017-11-21T17:00:00Z"),
 		Finish: new Date("2017-11-27T17:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "Living Story 4: Episode II",
 		name_de: "Lebendigen Geschichte 4: Episode II",
 		name_es: "Historia viviente 4: Episodio II",
@@ -2066,7 +2066,7 @@ Countdown: {
 		official: "news/living-world-season-4-continues-next-week/",
 		Start: new Date("2018-03-06T16:00:00Z"),
 		Finish: new Date("2018-03-07T16:00:00Z")
-	}
+	}*/
 	/*{
 		isWintersday: true,
 		name_en: "Wintersday 2017",
