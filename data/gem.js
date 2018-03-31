@@ -683,7 +683,7 @@ Toy: [
 	{i: 36172, n: "Bobblehead Laboratory", p: {gem: 400}},
 	{i: 66342, n: "Water Fight Balloon Bucket", p: {gem: 500}},
 	{i: 67881, n: "Aviator's Memory Box", p: {gem: 400}},
-	{i: 20000, n: "Box o' Fun", p: {gem: 80}, discount: [[1, 80], [5, 320]]},
+	{i: 20000, n: "Box o' Fun", p: {gem: 80}, discount: [[1, 80], [5, 400]]},
 	{i: 41911, n: "Super Adventure Box o' Fun", p: {gem: -125}, discount: [[1, 125], [5, 400]]},
 	{i: 49930, n: "Boxing Gloves", p: {gem: -300}},
 	{i: 49931, n: "Riding Broom", p: {gem: 250}},
