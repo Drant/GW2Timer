@@ -252,7 +252,8 @@ Head: [
 	{i: 81776, n: "Abaddon's Mask", p: {gem: -500}},
 	{i: 84014, n: "Swaggering Hat", p: {gem: -400}},
 	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
-	{i: 86516, n: "Freezie Crown", p: {gem: 350}}
+	{i: 86516, n: "Freezie Crown", p: {gem: 350}},
+	{i: 87311, n: "Winged Headpiece", p: {gem: 400}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -556,6 +557,7 @@ Mini: [
 	{i: 41907, n: "Miniature Super Trio", p: {gem: -500}},
 	{i: 46498, n: "Miniature Super Trio—World 2", p: {gem: -500}},
 	{i: 80939, n: "Miniature Super Trio—Series 3", p: {gem: -600}},
+	{i: 87323, n: "Miniature Super Trio—Series 4", p: {gem: -600}},
 	{i: 42897, n: "Dragon Bash Mini Pack", p: {gem: -500}},
 	{i: 42978, n: "Wintersday Minis 3-Pack", p: {gem: -500}},
 	{i: 42981, n: "Bazaar Quaggan Mini Pack", p: {gem: -500}},
