@@ -381,8 +381,9 @@ BlackLionWeapon: [
 	{i: 81816, n: "Abaddon weapon skins#Gallery", p: {blticket: 3}},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 3}},
 	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 3}},
-	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 2}},
-	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 1}}
+	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 3}},
+	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 2}},
+	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},
@@ -508,8 +509,9 @@ Pass: [
 	//{n: "Lava Lounge Pass Bundle", p: {gem: -1200}},
 ],
 Gathering: [
+	{i: 87402, n: "Black Lion Glyph Selection Container", p: {gem: 1000}},
 	{i: 49531, n: "Gathering Tool 3 Pack", p: {gem: -2250}},
-	{i: 48930, n: "Consortium Harvesting Sickle", p: {gem: -1000}},
+	{i: 48930, n: "Consortium Harvesting Sickle", p: {gem: 1000}},
 	{i: 48931, n: "Chop-It-All Logging Axe", p: {gem: 1000}},
 	{i: 47897, n: "Watchwork Mining Pick", p: {gem: 1000}},
 	{i: 48825, n: "Frost Wasp Logging Tool", p: {gem: -1000}},
