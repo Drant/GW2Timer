@@ -25,6 +25,8 @@ GW2T_SALE_DATA = {
 	{i: 78996, n: "Unbreakable Harvesting Sickle", p: {gem: 600}, discount: 800, Finish: new Date("2018-04-17T16:00:00Z")},
 	{i: 78806, n: "Unbreakable Logging Axe", p: {gem: 600}, discount: 800, Finish: new Date("2018-04-17T16:00:00Z")},
 	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 600}, discount: 800, Finish: new Date("2018-04-17T16:00:00Z")},
+	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: 525}, discount: 700, Finish: new Date("2018-04-20T16:00:00Z")},
+	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: 525}, discount: 700, Finish: new Date("2018-04-20T16:00:00Z")},
 	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: 1000}},
 	{i: 48930, n: "Consortium Harvesting Sickle", p: {gem: 1000}},
 	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: 1000}},
