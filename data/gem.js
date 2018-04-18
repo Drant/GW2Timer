@@ -161,7 +161,8 @@ Glider: [
 	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}},
 	{i: 85496, n: "Riding Broom Glider", p: {gem: -500}},
 	{i: 86715, n: "Glacial Glider", p: {gem: -500}},
-	{i: 87070, n: "Forged Glider", p: {gem: 700}}
+	{i: 87070, n: "Forged Glider", p: {gem: 700}},
+	{i: 87429, n: "Beastslayer Glider", p: {gem: 400}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: 300}},
@@ -458,7 +459,7 @@ Dye: [
 	{i: 81545, n: "Jormag Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 86898, n: "Zhaitan Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
