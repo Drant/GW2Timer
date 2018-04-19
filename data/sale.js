@@ -28,7 +28,8 @@ GW2T_SALE_DATA = {
 	{i: 85538, n: "Reforged Warhound", p: {gem: 2000}},
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: 2000}},
 	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}},
-	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 600}},
+	{i: 79360, n: "Amethyst Aegis", p: {gem: 600}, Finish: new Date("2018-04-21T16:00:00Z")},
+	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 600}, Finish: new Date("2018-04-20T16:00:00Z")},
 	{i: 87429, n: "Beastslayer Glider", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
@@ -38,7 +39,7 @@ GW2T_SALE_DATA = {
 	{i: 78009, n: "Super Adventure Glider", p: {gem: 400}},
 	{i: 87323, n: "Miniature Super Trio—Series 4", p: {gem: 600}, Finish: new Date("2018-04-24T16:00:00Z")},
 	{i: 20000, n: "Box o' Fun", p: {gem: 32}, discount: [[1, 32, 80], [5, 128, 400]]},
-	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 600}},
+	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 600}, Finish: new Date("2018-04-20T16:00:00Z")},
 	{i: 87311, n: "Winged Headpiece", p: {gem: 400}, Finish: new Date("2018-04-24T16:00:00Z")},
 	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-04-24T16:00:00Z")}
 	]
