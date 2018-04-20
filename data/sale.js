@@ -30,6 +30,7 @@ GW2T_SALE_DATA = {
 	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}},
 	{i: 79360, n: "Amethyst Aegis", p: {gem: 600}, Finish: new Date("2018-04-21T16:00:00Z")},
 	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 600}, Finish: new Date("2018-04-20T16:00:00Z")},
+	{i: 80981, n: "Hourglass Staff", p: {gem: 600}, Finish: new Date("2018-04-22T16:00:00Z")},
 	{i: 87429, n: "Beastslayer Glider", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
