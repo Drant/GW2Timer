@@ -21,9 +21,6 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: 525}, discount: 700, Finish: new Date("2018-04-20T16:00:00Z")},
-	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: 525}, discount: 700, Finish: new Date("2018-04-20T16:00:00Z")},
-	
 	{i: "https://i.imgur.com/ch0zrT3.png", n: "Foefire Armor Package", p: {gem: 1300}, Finish: new Date("2018-04-27T16:00:00Z")},
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}, Finish: new Date("2018-04-27T16:00:00Z")},
 	{i: 81293, n: "Foefire Wraps", p: {gem: 500}, Finish: new Date("2018-04-27T16:00:00Z")},
@@ -33,9 +30,9 @@ GW2T_SALE_DATA = {
 	{i: 85538, n: "Reforged Warhound", p: {gem: 2000}},
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: 2000}},
 	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}},
+	{i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}, Finish: new Date("2018-04-25T16:00:00Z")},
+	{i: 79386, n: "Dragon Kama Skin", p: {gem: 600}, Finish: new Date("2018-04-24T16:00:00Z")},
 	{i: 79310, n: "Storm Bow", p: {gem: 600}, Finish: new Date("2018-04-23T16:00:00Z")},
-	{i: 80981, n: "Hourglass Staff", p: {gem: 600}, Finish: new Date("2018-04-22T16:00:00Z")},
-	{i: 79360, n: "Amethyst Aegis", p: {gem: 600}, Finish: new Date("2018-04-21T16:00:00Z")},
 	{i: 87429, n: "Beastslayer Glider", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
@@ -45,7 +42,6 @@ GW2T_SALE_DATA = {
 	{i: 78009, n: "Super Adventure Glider", p: {gem: 400}},
 	{i: 87323, n: "Miniature Super Trio—Series 4", p: {gem: 600}, Finish: new Date("2018-04-24T16:00:00Z")},
 	{i: 20000, n: "Box o' Fun", p: {gem: 32}, discount: [[1, 32, 80], [5, 128, 400]]},
-	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 600}, Finish: new Date("2018-04-20T16:00:00Z")},
 	{i: 87311, n: "Winged Headpiece", p: {gem: 400}, Finish: new Date("2018-04-24T16:00:00Z")},
 	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-04-24T16:00:00Z")}
 	]
