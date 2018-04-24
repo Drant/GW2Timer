@@ -30,6 +30,7 @@ GW2T_SALE_DATA = {
 	{i: 85538, n: "Reforged Warhound", p: {gem: 2000}},
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: 2000}},
 	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}},
+	{i: 79365, n: "Peacock Scepter Skin", p: {gem: 600}, Finish: new Date("2018-04-26T16:00:00Z")},
 	{i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}, Finish: new Date("2018-04-25T16:00:00Z")},
 	{i: 79386, n: "Dragon Kama Skin", p: {gem: 600}, Finish: new Date("2018-04-24T16:00:00Z")},
 	{i: 79310, n: "Storm Bow", p: {gem: 600}, Finish: new Date("2018-04-23T16:00:00Z")},
