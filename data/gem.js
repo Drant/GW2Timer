@@ -98,7 +98,8 @@ Outfit: [
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
 	{i: 86637, n: "Winter Monarch Outfit", p: {gem: -700}},
 	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}},
-	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}}
+	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
+	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -335,7 +336,8 @@ Weapon: [
 	{i: 84064, n: "Fiery Blade Axe", p: {gem: -500}},
 	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}},
 	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}},
-	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: -600}}
+	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: -600}},
+	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: -600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
@@ -735,8 +737,8 @@ Node: [
 	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
 	{i: 67842, n: "Basic Cloth Rack", p: {gem: 800}},
 	{i: 78019, n: "Basic Leather Rack", p: {gem: 800}},
-	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: -1200}},
-	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: -1000}}
+	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
+	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}}
 ],
 Finisher: [
 	{i: 44068, n: "Permanent Mad King Finisher", p: {gem: -500}},
