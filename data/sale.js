@@ -21,10 +21,13 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: "https://i.imgur.com/ch0zrT3.png", n: "Foefire Armor Package", p: {gem: 1300}, Finish: new Date("2018-04-27T16:00:00Z")},
-	{i: 81412, n: "Foefire Mantle", p: {gem: 500}, Finish: new Date("2018-04-27T16:00:00Z")},
-	{i: 81293, n: "Foefire Wraps", p: {gem: 500}, Finish: new Date("2018-04-27T16:00:00Z")},
-	{i: 85282, n: "Foefire Greaves", p: {gem: 500}, Finish: new Date("2018-04-27T16:00:00Z")},
+	{i: 78008, n: "Gwen's Attire", p: {gem: 490}, discount: 700, Finish: new Date("2018-05-04T16:00:00Z")},
+	{i: 69863, n: "Monk's Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2018-05-04T16:00:00Z")},
+	{i: 70300, n: "Mini Bonebreaker", p: {gem: 350}, Finish: new Date("2018-05-04T16:00:00Z")},
+	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}, Finish: new Date("2018-05-04T16:00:00Z")},
+	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}, Finish: new Date("2018-05-04T16:00:00Z")},
+	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}, Finish: new Date("2018-05-04T16:00:00Z")},
+	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}, Finish: new Date("2018-05-04T16:00:00Z")},
 	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
 	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: 600}},
@@ -36,10 +39,6 @@ GW2T_SALE_DATA = {
 	{i: 85491, n: "Resplendent Avialan", p: {gem: 2000}, Finish: new Date("2018-05-01T16:00:00Z")},
 	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}, Finish: new Date("2018-05-01T16:00:00Z")},
 	{i: 69664, n: "Elegant Fan Focus Skin", p: {gem: 600}, Finish: new Date("2018-04-28T16:00:00Z")},
-	{i: 79365, n: "Peacock Scepter Skin", p: {gem: 600}, Finish: new Date("2018-04-26T16:00:00Z")},
-	{i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}, Finish: new Date("2018-04-25T16:00:00Z")},
-	{i: 79386, n: "Dragon Kama Skin", p: {gem: 600}, Finish: new Date("2018-04-24T16:00:00Z")},
-	{i: 79310, n: "Storm Bow", p: {gem: 600}, Finish: new Date("2018-04-23T16:00:00Z")},
 	{i: 87429, n: "Beastslayer Glider", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
@@ -53,13 +52,6 @@ GW2T_SALE_DATA = {
 	{i: 77339, n: "Mini Sabetha", p: {gem: 350}, Finish: new Date("2018-05-02T16:00:00Z")},
 	{i: 67838, n: "Mini Sand Giant", p: {gem: 350}, Finish: new Date("2018-05-02T16:00:00Z")},
 	{i: 42960, n: "Mini Scruffy", p: {gem: 500}, Finish: new Date("2018-05-02T16:00:00Z")},
-	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: 1000}},
-	{i: 48930, n: "Consortium Harvesting Sickle", p: {gem: 1000}, Finish: new Date("2018-04-24T16:00:00Z")},
-	{i: 80966, n: "Super Adventure Logging Bear", p: {gem: 1000}, Finish: new Date("2018-04-24T16:00:00Z")},
-	{i: 78009, n: "Super Adventure Glider", p: {gem: 400}},
-	{i: 87323, n: "Miniature Super Trio—Series 4", p: {gem: 600}, Finish: new Date("2018-04-24T16:00:00Z")},
-	{i: 20000, n: "Box o' Fun", p: {gem: 32}, discount: [[1, 32, 80], [5, 128, 400]]},
-	{i: 87311, n: "Winged Headpiece", p: {gem: 400}, Finish: new Date("2018-04-24T16:00:00Z")},
-	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-04-24T16:00:00Z")}
+	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: 1000}}
 	]
 };
