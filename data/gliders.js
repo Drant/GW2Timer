@@ -35,7 +35,8 @@ Dyeable: [
 	{u: 38, i: 80725, n: "Raven's Spirit Glider", l: "2", p: {gem: 500}},
 	{u: 50, i: 83341, n: "Sheet Music Glider", l: "2", p: {gem: 400}},
 	{u: 53, i: 85496, n: "Riding Broom Glider", l: "2", p: {gem: 500}},
-	{u: 57, i: 87070, n: "Forged Glider", l: "2", p: {gem: 0}}
+	{u: 57, i: 87070, n: "Forged Glider", l: "2", p: {gem: 0}},
+	{u: 58, i: 87429, n: "Beastslayer Glider", p: {gem: 400}}
 ],
 Colored: [
 	{u: 5, i: 67054, n: "Heart of Thorns Glider", l: "", p: {gem: 0}},
