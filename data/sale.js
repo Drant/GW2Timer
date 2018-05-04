@@ -41,11 +41,15 @@ GW2T_SALE_DATA = {
 	{i: 87429, n: "Beastslayer Glider", p: {gem: 400}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
-	{i: 67840, n: "Mini Drooburt's Ghost", p: {gem: 350}, Finish: new Date("2018-05-03T16:00:00Z")},
-	{i: 80860, n: "Mini Krytan Floppy Fish", p: {gem: 350}, Finish: new Date("2018-05-03T16:00:00Z")},
-	{i: 42951, n: "Mini Mordrem Leyleecher", p: {gem: 500}, Finish: new Date("2018-05-03T16:00:00Z")},
-	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}, Finish: new Date("2018-05-03T16:00:00Z")},
-	{i: 77675, n: "Mini Zintl Cavalier", p: {gem: 350}, Finish: new Date("2018-05-03T16:00:00Z")},
-	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: 1000}}
+	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}},
+	{i: 42593, n: "Mini Lion Cub", p: {gem: 400}},
+	{i: 42577, n: "Mini Moa Chick", p: {gem: 400}},
+	{i: 42578, n: "Mini Piglet", p: {gem: 400}},
+	{i: 42582, n: "Mini Polar Bear Cub", p: {gem: 400}},
+	{i: 70234, n: "Mini Angry Chest", p: {gem: 400}},
+	{i: 42581, n: "Mini Arctodus Cub", p: {gem: 400}},
+	{i: 69667, n: "Mini Bear Cub", p: {gem: 400}},
+	{i: 69656, n: "Mini Fox Kit", p: {gem: 400}},
+	{i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}}
 	]
 };
