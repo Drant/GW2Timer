@@ -26,13 +26,9 @@ GW2T_SALE_DATA = {
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}, Finish: new Date("2018-05-09T16:00:00Z")},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
-	{i: 78008, n: "Gwen's Attire", p: {gem: 490}, discount: 700, Finish: new Date("2018-05-04T16:00:00Z")},
-	{i: 69863, n: "Monk's Outfit", p: {gem: 490}, discount: 700, Finish: new Date("2018-05-04T16:00:00Z")},
-	{i: 70300, n: "Mini Bonebreaker", p: {gem: 350}, Finish: new Date("2018-05-04T16:00:00Z")},
-	{i: 85517, n: "Mini Kormeerkat", p: {gem: 350}, Finish: new Date("2018-05-04T16:00:00Z")},
-	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}, Finish: new Date("2018-05-04T16:00:00Z")},
-	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}, Finish: new Date("2018-05-04T16:00:00Z")},
-	{i: 84873, n: "Mini Zaishen Puppy", p: {gem: 400}, Finish: new Date("2018-05-04T16:00:00Z")},
+	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 800}, Finish: new Date("2018-05-11T16:00:00Z")},
+	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: 800}, Finish: new Date("2018-05-11T16:00:00Z")},
+	{i: 43158, n: "Magitech Medium Armor Skin", p: {gem: 800}, Finish: new Date("2018-05-11T16:00:00Z")},
 	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}, Finish: new Date("2018-05-09T16:00:00Z")},
 	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}, Finish: new Date("2018-05-09T16:00:00Z")},
 	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: 600}},
@@ -50,6 +46,9 @@ GW2T_SALE_DATA = {
 	{i: 42581, n: "Mini Arctodus Cub", p: {gem: 400}},
 	{i: 69667, n: "Mini Bear Cub", p: {gem: 400}},
 	{i: 69656, n: "Mini Fox Kit", p: {gem: 400}},
-	{i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}}
+	{i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}},
+	{i: 42592, n: "Mini Black Bear Cub", p: {gem: 400}},
+	{i: 42579, n: "Mini Hippo Calf", p: {gem: 400}},
+	{i: 42584, n: "Mini Jaguar Cub", p: {gem: 400}}
 	]
 };
