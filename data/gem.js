@@ -111,7 +111,8 @@ Mount: [
 	{i: 85491, n: "Resplendent Avialan", p: {gem: -2000}},
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}},
 	{i: 86766, n: "Summit Chevon Springer Skin", p: {gem: -2000}},
-	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}}
+	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}},
+	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: -700}},
@@ -523,9 +524,9 @@ Gathering: [
 	{i: 78724, n: "Focused Solar Logging Tool", p: {gem: -1000}},
 	{i: 78909, n: "Glitter Bomb Harvesting Tool", p: {gem: -1000}},
 	{i: 80067, n: "Celestial Rooster Harvesting Tool", p: {gem: -1000}},
-	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
-	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: 1000}},
-	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: 1000}},
+	{i: 67032, n: "Fused Molten Sickle", p: {gem: -1000}},
+	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: -1000}},
+	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: -1000}},
 	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: -1000}},
 	{i: 67029, n: "Tireless Logging Minion", p: {gem: -1000}},
 	{i: 48932, n: "Bone Pick", p: {gem: -1000}},
@@ -549,7 +550,7 @@ Gathering: [
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: -900}},
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}},
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: -1000}},
-	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: 1000}}
+	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: -1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
