@@ -27,6 +27,8 @@ GW2T_SALE_DATA = {
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}},
 	{i: 81545, n: "Jormag Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-05-11T16:00:00Z")},
 	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-05-11T16:00:00Z")},
+	{i: 67291, n: "Taimi's Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-05-13T16:00:00Z")},
+	{i: 79695, n: "Vibrant Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-05-13T16:00:00Z")},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: 700}, Finish: new Date("2018-05-09T16:00:00Z")},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 800}, Finish: new Date("2018-05-11T16:00:00Z")},
