@@ -550,7 +550,8 @@ Gathering: [
 	{i: 80979, n: "Unbound Magic Logging Pulse", p: {gem: -900}},
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}},
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: -1000}},
-	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: -1000}}
+	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: -1000}},
+	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
