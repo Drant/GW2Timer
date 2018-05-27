@@ -50,6 +50,12 @@ GW2T_SALE_DATA = {
 	{i: 78011, n: "White Mantle Outfit", p: {gem: 700}, Finish: new Date("2018-05-31T16:00:00Z")},
 	{i: 76905, n: "Crystal Arbiter Outfit", p: {gem: 700}, Finish: new Date("2018-06-01T16:00:00Z")},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}, Finish: new Date("2018-06-01T16:00:00Z")},
-	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}, Finish: new Date("2018-06-01T16:00:00Z")}
+	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}, Finish: new Date("2018-06-01T16:00:00Z")},
+	{i: 42870, n: "Aetherblade Light Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-01T16:00:00Z")},
+	{i: 42869, n: "Aetherblade Medium Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-01T16:00:00Z")},
+	{i: 42868, n: "Aetherblade Heavy Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-01T16:00:00Z")},
+	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-03T16:00:00Z")},
+	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-03T16:00:00Z")},
+	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-03T16:00:00Z")}
 	]
 };

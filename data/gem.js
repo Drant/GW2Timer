@@ -288,9 +288,9 @@ Armor: [
 	{i: 20274, n: "Profane Light Armor Skin", p: {gem: 500}},
 	{i: 20273, n: "Krytan Medium Armor Skin", p: {gem: 500}},
 	{i: 20272, n: "Primeval Heavy Armor Skin", p: {gem: 500}},
-	{i: 42870, n: "Aetherblade Light Armor Skin", p: {gem: 800}},
-	{i: 42869, n: "Aetherblade Medium Armor Skin", p: {gem: 800}},
-	{i: 42868, n: "Aetherblade Heavy Armor Skin", p: {gem: 800}},
+	{i: 42870, n: "Aetherblade Light Armor Skin", p: {gem: -800}},
+	{i: 42869, n: "Aetherblade Medium Armor Skin", p: {gem: -800}},
+	{i: 42868, n: "Aetherblade Heavy Armor Skin", p: {gem: -800}},
 	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: -800}},
 	{i: 43017, n: "Zodiac Medium Armor Skin", p: {gem: -800}},
 	{i: 43016, n: "Zodiac Heavy Armor Skin", p: {gem: -800}},
@@ -303,9 +303,9 @@ Armor: [
 	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: -800}},
 	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: -800}},
 	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: -800}},
-	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 800}},
-	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 800}},
-	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 800}}
+	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: -800}},
+	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: -800}},
+	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: -800}}
 ],
 Weapon: [
 	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: -600}},
