@@ -443,6 +443,7 @@ var GW2T_ACCOUNT_METADATA = {
 		172, // Daily Siren's Landing
 		194, // Daily Domain of Istan
 		204, // Daily Sandswept Isles
+		207, // Sunken Treasure Hunter Daily
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
@@ -494,6 +495,7 @@ var GW2T_ACCOUNT_METADATA = {
 		58, // Triple Trouble
 		47, // Tequatl
 		16, // Bosses
+		206, // Sunken Treasure Hunter
 		{en: "Heart of Thorns", de: "Heart of Thorns", es: "Heart of Thorns", fr: "Heart of Thorns", zh: "决战迈古玛"},
 		116, // Verdant Brink
 		111, // Auric Basin

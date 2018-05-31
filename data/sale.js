@@ -37,6 +37,9 @@ GW2T_SALE_DATA = {
 	{i: 86834, n: "Permanent Sandshark Finisher", p: {gem: 480}, discount: 600, Finish: new Date("2018-06-01T16:00:00Z")},
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}},
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}},
+	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
+	{i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: 700}},
+	{i: 69863, n: "Monk's Outfit", p: {gem: 700}},
 	{i: 70253, n: "Wedding Attire Outfit", p: {gem: 1000}, Finish: new Date("2018-06-05T16:00:00Z")},
 	{i: 67040, n: "Ceremonial Plated Outfit", p: {gem: 700}, Finish: new Date("2018-06-05T16:00:00Z")},
 	{i: 79531, n: "Mursaat Robes", p: {gem: 700}, Finish: new Date("2018-06-05T16:00:00Z")},
@@ -55,10 +58,6 @@ GW2T_SALE_DATA = {
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
 	{i: 44839, n: "Zodiac weapon skins#Gallery", p: {blticket: 3}, Finish: new Date("2018-06-12T16:00:00Z")},
 	{i: 77898, n: "Dominator weapon skins#Gallery", p: {blticket: 3}, Finish: new Date("2018-06-12T16:00:00Z")},
-	{i: 77282, n: "Bandit Sniper's Outfit", p: {gem: 700}, Finish: new Date("2018-05-30T16:00:00Z")},
-	{i: 81223, n: "Outlaw Outfit", p: {gem: 700}, Finish: new Date("2018-05-30T16:00:00Z")},
-	{i: 78574, n: "Sentinel Outfit", p: {gem: 700}, Finish: new Date("2018-05-30T16:00:00Z")},
-	{i: 78011, n: "White Mantle Outfit", p: {gem: 700}, Finish: new Date("2018-05-30T16:00:00Z")},
 	{i: 76905, n: "Crystal Arbiter Outfit", p: {gem: 700}, Finish: new Date("2018-05-31T16:00:00Z")},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}, Finish: new Date("2018-05-31T16:00:00Z")},
 	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}, Finish: new Date("2018-05-31T16:00:00Z")},
@@ -67,6 +66,9 @@ GW2T_SALE_DATA = {
 	{i: 42868, n: "Aetherblade Heavy Armor Skin", p: {gem: 800}, Finish: new Date("2018-05-31T16:00:00Z")},
 	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-02T16:00:00Z")},
 	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-02T16:00:00Z")},
-	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-02T16:00:00Z")}
+	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: 800}, Finish: new Date("2018-06-02T16:00:00Z")},
+	{i: 64747, n: "Inventor's Sunglasses", p: {gem: 150}, Finish: new Date("2018-06-06T16:00:00Z")},
+	{i: 67038, n: "Glowing Green Mask", p: {gem: 500}, Finish: new Date("2018-06-06T16:00:00Z")},
+	{i: 66309, n: "Wreath of Cooperation", p: {gem: 400}, Finish: new Date("2018-06-06T16:00:00Z")}
 	]
 };
