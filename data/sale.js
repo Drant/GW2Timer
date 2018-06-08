@@ -22,7 +22,6 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
 	{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}},
-	{i: 19980, n: "Black Lion Chest Key", p: {gem: 100}, discount: [[1, 100, 125], [5, 359, 450], [25, 1680, 2100]]},
 	{i: 87549, n: "Sunspear Glider", p: {gem: 400}},
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}},
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}},
@@ -39,6 +38,10 @@ GW2T_SALE_DATA = {
 	{i: 64751, n: "Fuzzy Quaggan Hat with Bow", p: {gem: 200}},
 	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}},
 	{i: 44608, n: "Mask of the Queen", p: {gem: 400}},
+	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}},
+	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}},
+	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}},
+	{i: 64745, n: "Ringmaster's Hat", p: {gem: 200}},
 	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
