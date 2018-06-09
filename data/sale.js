@@ -21,7 +21,12 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}},
+	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 560}, discount: 800, Finish: new Date("2018-06-11T16:00:00Z")},
+	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 350}, discount: 500, Finish: new Date("2018-06-11T16:00:00Z")},
+	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
+	{i: 77821, n: "Classical Glider", p: {gem: 400}},
+	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
+	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}},
 	{i: 87549, n: "Sunspear Glider", p: {gem: 400}},
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}},
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}},
@@ -50,11 +55,6 @@ GW2T_SALE_DATA = {
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}, Finish: new Date("2018-06-09T16:00:00Z")},
 	{i: 78745, n: "Moth Wings Backpack", p: {gem: 700}, Finish: new Date("2018-06-09T16:00:00Z")},
 	{i: 78768, n: "Moth Wings Glider", p: {gem: 700}, Finish: new Date("2018-06-09T16:00:00Z")},
-	{i: 79016, n: "White Mantle Glider", p: {gem: 400}, Finish: new Date("2018-06-09T16:00:00Z")},
-	{i: 78007, n: "Bubble Glider", p: {gem: 500}, Finish: new Date("2018-06-08T16:00:00Z")},
-	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: 500}, Finish: new Date("2018-06-08T16:00:00Z")},
-	{i: 77738, n: "Phoenix Kite Glider", p: {gem: 400}, Finish: new Date("2018-06-08T16:00:00Z")},
-	{i: 79084, n: "Shining Blade Glider", p: {gem: 700}, Finish: new Date("2018-06-08T16:00:00Z")},
-	{i: 79288, n: "Shining Blade Backpack", p: {gem: 700}, Finish: new Date("2018-06-08T16:00:00Z")}
+	{i: 79016, n: "White Mantle Glider", p: {gem: 400}, Finish: new Date("2018-06-09T16:00:00Z")}
 	]
 };
