@@ -21,6 +21,8 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 560}, discount: 800, Finish: new Date("2018-06-15T16:00:00Z")},
+	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 350}, discount: 500, Finish: new Date("2018-06-15T16:00:00Z")},
 	{i: "https://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1360}, discount: 1600, Finish: new Date("2018-06-15T16:00:00Z")},
 	{i: "https://i.imgur.com/7KQdXAx.png", n: "Marjory's Package", p: {gem: 1360}, discount: 1600, Finish: new Date("2018-06-15T16:00:00Z")},
 	{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1360}, discount: 1600, Finish: new Date("2018-06-15T16:00:00Z")},
@@ -59,16 +61,15 @@ GW2T_SALE_DATA = {
 	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
+	{i: 70234, n: "Mini Angry Chest", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
+	{i: 42581, n: "Mini Arctodus Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
+	{i: 69656, n: "Mini Fox Kit", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
+	{i: 42593, n: "Mini Lion Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
+	{i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
 	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}, Finish: new Date("2018-06-19T16:00:00Z")},
 	{i: 69667, n: "Mini Bear Cub", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")},
 	{i: 42577, n: "Mini Moa Chick", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")},
 	{i: 42578, n: "Mini Piglet", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")},
-	{i: 42582, n: "Mini Polar Bear Cub", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")},
-	{i: 78790, n: "Floral Glider", p: {gem: 400}, Finish: new Date("2018-06-09T16:00:00Z")},
-	{i: 82671, n: "Largos Fin Glider", p: {gem: 700}, Finish: new Date("2018-06-09T16:00:00Z")},
-	{i: 84241, n: "Largos Fin Backpack", p: {gem: 700}, Finish: new Date("2018-06-09T16:00:00Z")},
-	{i: 78745, n: "Moth Wings Backpack", p: {gem: 700}, Finish: new Date("2018-06-09T16:00:00Z")},
-	{i: 78768, n: "Moth Wings Glider", p: {gem: 700}, Finish: new Date("2018-06-09T16:00:00Z")},
-	{i: 79016, n: "White Mantle Glider", p: {gem: 400}, Finish: new Date("2018-06-09T16:00:00Z")}
+	{i: 42582, n: "Mini Polar Bear Cub", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")}
 	]
 };
