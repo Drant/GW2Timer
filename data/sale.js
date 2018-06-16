@@ -21,13 +21,10 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 560}, discount: 800, Finish: new Date("2018-06-15T16:00:00Z")},
-	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 350}, discount: 500, Finish: new Date("2018-06-15T16:00:00Z")},
-	{i: "https://i.imgur.com/AKzkrkI.png", n: "Kasmeer's Package", p: {gem: 1360}, discount: 1600, Finish: new Date("2018-06-15T16:00:00Z")},
-	{i: "https://i.imgur.com/7KQdXAx.png", n: "Marjory's Package", p: {gem: 1360}, discount: 1600, Finish: new Date("2018-06-15T16:00:00Z")},
-	{i: "https://i.imgur.com/u74xsUH.png", n: "Rox's Package", p: {gem: 1360}, discount: 1600, Finish: new Date("2018-06-15T16:00:00Z")},
-	{i: "https://i.imgur.com/vifSGUV.png", n: "Taimi's Package", p: {gem: 1700}, discount: 2000, Finish: new Date("2018-06-15T16:00:00Z")},
-	{i: "https://i.imgur.com/ODWMADq.png", n: "Braham's Bitterfrost Frontier Pack", p: {gem: 1700}, discount: 2000, Finish: new Date("2018-06-15T16:00:00Z")},
+	{i: 67071, n: "Shared Inventory Slot", p: {gem: 525}, discount: [[1, 525, 700], [3, 1417, 1890], [5, 2100, 2800]]},
+	{i: 48931, n: "Chop-It-All Logging Axe", p: {gem: 700}, discount: 1000, Finish: new Date("2018-06-18T16:00:00Z")},
+	{i: 49308, n: "Thresher-Sickle 5000", p: {gem: 1000}, discount: 1000, Finish: new Date("2018-06-18T16:00:00Z")},
+	{i: 47897, n: "Watchwork Mining Pick", p: {gem: 1000}, discount: 1000, Finish: new Date("2018-06-18T16:00:00Z")},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
