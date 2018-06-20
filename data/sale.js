@@ -21,10 +21,13 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 67071, n: "Shared Inventory Slot", p: {gem: 525}, discount: [[1, 525, 700], [3, 1417, 1890], [5, 2100, 2800]]},
-	{i: 48931, n: "Chop-It-All Logging Axe", p: {gem: 700}, discount: 1000, Finish: new Date("2018-06-18T16:00:00Z")},
-	{i: 49308, n: "Thresher-Sickle 5000", p: {gem: 1000}, discount: 1000, Finish: new Date("2018-06-18T16:00:00Z")},
-	{i: 47897, n: "Watchwork Mining Pick", p: {gem: 1000}, discount: 1000, Finish: new Date("2018-06-18T16:00:00Z")},
+	{i: 48931, n: "Chop-It-All Logging Axe", p: {gem: 700}, discount: 1000, Finish: new Date("2018-06-21T16:00:00Z")},
+	{i: 49308, n: "Thresher-Sickle 5000", p: {gem: 1000}, discount: 1000, Finish: new Date("2018-06-21T16:00:00Z")},
+	{i: 47897, n: "Watchwork Mining Pick", p: {gem: 1000}, discount: 1000, Finish: new Date("2018-06-21T16:00:00Z")},
+	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-06-26T16:00:00Z")},
+	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-06-26T16:00:00Z")},
+	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
+	{i: 83517, n: "Season 1 Memory Box - Scarlet vs. Lion's Arch", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
@@ -66,11 +69,6 @@ GW2T_SALE_DATA = {
 	{i: 42581, n: "Mini Arctodus Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
 	{i: 69656, n: "Mini Fox Kit", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
 	{i: 42593, n: "Mini Lion Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
-	{i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
-	{i: 67841, n: "Mini Avatar of the Tree", p: {gem: 350}, Finish: new Date("2018-06-19T16:00:00Z")},
-	{i: 69667, n: "Mini Bear Cub", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")},
-	{i: 42577, n: "Mini Moa Chick", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")},
-	{i: 42578, n: "Mini Piglet", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")},
-	{i: 42582, n: "Mini Polar Bear Cub", p: {gem: 400}, Finish: new Date("2018-06-19T16:00:00Z")}
+	{i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")}
 	]
 };
