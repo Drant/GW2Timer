@@ -28,6 +28,11 @@ GW2T_SALE_DATA = {
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-06-26T16:00:00Z")},
 	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
 	{i: 83517, n: "Season 1 Memory Box - Scarlet vs. Lion's Arch", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
+	{i: 42591, n: "Mini White Kitten", p: {gem: 400}},
+	{i: 42960, n: "Mini Scruffy", p: {gem: 500}},
+	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
+	{i: 79361, n: "Mini Jungle Lord Faren", p: {gem: 350}},
+	{i: 80371, n: "Mini Demmi Beetlestone", p: {gem: 400}},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
@@ -64,11 +69,6 @@ GW2T_SALE_DATA = {
 	{i: 42592, n: "Mini Black Bear Cub", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")},
 	{i: 42579, n: "Mini Hippo Calf", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")},
 	{i: 42584, n: "Mini Jaguar Cub", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")},
-	{i: 86958, n: "Mini Lucky Lantern Puppy", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")},
-	{i: 70234, n: "Mini Angry Chest", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
-	{i: 42581, n: "Mini Arctodus Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
-	{i: 69656, n: "Mini Fox Kit", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
-	{i: 42593, n: "Mini Lion Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")},
-	{i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}, Finish: new Date("2018-06-20T16:00:00Z")}
+	{i: 86958, n: "Mini Lucky Lantern Puppy", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")}
 	]
 };
