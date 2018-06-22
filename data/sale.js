@@ -21,18 +21,10 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 48931, n: "Chop-It-All Logging Axe", p: {gem: 700}, discount: 1000, Finish: new Date("2018-06-21T16:00:00Z")},
-	{i: 49308, n: "Thresher-Sickle 5000", p: {gem: 1000}, discount: 1000, Finish: new Date("2018-06-21T16:00:00Z")},
-	{i: 47897, n: "Watchwork Mining Pick", p: {gem: 1000}, discount: 1000, Finish: new Date("2018-06-21T16:00:00Z")},
 	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-06-26T16:00:00Z")},
 	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-06-26T16:00:00Z")},
 	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
 	{i: 83517, n: "Season 1 Memory Box - Scarlet vs. Lion's Arch", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
-	{i: 42591, n: "Mini White Kitten", p: {gem: 400}},
-	{i: 42960, n: "Mini Scruffy", p: {gem: 500}},
-	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
-	{i: 79361, n: "Mini Jungle Lord Faren", p: {gem: 350}},
-	{i: 80371, n: "Mini Demmi Beetlestone", p: {gem: 400}},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
@@ -66,9 +58,14 @@ GW2T_SALE_DATA = {
 	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
-	{i: 42592, n: "Mini Black Bear Cub", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")},
-	{i: 42579, n: "Mini Hippo Calf", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")},
-	{i: 42584, n: "Mini Jaguar Cub", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")},
-	{i: 86958, n: "Mini Lucky Lantern Puppy", p: {gem: 400}, Finish: new Date("2018-06-21T16:00:00Z")}
+	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
+	{i: 67835, n: "Pact Airship Balloon", p: {gem: 500}},
+	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
+	{i: 70191, n: "Mini Wyvern", p: {gem: 350}},
+	{i: 42591, n: "Mini White Kitten", p: {gem: 400}},
+	{i: 42960, n: "Mini Scruffy", p: {gem: 500}},
+	{i: 81242, n: "Mini Outlaw Puppy", p: {gem: 400}},
+	{i: 79361, n: "Mini Jungle Lord Faren", p: {gem: 350}},
+	{i: 80371, n: "Mini Demmi Beetlestone", p: {gem: 400}}
 	]
 };
