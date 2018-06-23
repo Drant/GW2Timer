@@ -26,6 +26,7 @@ GW2T_SALE_DATA = {
 	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
 	{i: 83517, n: "Season 1 Memory Box - Scarlet vs. Lion's Arch", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
+	{i: 49021, n: "Kasmeer's Staff Skin", p: {gem: 600}, Finish: new Date("2018-06-25T16:00:00Z")},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
