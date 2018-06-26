@@ -28,6 +28,8 @@ GW2T_SALE_DATA = {
 	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: 600}, Finish: new Date("2018-06-27T16:00:00Z")},
 	{i: 49015, n: "Marjory's Axe Skin", p: {gem: 600}, Finish: new Date("2018-06-26T16:00:00Z")},
 	{i: 49018, n: "Marjory's Dagger Skin", p: {gem: 600}, Finish: new Date("2018-06-26T16:00:00Z")},
+	{i: 79089, n: "Lord Caudecus's Sword Skin", p: {gem: 600}, Finish: new Date("2018-06-27T16:00:00Z")},
+	{i: 79179, n: "Lord Caudecus's Pistol Skin", p: {gem: 600}, Finish: new Date("2018-06-27T16:00:00Z")},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
 	{i: 49021, n: "Kasmeer's Staff Skin", p: {gem: 600}, Finish: new Date("2018-06-25T16:00:00Z")},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
