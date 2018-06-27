@@ -55,7 +55,8 @@ var GW2T_DYES_HEADERS = {
 	Jormag: {id: 81545, name_en: "Jormag Dye Kit", name_de: "Jormag-Farbkit", name_es: "Kit de tintes de Jormag", name_fr: "Kit de teintures de Jormag", name_zh: "卓玛染料包"},
 	Elonian: {id: 86163, name_en: "Elonian Landscape Dye Kit", name_de: "Elonische Landschaft-Farbkit", name_es: "Kit de tintes de paisaje eloniano", name_fr: "Kit de teinture de paysage élonien", name_zh: "伊伦娜风景染料包"},
 	Zhaitan: {id: 86898, name_en: "Zhaitan Dye Kit", name_de: "Zhaitan-Farbkit", name_es: "Kit de tintes de Zhaitan", name_fr: "Kit de teintures de Zhaïtan", name_zh: "泽坦染料包"},
-	Beasts: {id: 85628, name_en: "Elonian Beasts Dye Kit", name_de: "Elonische Bestien-Farbkit", name_es: "Kit de tintes de bestias elonianas", name_fr: "Kit de teinture vide", name_zh: "伊伦娜野兽染料包"}
+	Beasts: {id: 85628, name_en: "Elonian Beasts Dye Kit", name_de: "Elonische Bestien-Farbkit", name_es: "Kit de tintes de bestias elonianas", name_fr: "Kit de teinture vide", name_zh: "伊伦娜野兽染料包"},
+	Awakened: {id: 87603, name_en: "Awakened Dye Kit", name_de: "Erweckten-Farbkit", name_es: "Kit de tintes despertados", name_fr: "Kit de teintures d'éveillé", name_zh: "苏醒者染料包"}
 };
 
 /*
@@ -675,5 +676,13 @@ Beasts: [
 	{u: 1578, i: 87383, n: "Jacaranda Dye", c: ["#2c2400", "#211700", "#4b4000"], h: "Green", m: "Leather", l: "[&AgFXVQEA]", en: "Jacaranda", de: "Jacaranda", es: "Jacaranda", fr: "Jacaranda", zh: "蓝花楹"},
 	{u: 1595, i: 87312, n: "Sand Shark Dye", c: ["#1a8ac5", "#1a8ac5", "#41b1ed"], h: "Blue", m: "Vibrant", l: "[&AgEQVQEA]", en: "Sand Shark", de: "Sandhai", es: "Tiburón de arena", fr: "Requin des sables", zh: "沙漠鲨鱼"},
 	{u: 1593, i: 87355, n: "Desert Harpy Dye", c: ["#303d62", "#303d62", "#465378"], h: "Blue", m: "Vibrant", l: "[&AgE7VQEA]", en: "Desert Harpy", de: "Wüsten-Harpyie", es: "Arpía del desierto", fr: "Harpie du désert", zh: "沙漠鹰身女妖"}
+],
+Awakened: [
+	{u: 1599, i: 87947, n: "Tar Dye", c: ["#060a13", "#000000", "#1d2029"], h: "Gray", m: "Metal", l: "[&AgGLVwEA]", en: "Tar", de: "Teer", es: "Alquitrán", fr: "Goudron", zh: "焦油"},
+	{u: 1598, i: 87787, n: "Embalm Dye", c: ["#a1947e", "#a1947e", "#c5b9a2"], h: "Brown", m: "Leather", l: "[&AgHrVgEA]", en: "Embalm", de: "Einbalsamierung", es: "Embalsamador", fr: "Embaumement", zh: "入殓师"},
+	{u: 1597, i: 88024, n: "Vabbian Bronze Dye", c: ["#b06200", "#b06200", "#cf8118"], h: "Orange", m: "Vibrant", l: "[&AgHYVwEA]", en: "Vabbian Bronze", de: "Vaabische Bronze", es: "Bronce vabbiano", fr: "Bronze vabbien", zh: "瓦比青铜"},
+	{u: 1602, i: 87622, n: "Urn Dye", c: ["#a97451", "#a97451", "#986340"], h: "Orange", m: "Vibrant", l: "[&AgFGVgEA]", en: "Urn", de: "Urne", es: "Urna", fr: "Urne", zh: "骨灰瓮"},
+	{u: 1600, i: 88095, n: "Sarcophagus Dye", c: ["#8f7224", "#8f7224", "#a38739"], h: "Yellow", m: "Metal", l: "[&AgEfWAEA]", en: "Sarcophagus", de: "Sarkophag", es: "Sarcófago", fr: "Sarcophage", zh: "石棺"},
+	{u: 1601, i: 87855, n: "Scourge Dye", c: ["#3d3900", "#3d3900", "#6c6800"], h: "Green", m: "Leather", l: "[&AgEvVwEA]", en: "Scourge", de: "Geißel", es: "Azote", fr: "Fléau", zh: "灾厄"}	
 ]
 };

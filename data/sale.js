@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2018-06-12T16:00:00Z"),
-	Finish: new Date("2018-06-26T16:00:00Z"),
+	Start: new Date("2018-06-26T16:00:00Z"),
+	Finish: new Date("2018-07-10T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,23 +21,16 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-06-26T16:00:00Z")},
-	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-06-26T16:00:00Z")},
-	{i: 83073, n: "Season 1 Memory Box - Flame and Festivals", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
-	{i: 83517, n: "Season 1 Memory Box - Scarlet vs. Lion's Arch", p: {gem: 140}, discount: [[1, 140, 200], [10, 1050, 1500]]},
 	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: 600}, Finish: new Date("2018-06-27T16:00:00Z")},
-	{i: 49015, n: "Marjory's Axe Skin", p: {gem: 600}, Finish: new Date("2018-06-26T16:00:00Z")},
-	{i: 49018, n: "Marjory's Dagger Skin", p: {gem: 600}, Finish: new Date("2018-06-26T16:00:00Z")},
 	{i: 79089, n: "Lord Caudecus's Sword Skin", p: {gem: 600}, Finish: new Date("2018-06-27T16:00:00Z")},
 	{i: 79179, n: "Lord Caudecus's Pistol Skin", p: {gem: 600}, Finish: new Date("2018-06-27T16:00:00Z")},
+	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: 600}, Finish: new Date("2018-06-29T16:00:00Z")},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
-	{i: 49021, n: "Kasmeer's Staff Skin", p: {gem: 600}, Finish: new Date("2018-06-25T16:00:00Z")},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}},
 	{i: 87549, n: "Sunspear Glider", p: {gem: 400}},
-	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}},
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}},
 	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
 	{i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: 700}},
@@ -64,6 +57,9 @@ GW2T_SALE_DATA = {
 	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}},
+	{i: 69478, n: "Mad Scientist's Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-06-29T16:00:00Z")},
+	{i: 68799, n: "Mad Scientist's Logging Tool", p: {gem: 1000}, Finish: new Date("2018-06-29T16:00:00Z")},
+	{i: 68905, n: "Mad Scientist's Mining Tool", p: {gem: 1000}, Finish: new Date("2018-06-29T16:00:00Z")},
 	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
 	{i: 67835, n: "Pact Airship Balloon", p: {gem: 500}},
 	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
