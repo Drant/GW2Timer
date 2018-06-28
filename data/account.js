@@ -443,6 +443,7 @@ var GW2T_ACCOUNT_METADATA = {
 		172, // Daily Siren's Landing
 		194, // Daily Domain of Istan
 		204, // Daily Sandswept Isles
+		208, // Daily Domain of Kourna
 		207, // Sunken Treasure Hunter Daily
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
@@ -475,6 +476,7 @@ var GW2T_ACCOUNT_METADATA = {
 		187, // Path of Fire: Act 3
 		196, // Daybreak
 		203, // A Bug in the System
+		209, // Long Live the Lich
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons
