@@ -26,6 +26,8 @@ GW2T_SALE_DATA = {
 	{i: 79179, n: "Lord Caudecus's Pistol Skin", p: {gem: 600}, Finish: new Date("2018-06-27T16:00:00Z")},
 	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: 600}, Finish: new Date("2018-06-29T16:00:00Z")},
 	{i: 20004, n: "Caithe's Bloom Dagger", p: {gem: 600}, Finish: new Date("2018-06-30T16:00:00Z")},
+	{i: 42653, n: "Braham's Mace Skin", p: {gem: 600}, Finish: new Date("2018-07-01T16:00:00Z")},
+	{i: 42656, n: "Braham's Shield Skin", p: {gem: 600}, Finish: new Date("2018-07-01T16:00:00Z")},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}},
 	{i: 77821, n: "Classical Glider", p: {gem: 400}},
