@@ -1959,13 +1959,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	/*{
+	{
 		name: "ArenaNet API Offline",
-		url: "https://en-forum.guildwars2.com/discussion/3195/api-temporarily-disabled",
-		isIndefinite: false,
-		Start: new Date("2017-09-22T17:00:00Z"),
-		Finish: new Date("2017-09-25T17:00:00Z")
-	},*/
+		url: "https://en-forum.guildwars2.com/categories/api-development",
+		isIndefinite: true,
+		Start: new Date("2018-06-29T17:00:00Z"),
+		Finish: new Date("2018-07-04T17:00:00Z")
+	},
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
