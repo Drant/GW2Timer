@@ -388,8 +388,9 @@ BlackLionWeapon: [
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 3}},
 	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 3}},
 	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 3}},
-	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 2}},
-	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 1}}
+	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 3}},
+	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 2}},
+	{i: 88077, n: "Desert King#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},
@@ -464,7 +465,8 @@ Dye: [
 	{i: 81545, n: "Jormag Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 86898, n: "Zhaitan Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 87603, n: "Awakened Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
