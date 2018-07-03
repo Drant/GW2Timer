@@ -36157,11 +36157,12 @@ H = {
 						continue;
 					}
 					var productid = H.Pact.Products[recipeid] || recipeid;
-					var product = Q.getCachedItem(productid) || {
+					var recipe = Q.getCachedItem(recipeid);
+					var product = Q.getCachedItem(productid) || recipe || {
 						icon: "img/ui/unknown.png",
 						name: productid
 					};
-					var recipe = Q.getCachedItem(recipeid) || product;
+					recipe = recipe || product;
 					
 					var wikiquery = (D.isLanguageDefault) ? recipe.name : recipeid.toString();
 					$("<div id='dsbPactEntry_" + i + "' class='dsbPactEntry'></div>").appendTo(table).html(
