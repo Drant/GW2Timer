@@ -481,7 +481,11 @@ var GW2T_DAILY_ASSOCIATION = {
 	"4028": "Oasis",
 	"4006": "Oasis",
 	"4030": "Oasis",
-	"3973": "Oasis"
+	"3973": "Oasis",
+	"4244": "Deepstone",
+	"4218": "Deepstone",
+	"4210": "Deepstone",
+	"4224": "Deepstone"
 };
 
 /*
@@ -516,7 +520,7 @@ Fractal:
 		"Underground", // 8
 		"Furnace", // 9
 		"Molten", // 10
-		"Urban", // 11
+		"Deepstone", // 11
 		"Uncategorized", // 12
 		"Chaos", // 13
 		"Aetherblade", // 14
@@ -538,7 +542,7 @@ Fractal:
 		"Chaos", // 30
 		"Urban", // 31
 		"Swamp", // 32
-		"Cliffside", // 33
+		"Deepstone", // 33
 		"Thaumanova", // 34
 		"Ocean", // 35
 		"Uncategorized", // 36
@@ -572,7 +576,7 @@ Fractal:
 		"Thaumanova", // 64
 		"Aetherblade", // 65
 		"Urban", // 66
-		"Swamp", // 67
+		"Deepstone", // 67
 		"Snowblind", // 68
 		"Cliffside", // 69
 		"Molten", // 70
@@ -589,7 +593,7 @@ Fractal:
 		"Underground", // 81
 		"Cliffside", // 82
 		"Molten", // 83
-		"Thaumanova", // 84
+		"Deepstone", // 84
 		"Urban", // 85
 		"Snowblind", // 86
 		"Oasis", // 87
