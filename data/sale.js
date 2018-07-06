@@ -21,14 +21,6 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 560}, discount: 700, Finish: new Date("2018-07-02T16:00:00Z")},
-	{i: 20004, n: "Caithe's Bloom Dagger", p: {gem: 600}, Finish: new Date("2018-06-30T16:00:00Z")},
-	{i: 42653, n: "Braham's Mace Skin", p: {gem: 600}, Finish: new Date("2018-07-01T16:00:00Z")},
-	{i: 42656, n: "Braham's Shield Skin", p: {gem: 600}, Finish: new Date("2018-07-01T16:00:00Z")},
-	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}, Finish: new Date("2018-07-02T16:00:00Z")},
-	{i: 81001, n: "Replica Mirror of Lyssa", p: {gem: 600}, Finish: new Date("2018-07-02T16:00:00Z")},
-	{i: 42663, n: "Rox's Quiver Backpack Cover", p: {gem: 600}, Finish: new Date("2018-07-03T16:00:00Z")},
-	{i: 42659, n: "Rox's Short Bow Skin", p: {gem: 600}, Finish: new Date("2018-07-03T16:00:00Z")},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
 	{i: 87603, n: "Awakened Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},

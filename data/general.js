@@ -1803,6 +1803,18 @@ var GW2T_ZONE_DATA = {
 	region: "desert",
 	map_rect: [[-36864, -52224], [39936, 52224]],
 	continent_rect: [[19226, 39018], [22426, 43370]]
+},
+"kourna":
+{
+	id: "1288",
+	name_en: "Domain of Kourna",
+	name_de: "Domäne Kourna",
+	name_es: "Dominio de Kourna",
+	name_fr: "Domaine de Kourna",
+	name_zh: "克南领域",
+	region: "desert",
+	map_rect: [[-49152, -55296], [49152, 58368]],
+	continent_rect: [[30856, 43188],[34952, 47924]]
 }
 };
 
