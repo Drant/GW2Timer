@@ -5,7 +5,7 @@
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2018-06-26T16:00:00Z"),
-	Finish: new Date("2018-07-10T16:00:00Z"),
+	Finish: new Date("2018-07-17T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -33,6 +33,8 @@ GW2T_SALE_DATA = {
 	{i: 69737, n: "Daydreamer's Wings Backpack", p: {gem: 500}, Finish: new Date("2018-07-13T16:00:00Z")},
 	{i: 78733, n: "Sloth Backpack", p: {gem: 500}, Finish: new Date("2018-07-13T16:00:00Z")},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}, Finish: new Date("2018-07-13T16:00:00Z")},
+	{i: 74219, n: "Dread Quiver Backpack", p: {gem: 350}, Finish: new Date("2018-07-14T16:00:00Z")},
+	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}, Finish: new Date("2018-07-14T16:00:00Z")},
 	{i: 84998, n: "Mini Maraca Choya Pinata", p: {gem: 400}},
 	{i: 67835, n: "Pact Airship Balloon", p: {gem: 500}},
 	{i: 84782, n: "Mini Squire Aurene", p: {gem: 400}},
