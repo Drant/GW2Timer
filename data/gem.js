@@ -113,7 +113,8 @@ Mount: [
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}},
 	{i: 86766, n: "Summit Chevon Springer Skin", p: {gem: -2000}},
 	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}},
-	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}}
+	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}},
+	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: -2000}}
 ],
 Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: 700}},
@@ -149,7 +150,7 @@ Glider: [
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: -500}},
 	{i: 80484, n: "Necrotic Glider", p: {gem: -500}},
 	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}},
-	{i: 80725, n: "Raven's Spirit Glider", p: {gem: -500}},
+	{i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}},
 	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}},
 	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}},
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}},
@@ -257,7 +258,7 @@ Head: [
 	{i: 84014, n: "Swaggering Hat", p: {gem: 400}},
 	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
 	{i: 86516, n: "Freezie Crown", p: {gem: -350}},
-	{i: 87311, n: "Winged Headpiece", p: {gem: -400}}
+	{i: 87311, n: "Winged Headpiece", p: {gem: 400}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -556,7 +557,10 @@ Gathering: [
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}},
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}},
 	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: -1000}},
-	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}}
+	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}},
+	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: 1000}},
+	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: 1000}},
+	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: 1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
