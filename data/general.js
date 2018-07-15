@@ -1976,11 +1976,11 @@ Announcement:
 Countdown: {
 	Events: [
 	{
-		name: "ArenaNet API Offline",
+		name: "ArenaNet API Incomplete",
 		url: "https://en-forum.guildwars2.com/discussion/45906/current-state-of-the-gw2-api-july-2-2018",
 		isIndefinite: true,
 		Start: new Date("2018-06-29T17:00:00Z"),
-		Finish: new Date("2018-07-17T17:00:00Z")
+		Finish: new Date("2018-07-31T17:00:00Z")
 	},
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",

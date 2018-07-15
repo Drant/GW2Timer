@@ -39772,6 +39772,8 @@ I = {
 			pEvent.stopPropagation();
 			$(this).select();
 		});
+		
+		return searchbar;
 	},
 	
 	/*
@@ -40522,7 +40524,12 @@ I = {
 		if (I.ModeCurrent !== I.ModeEnum.Tile)
 		{
 			$("#itemDashboard").insertAfter(primaryheader);
-			I.createFilterBar($("<div id='dirSearch'></div>").insertAfter("#dsbContainer"), ".dirGroup .curClick", null, ".dirHeaderSecondary");
+			I.createFilterBar($("<div id='dirSearch'></div>").insertAfter("#dsbContainer"), ".dirGroup .curClick", null, ".dirHeaderSecondary")
+				.onEnterKey(function()
+			{
+				U.openExternalURL(U.getWikiSearchLanguage($(this).val()));
+				$(this).val("").trigger("input");
+			});
 		}
 	},
 	
