@@ -150,7 +150,7 @@ Glider: [
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: -500}},
 	{i: 80484, n: "Necrotic Glider", p: {gem: -500}},
 	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}},
-	{i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}},
+	{i: 80725, n: "Raven's Spirit Glider", p: {gem: -500}},
 	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}},
 	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}},
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}},
@@ -260,7 +260,7 @@ Head: [
 	{i: 84014, n: "Swaggering Hat", p: {gem: 400}},
 	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
 	{i: 86516, n: "Freezie Crown", p: {gem: -350}},
-	{i: 87311, n: "Winged Headpiece", p: {gem: 400}}
+	{i: 87311, n: "Winged Headpiece", p: {gem: -400}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -302,9 +302,9 @@ Armor: [
 	{i: 43102, n: "Trickster's Light-Armor Skin", p: {gem: 800}},
 	{i: 43101, n: "Viper's Medium-Armor Skin", p: {gem: 800}},
 	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 800}},
-	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: 800}},
-	{i: 43158, n: "Magitech Medium Armor Skin", p: {gem: 800}},
-	{i: 43157, n: "Braham's Heavy Armor Skin", p: {gem: 800}},
+	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: -800}},
+	{i: 43158, n: "Magitech Medium Armor Skin", p: {gem: -800}},
+	{i: 43157, n: "Braham's Heavy Armor Skin", p: {gem: -800}},
 	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: -800}},
 	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: -800}},
 	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: -800}},
@@ -343,7 +343,7 @@ Weapon: [
 	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}},
 	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}},
 	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: -600}},
-	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: -600}},
+	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: 600}},
 	{i: 87564, n: "Venom Warblade", p: {gem: -600}}
 ],
 BlackLionWeapon: [
@@ -561,6 +561,7 @@ Gathering: [
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}},
 	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: -1000}},
 	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}},
+	{i: 87554, n: "Choya Harvesting Tool", p: {gem: -1000}},
 	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: 1000}},
 	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: 1000}},
 	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: 1000}}
