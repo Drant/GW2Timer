@@ -166,7 +166,8 @@ Glider: [
 	{i: 86715, n: "Glacial Glider", p: {gem: -500}},
 	{i: 87070, n: "Forged Glider", p: {gem: 700}},
 	{i: 87429, n: "Beastslayer Glider", p: {gem: 400}},
-	{i: 87549, n: "Sunspear Glider", p: {gem: 400}}
+	{i: 87549, n: "Sunspear Glider", p: {gem: 400}},
+	{i: 85470, n: "Desert King Glider", p: {gem: 700}}
 ],
 Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
@@ -205,7 +206,8 @@ Back: [
 	{i: 81854, n: "Golden Zephyr Backpiece", p: {gem: 0}},
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: -700}},
 	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}},
-	{i: 87021, n: "Forged Wing Backpack", p: {gem: 700}}
+	{i: 87021, n: "Forged Wing Backpack", p: {gem: 700}},
+	{i: 88114, n: "Desert King Reliquary Backpiece", p: {gem: 700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -278,7 +280,8 @@ Gloves: [
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
 	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}},
-	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: -500}}
+	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: -500}},
+	{i: 88108, n: "Storm Gloves", p: {gem: 500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},

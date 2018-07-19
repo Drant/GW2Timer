@@ -4197,6 +4197,13 @@ U = {
 			return iArr.indexOf(iElm) === iArr.lastIndexOf(iElm);
 		});
 	},
+	getNew: function(pArrayOld, pArrayNew)
+	{	
+		return pArrayNew.filter(function(iElm)
+		{
+			return pArrayOld.indexOf(iElm) === -1;
+		});
+	},
 	getUnique: function(pArray)
 	{
 		return pArray.filter(function(iElm, iIndex)
@@ -6701,7 +6708,7 @@ Z = {
 					currentitemids.push(parseInt(ithitemid));
 				}
 				// Find what item IDs are missing by comparing the API's current list with the one here
-				newitemids = (wantrebuild) ? currentitemids : ((newitemids === undefined) ? U.getDifference(newitemslist, currentitemids) : newitemids);
+				newitemids = (wantrebuild) ? currentitemids : ((newitemids === undefined) ? U.getNew(currentitemids, newitemslist) : newitemids);
 				if (newitemids.length)
 				{
 					U.fetchAPI(U.getAPIURL(type), newitemids, {
