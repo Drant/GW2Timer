@@ -2022,7 +2022,7 @@ Countdown: {
 		Start: new Date("2018-03-01T16:00:00Z"),
 		Finish: new Date("2018-03-31T16:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "Super Adventure Festival",
 		name_de: "Super Adventure Festival",
 		name_es: "Festival Super Adventure",
@@ -2031,6 +2031,16 @@ Countdown: {
 		official: "the-game/releases/march-29-2018/",
 		Start: new Date("2018-03-29T16:00:00Z"),
 		Finish: new Date("2018-04-19T16:00:00Z")
+	},*/
+	{
+		name_en: "Festival of the Four Winds",
+		name_de: "Fest der Vier Winde",
+		name_es: "Festival de los Cuatro Vientos",
+		name_fr: "Festival des Quatre Vents",
+		name_zh: "四风节",
+		official: "news/festival-of-the-four-winds-begins-next-week/",
+		Start: new Date("2018-07-24T17:00:00Z"),
+		Finish: new Date("2018-08-07T17:00:00Z")
 	}
 	/*{
 		name_en: "PvP League Season 8",
