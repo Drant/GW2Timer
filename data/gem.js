@@ -392,9 +392,9 @@ BlackLionWeapon: [
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 3}},
 	{i: 85608, n: "Shifting Sands weapon skins#Gallery", p: {blticket: 3}},
 	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 3}},
-	{i: 86920, n: "Alchemist weapons#Gallery", p: {blticket: 3}},
-	{i: 87389, n: "Inquest Mark II#Gallery", p: {blticket: 2}},
-	{i: 88077, n: "Desert King#Gallery", p: {blticket: 1}}
+	{i: 86920, n: "Alchemist weapon skins#Gallery", p: {blticket: 3}},
+	{i: 87389, n: "Inquest Mark II weapon skins#Gallery", p: {blticket: 2}},
+	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},

@@ -1927,7 +1927,7 @@ Announcement:
 	NewsPVE: { // Shown on main page dashboard
 		//content: "Please tell new players about gw2timer.com!",
 		//content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='https://gw2timer.com/?page=Pumpkins'>more</a>.",
-		content: "Use the search bar below to search the wiki.",
+		content: "",
 		Finish: new Date("2018-08-01T16:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
@@ -1975,13 +1975,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
+	/*{
 		name: "ArenaNet API Incomplete",
 		url: "https://en-forum.guildwars2.com/discussion/45906/current-state-of-the-gw2-api-july-2-2018",
 		isIndefinite: true,
 		Start: new Date("2018-06-29T17:00:00Z"),
 		Finish: new Date("2018-07-31T17:00:00Z")
-	},
+	},*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",

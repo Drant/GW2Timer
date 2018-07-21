@@ -31,7 +31,7 @@ GW2T_SALE_DATA = {
 	{i: 85470, n: "Desert King Glider", p: {gem: 700}},
 	{i: 88114, n: "Desert King Reliquary Backpiece", p: {gem: 700}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
-	{i: 88077, n: "Desert King#Gallery", p: {blticket: 1}},
+	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
 	{i: 87554, n: "Choya Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-07-24T16:00:00Z")},
 	{i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}, Finish: new Date("2018-07-24T16:00:00Z")},
 	{i: 87311, n: "Winged Headpiece", p: {gem: 400}, Finish: new Date("2018-07-24T16:00:00Z")},

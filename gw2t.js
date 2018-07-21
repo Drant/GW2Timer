@@ -39739,14 +39739,15 @@ I = {
 	 * @param jqobject pElements to filter.
 	 * @param string pParentSelector to filter container of elements, optional.
 	 * @param jqobject pHideElements to hide while results exist, optional.
+	 * @param string pText search bar placeholder text.
 	 * @pre Each element must have its data "keywords" assigned for the matching.
 	 */
-	createFilterBar: function(pContainer, pElements, pParentSelector, pHideElements)
+	createFilterBar: function(pContainer, pElements, pParentSelector, pHideElements, pText)
 	{
 		var container = $(pContainer);
 		var elements = $(pElements);
 		var searchbar = $("<input class='cntSearch cssInputText' type='text' />").appendTo(container);
-		I.bindInputBarText(searchbar);
+		I.bindInputBarText(searchbar, pText);
 		searchbar.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
 			var query = $(this).val().toLowerCase();
@@ -40571,7 +40572,7 @@ I = {
 		if (I.ModeCurrent !== I.ModeEnum.Tile)
 		{
 			$("#itemDashboard").insertAfter(primaryheader);
-			I.createFilterBar($("<div id='dirSearch'></div>").insertAfter("#dsbContainer"), ".dirGroup .curClick", null, ".dirHeaderSecondary")
+			I.createFilterBar($("<div id='dirSearch'></div>").insertAfter("#dsbContainer"), ".dirGroup .curClick", null, ".dirHeaderSecondary", "Wiki...")
 				.onEnterKey(function()
 			{
 				U.openExternalURL(U.getWikiSearchLanguage($(this).val()));
