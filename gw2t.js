@@ -17376,8 +17376,8 @@ Q = {
 	createUnidentified: function(pItemID)
 	{
 		var item = {
-			name: "API Item Missing: " + pItemID,
-			description: "",
+			name: "" + pItemID,
+			description: "<c=@warning>The items API is missing this item. It may be content that is too old or too new.</c>",
 			type: "Weapon",
 			level: 0,
 			rarity: "Fine",
