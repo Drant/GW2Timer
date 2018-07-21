@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 180114}, // 171202 is before https transition
+		programVersion: {key: "int_utlProgramVersion", value: 180721}, // 171202 is before https transition
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -11287,13 +11287,17 @@ V = {
 				var titleid = iChar.title;
 				if (titleid)
 				{
-					if (usedtitles[titleid] === undefined)
+					var box = Q.getBoxedTitle(titleid);
+					if (box)
 					{
-						usedtitles[titleid] = 0;
+						if (usedtitles[titleid] === undefined)
+						{
+							usedtitles[titleid] = 0;
+						}
+						usedtitles[titleid] += 1;
+						var title = box.oData;
+						I.qTip.init($("#chrSelection_" + iChar.oCharIndex).attr("title", "&quot;<dfn>" + title.name + "</dfn>&quot;"));
 					}
-					usedtitles[titleid] += 1;
-					var title = Q.getBoxedTitle(titleid).oData;
-					I.qTip.init($("#chrSelection_" + iChar.oCharIndex).attr("title", "&quot;<dfn>" + title.name + "</dfn>&quot;"));
 				}
 			});
 			
@@ -17345,10 +17349,8 @@ Q = {
 				},
 				error: function()
 				{
-					if (pReplaceID === undefined)
-					{
-						Q.getItem(Q.GameLimit.UnknownItem, pCallback, pItemID);
-					}
+					var unidentified = Q.createUnidentified(pItemID);
+					pCallback(unidentified);
 				}
 			});
 			return jqxhr;
@@ -17364,6 +17366,44 @@ Q = {
 				pCallback();
 			}, pWantCache);
 		});
+	},
+	
+	/*
+	 * Creates a placeholder item which is missing in the items API.
+	 * @param int pItemID of missing item.
+	 * @returns object item.
+	 */
+	createUnidentified: function(pItemID)
+	{
+		var item = {
+			name: "API Item Missing: " + pItemID,
+			description: "",
+			type: "Weapon",
+			level: 0,
+			rarity: "Fine",
+			vendor_value: 0,
+			default_skin: 2851,
+			game_types: ["Activity", "Wvw", "Dungeon", "Pve"],
+			flags: ["NoSell", "SoulbindOnAcquire", "SoulBindOnUse"],
+			restrictions: [],
+			id: pItemID,
+			chat_link: "[&AgF3HwAA]",
+			icon: "https://render.guildwars2.com/file/216B62605406DA976965A880F426F03ED6AFC178/61771.png",
+			details: {
+				type: "SmallBundle",
+				damage_type: "Physical",
+				min_power: 0,
+				max_power: 0,
+				defense: 0,
+				infusion_slots: [],
+				secondary_suffix_item_id: ""
+			}
+		};
+		if (Q.Boxes.Items[pItemID] === undefined)
+		{
+			Q.Boxes.Items[pItemID] = {oData: item};
+		}
+		return item;
 	},
 	
 	/*
