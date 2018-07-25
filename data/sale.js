@@ -21,24 +21,25 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 64736, n: "Transmutation Charge", p: {gem: 105}, discount: [[5, 105, 150], [10, 189, 270], [25, 420, 600]], Finish: new Date("2018-07-23T16:00:00Z")},
-	{i: "https://i.imgur.com/WCB4gGK.png", n: "Outlaw Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-07-27T16:00:00Z")},
-	{i: "https://i.imgur.com/RoBhHfY.png", n: "White Mantle Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-07-27T16:00:00Z")},
+	{i: 88190, n: "Lightning Aspect Eye", p: {gem: 166}},
+	{i: 88161, n: "Sun Aspect Eye", p: {gem: 166}},
+	{i: 88170, n: "Wind Aspect Eye", p: {gem: 166}},
+	{i: 42967, n: "Lightning Kite", p: {gem: 250}, discount: 500, Finish: new Date("2018-07-31T16:00:00Z")},
+	{i: 43076, n: "Wind Kite", p: {gem: 250}, discount: 500, Finish: new Date("2018-07-31T16:00:00Z")},
+	{i: 43487, n: "Sun Kite", p: {gem: 250}, discount: 500, Finish: new Date("2018-07-31T16:00:00Z")},
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: 2000}},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
-	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: 600}, Finish: new Date("2018-07-27T16:00:00Z")},
 	{i: 88108, n: "Storm Gloves", p: {gem: 500}},
 	{i: 85470, n: "Desert King Glider", p: {gem: 700}},
 	{i: 88114, n: "Desert King Reliquary Backpiece", p: {gem: 700}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
-	{i: 87554, n: "Choya Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-07-24T16:00:00Z")},
-	{i: 80725, n: "Raven's Spirit Glider", p: {gem: 500}, Finish: new Date("2018-07-24T16:00:00Z")},
-	{i: 87311, n: "Winged Headpiece", p: {gem: 400}, Finish: new Date("2018-07-24T16:00:00Z")},
-	{i: 74219, n: "Dread Quiver Backpack", p: {gem: 350}, Finish: new Date("2018-07-24T16:00:00Z")},
-	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}, Finish: new Date("2018-07-24T16:00:00Z")},
-	{i: 69737, n: "Daydreamer's Wings Backpack", p: {gem: 500}, Finish: new Date("2018-07-24T16:00:00Z")},
-	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}, Finish: new Date("2018-07-24T16:00:00Z")},
-	{i: 78733, n: "Sloth Backpack", p: {gem: 500}, Finish: new Date("2018-07-24T16:00:00Z")}
+	{i: 66230, n: "Phoenix weapon skins#Gallery", p: {blticket: 5}},
+	{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-07-27T16:00:00Z")},
+	{i: "https://i.imgur.com/WCB4gGK.png", n: "Outlaw Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-07-27T16:00:00Z")},
+	{i: "https://i.imgur.com/RoBhHfY.png", n: "White Mantle Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-07-27T16:00:00Z")},
+	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: 600}, Finish: new Date("2018-07-27T16:00:00Z")},
+	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}, Finish: new Date("2018-07-27T16:00:00Z")},
+	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: 700}, Finish: new Date("2018-07-27T16:00:00Z")}
 	]
 };

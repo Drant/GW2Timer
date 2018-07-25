@@ -448,6 +448,7 @@ var GW2T_ACCOUNT_METADATA = {
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
+		213, // Daily Festival of the Four Winds
 		79, // Halloween Daily
 		98, // Wintersday Daily
 		199, // Dragon Ball
@@ -576,6 +577,10 @@ var GW2T_ACCOUNT_METADATA = {
 		45, // Super Adventure Box: World 2
 		46, // Super Adventure Box: Tribulation Mode
 		205, // Super Adventure Box: Nostalgia
+		210, // Festival of the Four Winds
+		211, // Crown Pavilion
+		214, // Queen's Gauntlet
+		212, // Four Winds Customs
 		29, // Shadow of the Mad King
 		119, // Shadow of the Mad King
 		146, // Shadow of the Mad King

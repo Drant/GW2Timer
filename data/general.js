@@ -2040,7 +2040,7 @@ Countdown: {
 		name_zh: "四风节",
 		official: "news/festival-of-the-four-winds-begins-next-week/",
 		Start: new Date("2018-07-24T17:00:00Z"),
-		Finish: new Date("2018-08-07T17:00:00Z")
+		Finish: new Date("2018-08-14T17:00:00Z")
 	}
 	/*{
 		name_en: "PvP League Season 8",

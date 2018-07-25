@@ -98,8 +98,8 @@ Outfit: [
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: -700}},
 	{i: 86637, n: "Winter Monarch Outfit", p: {gem: -700}},
 	{i: 82360, n: "Imperial Guard Outfit", p: {gem: -700}},
-	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
-	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: 700}},
+	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: -700}},
+	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: -700}},
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}}
 ],
 Mount: [
@@ -260,7 +260,10 @@ Head: [
 	{i: 84014, n: "Swaggering Hat", p: {gem: 400}},
 	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
 	{i: 86516, n: "Freezie Crown", p: {gem: -350}},
-	{i: 87311, n: "Winged Headpiece", p: {gem: -400}}
+	{i: 87311, n: "Winged Headpiece", p: {gem: -400}},
+	{i: 88190, n: "Lightning Aspect Eye", p: {gem: 166}},
+	{i: 88161, n: "Sun Aspect Eye", p: {gem: 166}},
+	{i: 88170, n: "Wind Aspect Eye", p: {gem: 166}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -343,7 +346,7 @@ Weapon: [
 	{i: 84112, n: "Icy Blade Axe", p: {gem: -500}},
 	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}},
 	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: -600}},
-	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: 600}},
+	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: -600}},
 	{i: 87564, n: "Venom Warblade", p: {gem: -600}}
 ],
 BlackLionWeapon: [
