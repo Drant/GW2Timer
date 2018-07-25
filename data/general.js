@@ -2038,7 +2038,7 @@ Countdown: {
 		name_es: "Festival de los Cuatro Vientos",
 		name_fr: "Festival des Quatre Vents",
 		name_zh: "四风节",
-		official: "news/festival-of-the-four-winds-begins-next-week/",
+		official: "the-game/releases/July-24-2018/",
 		Start: new Date("2018-07-24T17:00:00Z"),
 		Finish: new Date("2018-08-14T17:00:00Z")
 	}
