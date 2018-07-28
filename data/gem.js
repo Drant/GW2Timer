@@ -122,7 +122,7 @@ Glider: [
 	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: -500}},
 	{i: 74684, n: "Bat Wings Glider", p: {gem: -700}},
 	{i: 76236, n: "Exalted Glider", p: {gem: -400}},
-	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: -700}},
+	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 700}},
 	{i: 77291, n: "Soul River Glider", p: {gem: -500}},
 	{i: 77528, n: "Snowflake Glider", p: {gem: -500}},
 	{i: 77646, n: "Ugly Wool Glider", p: {gem: 0}},
@@ -154,7 +154,7 @@ Glider: [
 	{i: 80919, n: "Super Cloud Glider", p: {gem: -500}},
 	{i: 80958, n: "Super Adventure Holo-Copter", p: {gem: -700}},
 	{i: 80985, n: "Vine-Touched Destroyer Glider", p: {gem: 700}},
-	{i: 81291, n: "Magic Carpet Glider", p: {gem: -400}},
+	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}},
 	{i: 81547, n: "Dynamics Glider Module", p: {gem: 700}},
 	{i: 81888, n: "Feathers of the Zephyr", p: {gem: 0}},
 	{i: 82011, n: "Abaddon's Glider", p: {gem: -400}},
@@ -192,7 +192,7 @@ Back: [
 	{i: 70277, n: "Glittering Wings Backpack", p: {gem: -500}},
 	{i: 71323, n: "Ghoul Backpack", p: {gem: -300}},
 	{i: 73939, n: "Bat Wings Backpack", p: {gem: -700}},
-	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: -700}},
+	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 700}},
 	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: -700}},
 	{i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}},
 	{i: 78745, n: "Moth Wings Backpack", p: {gem: -700}},
@@ -283,14 +283,14 @@ Gloves: [
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
 	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}},
-	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: -500}},
+	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: 500}},
 	{i: 88108, n: "Storm Gloves", p: {gem: 500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: -300}},
 	{i: 85282, n: "Foefire Greaves", p: {gem: -500}},
-	{i: 86897, n: "Jackal Rune Greaves", p: {gem: -500}}
+	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}}
 ],
 Armor: [
 	{i: 20274, n: "Profane Light Armor Skin", p: {gem: 500}},

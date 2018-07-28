@@ -35,11 +35,10 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
 	{i: 66230, n: "Phoenix weapon skins#Gallery", p: {blticket: 5}},
-	{i: "https://i.imgur.com/mIuPrbz.png", n: "Bandit Sniper Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-07-27T16:00:00Z")},
-	{i: "https://i.imgur.com/WCB4gGK.png", n: "Outlaw Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-07-27T16:00:00Z")},
-	{i: "https://i.imgur.com/RoBhHfY.png", n: "White Mantle Appearance Pack", p: {gem: 2000}, Finish: new Date("2018-07-27T16:00:00Z")},
-	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: 600}, Finish: new Date("2018-07-27T16:00:00Z")},
-	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}, Finish: new Date("2018-07-27T16:00:00Z")},
-	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: 700}, Finish: new Date("2018-07-27T16:00:00Z")}
+	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 700}, Finish: new Date("2018-08-03T16:00:00Z")},
+	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 700}, Finish: new Date("2018-08-03T16:00:00Z")},
+	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: 500}, Finish: new Date("2018-08-03T16:00:00Z")},
+	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}, Finish: new Date("2018-08-03T16:00:00Z")},
+	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}, Finish: new Date("2018-08-03T16:00:00Z")}
 	]
 };
