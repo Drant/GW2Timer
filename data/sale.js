@@ -21,12 +21,15 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	
+	
+	{i: 48930, n: "Consortium Harvesting Sickle", p: {gem: 1000}},
+	{i: 88200, n: "Desert Racer Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [5, 1800], [25, 5100]]},
+	{i: 88154, n: "Desert Racer Mount Select License", p: {gem: 750}, discount: 1000, Finish: new Date("2018-08-07T16:00:00Z")},
+	{i: 48825, n: "Frost Wasp Logging Tool", p: {gem: 750}, discount: 1000, Finish: new Date("2018-08-07T16:00:00Z")},
 	{i: 88190, n: "Lightning Aspect Eye", p: {gem: 166}},
 	{i: 88161, n: "Sun Aspect Eye", p: {gem: 166}},
 	{i: 88170, n: "Wind Aspect Eye", p: {gem: 166}},
-	{i: 42967, n: "Lightning Kite", p: {gem: 250}, discount: 500, Finish: new Date("2018-07-31T16:00:00Z")},
-	{i: 43076, n: "Wind Kite", p: {gem: 250}, discount: 500, Finish: new Date("2018-07-31T16:00:00Z")},
-	{i: 43487, n: "Sun Kite", p: {gem: 250}, discount: 500, Finish: new Date("2018-07-31T16:00:00Z")},
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: 2000}},
 	{i: 87564, n: "Venom Warblade", p: {gem: 600}},
 	{i: 88108, n: "Storm Gloves", p: {gem: 500}},
@@ -35,6 +38,7 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
 	{i: 66230, n: "Phoenix weapon skins#Gallery", p: {blticket: 5}},
+	{i: 87603, n: "Awakened Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-08-07T16:00:00Z")},
 	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 700}, Finish: new Date("2018-08-03T16:00:00Z")},
 	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 700}, Finish: new Date("2018-08-03T16:00:00Z")},
 	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: 500}, Finish: new Date("2018-08-03T16:00:00Z")},
