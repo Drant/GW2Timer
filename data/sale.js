@@ -21,12 +21,10 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	
-	
-	{i: 48930, n: "Consortium Harvesting Sickle", p: {gem: 1000}},
+	{i: 48825, n: "Frost Wasp Logging Tool", p: {gem: 750}, discount: 1000, Finish: new Date("2018-08-07T16:00:00Z")},
+	{i: 48930, n: "Consortium Harvesting Sickle", p: {gem: 750}, discount: 1000, Finish: new Date("2018-08-07T16:00:00Z")},
 	{i: 88200, n: "Desert Racer Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [5, 1800], [25, 5100]]},
 	{i: 88154, n: "Desert Racer Mount Select License", p: {gem: 750}, discount: 1000, Finish: new Date("2018-08-07T16:00:00Z")},
-	{i: 48825, n: "Frost Wasp Logging Tool", p: {gem: 750}, discount: 1000, Finish: new Date("2018-08-07T16:00:00Z")},
 	{i: 88190, n: "Lightning Aspect Eye", p: {gem: 166}},
 	{i: 88161, n: "Sun Aspect Eye", p: {gem: 166}},
 	{i: 88170, n: "Wind Aspect Eye", p: {gem: 166}},
