@@ -36,11 +36,20 @@ GW2T_SALE_DATA = {
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
 	{i: 66230, n: "Phoenix weapon skins#Gallery", p: {blticket: 5}},
-	{i: 87603, n: "Awakened Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-08-07T16:00:00Z")},
-	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 700}, Finish: new Date("2018-08-03T16:00:00Z")},
-	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 700}, Finish: new Date("2018-08-03T16:00:00Z")},
-	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: 500}, Finish: new Date("2018-08-03T16:00:00Z")},
-	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}, Finish: new Date("2018-08-03T16:00:00Z")},
-	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}, Finish: new Date("2018-08-03T16:00:00Z")}
+	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 250}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 77811, n: "Electromagnetic-Descender Glider", p: {gem: 400}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 80854, n: "Bloodstone Ascender", p: {gem: 250}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 80795, n: "Shattered Bloodstone Glider", p: {gem: 400}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 700}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 700}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 85332, n: "Branded Wing Backpack", p: {gem: 700}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 85220, n: "Branded Wing Glider", p: {gem: 700}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: 500}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 67356, n: "Magic Carpet", p: {gem: 250}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 81291, n: "Magic Carpet Glider", p: {gem: 400}, Finish: new Date("2018-08-10T16:00:00Z")},
+	{i: 87603, n: "Awakened Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-08-07T16:00:00Z")}
 	]
 };
