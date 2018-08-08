@@ -100,7 +100,8 @@ Outfit: [
 	{i: 82360, n: "Imperial Guard Outfit", p: {gem: -700}},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: -700}},
 	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: -700}},
-	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}}
+	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}},
+	{i: 88321, n: "Timekeeper Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -284,7 +285,7 @@ Gloves: [
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
 	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}},
 	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: -500}},
-	{i: 88108, n: "Storm Gloves", p: {gem: 500}}
+	{i: 88108, n: "Storm Gloves", p: {gem: -500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
@@ -378,7 +379,7 @@ BlackLionWeapon: [
 	{i: 72683, n: "Glittering weapon skins#Gallery", p: {blticket: 3}},
 	{i: 77414, n: "Plasma weapon skins#Gallery", p: {blticket: 3}},
 	{i: 77518, n: "Merciless weapon skins#Gallery", p: {blticket: 3}},
-	{i: 77673, n: "Timekeeper weapon skins#Gallery", p: {blticket: 3}},
+	{i: 77673, n: "Timekeeper weapon skins#Gallery", p: {blticket: -3}},
 	{i: 77790, n: "Soaring weapon skins#Gallery", p: {blticket: -3}},
 	{i: 77898, n: "Dominator weapon skins#Gallery", p: {blticket: -3}},
 	{i: 78660, n: "Spectral weapon skins#Gallery", p: {blticket: 3}},
@@ -473,7 +474,8 @@ Dye: [
 	{i: 86163, n: "Elonian Landscape Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 86898, n: "Zhaitan Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 87603, n: "Awakened Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 87603, n: "Awakened Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
+	{i: 88258, n: "Mordremoth Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
@@ -565,9 +567,9 @@ Gathering: [
 	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: -1000}},
 	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}},
 	{i: 87554, n: "Choya Harvesting Tool", p: {gem: -1000}},
-	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: 1000}},
-	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: 1000}},
-	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: 1000}}
+	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: -1000}},
+	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: -1000}},
+	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: -1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},

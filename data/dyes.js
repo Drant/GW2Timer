@@ -56,7 +56,8 @@ var GW2T_DYES_HEADERS = {
 	Elonian: {id: 86163, name_en: "Elonian Landscape Dye Kit", name_de: "Elonische Landschaft-Farbkit", name_es: "Kit de tintes de paisaje eloniano", name_fr: "Kit de teinture de paysage élonien", name_zh: "伊伦娜风景染料包"},
 	Zhaitan: {id: 86898, name_en: "Zhaitan Dye Kit", name_de: "Zhaitan-Farbkit", name_es: "Kit de tintes de Zhaitan", name_fr: "Kit de teintures de Zhaïtan", name_zh: "泽坦染料包"},
 	Beasts: {id: 85628, name_en: "Elonian Beasts Dye Kit", name_de: "Elonische Bestien-Farbkit", name_es: "Kit de tintes de bestias elonianas", name_fr: "Kit de teinture vide", name_zh: "伊伦娜野兽染料包"},
-	Awakened: {id: 87603, name_en: "Awakened Dye Kit", name_de: "Erweckten-Farbkit", name_es: "Kit de tintes despertados", name_fr: "Kit de teintures d'éveillé", name_zh: "苏醒者染料包"}
+	Awakened: {id: 87603, name_en: "Awakened Dye Kit", name_de: "Erweckten-Farbkit", name_es: "Kit de tintes despertados", name_fr: "Kit de teintures d'éveillé", name_zh: "苏醒者染料包"},
+	Mordremoth: {id: 88258, name_en: "Mordremoth Dye Kit", name_de: "Mordremoth-Farbkit", name_es: "Kit de tintes de Mordremoth", name_fr: "Kit de teintures de Mordremoth", name_zh: "墨德摩斯染料包"}
 };
 
 /*
@@ -684,5 +685,13 @@ Awakened: [
 	{u: 1602, i: 87622, n: "Urn Dye", c: ["#a97451", "#a97451", "#986340"], h: "Orange", m: "Vibrant", l: "[&AgFGVgEA]", en: "Urn", de: "Urne", es: "Urna", fr: "Urne", zh: "骨灰瓮"},
 	{u: 1600, i: 88095, n: "Sarcophagus Dye", c: ["#8f7224", "#8f7224", "#a38739"], h: "Yellow", m: "Metal", l: "[&AgEfWAEA]", en: "Sarcophagus", de: "Sarkophag", es: "Sarcófago", fr: "Sarcophage", zh: "石棺"},
 	{u: 1601, i: 87855, n: "Scourge Dye", c: ["#3d3900", "#3d3900", "#6c6800"], h: "Green", m: "Leather", l: "[&AgEvVwEA]", en: "Scourge", de: "Geißel", es: "Azote", fr: "Fléau", zh: "灾厄"}	
+],
+Mordremoth: [
+	{u: 1619, i: 88331, n: "Bloom Dye", c: ["#913600", "#913600", "#913600"], h: "Orange", m: "Vibrant", l: "[&AgELWQEA]", en: "Bloom", de: "Blüte", es: "Flor", fr: "Floraison", zh: "绽放"},
+	{u: 1620, i: 88236, n: "Arid Dye", c: ["#603a00", "#603a00", "#775200"], h: "Orange", m: "Leather", l: "[&AgGsWAEA]", en: "Arid", de: "Dürre", es: "Árido", fr: "Aride", zh: "干涸"},
+	{u: 1618, i: 88289, n: "Auric Dye", c: ["#917707", "#917707", "#ac9221"], h: "Yellow", m: "Metal", l: "[&AgHhWAEA]", en: "Auric", de: "Gülden", es: "Áurico", fr: "Aurique", zh: "赤金"},
+	{u: 1621, i: 88346, n: "Nightmare Dye", c: ["#3e9500", "#3e9500", "#52a900"], h: "Green", m: "Vibrant", l: "[&AgEaWQEA]", en: "Nightmare", de: "Albtraum", es: "Pesadilla", fr: "Cauchemar", zh: "噩梦"},
+	{u: 1617, i: 88343, n: "Jungle Dye", c: ["#001e00", "#001e00", "#023102"], h: "Green", m: "Vibrant", l: "[&AgEXWQEA]", en: "Jungle", de: "Dschungel", es: "Selva", fr: "Jungle", zh: "丛林"},
+	{u: 1622, i: 88276, n: "Abyssal Forest Dye", c: ["#000000", "#000000", "#000000"], h: "Green", m: "Vibrant", l: "[&AgHUWAEA]", en: "Abyssal Forest", de: "Abgrundwald", es: "Bosque abisal", fr: "Forêt abyssale", zh: "地狱森林"}
 ]
 };

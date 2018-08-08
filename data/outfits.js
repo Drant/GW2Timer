@@ -80,7 +80,8 @@ General: [
 	{u: 55, i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}},
 	{u: 75, i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
 	{u: 76, i: 87477, n: "Primeval Dervish Outfit", p: {gem: 700}},
-	{u: 77, i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}}
+	{u: 77, i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}},
+	{u: 78, i: 88321, n: "Timekeeper Outfit", p: {gem: 700}}
 ],
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},
