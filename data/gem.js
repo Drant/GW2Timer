@@ -262,9 +262,9 @@ Head: [
 	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
 	{i: 86516, n: "Freezie Crown", p: {gem: -350}},
 	{i: 87311, n: "Winged Headpiece", p: {gem: -400}},
-	{i: 88190, n: "Lightning Aspect Eye", p: {gem: 166}},
-	{i: 88161, n: "Sun Aspect Eye", p: {gem: 166}},
-	{i: 88170, n: "Wind Aspect Eye", p: {gem: 166}}
+	{i: 88190, n: "Lightning Aspect Eye", p: {gem: -166}},
+	{i: 88161, n: "Sun Aspect Eye", p: {gem: -166}},
+	{i: 88170, n: "Wind Aspect Eye", p: {gem: -166}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
@@ -566,7 +566,8 @@ Gathering: [
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}},
 	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: -1000}},
 	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}},
-	{i: 87554, n: "Choya Harvesting Tool", p: {gem: -1000}},
+	{i: 87554, n: "Choya Harvesting Tool", p: {gem: 1000}},
+	{i: 88355, n: "Choya Mining Tool", p: {gem: 1000}},
 	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: -1000}},
 	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: -1000}},
 	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: -1000}}

@@ -2009,8 +2009,8 @@ Countdown: {
 		name_fr: "Festival lunaire",
 		name_zh: "新春：公鸡",
 		url: "https://forum-en.guildwars2.com/forum/game/gw2/Lunar-New-Year-Festival-Update",
-		Start: new Date("2018-02-06T17:00:00Z"),
-		Finish: new Date("2018-02-20T17:00:00Z")
+		Start: new Date("2019-02-06T17:00:00Z"),
+		Finish: new Date("2019-02-20T17:00:00Z")
 	},*/
 	/*{
 		name_en: "March Gem Store Sale",
@@ -2019,8 +2019,8 @@ Countdown: {
 		name_fr: "Mars boutique promotions",
 		name_zh: "宝石店三月促销",
 		official: "news/give-your-mounts-a-sinister-sparkle-with-the-branded-mounts-pack/",
-		Start: new Date("2018-03-01T16:00:00Z"),
-		Finish: new Date("2018-03-31T16:00:00Z")
+		Start: new Date("2019-03-01T16:00:00Z"),
+		Finish: new Date("2019-03-31T16:00:00Z")
 	},*/
 	/*{
 		name_en: "Super Adventure Festival",
@@ -2029,19 +2029,19 @@ Countdown: {
 		name_fr: "Festival de la Super Adventure",
 		name_zh: "超级冒险盒",
 		official: "the-game/releases/march-29-2018/",
-		Start: new Date("2018-03-29T16:00:00Z"),
-		Finish: new Date("2018-04-19T16:00:00Z")
+		Start: new Date("2019-03-29T16:00:00Z"),
+		Finish: new Date("2019-04-19T16:00:00Z")
 	},*/
-	{
+	/*{
 		name_en: "Festival of the Four Winds",
 		name_de: "Fest der Vier Winde",
 		name_es: "Festival de los Cuatro Vientos",
 		name_fr: "Festival des Quatre Vents",
 		name_zh: "四风节",
 		official: "the-game/releases/July-24-2018/",
-		Start: new Date("2018-07-24T17:00:00Z"),
-		Finish: new Date("2018-08-14T17:00:00Z")
-	}
+		Start: new Date("2019-07-24T17:00:00Z"),
+		Finish: new Date("2019-08-14T17:00:00Z")
+	}*/
 	/*{
 		name_en: "PvP League Season 8",
 		name_de: "PvP Liga Saison 8",
