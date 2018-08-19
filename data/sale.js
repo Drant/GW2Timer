@@ -21,7 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 67071, n: "Shared Inventory Slot", p: {gem: 490}, discount: [[1, 490, 700], [3, 1323, 1890], [5, 1960, 2800]], Finish: new Date("2018-08-19T16:00:00Z")},
+	{i: 42932, n: "Storage Expander", p: {gem: 560}, discount: 800, Finish: new Date("2018-08-20T16:00:00Z")},
 	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]], Finish: new Date("2018-08-21T16:00:00Z")},
 	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}, Finish: new Date("2018-08-21T16:00:00Z")},
 	{i: 87554, n: "Choya Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-08-21T16:00:00Z")},
