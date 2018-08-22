@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2018-07-31T16:00:00Z"),
-	Finish: new Date("2018-08-21T16:00:00Z"),
+	Start: new Date("2018-08-21T16:00:00Z"),
+	Finish: new Date("2018-09-19T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,17 +21,16 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 42932, n: "Storage Expander", p: {gem: 560}, discount: 800, Finish: new Date("2018-08-20T16:00:00Z")},
+	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
+	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]]},
+	{i: 88305, n: "Black Lion Outfit Ticket", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
+	{i: 88260, n: "Black Lion Weapons Voucher", p: {gem: 540}, discount: [[1, 540], [5, 2100], [10, 3000]]},
 	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]], Finish: new Date("2018-08-21T16:00:00Z")},
-	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}, Finish: new Date("2018-08-21T16:00:00Z")},
-	{i: 87554, n: "Choya Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-08-21T16:00:00Z")},
-	{i: 88355, n: "Choya Mining Tool", p: {gem: 1000}, Finish: new Date("2018-08-21T16:00:00Z")},
-	{i: 88321, n: "Timekeeper Outfit", p: {gem: 700}, Finish: new Date("2018-08-21T16:00:00Z")},
 	{i: 88258, n: "Mordremoth Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
-	{i: 88190, n: "Lightning Aspect Eye", p: {gem: 166}, Finish: new Date("2018-08-21T16:00:00Z")},
-	{i: 88161, n: "Sun Aspect Eye", p: {gem: 166}, Finish: new Date("2018-08-21T16:00:00Z")},
-	{i: 88170, n: "Wind Aspect Eye", p: {gem: 166}, Finish: new Date("2018-08-21T16:00:00Z")}
+	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}, Finish: new Date("2018-08-28T16:00:00Z")},
+	{i: 87554, n: "Choya Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-08-28T16:00:00Z")},
+	{i: 88355, n: "Choya Mining Tool", p: {gem: 1000}, Finish: new Date("2018-08-28T16:00:00Z")}
 	]
 };

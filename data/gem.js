@@ -41,6 +41,7 @@ var GW2T_GEM_HEADERS = {
 var GW2T_GEM_DATA = {
 Outfit: [
 	{i: "free_gem_store_item", n: "Free Gem Store Item", p: {gem: 0}},
+	{i: 88305, n: "Black Lion Outfit Ticket", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
 	{i: 65196, n: "Mad King's Outfit", p: {gem: -700}},
 	{i: 65201, n: "Witch's Outfit", p: {gem: -700}},
 	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: -700}},
@@ -118,6 +119,7 @@ Mount: [
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: -2000}}
 ],
 Glider: [
+	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]]},
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: 700}},
 	{i: 70048, n: "Black Feather Wings Glider", p: {gem: 700}},
 	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: -500}},
@@ -171,6 +173,7 @@ Glider: [
 	{i: 85470, n: "Desert King Glider", p: {gem: 700}}
 ],
 Back: [
+	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
 	{i: 39512, n: "Plush Charr Backpack Cover", p: {gem: -300}},
 	{i: 39516, n: "Covert Charr Backpack Cover", p: {gem: -300}},
@@ -317,6 +320,7 @@ Armor: [
 	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: -800}}
 ],
 Weapon: [
+	{i: 88260, n: "Black Lion Weapons Voucher", p: {gem: 540}, discount: [[1, 540], [5, 2100], [10, 3000]]},
 	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: -600}},
 	{i: 20004, n: "Caithe's Bloom Dagger", p: {gem: -600}},
 	{i: 42653, n: "Braham's Mace Skin", p: {gem: -600}},
@@ -565,9 +569,9 @@ Gathering: [
 	{i: 80977, n: "Unbound Magic Mining Beam", p: {gem: -900}},
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}},
 	{i: 87425, n: "Shifting Sand Mining Pick", p: {gem: -1000}},
-	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}},
-	{i: 87554, n: "Choya Harvesting Tool", p: {gem: 1000}},
-	{i: 88355, n: "Choya Mining Tool", p: {gem: 1000}},
+	{i: 87530, n: "Choya Logging Tool", p: {gem: -1000}},
+	{i: 87554, n: "Choya Harvesting Tool", p: {gem: -1000}},
+	{i: 88355, n: "Choya Mining Tool", p: {gem: -1000}},
 	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: -1000}},
 	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: -1000}},
 	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: -1000}}
