@@ -21,6 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 19980, n: "Black Lion Chest Key", p: {gem: 87}, discount: [[1, 87, 125], [5, 315, 450], [25, 1470, 2100]]},
 	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
 	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]]},
 	{i: 88305, n: "Black Lion Outfit Ticket", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
