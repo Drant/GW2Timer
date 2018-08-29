@@ -260,6 +260,7 @@ O = {
 		int_secAlertDesktop: 10,
 		bol_alertSpeech: true,
 		bol_alertDesktop: false,
+		bol_alertConsole: false,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
@@ -39056,33 +39057,43 @@ I = {
 	 */
 	notify: function(pSettings)
 	{
-		if (I.isNotificationsAllowed() === false)
+		if (O.Options.bol_alertConsole || I.isNotificationsAllowed())
 		{
-			return;
+			pSettings = (typeof pSettings === "string") ? { aTitle: pSettings } : pSettings;
+			var Settings = $.extend({
+				aTitle: I.cSiteName,
+				aBody: "",
+				aIcon: "img/meta/logo_192x192.png",
+				aDelay: O.Options.int_secAlertDesktop
+			}, pSettings);
+			Settings.aDelay *= T.cMSECONDS_IN_SECOND;
 		}
 		
-		pSettings = (typeof pSettings === "string") ? { aTitle: pSettings } : pSettings;
-		var Settings = $.extend({
-			aTitle: I.cSiteName,
-			aBody: "",
-			aIcon: "img/meta/logo_192x192.png",
-			aDelay: O.Options.int_secAlertDesktop
-		}, pSettings);
-		Settings.aDelay *= T.cMSECONDS_IN_SECOND;
-
-		// Create popup
-		var notif = new Notification(Settings.aTitle, {
-			icon: Settings.aIcon,
-			body: Settings.aBody
-		});
-		// Open the originating browser tab and close the popup when clicked on
-		notif.onclick = function(pEvent)
+		// Console message
+		if (O.Options.bol_alertConsole)
 		{
-			window.focus();
-			this.close();
-		};
-		// Self close after duration
-		setTimeout(notif.close.bind(notif), Settings.aDelay);
+			var consoleicon = Settings.aIcon ? "<img src='" + Settings.aIcon + "' />&nbsp;" : "";
+			var consolemessage = Settings.aTitle + " - " + Settings.aBody;
+			I.write(consoleicon + consolemessage, O.Options.int_secAlertDesktop);
+		}
+		
+		// Desktop popup
+		if (I.isNotificationsAllowed())
+		{
+			// Create popup
+			var notif = new Notification(Settings.aTitle, {
+				icon: Settings.aIcon,
+				body: Settings.aBody
+			});
+			// Open the originating browser tab and close the popup when clicked on
+			notif.onclick = function(pEvent)
+			{
+				window.focus();
+				this.close();
+			};
+			// Self close after duration
+			setTimeout(notif.close.bind(notif), Settings.aDelay);
+		}
 	},
 	
 	/*
