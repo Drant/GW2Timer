@@ -402,7 +402,8 @@ BlackLionWeapon: [
 	{i: 86675, n: "Glacial weapon skins#Gallery", p: {blticket: 3}},
 	{i: 86920, n: "Alchemist weapon skins#Gallery", p: {blticket: 3}},
 	{i: 87389, n: "Inquest Mark II weapon skins#Gallery", p: {blticket: 2}},
-	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}}
+	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
+	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},
@@ -732,7 +733,9 @@ Toy: [
 	{i: 43487, n: "Sun Kite", p: {gem: 500}},
 	{i: 67835, n: "Pact Airship Balloon", p: {gem: 500}},
 	{i: 68614, n: "Red Lantern", p: {gem: -250}},
-	{i: 68650, n: "Ram Balloon", p: {gem: -250}}
+	{i: 68650, n: "Ram Balloon", p: {gem: -250}},
+	{i: 88462, n: "Dragon Emblem Balloon", p: {gem: 250}},
+	{i: 88409, n: "Emblazoned Dragon Throne", p: {gem: 600}}
 ],
 Music: [
 	{i: 42888, n: "Marriner's Horn", p: {gem: 800}},

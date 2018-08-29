@@ -22,16 +22,18 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
 	{i: 35991, n: "Total Makeover Kit", p: {gem: 350}, discount: [[1, 105, 350], [5, 1400, 1400]], Finish: new Date("2018-08-29T16:00:00Z")},
-	{i: 19993, n: "Bag Slot Expansion", p: {gem: 240}, discount: 400, Finish: new Date("2018-08-28T16:00:00Z")},
-	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
-	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]]},
-	{i: 88305, n: "Black Lion Outfit Ticket", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
-	{i: 88260, n: "Black Lion Weapons Voucher", p: {gem: 540}, discount: [[1, 540], [5, 2100], [10, 3000]]},
-	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]},
+	{i: 42888, n: "Marriner's Horn", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
+	{i: 42973, n: "Flute", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
+	{i: 36174, n: "Musical Bass Guitar", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
+	{i: 43526, n: "Musical Frame Drum", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
+	{i: 44883, n: "Musical Harp", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
+	{i: 66323, n: "Musical Lute", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
-	{i: 87530, n: "Choya Logging Tool", p: {gem: 1000}, Finish: new Date("2018-08-28T16:00:00Z")},
-	{i: 87554, n: "Choya Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-08-28T16:00:00Z")},
-	{i: 88355, n: "Choya Mining Tool", p: {gem: 1000}, Finish: new Date("2018-08-28T16:00:00Z")}
+	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]], Finish: new Date("2018-09-04T16:00:00Z")},
+	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]], Finish: new Date("2018-09-04T16:00:00Z")},
+	{i: 88305, n: "Black Lion Outfit Ticket", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]], Finish: new Date("2018-09-04T16:00:00Z")},
+	{i: 88260, n: "Black Lion Weapons Voucher", p: {gem: 540}, discount: [[1, 540], [5, 2100], [10, 3000]], Finish: new Date("2018-09-04T16:00:00Z")},
+	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]}
 	]
 };
