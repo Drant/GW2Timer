@@ -22,6 +22,9 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
 	{i: 35991, n: "Total Makeover Kit", p: {gem: 350}, discount: [[1, 105, 350], [5, 1400, 1400]], Finish: new Date("2018-08-29T16:00:00Z")},
+	{i: 78996, n: "Unbreakable Harvesting Sickle", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-31T16:00:00Z")},
+	{i: 78806, n: "Unbreakable Logging Axe", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-31T16:00:00Z")},
+	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-31T16:00:00Z")},
 	{i: 42888, n: "Marriner's Horn", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
 	{i: 42973, n: "Flute", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
 	{i: 36174, n: "Musical Bass Guitar", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-30T16:00:00Z")},
