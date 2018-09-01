@@ -35577,7 +35577,7 @@ H = {
 				{
 					isdiscounted = true;
 				}
-				if (item.p && item.p.gem)
+				if (item.p && item.p.gem >= 0)
 				{
 					gemarray.push(item.p.gem);
 				}
