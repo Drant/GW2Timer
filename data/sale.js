@@ -21,21 +21,26 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 67881, n: "Aviator's Memory Box", p: {gem: 200}, discount: 400, Finish: new Date("2018-09-02T16:00:00Z")},
+	{i: 36172, n: "Bobblehead Laboratory", p: {gem: 200}, discount: 400, Finish: new Date("2018-09-02T16:00:00Z")},
+	{i: 66342, n: "Water Fight Balloon Bucket", p: {gem: 250}, discount: 500, Finish: new Date("2018-09-02T16:00:00Z")},
+	{i: 19995, n: "Bank Tab Expansion", p: {gem: 420}, discount: 600, Finish: new Date("2018-09-02T16:00:00Z")},
 	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 125}, discount: 250, Finish: new Date("2018-09-01T16:00:00Z")},
 	{i: 79666, n: "Hovering Mad Mirror", p: {gem: 125}, discount: 250, Finish: new Date("2018-09-01T16:00:00Z")},
 	{i: 80854, n: "Bloodstone Ascender", p: {gem: 125}, discount: 250, Finish: new Date("2018-09-01T16:00:00Z")},
 	{i: 67356, n: "Magic Carpet", p: {gem: 125}, discount: 250, Finish: new Date("2018-09-01T16:00:00Z")},
 	{i: 49931, n: "Riding Broom", p: {gem: 125}, discount: 250, Finish: new Date("2018-09-01T16:00:00Z")},
 	{i: 49948, n: "Sonic Tunneling Tool", p: {gem: 125}, discount: 250, Finish: new Date("2018-09-01T16:00:00Z")},
-	{i: 78996, n: "Unbreakable Harvesting Sickle", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-31T16:00:00Z")},
-	{i: 78806, n: "Unbreakable Logging Axe", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-31T16:00:00Z")},
-	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 400}, discount: 800, Finish: new Date("2018-08-31T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
 	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]], Finish: new Date("2018-09-04T16:00:00Z")},
 	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]], Finish: new Date("2018-09-04T16:00:00Z")},
 	{i: 88305, n: "Black Lion Outfit Ticket", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]], Finish: new Date("2018-09-04T16:00:00Z")},
 	{i: 88260, n: "Black Lion Weapons Voucher", p: {gem: 540}, discount: [[1, 540], [5, 2100], [10, 3000]], Finish: new Date("2018-09-04T16:00:00Z")},
-	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]}
+	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]], Finish: new Date("2018-09-07T16:00:00Z")},
+	{i: 64745, n: "Ringmaster's Hat", p: {gem: 200}, Finish: new Date("2018-09-07T16:00:00Z")},
+	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}, Finish: new Date("2018-09-07T16:00:00Z")},
+	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}, Finish: new Date("2018-09-07T16:00:00Z")},
+	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}, Finish: new Date("2018-09-07T16:00:00Z")}
 	]
 };

@@ -107,7 +107,7 @@ Outfit: [
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
 	{i: 87202, n: "Mini Branded Mounts Pack", p: {gem: -1600}},
-	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]]},
+	{i: 85580, n: "Mount Adoption License", p: {gem: -400}, discount: [[1, 400], [10, 3400]]},
 	{i: 87368, n: "Istani Isles—Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [5, 1800]]},
 	{i: 87360, n: "Istani Isles—Mount Select License", p: {gem: 1200}},
 	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}},
@@ -219,7 +219,7 @@ Head: [
 	{i: 65200, n: "Wintersday Earmuffs", p: {gem: -25}},
 	{i: 65202, n: "Festive Hat", p: {gem: -150}},
 	{i: 64742, n: "Aviator Cap", p: {gem: -200}},
-	{i: 64745, n: "Ringmaster's Hat", p: {gem: 200}},
+	{i: 64745, n: "Ringmaster's Hat", p: {gem: -200}},
 	{i: 64749, n: "Sailor's Beanie", p: {gem: -200}},
 	{i: 64750, n: "Top Hat", p: {gem: -200}},
 	{i: 64757, n: "Wizard's Hat", p: {gem: -200}},
