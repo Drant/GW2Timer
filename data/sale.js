@@ -21,8 +21,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 88404, n: "Novelty Selection Box", p: {gem: 0}, discount: 250, Finish: new Date("2018-09-03T16:00:00Z")},
-	{i: 79698, n: "Customer Appreciation Package", p: {gem: 0}, discount: 125, Finish: new Date("2018-09-03T16:00:00Z")},
+	{i: 88404, n: "Novelty Selection Box", p: {gem: 0}, discount: 250, Finish: new Date("2018-09-11T16:00:00Z")},
+	{i: 79698, n: "Customer Appreciation Package", p: {gem: 0}, discount: 125, Finish: new Date("2018-09-1T16:00:00Z")},
+	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 650}, discount: 1000, Finish: new Date("2018-09-04T16:00:00Z")},
+	{i: 69921, n: "Swarm Logging Flute", p: {gem: 650}, discount: 1000, Finish: new Date("2018-09-04T16:00:00Z")},
+	{i: 69958, n: "Firefly Mining Flute", p: {gem: 650}, discount: 1000, Finish: new Date("2018-09-04T16:00:00Z")},
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 520}, discount: 800, Finish: new Date("2018-09-03T16:00:00Z")},
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 325}, discount: 500, Finish: new Date("2018-09-03T16:00:00Z")},
 	{i: 67881, n: "Aviator's Memory Box", p: {gem: 200}, discount: 400, Finish: new Date("2018-09-02T16:00:00Z")},
@@ -45,6 +48,10 @@ GW2T_SALE_DATA = {
 	{i: 64755, n: "Fuzzy Bear Hat", p: {gem: 200}, Finish: new Date("2018-09-08T16:00:00Z")},
 	{i: 64751, n: "Fuzzy Quaggan Hat with Bow", p: {gem: 200}, Finish: new Date("2018-09-08T16:00:00Z")},
 	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}, Finish: new Date("2018-09-08T16:00:00Z")},
-	{i: 44608, n: "Mask of the Queen", p: {gem: 400}, Finish: new Date("2018-09-08T16:00:00Z")}
+	{i: 44608, n: "Mask of the Queen", p: {gem: 400}, Finish: new Date("2018-09-08T16:00:00Z")},
+	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: 300}, Finish: new Date("2018-09-09T16:00:00Z")},
+	{i: 63891, n: "Glowing Crimson Mask", p: {gem: 500}, Finish: new Date("2018-09-09T16:00:00Z")},
+	{i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 400},Finish: new Date("2018-09-09T16:00:00Z")},
+	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}, Finish: new Date("2018-09-09T16:00:00Z")}
 	]
 };
