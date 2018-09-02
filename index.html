@@ -243,7 +243,6 @@
 								<br />
 								<b class="jsTranslate">Desktop Notifications</b>
 								<label title="If you enable this option, please click on &quot;Allow&quot; when your browser asks for notification permissions."><input id="opt_bol_alertDesktop" type="checkbox" /> Show notification popups</label>
-								<label title="Show notifications in the console."><input id="opt_bol_alertConsole" type="checkbox" /> Show notification messages</label>
 								<label title="How long before the notification popup auto-closes."><input id="opt_int_secAlertDesktop" type="number" min="3" max="60" step="1" /> Seconds popup duration</label>
 								<b class="jsTranslate">Speech Notifications</b>
 								<label title="If unchecked, this will permanently mute all spoken alerts."><input id="opt_bol_alertSpeech" type="checkbox" /> Enable speech sounds</label>
@@ -285,6 +284,7 @@
 							</div>
 							<div id="mapAlarmOther">
 								<b class="jsTranslate">Info Alarm</b>
+								<label title="Show text notifications in the console."><input id="opt_bol_alertConsole" type="checkbox" /> Show notification messages</label>
 								<label title="Checks https://api.guildwars2.com/v2/build<br />every minute to see if build ID changed."><input id="opt_bol_alertBuild" type="checkbox" /> Alert new game build version</label>
 								<label><input id="opt_bol_alertDaylight" type="checkbox" /> Alert the start of day or night</label>
 								<label><input id="opt_bol_alertMystic" type="checkbox" /> Alert Mystic Forger daily achievement</label>

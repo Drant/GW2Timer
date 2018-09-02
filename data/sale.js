@@ -22,7 +22,7 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
 	{i: 88404, n: "Novelty Selection Box", p: {gem: 0}, discount: 250, Finish: new Date("2018-09-11T16:00:00Z")},
-	{i: 79698, n: "Customer Appreciation Package", p: {gem: 0}, discount: 125, Finish: new Date("2018-09-1T16:00:00Z")},
+	{i: 79698, n: "Customer Appreciation Package", p: {gem: 0}, discount: 125, Finish: new Date("2018-09-11T16:00:00Z")},
 	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 650}, discount: 1000, Finish: new Date("2018-09-04T16:00:00Z")},
 	{i: 69921, n: "Swarm Logging Flute", p: {gem: 650}, discount: 1000, Finish: new Date("2018-09-04T16:00:00Z")},
 	{i: 69958, n: "Firefly Mining Flute", p: {gem: 650}, discount: 1000, Finish: new Date("2018-09-04T16:00:00Z")},
