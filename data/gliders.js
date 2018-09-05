@@ -39,7 +39,8 @@ Dyeable: [
 	{u: 58, i: 87429, n: "Beastslayer Glider", p: {gem: 400}},
 	{u: 59, i: 87549, n: "Sunspear Glider", p: {gem: 400}},
 	{u: 60, i: 87750, n: "Jeweled Scarab Glider", p: {gem: 0}},
-	{u: 61, i: 88340, n: "Timekeeper Glider", p: {gem: 500}}
+	{u: 61, i: 88340, n: "Timekeeper Glider", p: {gem: 500}},
+	{u: 62, i: 88431, n: "Shattered Cathedral Glider", p: {gem: 400}}
 ],
 Colored: [
 	{u: 5, i: 67054, n: "Heart of Thorns Glider", l: "", p: {gem: 0}},
