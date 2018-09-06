@@ -307,9 +307,9 @@ Armor: [
 	{i: 42870, n: "Aetherblade Light Armor Skin", p: {gem: -800}},
 	{i: 42869, n: "Aetherblade Medium Armor Skin", p: {gem: -800}},
 	{i: 42868, n: "Aetherblade Heavy Armor Skin", p: {gem: -800}},
-	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: 800}},
-	{i: 43017, n: "Zodiac Medium Armor Skin", p: {gem: 800}},
-	{i: 43016, n: "Zodiac Heavy Armor Skin", p: {gem: 800}},
+	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: -800}},
+	{i: 43017, n: "Zodiac Medium Armor Skin", p: {gem: -800}},
+	{i: 43016, n: "Zodiac Heavy Armor Skin", p: {gem: -800}},
 	{i: 43102, n: "Trickster's Light-Armor Skin", p: {gem: 800}},
 	{i: 43101, n: "Viper's Medium-Armor Skin", p: {gem: 800}},
 	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 800}},
@@ -485,7 +485,7 @@ Dye: [
 	{i: 86898, n: "Zhaitan Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 85628, n: "Elonian Beasts Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
 	{i: 87603, n: "Awakened Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]},
-	{i: 88258, n: "Mordremoth Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]]}
+	{i: 88258, n: "Mordremoth Dye Kit", p: {gem: -125}, discount: [[1, 125], [5, 500], [25, 2500]]}
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
