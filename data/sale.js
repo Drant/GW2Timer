@@ -43,17 +43,15 @@ GW2T_SALE_DATA = {
 	{i: 88462, n: "Dragon Emblem Balloon", p: {gem: 250}},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
-	{i: 85580, n: "Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [10, 3400]], Finish: new Date("2018-09-07T16:00:00Z")},
+	{i: 67040, n: "Ceremonial Plated Outfit", p: {gem: 700}, Finish: new Date("2018-09-14T16:00:00Z")},
+	{i: 64756, n: "Cook's Outfit", p: {gem: 700}, Finish: new Date("2018-09-14T16:00:00Z")},
+	{i: 70253, n: "Wedding Attire Outfit", p: {gem: 1000}, Finish: new Date("2018-09-14T16:00:00Z")},
 	{i: 43102, n: "Trickster's Light-Armor Skin", p: {gem: 800}, Finish: new Date("2018-09-13T16:00:00Z")},
 	{i: 43101, n: "Viper's Medium-Armor Skin", p: {gem: 800}, Finish: new Date("2018-09-13T16:00:00Z")},
 	{i: 43100, n: "Phalanx Heavy-Armor Skin", p: {gem: 800}, Finish: new Date("2018-09-13T16:00:00Z")},
 	{i: 43018, n: "Zodiac Light Armor Skin", p: {gem: 800}, Finish: new Date("2018-09-12T16:00:00Z")},
 	{i: 43017, n: "Zodiac Medium Armor Skin", p: {gem: 800}, Finish: new Date("2018-09-12T16:00:00Z")},
 	{i: 43016, n: "Zodiac Heavy Armor Skin", p: {gem: 800}, Finish: new Date("2018-09-12T16:00:00Z")},
-	{i: 64745, n: "Ringmaster's Hat", p: {gem: 200}, Finish: new Date("2018-09-07T16:00:00Z")},
-	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: 300}, Finish: new Date("2018-09-07T16:00:00Z")},
-	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: 300}, Finish: new Date("2018-09-07T16:00:00Z")},
-	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: 300}, Finish: new Date("2018-09-07T16:00:00Z")},
 	{i: 64755, n: "Fuzzy Bear Hat", p: {gem: 200}, Finish: new Date("2018-09-08T16:00:00Z")},
 	{i: 64751, n: "Fuzzy Quaggan Hat with Bow", p: {gem: 200}, Finish: new Date("2018-09-08T16:00:00Z")},
 	{i: 44607, n: "Mask of the Jubilee", p: {gem: 400}, Finish: new Date("2018-09-08T16:00:00Z")},
@@ -64,6 +62,10 @@ GW2T_SALE_DATA = {
 	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}, Finish: new Date("2018-09-09T16:00:00Z")},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}, Finish: new Date("2018-09-10T16:00:00Z")},
 	{i: 84014, n: "Swaggering Hat", p: {gem: 400}, Finish: new Date("2018-09-10T16:00:00Z")},
-	{i: 88258, n: "Mordremoth Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-09-11T16:00:00Z")}
+	{i: 88258, n: "Mordremoth Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-09-11T16:00:00Z")},
+	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
+	{i: 64742, n: "Aviator Cap", p: {gem: 200}},
+	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
+	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}}
 	]
 };
