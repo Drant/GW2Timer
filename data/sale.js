@@ -62,10 +62,17 @@ GW2T_SALE_DATA = {
 	{i: 64743, n: "Sport Sunglasses", p: {gem: 150}, Finish: new Date("2018-09-09T16:00:00Z")},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}, Finish: new Date("2018-09-10T16:00:00Z")},
 	{i: 84014, n: "Swaggering Hat", p: {gem: 400}, Finish: new Date("2018-09-10T16:00:00Z")},
+	{i: 69662, n: "Daydreamer's Finery Outfit", p: {gem: 700}, Finish: new Date("2018-09-15T16:00:00Z")},
+	{i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: 700}, Finish: new Date("2018-09-15T16:00:00Z")},
+	{i: 69863, n: "Monk's Outfit", p: {gem: 700}, Finish: new Date("2018-09-15T16:00:00Z")},
 	{i: 88258, n: "Mordremoth Dye Kit", p: {gem: 125}, discount: [[1, 125], [5, 500], [25, 2500]], Finish: new Date("2018-09-11T16:00:00Z")},
 	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
 	{i: 64742, n: "Aviator Cap", p: {gem: 200}},
 	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
-	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}}
+	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}},
+	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
+	{i: 64758, n: "Fuzzy Cat Hat", p: {gem: 200}},
+	{i: 48817, n: "Scarlet's Grasp", p: {gem: 400}},
+	{i: 48824, n: "Scarlet's Spaulders", p: {gem: 400}}
 	]
 };
