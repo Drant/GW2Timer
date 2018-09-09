@@ -66,8 +66,8 @@ Outfit: [
 	{i: 69662, n: "Daydreamer's Finery Outfit", p: {gem: -700}},
 	{i: 69753, n: "Mad Scientist Outfit", p: {gem: -700}},
 	{i: 69806, n: "Dwayna's Regalia Outfit", p: {gem: 700}},
-	{i: 69863, n: "Monk's Outfit", p: {gem: 700}},
-	{i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: 700}},
+	{i: 69863, n: "Monk's Outfit", p: {gem: -700}},
+	{i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: -700}},
 	{i: 70253, n: "Wedding Attire Outfit", p: {gem: -1000}},
 	{i: 75129, n: "Lyssa's Regalia", p: {gem: 700}},
 	{i: 76905, n: "Crystal Arbiter Outfit", p: {gem: -700}},
@@ -80,7 +80,7 @@ Outfit: [
 	{i: 78010, n: "Ironclad Outfit", p: {gem: -700}},
 	{i: 78574, n: "Sentinel Outfit", p: {gem: -700}},
 	{i: 79220, n: "Verdant Executor Outfit", p: {gem: 700}},
-	{i: 79531, n: "Mursaat Robes", p: {gem: 700}},
+	{i: 79531, n: "Mursaat Robes", p: {gem: -700}},
 	{i: 79380, n: "Taimi's Outfit", p: {gem: 700}},
 	{i: 79671, n: "Ghostly Outfit", p: {gem: -700}},
 	{i: 79705, n: "Marjory's Shrouded Outfit", p: {gem: 700}},
@@ -91,7 +91,7 @@ Outfit: [
 	{i: 80973, n: "Kasmeer's Regal Outfit", p: {gem: 700}},
 	{i: 81223, n: "Outlaw Outfit", p: {gem: -700}},
 	{i: 81548, n: "Dynamics Exo-Suit Outfit", p: {gem: -700}},
-	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: 700}},
+	{i: 83865, n: "Champion of Tyria Outfit", p: {gem: -700}},
 	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 700}},
 	{i: 85034, n: "Forged Outfit", p: {gem: -700}},
 	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
@@ -101,7 +101,7 @@ Outfit: [
 	{i: 82360, n: "Imperial Guard Outfit", p: {gem: -700}},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: -700}},
 	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: -700}},
-	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}},
+	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: -700}},
 	{i: 88321, n: "Timekeeper Outfit", p: {gem: 700}}
 ],
 Mount: [
@@ -237,7 +237,7 @@ Head: [
 	{i: 44609, n: "Mask of the Crown", p: {gem: -400}},
 	{i: 47883, n: "Stag Helm Skin", p: {gem: -500}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: -300}},
-	{i: 63940, n: "Lawless Helmet Skin", p: {gem: -300}},
+	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
 	{i: 47890, n: "Grenth Hood Skin", p: {gem: -500}},
 	{i: 65203, n: "Phantom's Hood", p: {gem: -200}},
 	{i: 48944, n: "Mask of the Wanderer Skin", p: {gem: -500}},
@@ -251,7 +251,7 @@ Head: [
 	{i: 64746, n: "Fuzzy Leopard Hat", p: {gem: -200}},
 	{i: 64751, n: "Fuzzy Quaggan Hat with Bow", p: {gem: -200}},
 	{i: 64755, n: "Fuzzy Bear Hat", p: {gem: -200}},
-	{i: 64758, n: "Fuzzy Cat Hat", p: {gem: -200}},
+	{i: 64758, n: "Fuzzy Cat Hat", p: {gem: 200}},
 	{i: 64759, n: "Fuzzy Hylek Hat", p: {gem: -200}},
 	{i: 66309, n: "Wreath of Cooperation", p: {gem: -400}},
 	{i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: -400}},
@@ -260,7 +260,7 @@ Head: [
 	{i: 68656, n: "Lion Mask Skin", p: {gem: -300}},
 	{i: 79014, n: "Xera's Mask", p: {gem: -400}},
 	{i: 81212, n: "Sworn Zaishen Helm Skin", p: {gem: 0}},
-	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: -400}},
+	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
 	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
 	{i: 84014, n: "Swaggering Hat", p: {gem: -400}},
 	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
@@ -274,8 +274,8 @@ Head: [
 	{i: 88333, n: "Enchanted Dragon Crown", p: {gem: 166}}
 ],
 Shoulder: [
-	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
-	{i: 48824, n: "Scarlet's Spaulders", p: {gem: -400}},
+	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
+	{i: 48824, n: "Scarlet's Spaulders", p: {gem: 400}},
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
@@ -284,7 +284,7 @@ Shoulder: [
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
-	{i: 48817, n: "Scarlet's Grasp", p: {gem: -400}},
+	{i: 48817, n: "Scarlet's Grasp", p: {gem: 400}},
 	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: -300}},
@@ -295,7 +295,7 @@ Gloves: [
 	{i: 88108, n: "Storm Gloves", p: {gem: -500}}
 ],
 Boots: [
-	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
+	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: -300}},
 	{i: 85282, n: "Foefire Greaves", p: {gem: -500}},
 	{i: 86897, n: "Jackal Rune Greaves", p: {gem: -500}}
