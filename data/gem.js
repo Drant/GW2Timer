@@ -115,7 +115,7 @@ Mount: [
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}},
 	{i: 86766, n: "Summit Chevon Springer Skin", p: {gem: -2000}},
 	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}},
-	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}},
+	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: 2000}},
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: -2000}}
 ],
 Glider: [
@@ -527,12 +527,13 @@ Consumable: [
 ],
 Pass: [
 	{i: 46499, n: "Infinite Continue Coin", p: {gem: -600}},
+	{i: 88394, n: "World Boss Portal Device", p: {gem: 400}},
 	{i: 66927, n: "Home Portal Stone", p: {gem: 900}},
 	{i: 49149, n: "Royal Terrace Pass", p: {gem: -1000}},
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: -1000}},
 	{i: 79140, n: "Noble's Folly Pass", p: {gem: -1000}},
 	{i: 79500, n: "Lava Lounge Pass", p: {gem: -1000}},
-	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: -1000}}
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: -1000}},
 	//{n: "Lava Lounge Pass Bundle", p: {gem: -1200}},
 ],
 Gathering: [
@@ -578,9 +579,9 @@ Gathering: [
 	{i: 87530, n: "Choya Logging Tool", p: {gem: -1000}},
 	{i: 87554, n: "Choya Harvesting Tool", p: {gem: -1000}},
 	{i: 88355, n: "Choya Mining Tool", p: {gem: -1000}},
-	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: -1000}},
-	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: -1000}},
-	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: -1000}}
+	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: 1000}},
+	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: 1000}},
+	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: 1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
