@@ -316,9 +316,9 @@ Armor: [
 	{i: 43159, n: "Phoenix Light Armor Skin", p: {gem: -800}},
 	{i: 43158, n: "Magitech Medium Armor Skin", p: {gem: -800}},
 	{i: 43157, n: "Braham's Heavy Armor Skin", p: {gem: -800}},
-	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: -800}},
-	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: -800}},
-	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: -800}},
+	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: 800}},
+	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: 800}},
+	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: 800}},
 	{i: 63909, n: "Incarnate Light Armor Skin", p: {gem: -800}},
 	{i: 63899, n: "Strider's Medium Armor Skin", p: {gem: -800}},
 	{i: 63929, n: "Rampart Heavy Armor Skin", p: {gem: -800}}
