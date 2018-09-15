@@ -21,7 +21,7 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: "character_slot_expansion", n: "Character Slot Expansion", p: {gem: 520}, discount: 800, Finish: new Date("2018-09-15T16:00:00Z")},
+	{i: 19995, n: "Bank Tab Expansion", p: {gem: 420}, discount: 600, Finish: new Date("2018-09-16T16:00:00Z")},
 	{i: 88394, n: "World Boss Portal Device", p: {gem: 400}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
 	{i: 88226, n: "Dragon Horns", p: {gem: 166}},
@@ -48,6 +48,9 @@ GW2T_SALE_DATA = {
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}, Finish: new Date("2018-09-16T16:00:00Z")},
 	{i: 79531, n: "Mursaat Robes", p: {gem: 700}, Finish: new Date("2018-09-16T16:00:00Z")},
 	{i: 88355, n: "Choya Mining Tool", p: {gem: 1000}, Finish: new Date("2018-09-18T16:00:00Z")},
+	{i: 78008, n: "Gwen's Attire", p: {gem: 700}},
+	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}},
+	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}},
 	{i: 78010, n: "Ironclad Outfit", p: {gem: 700}},
 	{i: 69753, n: "Mad Scientist Outfit", p: {gem: 700}},
 	{i: 77483, n: "Slayer's Outfit", p: {gem: 700}},
