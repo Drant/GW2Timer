@@ -444,6 +444,7 @@ var GW2T_ACCOUNT_METADATA = {
 		194, // Daily Domain of Istan
 		204, // Daily Sandswept Isles
 		208, // Daily Domain of Kourna
+		217, // Daily Jahai Bluffs
 		207, // Sunken Treasure Hunter Daily
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
@@ -478,6 +479,7 @@ var GW2T_ACCOUNT_METADATA = {
 		196, // Daybreak
 		203, // A Bug in the System
 		209, // Long Live the Lich
+		216, // A Star to Guide Us
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons
@@ -548,6 +550,7 @@ var GW2T_ACCOUNT_METADATA = {
 		138, // Stronghold of the Faithful
 		155, // Bastion of the Penitent
 		195, // Hall of Chains
+		215, // Mythwright Gambit
 		{en: "Fractals of the Mists", de: "Fraktale der Nebel", es: "Fractales de la Niebla", fr: "Fractales des Brumes", zh: "迷雾碎层"},
 		148, // Nightmare Fractal
 		170, // Shattered Observatory Fractal
