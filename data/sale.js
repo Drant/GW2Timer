@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2018-08-21T16:00:00Z"),
-	Finish: new Date("2018-09-19T16:00:00Z"),
+	Start: new Date("2018-09-19T16:00:00Z"),
+	Finish: new Date("2018-10-09T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,10 +21,10 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 240}, discount: 400, Finish: new Date("2018-09-19T16:00:00Z")},
-	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-19T16:00:00Z")},
-	{i: 79391, n: "Pirate Hook Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-19T16:00:00Z")},
-	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-19T16:00:00Z")},
+	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 240}, discount: 400, Finish: new Date("2018-09-23T16:00:00Z")},
+	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-23T16:00:00Z")},
+	{i: 79391, n: "Pirate Hook Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-23T16:00:00Z")},
+	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-23T16:00:00Z")},
 	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},
 	{i: 88394, n: "World Boss Portal Device", p: {gem: 400}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
@@ -50,33 +50,9 @@ GW2T_SALE_DATA = {
 	{i: 67395, n: "Reap-r-Tron", p: {gem: 1000}, Finish: new Date("2018-09-25T16:00:00Z")},
 	{i: 67394, n: "Log-r-Tron", p: {gem: 1000}, Finish: new Date("2018-09-25T16:00:00Z")},
 	{i: 67396, n: "Mine-r-Tron", p: {gem: 1000}, Finish: new Date("2018-09-25T16:00:00Z")},
-	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 700}},
-	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}},
-	{i: 85034, n: "Forged Outfit", p: {gem: 700}},
-	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
-	{i: 78008, n: "Gwen's Attire", p: {gem: 700}},
-	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}},
-	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}},
-	{i: 78010, n: "Ironclad Outfit", p: {gem: 700}},
-	{i: 69753, n: "Mad Scientist Outfit", p: {gem: 700}},
-	{i: 77483, n: "Slayer's Outfit", p: {gem: 700}},
-	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: 2000}},
-	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: 1000}},
-	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: 1000}},
-	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: 1000}},
-	{i: 43576, n: "Flamekissed Light Armor Skin", p: {gem: 800}},
-	{i: 43575, n: "Flamewalker Medium Armor Skin", p: {gem: 800}},
-	{i: 43574, n: "Flamewrath Heavy Armor Skin", p: {gem: 800}},
-	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}},
-	{i: 64742, n: "Aviator Cap", p: {gem: 200}},
-	{i: 64740, n: "Aviator Sunglasses", p: {gem: 150}},
-	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}},
-	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}},
-	{i: 64758, n: "Fuzzy Cat Hat", p: {gem: 200}},
-	{i: 48817, n: "Scarlet's Grasp", p: {gem: 400}},
-	{i: 48824, n: "Scarlet's Spaulders", p: {gem: 400}},
-	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
-	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
-	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}}
+	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}, Finish: new Date("2018-09-26T16:00:00Z")},
+	{i: 48955, n: "Dreamcleaver Logging Axe", p: {gem: 1000}, Finish: new Date("2018-09-26T16:00:00Z")},
+	{i: 78724, n: "Focused Solar Logging Tool", p: {gem: 1000}, Finish: new Date("2018-09-26T16:00:00Z")},
+	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-09-26T16:00:00Z")}
 	]
 };
