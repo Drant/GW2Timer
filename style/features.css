@@ -916,6 +916,9 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 .chl_5_2 { background-position: -448px 0; }
 .chl_5_3 { background-position: -480px 0; }
 .chl_5_4 { background-position: -512px 0; }
+.chl_6_1 { background-position: -544px 0; }
+.chl_6_2 { background-position: -576px 0; }
+.chl_6_3 { background-position: -608px 0; }
 
 .chlDungeonBar label {
 	display: inline;

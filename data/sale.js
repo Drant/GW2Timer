@@ -21,10 +21,10 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 240}, discount: 400, Finish: new Date("2018-09-23T16:00:00Z")},
-	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-23T16:00:00Z")},
-	{i: 79391, n: "Pirate Hook Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-23T16:00:00Z")},
-	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-23T16:00:00Z")},
+	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 240}, discount: 400, Finish: new Date("2018-09-21T16:00:00Z")},
+	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-21T16:00:00Z")},
+	{i: 79391, n: "Pirate Hook Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-21T16:00:00Z")},
+	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-21T16:00:00Z")},
 	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},
 	{i: 88394, n: "World Boss Portal Device", p: {gem: 400}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
@@ -53,6 +53,9 @@ GW2T_SALE_DATA = {
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: 500}, Finish: new Date("2018-09-26T16:00:00Z")},
 	{i: 48955, n: "Dreamcleaver Logging Axe", p: {gem: 1000}, Finish: new Date("2018-09-26T16:00:00Z")},
 	{i: 78724, n: "Focused Solar Logging Tool", p: {gem: 1000}, Finish: new Date("2018-09-26T16:00:00Z")},
-	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-09-26T16:00:00Z")}
+	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-09-26T16:00:00Z")},
+	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 1000}, Finish: new Date("2018-09-27T16:00:00Z")},
+	{i: 69921, n: "Swarm Logging Flute", p: {gem: 1000}, Finish: new Date("2018-09-27T16:00:00Z")},
+	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}, Finish: new Date("2018-09-27T16:00:00Z")}
 	]
 };

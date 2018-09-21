@@ -11,7 +11,8 @@ var GW2T_RAIDS_HEADERS = {
 	SalvationPass: {name_en: "Salvation Pass", name_de: "Erlösungspass", name_es: "Paso de la Salvación", name_fr: "Passage de la rédemption", name_zh: "救赎小道"},
 	StrongholdOfTheFaithful: {name_en: "Stronghold of the Faithful", name_de: "Festung der Treuen", name_es: "Fortaleza de los Fieles", name_fr: "Forteresse des Fidèles", name_zh: "信仰要塞"},
 	BastionOfThePenitent: {name_en: "Bastion of the Penitent", name_de: "Bastion der Bußfertigen", name_es: "Bastión del Penitente", name_fr: "Bastion du pénitent", name_zh: "忏悔者堡垒"},
-	HallOfChains: {name_en: "Hall of Chains", name_de: "Halle der Ketten", name_es: "Sala de las Cadenas", name_fr: "Salle des chaînes", name_zh: "锁链殿堂"}
+	HallOfChains: {name_en: "Hall of Chains", name_de: "Halle der Ketten", name_es: "Sala de las Cadenas", name_fr: "Salle des chaînes", name_zh: "锁链殿堂"},
+	MythwrightGambit: {name_en: "Mythwright Gambit", name_de: "Mythenschreiber-Wagnis", name_es: "Forjador de Mitos", name_fr: "Gambit de forgeconte", name_zh: "秘法对决"}
 };
 
 /*
@@ -50,5 +51,10 @@ HallOfChains: [
 	{u: "river_of_souls", i: 77291, n: "Hall_of_Chains#River_of_Souls", l: "River"},
 	{u: "statues_of_grenth", i: 85667, n: "Hall_of_Chains#Statues_of_Grenth", l: "Statues"},
 	{u: "voice_in_the_void", i: 85998, n: "Hall_of_Chains#The_Voice_in_the_Void", l: "Voice"}
+],
+MythwrightGambit: [
+	{u: "conjured_amalgamate", i: 88543, n: "Mythwright_Gambit#Conjured_Amalgamate", l: "Amalgamate"},
+	{u: "twin_largos", i: 82671, n: "Mythwright_Gambit#Largos_Twins:_Nikare_and_Kenut", l: "Twins"},
+	{u: "qadim", i: 88587, n: "Mythwright_Gambit#Qadim", l: "Qadim"}
 ]
 };

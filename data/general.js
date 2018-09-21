@@ -1814,7 +1814,19 @@ var GW2T_ZONE_DATA = {
 	name_zh: "克南领域",
 	region: "desert",
 	map_rect: [[-49152, -55296], [49152, 58368]],
-	continent_rect: [[30856, 43188],[34952, 47924]]
+	continent_rect: [[30856, 43188], [34952, 47924]]
+},
+"jahai":
+{
+	id: "1301",
+	name_en: "Jahai Bluffs",
+	name_de: "Jahai-Klippen",
+	name_es: "Acantilados de Jahai",
+	name_fr: "Promontoire de Jahai",
+	name_zh: "亚哈悬崖",
+	region: "desert",
+	map_rect: [[-49152, -36864], [49152, 39936]],
+	continent_rect: [[30548, 39992], [34644, 43192]]
 }
 };
 
