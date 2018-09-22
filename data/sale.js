@@ -21,22 +21,21 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 50103, n: "Magnus's Eye Patch", p: {gem: 240}, discount: 400, Finish: new Date("2018-09-21T16:00:00Z")},
-	{i: 79374, n: "Pirate Corsair Hat Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-21T16:00:00Z")},
-	{i: 79391, n: "Pirate Hook Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-21T16:00:00Z")},
-	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: 180}, discount: 300, Finish: new Date("2018-09-21T16:00:00Z")},
+	{i: 69790, n: "Mini Rock", p: {gem: 245}, discount: 350, Finish: new Date("2018-09-23T16:00:00Z")},
+	{i: 79693, n: "Mini Bloodstone Rock", p: {gem: 350}, discount: 350, Finish: new Date("2018-09-23T16:00:00Z")},
 	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},
 	{i: 88394, n: "World Boss Portal Device", p: {gem: 400}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
 	{i: 88226, n: "Dragon Horns", p: {gem: 166}},
 	{i: 88244, n: "Dragon's Eye Circlet", p: {gem: 166}},
 	{i: 88333, n: "Enchanted Dragon Crown", p: {gem: 166}},
+	{i: 77678, n: "Hawk Wings Glider", p: {gem: 700}, Finish: new Date("2018-09-28T16:00:00Z")},
+	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: 700}, Finish: new Date("2018-09-28T16:00:00Z")},
+	{i: 78006, n: "Ironclad Glider", p: {gem: 500}, Finish: new Date("2018-09-28T16:00:00Z")},
+	{i: 80484, n: "Necrotic Glider", p: {gem: 500}, Finish: new Date("2018-09-28T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 2}},
-	{i: 77821, n: "Classical Glider", p: {gem: 400}, Finish: new Date("2018-09-21T16:00:00Z")},
-	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}, Finish: new Date("2018-09-21T16:00:00Z")},
-	{i: 79523, n: "Mursaat Wings Backpack", p: {gem: 700}, Finish: new Date("2018-09-21T16:00:00Z")},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}, Finish: new Date("2018-09-22T16:00:00Z")},
 	{i: 78727, n: "Macaw Wings Glider", p: {gem: 700}, Finish: new Date("2018-09-22T16:00:00Z")},
 	{i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}, Finish: new Date("2018-09-22T16:00:00Z")},
@@ -56,6 +55,10 @@ GW2T_SALE_DATA = {
 	{i: 86943, n: "Lucky Dog Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-09-26T16:00:00Z")},
 	{i: 70044, n: "Butterfly Harvesting Flute", p: {gem: 1000}, Finish: new Date("2018-09-27T16:00:00Z")},
 	{i: 69921, n: "Swarm Logging Flute", p: {gem: 1000}, Finish: new Date("2018-09-27T16:00:00Z")},
-	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}, Finish: new Date("2018-09-27T16:00:00Z")}
+	{i: 69958, n: "Firefly Mining Flute", p: {gem: 1000}, Finish: new Date("2018-09-27T16:00:00Z")},
+	{i: 80371, n: "Mini Demmi Beetlestone", p: {gem: 400}, Finish: new Date("2018-09-28T16:00:00Z")},
+	{i: 79361, n: "Mini Jungle Lord Faren", p: {gem: 350}, Finish: new Date("2018-09-28T16:00:00Z")},
+	{i: 67839, n: "Mini Pact Airship", p: {gem: 350}, Finish: new Date("2018-09-28T16:00:00Z")},
+	{i: 70191, n: "Mini Wyvern", p: {gem: 350}, Finish: new Date("2018-09-28T16:00:00Z")}
 	]
 };
