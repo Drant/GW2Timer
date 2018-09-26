@@ -102,7 +102,8 @@ Outfit: [
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}},
 	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: -700}},
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: -700}},
-	{i: 88321, n: "Timekeeper Outfit", p: {gem: 700}}
+	{i: 88321, n: "Timekeeper Outfit", p: {gem: 700}},
+	{i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -115,7 +116,7 @@ Mount: [
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}},
 	{i: 86766, n: "Summit Chevon Springer Skin", p: {gem: -2000}},
 	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}},
-	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: 2000}},
+	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}},
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: -2000}},
 	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},
 ],
@@ -270,9 +271,9 @@ Head: [
 	{i: 88190, n: "Lightning Aspect Eye", p: {gem: -166}},
 	{i: 88161, n: "Sun Aspect Eye", p: {gem: -166}},
 	{i: 88170, n: "Wind Aspect Eye", p: {gem: -166}},
-	{i: 88226, n: "Dragon Horns", p: {gem: 166}},
-	{i: 88244, n: "Dragon's Eye Circlet", p: {gem: 166}},
-	{i: 88333, n: "Enchanted Dragon Crown", p: {gem: 166}}
+	{i: 88226, n: "Dragon Horns", p: {gem: -166}},
+	{i: 88244, n: "Dragon's Eye Circlet", p: {gem: -166}},
+	{i: 88333, n: "Enchanted Dragon Crown", p: {gem: -166}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
@@ -357,7 +358,8 @@ Weapon: [
 	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: -600}},
 	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: -600}},
 	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: -600}},
-	{i: 87564, n: "Venom Warblade", p: {gem: -600}}
+	{i: 87564, n: "Venom Warblade", p: {gem: -600}},
+	{i: 88759, n: "Zafirah's Rifle Skin", p: {gem: -600}}
 ],
 BlackLionWeapon: [
 	{i: 38089, n: "Winter's weapon skins#Gallery", p: {blticket: -2}},
@@ -534,7 +536,7 @@ Pass: [
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: -1000}},
 	{i: 79140, n: "Noble's Folly Pass", p: {gem: -1000}},
 	{i: 79500, n: "Lava Lounge Pass", p: {gem: -1000}},
-	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: -1000}},
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: -1000}}
 	//{n: "Lava Lounge Pass Bundle", p: {gem: -1200}},
 ],
 Gathering: [
@@ -550,9 +552,9 @@ Gathering: [
 	{i: 78724, n: "Focused Solar Logging Tool", p: {gem: -1000}},
 	{i: 78909, n: "Glitter Bomb Harvesting Tool", p: {gem: -1000}},
 	{i: 80067, n: "Celestial Rooster Harvesting Tool", p: {gem: 1000}},
-	{i: 67032, n: "Fused Molten Sickle", p: {gem: -1000}},
-	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: -1000}},
-	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: -1000}},
+	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
+	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: 1000}},
+	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: 1000}},
 	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: -1000}},
 	{i: 67029, n: "Tireless Logging Minion", p: {gem: -1000}},
 	{i: 48932, n: "Bone Pick", p: {gem: -1000}},
@@ -580,9 +582,9 @@ Gathering: [
 	{i: 87530, n: "Choya Logging Tool", p: {gem: -1000}},
 	{i: 87554, n: "Choya Harvesting Tool", p: {gem: -1000}},
 	{i: 88355, n: "Choya Mining Tool", p: {gem: -1000}},
-	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: 1000}},
-	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: 1000}},
-	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: 1000}}
+	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: -1000}},
+	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: -1000}},
+	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: -1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
