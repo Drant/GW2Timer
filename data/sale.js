@@ -21,6 +21,8 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 87360, n: "Istani Isles—Mount Select License", p: {gem: 720}, discount: 1200, Finish: new Date("2018-09-30T16:00:00Z")},
+	{i: 85580, n: "Mount Adoption License", p: {gem: 320}, discount: [[1, 320, 400], [10, 2720, 3400]], Finish: new Date("2018-09-30T16:00:00Z")},
 	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},
 	{i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}},
 	{i: 88759, n: "Zafirah's Rifle Skin", p: {gem: 600}},
@@ -42,6 +44,9 @@ GW2T_SALE_DATA = {
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}, Finish: new Date("2018-10-02T16:00:00Z")},
 	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: 1000}, Finish: new Date("2018-10-02T16:00:00Z")},
 	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: 1000}, Finish: new Date("2018-10-02T16:00:00Z")},
+	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: 1000}, Finish: new Date("2018-10-04T16:00:00Z")},
+	{i: 67029, n: "Tireless Logging Minion", p: {gem: 1000}, Finish: new Date("2018-10-04T16:00:00Z")},
+	{i: 48932, n: "Bone Pick", p: {gem: 1000}, Finish: new Date("2018-10-04T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 2}},
