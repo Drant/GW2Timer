@@ -7010,6 +7010,14 @@ Z = {
 	{
 		Z.collateUnlockables("Finishers");
 	},
+	collateNodes: function()
+	{
+		Z.collateUnlockables("Nodes");
+	},
+	collateCats: function()
+	{
+		Z.collateUnlockables("Cats");
+	},
 	
 	/*
 	 * Sorts the dyes database according to set, hue, then lightness.

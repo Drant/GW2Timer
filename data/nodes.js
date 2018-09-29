@@ -22,6 +22,7 @@ var GW2T_NODES_HEADERS = {
 var GW2T_NODES_DATA = {
 Special: [
 	{u: "krait_obelisk", i: 48875, n: "Krait Obelisk Shard", p: {laurel: 25}},
+	{u: "bauble_gathering_system", i: 87324, n: "Bauble Gathering System", p: {bubble: 32}},
 	{u: "quartz_node", i: 43902, n: "Gift of Quartz", p: {laurel: 25}},
 	{u: "candy_corn_node", i: 48804, n: "Gift of Candy Corn", p: {laurel: 25}},
 	{u: "king_sized_candy_corn", i: 79646, n: "Greater Gift of Candy Corn", p: {cob: 5}},
@@ -31,11 +32,12 @@ Special: [
 	{u: "winterberry_bush", i: 79903, n: "Winterberry Bush Node", p: {coin: 500000}},
 	{u: "jade_fragment", i: 80450, n: "Jade Fragment Node", p: {coin: 500000}},
 	{u: "primordial_orchid", i: 81115, n: "Fire Orchid Node", p: {coin: 500000}},
-	{u: "orrian_oyster", i: 81696, n: "Orrian Oyster Node", p: {coin: 500000}},
-	{u: "brandstone_node", i: 86297, n: "Brandstone Node", p: {coin: 500000}}
+	{u: "orrian_oyster_node", i: 81696, n: "Orrian Oyster Node", p: {coin: 500000}},
+	{u: "brandstone_node", i: 86297, n: "Brandstone Node", p: {coin: 500000}},
+	{u: "difluorite_crystal_cluster_node", i: 87132, n: "Difluorite Crystal Cluster Node", p: {coin: 500000}}
 ],
 Gathering: [
-	{u: "hunters_contract", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
+	{u: "black_lion_hunters_board", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{u: "garden_plot_deed", i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
 	{u: "basic_harvesting_nodes", i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
 	{u: "basic_lumber_nodes", i: 66769, n: "Basic Lumber Node Pack", p: {gem: 800}},
