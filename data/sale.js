@@ -21,6 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 87360, n: "Istani Isles—Mount Select License", p: {gem: 720}, discount: 1200, Finish: new Date("2018-10-07T16:00:00Z")},
+	{i: 87368, n: "Istani Isles—Mount Adoption License", p: {gem: 320}, discount: [[1, 320, 400], [5, 1440, 1800]], Finish: new Date("2018-10-07T16:00:00Z")},
+	{i: 85580, n: "Mount Adoption License", p: {gem: 320}, discount: [[1, 320, 400], [10, 2720, 3400]], Finish: new Date("2018-10-07T16:00:00Z")},
 	{i: 88979, n: "Black Lion Expedition Contract", p: {gem: 1000}, Finish: new Date("2018-10-16T16:00:00Z")},
 	{i: 88451, n: "Night Watch Stool", p: {gem: 400}, Finish: new Date("2018-10-16T16:00:00Z")},
 	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},

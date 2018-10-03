@@ -110,7 +110,8 @@ Mount: [
 	{i: 87202, n: "Mini Branded Mounts Pack", p: {gem: -1600}},
 	{i: 85580, n: "Mount Adoption License", p: {gem: -400}, discount: [[1, 400], [10, 3400]]},
 	{i: 87368, n: "Istani Isles—Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [5, 1800]]},
-	{i: 87360, n: "Istani Isles—Mount Select License", p: {gem: 1200}},
+	{i: 87360, n: "Istani Isles—Mount Select License", p: {gem: 1200}},{i: 88154, n: "Desert Racer Mount Select License", p: {gem: 1200}},
+	{i: 88200, n: "Desert Racer Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [5, 1800], [15, 5100]]},
 	{i: 85538, n: "Reforged Warhound", p: {gem: -2000}},
 	{i: 85491, n: "Resplendent Avialan", p: {gem: -2000}},
 	{i: 86690, n: "Umbral Demon Skimmer Skin", p: {gem: -2000}},
@@ -118,7 +119,7 @@ Mount: [
 	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}},
 	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}},
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: -2000}},
-	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},
+	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}}
 ],
 Glider: [
 	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]]},
