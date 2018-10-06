@@ -118,7 +118,7 @@ Mount: [
 	{i: 86766, n: "Summit Chevon Springer Skin", p: {gem: -2000}},
 	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}},
 	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}},
-	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: -2000}},
+	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: 2000}},
 	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}}
 ],
 Glider: [
@@ -777,8 +777,8 @@ Node: [
 	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
 	{i: 67842, n: "Basic Cloth Rack", p: {gem: 800}},
 	{i: 78019, n: "Basic Leather Rack", p: {gem: 800}},
-	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: -1200}},
-	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: -1000}},
+	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
+	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
 	{i: 88979, n: "Black Lion Expedition Contract", p: {gem: 1000}}
 ],
 Finisher: [
