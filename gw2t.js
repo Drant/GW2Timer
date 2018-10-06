@@ -40591,12 +40591,21 @@ I = {
 		if (I.ModeCurrent !== I.ModeEnum.Tile)
 		{
 			$("#itemDashboard").insertAfter(primaryheader);
-			I.createFilterBar($("<div id='dirSearch'></div>").insertAfter("#dsbContainer"), ".dirGroup .curClick", null, ".dirHeaderSecondary", "Wiki...")
+			var search = I.createFilterBar($("<div id='dirSearch'></div>")
+				.insertAfter("#dsbContainer"), ".dirGroup .curClick", null, ".dirHeaderSecondary", "Wiki...")
 				.onEnterKey(function()
 			{
 				U.openExternalURL(U.getWikiSearchLanguage($(this).val()));
-				$(this).val("").trigger("input");
+				search.val("").trigger("input");
 			});
+			Q.bindItemSearch(search, {
+				aFillerText: null,
+				aCallback: function(pItem)
+				{
+					Q.printItemInfo(pItem, true);
+					search.val("").trigger("input");
+				}}
+			);
 		}
 	},
 	
