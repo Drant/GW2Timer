@@ -40604,8 +40604,12 @@ I = {
 				{
 					Q.printItemInfo(pItem, true);
 					search.val("").trigger("input");
-				}}
-			);
+				},
+				aCancel: function()
+				{
+					search.val("").trigger("input");
+				}
+			});
 		}
 	},
 	
