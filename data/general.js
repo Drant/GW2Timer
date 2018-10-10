@@ -2074,17 +2074,17 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	/*{
-		isHalloween: true,
+	{
+		isHalloween: false,
 		name_en: "Halloween 2018",
 		name_de: "Halloween 2018",
 		name_es: "Halloween 2018",
 		name_fr: "Halloween 2018",
 		name_zh: "万圣夜2018",
-		official: "news/shadow-of-the-mad-king-is-live-2/",
-		Start: new Date("2018-10-23T16:00:00Z"),
+		official: "news/halloween-is-coming-soon/",
+		Start: new Date("2018-10-16T16:00:00Z"),
 		Finish: new Date("2018-11-06T16:00:00Z")
-	},*/
+	}
 	/*{
 		name_en: "Black Friday Sale",
 		name_de: "Black Friday Verkauf",
