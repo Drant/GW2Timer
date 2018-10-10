@@ -45,9 +45,9 @@ Outfit: [
 	{i: 65196, n: "Mad King's Outfit", p: {gem: -700}},
 	{i: 65201, n: "Witch's Outfit", p: {gem: -700}},
 	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 700}},
-	{i: 65194, n: "Executioner's Outfit", p: {gem: -700}},
+	{i: 65194, n: "Executioner's Outfit", p: {gem: 700}},
 	{i: 67037, n: "Raiment of the Lich", p: {gem: -700}},
-	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: -700}},
+	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}},
 	{i: 65198, n: "Fancy Winter Outfit", p: {gem: -700}},
 	{i: 77595, n: "Winter Solstice Outfit", p: {gem: -700}},
 	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}},
@@ -174,7 +174,8 @@ Glider: [
 	{i: 87429, n: "Beastslayer Glider", p: {gem: -400}},
 	{i: 87549, n: "Sunspear Glider", p: {gem: 400}},
 	{i: 85470, n: "Desert King Glider", p: {gem: 700}},
-	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}}
+	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
+	{i: 88983, n: "Scaled Dragon Wings Glider", p: {gem: 700}}
 ],
 Back: [
 	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
@@ -215,7 +216,8 @@ Back: [
 	{i: 84241, n: "Largos Fin Backpack", p: {gem: -700}},
 	{i: 85332, n: "Branded Wing Backpack", p: {gem: -700}},
 	{i: 87021, n: "Forged Wing Backpack", p: {gem: -700}},
-	{i: 88114, n: "Desert King Reliquary Backpiece", p: {gem: 700}}
+	{i: 88114, n: "Desert King Reliquary Backpiece", p: {gem: 700}},
+	{i: 88992, n: "Scaled Dragon Wings Backpack", p: {gem: 700}}
 ],
 Head: [
 	{i: 64752, n: "Celebration Hat", p: {gem: 0}},
@@ -283,7 +285,7 @@ Shoulder: [
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
-	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
+	{i: 81412, n: "Foefire Mantle", p: {gem: 500}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
@@ -295,13 +297,13 @@ Gloves: [
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
 	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}},
 	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: -500}},
-	{i: 88108, n: "Storm Gloves", p: {gem: -500}}
+	{i: 88108, n: "Storm Gloves", p: {gem: 500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: -300}},
 	{i: 85282, n: "Foefire Greaves", p: {gem: -500}},
-	{i: 86897, n: "Jackal Rune Greaves", p: {gem: -500}}
+	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}}
 ],
 Armor: [
 	{i: 20274, n: "Profane Light Armor Skin", p: {gem: 500}},
