@@ -2075,7 +2075,7 @@ Countdown: {
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
 	{
-		isHalloween: false,
+		isHalloween: true,
 		name_en: "Halloween 2018",
 		name_de: "Halloween 2018",
 		name_es: "Halloween 2018",
@@ -2124,15 +2124,15 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: false,
+	isEnabled: true,
 	name_en: "Mad King Says",
 	name_de: "Verrückte König sagt",
 	name_es: "Rey Loco dice",
 	name_fr: "Roi Dément a dit",
 	name_zh: "疯王说",
-	url: "https://www.guildwars2.com/en/the-game/releases/october-17-2017/",
-	Start: new Date("2017-10-16T16:00:00Z"),
-	Finish: new Date("2017-11-07T16:00:00Z")
+	url: "https://www.guildwars2.com/en/news/halloween-is-coming-soon/",
+	Start: new Date("2018-10-16T16:00:00Z"),
+	Finish: new Date("2018-11-06T16:00:00Z")
 },
 
 /*
