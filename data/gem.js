@@ -119,7 +119,8 @@ Mount: [
 	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}},
 	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}},
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: 2000}},
-	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}}
+	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},
+	{i: 89003, n: "Nightfang Griffon Skin", p: {gem: 2000}}
 ],
 Glider: [
 	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]]},
@@ -413,7 +414,8 @@ BlackLionWeapon: [
 	{i: 86920, n: "Alchemist weapon skins#Gallery", p: {blticket: 3}},
 	{i: 87389, n: "Inquest Mark II weapon skins#Gallery", p: {blticket: 2}},
 	{i: 88077, n: "Desert King weapon skins#Gallery", p: {blticket: 1}},
-	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}}
+	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}},
+	{i: 89082, n: "Mad Realm weapon skins#Gallery", p: {blticket: -1}}
 ],
 Package: [
 	//{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}},
@@ -748,7 +750,8 @@ Toy: [
 	{i: 68650, n: "Ram Balloon", p: {gem: -250}},
 	{i: 88462, n: "Dragon Emblem Balloon", p: {gem: 250}},
 	{i: 88409, n: "Emblazoned Dragon Throne", p: {gem: -600}},
-	{i: 88451, n: "Night Watch Stool", p: {gem: 400}}
+	{i: 88451, n: "Night Watch Stool", p: {gem: 400}},
+	{i: 88995, n: "Festive Harvest Chair", p: {gem: 600}}
 ],
 Music: [
 	{i: 42888, n: "Marriner's Horn", p: {gem: 800}},
