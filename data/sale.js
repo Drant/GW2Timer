@@ -21,14 +21,22 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 48714, n: "Hallows Fortune Fireworks", p: {gem: 0}, discount: 200, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 70048, n: "Black Feather Wings Glider", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 68686, n: "Black Feather Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 69882, n: "White Feather Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 70009, n: "White Feather Wings Glider", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65196, n: "Mad King's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65201, n: "Witch's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 67406, n: "Candy Corn Gobbler Pack", p: {gem: 300}, discount: 200, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 48714, n: "Hallows Fortune Fireworks", p: {gem: 0}, discount: 200, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65194, n: "Executioner's Outfit", p: {gem: 700}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 67391, n: "Haunted Gramophone", p: {gem: 600}, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 79666, n: "Hovering Mad Mirror", p: {gem: 250}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}},
 	{i: 88983, n: "Scaled Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-10-23T16:00:00Z")},
 	{i: 88992, n: "Scaled Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-10-23T16:00:00Z")},
@@ -36,14 +44,12 @@ GW2T_SALE_DATA = {
 	{i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}},
 	{i: 88759, n: "Zafirah's Rifle Skin", p: {gem: 600}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
-	{i: 85496, n: "Riding Broom Glider", p: {gem: 500}, Finish: new Date("2018-10-19T16:00:00Z")},
-	{i: 85506, n: "Mini Elonian Familiar", p: {gem: 400}, Finish: new Date("2018-10-19T16:00:00Z")},
-	{i: 79651, n: "Mini Feline Familiar", p: {gem: 350}, Finish: new Date("2018-10-19T16:00:00Z")},
-	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}, Finish: new Date("2018-10-19T16:00:00Z")},
-	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}, Finish: new Date("2018-10-19T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}},
 	{i: 84963, n: "War God's weapon skins#Gallery", p: {blticket: 2}},
-	{i: 89082, n: "Mad Realm weapon skins#Gallery", p: {blticket: 1}, Finish: new Date("2018-11-06T16:00:00Z")}
+	{i: 89082, n: "Mad Realm weapon skins#Gallery", p: {blticket: 1}, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: 2000}, Finish: new Date("2018-10-26T16:00:00Z")},
+	{i: 85506, n: "Mini Elonian Familiar", p: {gem: 400}, Finish: new Date("2018-10-26T16:00:00Z")},
+	{i: 79651, n: "Mini Feline Familiar", p: {gem: 350}, Finish: new Date("2018-10-26T16:00:00Z")}
 	]
 };
