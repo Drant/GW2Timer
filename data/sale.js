@@ -31,6 +31,7 @@ GW2T_SALE_DATA = {
 	{i: 65196, n: "Mad King's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65201, n: "Witch's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 88995, n: "Festive Harvest Chair", p: {gem: 600}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 67406, n: "Candy Corn Gobbler Pack", p: {gem: 300}, discount: 200, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65194, n: "Executioner's Outfit", p: {gem: 700}, Finish: new Date("2018-11-06T16:00:00Z")},
