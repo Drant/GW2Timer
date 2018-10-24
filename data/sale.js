@@ -22,6 +22,8 @@ GW2T_SALE_DATA = {
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
 	{i: 48714, n: "Hallows Fortune Fireworks", p: {gem: 0}, discount: 200, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 44068, n: "Permanent Mad King Finisher", p: {gem: 350}, discount: 500, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 44069, n: "Permanent Scarecrow Finisher", p: {gem: 350}, discount: 500, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 70048, n: "Black Feather Wings Glider", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 68686, n: "Black Feather Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 69882, n: "White Feather Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
@@ -38,10 +40,13 @@ GW2T_SALE_DATA = {
 	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 67391, n: "Haunted Gramophone", p: {gem: 600}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 79666, n: "Hovering Mad Mirror", p: {gem: 250}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}},
-	{i: 88983, n: "Scaled Dragon Wings Glider", p: {gem: 700}, Finish: new Date("2018-10-23T16:00:00Z")},
-	{i: 88992, n: "Scaled Dragon Wings Backpack", p: {gem: 700}, Finish: new Date("2018-10-23T16:00:00Z")},
-	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}, Finish: new Date("2018-10-23T16:00:00Z")},
+	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: 400}, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 87311, n: "Winged Headpiece", p: {gem: 400}, Finish: new Date("2018-11-06T16:00:00Z")},
+	{i: 65203, n: "Phantom's Hood", p: {gem: 200}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 47890, n: "Grenth Hood Skin", p: {gem: 500}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 67037, n: "Raiment of the Lich", p: {gem: 700}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 79671, n: "Ghostly Outfit", p: {gem: 700}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 67398, n: "Noble Count Outfit", p: {gem: 700}, Finish: new Date("2018-10-30T16:00:00Z")},
 	{i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}},
 	{i: 88759, n: "Zafirah's Rifle Skin", p: {gem: 600}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
@@ -51,6 +56,13 @@ GW2T_SALE_DATA = {
 	{i: 89082, n: "Mad Realm weapon skins#Gallery", p: {blticket: 1}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: 2000}, Finish: new Date("2018-10-26T16:00:00Z")},
 	{i: 85506, n: "Mini Elonian Familiar", p: {gem: 400}, Finish: new Date("2018-10-26T16:00:00Z")},
-	{i: 79651, n: "Mini Feline Familiar", p: {gem: 350}, Finish: new Date("2018-10-26T16:00:00Z")}
+	{i: 79651, n: "Mini Feline Familiar", p: {gem: 350}, Finish: new Date("2018-10-26T16:00:00Z")},
+	{i: 64738, n: "Bunny Ears", p: {gem: 200}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 65197, n: "Devil Horns", p: {gem: 200}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 65194, n: "Executioner's Outfit", p: {gem: 700}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 88451, n: "Night Watch Stool", p: {gem: 400}, Finish: new Date("2018-10-30T16:00:00Z")},
+	{i: 64757, n: "Wizard's Hat", p: {gem: 200}, Finish: new Date("2018-10-30T16:00:00Z")}
 	]
 };
