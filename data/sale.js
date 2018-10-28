@@ -65,6 +65,8 @@ GW2T_SALE_DATA = {
 	{i: 64757, n: "Wizard's Hat", p: {gem: 200}, Finish: new Date("2018-10-30T16:00:00Z")},
 	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}, Finish: new Date("2018-11-02T16:00:00Z")},
 	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}, Finish: new Date("2018-11-02T16:00:00Z")},
-	{i: 78733, n: "Sloth Backpack", p: {gem: 500}, Finish: new Date("2018-11-02T16:00:00Z")}
+	{i: 78733, n: "Sloth Backpack", p: {gem: 500}, Finish: new Date("2018-11-02T16:00:00Z")},
+	{i: 69737, n: "Daydreamer's Wings Backpack", p: {gem: 500}, Finish: new Date("2018-11-04T16:00:00Z")},
+	{i: 74219, n: "Dread Quiver Backpack", p: {gem: 350}, Finish: new Date("2018-11-04T16:00:00Z")}
 	]
 };
