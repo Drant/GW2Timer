@@ -103,7 +103,8 @@ Outfit: [
 	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: -700}},
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: -700}},
 	{i: 88321, n: "Timekeeper Outfit", p: {gem: 700}},
-	{i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}}
+	{i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}},
+	{i: 89079, n: "Haunted Armor Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -127,7 +128,7 @@ Glider: [
 	{i: 70009, n: "White Feather Wings Glider", p: {gem: 700}},
 	{i: 70048, n: "Black Feather Wings Glider", p: {gem: 700}},
 	{i: 72252, n: "Crystal Arbiter Glider", p: {gem: -500}},
-	{i: 74684, n: "Bat Wings Glider", p: {gem: -700}},
+	{i: 74684, n: "Bat Wings Glider", p: {gem: 700}},
 	{i: 76236, n: "Exalted Glider", p: {gem: 400}},
 	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: -700}},
 	{i: 77291, n: "Soul River Glider", p: {gem: -500}},
@@ -176,7 +177,8 @@ Glider: [
 	{i: 87549, n: "Sunspear Glider", p: {gem: 400}},
 	{i: 85470, n: "Desert King Glider", p: {gem: 700}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
-	{i: 88983, n: "Scaled Dragon Wings Glider", p: {gem: 700}}
+	{i: 88983, n: "Scaled Dragon Wings Glider", p: {gem: 700}},
+	{i: 89030, n: "Arachnid Glider", p: {gem: 700}}
 ],
 Back: [
 	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
@@ -201,7 +203,7 @@ Back: [
 	{i: 70095, n: "Butterfly Wings Backpack", p: {gem: -500}},
 	{i: 70277, n: "Glittering Wings Backpack", p: {gem: -500}},
 	{i: 71323, n: "Ghoul Backpack", p: {gem: -300}},
-	{i: 73939, n: "Bat Wings Backpack", p: {gem: -700}},
+	{i: 73939, n: "Bat Wings Backpack", p: {gem: 700}},
 	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: -700}},
 	{i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: 700}},
 	{i: 78732, n: "Macaw Wings Backpack", p: {gem: -700}},
@@ -286,7 +288,7 @@ Shoulder: [
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
-	{i: 81412, n: "Foefire Mantle", p: {gem: 500}}
+	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
@@ -298,7 +300,7 @@ Gloves: [
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
 	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}},
 	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: -500}},
-	{i: 88108, n: "Storm Gloves", p: {gem: 500}}
+	{i: 88108, n: "Storm Gloves", p: {gem: -500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
@@ -784,7 +786,7 @@ Node: [
 	{i: 78019, n: "Basic Leather Rack", p: {gem: 800}},
 	{i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
 	{i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
-	{i: 88979, n: "Black Lion Expedition Contract", p: {gem: 1000}}
+	{i: 88979, n: "Black Lion Expedition Contract", p: {gem: -1000}}
 ],
 Finisher: [
 	{i: 44068, n: "Permanent Mad King Finisher", p: {gem: -500}},
