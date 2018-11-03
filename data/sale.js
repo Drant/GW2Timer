@@ -21,6 +21,11 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 19996, n: "Revive Orb", p: {gem: 0}, discount: [[1, 250], [5, 900]], Finish: new Date("2018-11-05T16:00:00Z")},
+	{i: 88108, n: "Storm Gloves", p: {gem: 500}, Finish: new Date("2018-11-09T16:00:00Z")},
+	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}, Finish: new Date("2018-11-09T16:00:00Z")},
+	{i: 68612, n: "Plush Ram Backpack", p: {gem: 300}, Finish: new Date("2018-11-09T16:00:00Z")},
+	{i: 39519, n: "Warrior Quaggan Backpack Cover", p: {gem: 300}, Finish: new Date("2018-11-09T16:00:00Z")},
 	{i: 89079, n: "Haunted Armor Outfit", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
 	{i: 89030, n: "Arachnid Glider", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
 	{i: 71323, n: "Ghoul Backpack", p: {gem: 195}, discount: 300, Finish: new Date("2018-11-06T16:00:00Z")},
@@ -43,12 +48,9 @@ GW2T_SALE_DATA = {
 	{i: 65203, n: "Phantom's Hood", p: {gem: 150}, discount: 200, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 88995, n: "Festive Harvest Chair", p: {gem: 600}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 67406, n: "Candy Corn Gobbler Pack", p: {gem: 300}, discount: 200, Finish: new Date("2018-11-02T16:00:00Z")},
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 65194, n: "Executioner's Outfit", p: {gem: 700}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 67391, n: "Haunted Gramophone", p: {gem: 600}, Finish: new Date("2018-11-02T16:00:00Z")},
-	{i: 79666, n: "Hovering Mad Mirror", p: {gem: 250}, Finish: new Date("2018-11-02T16:00:00Z")},
 	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: 400}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 87311, n: "Winged Headpiece", p: {gem: 400}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
@@ -58,9 +60,6 @@ GW2T_SALE_DATA = {
 	{i: 81412, n: "Foefire Mantle", p: {gem: 500}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 88108, n: "Storm Gloves", p: {gem: 500}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 85282, n: "Foefire Greaves", p: {gem: 500}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 81263, n: "Mercenary Backpack", p: {gem: 400}, Finish: new Date("2018-11-02T16:00:00Z")},
-	{i: 81565, n: "Mini Plush Aurene", p: {gem: 400}, Finish: new Date("2018-11-02T16:00:00Z")},
-	{i: 78733, n: "Sloth Backpack", p: {gem: 500}, Finish: new Date("2018-11-02T16:00:00Z")},
 	{i: 69737, n: "Daydreamer's Wings Backpack", p: {gem: 500}, Finish: new Date("2018-11-04T16:00:00Z")},
 	{i: 74219, n: "Dread Quiver Backpack", p: {gem: 350}, Finish: new Date("2018-11-04T16:00:00Z")}
 	]
