@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2018-10-09T16:00:00Z"),
-	Finish: new Date("2018-11-06T16:00:00Z"),
+	Start: new Date("2018-11-06T16:00:00Z"),
+	Finish: new Date("2018-11-20T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
@@ -21,46 +21,20 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
-	{i: 19996, n: "Revive Orb", p: {gem: 0}, discount: [[1, 250], [5, 900]], Finish: new Date("2018-11-05T16:00:00Z")},
+	{i: 89086, n: "Firestorm Logging Tool", p: {gem: 1000}, Finish: new Date("2018-11-20T16:00:00Z")},
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}, Finish: new Date("2018-11-20T16:00:00Z")},
 	{i: 88108, n: "Storm Gloves", p: {gem: 500}, Finish: new Date("2018-11-09T16:00:00Z")},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}, Finish: new Date("2018-11-09T16:00:00Z")},
 	{i: 68612, n: "Plush Ram Backpack", p: {gem: 300}, Finish: new Date("2018-11-09T16:00:00Z")},
 	{i: 39519, n: "Warrior Quaggan Backpack Cover", p: {gem: 300}, Finish: new Date("2018-11-09T16:00:00Z")},
 	{i: 89079, n: "Haunted Armor Outfit", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
 	{i: 89030, n: "Arachnid Glider", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
-	{i: 71323, n: "Ghoul Backpack", p: {gem: 195}, discount: 300, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 73815, n: "Mini Ghoul Legs", p: {gem: 195}, discount: 300, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 82391, n: "Grenth's Regalia Outfit", p: {gem: 560}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: 74684, n: "Bat Wings Glider", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
 	{i: 73939, n: "Bat Wings Backpack", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
-	{i: 48714, n: "Hallows Fortune Fireworks", p: {gem: 0}, discount: 200, Finish: new Date("2018-11-02T16:00:00Z")},
-	{i: 44068, n: "Permanent Mad King Finisher", p: {gem: 350}, discount: 500, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 44069, n: "Permanent Scarecrow Finisher", p: {gem: 350}, discount: 500, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 70048, n: "Black Feather Wings Glider", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 68686, n: "Black Feather Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 69882, n: "White Feather Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 70009, n: "White Feather Wings Glider", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 77270, n: "Golden Feather Wings Backpack", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 77269, n: "Golden Feather Wings Glider", p: {gem: 490}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 65196, n: "Mad King's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 65201, n: "Witch's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 47890, n: "Grenth Hood Skin", p: {gem: 375}, discount: 500, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 65203, n: "Phantom's Hood", p: {gem: 150}, discount: 200, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 525}, discount: 700, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 88995, n: "Festive Harvest Chair", p: {gem: 600}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: 1600}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 65194, n: "Executioner's Outfit", p: {gem: 700}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 85481, n: "Mini Choya Pumpkin Gang", p: {gem: 400}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 87311, n: "Winged Headpiece", p: {gem: 400}, Finish: new Date("2018-11-06T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}},
-	{i: 89082, n: "Mad Realm weapon skins#Gallery", p: {blticket: 1}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 88979, n: "Black Lion Expedition Contract", p: {gem: 1000}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 81412, n: "Foefire Mantle", p: {gem: 500}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 88108, n: "Storm Gloves", p: {gem: 500}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 85282, n: "Foefire Greaves", p: {gem: 500}, Finish: new Date("2018-11-06T16:00:00Z")},
-	{i: 69737, n: "Daydreamer's Wings Backpack", p: {gem: 500}, Finish: new Date("2018-11-04T16:00:00Z")},
-	{i: 74219, n: "Dread Quiver Backpack", p: {gem: 350}, Finish: new Date("2018-11-04T16:00:00Z")}
+	{i: 80861, n: "Shield of the Goddess", p: {gem: 600}, Finish: new Date("2018-11-09T16:00:00Z")},
+	{i: 81240, n: "Menzies's Agony", p: {gem: 600}, Finish: new Date("2018-11-09T16:00:00Z")},
+	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: 600}, Finish: new Date("2018-11-09T16:00:00Z")},
 	]
 };

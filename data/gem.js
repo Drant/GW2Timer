@@ -185,9 +185,9 @@ Back: [
 	{i: 39131, n: "Plush Quaggan Backpack Cover", p: {gem: -300}},
 	{i: 39512, n: "Plush Charr Backpack Cover", p: {gem: -300}},
 	{i: 39516, n: "Covert Charr Backpack Cover", p: {gem: -300}},
-	{i: 39519, n: "Warrior Quaggan Backpack Cover", p: {gem: -300}},
+	{i: 39519, n: "Warrior Quaggan Backpack Cover", p: {gem: 300}},
 	{i: 44735, n: "Plush Moto Backpack Cover", p: {gem: -300}},
-	{i: 68612, n: "Plush Ram Backpack", p: {gem: -300}},
+	{i: 68612, n: "Plush Ram Backpack", p: {gem: 300}},
 	{i: 67405, n: "Replica Job-o-Tron Backpack", p: {gem: -500}},
 	{i: 78733, n: "Sloth Backpack", p: {gem: -500}},
 	{i: 79702, n: "Plush Aurene Backpack Cover", p: {gem: 400}},
@@ -296,11 +296,11 @@ Gloves: [
 	{i: 49031, n: "Toxic Gloves Skin", p: {gem: -400}},
 	{i: 68576, n: "Shadow of the Dragon Gloves Skin", p: {gem: -300}},
 	{i: 79391, n: "Pirate Hook Skin", p: {gem: -300}},
-	{i: 78667, n: "Chaos Gloves Skin", p: {gem: -500}},
+	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}},
 	{i: 81293, n: "Foefire Wraps", p: {gem: -500}},
 	{i: 85615, n: "Salvaged Forged Gloves", p: {gem: -400}},
 	{i: 86904, n: "Jackal Rune Gauntlets", p: {gem: -500}},
-	{i: 88108, n: "Storm Gloves", p: {gem: -500}}
+	{i: 88108, n: "Storm Gloves", p: {gem: 500}}
 ],
 Boots: [
 	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
@@ -543,7 +543,7 @@ Pass: [
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: -1000}},
 	{i: 79140, n: "Noble's Folly Pass", p: {gem: -1000}},
 	{i: 79500, n: "Lava Lounge Pass", p: {gem: -1000}},
-	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: -1000}}
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}}
 	//{n: "Lava Lounge Pass Bundle", p: {gem: -1200}},
 ],
 Gathering: [
@@ -591,7 +591,8 @@ Gathering: [
 	{i: 88355, n: "Choya Mining Tool", p: {gem: -1000}},
 	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: -1000}},
 	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: -1000}},
-	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: -1000}}
+	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: -1000}},
+	{i: 89086, n: "Firestorm Logging Tool", p: {gem: 1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
