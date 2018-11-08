@@ -33,8 +33,11 @@ GW2T_SALE_DATA = {
 	{i: 73939, n: "Bat Wings Backpack", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}},
+	{i: 20004, n: "Caithe's Bloom Dagger", p: {gem: 600}, Finish: new Date("2018-11-10T16:00:00Z")},
+	{i: 42663, n: "Rox's Quiver Backpack Cover", p: {gem: 600}, Finish: new Date("2018-11-10T16:00:00Z")},
+	{i: 42659, n: "Rox's Short Bow Skin", p: {gem: 600}, Finish: new Date("2018-11-10T16:00:00Z")},
 	{i: 80861, n: "Shield of the Goddess", p: {gem: 600}, Finish: new Date("2018-11-09T16:00:00Z")},
 	{i: 81240, n: "Menzies's Agony", p: {gem: 600}, Finish: new Date("2018-11-09T16:00:00Z")},
-	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: 600}, Finish: new Date("2018-11-09T16:00:00Z")},
+	{i: 85192, n: "Trained Choya Hammer Skin", p: {gem: 600}, Finish: new Date("2018-11-09T16:00:00Z")}
 	]
 };
