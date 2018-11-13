@@ -33,14 +33,11 @@ GW2T_SALE_DATA = {
 	{i: 73939, n: "Bat Wings Backpack", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}},
-	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: 600}, Finish: new Date("2018-11-17T16:00:00Z")},
-	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}, Finish: new Date("2018-11-17T16:00:00Z")},
-	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}, Finish: new Date("2018-11-17T16:00:00Z")},
-	{i: 49021, n: "Kasmeer's Staff Skin", p: {gem: 600}, Finish: new Date("2018-11-16T16:00:00Z")},
-	{i: 49015, n: "Marjory's Axe Skin", p: {gem: 600}, Finish: new Date("2018-11-16T16:00:00Z")},
-	{i: 49018, n: "Marjory's Dagger Skin", p: {gem: 600}, Finish: new Date("2018-11-16T16:00:00Z")},
-	{i: 87478, n: "Suntouched Scythe Staff Skin", p: {gem: 600}, Finish: new Date("2018-11-11T16:00:00Z")},
-	{i: 79360, n: "Amethyst Aegis", p: {gem: 600}, Finish: new Date("2018-11-11T16:00:00Z")},
-	{i: 79310, n: "Storm Bow", p: {gem: 600}, Finish: new Date("2018-11-11T16:00:00Z")}
+	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: 600}, Finish: new Date("2018-11-14T16:00:00Z")},
+	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 600}, Finish: new Date("2018-11-14T16:00:00Z")},
+	{i: 79315, n: "Emissary's Staff", p: {gem: 600}, Finish: new Date("2018-11-14T16:00:00Z")},
+	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: 600}, Finish: new Date("2018-11-13T16:00:00Z")},
+	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}, Finish: new Date("2018-11-13T16:00:00Z")},
+	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}, Finish: new Date("2018-11-13T16:00:00Z")}
 	]
 };
