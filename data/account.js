@@ -527,6 +527,7 @@ var GW2T_ACCOUNT_METADATA = {
 		143, // Eternal Coliseum
 		152, // Forest of Niflhel
 		153, // Legacy of Foefire
+		218, // Djinn's Dominion
 		141, // Revenge of the Capricorn
 		156, // Battle of Kyhlo
 		157, // Temple of the Silent Storm

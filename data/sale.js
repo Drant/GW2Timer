@@ -21,23 +21,21 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 89104, n: "Raven Helm", p: {gem: 400}, Finish: new Date("2018-11-27T16:00:00Z")},
+	{i: 89207, n: "Raven Mantle", p: {gem: 400}, Finish: new Date("2018-11-27T16:00:00Z")},
+	{i: 20349, n: "Upgrade Extractor", p: {gem: 250}, discount: [[3, 250, 750], [10, 700, 2200], [25, 1500, 5000]], Finish: new Date("2018-11-20T16:00:00Z")},
 	{i: 88154, n: "Desert Racer Mount Select License", p: {gem: 720}, discount: 1200, Finish: new Date("2018-11-17T16:00:00Z")},
-	{i: 88200, n: "Desert Racer Mount Adoption License", p: {gem: 400}, discount: [[1, 320, 400], [5, 1490, 1800], [15, 4800, 5100]]},
+	{i: 88200, n: "Desert Racer Mount Adoption License", p: {gem: 400}, discount: [[1, 320, 400], [5, 1490, 1800], [15, 4800, 5100]], Finish: new Date("2018-11-17T16:00:00Z")},
 	{i: 89086, n: "Firestorm Logging Tool", p: {gem: 1000}, Finish: new Date("2018-11-20T16:00:00Z")},
 	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}, Finish: new Date("2018-11-20T16:00:00Z")},
 	{i: 88108, n: "Storm Gloves", p: {gem: 500}, Finish: new Date("2018-11-16T16:00:00Z")},
 	{i: 78667, n: "Chaos Gloves Skin", p: {gem: 500}, Finish: new Date("2018-11-16T16:00:00Z")},
-	{i: 89079, n: "Haunted Armor Outfit", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
-	{i: 89030, n: "Arachnid Glider", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
-	{i: 74684, n: "Bat Wings Glider", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
-	{i: 73939, n: "Bat Wings Backpack", p: {gem: 700}, Finish: new Date("2018-11-13T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
-	{i: 88406, n: "Equinox weapon skins#Gallery", p: {blticket: 1}},
+	{i: 89082, n: "Mad Realm weapon skins#Gallery", p: {blticket: 1}},
+	{i: 89030, n: "Arachnid Glider", p: {gem: 700}, Finish: new Date("2018-11-20T16:00:00Z")},
+	{i: 89003, n: "Nightfang Griffon Skin", p: {gem: 2000}, Finish: new Date("2018-11-20T16:00:00Z")},
 	{i: 86739, n: "Arcane Marksman Rifle", p: {gem: 600}, Finish: new Date("2018-11-14T16:00:00Z")},
 	{i: 69752, n: "Chain-Whip Sword Skin", p: {gem: 600}, Finish: new Date("2018-11-14T16:00:00Z")},
-	{i: 79315, n: "Emissary's Staff", p: {gem: 600}, Finish: new Date("2018-11-14T16:00:00Z")},
-	{i: 8466, n: "Belinda's Greatsword Skin", p: {gem: 600}, Finish: new Date("2018-11-13T16:00:00Z")},
-	{i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}, Finish: new Date("2018-11-13T16:00:00Z")},
-	{i: 68687, n: "Lord Faren's Rapier Skin", p: {gem: 500}, Finish: new Date("2018-11-13T16:00:00Z")}
+	{i: 79315, n: "Emissary's Staff", p: {gem: 600}, Finish: new Date("2018-11-14T16:00:00Z")}
 	]
 };

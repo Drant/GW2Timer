@@ -121,8 +121,8 @@ Mount: [
 	{i: 86899, n: "Grand Lion Griffon Skin", p: {gem: -2000}},
 	{i: 87539, n: "Shrine Guardian Jackal Skin", p: {gem: -2000}},
 	{i: 88111, n: "Tremor Armadillo Roller Beetle Skin", p: {gem: -2000}},
-	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: 2000}},
-	{i: 89003, n: "Nightfang Griffon Skin", p: {gem: 2000}}
+	{i: 88775, n: "Dreadnought Raptor Skin", p: {gem: -2000}},
+	{i: 89003, n: "Nightfang Griffon Skin", p: {gem: -2000}}
 ],
 Glider: [
 	{i: 88308, n: "Black Lion Glider Voucher", p: {gem: 360}, discount: [[1, 360], [5, 1400], [10, 2000]]},
@@ -179,7 +179,7 @@ Glider: [
 	{i: 85470, n: "Desert King Glider", p: {gem: 700}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: 700}},
 	{i: 88983, n: "Scaled Dragon Wings Glider", p: {gem: 700}},
-	{i: 89030, n: "Arachnid Glider", p: {gem: 700}}
+	{i: 89030, n: "Arachnid Glider", p: {gem: -700}}
 ],
 Back: [
 	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
@@ -280,7 +280,8 @@ Head: [
 	{i: 88170, n: "Wind Aspect Eye", p: {gem: -166}},
 	{i: 88226, n: "Dragon Horns", p: {gem: -166}},
 	{i: 88244, n: "Dragon's Eye Circlet", p: {gem: -166}},
-	{i: 88333, n: "Enchanted Dragon Crown", p: {gem: -166}}
+	{i: 88333, n: "Enchanted Dragon Crown", p: {gem: -166}},
+	{i: 89104, n: "Raven Helm", p: {gem: 400}}
 ],
 Shoulder: [
 	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
@@ -289,7 +290,8 @@ Shoulder: [
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
-	{i: 81412, n: "Foefire Mantle", p: {gem: -500}}
+	{i: 81412, n: "Foefire Mantle", p: {gem: -500}},
+	{i: 89207, n: "Raven Mantle", p: {gem: 400}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
@@ -502,7 +504,7 @@ Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: -500}},
 	{i: 19986, n: "Black Lion Salvage Kit", p: {gem: 300}},
-	{i: 20349, n: "Upgrade Extractor", p: {gem: 250}, discount: [[1, 250], [5, 1100], [25, 5000]]},
+	{i: 20349, n: "Upgrade Extractor", p: {gem: 250}, discount: [[3, 250], [10, 700], [25, 1500]]},
 	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: -2000}},
 	{i: 67279, n: "Waypoint Unlock Box", p: {gem: 600}},
 	{i: 49867, n: "Identity Repair Kit", p: {gem: 1000}},
