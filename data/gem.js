@@ -275,9 +275,9 @@ Head: [
 	{i: 85528, n: "Salvaged Forged Helm", p: {gem: 400}},
 	{i: 86516, n: "Freezie Crown", p: {gem: -350}},
 	{i: 87311, n: "Winged Headpiece", p: {gem: -400}},
-	{i: 88190, n: "Lightning Aspect Eye", p: {gem: -166}},
-	{i: 88161, n: "Sun Aspect Eye", p: {gem: -166}},
-	{i: 88170, n: "Wind Aspect Eye", p: {gem: -166}},
+	{i: 88190, n: "Lightning Aspect Eye", p: {gem: 166}},
+	{i: 88161, n: "Sun Aspect Eye", p: {gem: 166}},
+	{i: 88170, n: "Wind Aspect Eye", p: {gem: 166}},
 	{i: 88226, n: "Dragon Horns", p: {gem: -166}},
 	{i: 88244, n: "Dragon's Eye Circlet", p: {gem: -166}},
 	{i: 88333, n: "Enchanted Dragon Crown", p: {gem: -166}},
@@ -502,7 +502,7 @@ Dye: [
 ],
 Consumable: [
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
-	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: -500}},
+	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
 	{i: 19986, n: "Black Lion Salvage Kit", p: {gem: 300}},
 	{i: 20349, n: "Upgrade Extractor", p: {gem: 250}, discount: [[3, 250], [10, 700], [25, 1500]]},
 	{i: 82152, n: "Black Lion Instant Level 80 Ticket", p: {gem: -2000}},
@@ -757,7 +757,8 @@ Toy: [
 	{i: 88462, n: "Dragon Emblem Balloon", p: {gem: 250}},
 	{i: 88409, n: "Emblazoned Dragon Throne", p: {gem: -600}},
 	{i: 88451, n: "Night Watch Stool", p: {gem: -400}},
-	{i: 88995, n: "Festive Harvest Chair", p: {gem: -600}}
+	{i: 88995, n: "Festive Harvest Chair", p: {gem: -600}},
+	{i: 87612, n: "Pet Dog Whistle: Basenji", p: {gem: -500}}
 ],
 Music: [
 	{i: 42888, n: "Marriner's Horn", p: {gem: 800}},
