@@ -104,7 +104,7 @@ Outfit: [
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: -700}},
 	{i: 88321, n: "Timekeeper Outfit", p: {gem: 700}},
 	{i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}},
-	{i: 89079, n: "Haunted Armor Outfit", p: {gem: 700}}
+	{i: 89079, n: "Haunted Armor Outfit", p: {gem: -700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -546,7 +546,7 @@ Pass: [
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: -1000}},
 	{i: 79140, n: "Noble's Folly Pass", p: {gem: -1000}},
 	{i: 79500, n: "Lava Lounge Pass", p: {gem: -1000}},
-	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: 1000}}
+	{i: 81664, n: "Mistlock Sanctuary Passkey", p: {gem: -1000}}
 	//{n: "Lava Lounge Pass Bundle", p: {gem: -1200}},
 ],
 Gathering: [
