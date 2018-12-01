@@ -21,6 +21,9 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 68684, n: "Crystal Nomad Outfit", p: {gem: 700}, Finish: new Date("2018-12-07T16:00:00Z")},
+	{i: 67398, n: "Noble Count Outfit", p: {gem: 700}, Finish: new Date("2018-12-07T16:00:00Z")},
+	{i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}, Finish: new Date("2018-12-07T16:00:00Z")},
 	{i: "https://i.imgur.com/fb9KMVN.png", n: "The Evon Gnashblade Decorative Package", p: {gem: 3000}, Finish: new Date("2018-12-04T16:00:00Z")},
 	{i: 89325, n: "Distant Lands Mount Adoption License", p: {gem: 400}, discount: [[1, 400], [5, 1800], [15, 5100]], Finish: new Date("2018-12-04T16:00:00Z")},
 	{i: 89336, n: "Distant Lands Mount Select License", p: {gem: 1200}, Finish: new Date("2018-12-04T16:00:00Z")},
@@ -31,6 +34,10 @@ GW2T_SALE_DATA = {
 	{i: 87612, n: "Pet Dog Whistle: Basenji", p: {gem: 500}, Finish: new Date("2018-12-04T16:00:00Z")},
 	{i: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png", n: "Coin", p: {coin: 1000000}, url: "https://gw2timer.com/?page=Trading", side: 1},
 	{i: 89082, n: "Mad Realm weapon skins#Gallery", p: {blticket: 1}},
+	{i: 81776, n: "Abaddon's Mask", p: {gem: 500}, Finish: new Date("2018-12-07T16:00:00Z")},
+	{i: 81583, n: "Fuzzy Aurene Hat", p: {gem: 400}, Finish: new Date("2018-12-07T16:00:00Z")},
+	{i: 64758, n: "Fuzzy Cat Hat", p: {gem: 200}, Finish: new Date("2018-12-07T16:00:00Z")},
+	{i: 64753, n: "Wide Rim Glasses", p: {gem: 150}, Finish: new Date("2018-12-07T16:00:00Z")},
 	{i: 88190, n: "Lightning Aspect Eye", p: {gem: 166}, Finish: new Date("2018-12-04T16:00:00Z")},
 	{i: 88161, n: "Sun Aspect Eye", p: {gem: 166}, Finish: new Date("2018-12-04T16:00:00Z")},
 	{i: 88170, n: "Wind Aspect Eye", p: {gem: 166}, Finish: new Date("2018-12-04T16:00:00Z")},
@@ -39,11 +46,6 @@ GW2T_SALE_DATA = {
 	{i: 77483, n: "Slayer's Outfit", p: {gem: 700}, Finish: new Date("2018-12-02T16:00:00Z")},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: 700}, Finish: new Date("2018-12-01T16:00:00Z")},
 	{i: 85034, n: "Forged Outfit", p: {gem: 700}, Finish: new Date("2018-12-01T16:00:00Z")},
-	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}, Finish: new Date("2018-12-01T16:00:00Z")},
-	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}, Finish: new Date("2018-11-30T16:00:00Z")},
-	{i: 65195, n: "Bloody Prince's Outfit", p: {gem: 700}, Finish: new Date("2018-11-30T16:00:00Z")},
-	{i: 78008, n: "Gwen's Attire", p: {gem: 700}, Finish: new Date("2018-11-30T16:00:00Z")},
-	{i: 77676, n: "Nature's Oath Outfit", p: {gem: 700}, Finish: new Date("2018-11-30T16:00:00Z")},
-	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}, Finish: new Date("2018-11-30T16:00:00Z")}
+	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: 700}, Finish: new Date("2018-12-01T16:00:00Z")}
 	]
 };
