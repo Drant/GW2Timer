@@ -2074,7 +2074,7 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	{
+	/*{
 		isHalloween: true,
 		name_en: "Halloween 2018",
 		name_de: "Halloween 2018",
@@ -2084,7 +2084,7 @@ Countdown: {
 		official: "news/its-time-for-tricks-and-treats/",
 		Start: new Date("2018-10-16T16:00:00Z"),
 		Finish: new Date("2018-11-06T16:00:00Z")
-	}
+	}*/
 	/*{
 		name_en: "Black Friday Sale",
 		name_de: "Black Friday Verkauf",
@@ -2105,17 +2105,17 @@ Countdown: {
 		Start: new Date("2018-03-06T16:00:00Z"),
 		Finish: new Date("2018-03-07T16:00:00Z")
 	}*/
-	/*{
-		isWintersday: true,
-		name_en: "Wintersday 2017",
-		name_de: "Wintertag 2017",
-		name_es: "Día Invernal 2017",
-		name_fr: "Hivernel 2017",
-		name_zh: "冬幕节2017",
-		official: "news/wintersday-2017-is-here/",
-		Start: new Date("2018-12-17T17:00:00Z"),
+	{
+		isWintersday: false,
+		name_en: "Wintersday 2018",
+		name_de: "Wintertag 2018",
+		name_es: "Día Invernal 2018",
+		name_fr: "Hivernel 2018",
+		name_zh: "冬幕节2018",
+		official: "news/wintersday-arrives-next-week/",
+		Start: new Date("2018-12-11T17:00:00Z"),
 		Finish: new Date("2019-01-08T17:00:00Z")
-	}*/
+	}
 	]
 },
 

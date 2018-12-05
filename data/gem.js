@@ -97,7 +97,7 @@ Outfit: [
 	{i: 85383, n: "Fallen Balthazar Outfit", p: {gem: 0}},
 	{i: 85448, n: "Awakened Zealot Outfit", p: {gem: 700}},
 	{i: 85740, n: "First Follower Desmina Outfit", p: {gem: -700}},
-	{i: 86637, n: "Winter Monarch Outfit", p: {gem: -700}},
+	{i: 86637, n: "Winter Monarch Outfit", p: {gem: 700}},
 	{i: 82360, n: "Imperial Guard Outfit", p: {gem: 700}},
 	{i: 87182, n: "Inquest Exo-Suit Outfit", p: {gem: -700}},
 	{i: 87477, n: "Primeval Dervish Outfit", p: {gem: 700}},
@@ -156,7 +156,7 @@ Glider: [
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
 	{i: 79663, n: "Bloodstone Glider", p: {gem: -500}},
 	{i: 79660, n: "Grasping Phantom Glider", p: {gem: 0}},
-	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: -700}},
+	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}},
 	{i: 80018, n: "Infinirarium Glider", p: {gem: 0}},
 	{i: 80066, n: "Celestial Rooster Glider", p: {gem: -500}},
 	{i: 80484, n: "Necrotic Glider", p: {gem: 500}},
@@ -174,7 +174,7 @@ Glider: [
 	{i: 82671, n: "Largos Fin Glider", p: {gem: -700}},
 	{i: 85220, n: "Branded Wing Glider", p: {gem: -700}},
 	{i: 85496, n: "Riding Broom Glider", p: {gem: 500}},
-	{i: 86715, n: "Glacial Glider", p: {gem: -500}},
+	{i: 86715, n: "Glacial Glider", p: {gem: 500}},
 	{i: 87070, n: "Forged Glider", p: {gem: -700}},
 	{i: 87429, n: "Beastslayer Glider", p: {gem: -400}},
 	{i: 87549, n: "Sunspear Glider", p: {gem: 400}},
@@ -213,7 +213,7 @@ Back: [
 	{i: 78745, n: "Moth Wings Backpack", p: {gem: -700}},
 	{i: 79288, n: "Shining Blade Backpack", p: {gem: -700}},
 	{i: 79523, n: "Mursaat Wings Backpack", p: {gem: -700}},
-	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: -700}},
+	{i: 79707, n: "Crystalline Dragon Wings Backpack", p: {gem: 700}},
 	{i: 80887, n: "Super Adventure Holo-Copter Backpack", p: {gem: -700}},
 	{i: 80984, n: "Vine-Touched Destroyer Wings", p: {gem: -700}},
 	{i: 81263, n: "Mercenary Backpack", p: {gem: -400}},
@@ -248,7 +248,7 @@ Head: [
 	{i: 44609, n: "Mask of the Crown", p: {gem: -400}},
 	{i: 47883, n: "Stag Helm Skin", p: {gem: -500}},
 	{i: 68574, n: "Shadow of the Dragon Helmet Skin", p: {gem: -300}},
-	{i: 63940, n: "Lawless Helmet Skin", p: {gem: 300}},
+	{i: 63940, n: "Lawless Helmet Skin", p: {gem: -300}},
 	{i: 47890, n: "Grenth Hood Skin", p: {gem: 500}},
 	{i: 65203, n: "Phantom's Hood", p: {gem: 200}},
 	{i: 48944, n: "Mask of the Wanderer Skin", p: {gem: -500}},
@@ -283,17 +283,17 @@ Head: [
 	{i: 88226, n: "Dragon Horns", p: {gem: -166}},
 	{i: 88244, n: "Dragon's Eye Circlet", p: {gem: -166}},
 	{i: 88333, n: "Enchanted Dragon Crown", p: {gem: -166}},
-	{i: 89104, n: "Raven Helm", p: {gem: 400}}
+	{i: 89104, n: "Raven Helm", p: {gem: -400}}
 ],
 Shoulder: [
-	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: 300}},
+	{i: 42962, n: "Lawless Shoulder Skin", p: {gem: -300}},
 	{i: 48824, n: "Scarlet's Spaulders", p: {gem: -400}},
 	{i: 49024, n: "Toxic Mantle Skin", p: {gem: -400}},
 	{i: 68575, n: "Shadow of the Dragon Shoulder Skin", p: {gem: -300}},
 	{i: 67887, n: "Shoulder Scarf", p: {gem: -400}},
 	{i: 80082, n: "Braham's Wolfblood Pauldrons", p: {gem: -300}},
 	{i: 81412, n: "Foefire Mantle", p: {gem: -500}},
-	{i: 89207, n: "Raven Mantle", p: {gem: 400}}
+	{i: 89207, n: "Raven Mantle", p: {gem: -400}}
 ],
 Gloves: [
 	{i: 43525, n: "Lawless Gloves Skin", p: {gem: -300}},
@@ -308,7 +308,7 @@ Gloves: [
 	{i: 88108, n: "Storm Gloves", p: {gem: 500}}
 ],
 Boots: [
-	{i: 42966, n: "Lawless Boots Skin", p: {gem: 300}},
+	{i: 42966, n: "Lawless Boots Skin", p: {gem: -300}},
 	{i: 79387, n: "Peg-Leg Boots Skin", p: {gem: -300}},
 	{i: 85282, n: "Foefire Greaves", p: {gem: -500}},
 	{i: 86897, n: "Jackal Rune Greaves", p: {gem: 500}}
@@ -597,7 +597,8 @@ Gathering: [
 	{i: 87701, n: "Volatile Magic Harvesting Tool", p: {gem: -1000}},
 	{i: 87954, n: "Volatile Magic Logging Tool", p: {gem: -1000}},
 	{i: 87841, n: "Volatile Magic Mining Tool", p: {gem: -1000}},
-	{i: 89086, n: "Firestorm Logging Tool", p: {gem: 1000}}
+	{i: 89086, n: "Firestorm Logging Tool", p: {gem: -1000}},
+	{i: 89370, n: "Thunderstrike Harvesting Tool", p: {gem: 1000}}
 ],
 Mini: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 100}},
