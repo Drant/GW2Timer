@@ -21,6 +21,13 @@ GW2T_SALE_DATA = {
 	*/
 	Items: [
 	{i: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png", n: "Gem", p: {gem: 100}, url: "https://gw2timer.com/?page=Gem", side: 0},
+	{i: 87202, n: "Mini Branded Mounts Pack", p: {gem: 1200}, discount: 1600, Finish: new Date("2018-12-10T16:00:00Z")},
+	{i: 85220, n: "Branded Wing Glider", p: {gem: 560}, discount: 700, Finish: new Date("2018-12-10T16:00:00Z")},
+	{i: 85332, n: "Branded Wing Backpack", p: {gem: 560}, discount: 700, Finish: new Date("2018-12-10T16:00:00Z")},
+	{i: 80026, n: "Ice Crown", p: {gem: 400}, Finish: new Date("2018-12-28T16:00:00Z")},
+	{i: 64749, n: "Sailor's Beanie", p: {gem: 200}, Finish: new Date("2018-12-28T16:00:00Z")},
+	{i: 67887, n: "Shoulder Scarf", p: {gem: 400}, Finish: new Date("2018-12-28T16:00:00Z")},
+	{i: 65200, n: "Wintersday Earmuffs", p: {gem: 25}, Finish: new Date("2018-12-28T16:00:00Z")},
 	{i: 89370, n: "Thunderstrike Harvesting Tool", p: {gem: 1000}, Finish: new Date("2018-12-25T16:00:00Z")},
 	{i: "https://i.imgur.com/lbGRGqq.png", n: "Wintersday Appearance Package", p: {gem: 2000}, Finish: new Date("2018-12-25T16:00:00Z")},
 	{i: 77621, n: "Mini Angry Wintersday Gift", p: {gem: 400}, Finish: new Date("2018-12-26T16:00:00Z")},
