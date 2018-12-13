@@ -445,6 +445,7 @@ var GW2T_ACCOUNT_METADATA = {
 		204, // Daily Sandswept Isles
 		208, // Daily Domain of Kourna
 		217, // Daily Jahai Bluffs
+		221, // Daily Roller Beetle Racing
 		207, // Sunken Treasure Hunter Daily
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
@@ -518,6 +519,7 @@ var GW2T_ACCOUNT_METADATA = {
 		189, // Mastery Insights
 		178, // Specializations
 		{en: "Side Stories", de: "Side Stories", es: "Side Stories", fr: "Side Stories", zh: "Side Stories"},
+		220, // Roller Beetle Racing
 		175, // Knight of the Thorn
 		180, // Conservation of Magic
 		186, // Justice of the Blade
