@@ -62,7 +62,8 @@ Colored: [
 	{u: 44, i: 81291, n: "Magic Carpet Glider", l: "", p: {gem: 400}},	
 	{u: 46, i: 82011, n: "Abaddon's Glider", l: "", p: {gem: 400}},
 	{u: 49, i: 82666, n: "Geomancer Glider", l: "", p: {gem: 500}},
-	{u: 55, i: 86715, n: "Glacial Glider", l: "", p: {gem: 500}}
+	{u: 55, i: 86715, n: "Glacial Glider", l: "", p: {gem: 500}},
+	{u: 65, i: 89433, n: "Cryomancer Glider", l: "", p: {gem: 500}}
 ],
 Combo: [ // The audit function depends on this named category for ignoring duplicate backpack-glider skin
 	{u: 11, i: 77474, n: "The Ascension Glider", l: "", p: {craft: true}},

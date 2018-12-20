@@ -104,7 +104,8 @@ Outfit: [
 	{i: 87548, n: "Elonian Elementalist Outfit", p: {gem: -700}},
 	{i: 88321, n: "Timekeeper Outfit", p: {gem: 700}},
 	{i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}},
-	{i: 89079, n: "Haunted Armor Outfit", p: {gem: -700}}
+	{i: 89079, n: "Haunted Armor Outfit", p: {gem: -700}},
+	{i: 89428, n: "Gem Aura Outfit", p: {gem: 700}}
 ],
 Mount: [
 	{i: 85437, n: "Mini Spooky Mounts Pack", p: {gem: -1600}},
@@ -182,7 +183,8 @@ Glider: [
 	{i: 85470, n: "Desert King Glider", p: {gem: -700}},
 	{i: 88431, n: "Shattered Cathedral Glider", p: {gem: -700}},
 	{i: 88983, n: "Scaled Dragon Wings Glider", p: {gem: 700}},
-	{i: 89030, n: "Arachnid Glider", p: {gem: -700}}
+	{i: 89030, n: "Arachnid Glider", p: {gem: -700}},
+	{i: 89433, n: "Cryomancer Glider", p: {gem: 500}}
 ],
 Back: [
 	{i: 88339, n: "Black Lion Backpack and Glider Voucher", p: {gem: 630}, discount: [[1, 630], [5, 2450], [10, 3500]]},
@@ -764,7 +766,8 @@ Toy: [
 	{i: 88409, n: "Emblazoned Dragon Throne", p: {gem: -600}},
 	{i: 88451, n: "Night Watch Stool", p: {gem: -400}},
 	{i: 88995, n: "Festive Harvest Chair", p: {gem: -600}},
-	{i: 87612, n: "Pet Dog Whistle: Basenji", p: {gem: -500}}
+	{i: 87612, n: "Pet Dog Whistle: Basenji", p: {gem: -500}},
+	{i: 89400, n: "Candy Cane Chair", p: {gem: 400}}
 ],
 Music: [
 	{i: 42888, n: "Marriner's Horn", p: {gem: 800}},

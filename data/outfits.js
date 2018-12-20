@@ -83,7 +83,8 @@ General: [
 	{u: 77, i: 87548, n: "Elonian Elementalist Outfit", p: {gem: 700}},
 	{u: 78, i: 88321, n: "Timekeeper Outfit", p: {gem: 700}},
 	{u: 79, i: 88808, n: "Zafirah's Tactical Outfit", p: {gem: 700}},
-	{u: 80, i: 89079, n: "Haunted Armor Outfit", p: {gem: 700}}
+	{u: 80, i: 89079, n: "Haunted Armor Outfit", p: {gem: 700}},
+	{u: 81, i: 89428, n: "Gem Aura Outfit", p: {gem: 700}}
 ],
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},
