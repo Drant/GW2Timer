@@ -4,8 +4,8 @@
  */
 GW2T_SALE_DATA = {
 	note: "", // Important note about the sale, optional
-	Start: new Date("2018-11-27T16:00:00Z"),
-	Finish: new Date("2018-12-18T16:00:00Z"),
+	Start: new Date("2018-12-18T16:00:00Z"),
+	Finish: new Date("2019-01-08T16:00:00Z"),
 	Values: {}, // ID-to-Price mapping of the promoted items, to be initialized
 	numPaddingItems: 2,
 	/*
