@@ -1156,7 +1156,7 @@ O = {
 		 */
 		$("#optClearLocalStorage").click(function()
 		{
-			if (confirm(I.cSiteName + " Reset: This is will clear all options and everything you have written in this website. Continue?"))
+			if (confirm(I.cSiteName + " Reset: This will clear all options and everything you have written in this website. Continue?"))
 			{
 				localStorage.clear();
 				location.reload();
