@@ -521,7 +521,7 @@ Fractal:
 		"Furnace", // 9
 		"Molten", // 10
 		"Deepstone", // 11
-		"Uncategorized", // 12
+		"Reef", // 12
 		"Chaos", // 13
 		"Aetherblade", // 14
 		"Thaumanova", // 15
@@ -546,7 +546,7 @@ Fractal:
 		"Thaumanova", // 34
 		"Ocean", // 35
 		"Uncategorized", // 36
-		"Snowblind", // 37
+		"Reef", // 37
 		"Chaos", // 38
 		"Furnace", // 39
 		"Molten", // 40
@@ -563,7 +563,7 @@ Fractal:
 		"Snowblind", // 51
 		"Volcanic", // 52
 		"Underground", // 53
-		"Chaos", // 54
+		"Reef", // 54
 		"Thaumanova", // 55
 		"Swamp", // 56
 		"Urban", // 57
@@ -587,7 +587,7 @@ Fractal:
 		"Observatory", // 75
 		"Aquatic", // 76
 		"Swamp", // 77
-		"Urban", // 78
+		"Reef", // 78
 		"Uncategorized", // 79
 		"Ocean", // 80
 		"Underground", // 81
@@ -2106,7 +2106,7 @@ Countdown: {
 		Start: new Date("2018-03-06T16:00:00Z"),
 		Finish: new Date("2018-03-07T16:00:00Z")
 	}*/
-	{
+	/*{
 		isWintersday: true,
 		name_en: "Wintersday 2018",
 		name_de: "Wintertag 2018",
@@ -2116,7 +2116,7 @@ Countdown: {
 		official: "the-game/releases/december-11-2018/",
 		Start: new Date("2018-12-11T17:00:00Z"),
 		Finish: new Date("2019-01-02T17:00:00Z")
-	}
+	}*/
 	]
 },
 
