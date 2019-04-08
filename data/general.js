@@ -485,7 +485,10 @@ var GW2T_DAILY_ASSOCIATION = {
 	"4244": "Deepstone",
 	"4218": "Deepstone",
 	"4210": "Deepstone",
-	"4224": "Deepstone"
+	"4224": "Deepstone",
+	"4496": "Reef",
+	"4526": "Reef",
+	"4494": "Reef"
 };
 
 /*
