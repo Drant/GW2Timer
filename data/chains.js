@@ -3017,7 +3017,7 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BPIKAAA=]",
 	level: "80",
 	reward: {ecto: "2", loot: "3", dragonite: "16"},
-	timing: {hourInitial: 1, hourMultiplier: 1.5, minuteOffset: 0},
+	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 30},
 	flags: {isExpansion: true},
 	events: [
 	{

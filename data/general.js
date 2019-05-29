@@ -1830,6 +1830,30 @@ var GW2T_ZONE_DATA = {
 	region: "desert",
 	map_rect: [[-49152, -36864], [49152, 39936]],
 	continent_rect: [[30548, 39992], [34644, 43192]]
+},
+"thunderhead":
+{
+	id: "1310",
+	name_en: "Thunderhead Peaks",
+	name_de: "Donnerkopf-Gipfel",
+	name_es: "Picos del Trueno",
+	name_fr: "Pics de Chef-Tonnerre",
+	name_zh: "雷云高峰",
+	region: "shiverpeaks",
+	map_rect: [[-39936, -43008], [39936, 46080]],
+	continent_rect: [[23052, 18552], [26380, 22264]]
+},
+"dragonfall":
+{
+	id: "1317",
+	name_en: "Dragonfall",
+	name_de: "Drachensturz",
+	name_es: "Dragoncaído",
+	name_fr: "Chute draconique",
+	name_zh: "坠龙之地",
+	region: "desert",
+	map_rect: [[-39936, -33792], [43008, 33792]],
+	continent_rect: [[11200, 32000], [14656, 34816]]
 }
 };
 
@@ -1860,14 +1884,74 @@ var GW2T_TIMELINE = [
 		]
 	},*/
 	{
-		name_en: "Path of Fire", name_de: "Path of Fire", name_es: "Path of Fire", name_fr: "Path of Fire", name_zh: "Path of Fire",
+		zone: "thunderhead",
+		Segments: [
+			{ time: "00:00", duration: "00:05", primacy: 1, name_en: "Keep", name_de: "Feste", name_es: "Torre", name_fr: "Donjon", name_zh: "要塞" },
+			{ time: "00:05", duration: "00:40", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "00:45", duration: "00:15", primacy: 3, name_en: "Oil", name_de: "Öl", name_es: "Petróleo", name_fr: "Huile", name_zh: "油料" },
+			{ time: "01:00", duration: "00:45", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:45", duration: "00:15", primacy: 3, name_en: "Keep", name_de: "Feste", name_es: "Torre", name_fr: "Donjon", name_zh: "要塞" }
+		]
+	},
+	{
+		zone: "jahai",
+		Segments: [
+			{ time: "00:00", duration: "01:00", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:00", duration: "00:15", primacy: 1, name_en: "Shatterer", name_de: "Zerschmetterer", name_es: "Asolador marcado", name_fr: "Destructeur stigmatisé", name_zh: "死亡烙印碎裂巨兽" },
+			{ time: "01:15", duration: "00:15", primacy: 3, name_en: "Shatterer", name_de: "Zerschmetterer", name_es: "Asolador marcado", name_fr: "Destructeur stigmatisé", name_zh: "死亡烙印碎裂巨兽" },
+			{ time: "01:30", duration: "00:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
+		]
+	},
+	{
+		zone: "istan",
+		Segments: [
+			{ time: "00:00", duration: "00:15", primacy: 1, name_en: "Palawadan", name_de: "Palawadan", name_es: "Palawadan", name_fr: "Palawadan", name_zh: "帕拉瓦" },
+			{ time: "00:15", duration: "01:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:45", duration: "00:15", primacy: 3, name_en: "Palawadan", name_de: "Palawadan", name_es: "Palawadan", name_fr: "Palawadan", name_zh: "帕拉瓦" }
+		]
+	},
+	{
+		zone: "vabbi",
+		Segments: [
+			{ time: "00:00", duration: "00:20", primacy: 3, name_en: "Forged", name_de: "Geschmiedeten", name_es: "Forjados", name_fr: "Forgés", name_zh: "塑形军队" },
+			{ time: "00:20", duration: "00:10", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "00:30", duration: "00:30", primacy: 3, name_en: "Serpents", name_de: "Gebrandmarkten Vergessenen", name_es: "Olvidado marcado", name_fr: "Oubliés stigmatisé", name_zh: "烙印被遗忘者狂徒" },
+			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Forged", name_de: "Geschmiedeten", name_es: "Forjados", name_fr: "Forgés", name_zh: "塑形军队" },
+			{ time: "01:20", duration: "00:40", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
+		]
+	},
+	{
+		zone: "desolation",
+		Segments: [
+			{ time: "00:00", duration: "00:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "00:30", duration: "00:20", primacy: 3, name_en: "Junundu", name_de: "Junundu", name_es: "Junundu", name_fr: "Junundu", name_zh: "巨努多崛起" },
+			{ time: "00:50", duration: "00:10", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:00", duration: "00:30", primacy: 3, name_en: "Maws", name_de: "Schlünde der Qual", name_es: "Fauces de Tormento", name_fr: "Gueules des tourments", name_zh: "磨难血口" },
+			{ time: "01:30", duration: "00:20", primacy: 3, name_en: "Junundu", name_de: "Junundu", name_es: "Junundu", name_fr: "Junundu", name_zh: "巨努多崛起" },
+			{ time: "01:50", duration: "00:10", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
+		]
+	},
+	{
+		zone: "riverlands",
+		Segments: [
+			{ time: "00:00", duration: "01:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Ascension", name_de: "Aufstiegs", name_es: "Ascensión", name_fr: "Ascension", name_zh: "晋升" }
+		]
+	},
+	{
+		zone: "highlands",
+		Segments: [
+			{ time: "00:00", duration: "01:00", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Treasure", name_de: "Vergrabenen Schätzen", name_es: "Tesoro enterrado", name_fr: "Trésor enfoui", name_zh: "埋藏的宝藏" },
+			{ time: "01:20", duration: "00:40", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
+		]
+	},
+	{
+		zone: "oasis",
 		Segments: [
 			{ time: "00:00", duration: "00:05", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "00:05", duration: "00:20", primacy: 3, name_en: "Oasis: Casino", name_de: "Kasino-Blitz", name_es: "Carrera del casino", name_fr: "Casino express", name_zh: "赌场闪电战" },
-			{ time: "00:25", duration: "00:35", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Highlands: Treasure", name_de: "Vergrabenen Schätzen", name_es: "Tesoro enterrado", name_fr: "Trésor enfoui", name_zh: "埋藏的宝藏" },
-			{ time: "01:20", duration: "00:25", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
-			{ time: "01:45", duration: "00:15", primacy: 3, name_en: "Istan: Palawadan", name_de: "Istan: Palawadan", name_es: "Istan: Palawadan", name_fr: "", name_zh: "Istan: Palawadan" }
+			{ time: "00:05", duration: "00:20", primacy: 3, name_en: "Casino", name_de: "Kasino-Blitz", name_es: "Carrera del casino", name_fr: "Casino express", name_zh: "赌场闪电战" },
+			{ time: "00:25", duration: "01:35", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" }
 		]
 	},
 	{
