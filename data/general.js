@@ -1934,7 +1934,8 @@ var GW2T_TIMELINE = [
 	{
 		zone: "riverlands",
 		Segments: [
-			{ time: "00:00", duration: "01:30", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
+			{ time: "00:00", duration: "00:15", primacy: 2, name_en: "Doppelganger", name_de: "Doppelgänger", name_es: "Álter ego", name_fr: "Sosie", name_zh: "分身" },
+			{ time: "00:15", duration: "01:15", primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
 			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Ascension", name_de: "Aufstiegs", name_es: "Ascensión", name_fr: "Ascension", name_zh: "晋升" }
 		]
 	},
