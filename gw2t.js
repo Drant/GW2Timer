@@ -1191,7 +1191,7 @@ O = {
 			}
 			
 			I.print("Please click the link below to save the options file.<br />Or copy and paste all the text below to a text file.", true);
-			Z.createFile(filestr, "gw2t_options.txt");
+			Z.createFile(filestr, "gw2t_options_" + T.getLocalTimestamp() + ".txt");
 			I.print(htmlstr);
 		});
 		/*
@@ -7228,6 +7228,63 @@ Z = {
 	 */
 	collateAscended: function()
 	{
+		// Default payment value for item categories
+		var payment =
+		{
+			ContainerWeapon: {coin: 1200000},
+			ContainerArmor: {coin: 1200000},
+			ContainerHelm: {coin: 900000},
+			ContainerShoulders: {coin: 900000},
+			ContainerCoat: {coin: 1200000},
+			ContainerGloves: {coin: 900000},
+			ContainerLeggings: {coin: 1100000},
+			ContainerBoots: {coin: 1000000},
+			Back: {craft: true},
+			Ring: {coin: 0},
+			Accessory: {achievement: 0},
+			Amulet: {achievement: 0},
+			LightHelm: {coin: 900000},
+			LightShoulders: {coin: 900000},
+			LightCoat: {coin: 1200000},
+			LightGloves: {coin: 900000},
+			LightLeggings: {coin: 1100000},
+			LightBoots: {coin: 1000000},
+			MediumHelm: {coin: 900000},
+			MediumShoulders: {coin: 900000},
+			MediumCoat: {coin: 1200000},
+			MediumGloves: {coin: 900000},
+			MediumLeggings: {coin: 1100000},
+			MediumBoots: {coin: 1000000},
+			HeavyHelm: {coin: 900000},
+			HeavyShoulders: {coin: 900000},
+			HeavyCoat: {coin: 1200000},
+			HeavyGloves: {coin: 900000},
+			HeavyLeggings: {coin: 1100000},
+			HeavyBoots: {coin: 900000},
+			LightHelmAquatic: {coin: 900000},
+			MediumHelmAquatic: {coin: 900000},
+			HeavyHelmAquatic: {coin: 900000},
+			Axe: {coin: 1100000},
+			Mace: {coin: 1100000},
+			Sword: {coin: 1200000},
+			Dagger: {coin: 1100000},
+			Pistol: {coin: 1100000},
+			Scepter: {coin: 1100000},
+			Focus: {coin: 1000000},
+			Shield: {coin: 1000000},
+			Torch: {coin: 1000000},
+			Warhorn: {coin: 1000000},
+			Greatsword: {coin: 1200000},
+			Hammer: {coin: 1100000},
+			LongBow: {coin: 1300000},
+			ShortBow: {coin: 1300000},
+			Rifle: {coin: 1200000},
+			Staff: {coin: 1200000},
+			Harpoon: {coin: 1100000},
+			Speargun: {coin: 1300000},
+			Trident: {coin: 1000000}
+		};
+		
 		var categorizeItem = function(pItem)
 		{
 			var name = pItem.name.toLowerCase();
@@ -7289,7 +7346,7 @@ Z = {
 						pReturn.oRecord[category].push({
 							i: item.id,
 							n: item.name,
-							p: {coin: -1}
+							p: payment[category] || {coin: -1}
 						});
 						newitems.push(item);
 					}
@@ -34630,6 +34687,22 @@ T = {
 		}
 		// Return hours
 		return (seconds / T.cSECONDS_IN_HOUR).toFixed(1) + D.getWord("h");
+	},
+	
+	/*
+	 * Gets an ISO-like timestamp in local time.
+	 * @returns string timestamp.
+	 */
+	getLocalTimestamp: function()
+	{
+		var now = new Date();
+		var z = function(n)
+		{
+			return (n < 10 ? "0" : "") + n;
+		};
+		return (now.getFullYear() + "-" + z(now.getMonth() + 1) + "-" + z(now.getDate())
+			+ "_"
+			+ z(now.getHours()) + "." + z(now.getMinutes()) + "." + z(now.getSeconds()));
 	},
 	
 	/*

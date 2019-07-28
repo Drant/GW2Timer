@@ -34,11 +34,17 @@ Special: [
 	{u: "primordial_orchid", i: 81115, n: "Fire Orchid Node", p: {coin: 500000}},
 	{u: "orrian_oyster_node", i: 81696, n: "Orrian Oyster Node", p: {coin: 500000}},
 	{u: "brandstone_node", i: 86297, n: "Brandstone Node", p: {coin: 500000}},
-	{u: "difluorite_crystal_cluster_node", i: 87132, n: "Difluorite Crystal Cluster Node", p: {coin: 500000}}
+	{u: "difluorite_crystal_cluster_node", i: 87132, n: "Difluorite Crystal Cluster Node", p: {coin: 500000}},
+	{u: "dragon_crystal", i: 89786, n: "Dragon Crystal Home Instance Node", p: {coin: 500000}},
+	{u: "kournan_supply_cache", i: 87889, n: "Supply Cache", p: {coin: 500000}},
+	{u: "mistborn_mote", i: 90773, n: "Mistborn Mote Home Instance Node", p: {coin: 500000}},
+	{u: "mistonium_node", i: 88828, n: "Mistonium Node", p: {coin: 500000}}
 ],
 Gathering: [
 	{u: "black_lion_hunters_board", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
-	{u: "garden_plot_deed", i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
+	{u: "black_lion_expedition_board", i: 88979, n: "Season 3 Expedition Contract", p: {gem: 1000}},
+	{u: "garden_plot_01", i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
+	{u: "garden_plot_02", i: 86786, n: "Black Lion Garden Plot Deed", p: {gem: 1000}},
 	{u: "basic_harvesting_nodes", i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
 	{u: "basic_lumber_nodes", i: 66769, n: "Basic Lumber Node Pack", p: {gem: 800}},
 	{u: "basic_ore_nodes", i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},

@@ -147,7 +147,7 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 36, payment: "testimony", name_en: "Testimony of Heroics", name_de: "Zeugnis von Heldentaten", name_es: "Testimonio de hazañas", name_fr: "Témoignage des actes héroïques", name_zh: "英雄证明" },
 			{ id: 26, coefficient: 10, name_en: "WvW Skirmish Claim Ticket", name_de: "WvW-Gefecht-Ticket", name_es: "Tique de recogida de escaramuzas WvW", name_fr: "Billet de retrait d'escarmouche McM", name_zh: "世界之战突袭兑换劵" },
 			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP联赛兑换券" },
-			{ id: 33, coefficient: 10, payment: "glory", name_en: "Ascended Shards of Glory", name_de: "Aufgestiegene Scherben des Ruhms", name_es: "Esquirlas de gloria ascendidas", name_fr: "Éclats de gloire élevés", name_zh: "升华荣誉碎片" },
+			{ id: 33, coefficient: 10, payment: "glory", name_en: "Ascended Shards of Glory", name_de: "Aufgestiegene Scherben des Ruhms", name_es: "Esquirlas de gloria ascendidas", name_fr: "Éclats de gloire élevés", name_zh: "升华荣誉碎片" }
 		]
 	},
 	AuditWallet: {}, // Will contain a flattened version of the wallet object
@@ -445,12 +445,15 @@ var GW2T_ACCOUNT_METADATA = {
 		204, // Daily Sandswept Isles
 		208, // Daily Domain of Kourna
 		217, // Daily Jahai Bluffs
+		223, // Daily Thunderhead Peaks
+		227, // Daily Dragonfall
 		221, // Daily Roller Beetle Racing
 		207, // Sunken Treasure Hunter Daily
 		101, // Seasonal Activities
 		102, // Lunar New Year Dailies
 		162, // Daily Super Adventure Festival
 		213, // Daily Festival of the Four Winds
+		233, // Daily Dragon Bash
 		79, // Halloween Daily
 		98, // Wintersday Daily
 		199, // Dragon Ball
@@ -481,6 +484,8 @@ var GW2T_ACCOUNT_METADATA = {
 		203, // A Bug in the System
 		209, // Long Live the Lich
 		216, // A Star to Guide Us
+		224, // All or Nothing
+		226, // War Eternal
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons
@@ -502,6 +507,7 @@ var GW2T_ACCOUNT_METADATA = {
 		47, // Tequatl
 		16, // Bosses
 		206, // Sunken Treasure Hunter
+		228, // Bonus Events
 		{en: "Heart of Thorns", de: "Heart of Thorns", es: "Heart of Thorns", fr: "Heart of Thorns", zh: "决战迈古玛"},
 		116, // Verdant Brink
 		111, // Auric Basin
@@ -541,8 +547,10 @@ var GW2T_ACCOUNT_METADATA = {
 		129, // Year of the Ascension Part II
 		130, // Year of the Ascension Part III
 		3, // PvP Conqueror
+		230, // Historical PvP Achievements
 		13, // World vs World
 		60, // Edge of the Mists
+		225, // World vs World Warclaw
 		38, // Sanctum Sprint
 		40, // Crab Toss
 		39, // Southsun Survival
@@ -554,6 +562,7 @@ var GW2T_ACCOUNT_METADATA = {
 		155, // Bastion of the Penitent
 		195, // Hall of Chains
 		215, // Mythwright Gambit
+		229, // The Key of Ahdashim
 		{en: "Fractals of the Mists", de: "Fraktale der Nebel", es: "Fractales de la Niebla", fr: "Fractales des Brumes", zh: "迷雾碎层"},
 		148, // Nightmare Fractal
 		170, // Shattered Observatory Fractal
@@ -587,6 +596,8 @@ var GW2T_ACCOUNT_METADATA = {
 		211, // Crown Pavilion
 		214, // Queen's Gauntlet
 		212, // Four Winds Customs
+		231, // Dragon Bash
+		232, // Dragon Bash Feats
 		29, // Shadow of the Mad King
 		119, // Shadow of the Mad King
 		146, // Shadow of the Mad King

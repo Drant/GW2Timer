@@ -127,7 +127,8 @@ Tailor_Refinement: [
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
 	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
 	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]},
-	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]}
+	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]},
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
 ],
 Tailor_Component: [
 	{u: 844, i: 19629, n: "Gift of History", r: [[24310, 100], [19737, 250], [19664, 1], [24277, 250]], s: 9623, p: {coin: 100000}},
@@ -335,7 +336,86 @@ Tailor_UpgradeComponent: [
 	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
 	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751},
 	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725},
-	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834}
+	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834},
+	{u: 12824, i: 24716, n: "Major Rune of Rage", r: [[89271, 4], [37906, 2], [89216, 1]]},
+	{u: 12827, i: 24725, n: "Major Rune of Rata Sum", r: [[89271, 4], [24509, 5], [89103, 1]]},
+	{u: 12828, i: 24722, n: "Major Rune of the Eagle", r: [[89271, 4], [66933, 15], [89103, 1]]},
+	{u: 12829, i: 24695, n: "Major Rune of the Flock", r: [[89271, 4], [24323, 1], [89103, 1]]},
+	{u: 12831, i: 24733, n: "Minor Rune of the Grove", r: [[89271, 1], [24506, 5], [89216, 1]]},
+	{u: 12832, i: 24731, n: "Major Rune of Divinity", r: [[89271, 4], [83103, 25], [89103, 1]]},
+	{u: 12835, i: 24795, n: "Minor Rune of the Flame Legion", r: [[89271, 1], [71069, 10], [89258, 1]]},
+	{u: 12837, i: 24701, n: "Major Rune of the Pack", r: [[89271, 4], [74328, 25], [89216, 1]]},
+	{u: 12839, i: 38205, n: "Major Rune of Altruism", r: [[89271, 4], [24, 3], [89258, 1]]},
+	{u: 12840, i: 24690, n: "Major Rune of the Lich", r: [[89271, 4], [76491, 3], [89103, 1]]},
+	{u: 12845, i: 24724, n: "Minor Rune of Rata Sum", r: [[89271, 1], [24503, 5], [89103, 1]]},
+	{u: 12846, i: 24691, n: "Superior Rune of the Traveler", r: [[89271, 8], [24512, 5], [89216, 2], [19721, 5]], s: 89194},
+	{u: 12847, i: 24713, n: "Major Rune of Strength", r: [[89271, 4], [37897, 2], [89258, 1]]},
+	{u: 12854, i: 24685, n: "Minor Rune of the Afflicted", r: [[89271, 1], [74090, 1], [89103, 1]]},
+	{u: 12855, i: 24786, n: "Minor Rune of the Centaur", r: [[89271, 1], [24366, 1], [89216, 1]]},
+	{u: 12856, i: 24706, n: "Minor Rune of Mercy", r: [[89271, 1], [72504, 1], [89103, 1]]},
+	{u: 12857, i: 24765, n: "Superior Rune of Balthazar", r: [[89271, 12], [24508, 5], [89258, 1], [19721, 5]], s: 89149},
+	{u: 12860, i: 24704, n: "Major Rune of Infiltration", r: [[89271, 4], [24370, 3], [89216, 1]]},
+	{u: 12864, i: 24721, n: "Minor Rune of the Eagle", r: [[89271, 1], [66933, 5], [89103, 1]]},
+	{u: 12866, i: 24738, n: "Superior Rune of Scavenging", r: [[89271, 4], [72315, 3], [89216, 3], [19721, 5]], s: 89146},
+	{u: 12868, i: 24771, n: "Superior Rune of Melandru", r: [[89271, 8], [24515, 5], [19721, 5], [89258, 2]], s: 89192},
+	{u: 12870, i: 24699, n: "Superior Rune of the Dolyak", r: [[89271, 4], [74988, 3], [89258, 3], [19721, 5]], s: 89107},
+	{u: 12874, i: 24735, n: "Superior Rune of the Grove", r: [[89271, 4], [24520, 5], [89216, 3], [19721, 5]], s: 89261},
+	{u: 12875, i: 24764, n: "Major Rune of Balthazar", r: [[89271, 4], [24873, 5], [89258, 1]]},
+	{u: 12879, i: 24736, n: "Minor Rune of Scavenging", r: [[89271, 1], [72315, 1], [89216, 1]]},
+	{u: 12880, i: 24774, n: "Minor Rune of Lyssa", r: [[89271, 1], [24472, 5], [89103, 1]]},
+	{u: 12889, i: 24788, n: "Superior Rune of the Centaur", r: [[89271, 4], [24366, 5], [89216, 3], [19721, 5]], s: 89193},
+	{u: 12890, i: 24767, n: "Major Rune of Dwayna", r: [[89271, 4], [24876, 5], [89103, 1]]},
+	{u: 12891, i: 24778, n: "Major Rune of Grenth", r: [[89271, 4], [75654, 2], [89103, 1]]},
+	{u: 12892, i: 24740, n: "Major Rune of the Citadel", r: [[89271, 4], [72436, 2], [89258, 1]]},
+	{u: 12893, i: 24770, n: "Major Rune of Melandru", r: [[89271, 4], [24473, 5], [89258, 1]]},
+	{u: 12894, i: 24715, n: "Minor Rune of Rage", r: [[89271, 1], [37906, 1], [89216, 1]]},
+	{u: 12896, i: 24709, n: "Minor Rune of Vampirism", r: [[89271, 1], [74202, 10], [89258, 1]]},
+	{u: 12899, i: 24728, n: "Major Rune of Hoelbrak", r: [[89271, 4], [42006, 5], [89258, 1]]},
+	{u: 12902, i: 24775, n: "Major Rune of Lyssa", r: [[89271, 4], [24521, 5], [89103, 1]]},
+	{u: 12916, i: 24689, n: "Minor Rune of the Lich", r: [[89271, 1], [76491, 1], [89103, 1]]},
+	{u: 12918, i: 24726, n: "Superior Rune of the Rata Sum", r: [[89271, 8], [24510, 5], [89103, 2], [19721, 5]], s: 89154},
+	{u: 12919, i: 24776, n: "Superior Rune of Lyssa", r: [[89271, 4], [24522, 5], [89103, 3], [19721, 5]], s: 89155},
+	{u: 12922, i: 24769, n: "Minor Rune of Melandru", r: [[89271, 1], [24504, 5], [89258, 1]]},
+	{u: 12925, i: 38204, n: "Minor Rune of Altruism", r: [[89271, 1], [24, 1], [89258, 1]]},
+	{u: 12928, i: 24730, n: "Minor Rune of Divinity", r: [[89271, 1], [83103, 10], [89103, 1]]},
+	{u: 12929, i: 24708, n: "Superior Rune of Mercy", r: [[89271, 4], [72504, 3], [89103, 3], [19721, 5]], s: 89222},
+	{u: 12930, i: 24779, n: "Superior Rune of Grenth", r: [[89271, 12], [75654, 3], [89103, 1], [19721, 5]], s: 89129},
+	{u: 12932, i: 24739, n: "Minor Rune of the Citadel", r: [[89271, 1], [72436, 1], [89258, 1]]},
+	{u: 12934, i: 24694, n: "Minor Rune of the Flock", r: [[89271, 1], [24321, 1], [89103, 1]]},
+	{u: 12936, i: 24723, n: "Superior Rune of the Eagle", r: [[89271, 8], [66933, 25], [89103, 2], [19721, 5]], s: 89272},
+	{u: 12938, i: 24698, n: "Major Rune of the Dolyak", r: [[89271, 4], [74988, 2], [89258, 1]]},
+	{u: 12939, i: 24714, n: "Superior Rune of Strength", r: [[89271, 12], [37897, 3], [89258, 1], [19721, 5]], s: 89233},
+	{u: 12940, i: 24696, n: "Superior Rune of the Flock", r: [[89271, 12], [76179, 1], [19721, 5], [89103, 1]], s: 89128},
+	{u: 12941, i: 24710, n: "Major Rune of Vampirism", r: [[89271, 4], [74202, 25], [89258, 1]]},
+	{u: 12942, i: 24766, n: "Minor Rune of Dwayna", r: [[89271, 1], [24470, 5], [89103, 1]]},
+	{u: 12945, i: 24727, n: "Minor Rune of Hoelbrak", r: [[89271, 1], [24527, 1], [89258, 1]]},
+	{u: 12946, i: 24686, n: "Major Rune of the Afflicted", r: [[89271, 4], [74090, 5], [89103, 1]]},
+	{u: 12948, i: 24768, n: "Superior Rune of Dwayna", r: [[89271, 12], [24516, 5], [89103, 1], [19721, 5]], s: 89109},
+	{u: 12949, i: 24787, n: "Major Rune of the Centaur", r: [[89271, 4], [24366, 3], [89216, 1]]},
+	{u: 12951, i: 24688, n: "Superior Rune of the Lich", r: [[89271, 12], [76491, 5], [89103, 1], [19721, 5]], s: 89180},
+	{u: 12953, i: 24693, n: "Minor Rune of the Traveler", r: [[89271, 1], [24870, 5], [89216, 1]]},
+	{u: 12955, i: 24711, n: "Superior Rune of Vampirism", r: [[89271, 12], [75322, 1], [89258, 1], [19721, 5]], s: 89145},
+	{u: 12957, i: 68437, n: "Superior Rune of Snowfall", r: [[89271, 8], [24, 5], [89103, 2], [19721, 5]], s: 89178},
+	{u: 12958, i: 24732, n: "Superior Rune of Divinity", r: [[89271, 8], [83103, 50], [19721, 5], [89103, 2]], s: 89153},
+	{u: 12960, i: 24737, n: "Major Rune of Scavenging", r: [[89271, 4], [72315, 2], [89216, 1]]},
+	{u: 12961, i: 24763, n: "Minor Rune of Balthazar", r: [[89271, 1], [24889, 5], [89258, 1]]},
+	{u: 12962, i: 24797, n: "Superior Rune of the Flame Legion", r: [[89271, 8], [71069, 50], [89258, 2], [19721, 5]], s: 89232},
+	{u: 12963, i: 24777, n: "Minor Rune of Grenth", r: [[89271, 1], [75654, 1], [89103, 1]]},
+	{u: 12968, i: 24734, n: "Major Rune of the Grove", r: [[89271, 4], [24872, 5], [89216, 1]]},
+	{u: 12969, i: 24712, n: "Minor Rune of Strength", r: [[89271, 1], [37897, 1], [89258, 1]]},
+	{u: 12970, i: 24697, n: "Minor Rune of the Dolyak", r: [[89271, 1], [74988, 1], [89258, 1]]},
+	{u: 12971, i: 24729, n: "Superior Rune of Hoelbrak", r: [[89271, 4], [42010, 5], [19721, 5], [89258, 3]], s: 89269},
+	{u: 12973, i: 24700, n: "Minor Rune of the Pack", r: [[89271, 1], [74328, 10], [89216, 1]]},
+	{u: 12978, i: 24707, n: "Major Rune of Mercy", r: [[89271, 4], [72504, 2], [89103, 1]]},
+	{u: 12981, i: 24741, n: "Superior Rune of the Citadel", r: [[89271, 8], [72436, 3], [89258, 2], [19721, 5]], s: 89163},
+	{u: 12983, i: 24705, n: "Minor Rune of Infiltration", r: [[89271, 1], [24370, 1], [89216, 1]]},
+	{u: 12986, i: 24717, n: "Superior Rune of Rage", r: [[89271, 8], [37906, 3], [89216, 2], [19721, 5]], s: 89221},
+	{u: 12987, i: 24796, n: "Major Rune of the Flame Legion", r: [[89271, 4], [71069, 25], [89258, 1]]},
+	{u: 12992, i: 24687, n: "Superior Rune of the Afflicted", r: [[89271, 8], [70957, 1], [89103, 2], [19721, 5]], s: 89102},
+	{u: 12995, i: 24703, n: "Superior Rune of Infiltration", r: [[89271, 4], [24370, 5], [89216, 3], [19721, 5]], s: 89143},
+	{u: 13003, i: 24702, n: "Superior Rune of the Pack", r: [[89271, 4], [70851, 1], [89216, 3], [19721, 5]], s: 89087},
+	{u: 13005, i: 24692, n: "Major Rune of the Traveler", r: [[89271, 4], [24511, 5], [89216, 1]]},
+	{u: 13131, i: 89999, n: "Superior Rune of Fireworks", r: [[89271, 4], [77699, 10], [89103, 3], [19721, 5]], s: 90000}
 ],
 Tailor_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -524,7 +604,9 @@ Tailor_Insignia: [
 	{u: 12579, i: 86392, n: "Tixx's Giver's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [38162, 1]], s: 86496},
 	{u: 12625, i: 86585, n: "Bringer's Intricate Gossamer Insignia", r: [[76614, 5], [86601, 100], [19721, 5]], s: 86643, b: 86643},
 	{u: 12630, i: 86678, n: "Giftbringer's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [86585, 1]], s: 86699},
-	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875}
+	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875},
+	{u: 13047, i: 89758, n: "Diviner's Intricate Gossamer Insignia", r: [[76614, 5], [89537, 25], [19721, 5], [89696, 3]], s: 89727},
+	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533}
 ],
 Tailor_Bag: [
 	{u: 2209, i: 9406, n: "8 Slot Jute Bag", r: [[19720, 10]]},
@@ -909,7 +991,14 @@ Tailor_Helm: [
 	{u: 12737, i: 88022, n: "Nerashi's Masque", r: [[49523, 1], [88099, 1], [45896, 1], [45897, 1]], s: 87937},
 	{u: 12761, i: 88427, n: "Maklain's Cloth Breather", r: [[49523, 1], [76653, 1], [72506, 1], [75227, 1]], s: 88375, b: 88375},
 	{u: 12783, i: 88400, n: "Yassith's Cloth Breather", r: [[49523, 1], [76244, 1], [72506, 1], [75227, 1]], s: 88395, b: 88395},
-	{u: 12796, i: 88537, n: "Grieving Elegy Coronet", r: [[85039, 1], [13204, 1], [13203, 1]]}
+	{u: 12796, i: 88537, n: "Grieving Elegy Coronet", r: [[85039, 1], [13204, 1], [13203, 1]]},
+	{u: 12760, i: 88466, n: "Thackeray's Cloth Breather", r: [[49523, 1], [80258, 1], [72506, 1], [75227, 1]], s: 88362},
+	{u: 12771, i: 88458, n: "Laranthir's Cloth Breather", r: [[49523, 1], [72985, 1], [72506, 1], [75227, 1]], s: 88390, b: 88390},
+	{u: 12772, i: 88371, n: "Tizlak's Cloth Breather", r: [[49523, 1], [72674, 1], [72506, 1], [75227, 1]], s: 88383, b: 88383},
+	{u: 12782, i: 88413, n: "Ruka's Cloth Breather", r: [[49523, 1], [74808, 1], [72506, 1], [75227, 1]], s: 88444, b: 88444},
+	{u: 13101, i: 89982, n: "Diviner's Exalted Masque", r: [[89758, 1], [13204, 1], [13203, 1]], s: 89493},
+	{u: 13106, i: 89912, n: "Steelstar's Masque", r: [[49523, 1], [89563, 1], [45896, 1], [45897, 1]], s: 89899},
+	{u: 13216, i: 90708, n: "Diviner's Mist Shard Coronet", r: [[90783, 25], [13204, 1], [13203, 1]]}
 ],
 Tailor_Shoulders: [
 	{u: 2121, i: 11052, n: "Malign Embroidered Mantle", r: [[19870, 1], [13026, 1], [13025, 1]]},
@@ -1101,7 +1190,10 @@ Tailor_Shoulders: [
 	{u: 12597, i: 86650, n: "Tixx's Epaulets", r: [[49523, 1], [86392, 1], [45901, 1], [45893, 1]], s: 86660},
 	{u: 12704, i: 88085, n: "Nerashi's Epaulets", r: [[49523, 1], [88099, 1], [45901, 1], [45893, 1]], s: 87820},
 	{u: 12728, i: 87972, n: "Plaguedoctor's Exalted Mantle", r: [[88011, 1], [13205, 1], [13206, 1]], s: 87609},
-	{u: 12798, i: 88739, n: "Grieving Elegy Epaulets", r: [[85039, 1], [13205, 1], [13206, 1]]}
+	{u: 12798, i: 88739, n: "Grieving Elegy Epaulets", r: [[85039, 1], [13205, 1], [13206, 1]]},
+	{u: 13020, i: 89628, n: "Steelstar's Epaulets", r: [[49523, 1], [89563, 1], [45901, 1], [45893, 1]], s: 89732},
+	{u: 13064, i: 89436, n: "Diviner's Exalted Mantle", r: [[89758, 1], [13205, 1], [13206, 1]], s: 89760},
+	{u: 13172, i: 90931, n: "Diviner's Mist Shard Epaulets", r: [[90783, 25], [13205, 1], [13206, 1]]}
 ],
 Tailor_Coat: [
 	{u: 1977, i: 11016, n: "Malign Embroidered Coat", r: [[19870, 1], [13015, 1], [13016, 1]]},
@@ -1295,7 +1387,10 @@ Tailor_Coat: [
 	{u: 12635, i: 86670, n: "Giftbringer's Doublet", r: [[46746, 1], [86678, 1], [45891, 1], [45892, 1]], s: 86424},
 	{u: 12683, i: 87977, n: "Nerashi's Doublet", r: [[46746, 1], [88099, 1], [45891, 1], [45892, 1]], s: 87946},
 	{u: 12710, i: 87585, n: "Plaguedoctor's Exalted Coat", r: [[88011, 1], [13196, 1], [13195, 1]], s: 87940},
-	{u: 12797, i: 88722, n: "Grieving Elegy Gambeson", r: [[85039, 1], [13196, 1], [13195, 1]]}
+	{u: 12797, i: 88722, n: "Grieving Elegy Gambeson", r: [[85039, 1], [13196, 1], [13195, 1]]},
+	{u: 13052, i: 89768, n: "Steelstar's Doublet", r: [[46746, 1], [89563, 1], [45891, 1], [45892, 1]], s: 89885},
+	{u: 13108, i: 89849, n: "Diviner's Exalted Coat", r: [[89758, 1], [13196, 1], [13195, 1]], s: 89556},
+	{u: 13154, i: 90620, n: "Diviner's Mist Shard Gambeson", r: [[90783, 25], [13196, 1], [13195, 1]]}
 ],
 Tailor_Gloves: [
 	{u: 2227, i: 11022, n: "Malign Embroidered Wristguards", r: [[19870, 1], [13017, 1], [13018, 1]]},
@@ -1491,7 +1586,10 @@ Tailor_Gloves: [
 	{u: 12568, i: 86448, n: "Bringer's Exalted Gloves", r: [[86585, 1], [13198, 1], [13197, 1]]},
 	{u: 12719, i: 87960, n: "Nerashi's Wristguards", r: [[49523, 1], [88099, 1], [45894, 1], [45895, 1]], s: 88063},
 	{u: 12735, i: 87920, n: "Plaguedoctor's Exalted Gloves", r: [[88011, 1], [13198, 1], [13197, 1]], s: 88031},
-	{u: 12795, i: 88968, n: "Grieving Elegy Gloves", r: [[85039, 1], [13198, 1], [13197, 1]]}
+	{u: 12795, i: 88968, n: "Grieving Elegy Gloves", r: [[85039, 1], [13198, 1], [13197, 1]]},
+	{u: 13029, i: 89925, n: "Steelstar's Wristguards", r: [[49523, 1], [89563, 1], [45894, 1], [45895, 1]], s: 89942},
+	{u: 13072, i: 89734, n: "Diviner's Exalted Gloves", r: [[89758, 1], [13198, 1], [13197, 1]], s: 89975},
+	{u: 13159, i: 90936, n: "Diviner's Mist Shard Gloves", r: [[90783, 25], [13198, 1], [13197, 1]]}
 ],
 Tailor_Leggings: [
 	{u: 2085, i: 11025, n: "Malign Embroidered Pants", r: [[19870, 1], [13019, 1], [13020, 1]]},
@@ -1685,7 +1783,10 @@ Tailor_Leggings: [
 	{u: 12529, i: 86429, n: "Bringer's Exalted Pants", r: [[86585, 1], [13200, 1], [13199, 1]]},
 	{u: 12680, i: 87949, n: "Plaguedoctor's Exalted Pants", r: [[88011, 1], [13200, 1], [13199, 1]], s: 87793},
 	{u: 12721, i: 87806, n: "Nerashi's Breeches", r: [[49523, 1], [88099, 1], [45898, 1], [45899, 1]], s: 88071},
-	{u: 12793, i: 88716, n: "Grieving Elegy Breeches", r: [[85039, 1], [13200, 1], [13199, 1]]}
+	{u: 12793, i: 88716, n: "Grieving Elegy Breeches", r: [[85039, 1], [13200, 1], [13199, 1]]},
+	{u: 13091, i: 89940, n: "Steelstar's Breeches", r: [[49523, 1], [89563, 1], [45898, 1], [45899, 1]], s: 89513},
+	{u: 13113, i: 89923, n: "Diviner's Exalted Pants", r: [[89758, 1], [13200, 1], [13199, 1]], s: 89876},
+	{u: 13138, i: 90847, n: "Diviner's Mist Shard Breeches", r: [[90783, 25], [13200, 1], [13199, 1]]}
 ],
 Tailor_Boots: [
 	{u: 2049, i: 11019, n: "Malign Embroidered Sandals", r: [[19870, 1], [13021, 1], [13022, 2]]},
@@ -1879,7 +1980,10 @@ Tailor_Boots: [
 	{u: 12639, i: 86511, n: "Bringer's Exalted Boots", r: [[86585, 1], [13202, 1], [13201, 2]]},
 	{u: 12705, i: 87688, n: "Plaguedoctor's Exalted Boots", r: [[88011, 1], [13202, 1], [13201, 2]], s: 87665},
 	{u: 12711, i: 87696, n: "Nerashi's Footwear", r: [[49523, 1], [88099, 1], [45900, 1], [45902, 1]], s: 87686},
-	{u: 12802, i: 88602, n: "Grieving Elegy Walkers", r: [[85039, 1], [13202, 1], [13201, 2]]}
+	{u: 12802, i: 88602, n: "Grieving Elegy Walkers", r: [[85039, 1], [13202, 1], [13201, 2]]},
+	{u: 13031, i: 89452, n: "Steelstar's Footwear", r: [[49523, 1], [89563, 1], [45900, 1], [45902, 1]], s: 89588},
+	{u: 13124, i: 89465, n: "Diviner's Exalted Boots", r: [[89758, 1], [13202, 1], [13201, 2]], s: 89550},
+	{u: 13221, i: 90432, n: "Diviner's Mist Shard Walkers", r: [[90783, 25], [13202, 1], [13201, 2]]}
 ],
 Leatherworker_Refinement: [
 	{u: 7, i: 19742, n: "Bolt of Cotton", r: [[19741, 2]]},
@@ -1923,7 +2027,8 @@ Leatherworker_Refinement: [
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
 	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
 	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]},
-	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]}
+	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]},
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
 ],
 Leatherworker_Component: [
 	{u: 1126, i: 13093, n: "Rawhide Chestguard Padding", r: [[19720, 1], [19792, 2]]},
@@ -2131,7 +2236,86 @@ Leatherworker_UpgradeComponent: [
 	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
 	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751},
 	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725},
-	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834}
+	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834},
+	{u: 12824, i: 24716, n: "Major Rune of Rage", r: [[89271, 4], [37906, 2], [89216, 1]]},
+	{u: 12827, i: 24725, n: "Major Rune of Rata Sum", r: [[89271, 4], [24509, 5], [89103, 1]]},
+	{u: 12828, i: 24722, n: "Major Rune of the Eagle", r: [[89271, 4], [66933, 15], [89103, 1]]},
+	{u: 12829, i: 24695, n: "Major Rune of the Flock", r: [[89271, 4], [24323, 1], [89103, 1]]},
+	{u: 12831, i: 24733, n: "Minor Rune of the Grove", r: [[89271, 1], [24506, 5], [89216, 1]]},
+	{u: 12832, i: 24731, n: "Major Rune of Divinity", r: [[89271, 4], [83103, 25], [89103, 1]]},
+	{u: 12835, i: 24795, n: "Minor Rune of the Flame Legion", r: [[89271, 1], [71069, 10], [89258, 1]]},
+	{u: 12837, i: 24701, n: "Major Rune of the Pack", r: [[89271, 4], [74328, 25], [89216, 1]]},
+	{u: 12839, i: 38205, n: "Major Rune of Altruism", r: [[89271, 4], [24, 3], [89258, 1]]},
+	{u: 12840, i: 24690, n: "Major Rune of the Lich", r: [[89271, 4], [76491, 3], [89103, 1]]},
+	{u: 12845, i: 24724, n: "Minor Rune of Rata Sum", r: [[89271, 1], [24503, 5], [89103, 1]]},
+	{u: 12846, i: 24691, n: "Superior Rune of the Traveler", r: [[89271, 8], [24512, 5], [89216, 2], [19721, 5]], s: 89194},
+	{u: 12847, i: 24713, n: "Major Rune of Strength", r: [[89271, 4], [37897, 2], [89258, 1]]},
+	{u: 12854, i: 24685, n: "Minor Rune of the Afflicted", r: [[89271, 1], [74090, 1], [89103, 1]]},
+	{u: 12855, i: 24786, n: "Minor Rune of the Centaur", r: [[89271, 1], [24366, 1], [89216, 1]]},
+	{u: 12856, i: 24706, n: "Minor Rune of Mercy", r: [[89271, 1], [72504, 1], [89103, 1]]},
+	{u: 12857, i: 24765, n: "Superior Rune of Balthazar", r: [[89271, 12], [24508, 5], [89258, 1], [19721, 5]], s: 89149},
+	{u: 12860, i: 24704, n: "Major Rune of Infiltration", r: [[89271, 4], [24370, 3], [89216, 1]]},
+	{u: 12864, i: 24721, n: "Minor Rune of the Eagle", r: [[89271, 1], [66933, 5], [89103, 1]]},
+	{u: 12866, i: 24738, n: "Superior Rune of Scavenging", r: [[89271, 4], [72315, 3], [89216, 3], [19721, 5]], s: 89146},
+	{u: 12868, i: 24771, n: "Superior Rune of Melandru", r: [[89271, 8], [24515, 5], [19721, 5], [89258, 2]], s: 89192},
+	{u: 12870, i: 24699, n: "Superior Rune of the Dolyak", r: [[89271, 4], [74988, 3], [89258, 3], [19721, 5]], s: 89107},
+	{u: 12874, i: 24735, n: "Superior Rune of the Grove", r: [[89271, 4], [24520, 5], [89216, 3], [19721, 5]], s: 89261},
+	{u: 12875, i: 24764, n: "Major Rune of Balthazar", r: [[89271, 4], [24873, 5], [89258, 1]]},
+	{u: 12879, i: 24736, n: "Minor Rune of Scavenging", r: [[89271, 1], [72315, 1], [89216, 1]]},
+	{u: 12880, i: 24774, n: "Minor Rune of Lyssa", r: [[89271, 1], [24472, 5], [89103, 1]]},
+	{u: 12889, i: 24788, n: "Superior Rune of the Centaur", r: [[89271, 4], [24366, 5], [89216, 3], [19721, 5]], s: 89193},
+	{u: 12890, i: 24767, n: "Major Rune of Dwayna", r: [[89271, 4], [24876, 5], [89103, 1]]},
+	{u: 12891, i: 24778, n: "Major Rune of Grenth", r: [[89271, 4], [75654, 2], [89103, 1]]},
+	{u: 12892, i: 24740, n: "Major Rune of the Citadel", r: [[89271, 4], [72436, 2], [89258, 1]]},
+	{u: 12893, i: 24770, n: "Major Rune of Melandru", r: [[89271, 4], [24473, 5], [89258, 1]]},
+	{u: 12894, i: 24715, n: "Minor Rune of Rage", r: [[89271, 1], [37906, 1], [89216, 1]]},
+	{u: 12896, i: 24709, n: "Minor Rune of Vampirism", r: [[89271, 1], [74202, 10], [89258, 1]]},
+	{u: 12899, i: 24728, n: "Major Rune of Hoelbrak", r: [[89271, 4], [42006, 5], [89258, 1]]},
+	{u: 12902, i: 24775, n: "Major Rune of Lyssa", r: [[89271, 4], [24521, 5], [89103, 1]]},
+	{u: 12916, i: 24689, n: "Minor Rune of the Lich", r: [[89271, 1], [76491, 1], [89103, 1]]},
+	{u: 12918, i: 24726, n: "Superior Rune of the Rata Sum", r: [[89271, 8], [24510, 5], [89103, 2], [19721, 5]], s: 89154},
+	{u: 12919, i: 24776, n: "Superior Rune of Lyssa", r: [[89271, 4], [24522, 5], [89103, 3], [19721, 5]], s: 89155},
+	{u: 12922, i: 24769, n: "Minor Rune of Melandru", r: [[89271, 1], [24504, 5], [89258, 1]]},
+	{u: 12925, i: 38204, n: "Minor Rune of Altruism", r: [[89271, 1], [24, 1], [89258, 1]]},
+	{u: 12928, i: 24730, n: "Minor Rune of Divinity", r: [[89271, 1], [83103, 10], [89103, 1]]},
+	{u: 12929, i: 24708, n: "Superior Rune of Mercy", r: [[89271, 4], [72504, 3], [89103, 3], [19721, 5]], s: 89222},
+	{u: 12930, i: 24779, n: "Superior Rune of Grenth", r: [[89271, 12], [75654, 3], [89103, 1], [19721, 5]], s: 89129},
+	{u: 12932, i: 24739, n: "Minor Rune of the Citadel", r: [[89271, 1], [72436, 1], [89258, 1]]},
+	{u: 12934, i: 24694, n: "Minor Rune of the Flock", r: [[89271, 1], [24321, 1], [89103, 1]]},
+	{u: 12936, i: 24723, n: "Superior Rune of the Eagle", r: [[89271, 8], [66933, 25], [89103, 2], [19721, 5]], s: 89272},
+	{u: 12938, i: 24698, n: "Major Rune of the Dolyak", r: [[89271, 4], [74988, 2], [89258, 1]]},
+	{u: 12939, i: 24714, n: "Superior Rune of Strength", r: [[89271, 12], [37897, 3], [89258, 1], [19721, 5]], s: 89233},
+	{u: 12940, i: 24696, n: "Superior Rune of the Flock", r: [[89271, 12], [76179, 1], [19721, 5], [89103, 1]], s: 89128},
+	{u: 12941, i: 24710, n: "Major Rune of Vampirism", r: [[89271, 4], [74202, 25], [89258, 1]]},
+	{u: 12942, i: 24766, n: "Minor Rune of Dwayna", r: [[89271, 1], [24470, 5], [89103, 1]]},
+	{u: 12945, i: 24727, n: "Minor Rune of Hoelbrak", r: [[89271, 1], [24527, 1], [89258, 1]]},
+	{u: 12946, i: 24686, n: "Major Rune of the Afflicted", r: [[89271, 4], [74090, 5], [89103, 1]]},
+	{u: 12948, i: 24768, n: "Superior Rune of Dwayna", r: [[89271, 12], [24516, 5], [89103, 1], [19721, 5]], s: 89109},
+	{u: 12949, i: 24787, n: "Major Rune of the Centaur", r: [[89271, 4], [24366, 3], [89216, 1]]},
+	{u: 12951, i: 24688, n: "Superior Rune of the Lich", r: [[89271, 12], [76491, 5], [89103, 1], [19721, 5]], s: 89180},
+	{u: 12953, i: 24693, n: "Minor Rune of the Traveler", r: [[89271, 1], [24870, 5], [89216, 1]]},
+	{u: 12955, i: 24711, n: "Superior Rune of Vampirism", r: [[89271, 12], [75322, 1], [89258, 1], [19721, 5]], s: 89145},
+	{u: 12957, i: 68437, n: "Superior Rune of Snowfall", r: [[89271, 8], [24, 5], [89103, 2], [19721, 5]], s: 89178},
+	{u: 12958, i: 24732, n: "Superior Rune of Divinity", r: [[89271, 8], [83103, 50], [19721, 5], [89103, 2]], s: 89153},
+	{u: 12960, i: 24737, n: "Major Rune of Scavenging", r: [[89271, 4], [72315, 2], [89216, 1]]},
+	{u: 12961, i: 24763, n: "Minor Rune of Balthazar", r: [[89271, 1], [24889, 5], [89258, 1]]},
+	{u: 12962, i: 24797, n: "Superior Rune of the Flame Legion", r: [[89271, 8], [71069, 50], [89258, 2], [19721, 5]], s: 89232},
+	{u: 12963, i: 24777, n: "Minor Rune of Grenth", r: [[89271, 1], [75654, 1], [89103, 1]]},
+	{u: 12968, i: 24734, n: "Major Rune of the Grove", r: [[89271, 4], [24872, 5], [89216, 1]]},
+	{u: 12969, i: 24712, n: "Minor Rune of Strength", r: [[89271, 1], [37897, 1], [89258, 1]]},
+	{u: 12970, i: 24697, n: "Minor Rune of the Dolyak", r: [[89271, 1], [74988, 1], [89258, 1]]},
+	{u: 12971, i: 24729, n: "Superior Rune of Hoelbrak", r: [[89271, 4], [42010, 5], [19721, 5], [89258, 3]], s: 89269},
+	{u: 12973, i: 24700, n: "Minor Rune of the Pack", r: [[89271, 1], [74328, 10], [89216, 1]]},
+	{u: 12978, i: 24707, n: "Major Rune of Mercy", r: [[89271, 4], [72504, 2], [89103, 1]]},
+	{u: 12981, i: 24741, n: "Superior Rune of the Citadel", r: [[89271, 8], [72436, 3], [89258, 2], [19721, 5]], s: 89163},
+	{u: 12983, i: 24705, n: "Minor Rune of Infiltration", r: [[89271, 1], [24370, 1], [89216, 1]]},
+	{u: 12986, i: 24717, n: "Superior Rune of Rage", r: [[89271, 8], [37906, 3], [89216, 2], [19721, 5]], s: 89221},
+	{u: 12987, i: 24796, n: "Major Rune of the Flame Legion", r: [[89271, 4], [71069, 25], [89258, 1]]},
+	{u: 12992, i: 24687, n: "Superior Rune of the Afflicted", r: [[89271, 8], [70957, 1], [89103, 2], [19721, 5]], s: 89102},
+	{u: 12995, i: 24703, n: "Superior Rune of Infiltration", r: [[89271, 4], [24370, 5], [89216, 3], [19721, 5]], s: 89143},
+	{u: 13003, i: 24702, n: "Superior Rune of the Pack", r: [[89271, 4], [70851, 1], [89216, 3], [19721, 5]], s: 89087},
+	{u: 13005, i: 24692, n: "Major Rune of the Traveler", r: [[89271, 4], [24511, 5], [89216, 1]]},
+	{u: 13131, i: 89999, n: "Superior Rune of Fireworks", r: [[89271, 4], [77699, 10], [89103, 3], [19721, 5]], s: 90000}
 ],
 Leatherworker_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -2320,7 +2504,9 @@ Leatherworker_Insignia: [
 	{u: 12579, i: 86392, n: "Tixx's Giver's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [38162, 1]], s: 86496},
 	{u: 12625, i: 86585, n: "Bringer's Intricate Gossamer Insignia", r: [[76614, 5], [86601, 100], [19721, 5]], s: 86643, b: 86643},
 	{u: 12630, i: 86678, n: "Giftbringer's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [86585, 1]], s: 86699},
-	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875}
+	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875},
+	{u: 13047, i: 89758, n: "Diviner's Intricate Gossamer Insignia", r: [[76614, 5], [89537, 25], [19721, 5], [89696, 3]], s: 89727},
+	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533}
 ],
 Leatherworker_Bag: [
 	{u: 1125, i: 8940, n: "Wrangler's Bag", r: [[13010, 1], [24296, 1], [19738, 3]], s: 9564},
@@ -2707,7 +2893,11 @@ Leatherworker_Helm: [
 	{u: 12773, i: 88452, n: "Ruka's Leather Breather", r: [[49523, 1], [74808, 1], [71189, 1], [72297, 1]], s: 88430, b: 88430},
 	{u: 12778, i: 88443, n: "Maklain's Leather Breather", r: [[49523, 1], [76653, 1], [71189, 1], [72297, 1]], s: 88460, b: 88460},
 	{u: 12781, i: 88420, n: "Yassith's Leather Breather", r: [[49523, 1], [76244, 1], [71189, 1], [72297, 1]], s: 88379, b: 88379},
-	{u: 12791, i: 88553, n: "Grieving Elegy Visage", r: [[85039, 1], [13238, 1], [13239, 1]]}
+	{u: 12791, i: 88553, n: "Grieving Elegy Visage", r: [[85039, 1], [13238, 1], [13239, 1]]},
+	{u: 12765, i: 88422, n: "Tizlak's Leather Breather", r: [[49523, 1], [72674, 1], [71189, 1], [72297, 1]], s: 88434, b: 88434},
+	{u: 13114, i: 89969, n: "Steelstar's Visage", r: [[49523, 1], [89563, 1], [45860, 1], [45867, 1]], s: 89995},
+	{u: 13121, i: 89921, n: "Diviner's Emblazoned Helm", r: [[89758, 1], [13238, 1], [13239, 1]], s: 89472},
+	{u: 13194, i: 90396, n: "Diviner's Mist Shard Visage", r: [[90783, 25], [13238, 1], [13239, 1]]}
 ],
 Leatherworker_Shoulders: [
 	{u: 1123, i: 4246, n: "Bloodsaw Leather Work Shoulderpads", r: [[19800, 1], [19738, 3]], s: 9526},
@@ -2899,7 +3089,10 @@ Leatherworker_Shoulders: [
 	{u: 12636, i: 86620, n: "Giftbringer's Shoulderguard", r: [[49523, 1], [86678, 1], [45862, 1], [45869, 1]], s: 86421},
 	{u: 12732, i: 87749, n: "Plaguedoctor's Emblazoned Shoulders", r: [[88011, 1], [13242, 1], [13232, 1]], s: 87978},
 	{u: 12749, i: 87859, n: "Nerashi's Shoulderguard", r: [[49523, 1], [88099, 1], [45862, 1], [45869, 1]], s: 87632},
-	{u: 12789, i: 88777, n: "Grieving Elegy Shoulders", r: [[85039, 1], [13242, 1], [13232, 1]]}
+	{u: 12789, i: 88777, n: "Grieving Elegy Shoulders", r: [[85039, 1], [13242, 1], [13232, 1]]},
+	{u: 13030, i: 89443, n: "Diviner's Emblazoned Shoulders", r: [[89758, 1], [13242, 1], [13232, 1]], s: 89818},
+	{u: 13118, i: 89789, n: "Steelstar's Shoulderguard", r: [[49523, 1], [89563, 1], [45862, 1], [45869, 1]], s: 89776},
+	{u: 13206, i: 90854, n: "Diviner's Mist Shard Shoulders", r: [[90783, 25], [13242, 1], [13232, 1]]}
 ],
 Leatherworker_Coat: [
 	{u: 1119, i: 4242, n: "Bloodsaw Leather Work Coat", r: [[19796, 1], [19738, 12]], s: 9523},
@@ -3092,7 +3285,10 @@ Leatherworker_Coat: [
 	{u: 12565, i: 86684, n: "Tixx's Guise", r: [[46746, 1], [86392, 1], [45861, 1], [45868, 1]], s: 86700},
 	{u: 12707, i: 87818, n: "Plaguedoctor's Emblazoned Coat", r: [[88011, 1], [13234, 1], [13235, 1]], s: 87683},
 	{u: 12679, i: 87985, n: "Nerashi's Guise", r: [[46746, 1], [88099, 1], [45861, 1], [45868, 1]], s: 87844},
-	{u: 12815, i: 88691, n: "Grieving Elegy Chestguard", r: [[85039, 1], [13234, 1], [13235, 1]]}
+	{u: 12815, i: 88691, n: "Grieving Elegy Chestguard", r: [[85039, 1], [13234, 1], [13235, 1]]},
+	{u: 13076, i: 89528, n: "Steelstar's Guise", r: [[46746, 1], [89563, 1], [45861, 1], [45868, 1]], s: 89808},
+	{u: 13088, i: 89605, n: "Diviner's Emblazoned Coat", r: [[89758, 1], [13234, 1], [13235, 1]], s: 89640},
+	{u: 13176, i: 90384, n: "Diviner's Mist Shard Chestguard", r: [[90783, 25], [13234, 1], [13235, 1]]}
 ],
 Leatherworker_Gloves: [
 	{u: 1118, i: 4909, n: "Darkvine Leather Gloves", r: [[24278, 1], [13098, 1], [13095, 1]], s: 9405},
@@ -3286,7 +3482,10 @@ Leatherworker_Gloves: [
 	{u: 12522, i: 86425, n: "Bringer's Emblazoned Gloves", r: [[86585, 1], [13237, 1], [13236, 1]]},
 	{u: 12714, i: 87597, n: "Plaguedoctor's Emblazoned Gloves", r: [[88011, 1], [13237, 1], [13236, 1]], s: 87881},
 	{u: 12748, i: 87751, n: "Nerashi's Grips", r: [[49523, 1], [88099, 1], [45859, 1], [45866, 1]], s: 87652},
-	{u: 12811, i: 88586, n: "Grieving Elegy Bracers", r: [[85039, 1], [13237, 1], [13236, 1]]}
+	{u: 12811, i: 88586, n: "Grieving Elegy Bracers", r: [[85039, 1], [13237, 1], [13236, 1]]},
+	{u: 13071, i: 89985, n: "Steelstar's Grips", r: [[49523, 1], [89563, 1], [45859, 1], [45866, 1]], s: 89775},
+	{u: 13128, i: 89613, n: "Diviner's Emblazoned Gloves", r: [[89758, 1], [13237, 1], [13236, 1]], s: 89438},
+	{u: 13190, i: 90901, n: "Diviner's Mist Shard Bracers", r: [[90783, 25], [13237, 1], [13236, 1]]}
 ],
 Leatherworker_Leggings: [
 	{u: 1116, i: 4012, n: "Quiet Leather Leggings", r: [[19905, 1], [13217, 1], [13216, 1]], s: 9386},
@@ -3480,7 +3679,10 @@ Leatherworker_Leggings: [
 	{u: 12622, i: 86529, n: "Bringer's Emblazoned Pants", r: [[86585, 1], [13240, 1], [13241, 1]]},
 	{u: 12678, i: 88025, n: "Nerashi's Leggings", r: [[49523, 1], [88099, 1], [45863, 1], [45870, 1]], s: 87895},
 	{u: 12698, i: 87900, n: "Plaguedoctor's Emblazoned Pants", r: [[88011, 1], [13240, 1], [13241, 1]], s: 87723},
-	{u: 12794, i: 88556, n: "Grieving Elegy Leggings", r: [[85039, 1], [13240, 1], [13241, 1]]}
+	{u: 12794, i: 88556, n: "Grieving Elegy Leggings", r: [[85039, 1], [13240, 1], [13241, 1]]},
+	{u: 13039, i: 89722, n: "Diviner's Emblazoned Pants", r: [[89758, 1], [13240, 1], [13241, 1]], s: 89951},
+	{u: 13056, i: 89934, n: "Steelstar's Leggings", r: [[49523, 1], [89563, 1], [45863, 1], [45870, 1]], s: 89611},
+	{u: 13179, i: 90424, n: "Diviner's Mist Shard Leggings", r: [[90783, 25], [13240, 1], [13241, 1]]}
 ],
 Leatherworker_Boots: [
 	{u: 1117, i: 4241, n: "Bloodsaw Leather Work Boots", r: [[19800, 1], [19738, 3]], s: 9522},
@@ -3673,7 +3875,10 @@ Leatherworker_Boots: [
 	{u: 12587, i: 86686, n: "Tixx's Striders", r: [[49523, 1], [86392, 1], [45864, 1], [45865, 1]], s: 86475},
 	{u: 12739, i: 88042, n: "Plaguedoctor's Emblazoned Boots", r: [[88011, 1], [13233, 1], [13231, 2]], s: 87759},
 	{u: 12746, i: 87629, n: "Nerashi's Striders", r: [[49523, 1], [88099, 1], [45864, 1], [45865, 1]], s: 87931},
-	{u: 12790, i: 88837, n: "Grieving Elegy Boots", r: [[85039, 1], [13233, 1], [13231, 2]]}
+	{u: 12790, i: 88837, n: "Grieving Elegy Boots", r: [[85039, 1], [13233, 1], [13231, 2]]},
+	{u: 13018, i: 89893, n: "Steelstar's Striders", r: [[49523, 1], [89563, 1], [45864, 1], [45865, 1]], s: 89950},
+	{u: 13034, i: 89447, n: "Diviner's Emblazoned Boots", r: [[89758, 1], [13233, 1], [13231, 2]], s: 89553},
+	{u: 13139, i: 90715, n: "Diviner's Mist Shard Boots", r: [[90783, 25], [13233, 1], [13231, 2]]}
 ],
 Armorsmith_Refinement: [
 	{u: 7, i: 19742, n: "Bolt of Cotton", r: [[19741, 2]]},
@@ -3725,7 +3930,8 @@ Armorsmith_Refinement: [
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
 	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
 	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]},
-	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]}
+	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]},
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
 ],
 Armorsmith_Component: [
 	{u: 255, i: 13108, n: "Bronze Chain Boot Panel", r: [[19679, 2]]},
@@ -3935,7 +4141,86 @@ Armorsmith_UpgradeComponent: [
 	{u: 12215, i: 83338, n: "Superior Rune of the Firebrand", r: [[24824, 1], [68942, 1], [83103, 50]], s: 82709},
 	{u: 12248, i: 82633, n: "Superior Rune of the Holosmith", r: [[24812, 1], [68942, 1], [82582, 10]], s: 84751},
 	{u: 12283, i: 82791, n: "Superior Rune of the Deadeye", r: [[24818, 1], [68942, 1], [83757, 50]], s: 82725},
-	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834}
+	{u: 12463, i: 85713, n: "Superior Rune of the Stars", r: [[19746, 1], [24320, 1], [86069, 15], [19721, 1]], s: 85834},
+	{u: 12824, i: 24716, n: "Major Rune of Rage", r: [[89271, 4], [37906, 2], [89216, 1]]},
+	{u: 12827, i: 24725, n: "Major Rune of Rata Sum", r: [[89271, 4], [24509, 5], [89103, 1]]},
+	{u: 12828, i: 24722, n: "Major Rune of the Eagle", r: [[89271, 4], [66933, 15], [89103, 1]]},
+	{u: 12829, i: 24695, n: "Major Rune of the Flock", r: [[89271, 4], [24323, 1], [89103, 1]]},
+	{u: 12831, i: 24733, n: "Minor Rune of the Grove", r: [[89271, 1], [24506, 5], [89216, 1]]},
+	{u: 12832, i: 24731, n: "Major Rune of Divinity", r: [[89271, 4], [83103, 25], [89103, 1]]},
+	{u: 12835, i: 24795, n: "Minor Rune of the Flame Legion", r: [[89271, 1], [71069, 10], [89258, 1]]},
+	{u: 12837, i: 24701, n: "Major Rune of the Pack", r: [[89271, 4], [74328, 25], [89216, 1]]},
+	{u: 12839, i: 38205, n: "Major Rune of Altruism", r: [[89271, 4], [24, 3], [89258, 1]]},
+	{u: 12840, i: 24690, n: "Major Rune of the Lich", r: [[89271, 4], [76491, 3], [89103, 1]]},
+	{u: 12845, i: 24724, n: "Minor Rune of Rata Sum", r: [[89271, 1], [24503, 5], [89103, 1]]},
+	{u: 12846, i: 24691, n: "Superior Rune of the Traveler", r: [[89271, 8], [24512, 5], [89216, 2], [19721, 5]], s: 89194},
+	{u: 12847, i: 24713, n: "Major Rune of Strength", r: [[89271, 4], [37897, 2], [89258, 1]]},
+	{u: 12854, i: 24685, n: "Minor Rune of the Afflicted", r: [[89271, 1], [74090, 1], [89103, 1]]},
+	{u: 12855, i: 24786, n: "Minor Rune of the Centaur", r: [[89271, 1], [24366, 1], [89216, 1]]},
+	{u: 12856, i: 24706, n: "Minor Rune of Mercy", r: [[89271, 1], [72504, 1], [89103, 1]]},
+	{u: 12857, i: 24765, n: "Superior Rune of Balthazar", r: [[89271, 12], [24508, 5], [89258, 1], [19721, 5]], s: 89149},
+	{u: 12860, i: 24704, n: "Major Rune of Infiltration", r: [[89271, 4], [24370, 3], [89216, 1]]},
+	{u: 12864, i: 24721, n: "Minor Rune of the Eagle", r: [[89271, 1], [66933, 5], [89103, 1]]},
+	{u: 12866, i: 24738, n: "Superior Rune of Scavenging", r: [[89271, 4], [72315, 3], [89216, 3], [19721, 5]], s: 89146},
+	{u: 12868, i: 24771, n: "Superior Rune of Melandru", r: [[89271, 8], [24515, 5], [19721, 5], [89258, 2]], s: 89192},
+	{u: 12870, i: 24699, n: "Superior Rune of the Dolyak", r: [[89271, 4], [74988, 3], [89258, 3], [19721, 5]], s: 89107},
+	{u: 12874, i: 24735, n: "Superior Rune of the Grove", r: [[89271, 4], [24520, 5], [89216, 3], [19721, 5]], s: 89261},
+	{u: 12875, i: 24764, n: "Major Rune of Balthazar", r: [[89271, 4], [24873, 5], [89258, 1]]},
+	{u: 12879, i: 24736, n: "Minor Rune of Scavenging", r: [[89271, 1], [72315, 1], [89216, 1]]},
+	{u: 12880, i: 24774, n: "Minor Rune of Lyssa", r: [[89271, 1], [24472, 5], [89103, 1]]},
+	{u: 12889, i: 24788, n: "Superior Rune of the Centaur", r: [[89271, 4], [24366, 5], [89216, 3], [19721, 5]], s: 89193},
+	{u: 12890, i: 24767, n: "Major Rune of Dwayna", r: [[89271, 4], [24876, 5], [89103, 1]]},
+	{u: 12891, i: 24778, n: "Major Rune of Grenth", r: [[89271, 4], [75654, 2], [89103, 1]]},
+	{u: 12892, i: 24740, n: "Major Rune of the Citadel", r: [[89271, 4], [72436, 2], [89258, 1]]},
+	{u: 12893, i: 24770, n: "Major Rune of Melandru", r: [[89271, 4], [24473, 5], [89258, 1]]},
+	{u: 12894, i: 24715, n: "Minor Rune of Rage", r: [[89271, 1], [37906, 1], [89216, 1]]},
+	{u: 12896, i: 24709, n: "Minor Rune of Vampirism", r: [[89271, 1], [74202, 10], [89258, 1]]},
+	{u: 12899, i: 24728, n: "Major Rune of Hoelbrak", r: [[89271, 4], [42006, 5], [89258, 1]]},
+	{u: 12902, i: 24775, n: "Major Rune of Lyssa", r: [[89271, 4], [24521, 5], [89103, 1]]},
+	{u: 12916, i: 24689, n: "Minor Rune of the Lich", r: [[89271, 1], [76491, 1], [89103, 1]]},
+	{u: 12918, i: 24726, n: "Superior Rune of the Rata Sum", r: [[89271, 8], [24510, 5], [89103, 2], [19721, 5]], s: 89154},
+	{u: 12919, i: 24776, n: "Superior Rune of Lyssa", r: [[89271, 4], [24522, 5], [89103, 3], [19721, 5]], s: 89155},
+	{u: 12922, i: 24769, n: "Minor Rune of Melandru", r: [[89271, 1], [24504, 5], [89258, 1]]},
+	{u: 12925, i: 38204, n: "Minor Rune of Altruism", r: [[89271, 1], [24, 1], [89258, 1]]},
+	{u: 12928, i: 24730, n: "Minor Rune of Divinity", r: [[89271, 1], [83103, 10], [89103, 1]]},
+	{u: 12929, i: 24708, n: "Superior Rune of Mercy", r: [[89271, 4], [72504, 3], [89103, 3], [19721, 5]], s: 89222},
+	{u: 12930, i: 24779, n: "Superior Rune of Grenth", r: [[89271, 12], [75654, 3], [89103, 1], [19721, 5]], s: 89129},
+	{u: 12932, i: 24739, n: "Minor Rune of the Citadel", r: [[89271, 1], [72436, 1], [89258, 1]]},
+	{u: 12934, i: 24694, n: "Minor Rune of the Flock", r: [[89271, 1], [24321, 1], [89103, 1]]},
+	{u: 12936, i: 24723, n: "Superior Rune of the Eagle", r: [[89271, 8], [66933, 25], [89103, 2], [19721, 5]], s: 89272},
+	{u: 12938, i: 24698, n: "Major Rune of the Dolyak", r: [[89271, 4], [74988, 2], [89258, 1]]},
+	{u: 12939, i: 24714, n: "Superior Rune of Strength", r: [[89271, 12], [37897, 3], [89258, 1], [19721, 5]], s: 89233},
+	{u: 12940, i: 24696, n: "Superior Rune of the Flock", r: [[89271, 12], [76179, 1], [19721, 5], [89103, 1]], s: 89128},
+	{u: 12941, i: 24710, n: "Major Rune of Vampirism", r: [[89271, 4], [74202, 25], [89258, 1]]},
+	{u: 12942, i: 24766, n: "Minor Rune of Dwayna", r: [[89271, 1], [24470, 5], [89103, 1]]},
+	{u: 12945, i: 24727, n: "Minor Rune of Hoelbrak", r: [[89271, 1], [24527, 1], [89258, 1]]},
+	{u: 12946, i: 24686, n: "Major Rune of the Afflicted", r: [[89271, 4], [74090, 5], [89103, 1]]},
+	{u: 12948, i: 24768, n: "Superior Rune of Dwayna", r: [[89271, 12], [24516, 5], [89103, 1], [19721, 5]], s: 89109},
+	{u: 12949, i: 24787, n: "Major Rune of the Centaur", r: [[89271, 4], [24366, 3], [89216, 1]]},
+	{u: 12951, i: 24688, n: "Superior Rune of the Lich", r: [[89271, 12], [76491, 5], [89103, 1], [19721, 5]], s: 89180},
+	{u: 12953, i: 24693, n: "Minor Rune of the Traveler", r: [[89271, 1], [24870, 5], [89216, 1]]},
+	{u: 12955, i: 24711, n: "Superior Rune of Vampirism", r: [[89271, 12], [75322, 1], [89258, 1], [19721, 5]], s: 89145},
+	{u: 12957, i: 68437, n: "Superior Rune of Snowfall", r: [[89271, 8], [24, 5], [89103, 2], [19721, 5]], s: 89178},
+	{u: 12958, i: 24732, n: "Superior Rune of Divinity", r: [[89271, 8], [83103, 50], [19721, 5], [89103, 2]], s: 89153},
+	{u: 12960, i: 24737, n: "Major Rune of Scavenging", r: [[89271, 4], [72315, 2], [89216, 1]]},
+	{u: 12961, i: 24763, n: "Minor Rune of Balthazar", r: [[89271, 1], [24889, 5], [89258, 1]]},
+	{u: 12962, i: 24797, n: "Superior Rune of the Flame Legion", r: [[89271, 8], [71069, 50], [89258, 2], [19721, 5]], s: 89232},
+	{u: 12963, i: 24777, n: "Minor Rune of Grenth", r: [[89271, 1], [75654, 1], [89103, 1]]},
+	{u: 12968, i: 24734, n: "Major Rune of the Grove", r: [[89271, 4], [24872, 5], [89216, 1]]},
+	{u: 12969, i: 24712, n: "Minor Rune of Strength", r: [[89271, 1], [37897, 1], [89258, 1]]},
+	{u: 12970, i: 24697, n: "Minor Rune of the Dolyak", r: [[89271, 1], [74988, 1], [89258, 1]]},
+	{u: 12971, i: 24729, n: "Superior Rune of Hoelbrak", r: [[89271, 4], [42010, 5], [19721, 5], [89258, 3]], s: 89269},
+	{u: 12973, i: 24700, n: "Minor Rune of the Pack", r: [[89271, 1], [74328, 10], [89216, 1]]},
+	{u: 12978, i: 24707, n: "Major Rune of Mercy", r: [[89271, 4], [72504, 2], [89103, 1]]},
+	{u: 12981, i: 24741, n: "Superior Rune of the Citadel", r: [[89271, 8], [72436, 3], [89258, 2], [19721, 5]], s: 89163},
+	{u: 12983, i: 24705, n: "Minor Rune of Infiltration", r: [[89271, 1], [24370, 1], [89216, 1]]},
+	{u: 12986, i: 24717, n: "Superior Rune of Rage", r: [[89271, 8], [37906, 3], [89216, 2], [19721, 5]], s: 89221},
+	{u: 12987, i: 24796, n: "Major Rune of the Flame Legion", r: [[89271, 4], [71069, 25], [89258, 1]]},
+	{u: 12992, i: 24687, n: "Superior Rune of the Afflicted", r: [[89271, 8], [70957, 1], [89103, 2], [19721, 5]], s: 89102},
+	{u: 12995, i: 24703, n: "Superior Rune of Infiltration", r: [[89271, 4], [24370, 5], [89216, 3], [19721, 5]], s: 89143},
+	{u: 13003, i: 24702, n: "Superior Rune of the Pack", r: [[89271, 4], [70851, 1], [89216, 3], [19721, 5]], s: 89087},
+	{u: 13005, i: 24692, n: "Major Rune of the Traveler", r: [[89271, 4], [24511, 5], [89216, 1]]},
+	{u: 13131, i: 89999, n: "Superior Rune of Fireworks", r: [[89271, 4], [77699, 10], [89103, 3], [19721, 5]], s: 90000}
 ],
 Armorsmith_LegendaryComponent: [
 	{u: 10077, i: 76502, n: "Second Order Mist Frame", r: [[19746, 25], [19736, 75], [12988, 50]]},
@@ -4124,7 +4409,9 @@ Armorsmith_Insignia: [
 	{u: 12579, i: 86392, n: "Tixx's Giver's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [38162, 1]], s: 86496},
 	{u: 12625, i: 86585, n: "Bringer's Intricate Gossamer Insignia", r: [[76614, 5], [86601, 100], [19721, 5]], s: 86643, b: 86643},
 	{u: 12630, i: 86678, n: "Giftbringer's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [86585, 1]], s: 86699},
-	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875}
+	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875},
+	{u: 13047, i: 89758, n: "Diviner's Intricate Gossamer Insignia", r: [[76614, 5], [89537, 25], [19721, 5], [89696, 3]], s: 89727},
+	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533}
 ],
 Armorsmith_Bag: [
 	{u: 499, i: 9420, n: "8 Slot Reinforced Bronze Box", r: [[19679, 10]]},
@@ -4511,7 +4798,10 @@ Armorsmith_Helm: [
 	{u: 12763, i: 88463, n: "Ruka's Metal Breather", r: [[49523, 1], [74808, 1], [72689, 1], [70548, 1]], s: 88398, b: 88398},
 	{u: 12764, i: 88445, n: "Maklain's Metal Breather", r: [[49523, 1], [76653, 1], [72689, 1], [70548, 1]], s: 88468, b: 88468},
 	{u: 12776, i: 88376, n: "Yassith's Metal Breather", r: [[49523, 1], [76244, 1], [72689, 1], [70548, 1]], s: 88393, b: 88393},
-	{u: 12799, i: 88690, n: "Grieving Elegy Helm", r: [[85039, 1], [13167, 1], [13166, 1]]}
+	{u: 12799, i: 88690, n: "Grieving Elegy Helm", r: [[85039, 1], [13167, 1], [13166, 1]]},
+	{u: 13042, i: 89924, n: "Steelstar's Visor", r: [[49523, 1], [89563, 1], [45874, 1], [45880, 1]], s: 89986},
+	{u: 13062, i: 89877, n: "Diviner's Draconic Helm", r: [[89758, 1], [13167, 1], [13166, 1]], s: 89990},
+	{u: 13142, i: 90821, n: "Diviner's Mist Shard Helm", r: [[90783, 25], [13167, 1], [13166, 1]], s: 90556}
 ],
 Armorsmith_Shoulders: [
 	{u: 246, i: 3993, n: "Caer Pauldrons", r: [[24363, 3], [19681, 3], [19744, 3]], s: 9397},
@@ -4703,7 +4993,10 @@ Armorsmith_Shoulders: [
 	{u: 12637, i: 86541, n: "Tixx's Pauldrons", r: [[49523, 1], [86392, 1], [45876, 1], [45882, 1]], s: 86655},
 	{u: 12720, i: 87963, n: "Plaguedoctor's Draconic Pauldrons", r: [[88011, 1], [13160, 1], [13170, 1]], s: 87987},
 	{u: 12736, i: 88073, n: "Nerashi's Pauldrons", r: [[49523, 1], [88099, 1], [45876, 1], [45882, 1]], s: 87651},
-	{u: 12792, i: 88836, n: "Grieving Elegy Pauldrons", r: [[85039, 1], [13160, 1], [13170, 1]]}
+	{u: 12792, i: 88836, n: "Grieving Elegy Pauldrons", r: [[85039, 1], [13160, 1], [13170, 1]]},
+	{u: 13033, i: 89661, n: "Diviner's Draconic Pauldrons", r: [[89758, 1], [13160, 1], [13170, 1]], s: 89453},
+	{u: 13070, i: 89785, n: "Steelstar's Pauldrons", r: [[49523, 1], [89563, 1], [45876, 1], [45882, 1]], s: 89463},
+	{u: 13202, i: 90938, n: "Diviner's Mist Shard Pauldrons", r: [[90783, 25], [13160, 1], [13170, 1]], s: 90875}
 ],
 Armorsmith_Coat: [
 	{u: 249, i: 4236, n: "Iron Legion's Breastplate", r: [[19679, 8], [19797, 1], [13105, 2]], s: 9517},
@@ -4896,7 +5189,10 @@ Armorsmith_Coat: [
 	{u: 12569, i: 86510, n: "Giftbringer's Breastplate", r: [[46746, 1], [86678, 1], [45872, 1], [45878, 1]], s: 86626},
 	{u: 12708, i: 87650, n: "Nerashi's Breastplate", r: [[46746, 1], [88099, 1], [45872, 1], [45878, 1]], s: 87768},
 	{u: 12734, i: 88074, n: "Plaguedoctor's Draconic Coat", r: [[88011, 1], [13163, 1], [13162, 1]], s: 87968},
-	{u: 12817, i: 88568, n: "Grieving Elegy Plate", r: [[85039, 1], [13163, 1], [13162, 1]]}
+	{u: 12817, i: 88568, n: "Grieving Elegy Plate", r: [[85039, 1], [13163, 1], [13162, 1]]},
+	{u: 13115, i: 89733, n: "Steelstar's Breastplate", r: [[46746, 1], [89563, 1], [45872, 1], [45878, 1]], s: 89440},
+	{u: 13116, i: 89857, n: "Diviner's Draconic Coat", r: [[89758, 1], [13163, 1], [13162, 1]], s: 89701},
+	{u: 13211, i: 90471, n: "Diviner's Mist Shard Plate", r: [[90783, 25], [13163, 1], [13162, 1]], s: 90192}
 ],
 Armorsmith_Gloves: [
 	{u: 248, i: 4907, n: "Darkvine Gauntlets", r: [[24278, 1], [19679, 1], [19720, 1]], s: 9407},
@@ -5090,7 +5386,10 @@ Armorsmith_Gloves: [
 	{u: 12594, i: 86703, n: "Giftbringer's Warfist", r: [[49523, 1], [86678, 1], [45873, 1], [45879, 1]], s: 86426},
 	{u: 12672, i: 87887, n: "Nerashi's Warfists", r: [[49523, 1], [88099, 1], [45873, 1], [45879, 1]], s: 87727},
 	{u: 12685, i: 87769, n: "Plaguedoctor's Draconic Gauntlets", r: [[88011, 1], [13165, 1], [13164, 1]], s: 88104},
-	{u: 12816, i: 88829, n: "Grieving Elegy Gauntlets", r: [[85039, 1], [13165, 1], [13164, 1]]}
+	{u: 12816, i: 88829, n: "Grieving Elegy Gauntlets", r: [[85039, 1], [13165, 1], [13164, 1]]},
+	{u: 13087, i: 89822, n: "Steelstar's Warfists", r: [[49523, 1], [89563, 1], [45873, 1], [45879, 1]], s: 89769},
+	{u: 13098, i: 89491, n: "Diviner's Draconic Gauntlets", r: [[89758, 1], [13165, 1], [13164, 1]], s: 89652},
+	{u: 13166, i: 90406, n: "Diviner's Mist Shard Gauntlets", r: [[90783, 25], [13165, 1], [13164, 1]], s: 90218}
 ],
 Armorsmith_Leggings: [
 	{u: 252, i: 4239, n: "Iron Legion's Leggings", r: [[19679, 8], [19797, 1]], s: 9519},
@@ -5283,7 +5582,10 @@ Armorsmith_Leggings: [
 	{u: 12626, i: 86508, n: "Bringer's Draconic Legs", r: [[86585, 1], [13169, 1], [13168, 1]]},
 	{u: 12718, i: 88003, n: "Nerashi's Tassets", r: [[49523, 1], [88099, 1], [45875, 1], [45881, 1]], s: 87625},
 	{u: 12726, i: 87792, n: "Plaguedoctor's Draconic Legs", r: [[88011, 1], [13169, 1], [13168, 1]], s: 87836},
-	{u: 12813, i: 88492, n: "Grieving Elegy Tassets", r: [[85039, 1], [13169, 1], [13168, 1]]}
+	{u: 12813, i: 88492, n: "Grieving Elegy Tassets", r: [[85039, 1], [13169, 1], [13168, 1]]},
+	{u: 13065, i: 89460, n: "Steelstar's Tassets", r: [[49523, 1], [89563, 1], [45875, 1], [45881, 1]], s: 89497},
+	{u: 13102, i: 89721, n: "Diviner's Draconic Legs", r: [[89758, 1], [13169, 1], [13168, 1]], s: 89535},
+	{u: 13150, i: 90639, n: "Diviner's Mist Shard Tassets", r: [[90783, 25], [13169, 1], [13168, 1]], s: 90221}
 ],
 Armorsmith_Boots: [
 	{u: 247, i: 4235, n: "Iron Legion's Boots", r: [[19679, 4], [19797, 1]], s: 9516},
@@ -5476,7 +5778,10 @@ Armorsmith_Boots: [
 	{u: 12631, i: 86411, n: "Giftbringer's Greaves", r: [[49523, 1], [86678, 1], [45871, 1], [45877, 1]], s: 86669},
 	{u: 12684, i: 87742, n: "Nerashi's Greaves", r: [[49523, 1], [88099, 1], [45871, 1], [45877, 1]], s: 87794},
 	{u: 12686, i: 87713, n: "Plaguedoctor's Draconic Boots", r: [[88011, 1], [13159, 1], [13161, 1]], s: 88043},
-	{u: 12807, i: 88570, n: "Grieving Elegy Greaves", r: [[85039, 1], [13159, 1], [13161, 1]], s: 88489}
+	{u: 12807, i: 88570, n: "Grieving Elegy Greaves", r: [[85039, 1], [13159, 1], [13161, 1]], s: 88489},
+	{u: 13012, i: 89853, n: "Diviner's Draconic Boots", r: [[89758, 1], [13159, 1], [13161, 1]], s: 89511},
+	{u: 13092, i: 89656, n: "Steelstar's Greaves", r: [[49523, 1], [89563, 1], [45871, 1], [45877, 1]], s: 89919},
+	{u: 13180, i: 90633, n: "Diviner's Mist Shard Greaves", r: [[90783, 25], [13159, 1], [13161, 1]], s: 90905}
 ],
 Artificer_Refinement: [
 	{u: 1, i: 19713, n: "Soft Wood Plank", r: [[19726, 2]]},
@@ -5532,7 +5837,8 @@ Artificer_Refinement: [
 	{u: 12026, i: 80774, n: "Orb of Natural Essence", r: [[70957, 1], [74988, 2], [37907, 3], [68942, 5]]},
 	{u: 12032, i: 80791, n: "Composite Wood Board", r: [[19713, 10], [19714, 5], [19711, 10], [46744, 1]]},
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
-	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283}
+	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283},
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
 ],
 Artificer_Component: [
 	{u: 3835, i: 12971, n: "Green Staff Shaft", r: [[19710, 4]]},
@@ -5677,7 +5983,99 @@ Artificer_UpgradeComponent: [
 	{u: 9798, i: 67343, n: "Superior Sigil of Incapacitation", r: [[19685, 1], [24283, 2], [19721, 1], [24358, 2]], s: 67179, b: 67179},
 	{u: 9902, i: 67913, n: "Superior Sigil of Blight", r: [[19685, 1], [67832, 1], [19721, 1], [24335, 1]], s: 68483, b: 68483},
 	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177},
-	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902}
+	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902},
+	{u: 7871, i: 49445, n: "+22 Agony Infusion", r: [[49444, 2], [46747, 1]]},
+	{u: 12825, i: 24547, n: "Minor Sigil of Fire", r: [[89271, 1], [24526, 5], [89182, 1]]},
+	{u: 12826, i: 24665, n: "Major Sigil of Demon Slaying", r: [[89271, 5], [72504, 2], [89182, 1]]},
+	{u: 12830, i: 24578, n: "Superior Sigil of Corruption", r: [[89271, 10], [70842, 1], [89141, 1], [19721, 10]], s: 89255},
+	{u: 12834, i: 24546, n: "Major Sigil of Fire", r: [[89271, 5], [24873, 5], [89182, 1]]},
+	{u: 12836, i: 24580, n: "Superior Sigil of Perception", r: [[89271, 10], [70957, 1], [89141, 2], [19721, 10]], s: 89205},
+	{u: 12838, i: 24592, n: "Superior Sigil of Stamina", r: [[89271, 5], [24351, 10], [89098, 3], [19721, 10]], s: 89187},
+	{u: 12841, i: 24596, n: "Major Sigil of Hydromancy", r: [[89271, 5], [71069, 25], [89098, 1]]},
+	{u: 12842, i: 24645, n: "Superior Sigil of Centaur Slaying", r: [[89271, 10], [19737, 10], [89182, 2], [19721, 10]], s: 89229},
+	{u: 12843, i: 24550, n: "Major Sigil of Water", r: [[89271, 5], [24475, 5], [89098, 1]]},
+	{u: 12844, i: 24615, n: "Superior Sigil of Force", r: [[89271, 5], [24370, 5], [89141, 3], [19721, 10]], s: 89100},
+	{u: 12848, i: 24606, n: "Major Sigil of Energy", r: [[89271, 5], [83103, 50], [89098, 1]]},
+	{u: 12849, i: 24605, n: "Superior Sigil of Geomancy", r: [[89271, 10], [76491, 5], [89182, 2], [19721, 10]], s: 89122},
+	{u: 12850, i: 24553, n: "Major Sigil of Air", r: [[89271, 5], [24519, 5], [89182, 1]]},
+	{u: 12851, i: 24603, n: "Minor Sigil of Geomancy", r: [[89271, 1], [76491, 1], [89182, 1]]},
+	{u: 12852, i: 24636, n: "Superior Sigil of Debility", r: [[89271, 10], [74988, 10], [89098, 2], [19721, 10]], s: 89116},
+	{u: 12858, i: 24575, n: "Superior Sigil of Bloodlust", r: [[89271, 10], [24295, 10], [89141, 2], [19721, 10]], s: 89123},
+	{u: 12859, i: 24655, n: "Superior Sigil of Ogre Slaying", r: [[89271, 5], [19685, 10], [89182, 3], [19721, 10]], s: 89165},
+	{u: 12861, i: 24625, n: "Minor Sigil of Hobbling", r: [[89271, 1], [72315, 1], [89141, 1]]},
+	{u: 12862, i: 24573, n: "Minor Sigil of Bloodlust", r: [[89271, 1], [24291, 10], [89141, 1]]},
+	{u: 12865, i: 24572, n: "Superior Sigil of Nullification", r: [[89271, 10], [24300, 10], [89098, 2], [19721, 10]], s: 89259},
+	{u: 12867, i: 24554, n: "Superior Sigil of Air", r: [[89271, 15], [24520, 5], [89182, 1], [19721, 10]], s: 89112},
+	{u: 12869, i: 24646, n: "Minor Sigil of Grawl Slaying", r: [[89271, 1], [24366, 1], [89182, 1]]},
+	{u: 12871, i: 24610, n: "Minor Sigil of Agony", r: [[89271, 1], [24527, 5], [89141, 1]]},
+	{u: 12872, i: 24616, n: "Minor Sigil of Accuracy", r: [[89271, 1], [74328, 10], [89141, 1]]},
+	{u: 12873, i: 24593, n: "Major Sigil of Restoration", r: [[89271, 5], [24874, 5], [89098, 1]]},
+	{u: 12876, i: 24644, n: "Major Sigil of Centaur Slaying", r: [[89271, 5], [19736, 10], [89182, 1]]},
+	{u: 12877, i: 24659, n: "Major Sigil of Serpent Slaying", r: [[89271, 5], [24281, 10], [89182, 1]]},
+	{u: 12878, i: 24570, n: "Superior Sigil of Blood", r: [[89271, 10], [75322, 1], [89098, 2], [19721, 10]], s: 89176},
+	{u: 12881, i: 24582, n: "Superior Sigil of Life", r: [[89271, 5], [24289, 10], [89141, 3], [19721, 10]], s: 89173},
+	{u: 12882, i: 24594, n: "Superior Sigil of Restoration", r: [[89271, 5], [76179, 1], [89098, 3], [19721, 10]], s: 89130},
+	{u: 12884, i: 24556, n: "Major Sigil of Ice", r: [[89271, 5], [42006, 5], [89098, 1]]},
+	{u: 12885, i: 24551, n: "Superior Sigil of Water", r: [[89271, 15], [24516, 5], [89098, 1], [19721, 10]], s: 89197},
+	{u: 12886, i: 24623, n: "Major Sigil of Smoldering", r: [[89271, 5], [66933, 25], [89141, 1]]},
+	{u: 12887, i: 24617, n: "Major Sigil of Accuracy", r: [[89271, 5], [74328, 25], [89141, 1]]},
+	{u: 12888, i: 24626, n: "Major Sigil of Hobbling", r: [[89271, 5], [72315, 3], [89141, 1]]},
+	{u: 12895, i: 24600, n: "Superior Sigil of Intelligence", r: [[89271, 10], [82678, 1], [89141, 2], [19721, 10]], s: 89111},
+	{u: 12897, i: 24643, n: "Minor Sigil of Centaur Slaying", r: [[89271, 1], [19733, 10], [89182, 1]]},
+	{u: 12898, i: 24549, n: "Minor Sigil of Water", r: [[89271, 1], [24503, 5], [89098, 1]]},
+	{u: 12900, i: 24598, n: "Major Sigil of Leeching", r: [[89271, 5], [24509, 5], [89141, 1]]},
+	{u: 12901, i: 68436, n: "Superior Sigil of Mischief", r: [[89271, 10], [86601, 24], [89141, 2], [19721, 10]], s: 89137},
+	{u: 12905, i: 24611, n: "Major Sigil of Agony", r: [[89271, 5], [72436, 3], [89141, 1]]},
+	{u: 12906, i: 24619, n: "Minor Sigil of Peril", r: [[89271, 1], [50025, 1], [89141, 1]]},
+	{u: 12907, i: 24568, n: "Minor Sigil of Blood", r: [[89271, 1], [74202, 10], [89098, 1]]},
+	{u: 12908, i: 24620, n: "Major Sigil of Peril", r: [[89271, 5], [50025, 3], [89141, 1]]},
+	{u: 12909, i: 24614, n: "Major Sigil of Force", r: [[89271, 5], [24370, 3], [89141, 1]]},
+	{u: 12910, i: 24574, n: "Major Sigil of Bloodlust", r: [[89271, 5], [24293, 10], [89141, 1]]},
+	{u: 12911, i: 24618, n: "Superior Sigil of Accuracy", r: [[89271, 10], [70851, 1], [89141, 2], [19721, 10]], s: 89243},
+	{u: 12912, i: 68434, n: "Major Sigil of Mischief", r: [[89271, 5], [86601, 12], [89141, 1]]},
+	{u: 12913, i: 24581, n: "Major Sigil of Life", r: [[89271, 5], [24287, 10], [89141, 1]]},
+	{u: 12914, i: 24629, n: "Major Sigil of Chilling", r: [[89271, 5], [24345, 10], [89141, 1]]},
+	{u: 12917, i: 24666, n: "Minor Sigil of Demon Slaying", r: [[89271, 1], [72504, 1], [89182, 1]]},
+	{u: 12920, i: 24561, n: "Superior Sigil of Rage", r: [[89271, 10], [37906, 5], [89141, 1], [19721, 10]], s: 89147},
+	{u: 12921, i: 24647, n: "Major Sigil of Grawl Slaying", r: [[89271, 5], [24366, 5], [89182, 1]]},
+	{u: 12923, i: 24555, n: "Superior Sigil of Ice", r: [[89271, 5], [42010, 5], [89098, 3], [19721, 10]], s: 89191},
+	{u: 12924, i: 24624, n: "Superior Sigil of Smoldering", r: [[89271, 5], [66933, 50], [89141, 3], [19721, 10]], s: 89139},
+	{u: 12926, i: 24660, n: "Minor Sigil of Serpent Slaying", r: [[89271, 1], [24279, 10], [89182, 1]]},
+	{u: 12927, i: 24577, n: "Major Sigil of Corruption", r: [[89271, 5], [66932, 1], [89141, 1]]},
+	{u: 12931, i: 24627, n: "Superior Sigil of Hobbling", r: [[89271, 15], [72315, 5], [89141, 1], [19721, 10]], s: 89135},
+	{u: 12933, i: 68439, n: "Minor Sigil of Mischief", r: [[89271, 1], [86601, 4], [89141, 1]]},
+	{u: 12935, i: 24576, n: "Minor Sigil of Corruption", r: [[89271, 1], [66929, 1], [89141, 1]]},
+	{u: 12937, i: 24571, n: "Superior Sigil of Purity", r: [[89271, 15], [24512, 5], [89098, 1], [19721, 10]], s: 89270},
+	{u: 12943, i: 24599, n: "Superior Sigil of Leeching", r: [[89271, 10], [24510, 5], [19721, 10], [89141, 2]], s: 89226},
+	{u: 12944, i: 24612, n: "Superior Sigil of Agony", r: [[89271, 10], [72436, 5], [89141, 2], [19721, 10]], s: 89246},
+	{u: 12952, i: 24621, n: "Superior Sigil of Peril", r: [[89271, 10], [50025, 5], [89141, 2], [19721, 10]], s: 89166},
+	{u: 12954, i: 24607, n: "Superior Sigil of Energy", r: [[89271, 5], [83103, 100], [89098, 3], [19721, 10]], s: 89249},
+	{u: 12964, i: 24634, n: "Minor Sigil of Debility", r: [[89271, 1], [74988, 1], [89098, 1]]},
+	{u: 12966, i: 24583, n: "Superior Sigil of Demon Summoning", r: [[89271, 10], [75654, 3], [89182, 2], [19721, 10]], s: 89254},
+	{u: 12967, i: 24648, n: "Superior Sigil of Grawl Slaying", r: [[89271, 15], [24366, 10], [89182, 1], [19721, 10]], s: 89196},
+	{u: 12972, i: 24552, n: "Minor Sigil of Air", r: [[89271, 1], [24472, 5], [89182, 1]]},
+	{u: 12974, i: 24630, n: "Superior Sigil of Chilling", r: [[89271, 5], [24358, 10], [89141, 3], [19721, 10]], s: 89150},
+	{u: 12975, i: 24569, n: "Major Sigil of Blood", r: [[89271, 5], [74202, 25], [89098, 1]]},
+	{u: 12976, i: 24595, n: "Minor Sigil of Hydromancy", r: [[89271, 1], [71069, 10], [89098, 1]]},
+	{u: 12977, i: 24557, n: "Minor Sigil of Ice", r: [[89271, 1], [24507, 5], [89098, 1]]},
+	{u: 12979, i: 24656, n: "Major Sigil of Ogre Slaying", r: [[89271, 5], [19681, 10], [89182, 1]]},
+	{u: 12980, i: 24613, n: "Minor Sigil of Force", r: [[89271, 1], [24370, 1], [89141, 1]]},
+	{u: 12982, i: 24633, n: "Major Sigil of Venom", r: [[89271, 5], [24473, 5], [89141, 1]]},
+	{u: 12984, i: 24631, n: "Minor Sigil of Venom", r: [[89271, 1], [24504, 5], [89141, 1]]},
+	{u: 12985, i: 24658, n: "Superior Sigil of Serpent Slaying", r: [[89271, 15], [24283, 10], [89182, 1], [19721, 10]], s: 89213},
+	{u: 12988, i: 24622, n: "Minor Sigil of Smoldering", r: [[89271, 1], [66933, 10], [89141, 1]]},
+	{u: 12989, i: 24597, n: "Superior Sigil of Hydromancy", r: [[89271, 10], [71069, 50], [89098, 2], [19721, 10]], s: 89262},
+	{u: 12990, i: 24664, n: "Superior Sigil of Demon Slaying", r: [[89271, 5], [72504, 3], [89182, 3], [19721, 10]], s: 89251},
+	{u: 12991, i: 24632, n: "Superior Sigil of Venom", r: [[89271, 15], [24515, 5], [89141, 1], [19721, 10]], s: 89250},
+	{u: 12994, i: 24558, n: "Minor Sigil of Earth", r: [[89271, 1], [24506, 5], [89182, 1]]},
+	{u: 12996, i: 24657, n: "Minor Sigil of Ogre Slaying", r: [[89271, 1], [19683, 10], [89182, 1]]},
+	{u: 12997, i: 24579, n: "Major Sigil of Perception", r: [[89271, 5], [74090, 5], [89141, 1]]},
+	{u: 12998, i: 24559, n: "Major Sigil of Earth", r: [[89271, 5], [24521, 5], [89182, 1]]},
+	{u: 12999, i: 24602, n: "Major Sigil of Battle", r: [[89271, 5], [19744, 10], [89098, 1]]},
+	{u: 13000, i: 24601, n: "Superior Sigil of Battle", r: [[89271, 5], [19746, 10], [19721, 10], [89098, 3]], s: 89215},
+	{u: 13001, i: 24548, n: "Superior Sigil of Fire", r: [[89271, 10], [24508, 5], [19721, 10], [89182, 2]], s: 89185},
+	{u: 13002, i: 24604, n: "Major Sigil of Geomancy", r: [[89271, 5], [76491, 3], [89182, 1]]},
+	{u: 13004, i: 24560, n: "Superior Sigil of Earth", r: [[89271, 5], [24522, 5], [89182, 3], [19721, 10]], s: 89248}
 ],
 Artificer_LegendaryComponent: [
 	{u: 10042, i: 76000, n: "Jar of Yellow Paint", r: [[76076, 1], [75288, 1], [73596, 10], [71952, 30]], s: 75114},
@@ -5947,7 +6345,9 @@ Artificer_Inscription: [
 	{u: 12576, i: 86685, n: "Giver's Orichalcum-Imbued Inscription", r: [[12988, 5], [86601, 100], [19721, 5]], s: 86734, b: 86734},
 	{u: 12627, i: 86532, n: "Giftbringer's Inscription", r: [[46681, 10], [45832, 1], [38434, 1], [24277, 10]], s: 86696},
 	{u: 12671, i: 87505, n: "Revenant's Inscription", r: [[46681, 10], [71453, 1], [19721, 30], [69953, 1]]},
-	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959}
+	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959},
+	{u: 13035, i: 89735, n: "Diviner's Orichalcum-Imbued Inscription", r: [[12988, 5], [89537, 50], [19721, 5], [89696, 3]], s: 89756},
+	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514}
 ],
 Artificer_Potion: [
 	{u: 3869, i: 8640, n: "Grawl Snowman Potion", r: [[24277, 3], [24358, 3], [24320, 1]], s: 9549},
@@ -6072,7 +6472,10 @@ Artificer_Potion: [
 	{u: 7302, i: 45027, n: "Twisted Watchwork Portal Device", r: [[44941, 25], [36041, 25], [43319, 25], [38135, 25]], s: 45028, b: 45028},
 	{u: 10163, i: 71827, n: "Greater Potion of Auric Attunement", r: [[75024, 3], [73034, 1]]},
 	{u: 10703, i: 71264, n: "Greater Potion of Verdant Attunement", r: [[71627, 3], [73034, 1]]},
-	{u: 11029, i: 74653, n: "Greater Potion of Tangled Attunement", r: [[71207, 3], [73034, 1]]}
+	{u: 11029, i: 74653, n: "Greater Potion of Tangled Attunement", r: [[71207, 3], [73034, 1]]},
+	{u: 13236, i: 91350, n: "Powerful Potion of Mordrem Slaying", r: [[24277, 1], [74202, 1], [70842, 1], [12156, 1]], s: 91277},
+	{u: 13238, i: 50082, n: "Powerful Potion of Slaying Scarlet's Armies", r: [[44941, 1], [24357, 1], [19701, 1], [12156, 1]], s: 91341},
+	{u: 13239, i: 91289, n: "Powerful Potion of Branded Slaying", r: [[24277, 1], [24357, 1], [24330, 1], [12156, 1]], s: 91303}
 ],
 Artificer_Consumable: [
 	{u: 4438, i: 9476, n: "Master Tuning Crystal", r: [[24277, 5]]},
@@ -6326,7 +6729,11 @@ Artificer_Scepter: [
 	{u: 12239, i: 83672, n: "Sunspear Rod", r: [[83926, 1], [74825, 1], [71861, 1]], s: 82978},
 	{u: 12532, i: 86530, n: "Giftbringer's Wand", r: [[86532, 1], [45885, 1], [45886, 1], [46746, 1]], s: 86547},
 	{u: 12692, i: 87721, n: "Plaguedoctor's Pearl Rod", r: [[87809, 1], [13255, 1], [12976, 1]], s: 87894},
-	{u: 12730, i: 87857, n: "Nerashi's Wand", r: [[87638, 1], [45885, 1], [45886, 1], [46746, 1]], s: 88081}
+	{u: 12730, i: 87857, n: "Nerashi's Wand", r: [[87638, 1], [45885, 1], [45886, 1], [46746, 1]], s: 88081},
+	{u: 13025, i: 89946, n: "Diviner's Pearl Rod", r: [[89735, 1], [13255, 1], [12976, 1]], s: 89475},
+	{u: 13040, i: 89495, n: "Heroic Dragonsblood Scepter", r: [[89489, 1], [89442, 1], [45885, 1], [45886, 1]]},
+	{u: 13069, i: 89683, n: "Dragonsblood Scepter", r: [[89537, 10], [89735, 1], [13255, 1], [12976, 1]], s: 89801},
+	{u: 13111, i: 89484, n: "Steelstar's Wand", r: [[89489, 1], [45885, 1], [45886, 1], [46746, 1]], s: 89907}
 ],
 Artificer_Focus: [
 	{u: 3868, i: 29989, n: "Charr Focus", r: [[19710, 3], [19767, 1]], s: 9532},
@@ -6542,7 +6949,12 @@ Artificer_Focus: [
 	{u: 12548, i: 86589, n: "Giver's Pearl Conch", r: [[86685, 1], [13243, 1], [12982, 1]]},
 	{u: 12082, i: 83459, n: "Mordant Key", r: [[83974, 1], [75123, 1], [75049, 1]], s: 84021},
 	{u: 12592, i: 86542, n: "Giftbringer's Artifact", r: [[86532, 1], [45883, 1], [45884, 1], [46746, 1]], s: 86625},
-	{u: 12677, i: 87628, n: "Plaguedoctor's Pearl Conch", r: [[87809, 1], [13243, 1], [12982, 1]], s: 87917}
+	{u: 12677, i: 87628, n: "Plaguedoctor's Pearl Conch", r: [[87809, 1], [13243, 1], [12982, 1]], s: 87917},
+	{u: 12709, i: 87592, n: "Nerashi's Artifact", r: [[87638, 1], [45883, 1], [45884, 1], [46746, 1]], s: 87732},
+	{u: 13017, i: 89821, n: "Heroic Dragonsblood Focus", r: [[89489, 1], [89565, 1], [45883, 1], [45884, 1]]},
+	{u: 13027, i: 89771, n: "Dragonsblood Focus", r: [[89537, 10], [89735, 1], [13243, 1], [12982, 1]], s: 89653},
+	{u: 13103, i: 89600, n: "Diviner's Pearl Conch", r: [[89735, 1], [13243, 1], [12982, 1]], s: 89554},
+	{u: 13126, i: 89846, n: "Steelstar's Artifact", r: [[89489, 1], [45883, 1], [45884, 1], [46746, 1]], s: 89609}
 ],
 Artificer_Staff: [
 	{u: 3840, i: 29451, n: "Expermentor's Collection Staff", r: [[19839, 1], [13264, 1], [12972, 1]], s: 9392},
@@ -6759,7 +7171,11 @@ Artificer_Staff: [
 	{u: 12298, i: 84085, n: "Sunspear Standard", r: [[83926, 1], [75698, 1], [71312, 1]], s: 83814},
 	{u: 12559, i: 86610, n: "Giftbringer's Spire", r: [[86532, 1], [45887, 1], [45888, 1], [46746, 1]], s: 86482},
 	{u: 12674, i: 87700, n: "Plaguedoctor's Pearl Quarterstaff", r: [[87809, 1], [13261, 1], [12973, 1]], s: 88080},
-	{u: 12753, i: 87785, n: "Nerashi's Spire", r: [[87638, 1], [45887, 1], [45888, 1], [46746, 1]], s: 87942}
+	{u: 12753, i: 87785, n: "Nerashi's Spire", r: [[87638, 1], [45887, 1], [45888, 1], [46746, 1]], s: 87942},
+	{u: 13019, i: 89945, n: "Steelstar's Spire", r: [[89489, 1], [45887, 1], [45888, 1], [46746, 1]], s: 89729},
+	{u: 13080, i: 89794, n: "Diviner's Pearl Quarterstaff", r: [[89735, 1], [13261, 1], [12973, 1]], s: 89559},
+	{u: 13083, i: 89873, n: "Dragonsblood Staff", r: [[89537, 10], [89735, 1], [13261, 1], [12973, 1]], s: 89720},
+	{u: 13117, i: 89446, n: "Heroic Dragonsblood Staff", r: [[89489, 1], [89957, 1], [45887, 1], [45888, 1]]}
 ],
 Artificer_Trident: [
 	{u: 3865, i: 30004, n: "Charr Trident", r: [[19710, 6], [19767, 1]], s: 9529},
@@ -6951,7 +7367,9 @@ Artificer_Trident: [
 	{u: 12369, i: 85094, n: "The Twins' Trident", r: [[85113, 1], [45889, 1], [45890, 1], [46746, 1]], s: 84900, b: 84900},
 	{u: 12593, i: 86682, n: "Giftbringer's Trident", r: [[86532, 1], [45889, 1], [45890, 1], [46746, 1]], s: 86654},
 	{u: 12740, i: 87747, n: "Plaguedoctor's Pearl Trident", r: [[87809, 1], [13004, 1], [13253, 1]], s: 87697},
-	{u: 12742, i: 87948, n: "Nerashi's Trident", r: [[87638, 1], [45889, 1], [45890, 1], [46746, 1]], s: 88019}
+	{u: 12742, i: 87948, n: "Nerashi's Trident", r: [[87638, 1], [45889, 1], [45890, 1], [46746, 1]], s: 88019},
+	{u: 13075, i: 89575, n: "Diviner's Pearl Trident", r: [[89735, 1], [13004, 1], [13253, 1]], s: 89955},
+	{u: 13089, i: 89904, n: "Steelstar's Trident", r: [[89489, 1], [45889, 1], [45890, 1], [46746, 1]], s: 89968}
 ],
 Huntsman_Refinement: [
 	{u: 1, i: 19713, n: "Soft Wood Plank", r: [[19726, 2]]},
@@ -7015,7 +7433,8 @@ Huntsman_Refinement: [
 	{u: 12026, i: 80774, n: "Orb of Natural Essence", r: [[70957, 1], [74988, 2], [37907, 3], [68942, 5]]},
 	{u: 12032, i: 80791, n: "Composite Wood Board", r: [[19713, 10], [19714, 5], [19711, 10], [46744, 1]]},
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
-	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283}
+	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283},
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
 ],
 Huntsman_Component: [
 	{u: 4458, i: 12968, n: "Green Torch Handle", r: [[19710, 2]]},
@@ -7173,7 +7592,98 @@ Huntsman_UpgradeComponent: [
 	{u: 9798, i: 67343, n: "Superior Sigil of Incapacitation", r: [[19685, 1], [24283, 2], [19721, 1], [24358, 2]], s: 67179, b: 67179},
 	{u: 9902, i: 67913, n: "Superior Sigil of Blight", r: [[19685, 1], [67832, 1], [19721, 1], [24335, 1]], s: 68483, b: 68483},
 	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177},
-	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902}
+	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902},
+	{u: 12825, i: 24547, n: "Minor Sigil of Fire", r: [[89271, 1], [24526, 5], [89182, 1]]},
+	{u: 12826, i: 24665, n: "Major Sigil of Demon Slaying", r: [[89271, 5], [72504, 2], [89182, 1]]},
+	{u: 12830, i: 24578, n: "Superior Sigil of Corruption", r: [[89271, 10], [70842, 1], [89141, 1], [19721, 10]], s: 89255},
+	{u: 12834, i: 24546, n: "Major Sigil of Fire", r: [[89271, 5], [24873, 5], [89182, 1]]},
+	{u: 12836, i: 24580, n: "Superior Sigil of Perception", r: [[89271, 10], [70957, 1], [89141, 2], [19721, 10]], s: 89205},
+	{u: 12838, i: 24592, n: "Superior Sigil of Stamina", r: [[89271, 5], [24351, 10], [89098, 3], [19721, 10]], s: 89187},
+	{u: 12841, i: 24596, n: "Major Sigil of Hydromancy", r: [[89271, 5], [71069, 25], [89098, 1]]},
+	{u: 12842, i: 24645, n: "Superior Sigil of Centaur Slaying", r: [[89271, 10], [19737, 10], [89182, 2], [19721, 10]], s: 89229},
+	{u: 12843, i: 24550, n: "Major Sigil of Water", r: [[89271, 5], [24475, 5], [89098, 1]]},
+	{u: 12844, i: 24615, n: "Superior Sigil of Force", r: [[89271, 5], [24370, 5], [89141, 3], [19721, 10]], s: 89100},
+	{u: 12848, i: 24606, n: "Major Sigil of Energy", r: [[89271, 5], [83103, 50], [89098, 1]]},
+	{u: 12849, i: 24605, n: "Superior Sigil of Geomancy", r: [[89271, 10], [76491, 5], [89182, 2], [19721, 10]], s: 89122},
+	{u: 12850, i: 24553, n: "Major Sigil of Air", r: [[89271, 5], [24519, 5], [89182, 1]]},
+	{u: 12851, i: 24603, n: "Minor Sigil of Geomancy", r: [[89271, 1], [76491, 1], [89182, 1]]},
+	{u: 12852, i: 24636, n: "Superior Sigil of Debility", r: [[89271, 10], [74988, 10], [89098, 2], [19721, 10]], s: 89116},
+	{u: 12858, i: 24575, n: "Superior Sigil of Bloodlust", r: [[89271, 10], [24295, 10], [89141, 2], [19721, 10]], s: 89123},
+	{u: 12859, i: 24655, n: "Superior Sigil of Ogre Slaying", r: [[89271, 5], [19685, 10], [89182, 3], [19721, 10]], s: 89165},
+	{u: 12861, i: 24625, n: "Minor Sigil of Hobbling", r: [[89271, 1], [72315, 1], [89141, 1]]},
+	{u: 12862, i: 24573, n: "Minor Sigil of Bloodlust", r: [[89271, 1], [24291, 10], [89141, 1]]},
+	{u: 12865, i: 24572, n: "Superior Sigil of Nullification", r: [[89271, 10], [24300, 10], [89098, 2], [19721, 10]], s: 89259},
+	{u: 12867, i: 24554, n: "Superior Sigil of Air", r: [[89271, 15], [24520, 5], [89182, 1], [19721, 10]], s: 89112},
+	{u: 12869, i: 24646, n: "Minor Sigil of Grawl Slaying", r: [[89271, 1], [24366, 1], [89182, 1]]},
+	{u: 12871, i: 24610, n: "Minor Sigil of Agony", r: [[89271, 1], [24527, 5], [89141, 1]]},
+	{u: 12872, i: 24616, n: "Minor Sigil of Accuracy", r: [[89271, 1], [74328, 10], [89141, 1]]},
+	{u: 12873, i: 24593, n: "Major Sigil of Restoration", r: [[89271, 5], [24874, 5], [89098, 1]]},
+	{u: 12876, i: 24644, n: "Major Sigil of Centaur Slaying", r: [[89271, 5], [19736, 10], [89182, 1]]},
+	{u: 12877, i: 24659, n: "Major Sigil of Serpent Slaying", r: [[89271, 5], [24281, 10], [89182, 1]]},
+	{u: 12878, i: 24570, n: "Superior Sigil of Blood", r: [[89271, 10], [75322, 1], [89098, 2], [19721, 10]], s: 89176},
+	{u: 12881, i: 24582, n: "Superior Sigil of Life", r: [[89271, 5], [24289, 10], [89141, 3], [19721, 10]], s: 89173},
+	{u: 12882, i: 24594, n: "Superior Sigil of Restoration", r: [[89271, 5], [76179, 1], [89098, 3], [19721, 10]], s: 89130},
+	{u: 12884, i: 24556, n: "Major Sigil of Ice", r: [[89271, 5], [42006, 5], [89098, 1]]},
+	{u: 12885, i: 24551, n: "Superior Sigil of Water", r: [[89271, 15], [24516, 5], [89098, 1], [19721, 10]], s: 89197},
+	{u: 12886, i: 24623, n: "Major Sigil of Smoldering", r: [[89271, 5], [66933, 25], [89141, 1]]},
+	{u: 12887, i: 24617, n: "Major Sigil of Accuracy", r: [[89271, 5], [74328, 25], [89141, 1]]},
+	{u: 12888, i: 24626, n: "Major Sigil of Hobbling", r: [[89271, 5], [72315, 3], [89141, 1]]},
+	{u: 12895, i: 24600, n: "Superior Sigil of Intelligence", r: [[89271, 10], [82678, 1], [89141, 2], [19721, 10]], s: 89111},
+	{u: 12897, i: 24643, n: "Minor Sigil of Centaur Slaying", r: [[89271, 1], [19733, 10], [89182, 1]]},
+	{u: 12898, i: 24549, n: "Minor Sigil of Water", r: [[89271, 1], [24503, 5], [89098, 1]]},
+	{u: 12900, i: 24598, n: "Major Sigil of Leeching", r: [[89271, 5], [24509, 5], [89141, 1]]},
+	{u: 12901, i: 68436, n: "Superior Sigil of Mischief", r: [[89271, 10], [86601, 24], [89141, 2], [19721, 10]], s: 89137},
+	{u: 12905, i: 24611, n: "Major Sigil of Agony", r: [[89271, 5], [72436, 3], [89141, 1]]},
+	{u: 12906, i: 24619, n: "Minor Sigil of Peril", r: [[89271, 1], [50025, 1], [89141, 1]]},
+	{u: 12907, i: 24568, n: "Minor Sigil of Blood", r: [[89271, 1], [74202, 10], [89098, 1]]},
+	{u: 12908, i: 24620, n: "Major Sigil of Peril", r: [[89271, 5], [50025, 3], [89141, 1]]},
+	{u: 12909, i: 24614, n: "Major Sigil of Force", r: [[89271, 5], [24370, 3], [89141, 1]]},
+	{u: 12910, i: 24574, n: "Major Sigil of Bloodlust", r: [[89271, 5], [24293, 10], [89141, 1]]},
+	{u: 12911, i: 24618, n: "Superior Sigil of Accuracy", r: [[89271, 10], [70851, 1], [89141, 2], [19721, 10]], s: 89243},
+	{u: 12912, i: 68434, n: "Major Sigil of Mischief", r: [[89271, 5], [86601, 12], [89141, 1]]},
+	{u: 12913, i: 24581, n: "Major Sigil of Life", r: [[89271, 5], [24287, 10], [89141, 1]]},
+	{u: 12914, i: 24629, n: "Major Sigil of Chilling", r: [[89271, 5], [24345, 10], [89141, 1]]},
+	{u: 12917, i: 24666, n: "Minor Sigil of Demon Slaying", r: [[89271, 1], [72504, 1], [89182, 1]]},
+	{u: 12920, i: 24561, n: "Superior Sigil of Rage", r: [[89271, 10], [37906, 5], [89141, 1], [19721, 10]], s: 89147},
+	{u: 12921, i: 24647, n: "Major Sigil of Grawl Slaying", r: [[89271, 5], [24366, 5], [89182, 1]]},
+	{u: 12923, i: 24555, n: "Superior Sigil of Ice", r: [[89271, 5], [42010, 5], [89098, 3], [19721, 10]], s: 89191},
+	{u: 12924, i: 24624, n: "Superior Sigil of Smoldering", r: [[89271, 5], [66933, 50], [89141, 3], [19721, 10]], s: 89139},
+	{u: 12926, i: 24660, n: "Minor Sigil of Serpent Slaying", r: [[89271, 1], [24279, 10], [89182, 1]]},
+	{u: 12927, i: 24577, n: "Major Sigil of Corruption", r: [[89271, 5], [66932, 1], [89141, 1]]},
+	{u: 12931, i: 24627, n: "Superior Sigil of Hobbling", r: [[89271, 15], [72315, 5], [89141, 1], [19721, 10]], s: 89135},
+	{u: 12933, i: 68439, n: "Minor Sigil of Mischief", r: [[89271, 1], [86601, 4], [89141, 1]]},
+	{u: 12935, i: 24576, n: "Minor Sigil of Corruption", r: [[89271, 1], [66929, 1], [89141, 1]]},
+	{u: 12937, i: 24571, n: "Superior Sigil of Purity", r: [[89271, 15], [24512, 5], [89098, 1], [19721, 10]], s: 89270},
+	{u: 12943, i: 24599, n: "Superior Sigil of Leeching", r: [[89271, 10], [24510, 5], [19721, 10], [89141, 2]], s: 89226},
+	{u: 12944, i: 24612, n: "Superior Sigil of Agony", r: [[89271, 10], [72436, 5], [89141, 2], [19721, 10]], s: 89246},
+	{u: 12952, i: 24621, n: "Superior Sigil of Peril", r: [[89271, 10], [50025, 5], [89141, 2], [19721, 10]], s: 89166},
+	{u: 12954, i: 24607, n: "Superior Sigil of Energy", r: [[89271, 5], [83103, 100], [89098, 3], [19721, 10]], s: 89249},
+	{u: 12964, i: 24634, n: "Minor Sigil of Debility", r: [[89271, 1], [74988, 1], [89098, 1]]},
+	{u: 12966, i: 24583, n: "Superior Sigil of Demon Summoning", r: [[89271, 10], [75654, 3], [89182, 2], [19721, 10]], s: 89254},
+	{u: 12967, i: 24648, n: "Superior Sigil of Grawl Slaying", r: [[89271, 15], [24366, 10], [89182, 1], [19721, 10]], s: 89196},
+	{u: 12972, i: 24552, n: "Minor Sigil of Air", r: [[89271, 1], [24472, 5], [89182, 1]]},
+	{u: 12974, i: 24630, n: "Superior Sigil of Chilling", r: [[89271, 5], [24358, 10], [89141, 3], [19721, 10]], s: 89150},
+	{u: 12975, i: 24569, n: "Major Sigil of Blood", r: [[89271, 5], [74202, 25], [89098, 1]]},
+	{u: 12976, i: 24595, n: "Minor Sigil of Hydromancy", r: [[89271, 1], [71069, 10], [89098, 1]]},
+	{u: 12977, i: 24557, n: "Minor Sigil of Ice", r: [[89271, 1], [24507, 5], [89098, 1]]},
+	{u: 12979, i: 24656, n: "Major Sigil of Ogre Slaying", r: [[89271, 5], [19681, 10], [89182, 1]]},
+	{u: 12980, i: 24613, n: "Minor Sigil of Force", r: [[89271, 1], [24370, 1], [89141, 1]]},
+	{u: 12982, i: 24633, n: "Major Sigil of Venom", r: [[89271, 5], [24473, 5], [89141, 1]]},
+	{u: 12984, i: 24631, n: "Minor Sigil of Venom", r: [[89271, 1], [24504, 5], [89141, 1]]},
+	{u: 12985, i: 24658, n: "Superior Sigil of Serpent Slaying", r: [[89271, 15], [24283, 10], [89182, 1], [19721, 10]], s: 89213},
+	{u: 12988, i: 24622, n: "Minor Sigil of Smoldering", r: [[89271, 1], [66933, 10], [89141, 1]]},
+	{u: 12989, i: 24597, n: "Superior Sigil of Hydromancy", r: [[89271, 10], [71069, 50], [89098, 2], [19721, 10]], s: 89262},
+	{u: 12990, i: 24664, n: "Superior Sigil of Demon Slaying", r: [[89271, 5], [72504, 3], [89182, 3], [19721, 10]], s: 89251},
+	{u: 12991, i: 24632, n: "Superior Sigil of Venom", r: [[89271, 15], [24515, 5], [89141, 1], [19721, 10]], s: 89250},
+	{u: 12994, i: 24558, n: "Minor Sigil of Earth", r: [[89271, 1], [24506, 5], [89182, 1]]},
+	{u: 12996, i: 24657, n: "Minor Sigil of Ogre Slaying", r: [[89271, 1], [19683, 10], [89182, 1]]},
+	{u: 12997, i: 24579, n: "Major Sigil of Perception", r: [[89271, 5], [74090, 5], [89141, 1]]},
+	{u: 12998, i: 24559, n: "Major Sigil of Earth", r: [[89271, 5], [24521, 5], [89182, 1]]},
+	{u: 12999, i: 24602, n: "Major Sigil of Battle", r: [[89271, 5], [19744, 10], [89098, 1]]},
+	{u: 13000, i: 24601, n: "Superior Sigil of Battle", r: [[89271, 5], [19746, 10], [19721, 10], [89098, 3]], s: 89215},
+	{u: 13001, i: 24548, n: "Superior Sigil of Fire", r: [[89271, 10], [24508, 5], [19721, 10], [89182, 2]], s: 89185},
+	{u: 13002, i: 24604, n: "Major Sigil of Geomancy", r: [[89271, 5], [76491, 3], [89182, 1]]},
+	{u: 13004, i: 24560, n: "Superior Sigil of Earth", r: [[89271, 5], [24522, 5], [89182, 3], [19721, 10]], s: 89248}
 ],
 Huntsman_LegendaryComponent: [
 	{u: 9937, i: 29172, n: "Leaf of Kudzu", r: [[76405, 1], [76249, 1], [73966, 1], [72849, 1]], s: 71448},
@@ -7327,7 +7837,11 @@ Huntsman_LegendaryComponent: [
 	{u: 12699, i: 87711, n: "Shard of Call of the Void", r: [[87627, 1], [79410, 1], [19684, 20], [19709, 10]]},
 	{u: 12717, i: 87764, n: "Call of the Void", r: [[87711, 100], [80503, 1], [45839, 1], [45840, 1]], s: 87992},
 	{u: 12724, i: 87953, n: "Hifthorn", r: [[87711, 30], [19721, 10], [72009, 1], [70728, 1]], s: 87864},
-	{u: 12725, i: 87930, n: "Lament", r: [[87711, 60], [19721, 30], [72009, 1], [70728, 1]], s: 87691}
+	{u: 12725, i: 87930, n: "Lament", r: [[87711, 60], [19721, 30], [72009, 1], [70728, 1]], s: 87691},
+	{u: 13014, i: 89481, n: "Doctrina", r: [[89947, 60], [72504, 10], [72673, 1], [71155, 1]], s: 89754},
+	{u: 13067, i: 89947, n: "Shard of Spero", r: [[89478, 1], [79410, 1], [19684, 40], [19709, 30]]},
+	{u: 13081, i: 89886, n: "Spero", r: [[89947, 100], [80503, 1], [45841, 1], [45844, 1]], s: 89965},
+	{u: 13129, i: 89891, n: "Exitus", r: [[89947, 30], [72504, 3], [72673, 1], [71155, 1]], s: 89763}
 ],
 Huntsman_Inscription: [
 	{u: 118, i: 19887, n: "Malign Green Inscription", r: [[19758, 1], [24278, 3]]},
@@ -7502,7 +8016,9 @@ Huntsman_Inscription: [
 	{u: 12576, i: 86685, n: "Giver's Orichalcum-Imbued Inscription", r: [[12988, 5], [86601, 100], [19721, 5]], s: 86734, b: 86734},
 	{u: 12627, i: 86532, n: "Giftbringer's Inscription", r: [[46681, 10], [45832, 1], [38434, 1], [24277, 10]], s: 86696},
 	{u: 12671, i: 87505, n: "Revenant's Inscription", r: [[46681, 10], [71453, 1], [19721, 30], [69953, 1]]},
-	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959}
+	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959},
+	{u: 13035, i: 89735, n: "Diviner's Orichalcum-Imbued Inscription", r: [[12988, 5], [89537, 50], [19721, 5], [89696, 3]], s: 89756},
+	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514}
 ],
 Huntsman_Consumable: [
 	{u: 4480, i: 9452, n: "Apprentice Maintenance Oil", r: [[24272, 4], [12156, 3]]},
@@ -7519,7 +8035,9 @@ Huntsman_Consumable: [
 	{u: 9900, i: 67528, n: "Bountiful Maintenance Oil", r: [[24773, 3], [67832, 1], [12156, 20]], s: 67966, b: 67966},
 	{u: 11748, i: 77632, n: "Peppermint Oil", r: [[24277, 3], [12156, 20], [77651, 25]], s: 77653, b: 77653},
 	{u: 12045, i: 81157, n: "Magnanimous Maintenance Oil", r: [[24277, 5], [81127, 5], [46731, 100]], s: 81117},
-	{u: 12510, i: 86016, n: "Corsair Maintenance Oil", r: [[24277, 3], [86069, 25], [46731, 100]], s: 85866}
+	{u: 12510, i: 86016, n: "Corsair Maintenance Oil", r: [[24277, 3], [86069, 25], [46731, 100]], s: 85866},
+	{u: 12883, i: 89203, n: "Potent Lucent Oil", r: [[89271, 5], [12156, 20], [89258, 1], [24277, 3]], s: 89236},
+	{u: 12950, i: 89157, n: "Enhanced Lucent Oil", r: [[89271, 5], [12156, 20], [89141, 1], [24277, 3]], s: 89124}
 ],
 Huntsman_Feast: [
 	{u: 8458, i: 50018, n: "Maintenance Oil Station", r: [[46730, 1], [24277, 30], [46739, 5]], s: 50019, p: {karma: 25200}}
@@ -7746,7 +8264,11 @@ Huntsman_Pistol: [
 	{u: 12553, i: 86526, n: "Tixx's Revolver", r: [[86458, 1], [45833, 1], [45835, 1], [46746, 1]], s: 86470},
 	{u: 12573, i: 86687, n: "Giftbringer's Revolver", r: [[86532, 1], [45833, 1], [45835, 1], [46746, 1]], s: 86457},
 	{u: 12697, i: 88047, n: "Nerashi's Revolver", r: [[87638, 1], [45833, 1], [45835, 1], [46746, 1]], s: 87970},
-	{u: 12703, i: 87938, n: "Plaguedoctor's Pearl Handcannon", r: [[87809, 1], [12924, 1], [12959, 1]], s: 87726}
+	{u: 12703, i: 87938, n: "Plaguedoctor's Pearl Handcannon", r: [[87809, 1], [12924, 1], [12959, 1]], s: 87726},
+	{u: 13023, i: 89716, n: "Steelstar's Revolver", r: [[89489, 1], [45833, 1], [45835, 1], [46746, 1]], s: 89451},
+	{u: 13059, i: 89989, n: "Dragonsblood Pistol", r: [[89537, 10], [89735, 1], [12924, 1], [12959, 1]], s: 89747},
+	{u: 13097, i: 89647, n: "Heroic Dragonsblood Pistol", r: [[89489, 1], [89522, 1], [45833, 1], [45835, 1]]},
+	{u: 13105, i: 89761, n: "Diviner's Pearl Handcannon", r: [[89735, 1], [12924, 1], [12959, 1]], s: 89914}
 ],
 Huntsman_Torch: [
 	{u: 4499, i: 30003, n: "Charr Torch", r: [[19710, 3], [19767, 1]], s: 9512},
@@ -7961,7 +8483,11 @@ Huntsman_Torch: [
 	{u: 12617, i: 86439, n: "Tixx's Brazier", r: [[86458, 1], [45838, 1], [45836, 1], [46746, 1]], s: 86509},
 	{u: 12136, i: 83935, n: "Sunspear Firelight", r: [[83926, 1], [75321, 1], [70750, 1]], s: 83416},
 	{u: 12733, i: 88050, n: "Plaguedoctor's Pearl Brazier", r: [[87809, 1], [13014, 1], [13061, 1]], s: 87862},
-	{u: 12744, i: 87858, n: "Nerashi's Brazier", r: [[87638, 1], [45838, 1], [45836, 1], [46746, 1]], s: 87705}
+	{u: 12744, i: 87858, n: "Nerashi's Brazier", r: [[87638, 1], [45838, 1], [45836, 1], [46746, 1]], s: 87705},
+	{u: 13037, i: 89612, n: "Steelstar's Brazier", r: [[89489, 1], [45838, 1], [45836, 1], [46746, 1]], s: 89685},
+	{u: 13063, i: 89623, n: "Diviner's Pearl Brazier", r: [[89735, 1], [13014, 1], [13061, 1]], s: 89629},
+	{u: 13077, i: 89741, n: "Heroic Dragonsblood Torch", r: [[89489, 1], [89501, 1], [45836, 1], [45838, 1]]},
+	{u: 13123, i: 89670, n: "Dragonsblood Torch", r: [[89537, 10], [89735, 1], [13014, 1], [13061, 1]], s: 89571}
 ],
 Huntsman_Warhorn: [
 	{u: 4477, i: 30682, n: "Packmaster's Warhorn", r: [[24296, 1], [19679, 3]], s: 9415},
@@ -8177,7 +8703,11 @@ Huntsman_Warhorn: [
 	{u: 12189, i: 83271, n: "Sunspear Horn", r: [[83926, 1], [72009, 1], [70728, 1]], s: 82255},
 	{u: 12608, i: 86440, n: "Tixx's Herald", r: [[86458, 1], [45839, 1], [45840, 1], [46746, 1]], s: 86636},
 	{u: 12716, i: 87898, n: "Nerashi's Herald", r: [[87638, 1], [45839, 1], [45840, 1], [46746, 1]], s: 87964},
-	{u: 12731, i: 87824, n: "Plaguedoctor's Pearl Siren", r: [[87809, 1], [12936, 1], [12930, 1]], s: 87867}
+	{u: 12731, i: 87824, n: "Plaguedoctor's Pearl Siren", r: [[87809, 1], [12936, 1], [12930, 1]], s: 87867},
+	{u: 13038, i: 89624, n: "Steelstar's Herald", r: [[89489, 1], [45839, 1], [45840, 1], [46746, 1]], s: 89582},
+	{u: 13060, i: 89532, n: "Diviner's Pearl Siren", r: [[89735, 1], [12936, 1], [12930, 1]], s: 89471},
+	{u: 13100, i: 89592, n: "Heroic Dragonsblood Warhorn", r: [[89489, 1], [89474, 1], [45839, 1], [45840, 1]]},
+	{u: 13109, i: 89963, n: "Dragonsblood Warhorn", r: [[89537, 10], [89735, 1], [12936, 1], [12930, 1]], s: 89888}
 ],
 Huntsman_LongBow: [
 	{u: 4497, i: 29993, n: "Charr Longbow", r: [[19767, 1], [19710, 6]], s: 9510},
@@ -8391,7 +8921,12 @@ Huntsman_LongBow: [
 	{u: 12180, i: 82830, n: "Mordant Longbow", r: [[83974, 1], [72673, 1], [71155, 1]], s: 82663},
 	{u: 12541, i: 86483, n: "Tixx's Greatbow", r: [[86458, 1], [45841, 1], [45844, 1], [46746, 1]], s: 86593},
 	{u: 12606, i: 86402, n: "Giftbringer's Greatbow", r: [[86532, 1], [45841, 1], [45844, 1], [46746, 1]], s: 86410},
-	{u: 12687, i: 87962, n: "Plaguedoctor's Pearl Stinger", r: [[87809, 1], [12941, 1], [12963, 1]], s: 87754}
+	{u: 12687, i: 87962, n: "Plaguedoctor's Pearl Stinger", r: [[87809, 1], [12941, 1], [12963, 1]], s: 87754},
+	{u: 12701, i: 87866, n: "Nerashi's Greatbow", r: [[87638, 1], [45841, 1], [45844, 1], [46746, 1]], s: 87710},
+	{u: 13078, i: 89486, n: "Dragonsblood Longbow", r: [[89537, 10], [89735, 1], [12941, 1], [12963, 1]], s: 89797},
+	{u: 13090, i: 89681, n: "Steelstar's Greatbow", r: [[89489, 1], [45841, 1], [45844, 1], [46746, 1]], s: 89739},
+	{u: 13120, i: 89503, n: "Heroic Dragonsblood Longbow", r: [[89489, 1], [89752, 1], [45841, 1], [45844, 1]]},
+	{u: 13127, i: 89667, n: "Diviner's Pearl Stinger", r: [[89735, 1], [12941, 1], [12963, 1]], s: 89898}
 ],
 Huntsman_ShortBow: [
 	{u: 4498, i: 29999, n: "Charr Short Bow", r: [[19710, 5], [19767, 1]], s: 9511},
@@ -8604,7 +9139,13 @@ Huntsman_ShortBow: [
 	{u: 12591, i: 86731, n: "Giftbringer's Short Bow", r: [[86532, 1], [45842, 1], [45844, 1], [46746, 1]], s: 86430},
 	{u: 12287, i: 84325, n: "Sunspear Pocketbow", r: [[83926, 1], [76232, 1], [71155, 1]], s: 84275},
 	{u: 12426, i: 85200, n: "Zehtuka's Short Bow", r: [[84930, 1], [45842, 1], [45844, 1], [46746, 1]], s: 85298, b: 85298},
-	{u: 12673, i: 87647, n: "Plaguedoctor's Pearl Needler", r: [[87809, 1], [12947, 1], [12963, 1]], s: 87706}
+	{u: 12673, i: 87647, n: "Plaguedoctor's Pearl Needler", r: [[87809, 1], [12947, 1], [12963, 1]], s: 87706},
+	{u: 12610, i: 86706, n: "Tixx's Short Bow", r: [[86458, 1], [45842, 1], [45844, 1], [46746, 1]], s: 86572},
+	{u: 12752, i: 87811, n: "Nerashi's Short Bow", r: [[87638, 1], [45842, 1], [45844, 1], [46746, 1]], s: 87791},
+	{u: 13028, i: 89929, n: "Dragonsblood Short Bow", r: [[89537, 10], [89735, 1], [12947, 1], [12963, 1]], s: 89630},
+	{u: 13043, i: 89961, n: "Diviner's Pearl Needler", r: [[89735, 1], [12947, 1], [12963, 1]], s: 89682},
+	{u: 13084, i: 89949, n: "Steelstar's Short Bow", r: [[89489, 1], [45842, 1], [45844, 1], [46746, 1]], s: 89678},
+	{u: 13107, i: 89826, n: "Heroic Dragonsblood Short Bow", r: [[89489, 1], [89710, 1], [45844, 1], [45842, 1]]}
 ],
 Huntsman_Rifle: [
 	{u: 4459, i: 30572, n: "Experimental Skritt Musket", r: [[19787, 1], [19679, 2], [19710, 3]], s: 9400},
@@ -8821,7 +9362,12 @@ Huntsman_Rifle: [
 	{u: 12613, i: 86673, n: "Giftbringer's Musket", r: [[86532, 1], [45834, 1], [45843, 1], [46746, 1]], s: 86569},
 	{u: 12066, i: 84004, n: "Sunspear Matchlock", r: [[83926, 1], [73874, 1], [73555, 1]], s: 83856},
 	{u: 12628, i: 86668, n: "Tixx's Musket", r: [[86458, 1], [45834, 1], [45843, 1], [46746, 1]], s: 86480},
-	{u: 12754, i: 87956, n: "Nerashi's Musket", r: [[87638, 1], [45834, 1], [45843, 1], [46746, 1]], s: 87595}
+	{u: 12754, i: 87956, n: "Nerashi's Musket", r: [[87638, 1], [45834, 1], [45843, 1], [46746, 1]], s: 87595},
+	{u: 12693, i: 87693, n: "Plaguedoctor's Pearl Blunderbuss", r: [[87809, 1], [12918, 1], [12953, 1]], s: 87777},
+	{u: 13044, i: 89534, n: "Diviner's Pearl Blunderbuss", r: [[89735, 1], [12918, 1], [12953, 1]], s: 89880},
+	{u: 13068, i: 89833, n: "Dragonsblood Rifle", r: [[89537, 10], [89735, 1], [12918, 1], [12953, 1]], s: 89751},
+	{u: 13112, i: 89791, n: "Heroic Dragonsblood Rifle", r: [[89489, 1], [89779, 1], [45834, 1], [45843, 1]]},
+	{u: 13119, i: 89736, n: "Steelstar's Musket", r: [[89489, 1], [45834, 1], [45843, 1], [46746, 1]], s: 89941}
 ],
 Huntsman_Speargun: [
 	{u: 4501, i: 30000, n: "Charr Speargun", r: [[19710, 4], [19767, 1]], s: 9514},
@@ -9010,7 +9556,12 @@ Huntsman_Speargun: [
 	{u: 12604, i: 86464, n: "Giver's Pearl Speargun", r: [[86685, 1], [12953, 1], [13051, 1]]},
 	{u: 12343, i: 85036, n: "Zehtuka's Harpoon Gun", r: [[84930, 1], [45843, 1], [45837, 1], [46746, 1]], s: 85259, b: 85259},
 	{u: 12353, i: 84944, n: "The Twins' Harpoon Gun", r: [[85113, 1], [45843, 1], [45837, 1], [46746, 1]], s: 85321, b: 85321},
-	{u: 12524, i: 86489, n: "Giftbringer's Harpoon Gun", r: [[86532, 1], [45843, 1], [45837, 1], [46746, 1]], s: 86621}
+	{u: 12524, i: 86489, n: "Giftbringer's Harpoon Gun", r: [[86532, 1], [45843, 1], [45837, 1], [46746, 1]], s: 86621},
+	{u: 12590, i: 86574, n: "Tixx's Harpoon Gun", r: [[86458, 1], [45843, 1], [45837, 1], [46746, 1]], s: 86431},
+	{u: 12702, i: 87994, n: "Nerashi's Harpoon Gun", r: [[87638, 1], [45843, 1], [45837, 1], [46746, 1]], s: 87973},
+	{u: 12751, i: 87744, n: "Plaguedoctor's Pearl Speargun", r: [[87809, 1], [12953, 1], [13051, 1]], s: 87803},
+	{u: 13026, i: 89618, n: "Diviner's Pearl Speargun", r: [[89735, 1], [12953, 1], [13051, 1]], s: 89712},
+	{u: 13099, i: 89810, n: "Steelstar's Harpoon Gun", r: [[89489, 1], [45843, 1], [45837, 1], [46746, 1]], s: 89691}
 ],
 Weaponsmith_Refinement: [
 	{u: 1, i: 19713, n: "Soft Wood Plank", r: [[19726, 2]]},
@@ -9068,7 +9619,8 @@ Weaponsmith_Refinement: [
 	{u: 12026, i: 80774, n: "Orb of Natural Essence", r: [[70957, 1], [74988, 2], [37907, 3], [68942, 5]]},
 	{u: 12032, i: 80791, n: "Composite Wood Board", r: [[19713, 10], [19714, 5], [19711, 10], [46744, 1]]},
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
-	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283}
+	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283},
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
 ],
 Weaponsmith_Component: [
 	{u: 5324, i: 12848, n: "Bronze Axe Blade", r: [[19679, 3]]},
@@ -9240,7 +9792,98 @@ Weaponsmith_UpgradeComponent: [
 	{u: 9798, i: 67343, n: "Superior Sigil of Incapacitation", r: [[19685, 1], [24283, 2], [19721, 1], [24358, 2]], s: 67179, b: 67179},
 	{u: 9902, i: 67913, n: "Superior Sigil of Blight", r: [[19685, 1], [67832, 1], [19721, 1], [24335, 1]], s: 68483, b: 68483},
 	{u: 12043, i: 81045, n: "Superior Sigil of Bounty", r: [[19685, 1], [24315, 1], [81127, 10], [19721, 1]], s: 81177},
-	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902}
+	{u: 12467, i: 86170, n: "Superior Sigil of the Stars", r: [[19685, 1], [24320, 1], [86069, 50], [19721, 1]], s: 85902},
+	{u: 12825, i: 24547, n: "Minor Sigil of Fire", r: [[89271, 1], [24526, 5], [89182, 1]]},
+	{u: 12826, i: 24665, n: "Major Sigil of Demon Slaying", r: [[89271, 5], [72504, 2], [89182, 1]]},
+	{u: 12830, i: 24578, n: "Superior Sigil of Corruption", r: [[89271, 10], [70842, 1], [89141, 1], [19721, 10]], s: 89255},
+	{u: 12834, i: 24546, n: "Major Sigil of Fire", r: [[89271, 5], [24873, 5], [89182, 1]]},
+	{u: 12836, i: 24580, n: "Superior Sigil of Perception", r: [[89271, 10], [70957, 1], [89141, 2], [19721, 10]], s: 89205},
+	{u: 12838, i: 24592, n: "Superior Sigil of Stamina", r: [[89271, 5], [24351, 10], [89098, 3], [19721, 10]], s: 89187},
+	{u: 12841, i: 24596, n: "Major Sigil of Hydromancy", r: [[89271, 5], [71069, 25], [89098, 1]]},
+	{u: 12842, i: 24645, n: "Superior Sigil of Centaur Slaying", r: [[89271, 10], [19737, 10], [89182, 2], [19721, 10]], s: 89229},
+	{u: 12843, i: 24550, n: "Major Sigil of Water", r: [[89271, 5], [24475, 5], [89098, 1]]},
+	{u: 12844, i: 24615, n: "Superior Sigil of Force", r: [[89271, 5], [24370, 5], [89141, 3], [19721, 10]], s: 89100},
+	{u: 12848, i: 24606, n: "Major Sigil of Energy", r: [[89271, 5], [83103, 50], [89098, 1]]},
+	{u: 12849, i: 24605, n: "Superior Sigil of Geomancy", r: [[89271, 10], [76491, 5], [89182, 2], [19721, 10]], s: 89122},
+	{u: 12850, i: 24553, n: "Major Sigil of Air", r: [[89271, 5], [24519, 5], [89182, 1]]},
+	{u: 12851, i: 24603, n: "Minor Sigil of Geomancy", r: [[89271, 1], [76491, 1], [89182, 1]]},
+	{u: 12852, i: 24636, n: "Superior Sigil of Debility", r: [[89271, 10], [74988, 10], [89098, 2], [19721, 10]], s: 89116},
+	{u: 12858, i: 24575, n: "Superior Sigil of Bloodlust", r: [[89271, 10], [24295, 10], [89141, 2], [19721, 10]], s: 89123},
+	{u: 12859, i: 24655, n: "Superior Sigil of Ogre Slaying", r: [[89271, 5], [19685, 10], [89182, 3], [19721, 10]], s: 89165},
+	{u: 12861, i: 24625, n: "Minor Sigil of Hobbling", r: [[89271, 1], [72315, 1], [89141, 1]]},
+	{u: 12862, i: 24573, n: "Minor Sigil of Bloodlust", r: [[89271, 1], [24291, 10], [89141, 1]]},
+	{u: 12865, i: 24572, n: "Superior Sigil of Nullification", r: [[89271, 10], [24300, 10], [89098, 2], [19721, 10]], s: 89259},
+	{u: 12867, i: 24554, n: "Superior Sigil of Air", r: [[89271, 15], [24520, 5], [89182, 1], [19721, 10]], s: 89112},
+	{u: 12869, i: 24646, n: "Minor Sigil of Grawl Slaying", r: [[89271, 1], [24366, 1], [89182, 1]]},
+	{u: 12871, i: 24610, n: "Minor Sigil of Agony", r: [[89271, 1], [24527, 5], [89141, 1]]},
+	{u: 12872, i: 24616, n: "Minor Sigil of Accuracy", r: [[89271, 1], [74328, 10], [89141, 1]]},
+	{u: 12873, i: 24593, n: "Major Sigil of Restoration", r: [[89271, 5], [24874, 5], [89098, 1]]},
+	{u: 12876, i: 24644, n: "Major Sigil of Centaur Slaying", r: [[89271, 5], [19736, 10], [89182, 1]]},
+	{u: 12877, i: 24659, n: "Major Sigil of Serpent Slaying", r: [[89271, 5], [24281, 10], [89182, 1]]},
+	{u: 12878, i: 24570, n: "Superior Sigil of Blood", r: [[89271, 10], [75322, 1], [89098, 2], [19721, 10]], s: 89176},
+	{u: 12881, i: 24582, n: "Superior Sigil of Life", r: [[89271, 5], [24289, 10], [89141, 3], [19721, 10]], s: 89173},
+	{u: 12882, i: 24594, n: "Superior Sigil of Restoration", r: [[89271, 5], [76179, 1], [89098, 3], [19721, 10]], s: 89130},
+	{u: 12884, i: 24556, n: "Major Sigil of Ice", r: [[89271, 5], [42006, 5], [89098, 1]]},
+	{u: 12885, i: 24551, n: "Superior Sigil of Water", r: [[89271, 15], [24516, 5], [89098, 1], [19721, 10]], s: 89197},
+	{u: 12886, i: 24623, n: "Major Sigil of Smoldering", r: [[89271, 5], [66933, 25], [89141, 1]]},
+	{u: 12887, i: 24617, n: "Major Sigil of Accuracy", r: [[89271, 5], [74328, 25], [89141, 1]]},
+	{u: 12888, i: 24626, n: "Major Sigil of Hobbling", r: [[89271, 5], [72315, 3], [89141, 1]]},
+	{u: 12895, i: 24600, n: "Superior Sigil of Intelligence", r: [[89271, 10], [82678, 1], [89141, 2], [19721, 10]], s: 89111},
+	{u: 12897, i: 24643, n: "Minor Sigil of Centaur Slaying", r: [[89271, 1], [19733, 10], [89182, 1]]},
+	{u: 12898, i: 24549, n: "Minor Sigil of Water", r: [[89271, 1], [24503, 5], [89098, 1]]},
+	{u: 12900, i: 24598, n: "Major Sigil of Leeching", r: [[89271, 5], [24509, 5], [89141, 1]]},
+	{u: 12901, i: 68436, n: "Superior Sigil of Mischief", r: [[89271, 10], [86601, 24], [89141, 2], [19721, 10]], s: 89137},
+	{u: 12905, i: 24611, n: "Major Sigil of Agony", r: [[89271, 5], [72436, 3], [89141, 1]]},
+	{u: 12906, i: 24619, n: "Minor Sigil of Peril", r: [[89271, 1], [50025, 1], [89141, 1]]},
+	{u: 12907, i: 24568, n: "Minor Sigil of Blood", r: [[89271, 1], [74202, 10], [89098, 1]]},
+	{u: 12908, i: 24620, n: "Major Sigil of Peril", r: [[89271, 5], [50025, 3], [89141, 1]]},
+	{u: 12909, i: 24614, n: "Major Sigil of Force", r: [[89271, 5], [24370, 3], [89141, 1]]},
+	{u: 12910, i: 24574, n: "Major Sigil of Bloodlust", r: [[89271, 5], [24293, 10], [89141, 1]]},
+	{u: 12911, i: 24618, n: "Superior Sigil of Accuracy", r: [[89271, 10], [70851, 1], [89141, 2], [19721, 10]], s: 89243},
+	{u: 12912, i: 68434, n: "Major Sigil of Mischief", r: [[89271, 5], [86601, 12], [89141, 1]]},
+	{u: 12913, i: 24581, n: "Major Sigil of Life", r: [[89271, 5], [24287, 10], [89141, 1]]},
+	{u: 12914, i: 24629, n: "Major Sigil of Chilling", r: [[89271, 5], [24345, 10], [89141, 1]]},
+	{u: 12917, i: 24666, n: "Minor Sigil of Demon Slaying", r: [[89271, 1], [72504, 1], [89182, 1]]},
+	{u: 12920, i: 24561, n: "Superior Sigil of Rage", r: [[89271, 10], [37906, 5], [89141, 1], [19721, 10]], s: 89147},
+	{u: 12921, i: 24647, n: "Major Sigil of Grawl Slaying", r: [[89271, 5], [24366, 5], [89182, 1]]},
+	{u: 12923, i: 24555, n: "Superior Sigil of Ice", r: [[89271, 5], [42010, 5], [89098, 3], [19721, 10]], s: 89191},
+	{u: 12924, i: 24624, n: "Superior Sigil of Smoldering", r: [[89271, 5], [66933, 50], [89141, 3], [19721, 10]], s: 89139},
+	{u: 12926, i: 24660, n: "Minor Sigil of Serpent Slaying", r: [[89271, 1], [24279, 10], [89182, 1]]},
+	{u: 12927, i: 24577, n: "Major Sigil of Corruption", r: [[89271, 5], [66932, 1], [89141, 1]]},
+	{u: 12931, i: 24627, n: "Superior Sigil of Hobbling", r: [[89271, 15], [72315, 5], [89141, 1], [19721, 10]], s: 89135},
+	{u: 12933, i: 68439, n: "Minor Sigil of Mischief", r: [[89271, 1], [86601, 4], [89141, 1]]},
+	{u: 12935, i: 24576, n: "Minor Sigil of Corruption", r: [[89271, 1], [66929, 1], [89141, 1]]},
+	{u: 12937, i: 24571, n: "Superior Sigil of Purity", r: [[89271, 15], [24512, 5], [89098, 1], [19721, 10]], s: 89270},
+	{u: 12943, i: 24599, n: "Superior Sigil of Leeching", r: [[89271, 10], [24510, 5], [19721, 10], [89141, 2]], s: 89226},
+	{u: 12944, i: 24612, n: "Superior Sigil of Agony", r: [[89271, 10], [72436, 5], [89141, 2], [19721, 10]], s: 89246},
+	{u: 12952, i: 24621, n: "Superior Sigil of Peril", r: [[89271, 10], [50025, 5], [89141, 2], [19721, 10]], s: 89166},
+	{u: 12954, i: 24607, n: "Superior Sigil of Energy", r: [[89271, 5], [83103, 100], [89098, 3], [19721, 10]], s: 89249},
+	{u: 12964, i: 24634, n: "Minor Sigil of Debility", r: [[89271, 1], [74988, 1], [89098, 1]]},
+	{u: 12966, i: 24583, n: "Superior Sigil of Demon Summoning", r: [[89271, 10], [75654, 3], [89182, 2], [19721, 10]], s: 89254},
+	{u: 12967, i: 24648, n: "Superior Sigil of Grawl Slaying", r: [[89271, 15], [24366, 10], [89182, 1], [19721, 10]], s: 89196},
+	{u: 12972, i: 24552, n: "Minor Sigil of Air", r: [[89271, 1], [24472, 5], [89182, 1]]},
+	{u: 12974, i: 24630, n: "Superior Sigil of Chilling", r: [[89271, 5], [24358, 10], [89141, 3], [19721, 10]], s: 89150},
+	{u: 12975, i: 24569, n: "Major Sigil of Blood", r: [[89271, 5], [74202, 25], [89098, 1]]},
+	{u: 12976, i: 24595, n: "Minor Sigil of Hydromancy", r: [[89271, 1], [71069, 10], [89098, 1]]},
+	{u: 12977, i: 24557, n: "Minor Sigil of Ice", r: [[89271, 1], [24507, 5], [89098, 1]]},
+	{u: 12979, i: 24656, n: "Major Sigil of Ogre Slaying", r: [[89271, 5], [19681, 10], [89182, 1]]},
+	{u: 12980, i: 24613, n: "Minor Sigil of Force", r: [[89271, 1], [24370, 1], [89141, 1]]},
+	{u: 12982, i: 24633, n: "Major Sigil of Venom", r: [[89271, 5], [24473, 5], [89141, 1]]},
+	{u: 12984, i: 24631, n: "Minor Sigil of Venom", r: [[89271, 1], [24504, 5], [89141, 1]]},
+	{u: 12985, i: 24658, n: "Superior Sigil of Serpent Slaying", r: [[89271, 15], [24283, 10], [89182, 1], [19721, 10]], s: 89213},
+	{u: 12988, i: 24622, n: "Minor Sigil of Smoldering", r: [[89271, 1], [66933, 10], [89141, 1]]},
+	{u: 12989, i: 24597, n: "Superior Sigil of Hydromancy", r: [[89271, 10], [71069, 50], [89098, 2], [19721, 10]], s: 89262},
+	{u: 12990, i: 24664, n: "Superior Sigil of Demon Slaying", r: [[89271, 5], [72504, 3], [89182, 3], [19721, 10]], s: 89251},
+	{u: 12991, i: 24632, n: "Superior Sigil of Venom", r: [[89271, 15], [24515, 5], [89141, 1], [19721, 10]], s: 89250},
+	{u: 12994, i: 24558, n: "Minor Sigil of Earth", r: [[89271, 1], [24506, 5], [89182, 1]]},
+	{u: 12996, i: 24657, n: "Minor Sigil of Ogre Slaying", r: [[89271, 1], [19683, 10], [89182, 1]]},
+	{u: 12997, i: 24579, n: "Major Sigil of Perception", r: [[89271, 5], [74090, 5], [89141, 1]]},
+	{u: 12998, i: 24559, n: "Major Sigil of Earth", r: [[89271, 5], [24521, 5], [89182, 1]]},
+	{u: 12999, i: 24602, n: "Major Sigil of Battle", r: [[89271, 5], [19744, 10], [89098, 1]]},
+	{u: 13000, i: 24601, n: "Superior Sigil of Battle", r: [[89271, 5], [19746, 10], [19721, 10], [89098, 3]], s: 89215},
+	{u: 13001, i: 24548, n: "Superior Sigil of Fire", r: [[89271, 10], [24508, 5], [19721, 10], [89182, 2]], s: 89185},
+	{u: 13002, i: 24604, n: "Major Sigil of Geomancy", r: [[89271, 5], [76491, 3], [89182, 1]]},
+	{u: 13004, i: 24560, n: "Superior Sigil of Earth", r: [[89271, 5], [24522, 5], [89182, 3], [19721, 10]], s: 89248}
 ],
 Weaponsmith_LegendaryComponent: [
 	{u: 9936, i: 76117, n: "Experimental Sword Blade", r: [[46738, 15], [71581, 50], [70820, 50]]},
@@ -9411,7 +10054,11 @@ Weaponsmith_LegendaryComponent: [
 	{u: 12649, i: 87093, n: "Claw of Execution", r: [[87031, 30], [24350, 5], [76826, 1], [71331, 1]], s: 87254},
 	{u: 12651, i: 87031, n: "Shard of Resolution", r: [[87165, 1], [79410, 1], [19684, 30], [19709, 20]]},
 	{u: 12657, i: 87037, n: "Claw of Resolution", r: [[87031, 100], [80503, 1], [45854, 1], [45846, 1]], s: 87044},
-	{u: 12662, i: 86968, n: "Claw of Retribution", r: [[87031, 60], [24351, 5], [76826, 1], [71331, 1]], s: 87110}
+	{u: 12662, i: 86968, n: "Claw of Retribution", r: [[87031, 60], [24351, 5], [76826, 1], [71331, 1]], s: 87110},
+	{u: 13160, i: 90390, n: "Shard of Exitare", r: [[90776, 1], [79410, 1], [19684, 40], [19709, 30]]},
+	{u: 13163, i: 90780, n: "Visiospei", r: [[90390, 60], [76491, 10], [76084, 1], [71352, 1]], s: 90463},
+	{u: 13205, i: 90883, n: "Exitare", r: [[90390, 100], [80503, 1], [45855, 1], [45847, 1]], s: 90531},
+	{u: 13207, i: 90530, n: "Malumres", r: [[90390, 30], [76491, 3], [76084, 1], [71352, 1]], s: 90328}
 ],
 Weaponsmith_Inscription: [
 	{u: 118, i: 19887, n: "Malign Green Inscription", r: [[19758, 1], [24278, 3]]},
@@ -9586,7 +10233,9 @@ Weaponsmith_Inscription: [
 	{u: 12576, i: 86685, n: "Giver's Orichalcum-Imbued Inscription", r: [[12988, 5], [86601, 100], [19721, 5]], s: 86734, b: 86734},
 	{u: 12627, i: 86532, n: "Giftbringer's Inscription", r: [[46681, 10], [45832, 1], [38434, 1], [24277, 10]], s: 86696},
 	{u: 12671, i: 87505, n: "Revenant's Inscription", r: [[46681, 10], [71453, 1], [19721, 30], [69953, 1]]},
-	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959}
+	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959},
+	{u: 13035, i: 89735, n: "Diviner's Orichalcum-Imbued Inscription", r: [[12988, 5], [89537, 50], [19721, 5], [89696, 3]], s: 89756},
+	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514}
 ],
 Weaponsmith_Consumable: [
 	{u: 5396, i: 9431, n: "Rough Sharpening Stone", r: [[24272, 3], [19679, 3]]},
@@ -9831,7 +10480,11 @@ Weaponsmith_Axe: [
 	{u: 12618, i: 86444, n: "Tixx's Reaver", r: [[86458, 1], [45845, 1], [45850, 1], [46746, 1]], s: 86614},
 	{u: 12669, i: 87536, n: "Mistcleaver", r: [[87505, 1], [45845, 1], [45850, 1], [46746, 1]], s: 87521},
 	{u: 12750, i: 87789, n: "Plaguedoctor's Pearl Reaver", r: [[87809, 1], [12852, 1], [12892, 1]], s: 87743},
-	{u: 12676, i: 87605, n: "Nerashi's Reaver", r: [[87638, 1], [45845, 1], [45850, 1], [46746, 1]], s: 87765}
+	{u: 12676, i: 87605, n: "Nerashi's Reaver", r: [[87638, 1], [45845, 1], [45850, 1], [46746, 1]], s: 87765},
+	{u: 13024, i: 89799, n: "Steelstar's Reaver", r: [[89489, 1], [45845, 1], [45850, 1], [46746, 1]], s: 89643},
+	{u: 13036, i: 89690, n: "Diviner's Pearl Reaver", r: [[89735, 1], [12852, 1], [12892, 1]], s: 89614},
+	{u: 13045, i: 89632, n: "Heroic Dragonsblood Axe", r: [[89489, 1], [89967, 1], [45845, 1], [45850, 1]]},
+	{u: 13093, i: 89651, n: "Dragonsblood Axe", r: [[89735, 1], [12852, 1], [12892, 1], [89537, 10]], s: 89850}
 ],
 Weaponsmith_Mace: [
 	{u: 5419, i: 29994, n: "Charr Mace", r: [[19767, 1], [19679, 4]], s: 9508},
@@ -10049,7 +10702,11 @@ Weaponsmith_Mace: [
 	{u: 12564, i: 86451, n: "Giftbringer's Flanged Mace", r: [[86532, 1], [45852, 1], [45850, 1], [46746, 1]], s: 86721},
 	{u: 12670, i: 87500, n: "Mistrender", r: [[87505, 1], [45852, 1], [45850, 1], [46746, 1]], s: 87498},
 	{u: 12747, i: 87958, n: "Plaguedoctor's Pearl Bludgeoner", r: [[87809, 1], [12876, 1], [12892, 1]], s: 88037},
-	{u: 12729, i: 87739, n: "Nerashi's Flanged Mace", r: [[87638, 1], [45852, 1], [45850, 1], [46746, 1]], s: 88044}
+	{u: 12729, i: 87739, n: "Nerashi's Flanged Mace", r: [[87638, 1], [45852, 1], [45850, 1], [46746, 1]], s: 88044},
+	{u: 13013, i: 89492, n: "Dragonsblood Mace", r: [[89537, 10], [89735, 1], [12876, 1], [12892, 1]], s: 89562},
+	{u: 13048, i: 89707, n: "Steelstar's Flanged Mace", r: [[89489, 1], [45852, 1], [45850, 1], [46746, 1]], s: 89581},
+	{u: 13053, i: 89627, n: "Diviner's Pearl Bludgeoner", r: [[89735, 1], [12876, 1], [12892, 1]], s: 89531},
+	{u: 13110, i: 89848, n: "Heroic Dragonsblood Mace", r: [[89489, 1], [89983, 1], [45852, 1], [45850, 1]]}
 ],
 Weaponsmith_Sword: [
 	{u: 5414, i: 30002, n: "Charr Sword", r: [[19767, 1], [19679, 4]], s: 9504},
@@ -10267,7 +10924,11 @@ Weaponsmith_Sword: [
 	{u: 12245, i: 84632, n: "Sunspear Cutlass", r: [[83926, 1], [71574, 1], [73296, 1]], s: 83184},
 	{u: 12525, i: 86662, n: "Tixx's Blade", r: [[86458, 1], [45848, 1], [45856, 1], [46746, 1]], s: 86576},
 	{u: 12722, i: 87885, n: "Nerashi's Blade", r: [[87638, 1], [45848, 1], [45856, 1], [46746, 1]], s: 87980},
-	{u: 12688, i: 87871, n: "Plaguedoctor's Pearl Sabre", r: [[87809, 1], [12870, 1], [12846, 1]], s: 87736}
+	{u: 12688, i: 87871, n: "Plaguedoctor's Pearl Sabre", r: [[87809, 1], [12870, 1], [12846, 1]], s: 87736},
+	{u: 13015, i: 89726, n: "Diviner's Pearl Sabre", r: [[89735, 1], [12870, 1], [12846, 1]], s: 89448},
+	{u: 13079, i: 89645, n: "Steelstar's Blade", r: [[89489, 1], [45848, 1], [45856, 1], [46746, 1]], s: 89599},
+	{u: 13094, i: 89566, n: "Heroic Dragonsblood Sword", r: [[89489, 1], [89570, 1], [45848, 1], [45856, 1]]},
+	{u: 13125, i: 89590, n: "Dragonsblood Sword", r: [[89537, 10], [89735, 1], [12870, 1], [12846, 1]], s: 89800}
 ],
 Weaponsmith_Dagger: [
 	{u: 5416, i: 29988, n: "Charr Dagger", r: [[19767, 1], [19679, 3]], s: 9506},
@@ -10482,7 +11143,11 @@ Weaponsmith_Dagger: [
 	{u: 12242, i: 84002, n: "Sunspear Carver", r: [[83926, 1], [71331, 1], [76826, 1]], s: 82453},
 	{u: 12545, i: 86689, n: "Tixx's Razor", r: [[86458, 1], [45846, 1], [45854, 1], [46746, 1]], s: 86615},
 	{u: 12738, i: 87823, n: "Nerashi's Razor", r: [[87638, 1], [45846, 1], [45854, 1], [46746, 1]], s: 88029},
-	{u: 12743, i: 88040, n: "Plaguedoctor's Pearl Carver", r: [[87809, 1], [12858, 1], [12882, 1]], s: 87644}
+	{u: 12743, i: 88040, n: "Plaguedoctor's Pearl Carver", r: [[87809, 1], [12858, 1], [12882, 1]], s: 87644},
+	{u: 13022, i: 89906, n: "Steelstar's Razor", r: [[89489, 1], [45846, 1], [45854, 1], [46746, 1]], s: 89813},
+	{u: 13032, i: 89787, n: "Heroic Dragonsblood Dagger", r: [[89489, 1], [89762, 1], [45846, 1], [45854, 1]]},
+	{u: 13049, i: 89774, n: "Dragonsblood Dagger", r: [[89537, 10], [89735, 1], [12858, 1], [12882, 1]], s: 89520},
+	{u: 13082, i: 89915, n: "Diviner's Pearl Carver", r: [[89735, 1], [12858, 1], [12882, 1]], s: 89650}
 ],
 Weaponsmith_Shield: [
 	{u: 5328, i: 29450, n: "Crusader's Shield", r: [[12907, 1], [12913, 1], [24345, 5]], s: 9391},
@@ -10697,7 +11362,11 @@ Weaponsmith_Shield: [
 	{u: 12408, i: 85266, n: "The Twins' Bastion", r: [[85113, 1], [45857, 1], [45858, 1], [46746, 1]], s: 84961, b: 84961},
 	{u: 12530, i: 86558, n: "Giftbringer's Bastion", r: [[86532, 1], [45857, 1], [45858, 1], [46746, 1]], s: 86608},
 	{u: 12712, i: 88027, n: "Plaguedoctor's Pearl Shell", r: [[87809, 1], [12906, 1], [12912, 1]], s: 87923},
-	{u: 12682, i: 87608, n: "Nerashi's Bastion", r: [[87638, 1], [45857, 1], [45858, 1], [46746, 1]], s: 87982}
+	{u: 12682, i: 87608, n: "Nerashi's Bastion", r: [[87638, 1], [45857, 1], [45858, 1], [46746, 1]], s: 87982},
+	{u: 13021, i: 89724, n: "Diviner's Pearl Shell", r: [[89735, 1], [12906, 1], [12912, 1]], s: 89743},
+	{u: 13058, i: 89922, n: "Steelstar's Bastion", r: [[89489, 1], [45857, 1], [45858, 1], [46746, 1]], s: 89555},
+	{u: 13095, i: 89910, n: "Dragonsblood Shield", r: [[89537, 10], [89735, 1], [12906, 1], [12912, 1]], s: 89459},
+	{u: 13104, i: 89441, n: "Heroic Dragonsblood Shield", r: [[89489, 1], [89900, 1], [45858, 1], [45857, 1]]}
 ],
 Weaponsmith_Greatsword: [
 	{u: 5417, i: 29990, n: "Charr Greatsword", r: [[19767, 1], [19679, 6]], s: 9505},
@@ -10911,7 +11580,12 @@ Weaponsmith_Greatsword: [
 	{u: 12641, i: 86441, n: "Giver's Pearl Broadsword", r: [[86685, 1], [12840, 1], [12888, 1]]},
 	{u: 12139, i: 83326, n: "Sunspear Greatblade", r: [[83926, 1], [71352, 1], [76084, 1]], s: 83970},
 	{u: 12695, i: 87604, n: "Nerashi's Claymore", r: [[87638, 1], [45847, 1], [45855, 1], [46746, 1]], s: 88092},
-	{u: 12741, i: 87641, n: "Plaguedoctor's Pearl Broadsword", r: [[87809, 1], [12840, 1], [12888, 1]], s: 88082}
+	{u: 12741, i: 87641, n: "Plaguedoctor's Pearl Broadsword", r: [[87809, 1], [12840, 1], [12888, 1]], s: 88082},
+	{u: 12528, i: 86594, n: "Tixx's Claymore", r: [[86458, 1], [45847, 1], [45855, 1], [46746, 1]], s: 86605},
+	{u: 13016, i: 89879, n: "Heroic Dragonsblood Greatsword", r: [[89489, 1], [89519, 1], [45847, 1], [45855, 1]]},
+	{u: 13051, i: 89803, n: "Dragonsblood Greatsword", r: [[89537, 10], [89735, 1], [12840, 1], [12888, 1]], s: 89823},
+	{u: 13086, i: 89706, n: "Steelstar's Claymore", r: [[89489, 1], [45847, 1], [45855, 1], [46746, 1]], s: 89593},
+	{u: 13096, i: 89439, n: "Diviner's Pearl Broadsword", r: [[89735, 1], [12840, 1], [12888, 1]], s: 89807}
 ],
 Weaponsmith_Hammer: [
 	{u: 5418, i: 29991, n: "Charr Hammer", r: [[19767, 1], [19679, 6]], s: 9507},
@@ -11126,7 +11800,11 @@ Weaponsmith_Hammer: [
 	{u: 12577, i: 86564, n: "Tixx's Warhammer", r: [[86458, 1], [45851, 1], [45849, 1], [46746, 1]], s: 86622},
 	{u: 12668, i: 87513, n: "Mistbreaker", r: [[87505, 1], [45851, 1], [45849, 1], [46746, 1]], s: 87492},
 	{u: 12713, i: 87671, n: "Nerashi's Warhammer", r: [[87638, 1], [45851, 1], [45849, 1], [46746, 1]], s: 87666},
-	{u: 12723, i: 87720, n: "Plaguedoctor's Pearl Crusher", r: [[87809, 1], [12864, 1], [12899, 1]], s: 87684}
+	{u: 12723, i: 87720, n: "Plaguedoctor's Pearl Crusher", r: [[87809, 1], [12864, 1], [12899, 1]], s: 87684},
+	{u: 13041, i: 89576, n: "Dragonsblood Hammer", r: [[89537, 10], [89735, 1], [12864, 1], [12899, 1]], s: 89866},
+	{u: 13055, i: 89842, n: "Heroic Dragonsblood Hammer", r: [[89489, 1], [89558, 1], [45851, 1], [45849, 1]]},
+	{u: 13057, i: 89757, n: "Diviner's Pearl Crusher", r: [[89735, 1], [12864, 1], [12899, 1]], s: 89875},
+	{u: 13061, i: 89773, n: "Steelstar's Warhammer", r: [[89489, 1], [45851, 1], [45849, 1], [46746, 1]], s: 89542}
 ],
 Weaponsmith_Harpoon: [
 	{u: 5344, i: 30683, n: "Quetzal Harpoon", r: [[19887, 1], [12897, 1], [12994, 1]], s: 9410},
@@ -11317,7 +11995,11 @@ Weaponsmith_Harpoon: [
 	{u: 12376, i: 85131, n: "Zehtuka's Impaler", r: [[84930, 1], [45853, 1], [45849, 1], [46746, 1]], s: 84942, b: 84942},
 	{u: 12411, i: 85254, n: "The Twins' Impaler", r: [[85113, 1], [45853, 1], [45849, 1], [46746, 1]], s: 84947, b: 84947},
 	{u: 12633, i: 86688, n: "Tixx's Impaler", r: [[86458, 1], [45853, 1], [45849, 1], [46746, 1]], s: 86519},
-	{u: 12609, i: 86698, n: "Giftbringer's Impaler", r: [[86532, 1], [45853, 1], [45849, 1], [46746, 1]], s: 86467}
+	{u: 12609, i: 86698, n: "Giftbringer's Impaler", r: [[86532, 1], [45853, 1], [45849, 1], [46746, 1]], s: 86467},
+	{u: 12675, i: 87784, n: "Nerashi's Impaler", r: [[87638, 1], [45853, 1], [45849, 1], [46746, 1]], s: 87590},
+	{u: 12681, i: 87877, n: "Plaguedoctor's Pearl Impaler", r: [[87809, 1], [12998, 1], [12899, 1]], s: 87724},
+	{u: 13054, i: 89817, n: "Diviner's Pearl Impaler", r: [[89735, 1], [12998, 1], [12899, 1]], s: 89973},
+	{u: 13085, i: 89610, n: "Steelstar's Impaler", r: [[89489, 1], [45853, 1], [45849, 1], [46746, 1]], s: 89855}
 ],
 Scribe_Refinement: [
 	{u: 1, i: 19713, n: "Soft Wood Plank", r: [[19726, 2]]},
@@ -11363,7 +12045,8 @@ Scribe_Refinement: [
 	{u: 11250, i: 75857, n: "Resonating Fragment", r: [[71428, 3]]},
 	{u: 11253, i: 76708, n: "Green Wood Pulp", r: [[19710, 1]]},
 	{u: 11355, i: 75739, n: "Hard Wood Pulp", r: [[19711, 1]]},
-	{u: 11570, i: 71049, n: "Resonating Core", r: [[75857, 3]]}
+	{u: 11570, i: 71049, n: "Resonating Core", r: [[75857, 3]]},
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
 ],
 Scribe_Component: [
 	{u: 9933, i: 72549, n: "Mithril Nib", r: [[19684, 3]]},
@@ -11891,7 +12574,25 @@ Scribe_GuildDecoration: [
 	{u: 12806, i: 88592, n: "Silver Twin Largos Trophy", r: [[70489, 1]]},
 	{u: 12808, i: 88949, n: "Bronze Conjured Amalgamate Trophy", r: [[74768, 1]]},
 	{u: 12812, i: 88906, n: "Silver Qadim Trophy", r: [[70489, 1]]},
-	{u: 12814, i: 88846, n: "Silver Conjured Amalgamate Trophy", r: [[70489, 1]]}
+	{u: 12814, i: 88846, n: "Silver Conjured Amalgamate Trophy", r: [[70489, 1]]},
+	{u: 12786, i: 88670, n: "Gold Qadim Trophy", r: [[70933, 1]]},
+	{u: 12818, i: 89043, n: "Pot of Chrysanthemums", r: [[70454, 1], [12156, 10]]},
+	{u: 12820, i: 89050, n: "Primordial Leviathan Rib Cage: Right Curved", r: [[74768, 1], [24341, 20]]},
+	{u: 12822, i: 89080, n: "Decorated Casket", r: [[70489, 1]]},
+	{u: 13007, i: 89417, n: "Ice Castle: Turret", r: [[70489, 1], [72537, 1], [24277, 1]]},
+	{u: 13008, i: 89396, n: "Ice Castle: Roof", r: [[70489, 1], [24277, 1], [72537, 1]]},
+	{u: 13010, i: 89384, n: "Freezie's Heart Statue", r: [[70933, 1], [70930, 5]]},
+	{u: 13133, i: 90078, n: "Super Ice Wall", r: [[70926, 1], [75694, 4]]},
+	{u: 13135, i: 90101, n: "Super Snow Floor", r: [[70926, 1], [75862, 4]]},
+	{u: 13136, i: 90087, n: "Super Cliff Face", r: [[70926, 1], [75862, 8], [70426, 8]]},
+	{u: 13225, i: 91170, n: "Silver Ether Djinn Trophy", r: [[70489, 1]]},
+	{u: 13226, i: 91151, n: "Silver Cardinal Adina Trophy", r: [[70489, 1]]},
+	{u: 13227, i: 91173, n: "Bronze Ether Djinn Trophy", r: [[74768, 1]]},
+	{u: 13230, i: 91177, n: "Bronze Cardinal Adina Trophy", r: [[74768, 1]]},
+	{u: 13232, i: 91259, n: "Bronze Cardinal Sabir Trophy", r: [[74768, 1]]},
+	{u: 13233, i: 91254, n: "Silver Cardinal Sabir Trophy", r: [[70489, 1]]},
+	{u: 13234, i: 91311, n: "Red Dragon Target", r: [[74768, 1], [19711, 20], [71692, 5], [43319, 100]]},
+	{u: 13235, i: 91321, n: "Dragon Hologram Generator", r: [[70933, 1], [46738, 30], [46743, 30], [43320, 100]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
@@ -12717,7 +13418,8 @@ Jeweler_Refinement: [
 	{u: 11285, i: 71580, n: "Glass Mug", r: [[75075, 3], [46747, 1]]},
 	{u: 11628, i: 75075, n: "Lump of Glass", r: [[71641, 3], [46747, 1]]},
 	{u: 7310, i: 46743, n: "Xunlai Electrum Ingot", r: [[19687, 20], [19682, 10], [19686, 20], [46742, 1]]},
-	{u: 12053, i: 46742, n: "Lump of Mithrillium", r: [[19684, 50], [19721, 1], [46747, 10]]}
+	{u: 12053, i: 46742, n: "Lump of Mithrillium", r: [[19684, 50], [19721, 1], [46747, 10]]},
+	{u: 13006, i: 42010, n: "Azurite Orb", r: [[42006, 2], [24276, 5]]}
 ],
 Jeweler_Component: [
 	{u: 1714, i: 19641, n: "Shark Statue", r: [[19685, 250], [24295, 250], [19669, 1], [24289, 250]], s: 9635, p: {coin: 100000}},
@@ -13009,7 +13711,8 @@ Jeweler_Amulet: [
 	{u: 11315, i: 72968, n: "Maguuma Lily Orichalcum Amulet", r: [[75965, 5], [12821, 1], [12815, 1]], s: 76915, b: 76915},
 	{u: 12259, i: 83687, n: "Monstrous Amulet", r: [[84581, 5], [12821, 1], [12815, 1]], s: 83569},
 	{u: 12183, i: 84320, n: "Brandspark Amulet", r: [[84765, 5], [12821, 1], [12815, 1]], s: 82829},
-	{u: 12461, i: 82339, n: "Mournstone Amulet", r: [[82495, 5], [12821, 1], [12815, 1]], s: 85627, b: 85627}
+	{u: 12461, i: 82339, n: "Mournstone Amulet", r: [[82495, 5], [12821, 1], [12815, 1]], s: 85627, b: 85627},
+	{u: 13046, i: 89671, n: "Serpentite Orichalcum Amulet", r: [[89696, 5], [12821, 1], [12815, 1]], s: 89713, b: 89713}
 ],
 Jeweler_Ring: [
 	{u: 3469, i: 23311, n: "Deldrimor Ring Replica", r: [[19683, 5]], s: 9548},
@@ -13150,7 +13853,8 @@ Jeweler_Ring: [
 	{u: 11607, i: 73224, n: "Agate Orichalcum Ring", r: [[75435, 5], [12827, 1], [12815, 1]]},
 	{u: 12277, i: 82598, n: "Monstrous Ring", r: [[84581, 5], [12827, 1], [12815, 1]], s: 84049},
 	{u: 12279, i: 83293, n: "Brandspark Ring", r: [[84765, 5], [12827, 1], [12815, 1]], s: 82429},
-	{u: 12460, i: 82896, n: "Mournstone Ring", r: [[82495, 5], [12827, 1], [12815, 1]], s: 85558, b: 85558}
+	{u: 12460, i: 82896, n: "Mournstone Ring", r: [[82495, 5], [12827, 1], [12815, 1]], s: 85558, b: 85558},
+	{u: 13050, i: 89935, n: "Serpentite Orichalcum Ring", r: [[89696, 5], [12827, 1], [12815, 1]], s: 89916, b: 89916}
 ],
 Jeweler_Earring: [
 	{u: 3507, i: 13373, n: "Topaz Silver Earring", r: [[12811, 1], [12817, 1], [24535, 1]]},
@@ -13290,7 +13994,8 @@ Jeweler_Earring: [
 	{u: 12228, i: 84500, n: "Sunset Earring", r: [[84581, 5], [12809, 1], [12815, 1]], s: 82386},
 	{u: 6526, i: 36578, n: "Shukov's Launch Codes", r: [[12809, 1], [12815, 1], [44540, 1]], s: 36618},
 	{u: 12210, i: 84416, n: "Brandspark Earring", r: [[84765, 5], [12809, 1], [12815, 1]], s: 84441},
-	{u: 12458, i: 82478, n: "Mournstone Earring", r: [[82495, 5], [12809, 1], [12815, 1]], s: 85526, b: 85526}
+	{u: 12458, i: 82478, n: "Mournstone Earring", r: [[82495, 5], [12809, 1], [12815, 1]], s: 85526, b: 85526},
+	{u: 13066, i: 89958, n: "Serpentite Orichalcum Earring", r: [[89696, 5], [12809, 1], [12815, 1]], s: 89479, b: 89479}
 ],
 Jeweler_Backpack: [
 	{u: 9274, i: 62913, n: "Elegant Jeweler's Backpack", r: [[62984, 1], [62909, 1], [19721, 3]]},
