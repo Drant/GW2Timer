@@ -447,6 +447,7 @@ var GW2T_ACCOUNT_METADATA = {
 		217, // Daily Jahai Bluffs
 		223, // Daily Thunderhead Peaks
 		227, // Daily Dragonfall
+        234, // Daily Grothmar Valley
 		221, // Daily Roller Beetle Racing
 		207, // Sunken Treasure Hunter Daily
 		101, // Seasonal Activities
@@ -486,6 +487,7 @@ var GW2T_ACCOUNT_METADATA = {
 		216, // A Star to Guide Us
 		224, // All or Nothing
 		226, // War Eternal
+        236, // Prologue: Bound by Blood
 		{en: "General", de: "Allgemein", es: "Logros generales", fr: "Général", zh: "常规"},
 		137, // Current Events
 		27, // Dungeons

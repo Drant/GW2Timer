@@ -128,7 +128,8 @@ Tailor_Refinement: [
 	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
 	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]},
 	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]},
-	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
+	{u: 12959, i: 89105, n: "Mystic Aspect", r: [[89271, 10], [89103, 1], [89258, 1], [89216, 1]], s: 91479}
 ],
 Tailor_Component: [
 	{u: 844, i: 19629, n: "Gift of History", r: [[24310, 100], [19737, 250], [19664, 1], [24277, 250]], s: 9623, p: {coin: 100000}},
@@ -2028,7 +2029,8 @@ Leatherworker_Refinement: [
 	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
 	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]},
 	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]},
-	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
+	{u: 12959, i: 89105, n: "Mystic Aspect", r: [[89271, 10], [89103, 1], [89258, 1], [89216, 1]], s: 91479}
 ],
 Leatherworker_Component: [
 	{u: 1126, i: 13093, n: "Rawhide Chestguard Padding", r: [[19720, 1], [19792, 2]]},
@@ -3931,7 +3933,8 @@ Armorsmith_Refinement: [
 	{u: 12249, i: 82678, n: "Pulsing Brandspark", r: [[83757, 10], [24330, 1], [83284, 3], [83103, 10]]},
 	{u: 12309, i: 82796, n: "Oiled Forged Scrap", r: [[73034, 1], [82582, 20], [82678, 1]]},
 	{u: 12653, i: 87150, n: "Olmakhan Charm", r: [[83284, 50], [19721, 1], [66933, 100], [86967, 10]]},
-	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
+	{u: 12959, i: 89105, n: "Mystic Aspect", r: [[89271, 10], [89103, 1], [89258, 1], [89216, 1]], s: 91479}
 ],
 Armorsmith_Component: [
 	{u: 255, i: 13108, n: "Bronze Chain Boot Panel", r: [[19679, 2]]},
@@ -5838,7 +5841,8 @@ Artificer_Refinement: [
 	{u: 12032, i: 80791, n: "Composite Wood Board", r: [[19713, 10], [19714, 5], [19711, 10], [46744, 1]]},
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
 	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283},
-	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
+	{u: 12833, i: 89133, n: "Mystic Mote", r: [[89271, 10], [89098, 1], [89141, 1], [89182, 1]], s: 91571}
 ],
 Artificer_Component: [
 	{u: 3835, i: 12971, n: "Green Staff Shaft", r: [[19710, 4]]},
@@ -7434,7 +7438,8 @@ Huntsman_Refinement: [
 	{u: 12032, i: 80791, n: "Composite Wood Board", r: [[19713, 10], [19714, 5], [19711, 10], [46744, 1]]},
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
 	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283},
-	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
+	{u: 12833, i: 89133, n: "Mystic Mote", r: [[89271, 10], [89098, 1], [89141, 1], [89182, 1]], s: 91571}
 ],
 Huntsman_Component: [
 	{u: 4458, i: 12968, n: "Green Torch Handle", r: [[19710, 2]]},
@@ -9620,7 +9625,8 @@ Weaponsmith_Refinement: [
 	{u: 12032, i: 80791, n: "Composite Wood Board", r: [[19713, 10], [19714, 5], [19711, 10], [46744, 1]]},
 	{u: 12034, i: 80714, n: "Carbonized Mithrillium Ingot", r: [[19683, 10], [19688, 5], [19681, 10], [46742, 1]]},
 	{u: 12481, i: 85828, n: "Kralkatite Ingot", r: [[86069, 10], [86269, 10], [19721, 1]], s: 86283},
-	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]}
+	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
+	{u: 12833, i: 89133, n: "Mystic Mote", r: [[89271, 10], [89098, 1], [89141, 1], [89182, 1]], s: 91571}
 ],
 Weaponsmith_Component: [
 	{u: 5324, i: 12848, n: "Bronze Axe Blade", r: [[19679, 3]]},
@@ -12592,7 +12598,13 @@ Scribe_GuildDecoration: [
 	{u: 13232, i: 91259, n: "Bronze Cardinal Sabir Trophy", r: [[74768, 1]]},
 	{u: 13233, i: 91254, n: "Silver Cardinal Sabir Trophy", r: [[70489, 1]]},
 	{u: 13234, i: 91311, n: "Red Dragon Target", r: [[74768, 1], [19711, 20], [71692, 5], [43319, 100]]},
-	{u: 13235, i: 91321, n: "Dragon Hologram Generator", r: [[70933, 1], [46738, 30], [46743, 30], [43320, 100]]}
+	{u: 13235, i: 91321, n: "Dragon Hologram Generator", r: [[70933, 1], [46738, 30], [46743, 30], [43320, 100]]},
+	{u: 13228, i: 91208, n: "Gold Cardinal Adina Trophy", r: [[70933, 1]]},
+	{u: 13229, i: 91189, n: "Gold Cardinal Sabir Trophy", r: [[70933, 1]]},
+	{u: 13231, i: 91251, n: "Gold Ether Djinn Trophy", r: [[70933, 1]]},
+	{u: 13244, i: 91450, n: "Zephyr Koi Lantern", r: [[71146, 1], [24312, 1], [70714, 4]]},
+	{u: 13245, i: 91418, n: "Zephyr Sailboat", r: [[70933, 1], [19712, 10]]},
+	{u: 13246, i: 91598, n: "Zephyr Water Pot", r: [[70454, 1], [74852, 5], [12156, 5]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
@@ -12674,7 +12686,12 @@ Scribe_Backpack: [
 ],
 Chef_Refinement: [
 	{u: 10909, i: 72224, n: "Empty Keg", r: [[19709, 10], [19684, 10], [73034, 3]]},
-	{u: 10950, i: 73034, n: "Vial of Linseed Oil", r: [[74090, 20], [77256, 5], [76839, 1]]}
+	{u: 10950, i: 73034, n: "Vial of Linseed Oil", r: [[74090, 20], [77256, 5], [76839, 1]]},
+	{u: 13250, i: 91741, n: "Pile of Enriched Compost", r: [[91739, 5], [91786, 1]]},
+	{u: 13251, i: 91786, n: "Exquisite Extract of Nourishment", r: [[91838, 5], [91697, 5], [91684, 5], [91726, 10]]},
+	{u: 13254, i: 46730, n: "Bloodstone Brick", r: [[46731, 100], [19925, 2], [46747, 10]]},
+	{u: 13259, i: 46734, n: "Empyreal Star", r: [[46735, 100], [19925, 2], [46747, 10]]},
+	{u: 13260, i: 46732, n: "Dragonite Ingot", r: [[46733, 100], [19925, 2], [46747, 10]]}
 ],
 Chef_Component: [
 	{u: 3164, i: 19634, n: "Vial of Liquid Flame", r: [[12544, 250], [24315, 100], [19668, 1], [24325, 100]], s: 9631, p: {coin: 100000}},
@@ -12686,7 +12703,8 @@ Chef_Component: [
 	{u: 9271, i: 62988, n: "Hearty Chef's Tools", r: [[12281, 5]]},
 	{u: 9272, i: 62989, n: "Gourmet Chef's Tools", r: [[12519, 5]]},
 	{u: 9273, i: 62990, n: "Ambrosial Chef's Tools", r: [[12501, 5]]},
-	{u: 9790, i: 66923, n: "Plate of Piquant Plant Food", r: [[24359, 2], [12544, 2], [12547, 2], [66933, 4]], s: 66907}
+	{u: 9790, i: 66923, n: "Plate of Piquant Plant Food", r: [[24359, 2], [12544, 2], [12547, 2], [66933, 4]], s: 66907},
+	{u: 13258, i: 91745, n: "Portable Composter", r: [[46736, 4], [46739, 1]]}
 ],
 Chef_LegendaryComponent: [
 	{u: 10704, i: 75053, n: "Swiftly Scrambled Eggs", r: [[73683, 1], [12138, 1], [12178, 1], [12137, 1]], s: 71489},
@@ -12766,7 +12784,19 @@ Chef_IngredientCooking: [
 	{u: 10741, i: 74242, n: "Bag of Cassava Flour", r: [[73113, 10], [77256, 5], [76839, 1]], s: 73781},
 	{u: 11876, i: 79902, n: "Jar of Savory Winterberry Sauce", r: [[79899, 5], [12157, 2], [12335, 1], [12155, 1]]},
 	{u: 12068, i: 82527, n: "Dollop of Choya Harissa", r: [[84696, 1], [12278, 2], [77256, 1], [12531, 2]], s: 83256, b: 83256},
-	{u: 12096, i: 82915, n: "Pile of Jacarandere", r: [[83195, 1], [12278, 2], [77256, 1], [12328, 2]], s: 84618, b: 84618}
+	{u: 12096, i: 82915, n: "Pile of Jacarandere", r: [[83195, 1], [12278, 2], [77256, 1], [12328, 2]], s: 84618, b: 84618},
+	{u: 9224, i: 91860, n: "Jar of Orange-Clove Syrup", r: [[91796, 1], [12351, 1], [12252, 1], [91825, 1]]},
+	{u: 9247, i: 91861, n: "Jar of Hollandaise Sauce", r: [[12143, 1], [12138, 1], [12252, 1], [12153, 1]]},
+	{u: 9256, i: 91803, n: "Jar of Mint-Parsley Sauce", r: [[91793, 1], [12246, 1], [12158, 1]]},
+	{u: 9257, i: 91677, n: "Jar of Salsa Garnish", r: [[12141, 1], [12339, 1], [12142, 1], [91715, 1]]},
+	{u: 9258, i: 91719, n: "Jar of Sesame Syrup", r: [[91825, 1], [91701, 1]]},
+	{u: 9259, i: 91868, n: "Pile of Clove Spice Mix", r: [[91796, 1], [12258, 1]]},
+	{u: 13248, i: 91826, n: "Piece of Cured Meat", r: [[91751, 1], [12153, 3]]},
+	{u: 13249, i: 91765, n: "Filet of Sous-Vide Meat", r: [[91751, 1], [12156, 1]]},
+	{u: 13252, i: 91722, n: "Glob of Gelatin", r: [[91702, 1], [12156, 1]]},
+	{u: 13253, i: 91825, n: "Bottle of Simple Syrup", r: [[12155, 1], [12156, 1]]},
+	{u: 13263, i: 92006, n: "Side of Charred Meat", r: [[24359, 5], [19750, 1], [24313, 1], [68955, 2]]},
+	{u: 13267, i: 92001, n: "Handful of Charr Spice Blend", r: [[92072, 5], [12544, 3], [12504, 10], [12153, 2]]}
 ],
 Chef_Snack: [
 	{u: 2841, i: 12233, n: "Handful of Trail Mix", r: [[12338, 1], [12337, 1], [12250, 1], [12255, 1]], s: 9383},
@@ -12859,7 +12889,24 @@ Chef_Snack: [
 	{u: 11928, i: 80373, n: "((778249))", r: [[74266, 10], [12272, 1], [12491, 2], [12508, 5]], s: 80232},
 	{u: 12063, i: 82030, n: "Fried Oysters", r: [[81837, 8], [12474, 1], [12158, 1], [12137, 1]]},
 	{u: 12111, i: 84550, n: "Red-Lentil Saobosa", r: [[82866, 1], [12166, 2], [12156, 2], [12158, 3]], s: 82750, b: 82750},
-	{u: 12271, i: 82642, n: "Cup of Light-Roasted Coffee", r: [[82991, 1], [19750, 2], [12156, 2], [77256, 1]], s: 84562, b: 84562}
+	{u: 12271, i: 82642, n: "Cup of Light-Roasted Coffee", r: [[82991, 1], [19750, 2], [12156, 2], [77256, 1]], s: 84562, b: 84562},
+	{u: 9203, i: 91865, n: "Peppercorn-Spiced Eggs Benedict", r: [[91842, 1], [91869, 1]]},
+	{u: 9204, i: 91758, n: "Eggs Benedict with Mint-Parsley Sauce", r: [[91842, 1], [91803, 1]]},
+	{u: 9205, i: 91771, n: "Peppercorn and Veggie Flatbread", r: [[76603, 1], [12511, 1], [12142, 1], [91869, 1]]},
+	{u: 9206, i: 91876, n: "Salsa-Topped Veggie Flatbread", r: [[76603, 1], [12511, 1], [12142, 1], [91677, 1]]},
+	{u: 9207, i: 91823, n: "Sesame Veggie Flatbread", r: [[76603, 1], [12511, 1], [12142, 1], [91701, 1]]},
+	{u: 9208, i: 91727, n: "Mint and Veggie Flatbread", r: [[76603, 1], [12511, 1], [12142, 1], [91793, 1]]},
+	{u: 9209, i: 91784, n: "Clove-Spiced Pear and Cured Meat Flatbread", r: [[76603, 1], [91826, 2], [91868, 1], [12514, 1]]},
+	{u: 9210, i: 91867, n: "Sesame-Asparagus and Cured Meat Flatbread", r: [[76603, 1], [91826, 2], [91701, 1], [12505, 1]]},
+	{u: 9211, i: 91703, n: "Mint-Pear Cured Meat Flatbread", r: [[76603, 1], [91826, 2], [91793, 1], [12514, 1]]},
+	{u: 9233, i: 91705, n: "Clove-Spiced Eggs Benedict", r: [[91842, 1], [91868, 1]]},
+	{u: 9234, i: 91847, n: "Salsa Eggs Benedict", r: [[91842, 1], [91677, 1]]},
+	{u: 9235, i: 91855, n: "Sesame Eggs Benedict", r: [[91842, 1], [91701, 1]]},
+	{u: 9236, i: 91698, n: "Clove and Veggie Flatbread", r: [[76603, 1], [12511, 1], [12142, 1], [91796, 1]]},
+	{u: 9237, i: 91848, n: "Peppered Cured Meat Flatbread", r: [[76603, 1], [91826, 2], [91869, 1]]},
+	{u: 9238, i: 91878, n: "Cilantro and Cured Meat Flatbread", r: [[76603, 1], [91826, 2], [91715, 1], [12339, 1]]},
+	{u: 9254, i: 91842, n: "Plate of Eggs Benedict", r: [[12143, 1], [91861, 1], [91826, 1], [76603, 1]]},
+	{u: 13266, i: 91917, n: "Plate of Spicy Moa Wings", r: [[92072, 2], [24360, 5], [12158, 2], [12136, 2]], s: 92060}
 ],
 Chef_Dessert: [
 	{u: 2899, i: 12225, n: "Cinnamon Apple", r: [[12177, 1], [12165, 1]]},
@@ -12970,7 +13017,23 @@ Chef_Dessert: [
 	{u: 11856, i: 79541, n: "Plate of Island Pudding", r: [[12145, 5], [12170, 1], [12155, 5], [79507, 1]], s: 79582},
 	{u: 11879, i: 79748, n: "Winterberry Pie", r: [[79899, 5], [12155, 1], [12166, 1], [12252, 1]], s: 79897},
 	{u: 11881, i: 79776, n: "Winterberry Sorbet", r: [[79899, 5], [38216, 1], [24318, 1], [12252, 1]], s: 79922},
-	{u: 12656, i: 87029, n: "Avocado Smoothie", r: [[12340, 1], [86601, 2], [87289, 1]], s: 87145}
+	{u: 12656, i: 87029, n: "Avocado Smoothie", r: [[12340, 1], [86601, 2], [87289, 1]], s: 87145},
+	{u: 9191, i: 91851, n: "Strawberry Cilantro Cheesecake", r: [[38216, 2], [12169, 1], [91715, 1], [12253, 3]]},
+	{u: 9192, i: 91834, n: "Mint Strawberry Cheesecake", r: [[38216, 2], [12169, 1], [91793, 1], [12253, 3]]},
+	{u: 9193, i: 91743, n: "Mint Creme Brulee", r: [[38216, 1], [91793, 1], [12255, 2], [12254, 2]]},
+	{u: 9194, i: 91837, n: "Sesame Creme Brulee", r: [[38216, 1], [91719, 1], [12342, 1]]},
+	{u: 9195, i: 91746, n: "Mango Cilantro Creme Brulee", r: [[38216, 1], [91715, 1], [12543, 1], [12339, 1]]},
+	{u: 9196, i: 91742, n: "Spiced Pepper Creme Brulee", r: [[38216, 1], [91869, 1], [12331, 1]]},
+	{u: 9197, i: 91766, n: "Clove-Spiced Creme Brulee", r: [[38216, 1], [91868, 1]]},
+	{u: 9198, i: 91841, n: "Bowl of Fruit Salad with Orange-Clove Syrup", r: [[36793, 1], [91860, 1]]},
+	{u: 9199, i: 91737, n: "Bowl of Spiced Fruit Salad", r: [[36793, 1], [91869, 1], [12331, 1]]},
+	{u: 9200, i: 91769, n: "Bowl of Fruit Salad with Cilantro Garnish", r: [[36793, 1], [91715, 1], [12339, 1]]},
+	{u: 9201, i: 91732, n: "Bowl of Sesame Fruit Salad", r: [[36793, 1], [91719, 1], [12328, 1], [12339, 1]]},
+	{u: 9202, i: 91690, n: "Bowl of Fruit Salad with Mint Garnish", r: [[36793, 1], [91793, 1], [91825, 1]]},
+	{u: 9230, i: 91761, n: "Orange Clove Cheesecake", r: [[38216, 2], [12169, 1], [91860, 1]]},
+	{u: 9231, i: 91835, n: "Spiced Peppercorn Cheesecake", r: [[38216, 2], [12169, 1], [91869, 1]]},
+	{u: 9232, i: 91729, n: "Sesame Cheesecake", r: [[38216, 2], [12169, 1], [91701, 1]]},
+	{u: 13269, i: 92078, n: "Bowl of Green Chile Ice Cream", r: [[92001, 5], [38216, 1], [86601, 25]], s: 91894}
 ],
 Chef_Soup: [
 	{u: 2878, i: 12199, n: "Bowl of Red Meat Stock", r: [[12156, 1], [24359, 2], [12142, 2], [12134, 2]]},
@@ -13048,7 +13111,14 @@ Chef_Soup: [
 	{u: 10747, i: 72575, n: "Bowl of Curry Mussel Soup", r: [[12491, 1], [74266, 24], [12542, 1], [12350, 1]], s: 74157},
 	{u: 11620, i: 74777, n: "Bowl of Mussel Soup", r: [[74266, 24], [12268, 1]], s: 71997},
 	{u: 12160, i: 83345, n: "Bowl of Spiced Red Lentil Stew", r: [[82866, 3], [12489, 2], [24359, 2], [12267, 1]], s: 83169, b: 83169},
-	{u: 12207, i: 83955, n: "Bowl of Red Lentil Soup", r: [[82866, 3], [12143, 1], [12490, 2], [82915, 1]], s: 84053, b: 84053}
+	{u: 12207, i: 83955, n: "Bowl of Red Lentil Soup", r: [[82866, 3], [12143, 1], [12490, 2], [82915, 1]], s: 84053, b: 84053},
+	{u: 9228, i: 91754, n: "Spherified Clove-Spiced Oyster Soup", r: [[81837, 1], [91722, 1], [12206, 1], [91796, 1]]},
+	{u: 9229, i: 91756, n: "Spherified Sesame Oyster Soup", r: [[81837, 1], [91722, 1], [12491, 1], [91701, 1]]},
+	{u: 9245, i: 91804, n: "Spherified Cilantro Oyster Soup", r: [[81837, 1], [91722, 1], [12206, 1], [91715, 1]]},
+	{u: 9246, i: 91713, n: "Spherified Peppercorn-Spiced Oyster Soup", r: [[81837, 1], [91722, 1], [12491, 1], [91869, 1]]},
+	{u: 9255, i: 91748, n: "Spherified Oyster Soup with Mint Garnish", r: [[81837, 1], [91722, 1], [12206, 1], [91793, 1]]},
+	{u: 13264, i: 91950, n: "Bowl of Firebreather Chili", r: [[91954, 1], [92001, 2], [82915, 1]], s: 92038},
+	{u: 13268, i: 91954, n: "Bowl of Carne Khan Chili", r: [[92001, 5], [92006, 1], [12260, 2], [12239, 25]], s: 91993}
 ],
 Chef_Meal: [
 	{u: 2887, i: 12209, n: "Grilled Poultry", r: [[24360, 1], [12178, 1]]},
@@ -13140,7 +13210,33 @@ Chef_Meal: [
 	{u: 12140, i: 83622, n: "Plate of Sugar Rib Roast", r: [[82866, 10], [82806, 1], [82527, 3], [82915, 1]], s: 83775, b: 83775},
 	{u: 12289, i: 82541, n: "Bowl of \"Elon Red\"", r: [[12252, 1], [82866, 2], [12158, 1], [12156, 2]], s: 82352, b: 82352},
 	{u: 12658, i: 87076, n: "Bowl of Poultry Satay", r: [[12542, 2], [12181, 1], [87289, 1], [24360, 3]], s: 87125},
-	{u: 12661, i: 86997, n: "Plate of Beef Rendang", r: [[12542, 2], [24359, 2], [87289, 1], [12145, 5]], s: 87188}
+	{u: 12661, i: 86997, n: "Plate of Beef Rendang", r: [[12542, 2], [24359, 2], [87289, 1], [12145, 5]], s: 87188},
+	{u: 9190, i: 91770, n: "Plate of Peppered Clear Truffle Ravioli", r: [[12144, 1], [91722, 2], [41571, 1], [91869, 1]]},
+	{u: 9212, i: 91858, n: "Plate of Peppercorn-Spiced Beef Carpaccio", r: [[91751, 1], [91869, 1], [12252, 1]]},
+	{u: 9213, i: 91809, n: "Plate of Beef Carpaccio with Mint Garnish", r: [[91751, 1], [91793, 1], [12252, 1], [12248, 1]]},
+	{u: 9214, i: 91734, n: "Peppercorn-Crusted Sous-Vide Steak", r: [[91765, 1], [91869, 1], [12272, 1]]},
+	{u: 9215, i: 91805, n: "Cilantro Lime Sous-Vide Steak", r: [[91765, 1], [91715, 1], [12339, 1], [12153, 1]]},
+	{u: 9216, i: 91736, n: "Soy-Sesame Sous-Vide Steak", r: [[91765, 1], [91701, 1], [12271, 1], [12328, 1]]},
+	{u: 9217, i: 91780, n: "Plate of Clove-Spiced Coq Au Vin", r: [[24360, 2], [91796, 1], [8600, 1], [12163, 1]]},
+	{u: 9218, i: 91753, n: "Plate of Peppercorn-Spiced Coq Au Vin", r: [[24360, 2], [91869, 1], [8600, 1], [12163, 1]]},
+	{u: 9219, i: 91711, n: "Plate of Sesame-Crusted Coq Au Vin", r: [[24360, 2], [91701, 1], [8600, 1], [12163, 1]]},
+	{u: 9220, i: 91822, n: "Plate of Coq Au Vin with Mint Garnish", r: [[24360, 2], [91793, 1], [8600, 1], [12163, 1]]},
+	{u: 9225, i: 91794, n: "Plate of Peppercorn-Spiced Poultry Aspic", r: [[24360, 1], [91722, 3], [12167, 1], [91869, 1]]},
+	{u: 9226, i: 91775, n: "Plate of Sesame Poultry Aspic", r: [[24360, 1], [91722, 3], [12167, 1], [91701, 1]]},
+	{u: 9227, i: 91864, n: "Plate of Poultry Aspic with Mint Garnish", r: [[24360, 1], [91722, 3], [12167, 1], [91793, 1]]},
+	{u: 9239, i: 91806, n: "Plate of Clove-Spiced Beef Carpaccio", r: [[91751, 1], [91868, 1], [12252, 1]]},
+	{u: 9240, i: 91862, n: "Plate of Beef Carpaccio with Salsa Garnish", r: [[91751, 1], [91677, 1], [12339, 1]]},
+	{u: 9241, i: 91718, n: "Plate of Sesame-Ginger Beef Carpaccio", r: [[91751, 1], [91701, 1], [12339, 1], [12328, 1]]},
+	{u: 9242, i: 91790, n: "Mushroom Clove Sous-Vide Steak", r: [[91765, 1], [91796, 1], [12272, 1], [73504, 2]]},
+	{u: 9243, i: 91801, n: "Sous-Vide Steak with Mint-Parsley Sauce", r: [[91765, 1], [91803, 1], [12272, 1]]},
+	{u: 9244, i: 91709, n: "Plate of Coq Au Vin with Salsa", r: [[24360, 2], [91677, 1], [8600, 1], [12163, 1]]},
+	{u: 9248, i: 91797, n: "Plate of Clear Truffle and Mint Ravioli", r: [[12144, 1], [91722, 2], [91803, 1]]},
+	{u: 9249, i: 91798, n: "Plate of Clear Truffle and Sesame Ravioli", r: [[12144, 1], [91722, 2], [41571, 1], [91701, 1]]},
+	{u: 9250, i: 91735, n: "Plate of Clear Truffle and Cilantro Ravioli", r: [[12144, 1], [91722, 2], [12500, 1], [91715, 1]]},
+	{u: 9251, i: 91723, n: "Plate of Clove-Spiced Clear Truffle Ravioli", r: [[12144, 1], [91722, 2], [91796, 1], [41571, 1]]},
+	{u: 9252, i: 91704, n: "Plate of Poultry Aspic with Salsa Garnish", r: [[24360, 1], [91722, 3], [12167, 1], [91677, 1]]},
+	{u: 9253, i: 91839, n: "Plate of Clove-Spiced Poultry Aspic", r: [[24360, 1], [91722, 3], [12250, 1], [91868, 1]]},
+	{u: 13255, i: 91689, n: "Chef's Tasting Platter", r: [[12486, 1], [12465, 1], [12432, 1], [12452, 1]]}
 ],
 Chef_Feast: [
 	{u: 3167, i: 12555, n: "Tray of Banana Cream Pies", r: [[12230, 10]], s: 9638, b: 9638},
@@ -13326,7 +13422,8 @@ Chef_Feast: [
 	{u: 9714, i: 66534, n: "Feast of Black Pepper Cactus Salad", r: [[66529, 10]], s: 66449, b: 66449},
 	{u: 9721, i: 66525, n: "Pot of Sweet and Spicy Beans", r: [[66528, 10]], s: 66453, b: 66453},
 	{u: 12084, i: 82657, n: "Red Lentil and Flatbread Feast", r: [[82541, 5], [12406, 5], [82915, 3], [76603, 10]], s: 83317, b: 83317},
-	{u: 12310, i: 83545, n: "Pitcher of Desert-Spiced Coffee", r: [[82642, 10], [82527, 5], [12156, 20], [19750, 5]], s: 84315, b: 84315}
+	{u: 12310, i: 83545, n: "Pitcher of Desert-Spiced Coffee", r: [[82642, 10], [82527, 5], [12156, 20], [19750, 5]], s: 84315, b: 84315},
+	{u: 13265, i: 91943, n: "Feast of Carne Khan Chili", r: [[91954, 10]], s: 91904}
 ],
 Chef_Dye: [
 	{u: 3355, i: 12760, n: "Unidentified Orange Dye", r: [[12142, 25], [12134, 25]]},

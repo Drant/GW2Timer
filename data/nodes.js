@@ -38,7 +38,8 @@ Special: [
 	{u: "dragon_crystal", i: 89786, n: "Dragon Crystal Home Instance Node", p: {coin: 500000}},
 	{u: "kournan_supply_cache", i: 87889, n: "Supply Cache", p: {coin: 500000}},
 	{u: "mistborn_mote", i: 90773, n: "Mistborn Mote Home Instance Node", p: {coin: 500000}},
-	{u: "mistonium_node", i: 88828, n: "Mistonium Node", p: {coin: 500000}}
+	{u: "mistonium_node", i: 88828, n: "Mistonium Node", p: {coin: 500000}},
+    {u: "bound_hatched_chili_pepper_node", i: 92035, n: "Bound Hatched Chili Pepper Home Instance Node", p: {coin: 600000}}
 ],
 Gathering: [
 	{u: "black_lion_hunters_board", i: 81594, n: "Black Lion Hunters Contract", p: {gem: 1200}},
