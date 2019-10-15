@@ -2163,17 +2163,17 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	/*{
+	{
 		isHalloween: true,
-		name_en: "Halloween 2018",
-		name_de: "Halloween 2018",
-		name_es: "Halloween 2018",
-		name_fr: "Halloween 2018",
-		name_zh: "万圣夜2018",
-		official: "news/its-time-for-tricks-and-treats/",
-		Start: new Date("2018-10-16T16:00:00Z"),
-		Finish: new Date("2018-11-06T16:00:00Z")
-	}*/
+		name_en: "Halloween 2019",
+		name_de: "Halloween 2019",
+		name_es: "Halloween 2019",
+		name_fr: "Halloween 2019",
+		name_zh: "万圣夜2019",
+		official: "news/halloween-2019-is-getting-closer/",
+		Start: new Date("2019-10-15T16:00:00Z"),
+		Finish: new Date("2019-11-05T16:00:00Z")
+	}
 	/*{
 		name_en: "Black Friday Sale",
 		name_de: "Black Friday Verkauf",
@@ -2219,9 +2219,9 @@ Story:
 	name_es: "Rey Loco dice",
 	name_fr: "Roi Dément a dit",
 	name_zh: "疯王说",
-	url: "https://www.guildwars2.com/en/the-game/releases/october-16-2018/",
-	Start: new Date("2018-10-16T16:00:00Z"),
-	Finish: new Date("2018-11-06T16:00:00Z")
+	url: "https://www.guildwars2.com/news/halloween-2019-is-getting-closer/",
+	Start: new Date("2019-10-15T16:00:00Z"),
+    Finish: new Date("2019-11-05T16:00:00Z")
 },
 
 /*
