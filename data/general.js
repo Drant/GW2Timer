@@ -2170,7 +2170,7 @@ Countdown: {
 		name_es: "Halloween 2019",
 		name_fr: "Halloween 2019",
 		name_zh: "万圣夜2019",
-		official: "news/halloween-2019-is-getting-closer/",
+		official: "the-game/releases/october-15-2019/",
 		Start: new Date("2019-10-15T16:00:00Z"),
 		Finish: new Date("2019-11-05T16:00:00Z")
 	}
@@ -2219,7 +2219,7 @@ Story:
 	name_es: "Rey Loco dice",
 	name_fr: "Roi Dément a dit",
 	name_zh: "疯王说",
-	url: "https://www.guildwars2.com/news/halloween-2019-is-getting-closer/",
+	url: "https://www.guildwars2.com/en/the-game/releases/october-15-2019/",
 	Start: new Date("2019-10-15T16:00:00Z"),
     Finish: new Date("2019-11-05T16:00:00Z")
 },
