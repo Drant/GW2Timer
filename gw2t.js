@@ -29860,7 +29860,7 @@ G = {
 		};
 		
 		// Daily fractal scales
-		var scaleids = [fractals[0], fractals[1], fractals[fractals.length - 1]]; // The daily scales are located in these API array indexes
+		var scaleids = [fractals[0], fractals[1], fractals[2]]; // The daily scales are located in these API array indexes
 		var scaleA = parseInt(T.DailyAssociation[(scaleids[0])]);
 		var scaleB = parseInt(T.DailyAssociation[(scaleids[1])]);
 		var scaleC = parseInt(T.DailyAssociation[(scaleids[2])]);
