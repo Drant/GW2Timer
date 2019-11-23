@@ -13916,6 +13916,7 @@ V = {
 			
 			// Button to clear all subscriptions
 			var controller = $("<div class='cssCenter'></div>").prependTo(dish);
+			$("<div class='cssCenter'>This feature is no longer maintained.</div>").prependTo(dish);
 			var dishmenu = $("#accDishMenu_Gem");
 			$("<button class='accButton'>" + D.getPhraseOriginal("Help") + "</button>").appendTo(controller).click(function()
 			{
@@ -33893,11 +33894,8 @@ T = {
 		var min = now.getUTCMinutes();
 		var minute = (~~(min / T.cMINUTES_IN_MINIFRAME) * T.cMINUTES_IN_MINIFRAME) + (pOffset * T.cMINUTES_IN_MINIFRAME);
 		minute = T.wrapInteger(minute, T.cMINUTES_IN_HOUR);
-		if (minute < T.cBASE_10)
-		{
-			minute = "0" + minute;
-		}
-		return minute;
+		
+		return T.padZero(minute);
 	},
 	
 	/*
@@ -34497,7 +34495,13 @@ T = {
 	{
 		var time = pTime.split(":");
 		return parseInt(time[0], T.cBASE_10) * T.cMINUTES_IN_HOUR
-				+ parseInt(time[1], T.cBASE_10);
+			+ parseInt(time[1], T.cBASE_10);
+	},
+	unparseChainTime: function(pMinutes)
+	{
+		var hours = ~~(pMinutes / T.cMINUTES_IN_HOUR);
+		var minutes = pMinutes % T.cSECONDS_IN_MINUTE;
+		return T.padZero(hours) + ":" + T.padZero(minutes);
 	},
 
 	/*
@@ -34519,6 +34523,16 @@ T = {
 
 		var now = new Date();
 		T.DST_IN_EFFECT = (now.dst() && O.Options.bol_detectDST) ? 1 : 0;
+	},
+	
+	/*
+	 * Pad an hour, minute, or second string with a zero if less than 10 (decimal).
+	 * @param string pTime.
+	 * @returns string padded time.
+	 */
+	padZero: function(pTime)
+	{
+		return (pTime < T.cBASE_10) ? "0" + pTime : pTime;
 	},
 
 	/*
@@ -34615,11 +34629,11 @@ T = {
 			}
 			else if (Settings.aWantHours === false)
 			{
-				minsec = min + ":" + ((sec < T.cBASE_10) ? "0" + sec : sec);
+				minsec = min + ":" + T.padZero(sec);
 			}
 			else
 			{
-				minsec = ((min < T.cBASE_10) ? "0" + min : min) + ":" + ((sec < T.cBASE_10) ? "0" + sec : sec);
+				minsec = T.padZero(min) + ":" + T.padZero(sec);
 			}
 		}
 		else
@@ -34630,7 +34644,7 @@ T = {
 			}
 			else
 			{
-				minsec = ((min < T.cBASE_10) ? "0" + min : min);
+				minsec = T.padZero(min);
 			}
 		}
 		
@@ -34649,7 +34663,7 @@ T = {
 			{
 				return minsec;
 			}
-			return ((hour < T.cBASE_10) ? "0" + hour : hour) + ":" + minsec;
+			return T.padZero(hour) + ":" + minsec;
 		}
 		// Else shift the hour and suffix the meridiem
 		var period = " AM";
@@ -34698,7 +34712,7 @@ T = {
 		var now = new Date();
 		var z = function(n)
 		{
-			return (n < 10 ? "0" : "") + n;
+			return T.padZero(n);
 		};
 		return (now.getFullYear() + "-" + z(now.getMonth() + 1) + "-" + z(now.getDate())
 			+ "_"
@@ -36527,6 +36541,17 @@ H = {
 	 */
 	generateTimeline: function()
 	{
+		var getInterim = function(pTime, pDuration)
+		{
+			let obj =
+			{
+				time: T.unparseChainTime(pTime),
+				duration: T.unparseChainTime(pDuration),
+				primacy: 0, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: ""
+			};
+			return obj;
+		};
+		
 		H.isTimelineGenerated = true;
 		$("#tmlTitle").text(D.getWordCapital("timeline"));
 		// Container for all the timelines
@@ -36537,6 +36562,49 @@ H = {
 		});
 		// Initialize "checklist" so collapsed lines are remembered as so
 		X.initializeChecklist(X.Checklists.Timeline, H.Timeline.length);
+		
+		// Insert space non-event into the timeline
+		for (var i = 0; i < H.Timeline.length; i++)
+		{
+			var chain = H.Timeline[i];
+			var segments = [];
+			var segmentNext, segTime, segDuration, segNextTime, segNextExpectedTime;
+			var length = chain.Segments.length;
+			for (var ii = 0; ii < length; ii++)
+			{
+				var segment = chain.Segments[ii];
+				segTime = T.parseChainTime(segment.time);
+				segDuration = T.parseChainTime(segment.duration);
+				segNextExpectedTime = segTime + segDuration;
+				// Initial segment
+				if (ii === 0 && segTime !== 0)
+				{
+					segments.push(getInterim(0, segTime));
+				}
+				// Actual segment
+				segments.push(segment);
+				// Following segment
+				if (ii+1 < length)
+				{
+					segmentNext = chain.Segments[ii+1];
+					segNextTime = T.parseChainTime(segmentNext.time);
+					if (segNextExpectedTime < segNextTime)
+					{
+						segments.push(getInterim(segNextExpectedTime, segNextTime - segNextExpectedTime));
+					}
+				}
+				// Final segment
+				if (ii+1 === length)
+				{
+					if (segTime + segDuration < T.cMINUTES_IN_2_HOURS)
+					{
+						segments.push(getInterim(segNextExpectedTime, T.cMINUTES_IN_2_HOURS - segNextExpectedTime));
+					}
+				}
+			}
+			chain.Segments = segments;
+		}
+		
 		// Create timeline
 		for (var i = 0; i < H.Timeline.length; i++)
 		{

@@ -435,6 +435,7 @@ var GW2T_ACCOUNT_METADATA = {
 		{en: "Daily", de: "Täglich", es: "Logros diarios", fr: "Quotidien", zh: "日常"},
 		97, // Daily
 		88, // Daily Fractals
+        239, // Daily Bjora Marches
 		142, // Daily Bloodstone Fen
 		145, // Daily Ember Bay
 		149, // Daily Bitterfrost Frontier
@@ -448,6 +449,8 @@ var GW2T_ACCOUNT_METADATA = {
 		223, // Daily Thunderhead Peaks
 		227, // Daily Dragonfall
         234, // Daily Grothmar Valley
+        243, // Daily Living World Season 4
+        238, // Daily Living World Season 3
 		221, // Daily Roller Beetle Racing
 		207, // Sunken Treasure Hunter Daily
 		101, // Seasonal Activities
@@ -460,6 +463,7 @@ var GW2T_ACCOUNT_METADATA = {
 		199, // Dragon Ball
 		201, // Daily Lunar New Year
 		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
+        241, // Whisper in the Dark
 		68, // Gates of Maguuma
 		70, // Entanglement
 		71, // The Dragon's Reach, Part 1
@@ -584,6 +588,7 @@ var GW2T_ACCOUNT_METADATA = {
 		118, // Legendary Backpacks
 		125, // Legendary Armor
 		173, // Legendary Trinkets
+        237, // Festival Collections
 		76, // Black Lion Collections
 		{en: "Festival", de: "Festlicher", es: "Festivo", fr: "Festival", zh: "传统"},
 		132, // Lunar New Year
