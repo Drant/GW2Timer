@@ -2037,7 +2037,7 @@ var GW2T_TIMELINE = [
 	{
 		zone: "dragon",
 		Segments: [
-			{ time: "01:30", duration: "00:15", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突袭" },
+			{ time: "01:30", duration: "00:15", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突袭" }
 		]
 	},
 	{
