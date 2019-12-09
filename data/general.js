@@ -1926,18 +1926,19 @@ var GW2T_TIMELINE = [
 	{
 		zone: "bjora",
 		Segments: [
-			{ time: "00:00", duration: "00:15", primacy: 3, name_en: "Icebrood", name_de: "Eisbrut", name_es: "Progelie", name_fr: "Couvegivre", name_zh: "冰巢" },
-			{ time: "01:40", duration: "00:10", primacy: 3, name_en: "Raven", name_de: "Raben", name_es: "Cuervo", name_fr: "Corbeau", name_zh: "鸦灵" },
-			{ time: "01:50", duration: "00:10", primacy: 2, name_en: "Shards", name_de: "Scherbe", name_es: "Esquirla", name_fr: "Éclat", name_zh: "碎片" }
+			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Icebrood", name_de: "Eisbrut", name_es: "Progelie", name_fr: "Couvegivre", name_zh: "冰巢" },
+			{ time: "01:35", duration: "00:15", primacy: 3, name_en: "Raven", name_de: "Raben", name_es: "Cuervo", name_fr: "Corbeau", name_zh: "鸦灵" },
+			{ time: "01:50", duration: "00:05", primacy: 2, name_en: "Shards", name_de: "Scherbe", name_es: "Esquirla", name_fr: "Éclat", name_zh: "碎片" },
+			{ time: "01:55", duration: "00:05", primacy: 3, name_en: "Icebrood", name_de: "Eisbrut", name_es: "Progelie", name_fr: "Couvegivre", name_zh: "冰巢" }
 		]
 	},
 	{
 		zone: "grothmar",
 		Segments: [
 			{ time: "00:10", duration: "00:15", primacy: 3, name_en: "Effigy", name_de: "Abbild", name_es: "Efigie", name_fr: "Effigie", name_zh: "雕像" },
-			{ time: "00:35", duration: "00:25", primacy: 3, name_en: "Doomlore", name_de: "Schicksalswissens", name_es: "Maldito", name_fr: "Funeste", name_zh: "厄运传说圣坛" },
+			{ time: "00:40", duration: "00:20", primacy: 3, name_en: "Doomlore", name_de: "Schicksalswissens", name_es: "Maldito", name_fr: "Funeste", name_zh: "厄运传说圣坛" },
 			{ time: "01:05", duration: "00:20", primacy: 3, name_en: "Ooze", name_de: "Schleim", name_es: "Légamo", name_fr: "Limon", name_zh: "软泥怪" },
-			{ time: "01:40", duration: "00:10", primacy: 3, name_en: "Concert", name_de: "Konzert", name_es: "Concierto", name_fr: "Concert", name_zh: "演出" }
+			{ time: "01:40", duration: "00:15", primacy: 3, name_en: "Concert", name_de: "Konzert", name_es: "Concierto", name_fr: "Concert", name_zh: "演出" }
 		]
 	},
 	{
