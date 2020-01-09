@@ -251,6 +251,7 @@ O = {
 		// GPS
 		int_setFollow: 1,
 		bol_displayCharacter: true,
+		bol_switchMap: true,
 		int_setFollowWvW: 2,
 		bol_displayCharacterWvW: true,
 		int_msecGPSRefresh: 50,
@@ -24733,7 +24734,7 @@ M = {
 	initializeTouch: function()
 	{
 		var that = this;
-		if (O.Options.bol_ignoreTouch || (that.isTouchEnabled && I.isTouchEnabled))
+		if (I.ModeCurrent === I.ModeEnum.Overlay || O.Options.bol_ignoreTouch || (that.isTouchEnabled && I.isTouchEnabled))
 		{
 			return;
 		}
@@ -29458,7 +29459,7 @@ P = {
 		}
 		
 		// If the player has changed the map in game and the website's map is different from it, then switch the website's map
-		if (P.MapSwitchGPS !== previousmap && P.MapSwitchGPS !== P.MapSwitchWebsite)
+		if (O.Options.bol_switchMap && P.MapSwitchGPS !== previousmap && P.MapSwitchGPS !== P.MapSwitchWebsite)
 		{
 			$(htmlidprefix + "SwitchButton").trigger("click");
 		}
