@@ -463,6 +463,7 @@ var GW2T_ACCOUNT_METADATA = {
 		199, // Dragon Ball
 		201, // Daily Lunar New Year
 		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
+		246, // Shadow in the Ice
         241, // Whisper in the Dark
 		68, // Gates of Maguuma
 		70, // Entanglement
@@ -508,6 +509,7 @@ var GW2T_ACCOUNT_METADATA = {
 		11, // Hall of Monuments
 		14, // Jumping Puzzles
 		169, // Mastery Insights
+		245, // Drakkar
 		133, // The Shatterer
 		58, // Triple Trouble
 		47, // Tequatl
