@@ -2900,9 +2900,9 @@ U = {
 
 	URL_META:
 	{
-		Forum: "http://forum.renaka.com/forum/368355/",
-		News: "http://forum.renaka.com/topic/5500046/",
-		Overlay: "http://forum.renaka.com/topic/5546166/",
+		Forum: "https://www.tapatalk.com/groups/renaka/gw2timer-com-gw2-guild-wars-2-f4/",
+		News: "https://www.tapatalk.com/groups/renaka/gw2timer-update-notes-t141.html",
+		Overlay: "https://www.tapatalk.com/groups/renaka/gw2navi-guild-wars-2-overlay-t144.html",
 		BuildNotes: "https://{0}-forum.guildwars2.com/categories/game-release-notes"
 	},
 	ScriptURLs: {}, // Associative array of script URLs, so they are not loaded again

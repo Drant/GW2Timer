@@ -1881,7 +1881,7 @@ BloodstoneCreatures: {
 	color: "crimson",
 	view: "default",
 	wiki: "https://wiki.guildwars2.com/wiki/Bloodstone_Sightings",
-	credit: "http://forum.renaka.com/topic/6205181/",
+	credit: "https://www.tapatalk.com/groups/renaka/bloodstone-crazed-creatures-timers-t72.html",
 	iconsize: 96,
 	ringsize: 48,
 	wantpath: false,
