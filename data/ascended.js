@@ -1121,7 +1121,8 @@ Accessory: [
 	{i: 87873, n: "Tarnished Kournan Coin", p: {achievement: 0}},
 	{i: 89544, n: "Dagnar's Badge", p: {achievement: 0}},
 	{i: 90763, n: "Mists-Charged Treasure", p: {achievement: 0}},
-	{i: 91035, n: "Glimpse", p: {achievement: 0}}
+	{i: 91035, n: "Glimpse", p: {achievement: 0}},
+	{i: 92706, n: "Asgeir's Talisman", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -2537,7 +2538,8 @@ Axe: [
 	{i: 89632, n: "Heroic Dragonsblood Axe", p: {coin: 1100000}},
 	{i: 89799, n: "Steelstar's Reaver", p: {coin: 1100000}},
 	{i: 90737, n: "Reaver of the Scion", p: {coin: 1100000}},
-	{i: 91622, n: "Mist Lord's Axe", p: {coin: 1100000}}
+	{i: 91622, n: "Mist Lord's Axe", p: {coin: 1100000}},
+	{i: 92835, n: "Reaver of the Broken Voice", p: {coin: 1100000}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -2606,7 +2608,8 @@ Mace: [
 	{i: 89707, n: "Steelstar's Flanged Mace", p: {coin: 1100000}},
 	{i: 89848, n: "Heroic Dragonsblood Mace", p: {coin: 1100000}},
 	{i: 90906, n: "Flanged Mace of the Scion", p: {coin: 1100000}},
-	{i: 91671, n: "Mist Lord's Mace", p: {coin: 1100000}}
+	{i: 91671, n: "Mist Lord's Mace", p: {coin: 1100000}},
+	{i: 92823, n: "Flanged Mace of the Broken Voice", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2681,7 +2684,8 @@ Sword: [
 	{i: 89566, n: "Heroic Dragonsblood Sword", p: {coin: 1200000}},
 	{i: 89645, n: "Steelstar's Blade", p: {coin: 1200000}},
 	{i: 90894, n: "Blade of the Scion", p: {coin: 1200000}},
-	{i: 91649, n: "Mist Lord's Sword", p: {coin: 1200000}}
+	{i: 91649, n: "Mist Lord's Sword", p: {coin: 1200000}},
+	{i: 92821, n: "Blade of the Broken Voice", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -2751,7 +2755,8 @@ Dagger: [
 	{i: 89787, n: "Heroic Dragonsblood Dagger", p: {coin: 1100000}},
 	{i: 89906, n: "Steelstar's Razor", p: {coin: 1100000}},
 	{i: 90428, n: "Razor of the Scion", p: {coin: 1100000}},
-	{i: 91636, n: "Mist Lord's Dagger", p: {coin: 1100000}}
+	{i: 91636, n: "Mist Lord's Dagger", p: {coin: 1100000}},
+	{i: 92834, n: "Razor of the Broken Voice", p: {coin: 1100000}}
 ],
 Pistol: [
 	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
@@ -2818,7 +2823,8 @@ Pistol: [
 	{i: 89647, n: "Heroic Dragonsblood Pistol", p: {coin: 1100000}},
 	{i: 89716, n: "Steelstar's Revolver", p: {coin: 1100000}},
 	{i: 90616, n: "Revolver of the Scion", p: {coin: 1100000}},
-	{i: 91675, n: "Mist Lord's Pistol", p: {coin: 1100000}}
+	{i: 91675, n: "Mist Lord's Pistol", p: {coin: 1100000}},
+	{i: 92819, n: "Revolver of the Broken Voice", p: {coin: 1100000}}
 ],
 Scepter: [
 	{i: 77441, n: "Chest of Scepters", p: {coin: 1100000}},
@@ -2887,7 +2893,8 @@ Scepter: [
 	{i: 91163, n: "Sabir's Scepter of the Healer", p: {coin: 1100000}},
 	{i: 91198, n: "Sabir's Scepter of the Assaulter", p: {coin: 1100000}},
 	{i: 91269, n: "Sabir's Scepter of the Malicious", p: {coin: 1100000}},
-	{i: 91619, n: "Mist Lord's Scepter", p: {coin: 1100000}}
+	{i: 91619, n: "Mist Lord's Scepter", p: {coin: 1100000}},
+	{i: 92828, n: "Wand of the Broken Voice", p: {coin: 1100000}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -2954,7 +2961,8 @@ Focus: [
 	{i: 91156, n: "Adina's Nexus of the Defender", p: {coin: 1000000}},
 	{i: 91223, n: "Adina's Nexus of the Assaulter", p: {coin: 1000000}},
 	{i: 91239, n: "Adina's Nexus of the Malicious", p: {coin: 1000000}},
-	{i: 91657, n: "Mist Lord's Focus", p: {coin: 1000000}}
+	{i: 91657, n: "Mist Lord's Focus", p: {coin: 1000000}},
+	{i: 92831, n: "Artifact of the Broken Voice", p: {coin: 1000000}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -3029,7 +3037,8 @@ Shield: [
 	{i: 89441, n: "Heroic Dragonsblood Shield", p: {coin: 1000000}},
 	{i: 89922, n: "Steelstar's Bastion", p: {coin: 1000000}},
 	{i: 90330, n: "Bastion of the Scion", p: {coin: 1000000}},
-	{i: 91633, n: "Mist Lord's Shield", p: {coin: 1000000}}
+	{i: 91633, n: "Mist Lord's Shield", p: {coin: 1000000}},
+	{i: 92826, n: "Bastion of the Broken Voice", p: {coin: 1000000}}
 ],
 Torch: [
 	{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
@@ -3098,7 +3107,8 @@ Torch: [
 	{i: 91190, n: "Peerless Defender Torch", p: {coin: 1000000}},
 	{i: 91219, n: "Peerless Healer Torch", p: {coin: 1000000}},
 	{i: 91264, n: "Peerless Malicious Torch", p: {coin: 1000000}},
-	{i: 91653, n: "Mist Lord's Torch", p: {coin: 1000000}}
+	{i: 91653, n: "Mist Lord's Torch", p: {coin: 1000000}},
+	{i: 92824, n: "Brazier of the Broken Voice", p: {coin: 1000000}}
 ],
 Warhorn: [
 	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
@@ -3166,7 +3176,8 @@ Warhorn: [
 	{i: 91199, n: "Sabir's Call of the Defender", p: {coin: 1000000}},
 	{i: 91238, n: "Sabir's Call of the Malicious", p: {coin: 1000000}},
 	{i: 91249, n: "Sabir's Call of the Assaulter", p: {coin: 1000000}},
-	{i: 91676, n: "Mist Lord's Warhorn", p: {coin: 1000000}}
+	{i: 91676, n: "Mist Lord's Warhorn", p: {coin: 1000000}},
+	{i: 92817, n: "Herald of the Broken Voice", p: {coin: 1000000}}
 ],
 Greatsword: [
 	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
@@ -3239,7 +3250,8 @@ Greatsword: [
 	{i: 89879, n: "Heroic Dragonsblood Greatsword", p: {coin: 1200000}},
 	{i: 90217, n: "Claymore of the Scion", p: {coin: 1200000}},
 	{i: 90883, n: "Exitare", p: {coin: 1200000}},
-	{i: 91646, n: "Mist Lord's Greatsword", p: {coin: 1200000}}
+	{i: 91646, n: "Mist Lord's Greatsword", p: {coin: 1200000}},
+	{i: 92818, n: "Claymore of the Broken Voice", p: {coin: 1200000}}
 ],
 Hammer: [
 	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -3312,7 +3324,8 @@ Hammer: [
 	{i: 89773, n: "Steelstar's Warhammer", p: {coin: 1100000}},
 	{i: 89842, n: "Heroic Dragonsblood Hammer", p: {coin: 1100000}},
 	{i: 90402, n: "Warhammer of the Scion", p: {coin: 1100000}},
-	{i: 91652, n: "Mist Lord's Hammer", p: {coin: 1100000}}
+	{i: 91652, n: "Mist Lord's Hammer", p: {coin: 1100000}},
+	{i: 92815, n: "Warhammer of the Broken Voice", p: {coin: 1100000}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
@@ -3384,7 +3397,8 @@ LongBow: [
 	{i: 91201, n: "Peerless Healer Greatbow", p: {coin: 1300000}},
 	{i: 91230, n: "Peerless Assaulter Greatbow", p: {coin: 1300000}},
 	{i: 91263, n: "Peerless Defender Greatbow", p: {coin: 1300000}},
-	{i: 91632, n: "Mist Lord's Longbow", p: {coin: 1300000}}
+	{i: 91632, n: "Mist Lord's Longbow", p: {coin: 1300000}},
+	{i: 92814, n: "Greatbow of the Broken Voice", p: {coin: 1300000}}
 ],
 ShortBow: [
 	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
@@ -3448,7 +3462,8 @@ ShortBow: [
 	{i: 89826, n: "Heroic Dragonsblood Short Bow", p: {coin: 1300000}},
 	{i: 89949, n: "Steelstar's Short Bow", p: {coin: 1300000}},
 	{i: 90903, n: "Short Bow of the Scion", p: {coin: 1300000}},
-	{i: 91628, n: "Mist Lord's Short Bow", p: {coin: 1300000}}
+	{i: 91628, n: "Mist Lord's Short Bow", p: {coin: 1300000}},
+	{i: 92836, n: "Short Bow of the Broken Voice", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
@@ -3516,7 +3531,8 @@ Rifle: [
 	{i: 91229, n: "Adina's Rifle of the Assaulter", p: {coin: 1200000}},
 	{i: 91265, n: "Adina's Rifle of the Malicious", p: {coin: 1200000}},
 	{i: 91271, n: "Adina's Rifle of the Healer", p: {coin: 1200000}},
-	{i: 91637, n: "Mist Lord's Rifle", p: {coin: 1200000}}
+	{i: 91637, n: "Mist Lord's Rifle", p: {coin: 1200000}},
+	{i: 92829, n: "Musket of the Broken Voice", p: {coin: 1200000}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
@@ -3598,7 +3614,8 @@ Staff: [
 	{i: 89446, n: "Heroic Dragonsblood Staff", p: {coin: 1200000}},
 	{i: 89945, n: "Steelstar's Spire", p: {coin: 1200000}},
 	{i: 90189, n: "Spire of the Scion", p: {coin: 1200000}},
-	{i: 91674, n: "Mist Lord's Staff", p: {coin: 1200000}}
+	{i: 91674, n: "Mist Lord's Staff", p: {coin: 1200000}},
+	{i: 92827, n: "Spire of the Broken Voice", p: {coin: 1200000}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},
