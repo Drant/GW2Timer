@@ -462,7 +462,9 @@ var GW2T_ACCOUNT_METADATA = {
 		98, // Wintersday Daily
 		199, // Dragon Ball
 		201, // Daily Lunar New Year
+		250, // Daily Strike Mission
 		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
+		251, // Visions of the Past: Steel and Fire
 		246, // Shadow in the Ice
         241, // Whisper in the Dark
 		68, // Gates of Maguuma
@@ -515,6 +517,7 @@ var GW2T_ACCOUNT_METADATA = {
 		47, // Tequatl
 		16, // Bosses
 		206, // Sunken Treasure Hunter
+		247, // Tutorial
 		228, // Bonus Events
 		{en: "Heart of Thorns", de: "Heart of Thorns", es: "Heart of Thorns", fr: "Heart of Thorns", zh: "决战迈古玛"},
 		116, // Verdant Brink
@@ -555,6 +558,7 @@ var GW2T_ACCOUNT_METADATA = {
 		129, // Year of the Ascension Part II
 		130, // Year of the Ascension Part III
 		3, // PvP Conqueror
+		248, // PvP Seasons
 		230, // Historical PvP Achievements
 		13, // World vs World
 		60, // Edge of the Mists
