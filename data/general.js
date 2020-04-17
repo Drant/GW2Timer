@@ -1926,10 +1926,10 @@ var GW2T_TIMELINE = [
 	{
 		zone: "bjora",
 		Segments: [
-			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Icebrood", name_de: "Eisbrut", name_es: "Progelie", name_fr: "Couvegivre", name_zh: "冰巢" },
-			{ time: "01:35", duration: "00:15", primacy: 3, name_en: "Raven", name_de: "Raben", name_es: "Cuervo", name_fr: "Corbeau", name_zh: "鸦灵" },
-			{ time: "01:50", duration: "00:05", primacy: 2, name_en: "Shards", name_de: "Scherbe", name_es: "Esquirla", name_fr: "Éclat", name_zh: "碎片" },
-			{ time: "01:55", duration: "00:05", primacy: 3, name_en: "Icebrood", name_de: "Eisbrut", name_es: "Progelie", name_fr: "Couvegivre", name_zh: "冰巢" }
+			{ time: "00:00", duration: "00:05", primacy: 2, name_en: "Shards", name_de: "Scherbe", name_es: "Esquirla", name_fr: "Éclat", name_zh: "碎片" },
+			{ time: "00:05", duration: "00:15", primacy: 3, name_en: "Icebrood", name_de: "Eisbrut", name_es: "Progelie", name_fr: "Couvegivre", name_zh: "冰巢" },
+			{ time: "01:05", duration: "00:35", primacy: 3, name_en: "Drakkar", name_de: "Drakkar", name_es: "Drakkar", name_fr: "Drakkar", name_zh: "德拉卡" },
+			{ time: "01:45", duration: "00:15", primacy: 3, name_en: "Raven", name_de: "Raben", name_es: "Cuervo", name_fr: "Corbeau", name_zh: "鸦灵" }
 		]
 	},
 	{
