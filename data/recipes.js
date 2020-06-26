@@ -12712,7 +12712,9 @@ Scribe_GuildDecoration: [
 	{u: 13275, i: 92136, n: "Ominous Fortress Wall: Corrupted", r: [[74768, 1], [36041, 150]]},
 	{u: 13313, i: 92567, n: "Peppermint Platform", r: [[74768, 1], [24275, 1], [71668, 1]]},
 	{u: 13317, i: 92615, n: "Peppermint Arrow", r: [[74768, 1], [24275, 1], [71668, 1]]},
-	{u: 13326, i: 93317, n: "Super Tree Branch", r: [[70926, 1], [74982, 4]]}
+	{u: 13326, i: 93317, n: "Super Tree Branch", r: [[70926, 1], [74982, 4]]},
+	{u: 13363, i: 93683, n: "Dragon Bash Banner", r: [[70489, 1], [19744, 5], [19711, 5], [43319, 100]]},
+	{u: 13369, i: 93690, n: "Victorious Dragon Bash Poster", r: [[71146, 1], [70714, 5], [71070, 5], [43319, 100]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
