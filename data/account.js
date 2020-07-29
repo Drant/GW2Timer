@@ -465,6 +465,7 @@ var GW2T_ACCOUNT_METADATA = {
 		201, // Daily Lunar New Year
 		250, // Daily Strike Mission
 		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
+		254, // Jormag Rising
 		253, // No Quarter
 		251, // Visions of the Past: Steel and Fire
 		246, // Shadow in the Ice

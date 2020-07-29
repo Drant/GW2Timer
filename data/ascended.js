@@ -770,7 +770,8 @@ Back: [
 	{i: 86979, n: "Mark Y Golem", p: {craft: true}},
 	{i: 86990, n: "Mark Y Golem (Infused)", p: {craft: true}},
 	{i: 87672, n: "Ascended Banner of the Dauntless Commander (Infused)", p: {craft: true}},
-	{i: 87919, n: "Ascended Banner of the Dauntless Commander", p: {craft: true}}
+	{i: 87919, n: "Ascended Banner of the Dauntless Commander", p: {craft: true}},
+	{i: 90102, n: "Super Assassin Backpack", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1122,7 +1123,8 @@ Accessory: [
 	{i: 89544, n: "Dagnar's Badge", p: {achievement: 0}},
 	{i: 90763, n: "Mists-Charged Treasure", p: {achievement: 0}},
 	{i: 91035, n: "Glimpse", p: {achievement: 0}},
-	{i: 92706, n: "Asgeir's Talisman", p: {achievement: 0}}
+	{i: 92706, n: "Asgeir's Talisman", p: {achievement: 0}},
+	{i: 93727, n: "Ancient Norn Pin", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1199,7 +1201,8 @@ Amulet: [
 	{i: 87860, n: "Scarab Choker", p: {achievement: 0}},
 	{i: 89759, n: "Frodak's Steel Star", p: {achievement: 0}},
 	{i: 90355, n: "Scion-Spike Amulet", p: {achievement: 0}},
-	{i: 92215, n: "Asgeir's Amulet", p: {achievement: 0}}
+	{i: 92215, n: "Asgeir's Amulet", p: {achievement: 0}},
+	{i: 93852, n: "Ancient Norn Cape Pin", p: {achievement: 0}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -2894,7 +2897,8 @@ Scepter: [
 	{i: 91198, n: "Sabir's Scepter of the Assaulter", p: {coin: 1100000}},
 	{i: 91269, n: "Sabir's Scepter of the Malicious", p: {coin: 1100000}},
 	{i: 91619, n: "Mist Lord's Scepter", p: {coin: 1100000}},
-	{i: 92828, n: "Wand of the Broken Voice", p: {coin: 1100000}}
+	{i: 92828, n: "Wand of the Broken Voice", p: {coin: 1100000}},
+	{i: 93869, n: "Empowered Boneskinner's Rib", p: {coin: 1100000}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -3615,7 +3619,8 @@ Staff: [
 	{i: 89945, n: "Steelstar's Spire", p: {coin: 1200000}},
 	{i: 90189, n: "Spire of the Scion", p: {coin: 1200000}},
 	{i: 91674, n: "Mist Lord's Staff", p: {coin: 1200000}},
-	{i: 92827, n: "Spire of the Broken Voice", p: {coin: 1200000}}
+	{i: 92827, n: "Spire of the Broken Voice", p: {coin: 1200000}},
+	{i: 93872, n: "Empowered Boneskinner's Spine", p: {coin: 1200000}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},

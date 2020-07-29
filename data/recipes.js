@@ -260,7 +260,9 @@ Tailor_Component: [
 	{u: 12284, i: 82635, n: "Warbeast Gossamer Shoe Upper", r: [[19746, 2], [19790, 1], [82796, 5]]},
 	{u: 12286, i: 84191, n: "Warbeast Gossamer Glove Padding", r: [[19746, 1], [19790, 1], [82796, 2]]},
 	{u: 12304, i: 84623, n: "Warbeast Gossamer Coat Lining", r: [[19746, 1], [82796, 4]]},
-	{u: 12706, i: 87925, n: "Banner Pennon", r: [[19746, 5], [19790, 100], [19721, 5], [87153, 5]], s: 87988}
+	{u: 12706, i: 87925, n: "Banner Pennon", r: [[19746, 5], [19790, 100], [19721, 5], [87153, 5]], s: 87988},
+	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
+	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738}
 ],
 Tailor_UpgradeComponent: [
 	{u: 2193, i: 24798, n: "Minor Rune of the Elementalist", r: [[19720, 1], [24321, 2]]},
@@ -2167,7 +2169,9 @@ Leatherworker_Component: [
 	{u: 12237, i: 83916, n: "Warbeast Hardened Trouser Panel", r: [[19737, 4], [19790, 1], [82796, 2]]},
 	{u: 12290, i: 82266, n: "Warbeast Hardened Glove Panel", r: [[19737, 2], [82796, 1]]},
 	{u: 12302, i: 84226, n: "Warbeast Hardened Glove Lining", r: [[19746, 1], [19790, 1], [82796, 2]]},
-	{u: 12706, i: 87925, n: "Banner Pennon", r: [[19746, 5], [19790, 100], [19721, 5], [87153, 5]], s: 87988}
+	{u: 12706, i: 87925, n: "Banner Pennon", r: [[19746, 5], [19790, 100], [19721, 5], [87153, 5]], s: 87988},
+	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
+	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738}
 ],
 Leatherworker_UpgradeComponent: [
 	{u: 1354, i: 24810, n: "Minor Rune of the Engineer", r: [[19738, 1], [24321, 2], [19699, 1]]},
@@ -4077,7 +4081,9 @@ Armorsmith_Component: [
 	{u: 12252, i: 83883, n: "Warbeast Orichalcum Boot Lining", r: [[19746, 1], [19790, 1], [82796, 2]]},
 	{u: 12274, i: 82749, n: "Warbeast Orichalcum Gauntlet Lining", r: [[19746, 1], [19790, 1], [82796, 2]]},
 	{u: 12281, i: 82551, n: "Warbeast Orichalcum Boot Casing", r: [[19685, 2], [82796, 1]]},
-	{u: 12706, i: 87925, n: "Banner Pennon", r: [[19746, 5], [19790, 100], [19721, 5], [87153, 5]], s: 87988}
+	{u: 12706, i: 87925, n: "Banner Pennon", r: [[19746, 5], [19790, 100], [19721, 5], [87153, 5]], s: 87988},
+	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
+	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738}
 ],
 Armorsmith_UpgradeComponent: [
 	{u: 483, i: 24822, n: "Minor Rune of the Guardian", r: [[19679, 1], [24301, 2]]},
@@ -5953,7 +5959,11 @@ Artificer_Component: [
 	{u: 12023, i: 80781, n: "Weaponized Elder Wood Plank", r: [[46681, 3], [80764, 1], [80728, 1], [19709, 70]]},
 	{u: 12035, i: 80835, n: "Grandmaster Artificer's Mark", r: [[80791, 1], [80714, 1], [80723, 1], [80781, 1]], s: 80730},
 	{u: 13332, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]], s: 93437},
-	{u: 13333, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]], s: 93415}
+	{u: 13333, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]], s: 93415},
+	{u: 13373, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]]},
+	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
+	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738},
+	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]}
 ],
 Artificer_UpgradeComponent: [
 	{u: 3873, i: 24663, n: "Minor Sigil of Elemental Slaying", r: [[19679, 1], [24316, 2]]},
@@ -6765,7 +6775,8 @@ Artificer_Scepter: [
 	{u: 13282, i: 92244, n: "Restored Boreal Scepter", r: [[19920, 1], [92317, 10], [13255, 1], [12976, 1]], s: 92324},
 	{u: 13290, i: 92718, n: "Illuminated Boreal Scepter", r: [[92244, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92275},
 	{u: 13335, i: 93581, n: "Cleric's Stormcaller Scepter", r: [[12976, 1], [13255, 1], [19918, 1], [93567, 1]], s: 93611},
-	{u: 13348, i: 93596, n: "Assassin's Tengu Echo Scepter", r: [[12976, 1], [13255, 1], [19919, 1], [93417, 4]], s: 93436}
+	{u: 13348, i: 93596, n: "Assassin's Tengu Echo Scepter", r: [[12976, 1], [13255, 1], [19919, 1], [93417, 4]], s: 93436},
+	{u: 13377, i: 93881, n: "Cleric's Charged Stormcaller Scepter", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93905}
 ],
 Artificer_Focus: [
 	{u: 3868, i: 29989, n: "Charr Focus", r: [[19710, 3], [19767, 1]], s: 9532},
@@ -6990,7 +7001,8 @@ Artificer_Focus: [
 	{u: 13279, i: 92367, n: "Restored Boreal Focus", r: [[19920, 1], [92317, 10], [13243, 1], [12982, 1]], s: 92303},
 	{u: 13278, i: 92721, n: "Illuminated Boreal Focus", r: [[92367, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92351},
 	{u: 13336, i: 93440, n: "Assassin's Tengu Echo Focus", r: [[12982, 1], [13243, 1], [19919, 1], [93417, 4]], s: 93483},
-	{u: 13362, i: 93628, n: "Cleric's Stormcaller Focus", r: [[12982, 1], [13243, 1], [19918, 1], [93567, 1]], s: 93497}
+	{u: 13362, i: 93628, n: "Cleric's Stormcaller Focus", r: [[12982, 1], [13243, 1], [19918, 1], [93567, 1]], s: 93497},
+	{u: 13384, i: 93911, n: "Cleric's Charged Stormcaller Focus", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93749}
 ],
 Artificer_Staff: [
 	{u: 3840, i: 29451, n: "Expermentor's Collection Staff", r: [[19839, 1], [13264, 1], [12972, 1]], s: 9392},
@@ -7216,7 +7228,8 @@ Artificer_Staff: [
 	{u: 13284, i: 92686, n: "Illuminated Boreal Staff", r: [[92343, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92378},
 	{u: 13319, i: 93160, n: "Iron Legion Staff", r: [[12973, 1], [13261, 1], [93203, 1]], s: 92992},
 	{u: 13339, i: 93359, n: "Cleric's Stormcaller Staff", r: [[12973, 1], [13261, 1], [19918, 1], [93567, 1]], s: 93646},
-	{u: 13356, i: 93397, n: "Assassin's Tengu Echo Staff", r: [[12973, 1], [13261, 1], [19919, 1], [93417, 4]], s: 93652}
+	{u: 13356, i: 93397, n: "Assassin's Tengu Echo Staff", r: [[12973, 1], [13261, 1], [19919, 1], [93417, 4]], s: 93652},
+	{u: 13382, i: 93723, n: "Cleric's Charged Stormcaller Staff", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93820}
 ],
 Artificer_Trident: [
 	{u: 3865, i: 30004, n: "Charr Trident", r: [[19710, 6], [19767, 1]], s: 9529},
@@ -7600,7 +7613,11 @@ Huntsman_Component: [
 	{u: 12017, i: 80763, n: "Weaponized Cured Thick Leather Square", r: [[46681, 3], [80764, 1], [80728, 1], [19735, 40]]},
 	{u: 12025, i: 80746, n: "Grandmaster Huntsman's Mark", r: [[80791, 1], [80714, 1], [80723, 1], [80763, 1]], s: 80789},
 	{u: 13332, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]], s: 93437},
-	{u: 13333, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]], s: 93415}
+	{u: 13333, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]], s: 93415},
+	{u: 13373, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]]},
+	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
+	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738},
+	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]}
 ],
 Huntsman_UpgradeComponent: [
 	{u: 4757, i: 24863, n: "Minor Sigil of Celerity", r: [[19683, 1], [24331, 2]]},
@@ -8320,7 +8337,8 @@ Huntsman_Pistol: [
 	{u: 13294, i: 92747, n: "Illuminated Boreal Pistol", r: [[92222, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92399},
 	{u: 13322, i: 93093, n: "Iron Legion Pistol", r: [[12924, 1], [12959, 1], [93203, 1]], s: 93055},
 	{u: 13329, i: 93473, n: "Assassin's Stormcaller Pistol", r: [[12924, 1], [12959, 1], [19919, 1], [93567, 1]], s: 93563},
-	{u: 13349, i: 93639, n: "Assassin's Tengu Echo Pistol", r: [[12924, 1], [12959, 1], [19919, 1], [93417, 4]], s: 93537}
+	{u: 13349, i: 93639, n: "Assassin's Tengu Echo Pistol", r: [[12924, 1], [12959, 1], [19919, 1], [93417, 4]], s: 93537},
+	{u: 13380, i: 93878, n: "Assassin's Charged Stormcaller Pistol", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93769}
 ],
 Huntsman_Torch: [
 	{u: 4499, i: 30003, n: "Charr Torch", r: [[19710, 3], [19767, 1]], s: 9512},
@@ -8543,7 +8561,8 @@ Huntsman_Torch: [
 	{u: 13286, i: 92217, n: "Restored Boreal Torch", r: [[92317, 10], [19920, 1], [13014, 1], [13061, 1]], s: 92357},
 	{u: 13302, i: 92722, n: "Illuminated Boreal Torch", r: [[92217, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92349},
 	{u: 13360, i: 93524, n: "Cleric's Stormcaller Torch", r: [[13014, 1], [13061, 1], [19918, 1], [93567, 1]], s: 93557},
-	{u: 13361, i: 93454, n: "Assassin's Tengu Echo Torch", r: [[13014, 1], [13061, 1], [19919, 1], [93417, 4]], s: 93354}
+	{u: 13361, i: 93454, n: "Assassin's Tengu Echo Torch", r: [[13014, 1], [13061, 1], [19919, 1], [93417, 4]], s: 93354},
+	{u: 13375, i: 93778, n: "Cleric's Charged Stormcaller Torch", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93809}
 ],
 Huntsman_Warhorn: [
 	{u: 4477, i: 30682, n: "Packmaster's Warhorn", r: [[24296, 1], [19679, 3]], s: 9415},
@@ -8767,7 +8786,8 @@ Huntsman_Warhorn: [
 	{u: 13298, i: 92290, n: "Restored Boreal Warhorn", r: [[92317, 10], [19920, 1], [12936, 1], [12930, 1]], s: 92285},
 	{u: 13297, i: 92755, n: "Illuminated Boreal Warhorn", r: [[92290, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92240},
 	{u: 13344, i: 93552, n: "Berserker's Stormcaller Warhorn", r: [[12936, 1], [12930, 1], [19920, 1], [93567, 1]], s: 93377},
-	{u: 13359, i: 93597, n: "Assassin's Tengu Echo Warhorn", r: [[12936, 1], [12930, 1], [19919, 1], [93417, 4]], s: 93403}
+	{u: 13359, i: 93597, n: "Assassin's Tengu Echo Warhorn", r: [[12936, 1], [12930, 1], [19919, 1], [93417, 4]], s: 93403},
+	{u: 13376, i: 93885, n: "Berserker's Charged Stormcaller Warhorn", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93857}
 ],
 Huntsman_LongBow: [
 	{u: 4497, i: 29993, n: "Charr Longbow", r: [[19767, 1], [19710, 6]], s: 9510},
@@ -8990,7 +9010,8 @@ Huntsman_LongBow: [
 	{u: 13307, i: 92354, n: "Restored Boreal Longbow", r: [[19920, 1], [92317, 10], [12941, 1], [12963, 1]], s: 92252},
 	{u: 13306, i: 92695, n: "Illuminated Boreal Longbow", r: [[92354, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92386},
 	{u: 13346, i: 93374, n: "Berserker's Stormcaller Longbow", r: [[12941, 1], [12963, 1], [19920, 1], [93567, 1]], s: 93358},
-	{u: 13353, i: 93481, n: "Assassin's Tengu Echo Longbow", r: [[12941, 1], [12963, 1], [19919, 1], [93417, 4]], s: 93595}
+	{u: 13353, i: 93481, n: "Assassin's Tengu Echo Longbow", r: [[12941, 1], [12963, 1], [19919, 1], [93417, 4]], s: 93595},
+	{u: 13387, i: 93812, n: "Berserker's Charged Stormcaller Longbow", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93728}
 ],
 Huntsman_ShortBow: [
 	{u: 4498, i: 29999, n: "Charr Short Bow", r: [[19710, 5], [19767, 1]], s: 9511},
@@ -9213,7 +9234,8 @@ Huntsman_ShortBow: [
 	{u: 13295, i: 92298, n: "Restored Boreal Short Bow", r: [[92317, 10], [19920, 1], [12947, 1], [12963, 1]], s: 92372},
 	{u: 13309, i: 92797, n: "Illuminated Boreal Short Bow", r: [[92298, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92380},
 	{u: 13337, i: 93389, n: "Assassin's Stormcaller Short Bow", r: [[12947, 1], [12963, 1], [19919, 1], [93567, 1]], s: 93657},
-	{u: 13357, i: 93410, n: "Assassin's Tengu Echo Short Bow", r: [[12947, 1], [12963, 1], [19919, 1], [93417, 4]], s: 93404}
+	{u: 13357, i: 93410, n: "Assassin's Tengu Echo Short Bow", r: [[12947, 1], [12963, 1], [19919, 1], [93417, 4]], s: 93404},
+	{u: 13386, i: 93888, n: "Assassin's Charged Stormcaller Short Bow", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93789}
 ],
 Huntsman_Rifle: [
 	{u: 4459, i: 30572, n: "Experimental Skritt Musket", r: [[19787, 1], [19679, 2], [19710, 3]], s: 9400},
@@ -9440,7 +9462,8 @@ Huntsman_Rifle: [
 	{u: 13288, i: 92741, n: "Illuminated Boreal Rifle", r: [[92248, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92273},
 	{u: 13320, i: 93165, n: "Iron Legion Longshot", r: [[12918, 1], [12953, 1], [93203, 1]], s: 93086},
 	{u: 13350, i: 93500, n: "Knight's Stormcaller Rifle", r: [[12918, 1], [12953, 1], [19922, 1], [93567, 1]], s: 93626},
-	{u: 13355, i: 93419, n: "Assassin's Tengu Echo Rifle", r: [[12918, 1], [12953, 1], [19919, 1], [93417, 4]], s: 93551}
+	{u: 13355, i: 93419, n: "Assassin's Tengu Echo Rifle", r: [[12918, 1], [12953, 1], [19919, 1], [93417, 4]], s: 93551},
+	{u: 13388, i: 93736, n: "Knight's Charged Stormcaller Rifle", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93908}
 ],
 Huntsman_Speargun: [
 	{u: 4501, i: 30000, n: "Charr Speargun", r: [[19710, 4], [19767, 1]], s: 9514},
@@ -9832,7 +9855,11 @@ Weaponsmith_Component: [
 	{u: 12033, i: 80794, n: "Weaponized Mithril Ingot", r: [[46681, 3], [80764, 1], [80728, 1], [19684, 250]]},
 	{u: 12509, i: 86354, n: "Marshal's Stellar Orrery", r: [[45851, 1], [45849, 1], [85104, 1], [85947, 1]], s: 85798},
 	{u: 13332, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]], s: 93437},
-	{u: 13333, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]], s: 93415}
+	{u: 13333, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]], s: 93415},
+	{u: 13373, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]]},
+	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
+	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738},
+	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]}
 ],
 Weaponsmith_UpgradeComponent: [
 	{u: 5713, i: 24564, n: "Minor Sigil of Strength", r: [[19679, 1], [24306, 2]]},
@@ -10567,7 +10594,8 @@ Weaponsmith_Axe: [
 	{u: 13289, i: 92218, n: "Restored Boreal Axe", r: [[19920, 1], [12852, 1], [12892, 1], [92317, 10]], s: 92211},
 	{u: 13312, i: 92713, n: "Illuminated Boreal Axe", r: [[92218, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92371},
 	{u: 13330, i: 93566, n: "Berserker's Stormcaller Axe", r: [[12852, 1], [12892, 1], [19920, 1], [93567, 1]], s: 93451},
-	{u: 13331, i: 93435, n: "Assassin's Tengu Echo Axe", r: [[12852, 1], [12892, 1], [19919, 1], [93417, 4]], s: 93408}
+	{u: 13331, i: 93435, n: "Assassin's Tengu Echo Axe", r: [[12852, 1], [12892, 1], [19919, 1], [93417, 4]], s: 93408},
+	{u: 13381, i: 93834, n: "Berserker's Charged Stormcaller Axe", r: [[93567, 2], [92687, 2], [19721, 10], [19920, 1]], s: 93843}
 ],
 Weaponsmith_Mace: [
 	{u: 5419, i: 29994, n: "Charr Mace", r: [[19767, 1], [19679, 4]], s: 9508},
@@ -10793,7 +10821,8 @@ Weaponsmith_Mace: [
 	{u: 13277, i: 92395, n: "Restored Boreal Mace", r: [[19920, 1], [92317, 10], [12876, 1], [12892, 1]], s: 92225},
 	{u: 13304, i: 92771, n: "Illuminated Boreal Mace", r: [[92395, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92397},
 	{u: 13342, i: 93480, n: "Assassin's Tengu Echo Mace", r: [[12876, 1], [12892, 1], [19919, 1], [93417, 4]], s: 93356},
-	{u: 13345, i: 93558, n: "Knight's Stormcaller Mace", r: [[12876, 1], [12892, 1], [19922, 1], [93567, 1]], s: 93362}
+	{u: 13345, i: 93558, n: "Knight's Stormcaller Mace", r: [[12876, 1], [12892, 1], [19922, 1], [93567, 1]], s: 93362},
+	{u: 13371, i: 93903, n: "Knight's Charged Stormcaller Mace", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93755}
 ],
 Weaponsmith_Sword: [
 	{u: 5414, i: 30002, n: "Charr Sword", r: [[19767, 1], [19679, 4]], s: 9504},
@@ -11020,7 +11049,8 @@ Weaponsmith_Sword: [
 	{u: 13287, i: 92744, n: "Illuminated Boreal Sword", r: [[92359, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92254},
 	{u: 13323, i: 93279, n: "Iron Legion Combat Blade", r: [[12870, 1], [12846, 1], [93203, 1]], s: 93090},
 	{u: 13338, i: 93461, n: "Assassin's Tengu Echo Sword", r: [[12870, 1], [12846, 1], [19919, 1], [93417, 4]], s: 93387},
-	{u: 13341, i: 93361, n: "Assassin's Stormcaller Sword", r: [[12870, 1], [12846, 1], [19919, 1], [93567, 1]], s: 93608}
+	{u: 13341, i: 93361, n: "Assassin's Stormcaller Sword", r: [[12870, 1], [12846, 1], [19919, 1], [93567, 1]], s: 93608},
+	{u: 13374, i: 93836, n: "Assassin's Charged Stormcaller Sword", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93808}
 ],
 Weaponsmith_Dagger: [
 	{u: 5416, i: 29988, n: "Charr Dagger", r: [[19767, 1], [19679, 3]], s: 9506},
@@ -11243,7 +11273,8 @@ Weaponsmith_Dagger: [
 	{u: 13303, i: 92331, n: "Restored Boreal Dagger", r: [[19920, 1], [92317, 10], [12858, 1], [12882, 1]], s: 92377},
 	{u: 13310, i: 92702, n: "Illuminated Boreal Dagger", r: [[92331, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92366},
 	{u: 13343, i: 93561, n: "Assassin's Tengu Echo Dagger", r: [[12882, 1], [12858, 1], [19919, 1], [93417, 4]], s: 93405},
-	{u: 13351, i: 93456, n: "Assassin's Stormcaller Dagger", r: [[12882, 1], [12858, 1], [19919, 1], [93567, 1]], s: 93520}
+	{u: 13351, i: 93456, n: "Assassin's Stormcaller Dagger", r: [[12882, 1], [12858, 1], [19919, 1], [93567, 1]], s: 93520},
+	{u: 13372, i: 93776, n: "Assassin's Charged Stormcaller Dagger", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93721}
 ],
 Weaponsmith_Shield: [
 	{u: 5328, i: 29450, n: "Crusader's Shield", r: [[12907, 1], [12913, 1], [24345, 5]], s: 9391},
@@ -11466,7 +11497,8 @@ Weaponsmith_Shield: [
 	{u: 13299, i: 92261, n: "Restored Boreal Shield", r: [[92317, 10], [19920, 1], [12906, 1], [12912, 1]], s: 92404},
 	{u: 13305, i: 92737, n: "Illuminated Boreal Shield", r: [[92261, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92265},
 	{u: 13354, i: 93353, n: "Knight's Stormcaller Shield", r: [[12906, 1], [12912, 1], [19922, 1], [93567, 1]], s: 93379},
-	{u: 13358, i: 93466, n: "Assassin's Tengu Echo Shield", r: [[12906, 1], [12912, 1], [19919, 1], [93417, 4]], s: 93535}
+	{u: 13358, i: 93466, n: "Assassin's Tengu Echo Shield", r: [[12906, 1], [12912, 1], [19919, 1], [93417, 4]], s: 93535},
+	{u: 13383, i: 93897, n: "Knight's Charged Stormcaller Shield", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93902}
 ],
 Weaponsmith_Greatsword: [
 	{u: 5417, i: 29990, n: "Charr Greatsword", r: [[19767, 1], [19679, 6]], s: 9505},
@@ -11690,7 +11722,8 @@ Weaponsmith_Greatsword: [
 	{u: 13281, i: 92723, n: "Illuminated Boreal Greatsword", r: [[92363, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92362},
 	{u: 13321, i: 93010, n: "Iron Legion Flamesaw", r: [[12840, 1], [12888, 1], [93203, 1]], s: 93216},
 	{u: 13334, i: 93396, n: "Assassin's Tengu Echo Greatsword", r: [[12840, 1], [12888, 1], [19919, 1], [93417, 4]], s: 93532},
-	{u: 13347, i: 93640, n: "Berserker's Stormcaller Greatsword", r: [[12840, 1], [12888, 1], [19920, 1], [93567, 1]], s: 93642}
+	{u: 13347, i: 93640, n: "Berserker's Stormcaller Greatsword", r: [[12840, 1], [12888, 1], [19920, 1], [93567, 1]], s: 93642},
+	{u: 13379, i: 93826, n: "Berserker's Charged Stormcaller Greatsword", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93757}
 ],
 Weaponsmith_Hammer: [
 	{u: 5418, i: 29991, n: "Charr Hammer", r: [[19767, 1], [19679, 6]], s: 9507},
@@ -11913,7 +11946,8 @@ Weaponsmith_Hammer: [
 	{u: 13280, i: 92230, n: "Restored Boreal Hammer", r: [[19920, 1], [92317, 10], [12864, 1], [12899, 1]], s: 92262},
 	{u: 13300, i: 92728, n: "Illuminated Boreal Hammer", r: [[92230, 1], [92687, 2], [19721, 10], [92317, 35]], s: 92282},
 	{u: 13340, i: 93533, n: "Knight's Stormcaller Hammer", r: [[12899, 1], [12864, 1], [19922, 1], [93567, 1]], s: 93433},
-	{u: 13352, i: 93351, n: "Assassin's Tengu Echo Hammer", r: [[12899, 1], [12864, 1], [19919, 1], [93417, 4]], s: 93431}
+	{u: 13352, i: 93351, n: "Assassin's Tengu Echo Hammer", r: [[12899, 1], [12864, 1], [19919, 1], [93417, 4]], s: 93431},
+	{u: 13378, i: 93807, n: "Knight's Charged Stormcaller Hammer", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93743}
 ],
 Weaponsmith_Harpoon: [
 	{u: 5344, i: 30683, n: "Quetzal Harpoon", r: [[19887, 1], [12897, 1], [12994, 1]], s: 9410},
@@ -13673,7 +13707,9 @@ Jeweler_Component: [
 	{u: 9285, i: 62983, n: "Ornate Jeweler's Tools", r: [[19684, 5]]},
 	{u: 9286, i: 62984, n: "Elegant Jeweler's Tools", r: [[19685, 5]]},
 	{u: 9793, i: 66993, n: "Grow Lamp", r: [[43772, 10], [12815, 10], [24503, 25], [44941, 25]], s: 66978},
-	{u: 11885, i: 79795, n: "Dragon Hatchling Doll Adornments", r: [[24357, 15], [24351, 15], [24277, 15], [24330, 5]], s: 79888}
+	{u: 11885, i: 79795, n: "Dragon Hatchling Doll Adornments", r: [[24357, 15], [24351, 15], [24277, 15], [24330, 5]], s: 79888},
+	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
+	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738}
 ],
 Jeweler_UpgradeComponent: [
 	{u: 3436, i: 24477, n: "Adorned Amber Jewel", r: [[24534, 1], [12830, 1]]},
