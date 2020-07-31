@@ -3018,6 +3018,9 @@ header.jsSection sup {
 .dirHeaderPrimary {
 	padding-top: 8px;
 }
+.dirGroup {
+	position: relative;
+}
 .dirGroup:hover .dirHeaderSecondary {
 	color: #ffeebb;
 }
