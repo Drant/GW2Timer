@@ -3002,6 +3002,7 @@ header.jsSection sup {
 	background: linear-gradient(115deg, #111 0%, #222 50%, #000 51%, #222 100%);
 }
 #dirContent {
+	width: 360px;
 	padding-bottom: 32px;
 }
 #dirSearch {
