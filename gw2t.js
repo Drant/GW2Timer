@@ -40728,6 +40728,8 @@ I = {
 		{
 			$("#opt_bol_use24Hour").trigger("click");
 		});
+		// Align language selector with dashboard top header
+		$("#itemLanguage").appendTo(primaryheader);
 		
 		// Move the dashboard to a group now that the directory is generated
 		if (I.ModeCurrent !== I.ModeEnum.Tile)
