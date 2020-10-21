@@ -2205,17 +2205,17 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	/*{
+	{
 		isHalloween: true,
-		name_en: "Halloween 2019",
-		name_de: "Halloween 2019",
-		name_es: "Halloween 2019",
-		name_fr: "Halloween 2019",
-		name_zh: "万圣夜2019",
-		official: "the-game/releases/october-15-2019/",
-		Start: new Date("2019-10-15T16:00:00Z"),
-		Finish: new Date("2019-11-05T16:00:00Z")
-	}*/
+		name_en: "Halloween 2020",
+		name_de: "Halloween 2020",
+		name_es: "Halloween 2020",
+		name_fr: "Halloween 2020",
+		name_zh: "万圣夜2020",
+		official: "shadow-of-the-mad-king-2020-is-live/",
+		Start: new Date("2020-10-13T16:00:00Z"),
+		Finish: new Date("2020-11-03T16:00:00Z")
+	}
 	/*{
 		name_en: "Black Friday Sale",
 		name_de: "Black Friday Verkauf",
@@ -2255,15 +2255,15 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: false,
+	isEnabled: true,
 	name_en: "Mad King Says",
 	name_de: "Verrückte König sagt",
 	name_es: "Rey Loco dice",
 	name_fr: "Roi Dément a dit",
 	name_zh: "疯王说",
-	url: "https://www.guildwars2.com/en/the-game/releases/october-15-2019/",
-	Start: new Date("2019-10-15T16:00:00Z"),
-    Finish: new Date("2019-11-05T16:00:00Z")
+	url: "https://www.guildwars2.com/en/the-game/releases/october-13-2020/",
+	Start: new Date("2020-10-13T16:00:00Z"),
+    Finish: new Date("2020-11-03T16:00:00Z")
 },
 
 /*
