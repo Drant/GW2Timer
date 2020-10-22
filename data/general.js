@@ -2212,7 +2212,7 @@ Countdown: {
 		name_es: "Halloween 2020",
 		name_fr: "Halloween 2020",
 		name_zh: "万圣夜2020",
-		official: "shadow-of-the-mad-king-2020-is-live/",
+		official: "news/shadow-of-the-mad-king-2020-is-live/",
 		Start: new Date("2020-10-13T16:00:00Z"),
 		Finish: new Date("2020-11-03T16:00:00Z")
 	}
