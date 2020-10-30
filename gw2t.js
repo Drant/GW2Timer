@@ -290,6 +290,7 @@ O = {
 		// Tools
 		int_minStopwatchAlert: 5,
 		str_textStopwatchAlert: "Alert, alert, alert!",
+		bol_repeatStopwatchAlert: false,
 		int_sizeStopwatchFont: 64,
 		int_sizeNotepadFont: 12,
 		int_sizeNotepadHeight: 400,
@@ -38299,6 +38300,10 @@ K = {
 				aIcon: "img/notification/alert.png",
 				aDelay: 60
 			});
+			// Start alarm again if opted repeat
+			if (O.Options.bol_repeatStopwatchAlert) {
+				$("#watTimerStart").trigger("click");
+			}
 		}
 	},
 	
