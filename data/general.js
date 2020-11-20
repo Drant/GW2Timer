@@ -2206,7 +2206,7 @@ Countdown: {
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
 	{
-		isHalloween: true,
+		isHalloween: false,
 		name_en: "Halloween 2020",
 		name_de: "Halloween 2020",
 		name_es: "Halloween 2020",
@@ -2255,7 +2255,7 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: true,
+	isEnabled: false,
 	name_en: "Mad King Says",
 	name_de: "Verrückte König sagt",
 	name_es: "Rey Loco dice",
