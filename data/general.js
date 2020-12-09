@@ -2205,7 +2205,7 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	{
+	/*{
 		isHalloween: false,
 		name_en: "Halloween 2020",
 		name_de: "Halloween 2020",
@@ -2215,7 +2215,7 @@ Countdown: {
 		official: "news/shadow-of-the-mad-king-2020-is-live/",
 		Start: new Date("2020-10-13T16:00:00Z"),
 		Finish: new Date("2020-11-03T16:00:00Z")
-	}
+	}*/
 	/*{
 		name_en: "Black Friday Sale",
 		name_de: "Black Friday Verkauf",
@@ -2236,17 +2236,17 @@ Countdown: {
 		Start: new Date("2018-03-06T16:00:00Z"),
 		Finish: new Date("2018-03-07T16:00:00Z")
 	}*/
-	/*{
+	{
 		isWintersday: true,
-		name_en: "Wintersday 2018",
-		name_de: "Wintertag 2018",
-		name_es: "Día Invernal 2018",
-		name_fr: "Hivernel 2018",
-		name_zh: "冬幕节2018",
-		official: "the-game/releases/december-11-2018/",
-		Start: new Date("2018-12-11T17:00:00Z"),
-		Finish: new Date("2019-01-02T17:00:00Z")
-	}*/
+		name_en: "Wintersday 2020",
+		name_de: "Wintertag 2020",
+		name_es: "Día Invernal 2020",
+		name_fr: "Hivernel 2020",
+		name_zh: "冬幕节2020",
+		official: "news/a-very-merry-wintersday-begins-december-15/",
+		Start: new Date("2020-12-13T17:00:00Z"),
+		Finish: new Date("2021-01-04T17:00:00Z")
+	}
 	]
 },
 

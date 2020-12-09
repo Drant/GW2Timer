@@ -35559,6 +35559,10 @@ H = {
 			{
 				// Initialize countdown properties
 				ctd = H.Countdown.Events[i];
+				if (now > ctd.Finish)
+				{
+					continue;
+				}
 				ctd.isTimely = true;
 				ctd.StartStamp = T.formatWeektime(ctd.Start, true);
 				ctd.FinishStamp = T.formatWeektime(ctd.Finish, true);
@@ -35577,13 +35581,16 @@ H = {
 					ctd.Anchor = "<a" + U.convertExternalAnchor(url) + ">" + countdownname + "</a>";
 				}
 				// Activate festival switches for those countdowns
-				if (ctd.isHalloween)
+				if (T.isTimely(ctd))
 				{
-					K.isHalloween = true;
-				}
-				if (ctd.isWintersday)
-				{
-					K.isWintersday = true;
+					if (ctd.isHalloween)
+					{
+						K.isHalloween = true;
+					}
+					if (ctd.isWintersday)
+					{
+						K.isWintersday = true;
+					}
 				}
 				
 				/*
