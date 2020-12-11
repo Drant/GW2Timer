@@ -38577,7 +38577,7 @@ I = {
 			Map: "World Map",
 			Leaderboard: "WvW Leaderboard",
 			Manager: "Account Manager",
-			Gem: "Gem Alarm",
+//			Gem: "Gem Alarm",
 			Options: "Options"
 		},
 		Events:

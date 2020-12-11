@@ -2244,8 +2244,8 @@ Countdown: {
 		name_fr: "Hivernel 2020",
 		name_zh: "冬幕节2020",
 		official: "news/a-very-merry-wintersday-begins-december-15/",
-		Start: new Date("2020-12-13T17:00:00Z"),
-		Finish: new Date("2021-01-04T17:00:00Z")
+		Start: new Date("2020-12-15T17:00:00Z"),
+		Finish: new Date("2021-01-05T17:00:00Z")
 	}
 	]
 },
