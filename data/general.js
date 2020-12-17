@@ -411,7 +411,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"3228": "59",
 	"3172": "60",
 	"3198": "61",
-	//"": "62",
+	"3213": "62",
 	//"": "63",
 	"3215": "64",
 	"3189": "65",
@@ -505,7 +505,12 @@ var GW2T_DAILY_ASSOCIATION = {
 	"4224": "Deepstone",
 	"4496": "Reef",
 	"4526": "Reef",
-	"4494": "Reef"
+	"4494": "Reef",
+	"4551": "Reef",
+	"5447": "Sunqua",
+	"5449": "Sunqua",
+	"5437": "Sunqua",
+	"5446": "Sunqua"
 };
 
 /*
@@ -546,15 +551,15 @@ Fractal:
 		"Aetherblade", // 14
 		"Thaumanova", // 15
 		"Oasis", // 16
-		"Underground", // 17
+		"Swamp", // 17
 		"Maitrin", // 18
 		"Volcanic", // 19
 		"Ocean", // 20
-		"Swamp", // 21
-		"Cliffside", // 22
-		"Molten", // 23
-		"Nightmare", // 24
-		"Observatory", // 25
+		"Cliffside", // 21
+		"Furnace", // 22
+		"Nightmare", // 23
+		"Observatory", // 24
+		"Sunqua", // 25
 		"Aquatic", // 26
 		"Snowblind", // 27
 		"Volcanic", // 28
@@ -572,14 +577,14 @@ Fractal:
 		"Molten", // 40
 		"Oasis", // 41
 		"Maitrin", // 42
-		"Underground", // 43
+		"Thaumanova", // 43
 		"Uncategorized", // 44
 		"Ocean", // 45
 		"Aetherblade", // 46
 		"Cliffside", // 47
-		"Thaumanova", // 48
-		"Nightmare", // 49
-		"Observatory", // 50
+		"Nightmare", // 48
+		"Observatory", // 49
+		"Sunqua", // 50
 		"Snowblind", // 51
 		"Volcanic", // 52
 		"Underground", // 53
@@ -601,17 +606,17 @@ Fractal:
 		"Cliffside", // 69
 		"Molten", // 70
 		"Aetherblade", // 71
-		"Volcanic", // 72
-		"Maitrin", // 73
-		"Nightmare", // 74
-		"Observatory", // 75
+		"Maitrin", // 72
+		"Nightmare", // 73
+		"Observatory", // 74
+		"Sunqua", // 75
 		"Aquatic", // 76
 		"Swamp", // 77
 		"Reef", // 78
 		"Uncategorized", // 79
 		"Ocean", // 80
 		"Underground", // 81
-		"Cliffside", // 82
+		"Thaumanova", // 82
 		"Molten", // 83
 		"Deepstone", // 84
 		"Urban", // 85
@@ -626,10 +631,10 @@ Fractal:
 		"Cliffside", // 94
 		"Maitrin", // 95
 		"Aetherblade", // 96
-		"Thaumanova", // 97
-		"Chaos", // 98
-		"Nightmare", // 99
-		"Observatory"// 100
+		"Chaos", // 97
+		"Nightmare", // 98
+		"Observatory", // 99
+		"Sunqua"// 100
 	]
 },
 Bookmark:
