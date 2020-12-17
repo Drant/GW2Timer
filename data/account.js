@@ -435,6 +435,7 @@ var GW2T_ACCOUNT_METADATA = {
 		{en: "Daily", de: "Täglich", es: "Logros diarios", fr: "Quotidien", zh: "日常"},
 		97, // Daily
 		88, // Daily Fractals
+		264, // Daily Champions
 		252, // Daily Drizzlewood Coast
         239, // Daily Bjora Marches
 		142, // Daily Bloodstone Fen
@@ -465,6 +466,7 @@ var GW2T_ACCOUNT_METADATA = {
 		201, // Daily Lunar New Year
 		250, // Daily Strike Mission
 		{en: "Story Journal", de: "Chronik", es: "Logros de historia", fr: "Chroniques", zh: "史诗纪实"},
+		266, // Champions
 		254, // Jormag Rising
 		253, // No Quarter
 		251, // Visions of the Past: Steel and Fire
@@ -522,6 +524,9 @@ var GW2T_ACCOUNT_METADATA = {
 		206, // Sunken Treasure Hunter
 		247, // Tutorial
 		228, // Bonus Events
+		260, // Fractal Rush
+		256, // Meta-Event Rush
+		257, // Champion Rush
 		{en: "Heart of Thorns", de: "Heart of Thorns", es: "Heart of Thorns", fr: "Heart of Thorns", zh: "决战迈古玛"},
 		116, // Verdant Brink
 		111, // Auric Basin
@@ -571,6 +576,7 @@ var GW2T_ACCOUNT_METADATA = {
 		39, // Southsun Survival
 		35, // Belcher's Bluff
 		{en: "Raids", de: "Schlachtzüge", es: "Incursiones", fr: "Raids", zh: "大型地下城"},
+		259, // Weekly Raids
 		124, // Spirit Vale
 		134, // Salvation Pass
 		138, // Stronghold of the Faithful
@@ -579,10 +585,12 @@ var GW2T_ACCOUNT_METADATA = {
 		215, // Mythwright Gambit
 		229, // The Key of Ahdashim
 		{en: "Fractals of the Mists", de: "Fraktale der Nebel", es: "Fractales de la Niebla", fr: "Fractales des Brumes", zh: "迷雾碎层"},
-		148, // Nightmare Fractal
-		170, // Shattered Observatory Fractal
+		261, // Weekly Fractals
 		136, // Fractals of the Mists
 		30, // Fractals of the Mists
+		148, // Nightmare Fractal
+		170, // Shattered Observatory Fractal
+		258, // Sunqua Peak Fractal
 		{en: "World versus World", de: "Welt gegen Welt", es: "Mundo contra Mundo", fr: "Monde contre Monde", zh: "世界之战"},
 		61, // Edge of the Mists
 		74, // WvW Fall Tournament 2014
@@ -652,6 +660,11 @@ var GW2T_ACCOUNT_METADATA = {
 		62, // Escape from Lion's Arch
 		65, // The Battle for Lion's Arch
 		67, // Festival of the Four Winds
+		262, // Marshaling the Crystal Bloom
+		263, // Marshaling the Ebon Vanguard
+		265, // Mobilization Global Rewards
+		267, // Marshaling the Deldrimor Dwarves
+		268, // Mobilization Global Rewards
 		73, // Retired Achievement
 		{en: "Temporary", de: "Vorübergehend", es: "Temporal", fr: "Temporaire", zh: "临时"},
 		-1
