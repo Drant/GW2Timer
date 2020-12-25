@@ -2250,7 +2250,7 @@ Countdown: {
 		name_zh: "冬幕节2020",
 		official: "the-game/releases/december-15-2020/",
 		Start: new Date("2020-12-15T17:00:00Z"),
-		Finish: new Date("2021-01-05T17:00:00Z")
+		Finish: new Date("2021-01-07T17:00:00Z")
 	}
 	]
 },
