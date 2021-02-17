@@ -771,7 +771,8 @@ Back: [
 	{i: 86990, n: "Mark Y Golem (Infused)", p: {craft: true}},
 	{i: 87672, n: "Ascended Banner of the Dauntless Commander (Infused)", p: {craft: true}},
 	{i: 87919, n: "Ascended Banner of the Dauntless Commander", p: {craft: true}},
-	{i: 90102, n: "Super Assassin Backpack", p: {craft: true}}
+	{i: 90102, n: "Super Assassin Backpack", p: {craft: true}},
+	{i: 92784, n: "Sclerite Karka Shell (Infused)", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1202,7 +1203,8 @@ Amulet: [
 	{i: 89759, n: "Frodak's Steel Star", p: {achievement: 0}},
 	{i: 90355, n: "Scion-Spike Amulet", p: {achievement: 0}},
 	{i: 92215, n: "Asgeir's Amulet", p: {achievement: 0}},
-	{i: 93852, n: "Ancient Norn Cape Pin", p: {achievement: 0}}
+	{i: 93852, n: "Ancient Norn Cape Pin", p: {achievement: 0}},
+	{i: 93940, n: "Amulet of Celebration", p: {achievement: 0}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -2966,7 +2968,8 @@ Focus: [
 	{i: 91223, n: "Adina's Nexus of the Assaulter", p: {coin: 1000000}},
 	{i: 91239, n: "Adina's Nexus of the Malicious", p: {coin: 1000000}},
 	{i: 91657, n: "Mist Lord's Focus", p: {coin: 1000000}},
-	{i: 92831, n: "Artifact of the Broken Voice", p: {coin: 1000000}}
+	{i: 92831, n: "Artifact of the Broken Voice", p: {coin: 1000000}},
+	{i: 93804, n: "Empowered Boneskinner's Totem", p: {coin: 1000000}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
