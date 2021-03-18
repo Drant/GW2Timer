@@ -6784,7 +6784,9 @@ Artificer_Scepter: [
 	{u: 13335, i: 93581, n: "Cleric's Stormcaller Scepter", r: [[12976, 1], [13255, 1], [19918, 1], [93567, 1]], s: 93611},
 	{u: 13348, i: 93596, n: "Assassin's Tengu Echo Scepter", r: [[12976, 1], [13255, 1], [19919, 1], [93417, 4]], s: 93436},
 	{u: 13377, i: 93881, n: "Cleric's Charged Stormcaller Scepter", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93905},
-	{u: 13404, i: 94189, n: "Commander's Dragon Slayer Scepter", r: [[68063, 3], [94270, 3], [13255, 1], [12976, 1]], s: 94263}
+	{u: 13404, i: 94189, n: "Commander's Dragon Slayer Scepter", r: [[68063, 3], [94270, 3], [13255, 1], [12976, 1]], s: 94263},
+	{u: 13429, i: 94498, n: "Unfinished Azure Dragon Slayer Scepter", r: [[94270, 5], [24340, 10], [13255, 1], [12976, 1]], s: 94525},
+	{u: 13436, i: 94613, n: "Unfinished Crimson Dragon Slayer Scepter", r: [[94270, 5], [24325, 10], [12976, 1], [13255, 1]], s: 94575}
 ],
 Artificer_Focus: [
 	{u: 3868, i: 29989, n: "Charr Focus", r: [[19710, 3], [19767, 1]], s: 9532},
@@ -7011,7 +7013,9 @@ Artificer_Focus: [
 	{u: 13336, i: 93440, n: "Assassin's Tengu Echo Focus", r: [[12982, 1], [13243, 1], [19919, 1], [93417, 4]], s: 93483},
 	{u: 13362, i: 93628, n: "Cleric's Stormcaller Focus", r: [[12982, 1], [13243, 1], [19918, 1], [93567, 1]], s: 93497},
 	{u: 13384, i: 93911, n: "Cleric's Charged Stormcaller Focus", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93749},
-	{u: 13403, i: 94271, n: "Commander's Dragon Slayer Focus", r: [[68063, 3], [94270, 3], [12982, 1], [13243, 1]], s: 94236}
+	{u: 13403, i: 94271, n: "Commander's Dragon Slayer Focus", r: [[68063, 3], [94270, 3], [12982, 1], [13243, 1]], s: 94236},
+	{u: 13423, i: 94623, n: "Unfinished Azure Dragon Slayer Focus", r: [[94270, 5], [24340, 10], [12982, 1], [13243, 1]], s: 94504},
+	{u: 13445, i: 94569, n: "Unfinished Crimson Dragon Slayer Focus", r: [[94270, 5], [24325, 10], [12982, 1], [13243, 1]], s: 94460}
 ],
 Artificer_Staff: [
 	{u: 3840, i: 29451, n: "Expermentor's Collection Staff", r: [[19839, 1], [13264, 1], [12972, 1]], s: 9392},
@@ -7239,7 +7243,9 @@ Artificer_Staff: [
 	{u: 13339, i: 93359, n: "Cleric's Stormcaller Staff", r: [[12973, 1], [13261, 1], [19918, 1], [93567, 1]], s: 93646},
 	{u: 13356, i: 93397, n: "Assassin's Tengu Echo Staff", r: [[12973, 1], [13261, 1], [19919, 1], [93417, 4]], s: 93652},
 	{u: 13382, i: 93723, n: "Cleric's Charged Stormcaller Staff", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93820},
-	{u: 13399, i: 94262, n: "Commander's Dragon Slayer Staff", r: [[68063, 3], [94270, 3], [13261, 1], [12973, 1]], s: 94182}
+	{u: 13399, i: 94262, n: "Commander's Dragon Slayer Staff", r: [[68063, 3], [94270, 3], [13261, 1], [12973, 1]], s: 94182},
+	{u: 13435, i: 94625, n: "Unfinished Crimson Dragon Slayer Staff", r: [[94270, 5], [24325, 10], [13261, 1], [12973, 1]], s: 94474},
+	{u: 13444, i: 94499, n: "Unfinished Azure Dragon Slayer Staff", r: [[94270, 5], [24340, 10], [13261, 1], [12973, 1]], s: 94522}
 ],
 Artificer_Trident: [
 	{u: 3865, i: 30004, n: "Charr Trident", r: [[19710, 6], [19767, 1]], s: 9529},
@@ -8350,7 +8356,9 @@ Huntsman_Pistol: [
 	{u: 13329, i: 93473, n: "Assassin's Stormcaller Pistol", r: [[12924, 1], [12959, 1], [19919, 1], [93567, 1]], s: 93563},
 	{u: 13349, i: 93639, n: "Assassin's Tengu Echo Pistol", r: [[12924, 1], [12959, 1], [19919, 1], [93417, 4]], s: 93537},
 	{u: 13380, i: 93878, n: "Assassin's Charged Stormcaller Pistol", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93769},
-	{u: 13407, i: 94253, n: "Commander's Dragon Slayer Pistol", r: [[68063, 3], [94270, 3], [12959, 1], [12924, 1]], s: 94168}
+	{u: 13407, i: 94253, n: "Commander's Dragon Slayer Pistol", r: [[68063, 3], [94270, 3], [12959, 1], [12924, 1]], s: 94168},
+	{u: 13432, i: 94552, n: "Unfinished Crimson Dragon Slayer Pistol", r: [[94270, 5], [24325, 10], [12924, 1], [12959, 1]], s: 94482},
+	{u: 13448, i: 94483, n: "Unfinished Azure Dragon Slayer Pistol", r: [[94270, 5], [24340, 10], [12924, 1], [12959, 1]], s: 94541}
 ],
 Huntsman_Torch: [
 	{u: 4499, i: 30003, n: "Charr Torch", r: [[19710, 3], [19767, 1]], s: 9512},
@@ -8575,7 +8583,9 @@ Huntsman_Torch: [
 	{u: 13360, i: 93524, n: "Cleric's Stormcaller Torch", r: [[13014, 1], [13061, 1], [19918, 1], [93567, 1]], s: 93557},
 	{u: 13361, i: 93454, n: "Assassin's Tengu Echo Torch", r: [[13014, 1], [13061, 1], [19919, 1], [93417, 4]], s: 93354},
 	{u: 13375, i: 93778, n: "Cleric's Charged Stormcaller Torch", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93809},
-	{u: 13411, i: 94282, n: "Commander's Dragon Slayer Torch", r: [[68063, 3], [94270, 3], [13014, 1], [13061, 1]], s: 94212}
+	{u: 13411, i: 94282, n: "Commander's Dragon Slayer Torch", r: [[68063, 3], [94270, 3], [13014, 1], [13061, 1]], s: 94212},
+	{u: 13433, i: 94602, n: "Unfinished Crimson Dragon Slayer Torch", r: [[94270, 5], [24325, 10], [13061, 1], [13014, 1]], s: 94516},
+	{u: 13438, i: 94507, n: "Unfinished Azure Dragon Slayer Torch", r: [[94270, 5], [24340, 10], [13014, 1], [13061, 1]], s: 94470}
 ],
 Huntsman_Warhorn: [
 	{u: 4477, i: 30682, n: "Packmaster's Warhorn", r: [[24296, 1], [19679, 3]], s: 9415},
@@ -8801,7 +8811,9 @@ Huntsman_Warhorn: [
 	{u: 13344, i: 93552, n: "Berserker's Stormcaller Warhorn", r: [[12936, 1], [12930, 1], [19920, 1], [93567, 1]], s: 93377},
 	{u: 13359, i: 93597, n: "Assassin's Tengu Echo Warhorn", r: [[12936, 1], [12930, 1], [19919, 1], [93417, 4]], s: 93403},
 	{u: 13376, i: 93885, n: "Berserker's Charged Stormcaller Warhorn", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93857},
-	{u: 13398, i: 94203, n: "Commander's Dragon Slayer Warhorn", r: [[68063, 3], [94270, 3], [12936, 1], [12930, 1]], s: 94349}
+	{u: 13398, i: 94203, n: "Commander's Dragon Slayer Warhorn", r: [[68063, 3], [94270, 3], [12936, 1], [12930, 1]], s: 94349},
+	{u: 13442, i: 94564, n: "Unfinished Crimson Dragon Slayer Warhorn", r: [[94270, 5], [24325, 10], [12936, 1], [12930, 1]], s: 94497},
+	{u: 13446, i: 94616, n: "Unfinished Azure Dragon Slayer Warhorn", r: [[94270, 5], [24340, 10], [12936, 1], [12930, 1]], s: 94549}
 ],
 Huntsman_LongBow: [
 	{u: 4497, i: 29993, n: "Charr Longbow", r: [[19767, 1], [19710, 6]], s: 9510},
@@ -9026,7 +9038,9 @@ Huntsman_LongBow: [
 	{u: 13346, i: 93374, n: "Berserker's Stormcaller Longbow", r: [[12941, 1], [12963, 1], [19920, 1], [93567, 1]], s: 93358},
 	{u: 13353, i: 93481, n: "Assassin's Tengu Echo Longbow", r: [[12941, 1], [12963, 1], [19919, 1], [93417, 4]], s: 93595},
 	{u: 13387, i: 93812, n: "Berserker's Charged Stormcaller Longbow", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93728},
-	{u: 13402, i: 94347, n: "Commander's Dragon Slayer Longbow", r: [[68063, 3], [94270, 3], [12941, 1], [12963, 1]], s: 94356}
+	{u: 13402, i: 94347, n: "Commander's Dragon Slayer Longbow", r: [[68063, 3], [94270, 3], [12941, 1], [12963, 1]], s: 94356},
+	{u: 13426, i: 94513, n: "Unfinished Crimson Dragon Slayer Longbow", r: [[94270, 5], [24325, 10], [12941, 1], [12963, 1]], s: 94501},
+	{u: 13431, i: 94542, n: "Unfinished Azure Dragon Slayer Longbow", r: [[94270, 5], [24340, 10], [12941, 1], [12963, 1]], s: 94505}
 ],
 Huntsman_ShortBow: [
 	{u: 4498, i: 29999, n: "Charr Short Bow", r: [[19710, 5], [19767, 1]], s: 9511},
@@ -9251,7 +9265,9 @@ Huntsman_ShortBow: [
 	{u: 13337, i: 93389, n: "Assassin's Stormcaller Short Bow", r: [[12947, 1], [12963, 1], [19919, 1], [93567, 1]], s: 93657},
 	{u: 13357, i: 93410, n: "Assassin's Tengu Echo Short Bow", r: [[12947, 1], [12963, 1], [19919, 1], [93417, 4]], s: 93404},
 	{u: 13386, i: 93888, n: "Assassin's Charged Stormcaller Short Bow", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93789},
-	{u: 13406, i: 94268, n: "Commander's Dragon Slayer Short Bow", r: [[68063, 3], [94270, 3], [12947, 1], [12963, 1]], s: 94299}
+	{u: 13406, i: 94268, n: "Commander's Dragon Slayer Short Bow", r: [[68063, 3], [94270, 3], [12947, 1], [12963, 1]], s: 94299},
+	{u: 13424, i: 94545, n: "Unfinished Azure Dragon Slayer Short Bow", r: [[94270, 5], [24340, 10], [12947, 1], [12963, 1]], s: 94475},
+	{u: 13441, i: 94519, n: "Unfinished Crimson Dragon Slayer Short Bow", r: [[94270, 5], [24325, 10], [12947, 1], [12963, 1]], s: 94582}
 ],
 Huntsman_Rifle: [
 	{u: 4459, i: 30572, n: "Experimental Skritt Musket", r: [[19787, 1], [19679, 2], [19710, 3]], s: 9400},
@@ -9480,7 +9496,9 @@ Huntsman_Rifle: [
 	{u: 13350, i: 93500, n: "Knight's Stormcaller Rifle", r: [[12918, 1], [12953, 1], [19922, 1], [93567, 1]], s: 93626},
 	{u: 13355, i: 93419, n: "Assassin's Tengu Echo Rifle", r: [[12918, 1], [12953, 1], [19919, 1], [93417, 4]], s: 93551},
 	{u: 13388, i: 93736, n: "Knight's Charged Stormcaller Rifle", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93908},
-	{u: 13409, i: 94219, n: "Commander's Dragon Slayer Rifle", r: [[68063, 3], [94270, 3], [12953, 1], [12918, 1]], s: 94167}
+	{u: 13409, i: 94219, n: "Commander's Dragon Slayer Rifle", r: [[68063, 3], [94270, 3], [12953, 1], [12918, 1]], s: 94167},
+	{u: 13422, i: 94557, n: "Unfinished Azure Dragon Slayer Rifle", r: [[94270, 5], [24340, 10], [12918, 1], [12953, 1]], s: 94578},
+	{u: 13437, i: 94468, n: "Unfinished Crimson Dragon Slayer Rifle", r: [[94270, 5], [24325, 10], [12918, 1], [12953, 1]], s: 94574}
 ],
 Huntsman_Speargun: [
 	{u: 4501, i: 30000, n: "Charr Speargun", r: [[19710, 4], [19767, 1]], s: 9514},
@@ -10614,7 +10632,9 @@ Weaponsmith_Axe: [
 	{u: 13330, i: 93566, n: "Berserker's Stormcaller Axe", r: [[12852, 1], [12892, 1], [19920, 1], [93567, 1]], s: 93451},
 	{u: 13331, i: 93435, n: "Assassin's Tengu Echo Axe", r: [[12852, 1], [12892, 1], [19919, 1], [93417, 4]], s: 93408},
 	{u: 13381, i: 93834, n: "Berserker's Charged Stormcaller Axe", r: [[93567, 2], [92687, 2], [19721, 10], [19920, 1]], s: 93843},
-	{u: 13396, i: 94261, n: "Commander's Dragon Slayer Axe", r: [[94270, 3], [12892, 1], [12852, 1], [68063, 3]], s: 94205}
+	{u: 13396, i: 94261, n: "Commander's Dragon Slayer Axe", r: [[94270, 3], [12892, 1], [12852, 1], [68063, 3]], s: 94205},
+	{u: 13417, i: 94540, n: "Unfinished Azure Dragon Slayer Axe", r: [[12892, 1], [12852, 1], [94270, 5], [24340, 10]], s: 94464},
+	{u: 13440, i: 94476, n: "Unfinished Crimson Dragon Slayer Axe", r: [[94270, 5], [24325, 10], [12892, 1], [12852, 1]], s: 94568}
 ],
 Weaponsmith_Mace: [
 	{u: 5419, i: 29994, n: "Charr Mace", r: [[19767, 1], [19679, 4]], s: 9508},
@@ -10842,7 +10862,9 @@ Weaponsmith_Mace: [
 	{u: 13342, i: 93480, n: "Assassin's Tengu Echo Mace", r: [[12876, 1], [12892, 1], [19919, 1], [93417, 4]], s: 93356},
 	{u: 13345, i: 93558, n: "Knight's Stormcaller Mace", r: [[12876, 1], [12892, 1], [19922, 1], [93567, 1]], s: 93362},
 	{u: 13371, i: 93903, n: "Knight's Charged Stormcaller Mace", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93755},
-	{u: 13408, i: 94283, n: "Commander's Dragon Slayer Mace", r: [[68063, 3], [94270, 3], [12892, 1], [12876, 1]], s: 94350}
+	{u: 13408, i: 94283, n: "Commander's Dragon Slayer Mace", r: [[68063, 3], [94270, 3], [12892, 1], [12876, 1]], s: 94350},
+	{u: 13430, i: 94592, n: "Unfinished Crimson Dragon Slayer Mace", r: [[94270, 5], [24325, 10], [12892, 1], [12876, 1]], s: 94608},
+	{u: 13443, i: 94612, n: "Unfinished Azure Dragon Slayer Mace", r: [[94270, 5], [24340, 10], [12876, 1], [12892, 1]], s: 94620}
 ],
 Weaponsmith_Sword: [
 	{u: 5414, i: 30002, n: "Charr Sword", r: [[19767, 1], [19679, 4]], s: 9504},
@@ -11071,7 +11093,9 @@ Weaponsmith_Sword: [
 	{u: 13338, i: 93461, n: "Assassin's Tengu Echo Sword", r: [[12870, 1], [12846, 1], [19919, 1], [93417, 4]], s: 93387},
 	{u: 13341, i: 93361, n: "Assassin's Stormcaller Sword", r: [[12870, 1], [12846, 1], [19919, 1], [93567, 1]], s: 93608},
 	{u: 13374, i: 93836, n: "Assassin's Charged Stormcaller Sword", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93808},
-	{u: 13405, i: 94241, n: "Commander's Dragon Slayer Sword", r: [[68063, 3], [94270, 3], [12846, 1], [12870, 1]], s: 94302}
+	{u: 13405, i: 94241, n: "Commander's Dragon Slayer Sword", r: [[68063, 3], [94270, 3], [12846, 1], [12870, 1]], s: 94302},
+	{u: 13418, i: 94561, n: "Unfinished Azure Dragon Slayer Sword", r: [[94270, 5], [24340, 10], [12870, 1], [12846, 1]], s: 94573},
+	{u: 13421, i: 94479, n: "Unfinished Crimson Dragon Slayer Sword", r: [[94270, 5], [24325, 10], [12846, 1], [12870, 1]], s: 94611}
 ],
 Weaponsmith_Dagger: [
 	{u: 5416, i: 29988, n: "Charr Dagger", r: [[19767, 1], [19679, 3]], s: 9506},
@@ -11296,7 +11320,9 @@ Weaponsmith_Dagger: [
 	{u: 13343, i: 93561, n: "Assassin's Tengu Echo Dagger", r: [[12882, 1], [12858, 1], [19919, 1], [93417, 4]], s: 93405},
 	{u: 13351, i: 93456, n: "Assassin's Stormcaller Dagger", r: [[12882, 1], [12858, 1], [19919, 1], [93567, 1]], s: 93520},
 	{u: 13372, i: 93776, n: "Assassin's Charged Stormcaller Dagger", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93721},
-	{u: 13401, i: 94348, n: "Commander's Dragon Slayer Dagger", r: [[68063, 3], [94270, 3], [12882, 1], [12858, 1]], s: 94314}
+	{u: 13401, i: 94348, n: "Commander's Dragon Slayer Dagger", r: [[68063, 3], [94270, 3], [12882, 1], [12858, 1]], s: 94314},
+	{u: 13427, i: 94503, n: "Unfinished Crimson Dragon Slayer Dagger", r: [[94270, 5], [24325, 10], [12858, 1], [12882, 1]], s: 94527},
+	{u: 13428, i: 94500, n: "Unfinished Azure Dragon Slayer Dagger", r: [[94270, 5], [24340, 10], [12882, 1], [12858, 1]], s: 94559}
 ],
 Weaponsmith_Shield: [
 	{u: 5328, i: 29450, n: "Crusader's Shield", r: [[12907, 1], [12913, 1], [24345, 5]], s: 9391},
@@ -11521,7 +11547,9 @@ Weaponsmith_Shield: [
 	{u: 13354, i: 93353, n: "Knight's Stormcaller Shield", r: [[12906, 1], [12912, 1], [19922, 1], [93567, 1]], s: 93379},
 	{u: 13358, i: 93466, n: "Assassin's Tengu Echo Shield", r: [[12906, 1], [12912, 1], [19919, 1], [93417, 4]], s: 93535},
 	{u: 13383, i: 93897, n: "Knight's Charged Stormcaller Shield", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93902},
-	{u: 13395, i: 94258, n: "Commander's Dragon Slayer Shield", r: [[68063, 3], [94270, 3], [12906, 1], [12912, 1]], s: 94230}
+	{u: 13395, i: 94258, n: "Commander's Dragon Slayer Shield", r: [[68063, 3], [94270, 3], [12906, 1], [12912, 1]], s: 94230},
+	{u: 13419, i: 94493, n: "Unfinished Azure Dragon Slayer Shield", r: [[94270, 5], [24340, 10], [12906, 1], [12912, 1]], s: 94462},
+	{u: 13425, i: 94588, n: "Unfinished Crimson Dragon Slayer Shield", r: [[94270, 5], [24325, 10], [12906, 1], [12912, 1]], s: 94571}
 ],
 Weaponsmith_Greatsword: [
 	{u: 5417, i: 29990, n: "Charr Greatsword", r: [[19767, 1], [19679, 6]], s: 9505},
@@ -11747,7 +11775,9 @@ Weaponsmith_Greatsword: [
 	{u: 13334, i: 93396, n: "Assassin's Tengu Echo Greatsword", r: [[12840, 1], [12888, 1], [19919, 1], [93417, 4]], s: 93532},
 	{u: 13347, i: 93640, n: "Berserker's Stormcaller Greatsword", r: [[12840, 1], [12888, 1], [19920, 1], [93567, 1]], s: 93642},
 	{u: 13379, i: 93826, n: "Berserker's Charged Stormcaller Greatsword", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93757},
-	{u: 13397, i: 94199, n: "Commander's Dragon Slayer Greatsword", r: [[68063, 3], [94270, 3], [12888, 1], [12840, 1]], s: 94181}
+	{u: 13397, i: 94199, n: "Commander's Dragon Slayer Greatsword", r: [[68063, 3], [94270, 3], [12888, 1], [12840, 1]], s: 94181},
+	{u: 13434, i: 94567, n: "Unfinished Azure Dragon Slayer Greatsword", r: [[94270, 5], [24340, 10], [12840, 1], [12888, 1]], s: 94599},
+	{u: 13447, i: 94467, n: "Unfinished Crimson Dragon Slayer Greatsword", r: [[94270, 5], [24325, 10], [12840, 1], [12888, 1]], s: 94461}
 ],
 Weaponsmith_Hammer: [
 	{u: 5418, i: 29991, n: "Charr Hammer", r: [[19767, 1], [19679, 6]], s: 9507},
@@ -11972,7 +12002,9 @@ Weaponsmith_Hammer: [
 	{u: 13340, i: 93533, n: "Knight's Stormcaller Hammer", r: [[12899, 1], [12864, 1], [19922, 1], [93567, 1]], s: 93433},
 	{u: 13352, i: 93351, n: "Assassin's Tengu Echo Hammer", r: [[12899, 1], [12864, 1], [19919, 1], [93417, 4]], s: 93431},
 	{u: 13378, i: 93807, n: "Knight's Charged Stormcaller Hammer", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93743},
-	{u: 13410, i: 94216, n: "Commander's Dragon Slayer Hammer", r: [[68063, 3], [94270, 3], [12864, 1], [12899, 1]], s: 94267}
+	{u: 13410, i: 94216, n: "Commander's Dragon Slayer Hammer", r: [[68063, 3], [94270, 3], [12864, 1], [12899, 1]], s: 94267},
+	{u: 13420, i: 94617, n: "Unfinished Azure Dragon Slayer Hammer", r: [[94270, 5], [24340, 10], [12864, 1], [12899, 1]], s: 94555},
+	{u: 13439, i: 94506, n: "Unfinished Crimson Dragon Slayer Hammer", r: [[94270, 5], [24325, 10], [12899, 1], [12864, 1]], s: 94528}
 ],
 Weaponsmith_Harpoon: [
 	{u: 5344, i: 30683, n: "Quetzal Harpoon", r: [[19887, 1], [12897, 1], [12994, 1]], s: 9410},
@@ -12781,7 +12813,8 @@ Scribe_GuildDecoration: [
 	{u: 13391, i: 94122, n: "Clock Tower Gear", r: [[70489, 1], [48807, 1], [44941, 20]]},
 	{u: 13393, i: 94115, n: "Grand Clock Tower Gear", r: [[70933, 1], [48807, 3], [44941, 50]]},
 	{u: 13412, i: 94445, n: "Embellished Wintersday Star", r: [[70933, 1], [24277, 8], [70930, 1]]},
-	{u: 13414, i: 94400, n: "Draped Wintersday Garland", r: [[74768, 1], [69466, 2], [71668, 1]]}
+	{u: 13414, i: 94400, n: "Draped Wintersday Garland", r: [[74768, 1], [69466, 2], [71668, 1]]},
+	{u: 13449, i: 94648, n: "Ox Statue", r: [[70926, 1], [94692, 1]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
