@@ -131,7 +131,8 @@ Tailor_Refinement: [
 	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
 	{u: 12959, i: 89105, n: "Mystic Aspect", r: [[89271, 10], [89103, 1], [89258, 1], [89216, 1]], s: 91479},
 	{u: 13296, i: 92317, n: "Eitrite Ingot", r: [[92272, 25], [19685, 2], [24320, 1], [24340, 1]], s: 92333},
-	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273}
+	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273},
+	{u: 13482, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 10], [19684, 90], [19721, 10]], s: 94873}
 ],
 Tailor_Component: [
 	{u: 844, i: 19629, n: "Gift of History", r: [[24310, 100], [19737, 250], [19664, 1], [24277, 250]], s: 9623, p: {coin: 100000}},
@@ -2040,7 +2041,8 @@ Leatherworker_Refinement: [
 	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
 	{u: 12959, i: 89105, n: "Mystic Aspect", r: [[89271, 10], [89103, 1], [89258, 1], [89216, 1]], s: 91479},
 	{u: 13296, i: 92317, n: "Eitrite Ingot", r: [[92272, 25], [19685, 2], [24320, 1], [24340, 1]], s: 92333},
-	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273}
+	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273},
+	{u: 13482, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 10], [19684, 90], [19721, 10]], s: 94873}
 ],
 Leatherworker_Component: [
 	{u: 1126, i: 13093, n: "Rawhide Chestguard Padding", r: [[19720, 1], [19792, 2]]},
@@ -3954,7 +3956,8 @@ Armorsmith_Refinement: [
 	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
 	{u: 12959, i: 89105, n: "Mystic Aspect", r: [[89271, 10], [89103, 1], [89258, 1], [89216, 1]], s: 91479},
 	{u: 13296, i: 92317, n: "Eitrite Ingot", r: [[92272, 25], [19685, 2], [24320, 1], [24340, 1]], s: 92333},
-	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273}
+	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273},
+	{u: 13482, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 10], [19684, 90], [19721, 10]], s: 94873}
 ],
 Armorsmith_Component: [
 	{u: 255, i: 13108, n: "Bronze Chain Boot Panel", r: [[19679, 2]]},
@@ -5873,7 +5876,8 @@ Artificer_Refinement: [
 	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
 	{u: 12833, i: 89133, n: "Mystic Mote", r: [[89271, 10], [89098, 1], [89141, 1], [89182, 1]], s: 91571},
 	{u: 13296, i: 92317, n: "Eitrite Ingot", r: [[92272, 25], [19685, 2], [24320, 1], [24340, 1]], s: 92333},
-	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273}
+	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273},
+	{u: 13482, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 10], [19684, 90], [19721, 10]], s: 94873}
 ],
 Artificer_Component: [
 	{u: 3835, i: 12971, n: "Green Staff Shaft", r: [[19710, 4]]},
@@ -6786,7 +6790,9 @@ Artificer_Scepter: [
 	{u: 13377, i: 93881, n: "Cleric's Charged Stormcaller Scepter", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93905},
 	{u: 13404, i: 94189, n: "Commander's Dragon Slayer Scepter", r: [[68063, 3], [94270, 3], [13255, 1], [12976, 1]], s: 94263},
 	{u: 13429, i: 94498, n: "Unfinished Azure Dragon Slayer Scepter", r: [[94270, 5], [24340, 10], [13255, 1], [12976, 1]], s: 94525},
-	{u: 13436, i: 94613, n: "Unfinished Crimson Dragon Slayer Scepter", r: [[94270, 5], [24325, 10], [12976, 1], [13255, 1]], s: 94575}
+	{u: 13436, i: 94613, n: "Unfinished Crimson Dragon Slayer Scepter", r: [[94270, 5], [24325, 10], [12976, 1], [13255, 1]], s: 94575},
+	{u: 13473, i: 94818, n: "Viper's Fiery Dragon Slayer Scepter of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94847},
+	{u: 13479, i: 94745, n: "Marauder Icy Dragon Slayer Scepter of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94723}
 ],
 Artificer_Focus: [
 	{u: 3868, i: 29989, n: "Charr Focus", r: [[19710, 3], [19767, 1]], s: 9532},
@@ -7015,7 +7021,9 @@ Artificer_Focus: [
 	{u: 13384, i: 93911, n: "Cleric's Charged Stormcaller Focus", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93749},
 	{u: 13403, i: 94271, n: "Commander's Dragon Slayer Focus", r: [[68063, 3], [94270, 3], [12982, 1], [13243, 1]], s: 94236},
 	{u: 13423, i: 94623, n: "Unfinished Azure Dragon Slayer Focus", r: [[94270, 5], [24340, 10], [12982, 1], [13243, 1]], s: 94504},
-	{u: 13445, i: 94569, n: "Unfinished Crimson Dragon Slayer Focus", r: [[94270, 5], [24325, 10], [12982, 1], [13243, 1]], s: 94460}
+	{u: 13445, i: 94569, n: "Unfinished Crimson Dragon Slayer Focus", r: [[94270, 5], [24325, 10], [12982, 1], [13243, 1]], s: 94460},
+	{u: 13457, i: 94709, n: "Viper's Fiery Dragon Slayer Focus of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94783},
+	{u: 13467, i: 94747, n: "Marauder Icy Dragon Slayer Focus of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94753}
 ],
 Artificer_Staff: [
 	{u: 3840, i: 29451, n: "Expermentor's Collection Staff", r: [[19839, 1], [13264, 1], [12972, 1]], s: 9392},
@@ -7245,7 +7253,9 @@ Artificer_Staff: [
 	{u: 13382, i: 93723, n: "Cleric's Charged Stormcaller Staff", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93820},
 	{u: 13399, i: 94262, n: "Commander's Dragon Slayer Staff", r: [[68063, 3], [94270, 3], [13261, 1], [12973, 1]], s: 94182},
 	{u: 13435, i: 94625, n: "Unfinished Crimson Dragon Slayer Staff", r: [[94270, 5], [24325, 10], [13261, 1], [12973, 1]], s: 94474},
-	{u: 13444, i: 94499, n: "Unfinished Azure Dragon Slayer Staff", r: [[94270, 5], [24340, 10], [13261, 1], [12973, 1]], s: 94522}
+	{u: 13444, i: 94499, n: "Unfinished Azure Dragon Slayer Staff", r: [[94270, 5], [24340, 10], [13261, 1], [12973, 1]], s: 94522},
+	{u: 13458, i: 94865, n: "Viper's Fiery Dragon Slayer Staff of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94802},
+	{u: 13468, i: 94787, n: "Marauder Icy Dragon Slayer Staff of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94829}
 ],
 Artificer_Trident: [
 	{u: 3865, i: 30004, n: "Charr Trident", r: [[19710, 6], [19767, 1]], s: 9529},
@@ -7507,7 +7517,8 @@ Huntsman_Refinement: [
 	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
 	{u: 12833, i: 89133, n: "Mystic Mote", r: [[89271, 10], [89098, 1], [89141, 1], [89182, 1]], s: 91571},
 	{u: 13296, i: 92317, n: "Eitrite Ingot", r: [[92272, 25], [19685, 2], [24320, 1], [24340, 1]], s: 92333},
-	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273}
+	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273},
+	{u: 13482, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 10], [19684, 90], [19721, 10]], s: 94873}
 ],
 Huntsman_Component: [
 	{u: 4458, i: 12968, n: "Green Torch Handle", r: [[19710, 2]]},
@@ -8358,7 +8369,9 @@ Huntsman_Pistol: [
 	{u: 13380, i: 93878, n: "Assassin's Charged Stormcaller Pistol", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93769},
 	{u: 13407, i: 94253, n: "Commander's Dragon Slayer Pistol", r: [[68063, 3], [94270, 3], [12959, 1], [12924, 1]], s: 94168},
 	{u: 13432, i: 94552, n: "Unfinished Crimson Dragon Slayer Pistol", r: [[94270, 5], [24325, 10], [12924, 1], [12959, 1]], s: 94482},
-	{u: 13448, i: 94483, n: "Unfinished Azure Dragon Slayer Pistol", r: [[94270, 5], [24340, 10], [12924, 1], [12959, 1]], s: 94541}
+	{u: 13448, i: 94483, n: "Unfinished Azure Dragon Slayer Pistol", r: [[94270, 5], [24340, 10], [12924, 1], [12959, 1]], s: 94541},
+	{u: 13460, i: 94736, n: "Marauder Icy Dragon Slayer Pistol of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94837},
+	{u: 13472, i: 94721, n: "Viper's Fiery Dragon Slayer Pistol of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94718}
 ],
 Huntsman_Torch: [
 	{u: 4499, i: 30003, n: "Charr Torch", r: [[19710, 3], [19767, 1]], s: 9512},
@@ -8585,7 +8598,9 @@ Huntsman_Torch: [
 	{u: 13375, i: 93778, n: "Cleric's Charged Stormcaller Torch", r: [[19918, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93809},
 	{u: 13411, i: 94282, n: "Commander's Dragon Slayer Torch", r: [[68063, 3], [94270, 3], [13014, 1], [13061, 1]], s: 94212},
 	{u: 13433, i: 94602, n: "Unfinished Crimson Dragon Slayer Torch", r: [[94270, 5], [24325, 10], [13061, 1], [13014, 1]], s: 94516},
-	{u: 13438, i: 94507, n: "Unfinished Azure Dragon Slayer Torch", r: [[94270, 5], [24340, 10], [13014, 1], [13061, 1]], s: 94470}
+	{u: 13438, i: 94507, n: "Unfinished Azure Dragon Slayer Torch", r: [[94270, 5], [24340, 10], [13014, 1], [13061, 1]], s: 94470},
+	{u: 13451, i: 94711, n: "Viper's Fiery Dragon Slayer Torch of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94849},
+	{u: 13453, i: 94826, n: "Marauder Icy Dragon Slayer Torch of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94712}
 ],
 Huntsman_Warhorn: [
 	{u: 4477, i: 30682, n: "Packmaster's Warhorn", r: [[24296, 1], [19679, 3]], s: 9415},
@@ -8813,7 +8828,9 @@ Huntsman_Warhorn: [
 	{u: 13376, i: 93885, n: "Berserker's Charged Stormcaller Warhorn", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93857},
 	{u: 13398, i: 94203, n: "Commander's Dragon Slayer Warhorn", r: [[68063, 3], [94270, 3], [12936, 1], [12930, 1]], s: 94349},
 	{u: 13442, i: 94564, n: "Unfinished Crimson Dragon Slayer Warhorn", r: [[94270, 5], [24325, 10], [12936, 1], [12930, 1]], s: 94497},
-	{u: 13446, i: 94616, n: "Unfinished Azure Dragon Slayer Warhorn", r: [[94270, 5], [24340, 10], [12936, 1], [12930, 1]], s: 94549}
+	{u: 13446, i: 94616, n: "Unfinished Azure Dragon Slayer Warhorn", r: [[94270, 5], [24340, 10], [12936, 1], [12930, 1]], s: 94549},
+	{u: 13461, i: 94724, n: "Marauder Icy Dragon Slayer Warhorn of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94839},
+	{u: 13474, i: 94785, n: "Viper's Fiery Dragon Slayer Warhorn of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94859}
 ],
 Huntsman_LongBow: [
 	{u: 4497, i: 29993, n: "Charr Longbow", r: [[19767, 1], [19710, 6]], s: 9510},
@@ -9040,7 +9057,9 @@ Huntsman_LongBow: [
 	{u: 13387, i: 93812, n: "Berserker's Charged Stormcaller Longbow", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93728},
 	{u: 13402, i: 94347, n: "Commander's Dragon Slayer Longbow", r: [[68063, 3], [94270, 3], [12941, 1], [12963, 1]], s: 94356},
 	{u: 13426, i: 94513, n: "Unfinished Crimson Dragon Slayer Longbow", r: [[94270, 5], [24325, 10], [12941, 1], [12963, 1]], s: 94501},
-	{u: 13431, i: 94542, n: "Unfinished Azure Dragon Slayer Longbow", r: [[94270, 5], [24340, 10], [12941, 1], [12963, 1]], s: 94505}
+	{u: 13431, i: 94542, n: "Unfinished Azure Dragon Slayer Longbow", r: [[94270, 5], [24340, 10], [12941, 1], [12963, 1]], s: 94505},
+	{u: 13465, i: 94733, n: "Viper's Fiery Dragon Slayer Longbow of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94848},
+	{u: 13470, i: 94861, n: "Marauder Icy Dragon Slayer Longbow of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94782}
 ],
 Huntsman_ShortBow: [
 	{u: 4498, i: 29999, n: "Charr Short Bow", r: [[19710, 5], [19767, 1]], s: 9511},
@@ -9267,7 +9286,9 @@ Huntsman_ShortBow: [
 	{u: 13386, i: 93888, n: "Assassin's Charged Stormcaller Short Bow", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93789},
 	{u: 13406, i: 94268, n: "Commander's Dragon Slayer Short Bow", r: [[68063, 3], [94270, 3], [12947, 1], [12963, 1]], s: 94299},
 	{u: 13424, i: 94545, n: "Unfinished Azure Dragon Slayer Short Bow", r: [[94270, 5], [24340, 10], [12947, 1], [12963, 1]], s: 94475},
-	{u: 13441, i: 94519, n: "Unfinished Crimson Dragon Slayer Short Bow", r: [[94270, 5], [24325, 10], [12947, 1], [12963, 1]], s: 94582}
+	{u: 13441, i: 94519, n: "Unfinished Crimson Dragon Slayer Short Bow", r: [[94270, 5], [24325, 10], [12947, 1], [12963, 1]], s: 94582},
+	{u: 13450, i: 94821, n: "Marauder Icy Dragon Slayer Short Bow of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94801},
+	{u: 13477, i: 94754, n: "Viper's Fiery Dragon Slayer Short Bow of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94771}
 ],
 Huntsman_Rifle: [
 	{u: 4459, i: 30572, n: "Experimental Skritt Musket", r: [[19787, 1], [19679, 2], [19710, 3]], s: 9400},
@@ -9498,7 +9519,9 @@ Huntsman_Rifle: [
 	{u: 13388, i: 93736, n: "Knight's Charged Stormcaller Rifle", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93908},
 	{u: 13409, i: 94219, n: "Commander's Dragon Slayer Rifle", r: [[68063, 3], [94270, 3], [12953, 1], [12918, 1]], s: 94167},
 	{u: 13422, i: 94557, n: "Unfinished Azure Dragon Slayer Rifle", r: [[94270, 5], [24340, 10], [12918, 1], [12953, 1]], s: 94578},
-	{u: 13437, i: 94468, n: "Unfinished Crimson Dragon Slayer Rifle", r: [[94270, 5], [24325, 10], [12918, 1], [12953, 1]], s: 94574}
+	{u: 13437, i: 94468, n: "Unfinished Crimson Dragon Slayer Rifle", r: [[94270, 5], [24325, 10], [12918, 1], [12953, 1]], s: 94574},
+	{u: 13476, i: 94793, n: "Marauder Icy Dragon Slayer Rifle of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94795},
+	{u: 13478, i: 94796, n: "Viper's Fiery Dragon Slayer Rifle of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94790}
 ],
 Huntsman_Speargun: [
 	{u: 4501, i: 30000, n: "Charr Speargun", r: [[19710, 4], [19767, 1]], s: 9514},
@@ -9754,7 +9777,8 @@ Weaponsmith_Refinement: [
 	{u: 12915, i: 89271, n: "Pile of Lucent Crystal", r: [[89140, 10]]},
 	{u: 12833, i: 89133, n: "Mystic Mote", r: [[89271, 10], [89098, 1], [89141, 1], [89182, 1]], s: 91571},
 	{u: 13296, i: 92317, n: "Eitrite Ingot", r: [[92272, 25], [19685, 2], [24320, 1], [24340, 1]], s: 92333},
-	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273}
+	{u: 13400, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 50], [19684, 50], [19721, 10]], s: 94273},
+	{u: 13482, i: 94270, n: "Prismatium Ingot", r: [[94163, 10], [19685, 10], [19684, 90], [19721, 10]], s: 94873}
 ],
 Weaponsmith_Component: [
 	{u: 5324, i: 12848, n: "Bronze Axe Blade", r: [[19679, 3]]},
@@ -10634,7 +10658,9 @@ Weaponsmith_Axe: [
 	{u: 13381, i: 93834, n: "Berserker's Charged Stormcaller Axe", r: [[93567, 2], [92687, 2], [19721, 10], [19920, 1]], s: 93843},
 	{u: 13396, i: 94261, n: "Commander's Dragon Slayer Axe", r: [[94270, 3], [12892, 1], [12852, 1], [68063, 3]], s: 94205},
 	{u: 13417, i: 94540, n: "Unfinished Azure Dragon Slayer Axe", r: [[12892, 1], [12852, 1], [94270, 5], [24340, 10]], s: 94464},
-	{u: 13440, i: 94476, n: "Unfinished Crimson Dragon Slayer Axe", r: [[94270, 5], [24325, 10], [12892, 1], [12852, 1]], s: 94568}
+	{u: 13440, i: 94476, n: "Unfinished Crimson Dragon Slayer Axe", r: [[94270, 5], [24325, 10], [12892, 1], [12852, 1]], s: 94568},
+	{u: 13456, i: 94738, n: "Marauder Icy Dragon Slayer Axe of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94866},
+	{u: 13475, i: 94716, n: "Viper's Fiery Dragon Slayer Axe of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94730}
 ],
 Weaponsmith_Mace: [
 	{u: 5419, i: 29994, n: "Charr Mace", r: [[19767, 1], [19679, 4]], s: 9508},
@@ -10864,7 +10890,9 @@ Weaponsmith_Mace: [
 	{u: 13371, i: 93903, n: "Knight's Charged Stormcaller Mace", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93755},
 	{u: 13408, i: 94283, n: "Commander's Dragon Slayer Mace", r: [[68063, 3], [94270, 3], [12892, 1], [12876, 1]], s: 94350},
 	{u: 13430, i: 94592, n: "Unfinished Crimson Dragon Slayer Mace", r: [[94270, 5], [24325, 10], [12892, 1], [12876, 1]], s: 94608},
-	{u: 13443, i: 94612, n: "Unfinished Azure Dragon Slayer Mace", r: [[94270, 5], [24340, 10], [12876, 1], [12892, 1]], s: 94620}
+	{u: 13443, i: 94612, n: "Unfinished Azure Dragon Slayer Mace", r: [[94270, 5], [24340, 10], [12876, 1], [12892, 1]], s: 94620},
+	{u: 13455, i: 94841, n: "Viper's Fiery Dragon Slayer Mace of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94768},
+	{u: 13481, i: 94789, n: "Marauder Icy Dragon Slayer Mace of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94707}
 ],
 Weaponsmith_Sword: [
 	{u: 5414, i: 30002, n: "Charr Sword", r: [[19767, 1], [19679, 4]], s: 9504},
@@ -11095,7 +11123,9 @@ Weaponsmith_Sword: [
 	{u: 13374, i: 93836, n: "Assassin's Charged Stormcaller Sword", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93808},
 	{u: 13405, i: 94241, n: "Commander's Dragon Slayer Sword", r: [[68063, 3], [94270, 3], [12846, 1], [12870, 1]], s: 94302},
 	{u: 13418, i: 94561, n: "Unfinished Azure Dragon Slayer Sword", r: [[94270, 5], [24340, 10], [12870, 1], [12846, 1]], s: 94573},
-	{u: 13421, i: 94479, n: "Unfinished Crimson Dragon Slayer Sword", r: [[94270, 5], [24325, 10], [12846, 1], [12870, 1]], s: 94611}
+	{u: 13421, i: 94479, n: "Unfinished Crimson Dragon Slayer Sword", r: [[94270, 5], [24325, 10], [12846, 1], [12870, 1]], s: 94611},
+	{u: 13454, i: 94812, n: "Marauder Icy Dragon Slayer Sword of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94779},
+	{u: 13480, i: 94843, n: "Viper's Fiery Dragon Slayer Sword of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94728}
 ],
 Weaponsmith_Dagger: [
 	{u: 5416, i: 29988, n: "Charr Dagger", r: [[19767, 1], [19679, 3]], s: 9506},
@@ -11322,7 +11352,9 @@ Weaponsmith_Dagger: [
 	{u: 13372, i: 93776, n: "Assassin's Charged Stormcaller Dagger", r: [[19919, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93721},
 	{u: 13401, i: 94348, n: "Commander's Dragon Slayer Dagger", r: [[68063, 3], [94270, 3], [12882, 1], [12858, 1]], s: 94314},
 	{u: 13427, i: 94503, n: "Unfinished Crimson Dragon Slayer Dagger", r: [[94270, 5], [24325, 10], [12858, 1], [12882, 1]], s: 94527},
-	{u: 13428, i: 94500, n: "Unfinished Azure Dragon Slayer Dagger", r: [[94270, 5], [24340, 10], [12882, 1], [12858, 1]], s: 94559}
+	{u: 13428, i: 94500, n: "Unfinished Azure Dragon Slayer Dagger", r: [[94270, 5], [24340, 10], [12882, 1], [12858, 1]], s: 94559},
+	{u: 13452, i: 94775, n: "Viper's Fiery Dragon Slayer Dagger of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94852},
+	{u: 13464, i: 94764, n: "Marauder Icy Dragon Slayer Dagger of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94774}
 ],
 Weaponsmith_Shield: [
 	{u: 5328, i: 29450, n: "Crusader's Shield", r: [[12907, 1], [12913, 1], [24345, 5]], s: 9391},
@@ -11549,7 +11581,9 @@ Weaponsmith_Shield: [
 	{u: 13383, i: 93897, n: "Knight's Charged Stormcaller Shield", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93902},
 	{u: 13395, i: 94258, n: "Commander's Dragon Slayer Shield", r: [[68063, 3], [94270, 3], [12906, 1], [12912, 1]], s: 94230},
 	{u: 13419, i: 94493, n: "Unfinished Azure Dragon Slayer Shield", r: [[94270, 5], [24340, 10], [12906, 1], [12912, 1]], s: 94462},
-	{u: 13425, i: 94588, n: "Unfinished Crimson Dragon Slayer Shield", r: [[94270, 5], [24325, 10], [12906, 1], [12912, 1]], s: 94571}
+	{u: 13425, i: 94588, n: "Unfinished Crimson Dragon Slayer Shield", r: [[94270, 5], [24325, 10], [12906, 1], [12912, 1]], s: 94571},
+	{u: 13463, i: 94763, n: "Viper's Fiery Dragon Slayer Shield of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94827},
+	{u: 13471, i: 94781, n: "Marauder Icy Dragon Slayer Shield of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94836}
 ],
 Weaponsmith_Greatsword: [
 	{u: 5417, i: 29990, n: "Charr Greatsword", r: [[19767, 1], [19679, 6]], s: 9505},
@@ -11777,7 +11811,9 @@ Weaponsmith_Greatsword: [
 	{u: 13379, i: 93826, n: "Berserker's Charged Stormcaller Greatsword", r: [[19920, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93757},
 	{u: 13397, i: 94199, n: "Commander's Dragon Slayer Greatsword", r: [[68063, 3], [94270, 3], [12888, 1], [12840, 1]], s: 94181},
 	{u: 13434, i: 94567, n: "Unfinished Azure Dragon Slayer Greatsword", r: [[94270, 5], [24340, 10], [12840, 1], [12888, 1]], s: 94599},
-	{u: 13447, i: 94467, n: "Unfinished Crimson Dragon Slayer Greatsword", r: [[94270, 5], [24325, 10], [12840, 1], [12888, 1]], s: 94461}
+	{u: 13447, i: 94467, n: "Unfinished Crimson Dragon Slayer Greatsword", r: [[94270, 5], [24325, 10], [12840, 1], [12888, 1]], s: 94461},
+	{u: 13462, i: 94857, n: "Viper's Fiery Dragon Slayer Greatsword of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94720},
+	{u: 13466, i: 94815, n: "Marauder Icy Dragon Slayer Greatsword of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94761}
 ],
 Weaponsmith_Hammer: [
 	{u: 5418, i: 29991, n: "Charr Hammer", r: [[19767, 1], [19679, 6]], s: 9507},
@@ -12004,7 +12040,9 @@ Weaponsmith_Hammer: [
 	{u: 13378, i: 93807, n: "Knight's Charged Stormcaller Hammer", r: [[19922, 1], [92687, 2], [19721, 10], [93567, 2]], s: 93743},
 	{u: 13410, i: 94216, n: "Commander's Dragon Slayer Hammer", r: [[68063, 3], [94270, 3], [12864, 1], [12899, 1]], s: 94267},
 	{u: 13420, i: 94617, n: "Unfinished Azure Dragon Slayer Hammer", r: [[94270, 5], [24340, 10], [12864, 1], [12899, 1]], s: 94555},
-	{u: 13439, i: 94506, n: "Unfinished Crimson Dragon Slayer Hammer", r: [[94270, 5], [24325, 10], [12899, 1], [12864, 1]], s: 94528}
+	{u: 13439, i: 94506, n: "Unfinished Crimson Dragon Slayer Hammer", r: [[94270, 5], [24325, 10], [12899, 1], [12864, 1]], s: 94528},
+	{u: 13459, i: 94822, n: "Marauder Icy Dragon Slayer Hammer of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94760},
+	{u: 13469, i: 94788, n: "Viper's Fiery Dragon Slayer Hammer of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94850}
 ],
 Weaponsmith_Harpoon: [
 	{u: 5344, i: 30683, n: "Quetzal Harpoon", r: [[19887, 1], [12897, 1], [12994, 1]], s: 9410},

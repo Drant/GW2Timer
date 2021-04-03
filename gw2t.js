@@ -21,7 +21,6 @@
 	Objects are camel case: ExampleObject.
 	Array names are plural (end with s or es): exampleElements.
 	Functions are lower camel case and starts with a verb: getExample().
-	~~ operator (reverse bits twice) is shorthand for parseInt and is used in integer division.
 	Functions that are repeated in milliseconds should use core JS instead of jQuery.
 	Arguments in double quotes: $("argument"), single quotes for HTML generation.
 	Parameters are camel case and start with "p": function(pExampleParameter).
@@ -2655,8 +2654,8 @@ X = {
 		var updateCalculator = function()
 		{
 			var money = X.Checklists.Dungeon.money;
-			var gold = ~~(money / E.Exchange.COPPER_IN_GOLD);
-			var silver = ~~(money / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER;
+			var gold = Math.floor(money / E.Exchange.COPPER_IN_GOLD);
+			var silver = Math.floor(money / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER;
 			var copper = money % E.Exchange.COPPER_IN_SILVER;
 			$("#chlDungeonCalculator_Gold").text(gold);
 			$("#chlDungeonCalculator_Silver").text(silver);
@@ -6067,7 +6066,7 @@ Z = {
 		var waitCooldown = function()
 		{
 			var percentcomplete = U.convertRatioToPercent(reqindex / idsarray.length);
-			var secremaining = Math.ceil((idsarray.length - reqindex) / reqlimit) * ~~(reqcooldownms / T.cMSECONDS_IN_SECOND);
+			var secremaining = Math.ceil((idsarray.length - reqindex) / reqlimit) * Math.floor(reqcooldownms / T.cMSECONDS_IN_SECOND);
 			I.print(D.getWordCapital("cooldown") + "... " + reqindex + " / " + idsarray.length
 				+ " (" + percentcomplete + ")" + " " + T.formatTimeLetter(secremaining, true) + " " + D.getWord("remaining") + ".");
 			setTimeout(function()
@@ -9119,7 +9118,7 @@ A = {
 			});
 			
 			// Add bank contents
-			A.assignAccountUpgrades("BankTab", ~~(pBankData.length / A.Metadata.Bank.NumSlotsPerTab));
+			A.assignAccountUpgrades("BankTab", Math.floor(pBankData.length / A.Metadata.Bank.NumSlotsPerTab));
 			A.Tally.Bank[1] = pBankData.length;
 			pBankData.forEach(function(iSlot)
 			{
@@ -11030,7 +11029,7 @@ V = {
 				{
 					// Current rank
 					titleindex = (i-1) % rankobj.RanksPerModifier;
-					modifierindex = ~~((i-1) / rankobj.RanksPerModifier);
+					modifierindex = Math.floor((i-1) / rankobj.RanksPerModifier);
 					wvwtitle = D.orderModifier(
 						D.getObjectTranslation(rankobj.Titles[titleindex]),
 						D.getObjectTranslation(rankobj.Modifiers[modifierindex])
@@ -11039,7 +11038,7 @@ V = {
 					if (i < length)
 					{
 						titleindex = i % rankobj.RanksPerModifier;
-						modifierindex = ~~(i / rankobj.RanksPerModifier);
+						modifierindex = Math.floor(i / rankobj.RanksPerModifier);
 						wvwtitlenext = D.orderModifier(
 							D.getObjectTranslation(rankobj.Titles[titleindex]),
 							D.getObjectTranslation(rankobj.Modifiers[modifierindex])
@@ -11071,7 +11070,7 @@ V = {
 			{
 				highestdeaths = iChar.deaths;
 			}
-			iChar.oCharLifetime = ~~((nowmsec - (new Date(iChar.created)).getTime()) / T.cMSECONDS_IN_SECOND);
+			iChar.oCharLifetime = Math.floor((nowmsec - (new Date(iChar.created)).getTime()) / T.cMSECONDS_IN_SECOND);
 			if (highestlifetime < iChar.oCharLifetime)
 			{
 				highestlifetime = iChar.oCharLifetime;
@@ -11093,10 +11092,10 @@ V = {
 			$("#chrUsage_" + iChar.oCharIndex).append(usage);
 			// SENIORITY COLUMN (right)
 			var birthdate = (new Date(iChar.created)).toLocaleString();
-			var birthdays = ~~(iChar.oCharLifetime / T.cSECONDS_IN_YEAR);
-			var lifetime = ~~(iChar.oCharLifetime / T.cSECONDS_IN_DAY);
+			var birthdays = Math.floor(iChar.oCharLifetime / T.cSECONDS_IN_YEAR);
+			var lifetime = Math.floor(iChar.oCharLifetime / T.cSECONDS_IN_DAY);
 			var lifetimepercent = (iChar.oCharLifetime / highestlifetime) * T.cPERCENT_100;
-			var birthdaysince = ~~((iChar.oCharLifetime % T.cSECONDS_IN_YEAR) / T.cSECONDS_IN_DAY);
+			var birthdaysince = Math.floor((iChar.oCharLifetime % T.cSECONDS_IN_YEAR) / T.cSECONDS_IN_DAY);
 			var birthdaytill = T.cDAYS_IN_YEAR - birthdaysince;
 			var birthdaypercent = (birthdaysince / T.cDAYS_IN_YEAR) * T.cPERCENT_100;
 			var seniority = "<var class='chrLifetime' title='" + T.formatTimeLetter(iChar.oCharLifetime) + "' data-value='" + iChar.oCharLifetime + "'>"
@@ -11138,7 +11137,7 @@ V = {
 			var forumlink = U.convertPrivateAnchor("https://forum-en.guildwars2.com/members/" + pData.name.replace(/[\s\.]/g, "-") + "/showposts");
 			var totalagehour = Math.round(totalage / T.cSECONDS_IN_HOUR);
 			var accountbirthdate = new Date(pData.created);
-			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMSECONDS_IN_SECOND);
+			var accountlifetime = Math.floor((nowmsec - accountbirthdate.getTime()) / T.cMSECONDS_IN_SECOND);
 			var accountbirthdaysince = T.formatTimeLetter(accountlifetime).trim();
 			var hoursperday = T.parseRatio((totalage / accountlifetime) * T.cHOURS_IN_DAY, 2);
 			var commandership = (pData.commander) ? "" : "accTrivial";
@@ -19862,8 +19861,8 @@ E = {
 			sep = " ";
 		}
 		
-		var gold = Math.abs(~~(amount / E.Exchange.COPPER_IN_GOLD));
-		var silver = Math.abs(~~(amount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
+		var gold = Math.abs(Math.floor(amount / E.Exchange.COPPER_IN_GOLD));
+		var silver = Math.abs(Math.floor(amount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
 		var copper = Math.abs(amount % E.Exchange.COPPER_IN_SILVER);
 		var goldstr = (Settings.aWantColor || Settings.aWantBig || Settings.aWantShort) ? gold.toLocaleString() : gold;
 		var silverstr = silver;
@@ -19938,7 +19937,7 @@ E = {
 		}
 		pAmount = parseInt(pAmount);
 		
-		var dollar = Math.abs(~~(pAmount / E.Exchange.CENTS_IN_DOLLAR));
+		var dollar = Math.abs(Math.floor(pAmount / E.Exchange.CENTS_IN_DOLLAR));
 		var cent = Math.abs(pAmount % E.Exchange.CENTS_IN_DOLLAR);
 		var sign = (pAmount < 0) ? I.Symbol.Negative : "";
 		
@@ -23354,7 +23353,7 @@ C = {
 				+ previoussuccessinterim + pChain.primaryEvents[i-1].avgSum;
 			// minavgSum = minSum + (avgSum - minSum)/2;
 			pChain.primaryEvents[i].minavgSum = pChain.primaryEvents[i].minSum
-				+ ~~(Math.abs(pChain.primaryEvents[i].avgSum - pChain.primaryEvents[i].minSum) / 2);
+				+ Math.floor(Math.abs(pChain.primaryEvents[i].avgSum - pChain.primaryEvents[i].minSum) / 2);
 		}
 		/*
 		 * min time for the entire chain to finish is the final primary event's
@@ -23366,7 +23365,7 @@ C = {
 			+ T.parseEventTime(pChain.primaryEvents[i].min);
 		pChain.avgFinish = pChain.primaryEvents[i].avgSum
 			+ T.parseEventTime(pChain.primaryEvents[i].avg);
-		pChain.minavgFinish = pChain.minFinish + ~~(Math.abs(pChain.avgFinish - pChain.minFinish)/2);
+		pChain.minavgFinish = pChain.minFinish + Math.floor(Math.abs(pChain.avgFinish - pChain.minFinish)/2);
 		
 		/*
 		 * Now with an array of primary events created, link the non-primary
@@ -25329,8 +25328,8 @@ M = {
 	{
 		var rect = pZone.continent_rect;
 		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
-		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
-		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
+		var x = rect[0][0] + Math.floor((rect[1][0] - rect[0][0]) / 2);
+		var y = rect[0][1] + Math.floor((rect[1][1] - rect[0][1]) / 2);
 		return [x, y];
 	},
 	getZoneCenter: function(pNick)
@@ -26093,7 +26092,7 @@ M = {
 				this.convertLCtoGC(markers[i+1].getLatLng())
 			);
 		}
-		var units = ~~(distance * T.cPOINTS_TO_UNITS);
+		var units = Math.floor(distance * T.cPOINTS_TO_UNITS);
 		var time = T.formatTimeLetter(Math.ceil(units / T.cUNITS_PER_SECOND), true);
 		this.outputCoordinatesName(units + " " + D.getWord("range") + " (" + time + ")");
 	},
@@ -27340,8 +27339,8 @@ M = {
 		
 		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
 		return [
-			~~(cr[0][0]+(cr[1][0]-cr[0][0])*(pPos[0]-mr[0][0])/(mr[1][0]-mr[0][0])),
-			~~(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(pPos[1]-mr[0][1])/(mr[1][1]-mr[0][1])))
+			Math.floor(cr[0][0]+(cr[1][0]-cr[0][0])*(pPos[0]-mr[0][0])/(mr[1][0]-mr[0][0])),
+			Math.floor(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(pPos[1]-mr[0][1])/(mr[1][1]-mr[0][1])))
 		];
 	},
 	convertEventCoordMulti: function(pPosArray, pZone)
@@ -27525,8 +27524,8 @@ M = {
 			if (that.Map.getZoom() === that.ZoomEnum.Max)
 			{
 				var center = that.Map.getCenter();
-				if (~~(center.lat) === ~~(thislatlng.lat)
-					&& ~~(center.lng) === ~~(thislatlng.lng))
+				if (Math.floor(center.lat) === Math.floor(thislatlng.lat)
+					&& Math.floor(center.lng) === Math.floor(thislatlng.lng))
 				{
 					// If maxed zoom and centered on the marker, then zoom out
 					that.Map.setZoom(that.ZoomEnum.Default);
@@ -27589,8 +27588,8 @@ M = {
 			if (that.Map.getZoom() === that.ZoomEnum.Max)
 			{
 				var center = that.Map.getCenter();
-				if (~~(center.lat) === ~~(pEvent.latlng.lat)
-					&& ~~(center.lng) === ~~(pEvent.latlng.lng))
+				if (Math.floor(center.lat) === Math.floor(pEvent.latlng.lat)
+					&& Math.floor(center.lng) === Math.floor(pEvent.latlng.lng))
 				{
 					// If maxed zoom and centered on the marker, then zoom out
 					that.Map.setZoom(pZoomOut);
@@ -28749,7 +28748,7 @@ P = {
 	},
 	getUnitsBetweenCoords: function(pCoordA, pCoordB)
 	{
-		return ~~(P.getDistanceBetweenCoords(pCoordA, pCoordB) * T.cPOINTS_TO_UNITS);
+		return Math.floor(P.getDistanceBetweenCoords(pCoordA, pCoordB) * T.cPOINTS_TO_UNITS);
 	},
 	
 	/*
@@ -33212,7 +33211,7 @@ W = {
 				W.MatchFinishTimeISO = pData.end_time;
 				W.MatchStartTimeMS = (new Date(pData.start_time)).getTime();
 				W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
-				W.secTillWvWReset = ~~((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
+				W.secTillWvWReset = Math.floor((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
 				W.MatchupIDCurrent = pData.id;
 				W.MatchupCurrent = W.formatMatchup(pData);
 				W.updateParticipants();
@@ -33420,7 +33419,7 @@ W = {
 						W.MatchupIDCurrent = match.wvw_match_id;
 						W.MatchStartTimeMS = (new Date(pData.start_time)).getTime();
 						W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
-						W.secTillWvWReset = ~~((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
+						W.secTillWvWReset = Math.floor((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
 						// Initialize matchup data
 						W.MatchupCurrent = W.formatMatchup(W.Matches[W.MatchupIDCurrent]);
 						W.updateParticipants();
@@ -33894,7 +33893,7 @@ T = {
 		pOffset = pOffset || 0;
 		var now = new Date();
 		var min = now.getUTCMinutes();
-		var minute = (~~(min / T.cMINUTES_IN_MINIFRAME) * T.cMINUTES_IN_MINIFRAME) + (pOffset * T.cMINUTES_IN_MINIFRAME);
+		var minute = (Math.floor(min / T.cMINUTES_IN_MINIFRAME) * T.cMINUTES_IN_MINIFRAME) + (pOffset * T.cMINUTES_IN_MINIFRAME);
 		minute = T.wrapInteger(minute, T.cMINUTES_IN_HOUR);
 		
 		return T.padZero(minute);
@@ -34246,8 +34245,8 @@ T = {
 	getTimeTillChainFormatted: function(pChain, pFormat)
 	{
 		var secondsleft = T.getSecondsUntilChainStarts(pChain);
-		var min = ~~(secondsleft / T.cSECONDS_IN_MINUTE) % T.cSECONDS_IN_MINUTE;
-		var hour = ~~(secondsleft / T.cSECONDS_IN_HOUR);
+		var min = Math.floor(secondsleft / T.cSECONDS_IN_MINUTE) % T.cSECONDS_IN_MINUTE;
+		var hour = Math.floor(secondsleft / T.cSECONDS_IN_HOUR);
 		var minword = D.getTranslation("m");
 		var hourword = D.getTranslation("h");
 		
@@ -34403,7 +34402,7 @@ T = {
 	 */
 	stepFunction: function(pX, pDivisor, pMin, pMax, pMultiplier)
 	{
-		var result = (~~(pX / pDivisor) * pMultiplier) + pMin;
+		var result = (Math.floor(pX / pDivisor) * pMultiplier) + pMin;
 		return (result > pMax) ? pMax : result;
 	},
 	
@@ -34461,7 +34460,7 @@ T = {
 		{
 			time = pTime.split("~");
 			// Sum the minimum wait with the expected (half) time of the window
-			return T.parseEventTime(time[0]) + ~~(T.parseEventTime(time[1]) / 2);
+			return T.parseEventTime(time[0]) + Math.floor(T.parseEventTime(time[1]) / 2);
 		}
 		if (pTime === "*")
 		{
@@ -34501,7 +34500,7 @@ T = {
 	},
 	unparseChainTime: function(pMinutes)
 	{
-		var hours = ~~(pMinutes / T.cMINUTES_IN_HOUR);
+		var hours = Math.floor(pMinutes / T.cMINUTES_IN_HOUR);
 		var minutes = pMinutes % T.cSECONDS_IN_MINUTE;
 		return T.padZero(hours) + ":" + T.padZero(minutes);
 	},
@@ -34605,13 +34604,9 @@ T = {
 				cust = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
 			}
 			
-			/*
-			 * Convert specified seconds to time units. The ~~ gets rid of the
-			 * decimal so / behaves like integer divide.
-			 */
 			sec = cust % T.cSECONDS_IN_MINUTE;
-			min = ~~(cust / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
-			hour = ~~(cust / T.cSECONDS_IN_HOUR);
+			min = Math.floor(cust / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			hour = Math.floor(cust / T.cSECONDS_IN_HOUR);
 		}
 		
 		var minsec = "";
@@ -34691,7 +34686,7 @@ T = {
 	 */
 	getShorthandTime: function(pMilliseconds)
 	{
-		var seconds = ~~(pMilliseconds / T.cMSECONDS_IN_SECOND);
+		var seconds = Math.floor(pMilliseconds / T.cMSECONDS_IN_SECOND);
 		// Return minutes
 		if (seconds < T.cSECONDS_IN_MINUTE)
 		{
@@ -34699,7 +34694,7 @@ T = {
 		}
 		if (seconds < T.cSECONDS_IN_HOUR)
 		{
-			return (~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR) + D.getWord("m");
+			return (Math.floor(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR) + D.getWord("m");
 		}
 		// Return hours
 		return (seconds / T.cSECONDS_IN_HOUR).toFixed(1) + D.getWord("h");
@@ -34735,7 +34730,7 @@ T = {
 			ms *= -1;
 			signstr = I.Symbol.Negative;
 		}
-		var seconds = ~~(ms / T.cMSECONDS_IN_SECOND);
+		var seconds = Math.floor(ms / T.cMSECONDS_IN_SECOND);
 		var day, hour, min, sec;
 		var daystr = "";
 		var hourstr = "";
@@ -34745,12 +34740,12 @@ T = {
 		
 		if (seconds >= T.cSECONDS_IN_DAY)
 		{
-			day = ~~(seconds / T.cSECONDS_IN_DAY);
+			day = Math.floor(seconds / T.cSECONDS_IN_DAY);
 			daystr = day + "::";
 		}
 		if (seconds >= T.cSECONDS_IN_HOUR)
 		{
-			hour = ~~(seconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
+			hour = Math.floor(seconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
 			hourstr = hour + ":";
 			if (daystr !== "" && hour < T.cBASE_10)
 			{
@@ -34759,7 +34754,7 @@ T = {
 		}
 		if (seconds >= T.cSECONDS_IN_MINUTE)
 		{
-			min = ~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			min = Math.floor(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
 			minstr = min + ":";
 			if (hourstr !== "" && min < T.cBASE_10)
 			{
@@ -34778,7 +34773,7 @@ T = {
 		}
 		if (pWantDeciseconds)
 		{
-			var deciseconds = ~~((ms % T.cMSECONDS_IN_SECOND) / T.cBASE_10);
+			var deciseconds = Math.floor((ms % T.cMSECONDS_IN_SECOND) / T.cBASE_10);
 			msstr = "." + deciseconds;
 			if (deciseconds < T.cBASE_10)
 			{
@@ -34827,7 +34822,7 @@ T = {
 		{
 			if (seconds >= T.cSECONDS_IN_MONTH)
 			{
-				month = ~~(seconds / T.cSECONDS_IN_MONTH);
+				month = Math.floor(seconds / T.cSECONDS_IN_MONTH);
 				monthstr = month + D.getWord("mo") + " ";
 				daydivisor = T.cDAYS_IN_MONTH;
 			}
@@ -34835,7 +34830,7 @@ T = {
 			{
 				if (seconds >= T.cSECONDS_IN_WEEK)
 				{
-					week = ~~(seconds / T.cSECONDS_IN_WEEK);
+					week = Math.floor(seconds / T.cSECONDS_IN_WEEK);
 					weekstr = week + D.getWord("w") + " ";
 				}
 				daydivisor = T.cDAYS_IN_WEEK;
@@ -34843,7 +34838,7 @@ T = {
 		}
 		else
 		{
-			year = ~~(seconds / T.cSECONDS_IN_YEAR);
+			year = Math.floor(seconds / T.cSECONDS_IN_YEAR);
 			yearstr = year + D.getWord("y") + " ";
 		}
 		// Day string
@@ -34851,9 +34846,9 @@ T = {
 		{
 			if (pWantShort)
 			{
-				return ~~(seconds / T.cSECONDS_IN_DAY) + D.getWord("d");
+				return Math.floor(seconds / T.cSECONDS_IN_DAY) + D.getWord("d");
 			}
-			day = ~~(seconds / T.cSECONDS_IN_DAY) % daydivisor;
+			day = Math.floor(seconds / T.cSECONDS_IN_DAY) % daydivisor;
 			daystr = day + D.getWord("d") + ((seconds < T.cSECONDS_IN_YEAR) ? " " : "");
 		}
 		// Include hms only if duration is less than a year
@@ -34861,12 +34856,12 @@ T = {
 		{
 			if (seconds >= T.cSECONDS_IN_HOUR)
 			{
-				hour = ~~(seconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
+				hour = Math.floor(seconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
 				hourstr = hour + D.getWord("h") + " ";
 			}
 			if (seconds >= T.cSECONDS_IN_MINUTE)
 			{
-				min = ~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+				min = Math.floor(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
 				minstr = min + D.getWord("m") + ((pWantSeconds || seconds < T.cSECONDS_IN_MINUTE) ? " " : "");
 			}
 			if (pWantSeconds || seconds < T.cSECONDS_IN_MINUTE)
@@ -34880,7 +34875,7 @@ T = {
 	},
 	formatMilliseconds: function(pMilliseconds)
 	{
-		return T.formatTimeLetter(~~(pMilliseconds / T.cMSECONDS_IN_SECOND));
+		return T.formatTimeLetter(Math.floor(pMilliseconds / T.cMSECONDS_IN_SECOND));
 	},
 	formatMinutes: function(pMinutes)
 	{
@@ -34910,14 +34905,14 @@ T = {
 		{
 			if (sec < divisors[i+1])
 			{
-				return ~~(sec / divisors[i]) + space + D.getWord(units[i]);
+				return Math.floor(sec / divisors[i]) + space + D.getWord(units[i]);
 			}
 		}
 		return "";
 	},
 	formatTooltipTimeMS: function(pMilliseconds, pWantSpace)
 	{
-		return T.formatTooltipTime(~~(pMilliseconds / T.cMSECONDS_IN_SECOND), pWantSpace);
+		return T.formatTooltipTime(Math.floor(pMilliseconds / T.cMSECONDS_IN_SECOND), pWantSpace);
 	},
 	
 	/*
@@ -35126,7 +35121,7 @@ T = {
 	 */
 	getDaysSince: function(pStart, pFinish)
 	{
-		return ~~(Math.abs((pStart.getTime() - pFinish.getTime()) / T.cMSECONDS_IN_DAY));
+		return Math.floor(Math.abs((pStart.getTime() - pFinish.getTime()) / T.cMSECONDS_IN_DAY));
 	},
 	
 	/*
@@ -35143,7 +35138,7 @@ T = {
 	 */
 	getUNIXSeconds: function()
 	{
-		return ~~((new Date()).getTime() / T.cMSECONDS_IN_SECOND);
+		return Math.floor((new Date()).getTime() / T.cMSECONDS_IN_SECOND);
 	},
 	
 	/*
@@ -35755,7 +35750,7 @@ H = {
 					{
 						continue;
 					}
-					H.SaleCountdowns[i] = ~~(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
+					H.SaleCountdowns[i] = Math.floor(item.Finish.getTime() / T.cMSECONDS_IN_SECOND);
 				}
 
 				var oldprice = null;
@@ -36455,7 +36450,7 @@ H = {
 			var ctd = H.Countdown.Events[i];
 			if (ctd.isTimely)
 			{
-				var ithtime = (ctd.isIndefinite) ? I.Symbol.Infinity : T.formatTimeLetter(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMSECONDS_IN_SECOND), true);
+				var ithtime = (ctd.isIndefinite) ? I.Symbol.Infinity : T.formatTimeLetter(Math.floor((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMSECONDS_IN_SECOND), true);
 				document.getElementById("dsbCountdownTime_" + i).innerHTML = ithtime;
 			}
 		}
@@ -38291,7 +38286,7 @@ K = {
 		var msec = K.StopwatchTimerFinish - now.getTime();
 		if (msec > 0)
 		{
-			K.stopwatchDown.innerHTML = T.formatTimeLetter(~~(msec / T.cMSECONDS_IN_SECOND), true);
+			K.stopwatchDown.innerHTML = T.formatTimeLetter(Math.floor(msec / T.cMSECONDS_IN_SECOND), true);
 		}
 		else
 		{

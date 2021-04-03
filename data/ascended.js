@@ -2544,7 +2544,9 @@ Axe: [
 	{i: 89799, n: "Steelstar's Reaver", p: {coin: 1100000}},
 	{i: 90737, n: "Reaver of the Scion", p: {coin: 1100000}},
 	{i: 91622, n: "Mist Lord's Axe", p: {coin: 1100000}},
-	{i: 92835, n: "Reaver of the Broken Voice", p: {coin: 1100000}}
+	{i: 92835, n: "Reaver of the Broken Voice", p: {coin: 1100000}},
+	{i: 94716, n: "Viper's Fiery Dragon Slayer Axe of Icebrood Slaying", p: {coin: 1100000}},
+	{i: 94738, n: "Marauder Icy Dragon Slayer Axe of Destroyer Slaying", p: {coin: 1100000}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -2614,7 +2616,9 @@ Mace: [
 	{i: 89848, n: "Heroic Dragonsblood Mace", p: {coin: 1100000}},
 	{i: 90906, n: "Flanged Mace of the Scion", p: {coin: 1100000}},
 	{i: 91671, n: "Mist Lord's Mace", p: {coin: 1100000}},
-	{i: 92823, n: "Flanged Mace of the Broken Voice", p: {coin: 1100000}}
+	{i: 92823, n: "Flanged Mace of the Broken Voice", p: {coin: 1100000}},
+	{i: 94789, n: "Marauder Icy Dragon Slayer Mace of Destroyer Slaying", p: {coin: 1100000}},
+	{i: 94841, n: "Viper's Fiery Dragon Slayer Mace of Icebrood Slaying", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2690,7 +2694,9 @@ Sword: [
 	{i: 89645, n: "Steelstar's Blade", p: {coin: 1200000}},
 	{i: 90894, n: "Blade of the Scion", p: {coin: 1200000}},
 	{i: 91649, n: "Mist Lord's Sword", p: {coin: 1200000}},
-	{i: 92821, n: "Blade of the Broken Voice", p: {coin: 1200000}}
+	{i: 92821, n: "Blade of the Broken Voice", p: {coin: 1200000}},
+	{i: 94812, n: "Marauder Icy Dragon Slayer Sword of Destroyer Slaying", p: {coin: 1200000}},
+	{i: 94843, n: "Viper's Fiery Dragon Slayer Sword of Icebrood Slaying", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -2761,7 +2767,9 @@ Dagger: [
 	{i: 89906, n: "Steelstar's Razor", p: {coin: 1100000}},
 	{i: 90428, n: "Razor of the Scion", p: {coin: 1100000}},
 	{i: 91636, n: "Mist Lord's Dagger", p: {coin: 1100000}},
-	{i: 92834, n: "Razor of the Broken Voice", p: {coin: 1100000}}
+	{i: 92834, n: "Razor of the Broken Voice", p: {coin: 1100000}},
+	{i: 94764, n: "Marauder Icy Dragon Slayer Dagger of Destroyer Slaying", p: {coin: 1100000}},
+	{i: 94775, n: "Viper's Fiery Dragon Slayer Dagger of Icebrood Slaying", p: {coin: 1100000}}
 ],
 Pistol: [
 	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
@@ -2829,7 +2837,9 @@ Pistol: [
 	{i: 89716, n: "Steelstar's Revolver", p: {coin: 1100000}},
 	{i: 90616, n: "Revolver of the Scion", p: {coin: 1100000}},
 	{i: 91675, n: "Mist Lord's Pistol", p: {coin: 1100000}},
-	{i: 92819, n: "Revolver of the Broken Voice", p: {coin: 1100000}}
+	{i: 92819, n: "Revolver of the Broken Voice", p: {coin: 1100000}},
+	{i: 94721, n: "Viper's Fiery Dragon Slayer Pistol of Icebrood Slaying", p: {coin: 1100000}},
+	{i: 94736, n: "Marauder Icy Dragon Slayer Pistol of Destroyer Slaying", p: {coin: 1100000}}
 ],
 Scepter: [
 	{i: 77441, n: "Chest of Scepters", p: {coin: 1100000}},
@@ -2900,7 +2910,9 @@ Scepter: [
 	{i: 91269, n: "Sabir's Scepter of the Malicious", p: {coin: 1100000}},
 	{i: 91619, n: "Mist Lord's Scepter", p: {coin: 1100000}},
 	{i: 92828, n: "Wand of the Broken Voice", p: {coin: 1100000}},
-	{i: 93869, n: "Empowered Boneskinner's Rib", p: {coin: 1100000}}
+	{i: 93869, n: "Empowered Boneskinner's Rib", p: {coin: 1100000}},
+	{i: 94745, n: "Marauder Icy Dragon Slayer Scepter of Destroyer Slaying", p: {coin: 1100000}},
+	{i: 94818, n: "Viper's Fiery Dragon Slayer Scepter of Icebrood Slaying", p: {coin: 1100000}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -2969,7 +2981,9 @@ Focus: [
 	{i: 91239, n: "Adina's Nexus of the Malicious", p: {coin: 1000000}},
 	{i: 91657, n: "Mist Lord's Focus", p: {coin: 1000000}},
 	{i: 92831, n: "Artifact of the Broken Voice", p: {coin: 1000000}},
-	{i: 93804, n: "Empowered Boneskinner's Totem", p: {coin: 1000000}}
+	{i: 93804, n: "Empowered Boneskinner's Totem", p: {coin: 1000000}},
+	{i: 94709, n: "Viper's Fiery Dragon Slayer Focus of Icebrood Slaying", p: {coin: 1000000}},
+	{i: 94747, n: "Marauder Icy Dragon Slayer Focus of Destroyer Slaying", p: {coin: 1000000}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -3045,7 +3059,9 @@ Shield: [
 	{i: 89922, n: "Steelstar's Bastion", p: {coin: 1000000}},
 	{i: 90330, n: "Bastion of the Scion", p: {coin: 1000000}},
 	{i: 91633, n: "Mist Lord's Shield", p: {coin: 1000000}},
-	{i: 92826, n: "Bastion of the Broken Voice", p: {coin: 1000000}}
+	{i: 92826, n: "Bastion of the Broken Voice", p: {coin: 1000000}},
+	{i: 94763, n: "Viper's Fiery Dragon Slayer Shield of Icebrood Slaying", p: {coin: 1000000}},
+	{i: 94781, n: "Marauder Icy Dragon Slayer Shield of Destroyer Slaying", p: {coin: 1000000}}
 ],
 Torch: [
 	{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
@@ -3115,7 +3131,9 @@ Torch: [
 	{i: 91219, n: "Peerless Healer Torch", p: {coin: 1000000}},
 	{i: 91264, n: "Peerless Malicious Torch", p: {coin: 1000000}},
 	{i: 91653, n: "Mist Lord's Torch", p: {coin: 1000000}},
-	{i: 92824, n: "Brazier of the Broken Voice", p: {coin: 1000000}}
+	{i: 92824, n: "Brazier of the Broken Voice", p: {coin: 1000000}},
+	{i: 94711, n: "Viper's Fiery Dragon Slayer Torch of Icebrood Slaying", p: {coin: 1000000}},
+	{i: 94826, n: "Marauder Icy Dragon Slayer Torch of Destroyer Slaying", p: {coin: 1000000}}
 ],
 Warhorn: [
 	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
@@ -3184,7 +3202,9 @@ Warhorn: [
 	{i: 91238, n: "Sabir's Call of the Malicious", p: {coin: 1000000}},
 	{i: 91249, n: "Sabir's Call of the Assaulter", p: {coin: 1000000}},
 	{i: 91676, n: "Mist Lord's Warhorn", p: {coin: 1000000}},
-	{i: 92817, n: "Herald of the Broken Voice", p: {coin: 1000000}}
+	{i: 92817, n: "Herald of the Broken Voice", p: {coin: 1000000}},
+	{i: 94724, n: "Marauder Icy Dragon Slayer Warhorn of Destroyer Slaying", p: {coin: 1000000}},
+	{i: 94785, n: "Viper's Fiery Dragon Slayer Warhorn of Icebrood Slaying", p: {coin: 1000000}}
 ],
 Greatsword: [
 	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
@@ -3258,7 +3278,9 @@ Greatsword: [
 	{i: 90217, n: "Claymore of the Scion", p: {coin: 1200000}},
 	{i: 90883, n: "Exitare", p: {coin: 1200000}},
 	{i: 91646, n: "Mist Lord's Greatsword", p: {coin: 1200000}},
-	{i: 92818, n: "Claymore of the Broken Voice", p: {coin: 1200000}}
+	{i: 92818, n: "Claymore of the Broken Voice", p: {coin: 1200000}},
+	{i: 94815, n: "Marauder Icy Dragon Slayer Greatsword of Destroyer Slaying", p: {coin: 1200000}},
+	{i: 94857, n: "Viper's Fiery Dragon Slayer Greatsword of Icebrood Slaying", p: {coin: 1200000}}
 ],
 Hammer: [
 	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -3332,7 +3354,9 @@ Hammer: [
 	{i: 89842, n: "Heroic Dragonsblood Hammer", p: {coin: 1100000}},
 	{i: 90402, n: "Warhammer of the Scion", p: {coin: 1100000}},
 	{i: 91652, n: "Mist Lord's Hammer", p: {coin: 1100000}},
-	{i: 92815, n: "Warhammer of the Broken Voice", p: {coin: 1100000}}
+	{i: 92815, n: "Warhammer of the Broken Voice", p: {coin: 1100000}},
+	{i: 94788, n: "Viper's Fiery Dragon Slayer Hammer of Icebrood Slaying", p: {coin: 1100000}},
+	{i: 94822, n: "Marauder Icy Dragon Slayer Hammer of Destroyer Slaying", p: {coin: 1100000}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
@@ -3405,7 +3429,9 @@ LongBow: [
 	{i: 91230, n: "Peerless Assaulter Greatbow", p: {coin: 1300000}},
 	{i: 91263, n: "Peerless Defender Greatbow", p: {coin: 1300000}},
 	{i: 91632, n: "Mist Lord's Longbow", p: {coin: 1300000}},
-	{i: 92814, n: "Greatbow of the Broken Voice", p: {coin: 1300000}}
+	{i: 92814, n: "Greatbow of the Broken Voice", p: {coin: 1300000}},
+	{i: 94733, n: "Viper's Fiery Dragon Slayer Longbow of Icebrood Slaying", p: {coin: 1300000}},
+	{i: 94861, n: "Marauder Icy Dragon Slayer Longbow of Destroyer Slaying", p: {coin: 1300000}}
 ],
 ShortBow: [
 	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
@@ -3470,7 +3496,9 @@ ShortBow: [
 	{i: 89949, n: "Steelstar's Short Bow", p: {coin: 1300000}},
 	{i: 90903, n: "Short Bow of the Scion", p: {coin: 1300000}},
 	{i: 91628, n: "Mist Lord's Short Bow", p: {coin: 1300000}},
-	{i: 92836, n: "Short Bow of the Broken Voice", p: {coin: 1300000}}
+	{i: 92836, n: "Short Bow of the Broken Voice", p: {coin: 1300000}},
+	{i: 94754, n: "Viper's Fiery Dragon Slayer Short Bow of Icebrood Slaying", p: {coin: 1300000}},
+	{i: 94821, n: "Marauder Icy Dragon Slayer Short Bow of Destroyer Slaying", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
@@ -3539,7 +3567,9 @@ Rifle: [
 	{i: 91265, n: "Adina's Rifle of the Malicious", p: {coin: 1200000}},
 	{i: 91271, n: "Adina's Rifle of the Healer", p: {coin: 1200000}},
 	{i: 91637, n: "Mist Lord's Rifle", p: {coin: 1200000}},
-	{i: 92829, n: "Musket of the Broken Voice", p: {coin: 1200000}}
+	{i: 92829, n: "Musket of the Broken Voice", p: {coin: 1200000}},
+	{i: 94793, n: "Marauder Icy Dragon Slayer Rifle of Destroyer Slaying", p: {coin: 1200000}},
+	{i: 94796, n: "Viper's Fiery Dragon Slayer Rifle of Icebrood Slaying", p: {coin: 1200000}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
@@ -3623,7 +3653,9 @@ Staff: [
 	{i: 90189, n: "Spire of the Scion", p: {coin: 1200000}},
 	{i: 91674, n: "Mist Lord's Staff", p: {coin: 1200000}},
 	{i: 92827, n: "Spire of the Broken Voice", p: {coin: 1200000}},
-	{i: 93872, n: "Empowered Boneskinner's Spine", p: {coin: 1200000}}
+	{i: 93872, n: "Empowered Boneskinner's Spine", p: {coin: 1200000}},
+	{i: 94787, n: "Marauder Icy Dragon Slayer Staff of Destroyer Slaying", p: {coin: 1200000}},
+	{i: 94865, n: "Viper's Fiery Dragon Slayer Staff of Icebrood Slaying", p: {coin: 1200000}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},
