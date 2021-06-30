@@ -2241,7 +2241,7 @@ Countdown: {
 		Start: new Date("2018-03-06T16:00:00Z"),
 		Finish: new Date("2018-03-07T16:00:00Z")
 	}*/
-	{
+	/*{
 		isWintersday: false,
 		name_en: "Wintersday 2020",
 		name_de: "Wintertag 2020",
@@ -2251,7 +2251,7 @@ Countdown: {
 		official: "the-game/releases/december-15-2020/",
 		Start: new Date("2020-12-15T17:00:00Z"),
 		Finish: new Date("2021-01-07T17:00:00Z")
-	}
+	}*/
 	]
 },
 

@@ -1128,7 +1128,9 @@ Accessory: [
 	{i: 91035, n: "Glimpse", p: {achievement: 0}},
 	{i: 92706, n: "Asgeir's Talisman", p: {achievement: 0}},
 	{i: 93727, n: "Ancient Norn Pin", p: {achievement: 0}},
-	{i: 94975, n: "Saga's End Draconic Core", p: {achievement: 0}}
+	{i: 94975, n: "Saga's End Draconic Core", p: {achievement: 0}},
+	{i: 95013, n: "Fractal Troubleshooter's Star", p: {achievement: 0}},
+	{i: 95071, n: "Plush Primo", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
