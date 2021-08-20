@@ -2313,7 +2313,7 @@ Pact:
 {
 	isEnabled: true,
 	SpreadsheetEdit: "https://docs.google.com/spreadsheets/d/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/edit?usp=sharing",
-	SpreadsheetData: "https://spreadsheets.google.com/feeds/list/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/od6/public/values?alt=json",
+	SpreadsheetData: "https://sheets.googleapis.com/v4/spreadsheets/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/values/Pact%20Supplies?key=AIzaSyAvWYr1PnZfyQ1b5HNlUlp4pIyeMx6E80w",
 	resetHour: 8,
 	name_en: "Pact Supply",
 	name_de: "Pakt-Vorratsnetzwerk",

@@ -36240,8 +36240,8 @@ H = {
 				expiredstr = (updatetime > T.ResetToday && updatetime < T.ResetTomorrow) ? "" : D.getWordCapital("expired") + ". ";
 			}
 			table.append("<div id='dsbPactNote'>This daily recipes list is user contributed. "
-				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Pact.SpreadsheetEdit) + ">Update</a> link."
-				+ "<br />" + expiredstr + "<time id='dsbPactTime'>" + timestamp + "</time></div>");
+				+ "Please correct items using the <a" + U.convertExternalAnchor(H.Pact.SpreadsheetEdit) + ">Update</a> link.</div>");
+//				+ "<br />" + expiredstr + "<time id='dsbPactTime'>" + timestamp + "</time></div>");
 		};
 		
 		var getDateNumber = function(pDate)
@@ -36257,14 +36257,15 @@ H = {
 			var iserror = true;
 			try
 			{
-				var ids = pData.feed.entry[0];
-				var times = pData.feed.entry[1];
+				var values = pData.values;
+				var ids = values[1];
+				var times = values[2];
 				var today = getDateNumber(new Date());
 				for (var i in H.Pact.OffersAssoc)
 				{
-					var key = "gsx$" + i.toLowerCase();
-					var id = parseInt(ids[key].$t);
-					var time = times[key].$t;
+					var key = H.Pact.OffersAssoc[i];
+					var id = parseInt(ids[key]);
+					var time = times[key];
 					if (id || H.Pact.Products[id])
 					{
 						recipelist[i] = id;
@@ -36276,7 +36277,7 @@ H = {
 						recipelist[i] = Q.GameLimit.UnknownItem;
 					}
 				}
-				updatetime = pData.feed.updated.$t;
+				updatetime = (new Date()).toISOString();
 			}
 			catch (e) {}
 			if (iserror)
