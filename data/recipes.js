@@ -12852,7 +12852,15 @@ Scribe_GuildDecoration: [
 	{u: 13393, i: 94115, n: "Grand Clock Tower Gear", r: [[70933, 1], [48807, 3], [44941, 50]]},
 	{u: 13412, i: 94445, n: "Embellished Wintersday Star", r: [[70933, 1], [24277, 8], [70930, 1]]},
 	{u: 13414, i: 94400, n: "Draped Wintersday Garland", r: [[74768, 1], [69466, 2], [71668, 1]]},
-	{u: 13449, i: 94648, n: "Ox Statue", r: [[70926, 1], [94692, 1]]}
+	{u: 13449, i: 94648, n: "Ox Statue", r: [[70926, 1], [94692, 1]]},
+	{u: 13485, i: 94902, n: "Super Pointing Glad Hand", r: [[70454, 1], [75862, 4]]},
+	{u: 13487, i: 94907, n: "Super Pointing Flat Hand", r: [[70926, 1], [75862, 4]]},
+	{u: 13489, i: 95041, n: "Dragon Bash Kite", r: [[71146, 1], [19742, 20], [19740, 5], [43319, 50]]},
+	{u: 13490, i: 95049, n: "Dragon Bash Firework Launcher", r: [[70489, 1], [19688, 10], [24276, 5], [43319, 100]]},
+	{u: 13492, i: 95072, n: "Primordus Hologram Generator", r: [[70933, 1], [46738, 30], [46743, 10], [43320, 50]]},
+	{u: 13494, i: 95062, n: "Dragon Bash Windcatcher", r: [[71146, 1], [19742, 20], [19714, 10], [43319, 100]]},
+	{u: 13497, i: 95274, n: "Zephyr Net", r: [[19720, 30], [70454, 1]]},
+	{u: 13503, i: 95354, n: "Shattered Stairway", r: [[70489, 1], [48806, 3], [19681, 40]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
@@ -13154,7 +13162,9 @@ Chef_Snack: [
 	{u: 9237, i: 91848, n: "Peppered Cured Meat Flatbread", r: [[76603, 1], [91826, 2], [91869, 1]]},
 	{u: 9238, i: 91878, n: "Cilantro and Cured Meat Flatbread", r: [[76603, 1], [91826, 2], [91715, 1], [12339, 1]]},
 	{u: 9254, i: 91842, n: "Plate of Eggs Benedict", r: [[12143, 1], [91861, 1], [91826, 1], [76603, 1]]},
-	{u: 13266, i: 91917, n: "Plate of Spicy Moa Wings", r: [[92072, 2], [24360, 5], [12158, 2], [12136, 2]], s: 92060}
+	{u: 13266, i: 91917, n: "Plate of Spicy Moa Wings", r: [[92072, 2], [24360, 5], [12158, 2], [12136, 2]], s: 92060},
+	{u: 13498, i: 95277, n: "Fried Banana Chips", r: [[12251, 4], [12158, 2]], s: 95278},
+	{u: 13499, i: 95421, n: "Homemade Campfire Treat", r: [[12155, 12], [91702, 3], [12229, 6], [12169, 8]], s: 95343}
 ],
 Chef_Dessert: [
 	{u: 2899, i: 12225, n: "Cinnamon Apple", r: [[12177, 1], [12165, 1]]},
