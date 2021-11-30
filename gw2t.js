@@ -31955,10 +31955,14 @@ W = {
 				teamserverids = teams[ithteamname];
 				hostserverid = pMatchData.worlds[ithteamname];
 				servers[i] = new Array();
+				if (W.Servers[hostserverid] === undefined)
+				{
+					continue;
+				}
 				servers[i].push(W.Servers[hostserverid]); // Host server is index 0
 				for (var ii = 0; ii < teamserverids.length; ii++)
 				{
-					if (teamserverids[ii] !== hostserverid)
+					if (teamserverids[ii] !== hostserverid && W.Servers[(teamserverids[ii])] !== undefined)
 					{
 						servers[i].push(W.Servers[(teamserverids[ii])]);
 					}

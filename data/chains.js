@@ -3366,45 +3366,6 @@ var GW2T_CHAIN_DATA = [
 },
 {
 	series: 4,
-	alias: "Marionette",
-	pronunciation: "marionette",
-	title: "The Twisted Marionette",
-	name_en: "Twisted Marionette",
-	name_de: "Verdrehten Marionette",
-	name_es: "Marioneta Retorcida",
-	name_fr: "Marionnette détraquée",
-	name_zh: "扭曲木偶",
-	zone: "lornar",
-	waypoint: "[&BA4FAAA=]",
-	level: "80",
-	reward: {ecto: "4", loot: "8", dragonite: "15"},
-	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 0},
-	flags: {isExpansion: true},
-	events: [
-	{
-		primacy: 3,
-		path: [[19100, 16258]],
-		name_en: "Twisted Marionette",
-		name_de: "Verdrehten Marionette",
-		name_es: "Marioneta Retorcida",
-		name_fr: "Marionnette détraquée",
-		name_zh: "扭曲木偶",
-		icon: "boss",
-		ring: "",
-		num: "1",
-		sGotoNum: ["1"],
-		fGotoNum: "1#",
-		sInterim: ["1#"],
-		fInterim: "0",
-		lim: "*",
-		avg: "20:00",
-		min: "20:00",
-		max: "20:00"
-	}
-	]
-},
-{
-	series: 4,
 	alias: "BloodMoa",
 	pronunciation: "bloodstone moa",
 	title: "Bloodstone-Crazed Moa",
@@ -3799,6 +3760,44 @@ var GW2T_CHAIN_DATA = [
 		avg: "15:00",
 		min: "15:00",
 		max: "15:00"
+	}
+	]
+},
+{
+	series: 4,
+	alias: "Marionette",
+	pronunciation: "marionette",
+	title: "Twisted Marionette",
+	name_en: "Twisted Marionette",
+	name_de: "Verdrehten Marionette",
+	name_es: "Marioneta Retorcida",
+	name_fr: "Marionnette détraquée",
+	name_zh: "扭曲木偶",
+	zone: "lornar",
+	waypoint: "[&BA4FAAA=]",
+	level: "80",
+	reward: {ecto: "4", loot: "8", dragonite: "15"},
+	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 0},
+	flags: {isExpansion: true},
+	events: [
+	{
+		primacy: 3,
+		path: [[19100, 16258]],
+		name_en: "Twisted Marionette",
+		name_de: "Verdrehten Marionette",
+		name_es: "Marioneta Retorcida",
+		name_fr: "Marionnette détraquée",
+		name_zh: "扭曲木偶",
+		icon: "boss",
+		num: "1",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
+		max: "20:00"
 	}
 	]
 },
