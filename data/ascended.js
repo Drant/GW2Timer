@@ -1134,7 +1134,8 @@ Accessory: [
 	{i: 95013, n: "Fractal Troubleshooter's Star", p: {achievement: 0}},
 	{i: 95071, n: "Plush Primo", p: {achievement: 0}},
 	{i: 95276, n: "Plush Kralky", p: {achievement: 0}},
-	{i: 95318, n: "Plush Zhaia", p: {achievement: 0}}
+	{i: 95318, n: "Plush Zhaia", p: {achievement: 0}},
+	{i: 95568, n: "Plush Jorms", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
