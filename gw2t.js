@@ -36312,7 +36312,7 @@ H = {
 					var recipe = Q.getCachedItem(recipeid);
 					var product = Q.getCachedItem(productid) || recipe || {
 						icon: "img/ui/unknown.png",
-						name: productid
+						name: productid.toString()
 					};
 					recipe = recipe || product;
 					
