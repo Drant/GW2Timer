@@ -344,7 +344,7 @@ var GW2T_ASCENDED_METADATA = {
 		6233: 1, // Rage
 		6505: 1 // Venom
 	},
-	JunkValue: {"19182": 2, "19202": 15, "19526": 2, "19527": 9, "19528": 16, "19529": 2, "19530": 9, "19531": 16, "19532": 2, "19533": 9, "19534": 16, "19535": 2, "19536": 9, "19537": 16, "19538": 2, "19539": 9, "19540": 16, "19541": 2, "19542": 16, "19543": 2, "19544": 9, "19545": 16, "19546": 2, "19547": 9, "19548": 16, "19549": 2, "19550": 9, "19551": 16, "19552": 2, "19553": 9, "19554": 16, "19557": 16, "19558": 2, "19559": 9, "19560": 16, "19561": 2, "19562": 9, "19563": 16, "19564": 2, "19565": 9, "19566": 16, "19567": 2, "19568": 9, "19569": 16, "19570": 2, "19571": 9, "19572": 16, "19573": 2, "19574": 9, "19575": 16, "19576": 2, "19577": 9, "19578": 16, "19579": 2, "19584": 9, "19591": 16, "19594": 19, "19595": 20, "19596": 2, "19597": 4, "19599": 6, "19601": 9, "19603": 11, "19605": 13, "19607": 15, "19608": 16, "19609": 17, "19611": 19, "19612": 20, "19613": 2, "19614": 9, "19615": 16, "19616": 9, "19617": 2, "19618": 2, "19619": 2, "19620": 2, "21265": 496, "24120": 2, "24361": 4, "24371": 2, "24435": 2, "24436": 2, "24437": 2, "24438": 2, "24441": 2, "24448": 2, "35736": 1000, "39223": 50, "42680": 3, "48882": 17, "67807": 2500, "67808": 2500, "67968": 2500, "68043": 2500, "68389": 100, "68390": 1000, "68510": 2500, "68527": 2500, "68637": 888, "68638": 88, "68639": 8888, "68640": 88888, "69568": 100, "69850": 1000, "69936": 1000000, "70036": 10000, "70093": 3000, "70934": 20, "71315": 2000, "71384": 2, "71509": 3000, "72336": 2500, "72468": 2000, "72544": 16, "72657": 2500, "72796": 5000, "72847": 2, "72974": 6000, "73055": 20, "73331": 2000, "73372": 2, "73398": 10000, "73402": 2500, "73478": 6000, "73561": 3000, "73705": 2000, "73848": 3000, "73992": 2000, "74100": 2000, "74696": 3000, "74863": 16, "74916": 3000, "74924": 2500, "74996": 1000, "75096": 2500, "75220": 2000, "75653": 6000, "76046": 9, "76740": 3000, "76822": 20, "77172": 2500, "77690": 8888, "78534": 20, "78740": 10000, "78753": 25, "78769": 2500, "78946": 1000, "79047": 5000, "79634": 600, "79734": 10, "80075": 8888, "80565": 10, "81093": 10, "81996": 1, "81997": 10, "82111": 10000, "82137": 1500, "82153": 5000, "82240": 5000, "82251": 1000, "82283": 1000, "82294": 5000, "82304": 1000, "82420": 1000, "82445": 250, "82534": 16, "82543": 250, "82580": 250, "82592": 5000, "82628": 1000, "82733": 1500, "82795": 10, "82937": 16, "82980": 5000, "82998": 5000, "83061": 1000, "83102": 1000, "83105": 5000, "83125": 5000, "83176": 1000, "83234": 5000, "83344": 5000, "83510": 5000, "83512": 5000, "83521": 1000, "83561": 1500, "83580": 5000, "83597": 1000, "83598": 1000, "83615": 1000, "83653": 5000, "83659": 5000, "83684": 1000, "83778": 1000, "83783": 5000, "83801": 1000, "83818": 1000, "83932": 5000, "83982": 5000, "84048": 1000000, "84063": 1000, "84105": 1000, "84108": 5000, "84151": 250, "84165": 5000, "84167": 1000, "84239": 1500, "84243": 10000, "84261": 5000, "84324": 1000, "84394": 5000, "84397": 1000, "84399": 5000, "84510": 5000, "84530": 5000, "84614": 1000, "84620": 250, "84681": 5000, "84689": 1000, "84710": 1500, "84797": 5000, "85378": 20000, "85394": 10000, "85417": 5000, "85441": 50000, "85447": 15000, "86356": 10, "86395": 50000, "86591": 10000, "86602": 15000, "86612": 5000, "86658": 20000, "86911": 10000, "86934": 5000, "86936": 15000, "86942": 50000, "86945": 20000, "86959": 8888, "87022": 10, "87050": 10000, "87055": 2000, "87174": 10, "87265": 4000, "87275": 6250, "87656": 10, "87740": 10, "87758": 3000, "87766": 2000, "88014": 10, "88055": 6000, "88090": 2500, "88164": 10000, "88168": 5000, "88177": 15000, "88182": 50000, "88214": 20000, "88549": 10, "89095": 50000, "89212": 7500, "89219": 5000, "89224": 15000, "89355": 10, "89637": 10, "90014": 8888, "90449": 10, "91141": 6, "91440": 10000, "91514": 5000, "91640": 500, "91683": 5000, "91707": 10000, "91733": 20000, "91791": 15000, "91811": 50000, "91890": 10, "92002": 10, "92114": 20000, "92161": 15000, "92300": 10, "92373": 4, "92555": 50000, "92569": 15000, "92654": 8888, "92732": 10, "92978": 10, "93339": 10, "93580": 1, "93661": 10, "93676": 5000, "93677": 10000, "93706": 20000, "93709": 50000, "93711": 15000, "93767": 10, "93795": 10, "93946": 20000, "93955": 50000, "94116": 5000, "94118": 10000, "94162": 10, "94178": 10, "94193": 10, "94200": 10, "94204": 10, "94222": 10, "94244": 10, "94264": 10, "94296": 10, "94307": 10, "94340": 10, "94342": 10, "94395": 10000, "94441": 20000, "94535": 10, "94687": 8888, "94809": 10, "94961": 10, "95045": 50000, "95057": 10000, "95336": 400, "95352": 400, "95365": 400, "95403": 400, "95437": 400}
+	JunkValue: {"19182": 2, "19202": 15, "19526": 2, "19527": 9, "19528": 16, "19529": 2, "19530": 9, "19531": 16, "19532": 2, "19533": 9, "19534": 16, "19535": 2, "19536": 9, "19537": 16, "19538": 2, "19539": 9, "19540": 16, "19541": 2, "19542": 16, "19543": 2, "19544": 9, "19545": 16, "19546": 2, "19547": 9, "19548": 16, "19549": 2, "19550": 9, "19551": 16, "19552": 2, "19553": 9, "19554": 16, "19557": 16, "19558": 2, "19559": 9, "19560": 16, "19561": 2, "19562": 9, "19563": 16, "19564": 2, "19565": 9, "19566": 16, "19567": 2, "19568": 9, "19569": 16, "19570": 2, "19571": 9, "19572": 16, "19573": 2, "19574": 9, "19575": 16, "19576": 2, "19577": 9, "19578": 16, "19579": 2, "19584": 9, "19591": 16, "19594": 19, "19595": 20, "19596": 2, "19597": 4, "19599": 6, "19601": 9, "19603": 11, "19605": 13, "19607": 15, "19608": 16, "19609": 17, "19611": 19, "19612": 20, "19613": 2, "19614": 9, "19615": 16, "19616": 9, "19617": 2, "19618": 2, "19619": 2, "19620": 2, "21265": 496, "24120": 2, "24361": 4, "24371": 2, "24435": 2, "24436": 2, "24437": 2, "24438": 2, "24441": 2, "24448": 2, "35736": 1000, "39223": 50, "42680": 3, "48882": 17, "67807": 2500, "67808": 2500, "67968": 2500, "68043": 2500, "68389": 100, "68390": 1000, "68510": 2500, "68527": 2500, "68637": 888, "68638": 88, "68639": 8888, "68640": 88888, "69568": 100, "69850": 1000, "69936": 1000000, "70036": 10000, "70093": 3000, "70934": 20, "71315": 2000, "71384": 2, "71509": 3000, "72336": 2500, "72468": 2000, "72544": 16, "72657": 2500, "72796": 5000, "72847": 2, "72974": 6000, "73055": 20, "73331": 2000, "73372": 2, "73398": 10000, "73402": 2500, "73478": 6000, "73561": 3000, "73705": 2000, "73848": 3000, "73992": 2000, "74100": 2000, "74696": 3000, "74863": 16, "74916": 3000, "74924": 2500, "74996": 1000, "75096": 2500, "75220": 2000, "75653": 6000, "76046": 9, "76740": 3000, "76822": 20, "77172": 2500, "77690": 8888, "78534": 20, "78740": 10000, "78753": 25, "78769": 2500, "78946": 1000, "79047": 5000, "79634": 600, "79734": 10, "80075": 8888, "80565": 10, "81093": 10, "81996": 1, "81997": 10, "82111": 10000, "82137": 1500, "82153": 5000, "82240": 5000, "82251": 1000, "82283": 1000, "82294": 5000, "82304": 1000, "82420": 1000, "82445": 250, "82534": 16, "82543": 250, "82580": 250, "82592": 5000, "82628": 1000, "82733": 1500, "82795": 10, "82937": 16, "82980": 5000, "82998": 5000, "83061": 1000, "83102": 1000, "83105": 5000, "83125": 5000, "83176": 1000, "83234": 5000, "83344": 5000, "83510": 5000, "83512": 5000, "83521": 1000, "83561": 1500, "83580": 5000, "83597": 1000, "83598": 1000, "83615": 1000, "83653": 5000, "83659": 5000, "83684": 1000, "83778": 1000, "83783": 5000, "83801": 1000, "83818": 1000, "83932": 5000, "83982": 5000, "84048": 1000000, "84063": 1000, "84105": 1000, "84108": 5000, "84151": 250, "84165": 5000, "84167": 1000, "84239": 1500, "84243": 10000, "84261": 5000, "84324": 1000, "84394": 5000, "84397": 1000, "84399": 5000, "84510": 5000, "84530": 5000, "84614": 1000, "84620": 250, "84681": 5000, "84689": 1000, "84710": 1500, "84797": 5000, "85378": 20000, "85394": 10000, "85417": 5000, "85441": 50000, "85447": 15000, "86356": 10, "86395": 50000, "86591": 10000, "86602": 15000, "86612": 5000, "86658": 20000, "86911": 10000, "86934": 5000, "86936": 15000, "86942": 50000, "86945": 20000, "86959": 8888, "87022": 10, "87050": 10000, "87055": 2000, "87174": 10, "87265": 4000, "87275": 6250, "87656": 10, "87740": 10, "87758": 3000, "87766": 2000, "88014": 10, "88055": 6000, "88090": 2500, "88164": 10000, "88168": 5000, "88177": 15000, "88182": 50000, "88214": 20000, "88549": 10, "89095": 50000, "89212": 7500, "89219": 5000, "89224": 15000, "89355": 10, "89637": 10, "90014": 8888, "90449": 10, "91141": 6, "91440": 10000, "91514": 5000, "91640": 500, "91683": 5000, "91707": 10000, "91733": 20000, "91791": 15000, "91811": 50000, "91890": 10, "92002": 10, "92114": 20000, "92161": 15000, "92300": 10, "92373": 4, "92555": 50000, "92569": 15000, "92654": 8888, "92732": 10, "92978": 10, "93339": 10, "93580": 1, "93661": 10, "93676": 5000, "93677": 10000, "93706": 20000, "93709": 50000, "93711": 15000, "93767": 10, "93795": 10, "93946": 20000, "93955": 50000, "94116": 5000, "94118": 10000, "94162": 10, "94178": 10, "94193": 10, "94200": 10, "94204": 10, "94222": 10, "94244": 10, "94264": 10, "94296": 10, "94307": 10, "94340": 10, "94342": 10, "94395": 10000, "94441": 20000, "94535": 10, "94687": 8888, "94809": 10, "94961": 10, "95045": 50000, "95057": 10000, "95336": 400, "95352": 400, "95365": 400, "95403": 400, "95437": 400, "95572": 8888, "95602": 20, "95680": 10, "95767": 16, "95806": 100, "95816": 10000, "95880": 16, "95885": 5000, "95998": 20, "96006": 10, "96016": 10000, "96063": 16, "96116": 20, "96153": 16, "96231": 2, "96234": 3500, "96500": 16, "96584": 100, "96591": 20, "96647": 13, "96729": 20, "96779": 16, "96819": 16, "96852": 10000, "96859": 100, "96885": 16, "97007": 10000, "97015": 2500, "97032": 16, "97090": 100, "97108": 20, "97220": 20, "97224": 100, "97250": 16, "97252": 16, "97381": 100, "97388": 100, "97389": 20, "97393": 20, "97455": 100, "97557": 10, "97566": 50, "97585": 100, "97614": 20, "97667": 16, "97707": 16, "97718": 100, "97747": 7500, "97859": 20}
 };
 
 var GW2T_ASCENDED_BLACKLIST = {
@@ -774,7 +774,8 @@ Back: [
 	{i: 90102, n: "Super Assassin Backpack", p: {craft: true}},
 	{i: 92784, n: "Sclerite Karka Shell (Infused)", p: {craft: true}},
 	{i: 94932, n: "Dragonscale Cape (Infused)", p: {craft: true}},
-	{i: 94947, n: "Dragonscale Cape", p: {craft: true}}
+	{i: 94947, n: "Dragonscale Cape", p: {craft: true}},
+	{i: 97129, n: "Antique Dragon's Drape", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1054,7 +1055,11 @@ Ring: [
 	{i: 90369, n: "Mistborn Band", p: {coin: 0}},
 	{i: 90389, n: "Attuned Mistborn Band", p: {coin: 0}},
 	{i: 95073, n: "Energy Regulator Cog", p: {coin: 0}},
-	{i: 95140, n: "Pact Vigilance Signet", p: {coin: 0}}
+	{i: 95140, n: "Pact Vigilance Signet", p: {coin: 0}},
+	{i: 96167, n: "Ring of Rebirth", p: {coin: 0}},
+	{i: 96416, n: "Attuned Ring of Rebirth", p: {coin: 0}},
+	{i: 97033, n: "Ring of Rebirth (Infused)", p: {coin: 0}},
+	{i: 97237, n: "Attuned Ring of Rebirth (Infused)", p: {coin: 0}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1135,7 +1140,10 @@ Accessory: [
 	{i: 95071, n: "Plush Primo", p: {achievement: 0}},
 	{i: 95276, n: "Plush Kralky", p: {achievement: 0}},
 	{i: 95318, n: "Plush Zhaia", p: {achievement: 0}},
-	{i: 95568, n: "Plush Jorms", p: {achievement: 0}}
+	{i: 95568, n: "Plush Jorms", p: {achievement: 0}},
+	{i: 95517, n: "Plush Mordy", p: {achievement: 0}},
+	{i: 96199, n: "Traveling Tankard", p: {achievement: 0}},
+	{i: 97322, n: "Storyteller's Lute", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1214,7 +1222,9 @@ Amulet: [
 	{i: 90355, n: "Scion-Spike Amulet", p: {achievement: 0}},
 	{i: 92215, n: "Asgeir's Amulet", p: {achievement: 0}},
 	{i: 93852, n: "Ancient Norn Cape Pin", p: {achievement: 0}},
-	{i: 93940, n: "Amulet of Celebration", p: {achievement: 0}}
+	{i: 93940, n: "Amulet of Celebration", p: {achievement: 0}},
+	{i: 95892, n: "Kurzick Brooch", p: {achievement: 0}},
+	{i: 95996, n: "Luxon Brooch", p: {achievement: 0}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1280,7 +1290,8 @@ LightHelm: [
 	{i: 90976, n: "Defender's Mist-Touched Masque", p: {coin: 900000}},
 	{i: 91007, n: "Assaulter's Mist-Touched Masque", p: {coin: 900000}},
 	{i: 91055, n: "Malicious Mist-Touched Masque", p: {coin: 900000}},
-	{i: 91056, n: "Healer's Mist-Touched Masque", p: {coin: 900000}}
+	{i: 91056, n: "Healer's Mist-Touched Masque", p: {coin: 900000}},
+	{i: 96005, n: "Togo's Masque", p: {coin: 900000}}
 ],
 LightShoulders: [
 	{i: 48101, n: "Ahamid's Epaulets", p: {coin: 900000}},
@@ -1347,7 +1358,8 @@ LightShoulders: [
 	{i: 90981, n: "Healer's Mist-Touched Epaulets", p: {coin: 900000}},
 	{i: 91026, n: "Assaulter's Mist-Touched Epaulets", p: {coin: 900000}},
 	{i: 91091, n: "Defender's Mist-Touched Epaulets", p: {coin: 900000}},
-	{i: 91110, n: "Malicious Mist-Touched Epaulets", p: {coin: 900000}}
+	{i: 91110, n: "Malicious Mist-Touched Epaulets", p: {coin: 900000}},
+	{i: 97313, n: "Togo's Epaulets", p: {coin: 900000}}
 ],
 LightCoat: [
 	{i: 48097, n: "Ahamid's Doublet", p: {coin: 1200000}},
@@ -1408,7 +1420,8 @@ LightCoat: [
 	{i: 90963, n: "Defender's Mist-Touched Doublet", p: {coin: 1200000}},
 	{i: 91015, n: "Assaulter's Mist-Touched Doublet", p: {coin: 1200000}},
 	{i: 91119, n: "Malicious Mist-Touched Doublet", p: {coin: 1200000}},
-	{i: 91130, n: "Healer's Mist-Touched Doublet", p: {coin: 1200000}}
+	{i: 91130, n: "Healer's Mist-Touched Doublet", p: {coin: 1200000}},
+	{i: 96962, n: "Togo's Doublet", p: {coin: 1200000}}
 ],
 LightGloves: [
 	{i: 48098, n: "Ahamid's Wristguards", p: {coin: 900000}},
@@ -1478,7 +1491,8 @@ LightGloves: [
 	{i: 90959, n: "Malicious Mist-Touched Wristguards", p: {coin: 900000}},
 	{i: 90970, n: "Assaulter's Mist-Touched Wristguards", p: {coin: 900000}},
 	{i: 90988, n: "Defender's Mist-Touched Wristguards", p: {coin: 900000}},
-	{i: 90989, n: "Healer's Mist-Touched Wristguards", p: {coin: 900000}}
+	{i: 90989, n: "Healer's Mist-Touched Wristguards", p: {coin: 900000}},
+	{i: 96140, n: "Togo's Wristguards", p: {coin: 900000}}
 ],
 LightLeggings: [
 	{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -1539,7 +1553,8 @@ LightLeggings: [
 	{i: 91022, n: "Defender's Mist-Touched Breeches", p: {coin: 1100000}},
 	{i: 91062, n: "Malicious Mist-Touched Breeches", p: {coin: 1100000}},
 	{i: 91118, n: "Assaulter's Mist-Touched Breeches", p: {coin: 1100000}},
-	{i: 91129, n: "Healer's Mist-Touched Breeches", p: {coin: 1100000}}
+	{i: 91129, n: "Healer's Mist-Touched Breeches", p: {coin: 1100000}},
+	{i: 97476, n: "Togo's Breeches", p: {coin: 1100000}}
 ],
 LightBoots: [
 	{i: 48096, n: "Ahamid's Footwear", p: {coin: 1000000}},
@@ -1604,7 +1619,8 @@ LightBoots: [
 	{i: 90960, n: "Malicious Mist-Touched Footwear", p: {coin: 1000000}},
 	{i: 90987, n: "Healer's Mist-Touched Footwear", p: {coin: 1000000}},
 	{i: 91079, n: "Defender's Mist-Touched Footwear", p: {coin: 1000000}},
-	{i: 91083, n: "Assaulter's Mist-Touched Footwear", p: {coin: 1000000}}
+	{i: 91083, n: "Assaulter's Mist-Touched Footwear", p: {coin: 1000000}},
+	{i: 96739, n: "Togo's Footwear", p: {coin: 1000000}}
 ],
 MediumHelm: [
 	{i: 48105, n: "Ahamid's Visage", p: {coin: 900000}},
@@ -1670,7 +1686,8 @@ MediumHelm: [
 	{i: 90964, n: "Assaulter's Mist-Touched Visage", p: {coin: 900000}},
 	{i: 90983, n: "Malicious Mist-Touched Visage", p: {coin: 900000}},
 	{i: 91066, n: "Defender's Mist-Touched Visage", p: {coin: 900000}},
-	{i: 91103, n: "Healer's Mist-Touched Visage", p: {coin: 900000}}
+	{i: 91103, n: "Healer's Mist-Touched Visage", p: {coin: 900000}},
+	{i: 97440, n: "Togo's Visage", p: {coin: 900000}}
 ],
 MediumShoulders: [
 	{i: 48107, n: "Ahamid's Shoulderguard", p: {coin: 900000}},
@@ -1737,7 +1754,8 @@ MediumShoulders: [
 	{i: 91002, n: "Healer's Mist-Touched Shoulderguard", p: {coin: 900000}},
 	{i: 91032, n: "Defender's Mist-Touched Shoulderguard", p: {coin: 900000}},
 	{i: 91051, n: "Malicious Mist-Touched Shoulderguard", p: {coin: 900000}},
-	{i: 91100, n: "Assaulter's Mist-Touched Shoulderguard", p: {coin: 900000}}
+	{i: 91100, n: "Assaulter's Mist-Touched Shoulderguard", p: {coin: 900000}},
+	{i: 97862, n: "Togo's Shoulderguard", p: {coin: 900000}}
 ],
 MediumCoat: [
 	{i: 48103, n: "Ahamid's Guise", p: {coin: 1200000}},
@@ -1798,7 +1816,8 @@ MediumCoat: [
 	{i: 90971, n: "Malicious Mist-Touched Guise", p: {coin: 1200000}},
 	{i: 91046, n: "Assaulter's Mist-Touched Guise", p: {coin: 1200000}},
 	{i: 91089, n: "Defender's Mist-Touched Guise", p: {coin: 1200000}},
-	{i: 91113, n: "Healer's Mist-Touched Guise", p: {coin: 1200000}}
+	{i: 91113, n: "Healer's Mist-Touched Guise", p: {coin: 1200000}},
+	{i: 97154, n: "Togo's Guise", p: {coin: 1200000}}
 ],
 MediumGloves: [
 	{i: 48104, n: "Ahamid's Grips", p: {coin: 900000}},
@@ -1868,7 +1887,8 @@ MediumGloves: [
 	{i: 90998, n: "Assaulter's Mist-Touched Grips", p: {coin: 900000}},
 	{i: 91038, n: "Healer's Mist-Touched Grips", p: {coin: 900000}},
 	{i: 91047, n: "Malicious Mist-Touched Grips", p: {coin: 900000}},
-	{i: 91133, n: "Defender's Mist-Touched Grips", p: {coin: 900000}}
+	{i: 91133, n: "Defender's Mist-Touched Grips", p: {coin: 900000}},
+	{i: 96795, n: "Togo's Grips", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -1929,7 +1949,8 @@ MediumLeggings: [
 	{i: 90962, n: "Assaulter's Mist-Touched Leggings", p: {coin: 1100000}},
 	{i: 90993, n: "Malicious Mist-Touched Leggings", p: {coin: 1100000}},
 	{i: 91044, n: "Defender's Mist-Touched Leggings", p: {coin: 1100000}},
-	{i: 91053, n: "Healer's Mist-Touched Leggings", p: {coin: 1100000}}
+	{i: 91053, n: "Healer's Mist-Touched Leggings", p: {coin: 1100000}},
+	{i: 95714, n: "Togo's Leggings", p: {coin: 1100000}}
 ],
 MediumBoots: [
 	{i: 48102, n: "Ahamid's Striders", p: {coin: 1000000}},
@@ -1994,7 +2015,8 @@ MediumBoots: [
 	{i: 90979, n: "Defender's Mist-Touched Striders", p: {coin: 1000000}},
 	{i: 91011, n: "Healer's Mist-Touched Striders", p: {coin: 1000000}},
 	{i: 91033, n: "Malicious Mist-Touched Striders", p: {coin: 1000000}},
-	{i: 91102, n: "Assaulter's Mist-Touched Striders", p: {coin: 1000000}}
+	{i: 91102, n: "Assaulter's Mist-Touched Striders", p: {coin: 1000000}},
+	{i: 97395, n: "Togo's Striders", p: {coin: 1000000}}
 ],
 HeavyHelm: [
 	{i: 48093, n: "Ahamid's Visor", p: {coin: 900000}},
@@ -2060,7 +2082,8 @@ HeavyHelm: [
 	{i: 90991, n: "Defender's Mist-Touched Visor", p: {coin: 900000}},
 	{i: 90992, n: "Assaulter's Mist-Touched Visor", p: {coin: 900000}},
 	{i: 91031, n: "Healer's Mist-Touched Visor", p: {coin: 900000}},
-	{i: 91058, n: "Malicious Mist-Touched Visor", p: {coin: 900000}}
+	{i: 91058, n: "Malicious Mist-Touched Visor", p: {coin: 900000}},
+	{i: 96711, n: "Togo's Visor", p: {coin: 900000}}
 ],
 HeavyShoulders: [
 	{i: 48095, n: "Ahamid's Pauldrons", p: {coin: 900000}},
@@ -2127,7 +2150,8 @@ HeavyShoulders: [
 	{i: 90956, n: "Malicious Mist-Touched Pauldrons", p: {coin: 900000}},
 	{i: 91016, n: "Healer's Mist-Touched Pauldrons", p: {coin: 900000}},
 	{i: 91081, n: "Defender's Mist-Touched Pauldrons", p: {coin: 900000}},
-	{i: 91096, n: "Assaulter's Mist-Touched Pauldrons", p: {coin: 900000}}
+	{i: 91096, n: "Assaulter's Mist-Touched Pauldrons", p: {coin: 900000}},
+	{i: 96114, n: "Togo's Pauldrons", p: {coin: 900000}}
 ],
 HeavyCoat: [
 	{i: 48091, n: "Ahamid's Breastplate", p: {coin: 1200000}},
@@ -2188,7 +2212,8 @@ HeavyCoat: [
 	{i: 91057, n: "Assaulter's Mist-Touched Breastplate", p: {coin: 1200000}},
 	{i: 91059, n: "Defender's Mist-Touched Breastplate", p: {coin: 1200000}},
 	{i: 91065, n: "Healer's Mist-Touched Breastplate", p: {coin: 1200000}},
-	{i: 91078, n: "Malicious Mist-Touched Breastplate", p: {coin: 1200000}}
+	{i: 91078, n: "Malicious Mist-Touched Breastplate", p: {coin: 1200000}},
+	{i: 96278, n: "Togo's Breastplate", p: {coin: 1200000}}
 ],
 HeavyGloves: [
 	{i: 48092, n: "Ahamid's Warfists", p: {coin: 900000}},
@@ -2258,7 +2283,8 @@ HeavyGloves: [
 	{i: 90995, n: "Defender's Mist-Touched Warfists", p: {coin: 900000}},
 	{i: 91008, n: "Assaulter's Mist-Touched Warfists", p: {coin: 900000}},
 	{i: 91085, n: "Healer's Mist-Touched Warfists", p: {coin: 900000}},
-	{i: 91120, n: "Malicious Mist-Touched Warfists", p: {coin: 900000}}
+	{i: 91120, n: "Malicious Mist-Touched Warfists", p: {coin: 900000}},
+	{i: 96967, n: "Togo's Warfist", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -2319,7 +2345,8 @@ HeavyLeggings: [
 	{i: 90984, n: "Assaulter's Mist-Touched Tassets", p: {coin: 1100000}},
 	{i: 91004, n: "Defender's Mist-Touched Tassets", p: {coin: 1100000}},
 	{i: 91045, n: "Malicious Mist-Touched Tassets", p: {coin: 1100000}},
-	{i: 91080, n: "Healer's Mist-Touched Tassets", p: {coin: 1100000}}
+	{i: 91080, n: "Healer's Mist-Touched Tassets", p: {coin: 1100000}},
+	{i: 97710, n: "Togo's Tassets", p: {coin: 1100000}}
 ],
 HeavyBoots: [
 	{i: 48090, n: "Ahamid's Greaves", p: {coin: 900000}},
@@ -2384,7 +2411,8 @@ HeavyBoots: [
 	{i: 91061, n: "Healer's Mist-Touched Greaves", p: {coin: 900000}},
 	{i: 91094, n: "Malicious Mist-Touched Greaves", p: {coin: 900000}},
 	{i: 91122, n: "Assaulter's Mist-Touched Greaves", p: {coin: 900000}},
-	{i: 91127, n: "Defender's Mist-Touched Greaves", p: {coin: 900000}}
+	{i: 91127, n: "Defender's Mist-Touched Greaves", p: {coin: 900000}},
+	{i: 96932, n: "Togo's Greaves", p: {coin: 900000}}
 ],
 LightHelmAquatic: [
 	{i: 73723, n: "Ahamid's Cloth Breather", p: {coin: 900000}},
@@ -2556,7 +2584,9 @@ Axe: [
 	{i: 91622, n: "Mist Lord's Axe", p: {coin: 1100000}},
 	{i: 92835, n: "Reaver of the Broken Voice", p: {coin: 1100000}},
 	{i: 94716, n: "Viper's Fiery Dragon Slayer Axe of Icebrood Slaying", p: {coin: 1100000}},
-	{i: 94738, n: "Marauder Icy Dragon Slayer Axe of Destroyer Slaying", p: {coin: 1100000}}
+	{i: 94738, n: "Marauder Icy Dragon Slayer Axe of Destroyer Slaying", p: {coin: 1100000}},
+	{i: 95781, n: "Togo's Reaver", p: {coin: 1100000}},
+	{i: 96753, n: "Living Water Axe", p: {coin: 1100000}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -2628,7 +2658,10 @@ Mace: [
 	{i: 91671, n: "Mist Lord's Mace", p: {coin: 1100000}},
 	{i: 92823, n: "Flanged Mace of the Broken Voice", p: {coin: 1100000}},
 	{i: 94789, n: "Marauder Icy Dragon Slayer Mace of Destroyer Slaying", p: {coin: 1100000}},
-	{i: 94841, n: "Viper's Fiery Dragon Slayer Mace of Icebrood Slaying", p: {coin: 1100000}}
+	{i: 94841, n: "Viper's Fiery Dragon Slayer Mace of Icebrood Slaying", p: {coin: 1100000}},
+	{i: 96044, n: "Togo's Flanged Mace", p: {coin: 1100000}},
+	{i: 96531, n: "Percussive Maintenance", p: {coin: 1100000}},
+	{i: 97754, n: "Living Water Mace", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2706,7 +2739,8 @@ Sword: [
 	{i: 91649, n: "Mist Lord's Sword", p: {coin: 1200000}},
 	{i: 92821, n: "Blade of the Broken Voice", p: {coin: 1200000}},
 	{i: 94812, n: "Marauder Icy Dragon Slayer Sword of Destroyer Slaying", p: {coin: 1200000}},
-	{i: 94843, n: "Viper's Fiery Dragon Slayer Sword of Icebrood Slaying", p: {coin: 1200000}}
+	{i: 94843, n: "Viper's Fiery Dragon Slayer Sword of Icebrood Slaying", p: {coin: 1200000}},
+	{i: 97307, n: "Living Water Sword", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -2779,7 +2813,10 @@ Dagger: [
 	{i: 91636, n: "Mist Lord's Dagger", p: {coin: 1100000}},
 	{i: 92834, n: "Razor of the Broken Voice", p: {coin: 1100000}},
 	{i: 94764, n: "Marauder Icy Dragon Slayer Dagger of Destroyer Slaying", p: {coin: 1100000}},
-	{i: 94775, n: "Viper's Fiery Dragon Slayer Dagger of Icebrood Slaying", p: {coin: 1100000}}
+	{i: 94775, n: "Viper's Fiery Dragon Slayer Dagger of Icebrood Slaying", p: {coin: 1100000}},
+	{i: 96057, n: "Living Water Dagger", p: {coin: 1100000}},
+	{i: 96821, n: "Togo's Razor", p: {coin: 1100000}},
+	{i: 97360, n: "Prima Donna", p: {coin: 1100000}}
 ],
 Pistol: [
 	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
@@ -2849,7 +2886,11 @@ Pistol: [
 	{i: 91675, n: "Mist Lord's Pistol", p: {coin: 1100000}},
 	{i: 92819, n: "Revolver of the Broken Voice", p: {coin: 1100000}},
 	{i: 94721, n: "Viper's Fiery Dragon Slayer Pistol of Icebrood Slaying", p: {coin: 1100000}},
-	{i: 94736, n: "Marauder Icy Dragon Slayer Pistol of Destroyer Slaying", p: {coin: 1100000}}
+	{i: 94736, n: "Marauder Icy Dragon Slayer Pistol of Destroyer Slaying", p: {coin: 1100000}},
+	{i: 96066, n: "Quietus", p: {coin: 1100000}},
+	{i: 96301, n: "Living Water Pistol", p: {coin: 1100000}},
+	{i: 97355, n: "The Keenest Cut", p: {coin: 1100000}},
+	{i: 97508, n: "Togo's Revolver", p: {coin: 1100000}}
 ],
 Scepter: [
 	{i: 77441, n: "Chest of Scepters", p: {coin: 1100000}},
@@ -2922,7 +2963,10 @@ Scepter: [
 	{i: 92828, n: "Wand of the Broken Voice", p: {coin: 1100000}},
 	{i: 93869, n: "Empowered Boneskinner's Rib", p: {coin: 1100000}},
 	{i: 94745, n: "Marauder Icy Dragon Slayer Scepter of Destroyer Slaying", p: {coin: 1100000}},
-	{i: 94818, n: "Viper's Fiery Dragon Slayer Scepter of Icebrood Slaying", p: {coin: 1100000}}
+	{i: 94818, n: "Viper's Fiery Dragon Slayer Scepter of Icebrood Slaying", p: {coin: 1100000}},
+	{i: 96969, n: "Living Water Scepter", p: {coin: 1100000}},
+	{i: 97272, n: "Togo's Wand", p: {coin: 1100000}},
+	{i: 97845, n: "Possession", p: {coin: 1100000}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -2993,7 +3037,8 @@ Focus: [
 	{i: 92831, n: "Artifact of the Broken Voice", p: {coin: 1000000}},
 	{i: 93804, n: "Empowered Boneskinner's Totem", p: {coin: 1000000}},
 	{i: 94709, n: "Viper's Fiery Dragon Slayer Focus of Icebrood Slaying", p: {coin: 1000000}},
-	{i: 94747, n: "Marauder Icy Dragon Slayer Focus of Destroyer Slaying", p: {coin: 1000000}}
+	{i: 94747, n: "Marauder Icy Dragon Slayer Focus of Destroyer Slaying", p: {coin: 1000000}},
+	{i: 97357, n: "Living Water Focus", p: {coin: 1000000}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -3071,7 +3116,9 @@ Shield: [
 	{i: 91633, n: "Mist Lord's Shield", p: {coin: 1000000}},
 	{i: 92826, n: "Bastion of the Broken Voice", p: {coin: 1000000}},
 	{i: 94763, n: "Viper's Fiery Dragon Slayer Shield of Icebrood Slaying", p: {coin: 1000000}},
-	{i: 94781, n: "Marauder Icy Dragon Slayer Shield of Destroyer Slaying", p: {coin: 1000000}}
+	{i: 94781, n: "Marauder Icy Dragon Slayer Shield of Destroyer Slaying", p: {coin: 1000000}},
+	{i: 97425, n: "Togo's Bastion", p: {coin: 1000000}},
+	{i: 97878, n: "Living Water Shield", p: {coin: 1000000}}
 ],
 Torch: [
 	{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
@@ -3143,7 +3190,9 @@ Torch: [
 	{i: 91653, n: "Mist Lord's Torch", p: {coin: 1000000}},
 	{i: 92824, n: "Brazier of the Broken Voice", p: {coin: 1000000}},
 	{i: 94711, n: "Viper's Fiery Dragon Slayer Torch of Icebrood Slaying", p: {coin: 1000000}},
-	{i: 94826, n: "Marauder Icy Dragon Slayer Torch of Destroyer Slaying", p: {coin: 1000000}}
+	{i: 94826, n: "Marauder Icy Dragon Slayer Torch of Destroyer Slaying", p: {coin: 1000000}},
+	{i: 97011, n: "Living Water Torch", p: {coin: 1000000}},
+	{i: 97752, n: "Togo's Brazier", p: {coin: 1000000}}
 ],
 Warhorn: [
 	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
@@ -3214,7 +3263,9 @@ Warhorn: [
 	{i: 91676, n: "Mist Lord's Warhorn", p: {coin: 1000000}},
 	{i: 92817, n: "Herald of the Broken Voice", p: {coin: 1000000}},
 	{i: 94724, n: "Marauder Icy Dragon Slayer Warhorn of Destroyer Slaying", p: {coin: 1000000}},
-	{i: 94785, n: "Viper's Fiery Dragon Slayer Warhorn of Icebrood Slaying", p: {coin: 1000000}}
+	{i: 94785, n: "Viper's Fiery Dragon Slayer Warhorn of Icebrood Slaying", p: {coin: 1000000}},
+	{i: 95717, n: "Living Water Warhorn", p: {coin: 1000000}},
+	{i: 96544, n: "Togo's Herald", p: {coin: 1000000}}
 ],
 Greatsword: [
 	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
@@ -3291,7 +3342,9 @@ Greatsword: [
 	{i: 92818, n: "Claymore of the Broken Voice", p: {coin: 1200000}},
 	{i: 94815, n: "Marauder Icy Dragon Slayer Greatsword of Destroyer Slaying", p: {coin: 1200000}},
 	{i: 94857, n: "Viper's Fiery Dragon Slayer Greatsword of Icebrood Slaying", p: {coin: 1200000}},
-	{i: 94933, n: "Frostsaw of Chilling", p: {coin: 1200000}}
+	{i: 94933, n: "Frostsaw of Chilling", p: {coin: 1200000}},
+	{i: 97326, n: "Living Water Greatsword", p: {coin: 1200000}},
+	{i: 97868, n: "Dichotomy", p: {coin: 1200000}}
 ],
 Hammer: [
 	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -3367,7 +3420,10 @@ Hammer: [
 	{i: 91652, n: "Mist Lord's Hammer", p: {coin: 1100000}},
 	{i: 92815, n: "Warhammer of the Broken Voice", p: {coin: 1100000}},
 	{i: 94788, n: "Viper's Fiery Dragon Slayer Hammer of Icebrood Slaying", p: {coin: 1100000}},
-	{i: 94822, n: "Marauder Icy Dragon Slayer Hammer of Destroyer Slaying", p: {coin: 1100000}}
+	{i: 94822, n: "Marauder Icy Dragon Slayer Hammer of Destroyer Slaying", p: {coin: 1100000}},
+	{i: 96329, n: "Living Water Hammer", p: {coin: 1100000}},
+	{i: 97083, n: "Crushing Weight", p: {coin: 1100000}},
+	{i: 97651, n: "Gravity", p: {coin: 1100000}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
@@ -3442,7 +3498,8 @@ LongBow: [
 	{i: 91632, n: "Mist Lord's Longbow", p: {coin: 1300000}},
 	{i: 92814, n: "Greatbow of the Broken Voice", p: {coin: 1300000}},
 	{i: 94733, n: "Viper's Fiery Dragon Slayer Longbow of Icebrood Slaying", p: {coin: 1300000}},
-	{i: 94861, n: "Marauder Icy Dragon Slayer Longbow of Destroyer Slaying", p: {coin: 1300000}}
+	{i: 94861, n: "Marauder Icy Dragon Slayer Longbow of Destroyer Slaying", p: {coin: 1300000}},
+	{i: 95679, n: "Living Water Longbow", p: {coin: 1300000}}
 ],
 ShortBow: [
 	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
@@ -3509,7 +3566,9 @@ ShortBow: [
 	{i: 91628, n: "Mist Lord's Short Bow", p: {coin: 1300000}},
 	{i: 92836, n: "Short Bow of the Broken Voice", p: {coin: 1300000}},
 	{i: 94754, n: "Viper's Fiery Dragon Slayer Short Bow of Icebrood Slaying", p: {coin: 1300000}},
-	{i: 94821, n: "Marauder Icy Dragon Slayer Short Bow of Destroyer Slaying", p: {coin: 1300000}}
+	{i: 94821, n: "Marauder Icy Dragon Slayer Short Bow of Destroyer Slaying", p: {coin: 1300000}},
+	{i: 96528, n: "Togo's Short Bow", p: {coin: 1300000}},
+	{i: 97039, n: "Living Water Short Bow", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
@@ -3580,7 +3639,8 @@ Rifle: [
 	{i: 91637, n: "Mist Lord's Rifle", p: {coin: 1200000}},
 	{i: 92829, n: "Musket of the Broken Voice", p: {coin: 1200000}},
 	{i: 94793, n: "Marauder Icy Dragon Slayer Rifle of Destroyer Slaying", p: {coin: 1200000}},
-	{i: 94796, n: "Viper's Fiery Dragon Slayer Rifle of Icebrood Slaying", p: {coin: 1200000}}
+	{i: 94796, n: "Viper's Fiery Dragon Slayer Rifle of Icebrood Slaying", p: {coin: 1200000}},
+	{i: 96840, n: "Living Water Rifle", p: {coin: 1200000}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
@@ -3666,7 +3726,9 @@ Staff: [
 	{i: 92827, n: "Spire of the Broken Voice", p: {coin: 1200000}},
 	{i: 93872, n: "Empowered Boneskinner's Spine", p: {coin: 1200000}},
 	{i: 94787, n: "Marauder Icy Dragon Slayer Staff of Destroyer Slaying", p: {coin: 1200000}},
-	{i: 94865, n: "Viper's Fiery Dragon Slayer Staff of Icebrood Slaying", p: {coin: 1200000}}
+	{i: 94865, n: "Viper's Fiery Dragon Slayer Staff of Icebrood Slaying", p: {coin: 1200000}},
+	{i: 95891, n: "Living Water Staff", p: {coin: 1200000}},
+	{i: 96869, n: "Togo's Spire", p: {coin: 1200000}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},
@@ -3809,6 +3871,7 @@ Trident: [
 	{i: 87948, n: "Nerashi's Trident", p: {coin: 1000000}},
 	{i: 89904, n: "Steelstar's Trident", p: {coin: 1000000}},
 	{i: 90637, n: "Trident of the Scion", p: {coin: 1000000}},
-	{i: 90644, n: "Terracotta Antique Trident", p: {coin: 1000000}}
+	{i: 90644, n: "Terracotta Antique Trident", p: {coin: 1000000}},
+	{i: 97555, n: "Togo's Trident", p: {coin: 1000000}}
 ]
 };
