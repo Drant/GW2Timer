@@ -775,7 +775,8 @@ Back: [
 	{i: 92784, n: "Sclerite Karka Shell (Infused)", p: {craft: true}},
 	{i: 94932, n: "Dragonscale Cape (Infused)", p: {craft: true}},
 	{i: 94947, n: "Dragonscale Cape", p: {craft: true}},
-	{i: 97129, n: "Antique Dragon's Drape", p: {craft: true}}
+	{i: 97129, n: "Antique Dragon's Drape", p: {craft: true}},
+	{i: 96008, n: "Echovald Cathedral Backpiece", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1059,7 +1060,13 @@ Ring: [
 	{i: 96167, n: "Ring of Rebirth", p: {coin: 0}},
 	{i: 96416, n: "Attuned Ring of Rebirth", p: {coin: 0}},
 	{i: 97033, n: "Ring of Rebirth (Infused)", p: {coin: 0}},
-	{i: 97237, n: "Attuned Ring of Rebirth (Infused)", p: {coin: 0}}
+	{i: 97237, n: "Attuned Ring of Rebirth (Infused)", p: {coin: 0}},
+	{i: 95737, n: "Master Specter's Ring (Infused)", p: {coin: 0}},
+	{i: 95774, n: "Master Untamed's Ring", p: {coin: 0}},
+	{i: 96126, n: "Master Untamed's Ring (Infused)", p: {coin: 0}},
+	{i: 96456, n: "Attuned Master Specter's Ring (Infused)", p: {coin: 0}},
+	{i: 96515, n: "Master Specter's Ring", p: {coin: 0}},
+	{i: 97115, n: "Master Mechanist's Ring", p: {coin: 0}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1143,7 +1150,11 @@ Accessory: [
 	{i: 95568, n: "Plush Jorms", p: {achievement: 0}},
 	{i: 95517, n: "Plush Mordy", p: {achievement: 0}},
 	{i: 96199, n: "Traveling Tankard", p: {achievement: 0}},
-	{i: 97322, n: "Storyteller's Lute", p: {achievement: 0}}
+	{i: 97322, n: "Storyteller's Lute", p: {achievement: 0}},
+	{i: 95990, n: "Master Harbinger's Trinket", p: {achievement: 0}},
+	{i: 96566, n: "Master Mechanist's Trinket", p: {achievement: 0}},
+	{i: 97125, n: "Master Specter's Trinket", p: {achievement: 0}},
+	{i: 97662, n: "Master Untamed's Trinket", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1224,7 +1235,8 @@ Amulet: [
 	{i: 93852, n: "Ancient Norn Cape Pin", p: {achievement: 0}},
 	{i: 93940, n: "Amulet of Celebration", p: {achievement: 0}},
 	{i: 95892, n: "Kurzick Brooch", p: {achievement: 0}},
-	{i: 95996, n: "Luxon Brooch", p: {achievement: 0}}
+	{i: 95996, n: "Luxon Brooch", p: {achievement: 0}},
+	{i: 96280, n: "Master Specter's Badge", p: {achievement: 0}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1291,7 +1303,8 @@ LightHelm: [
 	{i: 91007, n: "Assaulter's Mist-Touched Masque", p: {coin: 900000}},
 	{i: 91055, n: "Malicious Mist-Touched Masque", p: {coin: 900000}},
 	{i: 91056, n: "Healer's Mist-Touched Masque", p: {coin: 900000}},
-	{i: 96005, n: "Togo's Masque", p: {coin: 900000}}
+	{i: 96005, n: "Togo's Masque", p: {coin: 900000}},
+	{i: 97161, n: "Suun's Masque", p: {coin: 900000}}
 ],
 LightShoulders: [
 	{i: 48101, n: "Ahamid's Epaulets", p: {coin: 900000}},
@@ -1359,7 +1372,8 @@ LightShoulders: [
 	{i: 91026, n: "Assaulter's Mist-Touched Epaulets", p: {coin: 900000}},
 	{i: 91091, n: "Defender's Mist-Touched Epaulets", p: {coin: 900000}},
 	{i: 91110, n: "Malicious Mist-Touched Epaulets", p: {coin: 900000}},
-	{i: 97313, n: "Togo's Epaulets", p: {coin: 900000}}
+	{i: 97313, n: "Togo's Epaulets", p: {coin: 900000}},
+	{i: 96731, n: "Suun's Epaulets", p: {coin: 900000}}
 ],
 LightCoat: [
 	{i: 48097, n: "Ahamid's Doublet", p: {coin: 1200000}},
@@ -1421,7 +1435,8 @@ LightCoat: [
 	{i: 91015, n: "Assaulter's Mist-Touched Doublet", p: {coin: 1200000}},
 	{i: 91119, n: "Malicious Mist-Touched Doublet", p: {coin: 1200000}},
 	{i: 91130, n: "Healer's Mist-Touched Doublet", p: {coin: 1200000}},
-	{i: 96962, n: "Togo's Doublet", p: {coin: 1200000}}
+	{i: 96962, n: "Togo's Doublet", p: {coin: 1200000}},
+	{i: 95626, n: "Suun's Doublet", p: {coin: 1200000}}
 ],
 LightGloves: [
 	{i: 48098, n: "Ahamid's Wristguards", p: {coin: 900000}},
@@ -1492,7 +1507,8 @@ LightGloves: [
 	{i: 90970, n: "Assaulter's Mist-Touched Wristguards", p: {coin: 900000}},
 	{i: 90988, n: "Defender's Mist-Touched Wristguards", p: {coin: 900000}},
 	{i: 90989, n: "Healer's Mist-Touched Wristguards", p: {coin: 900000}},
-	{i: 96140, n: "Togo's Wristguards", p: {coin: 900000}}
+	{i: 96140, n: "Togo's Wristguards", p: {coin: 900000}},
+	{i: 97390, n: "Suun's Wristguards", p: {coin: 900000}}
 ],
 LightLeggings: [
 	{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -1554,7 +1570,8 @@ LightLeggings: [
 	{i: 91062, n: "Malicious Mist-Touched Breeches", p: {coin: 1100000}},
 	{i: 91118, n: "Assaulter's Mist-Touched Breeches", p: {coin: 1100000}},
 	{i: 91129, n: "Healer's Mist-Touched Breeches", p: {coin: 1100000}},
-	{i: 97476, n: "Togo's Breeches", p: {coin: 1100000}}
+	{i: 97476, n: "Togo's Breeches", p: {coin: 1100000}},
+	{i: 96818, n: "Suun's Breeches", p: {coin: 1100000}}
 ],
 LightBoots: [
 	{i: 48096, n: "Ahamid's Footwear", p: {coin: 1000000}},
@@ -1620,7 +1637,8 @@ LightBoots: [
 	{i: 90987, n: "Healer's Mist-Touched Footwear", p: {coin: 1000000}},
 	{i: 91079, n: "Defender's Mist-Touched Footwear", p: {coin: 1000000}},
 	{i: 91083, n: "Assaulter's Mist-Touched Footwear", p: {coin: 1000000}},
-	{i: 96739, n: "Togo's Footwear", p: {coin: 1000000}}
+	{i: 96739, n: "Togo's Footwear", p: {coin: 1000000}},
+	{i: 96062, n: "Suun's Footwear", p: {coin: 1000000}}
 ],
 MediumHelm: [
 	{i: 48105, n: "Ahamid's Visage", p: {coin: 900000}},
@@ -1687,7 +1705,8 @@ MediumHelm: [
 	{i: 90983, n: "Malicious Mist-Touched Visage", p: {coin: 900000}},
 	{i: 91066, n: "Defender's Mist-Touched Visage", p: {coin: 900000}},
 	{i: 91103, n: "Healer's Mist-Touched Visage", p: {coin: 900000}},
-	{i: 97440, n: "Togo's Visage", p: {coin: 900000}}
+	{i: 97440, n: "Togo's Visage", p: {coin: 900000}},
+	{i: 96832, n: "Suun's Visage", p: {coin: 900000}}
 ],
 MediumShoulders: [
 	{i: 48107, n: "Ahamid's Shoulderguard", p: {coin: 900000}},
@@ -1755,7 +1774,8 @@ MediumShoulders: [
 	{i: 91032, n: "Defender's Mist-Touched Shoulderguard", p: {coin: 900000}},
 	{i: 91051, n: "Malicious Mist-Touched Shoulderguard", p: {coin: 900000}},
 	{i: 91100, n: "Assaulter's Mist-Touched Shoulderguard", p: {coin: 900000}},
-	{i: 97862, n: "Togo's Shoulderguard", p: {coin: 900000}}
+	{i: 97862, n: "Togo's Shoulderguard", p: {coin: 900000}},
+	{i: 96236, n: "Suun's Shoulderguard", p: {coin: 900000}}
 ],
 MediumCoat: [
 	{i: 48103, n: "Ahamid's Guise", p: {coin: 1200000}},
@@ -1817,7 +1837,8 @@ MediumCoat: [
 	{i: 91046, n: "Assaulter's Mist-Touched Guise", p: {coin: 1200000}},
 	{i: 91089, n: "Defender's Mist-Touched Guise", p: {coin: 1200000}},
 	{i: 91113, n: "Healer's Mist-Touched Guise", p: {coin: 1200000}},
-	{i: 97154, n: "Togo's Guise", p: {coin: 1200000}}
+	{i: 97154, n: "Togo's Guise", p: {coin: 1200000}},
+	{i: 96431, n: "Suun's Guise", p: {coin: 1200000}}
 ],
 MediumGloves: [
 	{i: 48104, n: "Ahamid's Grips", p: {coin: 900000}},
@@ -1888,7 +1909,8 @@ MediumGloves: [
 	{i: 91038, n: "Healer's Mist-Touched Grips", p: {coin: 900000}},
 	{i: 91047, n: "Malicious Mist-Touched Grips", p: {coin: 900000}},
 	{i: 91133, n: "Defender's Mist-Touched Grips", p: {coin: 900000}},
-	{i: 96795, n: "Togo's Grips", p: {coin: 900000}}
+	{i: 96795, n: "Togo's Grips", p: {coin: 900000}},
+	{i: 97663, n: "Suun's Grips", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -1950,7 +1972,8 @@ MediumLeggings: [
 	{i: 90993, n: "Malicious Mist-Touched Leggings", p: {coin: 1100000}},
 	{i: 91044, n: "Defender's Mist-Touched Leggings", p: {coin: 1100000}},
 	{i: 91053, n: "Healer's Mist-Touched Leggings", p: {coin: 1100000}},
-	{i: 95714, n: "Togo's Leggings", p: {coin: 1100000}}
+	{i: 95714, n: "Togo's Leggings", p: {coin: 1100000}},
+	{i: 96230, n: "Suun's Leggings", p: {coin: 1100000}}
 ],
 MediumBoots: [
 	{i: 48102, n: "Ahamid's Striders", p: {coin: 1000000}},
@@ -2016,7 +2039,8 @@ MediumBoots: [
 	{i: 91011, n: "Healer's Mist-Touched Striders", p: {coin: 1000000}},
 	{i: 91033, n: "Malicious Mist-Touched Striders", p: {coin: 1000000}},
 	{i: 91102, n: "Assaulter's Mist-Touched Striders", p: {coin: 1000000}},
-	{i: 97395, n: "Togo's Striders", p: {coin: 1000000}}
+	{i: 97395, n: "Togo's Striders", p: {coin: 1000000}},
+	{i: 96780, n: "Suun's Striders", p: {coin: 1000000}}
 ],
 HeavyHelm: [
 	{i: 48093, n: "Ahamid's Visor", p: {coin: 900000}},
@@ -2083,7 +2107,8 @@ HeavyHelm: [
 	{i: 90992, n: "Assaulter's Mist-Touched Visor", p: {coin: 900000}},
 	{i: 91031, n: "Healer's Mist-Touched Visor", p: {coin: 900000}},
 	{i: 91058, n: "Malicious Mist-Touched Visor", p: {coin: 900000}},
-	{i: 96711, n: "Togo's Visor", p: {coin: 900000}}
+	{i: 96711, n: "Togo's Visor", p: {coin: 900000}},
+	{i: 95605, n: "Suun's Visor", p: {coin: 900000}}
 ],
 HeavyShoulders: [
 	{i: 48095, n: "Ahamid's Pauldrons", p: {coin: 900000}},
@@ -2151,7 +2176,8 @@ HeavyShoulders: [
 	{i: 91016, n: "Healer's Mist-Touched Pauldrons", p: {coin: 900000}},
 	{i: 91081, n: "Defender's Mist-Touched Pauldrons", p: {coin: 900000}},
 	{i: 91096, n: "Assaulter's Mist-Touched Pauldrons", p: {coin: 900000}},
-	{i: 96114, n: "Togo's Pauldrons", p: {coin: 900000}}
+	{i: 96114, n: "Togo's Pauldrons", p: {coin: 900000}},
+	{i: 96966, n: "Suun's Pauldrons", p: {coin: 900000}}
 ],
 HeavyCoat: [
 	{i: 48091, n: "Ahamid's Breastplate", p: {coin: 1200000}},
@@ -2213,7 +2239,8 @@ HeavyCoat: [
 	{i: 91059, n: "Defender's Mist-Touched Breastplate", p: {coin: 1200000}},
 	{i: 91065, n: "Healer's Mist-Touched Breastplate", p: {coin: 1200000}},
 	{i: 91078, n: "Malicious Mist-Touched Breastplate", p: {coin: 1200000}},
-	{i: 96278, n: "Togo's Breastplate", p: {coin: 1200000}}
+	{i: 96278, n: "Togo's Breastplate", p: {coin: 1200000}},
+	{i: 97812, n: "Suun's Breastplate", p: {coin: 1200000}}
 ],
 HeavyGloves: [
 	{i: 48092, n: "Ahamid's Warfists", p: {coin: 900000}},
@@ -2284,7 +2311,8 @@ HeavyGloves: [
 	{i: 91008, n: "Assaulter's Mist-Touched Warfists", p: {coin: 900000}},
 	{i: 91085, n: "Healer's Mist-Touched Warfists", p: {coin: 900000}},
 	{i: 91120, n: "Malicious Mist-Touched Warfists", p: {coin: 900000}},
-	{i: 96967, n: "Togo's Warfist", p: {coin: 900000}}
+	{i: 96967, n: "Togo's Warfist", p: {coin: 900000}},
+	{i: 97680, n: "Suun's Warfist", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -2346,7 +2374,8 @@ HeavyLeggings: [
 	{i: 91004, n: "Defender's Mist-Touched Tassets", p: {coin: 1100000}},
 	{i: 91045, n: "Malicious Mist-Touched Tassets", p: {coin: 1100000}},
 	{i: 91080, n: "Healer's Mist-Touched Tassets", p: {coin: 1100000}},
-	{i: 97710, n: "Togo's Tassets", p: {coin: 1100000}}
+	{i: 97710, n: "Togo's Tassets", p: {coin: 1100000}},
+	{i: 97540, n: "Suun's Tassets", p: {coin: 1100000}}
 ],
 HeavyBoots: [
 	{i: 48090, n: "Ahamid's Greaves", p: {coin: 900000}},
@@ -2412,7 +2441,8 @@ HeavyBoots: [
 	{i: 91094, n: "Malicious Mist-Touched Greaves", p: {coin: 900000}},
 	{i: 91122, n: "Assaulter's Mist-Touched Greaves", p: {coin: 900000}},
 	{i: 91127, n: "Defender's Mist-Touched Greaves", p: {coin: 900000}},
-	{i: 96932, n: "Togo's Greaves", p: {coin: 900000}}
+	{i: 96932, n: "Togo's Greaves", p: {coin: 900000}},
+	{i: 95583, n: "Suun's Greaves", p: {coin: 900000}}
 ],
 LightHelmAquatic: [
 	{i: 73723, n: "Ahamid's Cloth Breather", p: {coin: 900000}},
@@ -2586,7 +2616,9 @@ Axe: [
 	{i: 94716, n: "Viper's Fiery Dragon Slayer Axe of Icebrood Slaying", p: {coin: 1100000}},
 	{i: 94738, n: "Marauder Icy Dragon Slayer Axe of Destroyer Slaying", p: {coin: 1100000}},
 	{i: 95781, n: "Togo's Reaver", p: {coin: 1100000}},
-	{i: 96753, n: "Living Water Axe", p: {coin: 1100000}}
+	{i: 96753, n: "Living Water Axe", p: {coin: 1100000}},
+	{i: 95963, n: "Jade Punk Axe", p: {coin: 1100000}},
+	{i: 96835, n: "Suun's Reaver", p: {coin: 1100000}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -2661,7 +2693,9 @@ Mace: [
 	{i: 94841, n: "Viper's Fiery Dragon Slayer Mace of Icebrood Slaying", p: {coin: 1100000}},
 	{i: 96044, n: "Togo's Flanged Mace", p: {coin: 1100000}},
 	{i: 96531, n: "Percussive Maintenance", p: {coin: 1100000}},
-	{i: 97754, n: "Living Water Mace", p: {coin: 1100000}}
+	{i: 97754, n: "Living Water Mace", p: {coin: 1100000}},
+	{i: 96042, n: "Suun's Flanged Mace", p: {coin: 1100000}},
+	{i: 97162, n: "Jade Punk Mace", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2740,7 +2774,10 @@ Sword: [
 	{i: 92821, n: "Blade of the Broken Voice", p: {coin: 1200000}},
 	{i: 94812, n: "Marauder Icy Dragon Slayer Sword of Destroyer Slaying", p: {coin: 1200000}},
 	{i: 94843, n: "Viper's Fiery Dragon Slayer Sword of Icebrood Slaying", p: {coin: 1200000}},
-	{i: 97307, n: "Living Water Sword", p: {coin: 1200000}}
+	{i: 97307, n: "Living Water Sword", p: {coin: 1200000}},
+	{i: 96781, n: "Jade Punk Sword", p: {coin: 1200000}},
+	{i: 97308, n: "Suun's Blade", p: {coin: 1200000}},
+	{i: 97681, n: "Togo's Blade", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -2816,7 +2853,9 @@ Dagger: [
 	{i: 94775, n: "Viper's Fiery Dragon Slayer Dagger of Icebrood Slaying", p: {coin: 1100000}},
 	{i: 96057, n: "Living Water Dagger", p: {coin: 1100000}},
 	{i: 96821, n: "Togo's Razor", p: {coin: 1100000}},
-	{i: 97360, n: "Prima Donna", p: {coin: 1100000}}
+	{i: 97360, n: "Prima Donna", p: {coin: 1100000}},
+	{i: 97295, n: "Suun's Razor", p: {coin: 1100000}},
+	{i: 97827, n: "Jade Punk Dagger", p: {coin: 1100000}}
 ],
 Pistol: [
 	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
@@ -2890,7 +2929,9 @@ Pistol: [
 	{i: 96066, n: "Quietus", p: {coin: 1100000}},
 	{i: 96301, n: "Living Water Pistol", p: {coin: 1100000}},
 	{i: 97355, n: "The Keenest Cut", p: {coin: 1100000}},
-	{i: 97508, n: "Togo's Revolver", p: {coin: 1100000}}
+	{i: 97508, n: "Togo's Revolver", p: {coin: 1100000}},
+	{i: 95852, n: "Suun's Revolver", p: {coin: 1100000}},
+	{i: 96331, n: "Jade Punk Pistol", p: {coin: 1100000}}
 ],
 Scepter: [
 	{i: 77441, n: "Chest of Scepters", p: {coin: 1100000}},
@@ -2966,7 +3007,8 @@ Scepter: [
 	{i: 94818, n: "Viper's Fiery Dragon Slayer Scepter of Icebrood Slaying", p: {coin: 1100000}},
 	{i: 96969, n: "Living Water Scepter", p: {coin: 1100000}},
 	{i: 97272, n: "Togo's Wand", p: {coin: 1100000}},
-	{i: 97845, n: "Possession", p: {coin: 1100000}}
+	{i: 97845, n: "Possession", p: {coin: 1100000}},
+	{i: 95985, n: "Jade Punk Scepter", p: {coin: 1100000}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -3038,7 +3080,10 @@ Focus: [
 	{i: 93804, n: "Empowered Boneskinner's Totem", p: {coin: 1000000}},
 	{i: 94709, n: "Viper's Fiery Dragon Slayer Focus of Icebrood Slaying", p: {coin: 1000000}},
 	{i: 94747, n: "Marauder Icy Dragon Slayer Focus of Destroyer Slaying", p: {coin: 1000000}},
-	{i: 97357, n: "Living Water Focus", p: {coin: 1000000}}
+	{i: 97357, n: "Living Water Focus", p: {coin: 1000000}},
+	{i: 95667, n: "Suun's Artifact", p: {coin: 1000000}},
+	{i: 97184, n: "Jade Punk Focus", p: {coin: 1000000}},
+	{i: 97831, n: "Togo's Artifact", p: {coin: 1000000}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -3118,7 +3163,9 @@ Shield: [
 	{i: 94763, n: "Viper's Fiery Dragon Slayer Shield of Icebrood Slaying", p: {coin: 1000000}},
 	{i: 94781, n: "Marauder Icy Dragon Slayer Shield of Destroyer Slaying", p: {coin: 1000000}},
 	{i: 97425, n: "Togo's Bastion", p: {coin: 1000000}},
-	{i: 97878, n: "Living Water Shield", p: {coin: 1000000}}
+	{i: 97878, n: "Living Water Shield", p: {coin: 1000000}},
+	{i: 95987, n: "Suun's Bastion", p: {coin: 1000000}},
+	{i: 97023, n: "Jade Punk Shield", p: {coin: 1000000}}
 ],
 Torch: [
 	{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
@@ -3192,7 +3239,9 @@ Torch: [
 	{i: 94711, n: "Viper's Fiery Dragon Slayer Torch of Icebrood Slaying", p: {coin: 1000000}},
 	{i: 94826, n: "Marauder Icy Dragon Slayer Torch of Destroyer Slaying", p: {coin: 1000000}},
 	{i: 97011, n: "Living Water Torch", p: {coin: 1000000}},
-	{i: 97752, n: "Togo's Brazier", p: {coin: 1000000}}
+	{i: 97752, n: "Togo's Brazier", p: {coin: 1000000}},
+	{i: 95785, n: "Jade Punk Torch", p: {coin: 1000000}},
+	{i: 96286, n: "Suun's Brazier", p: {coin: 1000000}}
 ],
 Warhorn: [
 	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
@@ -3265,7 +3314,9 @@ Warhorn: [
 	{i: 94724, n: "Marauder Icy Dragon Slayer Warhorn of Destroyer Slaying", p: {coin: 1000000}},
 	{i: 94785, n: "Viper's Fiery Dragon Slayer Warhorn of Icebrood Slaying", p: {coin: 1000000}},
 	{i: 95717, n: "Living Water Warhorn", p: {coin: 1000000}},
-	{i: 96544, n: "Togo's Herald", p: {coin: 1000000}}
+	{i: 96544, n: "Togo's Herald", p: {coin: 1000000}},
+	{i: 95749, n: "Suun's Herald", p: {coin: 1000000}},
+	{i: 96216, n: "Jade Punk Warhorn", p: {coin: 1000000}}
 ],
 Greatsword: [
 	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
@@ -3344,7 +3395,9 @@ Greatsword: [
 	{i: 94857, n: "Viper's Fiery Dragon Slayer Greatsword of Icebrood Slaying", p: {coin: 1200000}},
 	{i: 94933, n: "Frostsaw of Chilling", p: {coin: 1200000}},
 	{i: 97326, n: "Living Water Greatsword", p: {coin: 1200000}},
-	{i: 97868, n: "Dichotomy", p: {coin: 1200000}}
+	{i: 97868, n: "Dichotomy", p: {coin: 1200000}},
+	{i: 96994, n: "Jade Punk Greatsword", p: {coin: 1200000}},
+	{i: 97260, n: "Suun's Claymore", p: {coin: 1200000}}
 ],
 Hammer: [
 	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -3423,7 +3476,10 @@ Hammer: [
 	{i: 94822, n: "Marauder Icy Dragon Slayer Hammer of Destroyer Slaying", p: {coin: 1100000}},
 	{i: 96329, n: "Living Water Hammer", p: {coin: 1100000}},
 	{i: 97083, n: "Crushing Weight", p: {coin: 1100000}},
-	{i: 97651, n: "Gravity", p: {coin: 1100000}}
+	{i: 97651, n: "Gravity", p: {coin: 1100000}},
+	{i: 96691, n: "Togo's Warhammer", p: {coin: 1100000}},
+	{i: 97156, n: "Suun's Warhammer", p: {coin: 1100000}},
+	{i: 97672, n: "Jade Punk Hammer", p: {coin: 1100000}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
@@ -3499,7 +3555,9 @@ LongBow: [
 	{i: 92814, n: "Greatbow of the Broken Voice", p: {coin: 1300000}},
 	{i: 94733, n: "Viper's Fiery Dragon Slayer Longbow of Icebrood Slaying", p: {coin: 1300000}},
 	{i: 94861, n: "Marauder Icy Dragon Slayer Longbow of Destroyer Slaying", p: {coin: 1300000}},
-	{i: 95679, n: "Living Water Longbow", p: {coin: 1300000}}
+	{i: 95679, n: "Living Water Longbow", p: {coin: 1300000}},
+	{i: 96518, n: "Jade Punk Longbow", p: {coin: 1300000}},
+	{i: 97748, n: "Suun's Greatbow", p: {coin: 1300000}}
 ],
 ShortBow: [
 	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
@@ -3568,7 +3626,9 @@ ShortBow: [
 	{i: 94754, n: "Viper's Fiery Dragon Slayer Short Bow of Icebrood Slaying", p: {coin: 1300000}},
 	{i: 94821, n: "Marauder Icy Dragon Slayer Short Bow of Destroyer Slaying", p: {coin: 1300000}},
 	{i: 96528, n: "Togo's Short Bow", p: {coin: 1300000}},
-	{i: 97039, n: "Living Water Short Bow", p: {coin: 1300000}}
+	{i: 97039, n: "Living Water Short Bow", p: {coin: 1300000}},
+	{i: 96387, n: "Jade Punk Short Bow", p: {coin: 1300000}},
+	{i: 96522, n: "Suun's Short Bow", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
@@ -3640,7 +3700,9 @@ Rifle: [
 	{i: 92829, n: "Musket of the Broken Voice", p: {coin: 1200000}},
 	{i: 94793, n: "Marauder Icy Dragon Slayer Rifle of Destroyer Slaying", p: {coin: 1200000}},
 	{i: 94796, n: "Viper's Fiery Dragon Slayer Rifle of Icebrood Slaying", p: {coin: 1200000}},
-	{i: 96840, n: "Living Water Rifle", p: {coin: 1200000}}
+	{i: 96840, n: "Living Water Rifle", p: {coin: 1200000}},
+	{i: 95687, n: "Jade Punk Rifle", p: {coin: 1200000}},
+	{i: 96796, n: "Suun's Musket", p: {coin: 1200000}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
@@ -3728,7 +3790,9 @@ Staff: [
 	{i: 94787, n: "Marauder Icy Dragon Slayer Staff of Destroyer Slaying", p: {coin: 1200000}},
 	{i: 94865, n: "Viper's Fiery Dragon Slayer Staff of Icebrood Slaying", p: {coin: 1200000}},
 	{i: 95891, n: "Living Water Staff", p: {coin: 1200000}},
-	{i: 96869, n: "Togo's Spire", p: {coin: 1200000}}
+	{i: 96869, n: "Togo's Spire", p: {coin: 1200000}},
+	{i: 97000, n: "Jade Punk Staff", p: {coin: 1200000}},
+	{i: 97593, n: "Suun's Spire", p: {coin: 1200000}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},
@@ -3775,7 +3839,9 @@ Harpoon: [
 	{i: 86698, n: "Giftbringer's Impaler", p: {coin: 1100000}},
 	{i: 87784, n: "Nerashi's Impaler", p: {coin: 1100000}},
 	{i: 89610, n: "Steelstar's Impaler", p: {coin: 1100000}},
-	{i: 90226, n: "Impaler of the Scion", p: {coin: 1100000}}
+	{i: 90226, n: "Impaler of the Scion", p: {coin: 1100000}},
+	{i: 96525, n: "Togo's Impaler", p: {coin: 1100000}},
+	{i: 96974, n: "Suun's Impaler", p: {coin: 1100000}}
 ],
 Speargun: [
 	{i: 77285, n: "Chest of Harpoon Guns", p: {coin: 1300000}},
@@ -3823,7 +3889,9 @@ Speargun: [
 	{i: 86574, n: "Tixx's Harpoon Gun", p: {coin: 1300000}},
 	{i: 87994, n: "Nerashi's Harpoon Gun", p: {coin: 1300000}},
 	{i: 89810, n: "Steelstar's Harpoon Gun", p: {coin: 1300000}},
-	{i: 90283, n: "Harpoon Gun of the Scion", p: {coin: 1300000}}
+	{i: 90283, n: "Harpoon Gun of the Scion", p: {coin: 1300000}},
+	{i: 96029, n: "Suun's Harpoon Gun", p: {coin: 1300000}},
+	{i: 97180, n: "Togo's Harpoon Gun", p: {coin: 1300000}}
 ],
 Trident: [
 	{i: 77329, n: "Chest of Tridents", p: {coin: 1000000}},

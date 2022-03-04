@@ -612,7 +612,8 @@ Tailor_Insignia: [
 	{u: 12630, i: 86678, n: "Giftbringer's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [86585, 1]], s: 86699},
 	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875},
 	{u: 13047, i: 89758, n: "Diviner's Intricate Gossamer Insignia", r: [[76614, 5], [89537, 25], [19721, 5], [89696, 3]], s: 89727},
-	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533}
+	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533},
+	{u: 13776, i: 96061, n: "Togo's Ritualist Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [96315, 1]], s: 96162}
 ],
 Tailor_Bag: [
 	{u: 2209, i: 9406, n: "8 Slot Jute Bag", r: [[19720, 10]]},
@@ -1008,7 +1009,8 @@ Tailor_Helm: [
 	{u: 12782, i: 88413, n: "Ruka's Cloth Breather", r: [[49523, 1], [74808, 1], [72506, 1], [75227, 1]], s: 88444, b: 88444},
 	{u: 13101, i: 89982, n: "Diviner's Exalted Masque", r: [[89758, 1], [13204, 1], [13203, 1]], s: 89493},
 	{u: 13106, i: 89912, n: "Steelstar's Masque", r: [[49523, 1], [89563, 1], [45896, 1], [45897, 1]], s: 89899},
-	{u: 13216, i: 90708, n: "Diviner's Mist Shard Coronet", r: [[90783, 25], [13204, 1], [13203, 1]]}
+	{u: 13216, i: 90708, n: "Diviner's Mist Shard Coronet", r: [[90783, 25], [13204, 1], [13203, 1]]},
+	{u: 13563, i: 96005, n: "Togo's Masque", r: [[49523, 1], [96061, 1], [45896, 1], [45897, 1]], s: 95759}
 ],
 Tailor_Shoulders: [
 	{u: 2121, i: 11052, n: "Malign Embroidered Mantle", r: [[19870, 1], [13026, 1], [13025, 1]]},
@@ -1203,7 +1205,8 @@ Tailor_Shoulders: [
 	{u: 12798, i: 88739, n: "Grieving Elegy Epaulets", r: [[85039, 1], [13205, 1], [13206, 1]]},
 	{u: 13020, i: 89628, n: "Steelstar's Epaulets", r: [[49523, 1], [89563, 1], [45901, 1], [45893, 1]], s: 89732},
 	{u: 13064, i: 89436, n: "Diviner's Exalted Mantle", r: [[89758, 1], [13205, 1], [13206, 1]], s: 89760},
-	{u: 13172, i: 90931, n: "Diviner's Mist Shard Epaulets", r: [[90783, 25], [13205, 1], [13206, 1]]}
+	{u: 13172, i: 90931, n: "Diviner's Mist Shard Epaulets", r: [[90783, 25], [13205, 1], [13206, 1]]},
+	{u: 13579, i: 97313, n: "Togo's Epaulets", r: [[49523, 1], [96061, 1], [45901, 1], [45893, 1]], s: 97246}
 ],
 Tailor_Coat: [
 	{u: 1977, i: 11016, n: "Malign Embroidered Coat", r: [[19870, 1], [13015, 1], [13016, 1]]},
@@ -1400,7 +1403,8 @@ Tailor_Coat: [
 	{u: 12797, i: 88722, n: "Grieving Elegy Gambeson", r: [[85039, 1], [13196, 1], [13195, 1]]},
 	{u: 13052, i: 89768, n: "Steelstar's Doublet", r: [[46746, 1], [89563, 1], [45891, 1], [45892, 1]], s: 89885},
 	{u: 13108, i: 89849, n: "Diviner's Exalted Coat", r: [[89758, 1], [13196, 1], [13195, 1]], s: 89556},
-	{u: 13154, i: 90620, n: "Diviner's Mist Shard Gambeson", r: [[90783, 25], [13196, 1], [13195, 1]]}
+	{u: 13154, i: 90620, n: "Diviner's Mist Shard Gambeson", r: [[90783, 25], [13196, 1], [13195, 1]]},
+	{u: 13890, i: 96962, n: "Togo's Doublet", r: [[46746, 1], [96061, 1], [45891, 1], [45892, 1]], s: 95876}
 ],
 Tailor_Gloves: [
 	{u: 2227, i: 11022, n: "Malign Embroidered Wristguards", r: [[19870, 1], [13017, 1], [13018, 1]]},
@@ -1599,7 +1603,8 @@ Tailor_Gloves: [
 	{u: 12795, i: 88968, n: "Grieving Elegy Gloves", r: [[85039, 1], [13198, 1], [13197, 1]]},
 	{u: 13029, i: 89925, n: "Steelstar's Wristguards", r: [[49523, 1], [89563, 1], [45894, 1], [45895, 1]], s: 89942},
 	{u: 13072, i: 89734, n: "Diviner's Exalted Gloves", r: [[89758, 1], [13198, 1], [13197, 1]], s: 89975},
-	{u: 13159, i: 90936, n: "Diviner's Mist Shard Gloves", r: [[90783, 25], [13198, 1], [13197, 1]]}
+	{u: 13159, i: 90936, n: "Diviner's Mist Shard Gloves", r: [[90783, 25], [13198, 1], [13197, 1]]},
+	{u: 13613, i: 96140, n: "Togo's Wristguards", r: [[49523, 1], [96061, 1], [45894, 1], [45895, 1]], s: 95768}
 ],
 Tailor_Leggings: [
 	{u: 2085, i: 11025, n: "Malign Embroidered Pants", r: [[19870, 1], [13019, 1], [13020, 1]]},
@@ -1796,7 +1801,8 @@ Tailor_Leggings: [
 	{u: 12793, i: 88716, n: "Grieving Elegy Breeches", r: [[85039, 1], [13200, 1], [13199, 1]]},
 	{u: 13091, i: 89940, n: "Steelstar's Breeches", r: [[49523, 1], [89563, 1], [45898, 1], [45899, 1]], s: 89513},
 	{u: 13113, i: 89923, n: "Diviner's Exalted Pants", r: [[89758, 1], [13200, 1], [13199, 1]], s: 89876},
-	{u: 13138, i: 90847, n: "Diviner's Mist Shard Breeches", r: [[90783, 25], [13200, 1], [13199, 1]]}
+	{u: 13138, i: 90847, n: "Diviner's Mist Shard Breeches", r: [[90783, 25], [13200, 1], [13199, 1]]},
+	{u: 13845, i: 97476, n: "Togo's Breeches", r: [[49523, 1], [96061, 1], [45898, 1], [45899, 1]], s: 96570}
 ],
 Tailor_Boots: [
 	{u: 2049, i: 11019, n: "Malign Embroidered Sandals", r: [[19870, 1], [13021, 1], [13022, 2]]},
@@ -2522,7 +2528,8 @@ Leatherworker_Insignia: [
 	{u: 12630, i: 86678, n: "Giftbringer's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [86585, 1]], s: 86699},
 	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875},
 	{u: 13047, i: 89758, n: "Diviner's Intricate Gossamer Insignia", r: [[76614, 5], [89537, 25], [19721, 5], [89696, 3]], s: 89727},
-	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533}
+	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533},
+	{u: 13776, i: 96061, n: "Togo's Ritualist Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [96315, 1]], s: 96162}
 ],
 Leatherworker_Bag: [
 	{u: 1125, i: 8940, n: "Wrangler's Bag", r: [[13010, 1], [24296, 1], [19738, 3]], s: 9564},
@@ -2919,7 +2926,8 @@ Leatherworker_Helm: [
 	{u: 13121, i: 89921, n: "Diviner's Emblazoned Helm", r: [[89758, 1], [13238, 1], [13239, 1]], s: 89472},
 	{u: 13194, i: 90396, n: "Diviner's Mist Shard Visage", r: [[90783, 25], [13238, 1], [13239, 1]]},
 	{u: 12762, i: 88432, n: "Thackeray's Leather Breather", r: [[49523, 1], [80258, 1], [71189, 1], [72297, 1]], s: 88377},
-	{u: 12777, i: 88455, n: "Laranthir's Leather Breather", r: [[49523, 1], [72985, 1], [71189, 1], [72297, 1]], s: 88369, b: 88369}
+	{u: 12777, i: 88455, n: "Laranthir's Leather Breather", r: [[49523, 1], [72985, 1], [71189, 1], [72297, 1]], s: 88369, b: 88369},
+	{u: 13544, i: 97440, n: "Togo's Visage", r: [[49523, 1], [96061, 1], [45860, 1], [45867, 1]], s: 97698}
 ],
 Leatherworker_Shoulders: [
 	{u: 1123, i: 4246, n: "Bloodsaw Leather Work Shoulderpads", r: [[19800, 1], [19738, 3]], s: 9526},
@@ -3114,7 +3122,8 @@ Leatherworker_Shoulders: [
 	{u: 12789, i: 88777, n: "Grieving Elegy Shoulders", r: [[85039, 1], [13242, 1], [13232, 1]]},
 	{u: 13030, i: 89443, n: "Diviner's Emblazoned Shoulders", r: [[89758, 1], [13242, 1], [13232, 1]], s: 89818},
 	{u: 13118, i: 89789, n: "Steelstar's Shoulderguard", r: [[49523, 1], [89563, 1], [45862, 1], [45869, 1]], s: 89776},
-	{u: 13206, i: 90854, n: "Diviner's Mist Shard Shoulders", r: [[90783, 25], [13242, 1], [13232, 1]]}
+	{u: 13206, i: 90854, n: "Diviner's Mist Shard Shoulders", r: [[90783, 25], [13242, 1], [13232, 1]]},
+	{u: 13873, i: 97862, n: "Togo's Shoulderguard", r: [[49523, 1], [96061, 1], [45862, 1], [45869, 1]], s: 97242}
 ],
 Leatherworker_Coat: [
 	{u: 1119, i: 4242, n: "Bloodsaw Leather Work Coat", r: [[19796, 1], [19738, 12]], s: 9523},
@@ -3310,7 +3319,8 @@ Leatherworker_Coat: [
 	{u: 12815, i: 88691, n: "Grieving Elegy Chestguard", r: [[85039, 1], [13234, 1], [13235, 1]]},
 	{u: 13076, i: 89528, n: "Steelstar's Guise", r: [[46746, 1], [89563, 1], [45861, 1], [45868, 1]], s: 89808},
 	{u: 13088, i: 89605, n: "Diviner's Emblazoned Coat", r: [[89758, 1], [13234, 1], [13235, 1]], s: 89640},
-	{u: 13176, i: 90384, n: "Diviner's Mist Shard Chestguard", r: [[90783, 25], [13234, 1], [13235, 1]]}
+	{u: 13176, i: 90384, n: "Diviner's Mist Shard Chestguard", r: [[90783, 25], [13234, 1], [13235, 1]]},
+	{u: 13572, i: 97154, n: "Togo's Guise", r: [[46746, 1], [96061, 1], [45861, 1], [45868, 1]], s: 95683}
 ],
 Leatherworker_Gloves: [
 	{u: 1118, i: 4909, n: "Darkvine Leather Gloves", r: [[24278, 1], [13098, 1], [13095, 1]], s: 9405},
@@ -3507,7 +3517,8 @@ Leatherworker_Gloves: [
 	{u: 12811, i: 88586, n: "Grieving Elegy Bracers", r: [[85039, 1], [13237, 1], [13236, 1]]},
 	{u: 13071, i: 89985, n: "Steelstar's Grips", r: [[49523, 1], [89563, 1], [45859, 1], [45866, 1]], s: 89775},
 	{u: 13128, i: 89613, n: "Diviner's Emblazoned Gloves", r: [[89758, 1], [13237, 1], [13236, 1]], s: 89438},
-	{u: 13190, i: 90901, n: "Diviner's Mist Shard Bracers", r: [[90783, 25], [13237, 1], [13236, 1]]}
+	{u: 13190, i: 90901, n: "Diviner's Mist Shard Bracers", r: [[90783, 25], [13237, 1], [13236, 1]]},
+	{u: 13511, i: 96795, n: "Togo's Grips", r: [[49523, 1], [96061, 1], [45859, 1], [45866, 1]], s: 97426}
 ],
 Leatherworker_Leggings: [
 	{u: 1116, i: 4012, n: "Quiet Leather Leggings", r: [[19905, 1], [13217, 1], [13216, 1]], s: 9386},
@@ -3704,7 +3715,8 @@ Leatherworker_Leggings: [
 	{u: 12794, i: 88556, n: "Grieving Elegy Leggings", r: [[85039, 1], [13240, 1], [13241, 1]]},
 	{u: 13039, i: 89722, n: "Diviner's Emblazoned Pants", r: [[89758, 1], [13240, 1], [13241, 1]], s: 89951},
 	{u: 13056, i: 89934, n: "Steelstar's Leggings", r: [[49523, 1], [89563, 1], [45863, 1], [45870, 1]], s: 89611},
-	{u: 13179, i: 90424, n: "Diviner's Mist Shard Leggings", r: [[90783, 25], [13240, 1], [13241, 1]]}
+	{u: 13179, i: 90424, n: "Diviner's Mist Shard Leggings", r: [[90783, 25], [13240, 1], [13241, 1]]},
+	{u: 13600, i: 95714, n: "Togo's Leggings", r: [[49523, 1], [96061, 1], [45863, 1], [45870, 1]], s: 97877}
 ],
 Leatherworker_Boots: [
 	{u: 1117, i: 4241, n: "Bloodsaw Leather Work Boots", r: [[19800, 1], [19738, 3]], s: 9522},
@@ -3900,7 +3912,8 @@ Leatherworker_Boots: [
 	{u: 12790, i: 88837, n: "Grieving Elegy Boots", r: [[85039, 1], [13233, 1], [13231, 2]]},
 	{u: 13018, i: 89893, n: "Steelstar's Striders", r: [[49523, 1], [89563, 1], [45864, 1], [45865, 1]], s: 89950},
 	{u: 13034, i: 89447, n: "Diviner's Emblazoned Boots", r: [[89758, 1], [13233, 1], [13231, 2]], s: 89553},
-	{u: 13139, i: 90715, n: "Diviner's Mist Shard Boots", r: [[90783, 25], [13233, 1], [13231, 2]]}
+	{u: 13139, i: 90715, n: "Diviner's Mist Shard Boots", r: [[90783, 25], [13233, 1], [13231, 2]]},
+	{u: 13512, i: 97395, n: "Togo's Striders", r: [[49523, 1], [96061, 1], [45864, 1], [45865, 1]], s: 96736}
 ],
 Armorsmith_Refinement: [
 	{u: 7, i: 19742, n: "Bolt of Cotton", r: [[19741, 2]]},
@@ -4439,7 +4452,8 @@ Armorsmith_Insignia: [
 	{u: 12630, i: 86678, n: "Giftbringer's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [86585, 1]], s: 86699},
 	{u: 12694, i: 88099, n: "Nerashi's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [88011, 1]], s: 87875},
 	{u: 13047, i: 89758, n: "Diviner's Intricate Gossamer Insignia", r: [[76614, 5], [89537, 25], [19721, 5], [89696, 3]], s: 89727},
-	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533}
+	{u: 13074, i: 89563, n: "Steelstar's Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [89758, 1]], s: 89533},
+	{u: 13776, i: 96061, n: "Togo's Ritualist Insignia", r: [[46681, 5], [24277, 10], [71334, 3], [96315, 1]], s: 96162}
 ],
 Armorsmith_Bag: [
 	{u: 499, i: 9420, n: "8 Slot Reinforced Bronze Box", r: [[19679, 10]]},
@@ -4836,7 +4850,8 @@ Armorsmith_Helm: [
 	{u: 13142, i: 90821, n: "Diviner's Mist Shard Helm", r: [[90783, 25], [13167, 1], [13166, 1]], s: 90556},
 	{u: 12785, i: 88440, n: "Thackeray's Metal Breather", r: [[49523, 1], [80258, 1], [72689, 1], [70548, 1]], s: 88453},
 	{u: 12766, i: 88429, n: "Laranthir's Metal Breather", r: [[49523, 1], [72985, 1], [72689, 1], [70548, 1]], s: 88459, b: 88459},
-	{u: 12767, i: 88467, n: "Tizlak's Metal Breather", r: [[49523, 1], [72674, 1], [72689, 1], [70548, 1]], s: 88435, b: 88435}
+	{u: 12767, i: 88467, n: "Tizlak's Metal Breather", r: [[49523, 1], [72674, 1], [72689, 1], [70548, 1]], s: 88435, b: 88435},
+	{u: 13636, i: 96711, n: "Togo's Visor", r: [[49523, 1], [96061, 1], [45874, 1], [45880, 1]], s: 97444}
 ],
 Armorsmith_Shoulders: [
 	{u: 246, i: 3993, n: "Caer Pauldrons", r: [[24363, 3], [19681, 3], [19744, 3]], s: 9397},
@@ -5031,7 +5046,8 @@ Armorsmith_Shoulders: [
 	{u: 12792, i: 88836, n: "Grieving Elegy Pauldrons", r: [[85039, 1], [13160, 1], [13170, 1]]},
 	{u: 13033, i: 89661, n: "Diviner's Draconic Pauldrons", r: [[89758, 1], [13160, 1], [13170, 1]], s: 89453},
 	{u: 13070, i: 89785, n: "Steelstar's Pauldrons", r: [[49523, 1], [89563, 1], [45876, 1], [45882, 1]], s: 89463},
-	{u: 13202, i: 90938, n: "Diviner's Mist Shard Pauldrons", r: [[90783, 25], [13160, 1], [13170, 1]], s: 90875}
+	{u: 13202, i: 90938, n: "Diviner's Mist Shard Pauldrons", r: [[90783, 25], [13160, 1], [13170, 1]], s: 90875},
+	{u: 13539, i: 96114, n: "Togo's Pauldrons", r: [[49523, 1], [96061, 1], [45876, 1], [45882, 1]], s: 97737}
 ],
 Armorsmith_Coat: [
 	{u: 249, i: 4236, n: "Iron Legion's Breastplate", r: [[19679, 8], [19797, 1], [13105, 2]], s: 9517},
@@ -5424,7 +5440,8 @@ Armorsmith_Gloves: [
 	{u: 12816, i: 88829, n: "Grieving Elegy Gauntlets", r: [[85039, 1], [13165, 1], [13164, 1]]},
 	{u: 13087, i: 89822, n: "Steelstar's Warfists", r: [[49523, 1], [89563, 1], [45873, 1], [45879, 1]], s: 89769},
 	{u: 13098, i: 89491, n: "Diviner's Draconic Gauntlets", r: [[89758, 1], [13165, 1], [13164, 1]], s: 89652},
-	{u: 13166, i: 90406, n: "Diviner's Mist Shard Gauntlets", r: [[90783, 25], [13165, 1], [13164, 1]], s: 90218}
+	{u: 13166, i: 90406, n: "Diviner's Mist Shard Gauntlets", r: [[90783, 25], [13165, 1], [13164, 1]], s: 90218},
+	{u: 13747, i: 96967, n: "Togo's Warfist", r: [[49523, 1], [96061, 1], [45873, 1], [45879, 1]], s: 95910}
 ],
 Armorsmith_Leggings: [
 	{u: 252, i: 4239, n: "Iron Legion's Leggings", r: [[19679, 8], [19797, 1]], s: 9519},
@@ -5620,7 +5637,8 @@ Armorsmith_Leggings: [
 	{u: 12813, i: 88492, n: "Grieving Elegy Tassets", r: [[85039, 1], [13169, 1], [13168, 1]]},
 	{u: 13065, i: 89460, n: "Steelstar's Tassets", r: [[49523, 1], [89563, 1], [45875, 1], [45881, 1]], s: 89497},
 	{u: 13102, i: 89721, n: "Diviner's Draconic Legs", r: [[89758, 1], [13169, 1], [13168, 1]], s: 89535},
-	{u: 13150, i: 90639, n: "Diviner's Mist Shard Tassets", r: [[90783, 25], [13169, 1], [13168, 1]], s: 90221}
+	{u: 13150, i: 90639, n: "Diviner's Mist Shard Tassets", r: [[90783, 25], [13169, 1], [13168, 1]], s: 90221},
+	{u: 13829, i: 97710, n: "Togo's Tassets", r: [[49523, 1], [96061, 1], [45875, 1], [45881, 1]], s: 96092}
 ],
 Armorsmith_Boots: [
 	{u: 247, i: 4235, n: "Iron Legion's Boots", r: [[19679, 4], [19797, 1]], s: 9516},
@@ -5816,7 +5834,8 @@ Armorsmith_Boots: [
 	{u: 12807, i: 88570, n: "Grieving Elegy Greaves", r: [[85039, 1], [13159, 1], [13161, 1]], s: 88489},
 	{u: 13012, i: 89853, n: "Diviner's Draconic Boots", r: [[89758, 1], [13159, 1], [13161, 1]], s: 89511},
 	{u: 13092, i: 89656, n: "Steelstar's Greaves", r: [[49523, 1], [89563, 1], [45871, 1], [45877, 1]], s: 89919},
-	{u: 13180, i: 90633, n: "Diviner's Mist Shard Greaves", r: [[90783, 25], [13159, 1], [13161, 1]], s: 90905}
+	{u: 13180, i: 90633, n: "Diviner's Mist Shard Greaves", r: [[90783, 25], [13159, 1], [13161, 1]], s: 90905},
+	{u: 13885, i: 96932, n: "Togo's Greaves", r: [[49523, 1], [96061, 1], [45871, 1], [45877, 1]], s: 96281}
 ],
 Artificer_Refinement: [
 	{u: 1, i: 19713, n: "Soft Wood Plank", r: [[19726, 2]]},
@@ -5972,7 +5991,11 @@ Artificer_Component: [
 	{u: 13373, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]]},
 	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
 	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738},
-	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]}
+	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]},
+	{u: 13666, i: 95970, n: "Fortified Precursor Staff Head", r: [[45887, 1], [97829, 1], [96471, 20]]},
+	{u: 13745, i: 96448, n: "Fortified Precursor Scepter Core", r: [[45885, 1], [97829, 1], [96471, 20]]},
+	{u: 13800, i: 95913, n: "Transcendent Crystal", r: [[19721, 10], [20852, 1], [95813, 100], [68063, 10]]},
+	{u: 13850, i: 97586, n: "Fortified Precursor Scepter Rod", r: [[45886, 1], [97829, 1], [96471, 20]]}
 ],
 Artificer_UpgradeComponent: [
 	{u: 3873, i: 24663, n: "Minor Sigil of Elemental Slaying", r: [[19679, 1], [24316, 2]]},
@@ -6396,7 +6419,8 @@ Artificer_Inscription: [
 	{u: 12671, i: 87505, n: "Revenant's Inscription", r: [[46681, 10], [71453, 1], [19721, 30], [69953, 1]]},
 	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959},
 	{u: 13035, i: 89735, n: "Diviner's Orichalcum-Imbued Inscription", r: [[12988, 5], [89537, 50], [19721, 5], [89696, 3]], s: 89756},
-	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514}
+	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514},
+	{u: 13880, i: 97469, n: "Togo's Inscription", r: [[46681, 10], [45832, 1], [96814, 1], [24277, 10]], s: 96107}
 ],
 Artificer_Potion: [
 	{u: 3869, i: 8640, n: "Grawl Snowman Potion", r: [[24277, 3], [24358, 3], [24320, 1]], s: 9549},
@@ -6792,7 +6816,9 @@ Artificer_Scepter: [
 	{u: 13429, i: 94498, n: "Unfinished Azure Dragon Slayer Scepter", r: [[94270, 5], [24340, 10], [13255, 1], [12976, 1]], s: 94525},
 	{u: 13436, i: 94613, n: "Unfinished Crimson Dragon Slayer Scepter", r: [[94270, 5], [24325, 10], [12976, 1], [13255, 1]], s: 94575},
 	{u: 13473, i: 94818, n: "Viper's Fiery Dragon Slayer Scepter of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94847},
-	{u: 13479, i: 94745, n: "Marauder Icy Dragon Slayer Scepter of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94723}
+	{u: 13479, i: 94745, n: "Marauder Icy Dragon Slayer Scepter of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94723},
+	{u: 13620, i: 96193, n: "Dragon's Wisdom", r: [[96448, 1], [97586, 1], [95913, 1], [96088, 100]], s: 96343},
+	{u: 13758, i: 97272, n: "Togo's Wand", r: [[97469, 1], [45885, 1], [45886, 1], [46746, 1]], s: 97415}
 ],
 Artificer_Focus: [
 	{u: 3868, i: 29989, n: "Charr Focus", r: [[19710, 3], [19767, 1]], s: 9532},
@@ -7255,7 +7281,8 @@ Artificer_Staff: [
 	{u: 13435, i: 94625, n: "Unfinished Crimson Dragon Slayer Staff", r: [[94270, 5], [24325, 10], [13261, 1], [12973, 1]], s: 94474},
 	{u: 13444, i: 94499, n: "Unfinished Azure Dragon Slayer Staff", r: [[94270, 5], [24340, 10], [13261, 1], [12973, 1]], s: 94522},
 	{u: 13458, i: 94865, n: "Viper's Fiery Dragon Slayer Staff of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94802},
-	{u: 13468, i: 94787, n: "Marauder Icy Dragon Slayer Staff of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94829}
+	{u: 13468, i: 94787, n: "Marauder Icy Dragon Slayer Staff of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94829},
+	{u: 13810, i: 95814, n: "Dragon's Insight", r: [[95970, 1], [97408, 1], [95913, 1], [96088, 100]], s: 95909}
 ],
 Artificer_Trident: [
 	{u: 3865, i: 30004, n: "Charr Trident", r: [[19710, 6], [19767, 1]], s: 9529},
@@ -7645,7 +7672,11 @@ Huntsman_Component: [
 	{u: 13373, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]]},
 	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
 	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738},
-	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]}
+	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]},
+	{u: 13587, i: 95708, n: "Fortified Precursor Longbow Stave", r: [[45841, 1], [97829, 1], [96471, 20]]},
+	{u: 13642, i: 97305, n: "Fortified Precursor Pistol Barrel", r: [[45833, 1], [97829, 1], [97102, 20]]},
+	{u: 13754, i: 96526, n: "Fortified Precursor Pistol Frame", r: [[45835, 1], [97829, 1], [96471, 20]]},
+	{u: 13800, i: 95913, n: "Transcendent Crystal", r: [[19721, 10], [20852, 1], [95813, 100], [68063, 10]]}
 ],
 Huntsman_UpgradeComponent: [
 	{u: 4757, i: 24863, n: "Minor Sigil of Celerity", r: [[19683, 1], [24331, 2]]},
@@ -8110,7 +8141,8 @@ Huntsman_Inscription: [
 	{u: 12671, i: 87505, n: "Revenant's Inscription", r: [[46681, 10], [71453, 1], [19721, 30], [69953, 1]]},
 	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959},
 	{u: 13035, i: 89735, n: "Diviner's Orichalcum-Imbued Inscription", r: [[12988, 5], [89537, 50], [19721, 5], [89696, 3]], s: 89756},
-	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514}
+	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514},
+	{u: 13880, i: 97469, n: "Togo's Inscription", r: [[46681, 10], [45832, 1], [96814, 1], [24277, 10]], s: 96107}
 ],
 Huntsman_Consumable: [
 	{u: 4480, i: 9452, n: "Apprentice Maintenance Oil", r: [[24272, 4], [12156, 3]]},
@@ -8371,7 +8403,9 @@ Huntsman_Pistol: [
 	{u: 13432, i: 94552, n: "Unfinished Crimson Dragon Slayer Pistol", r: [[94270, 5], [24325, 10], [12924, 1], [12959, 1]], s: 94482},
 	{u: 13448, i: 94483, n: "Unfinished Azure Dragon Slayer Pistol", r: [[94270, 5], [24340, 10], [12924, 1], [12959, 1]], s: 94541},
 	{u: 13460, i: 94736, n: "Marauder Icy Dragon Slayer Pistol of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94837},
-	{u: 13472, i: 94721, n: "Viper's Fiery Dragon Slayer Pistol of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94718}
+	{u: 13472, i: 94721, n: "Viper's Fiery Dragon Slayer Pistol of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94718},
+	{u: 13705, i: 96915, n: "Dragon's Argument", r: [[97305, 1], [96526, 1], [95913, 1], [96088, 100]], s: 95919},
+	{u: 13803, i: 97508, n: "Togo's Revolver", r: [[97469, 1], [45833, 1], [45835, 1], [46746, 1]], s: 97022}
 ],
 Huntsman_Torch: [
 	{u: 4499, i: 30003, n: "Charr Torch", r: [[19710, 3], [19767, 1]], s: 9512},
@@ -8600,7 +8634,9 @@ Huntsman_Torch: [
 	{u: 13433, i: 94602, n: "Unfinished Crimson Dragon Slayer Torch", r: [[94270, 5], [24325, 10], [13061, 1], [13014, 1]], s: 94516},
 	{u: 13438, i: 94507, n: "Unfinished Azure Dragon Slayer Torch", r: [[94270, 5], [24340, 10], [13014, 1], [13061, 1]], s: 94470},
 	{u: 13451, i: 94711, n: "Viper's Fiery Dragon Slayer Torch of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94849},
-	{u: 13453, i: 94826, n: "Marauder Icy Dragon Slayer Torch of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94712}
+	{u: 13453, i: 94826, n: "Marauder Icy Dragon Slayer Torch of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94712},
+	{u: 13560, i: 96925, n: "Dragon's Breath", r: [[97036, 1], [97815, 1], [95913, 1], [96088, 100]], s: 97177},
+	{u: 13722, i: 97752, n: "Togo's Brazier", r: [[97469, 1], [45838, 1], [45836, 1], [46746, 1]], s: 96244}
 ],
 Huntsman_Warhorn: [
 	{u: 4477, i: 30682, n: "Packmaster's Warhorn", r: [[24296, 1], [19679, 3]], s: 9415},
@@ -9059,7 +9095,8 @@ Huntsman_LongBow: [
 	{u: 13426, i: 94513, n: "Unfinished Crimson Dragon Slayer Longbow", r: [[94270, 5], [24325, 10], [12941, 1], [12963, 1]], s: 94501},
 	{u: 13431, i: 94542, n: "Unfinished Azure Dragon Slayer Longbow", r: [[94270, 5], [24340, 10], [12941, 1], [12963, 1]], s: 94505},
 	{u: 13465, i: 94733, n: "Viper's Fiery Dragon Slayer Longbow of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94848},
-	{u: 13470, i: 94861, n: "Marauder Icy Dragon Slayer Longbow of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94782}
+	{u: 13470, i: 94861, n: "Marauder Icy Dragon Slayer Longbow of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94782},
+	{u: 13609, i: 95834, n: "Dragon's Flight", r: [[95708, 1], [97757, 1], [95913, 1], [96088, 100]], s: 96886}
 ],
 Huntsman_ShortBow: [
 	{u: 4498, i: 29999, n: "Charr Short Bow", r: [[19710, 5], [19767, 1]], s: 9511},
@@ -9521,7 +9558,8 @@ Huntsman_Rifle: [
 	{u: 13422, i: 94557, n: "Unfinished Azure Dragon Slayer Rifle", r: [[94270, 5], [24340, 10], [12918, 1], [12953, 1]], s: 94578},
 	{u: 13437, i: 94468, n: "Unfinished Crimson Dragon Slayer Rifle", r: [[94270, 5], [24325, 10], [12918, 1], [12953, 1]], s: 94574},
 	{u: 13476, i: 94793, n: "Marauder Icy Dragon Slayer Rifle of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94795},
-	{u: 13478, i: 94796, n: "Viper's Fiery Dragon Slayer Rifle of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94790}
+	{u: 13478, i: 94796, n: "Viper's Fiery Dragon Slayer Rifle of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94790},
+	{u: 13556, i: 97267, n: "Dragon's Persuasion", r: [[97598, 1], [96040, 1], [95913, 1], [96088, 100]], s: 97126}
 ],
 Huntsman_Speargun: [
 	{u: 4501, i: 30000, n: "Charr Speargun", r: [[19710, 4], [19767, 1]], s: 9514},
@@ -9919,7 +9957,14 @@ Weaponsmith_Component: [
 	{u: 13373, i: 93567, n: "Stormcaller Core", r: [[24305, 10], [19746, 75], [19685, 25], [43772, 1]]},
 	{u: 13385, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [70842, 10]], s: 93802},
 	{u: 13389, i: 92687, n: "Amalgamated Draconic Lodestone", r: [[24330, 10], [24325, 10], [24340, 10], [24335, 10]], s: 93738},
-	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]}
+	{u: 13390, i: 93417, n: "Tengu Echo Blade", r: [[19685, 2], [19684, 2], [19686, 2], [68063, 2]]},
+	{u: 13668, i: 96312, n: "Fortified Precursor Shield Backing", r: [[45857, 1], [97829, 1], [97102, 20]]},
+	{u: 13691, i: 96267, n: "Fortified Precursor Shield Boss", r: [[45858, 1], [97829, 1], [97102, 20]]},
+	{u: 13703, i: 97235, n: "Fortified Precursor Greatsword Blade", r: [[45847, 1], [97829, 1], [97102, 20]]},
+	{u: 13717, i: 97366, n: "Fortified Precursor Greatsword Hilt", r: [[45855, 1], [97829, 1], [97102, 20]]},
+	{u: 13748, i: 96399, n: "Fortified Precursor Dagger Blade", r: [[45846, 1], [97829, 1], [97102, 20]]},
+	{u: 13800, i: 95913, n: "Transcendent Crystal", r: [[19721, 10], [20852, 1], [95813, 100], [68063, 10]]},
+	{u: 13844, i: 95841, n: "Fortified Precursor Dagger Hilt", r: [[45854, 1], [97829, 1], [97102, 20]]}
 ],
 Weaponsmith_UpgradeComponent: [
 	{u: 5713, i: 24564, n: "Minor Sigil of Strength", r: [[19679, 1], [24306, 2]]},
@@ -10401,7 +10446,8 @@ Weaponsmith_Inscription: [
 	{u: 12671, i: 87505, n: "Revenant's Inscription", r: [[46681, 10], [71453, 1], [19721, 30], [69953, 1]]},
 	{u: 12690, i: 87638, n: "Nerashi's Inscription", r: [[46681, 10], [45832, 1], [87809, 1], [24277, 10]], s: 87959},
 	{u: 13035, i: 89735, n: "Diviner's Orichalcum-Imbued Inscription", r: [[12988, 5], [89537, 50], [19721, 5], [89696, 3]], s: 89756},
-	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514}
+	{u: 13073, i: 89489, n: "Steelstar's Inscription", r: [[46681, 10], [45832, 1], [89735, 1], [24277, 10]], s: 89514},
+	{u: 13880, i: 97469, n: "Togo's Inscription", r: [[46681, 10], [45832, 1], [96814, 1], [24277, 10]], s: 96107}
 ],
 Weaponsmith_Consumable: [
 	{u: 5396, i: 9431, n: "Rough Sharpening Stone", r: [[24272, 3], [19679, 3]]},
@@ -10660,7 +10706,9 @@ Weaponsmith_Axe: [
 	{u: 13417, i: 94540, n: "Unfinished Azure Dragon Slayer Axe", r: [[12892, 1], [12852, 1], [94270, 5], [24340, 10]], s: 94464},
 	{u: 13440, i: 94476, n: "Unfinished Crimson Dragon Slayer Axe", r: [[94270, 5], [24325, 10], [12892, 1], [12852, 1]], s: 94568},
 	{u: 13456, i: 94738, n: "Marauder Icy Dragon Slayer Axe of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94866},
-	{u: 13475, i: 94716, n: "Viper's Fiery Dragon Slayer Axe of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94730}
+	{u: 13475, i: 94716, n: "Viper's Fiery Dragon Slayer Axe of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94730},
+	{u: 13769, i: 95781, n: "Togo's Reaver", r: [[97469, 1], [45845, 1], [45850, 1], [46746, 1]], s: 97294},
+	{u: 13865, i: 97449, n: "Dragon's Rending", r: [[96398, 1], [95656, 1], [95913, 1], [96088, 100]], s: 97521}
 ],
 Weaponsmith_Mace: [
 	{u: 5419, i: 29994, n: "Charr Mace", r: [[19767, 1], [19679, 4]], s: 9508},
@@ -11125,7 +11173,8 @@ Weaponsmith_Sword: [
 	{u: 13418, i: 94561, n: "Unfinished Azure Dragon Slayer Sword", r: [[94270, 5], [24340, 10], [12870, 1], [12846, 1]], s: 94573},
 	{u: 13421, i: 94479, n: "Unfinished Crimson Dragon Slayer Sword", r: [[94270, 5], [24325, 10], [12846, 1], [12870, 1]], s: 94611},
 	{u: 13454, i: 94812, n: "Marauder Icy Dragon Slayer Sword of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94779},
-	{u: 13480, i: 94843, n: "Viper's Fiery Dragon Slayer Sword of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94728}
+	{u: 13480, i: 94843, n: "Viper's Fiery Dragon Slayer Sword of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94728},
+	{u: 13629, i: 95994, n: "Dragon's Fang", r: [[97006, 1], [97206, 1], [95913, 1], [96088, 100]], s: 96520}
 ],
 Weaponsmith_Dagger: [
 	{u: 5416, i: 29988, n: "Charr Dagger", r: [[19767, 1], [19679, 3]], s: 9506},
@@ -11354,7 +11403,9 @@ Weaponsmith_Dagger: [
 	{u: 13427, i: 94503, n: "Unfinished Crimson Dragon Slayer Dagger", r: [[94270, 5], [24325, 10], [12858, 1], [12882, 1]], s: 94527},
 	{u: 13428, i: 94500, n: "Unfinished Azure Dragon Slayer Dagger", r: [[94270, 5], [24340, 10], [12882, 1], [12858, 1]], s: 94559},
 	{u: 13452, i: 94775, n: "Viper's Fiery Dragon Slayer Dagger of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94852},
-	{u: 13464, i: 94764, n: "Marauder Icy Dragon Slayer Dagger of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94774}
+	{u: 13464, i: 94764, n: "Marauder Icy Dragon Slayer Dagger of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94774},
+	{u: 13713, i: 95967, n: "Dragon's Claw", r: [[96399, 1], [95841, 1], [95913, 1], [96088, 100]], s: 96630},
+	{u: 13735, i: 96821, n: "Togo's Razor", r: [[97469, 1], [45846, 1], [45854, 1], [46746, 1]], s: 97638}
 ],
 Weaponsmith_Shield: [
 	{u: 5328, i: 29450, n: "Crusader's Shield", r: [[12907, 1], [12913, 1], [24345, 5]], s: 9391},
@@ -11583,7 +11634,8 @@ Weaponsmith_Shield: [
 	{u: 13419, i: 94493, n: "Unfinished Azure Dragon Slayer Shield", r: [[94270, 5], [24340, 10], [12906, 1], [12912, 1]], s: 94462},
 	{u: 13425, i: 94588, n: "Unfinished Crimson Dragon Slayer Shield", r: [[94270, 5], [24325, 10], [12906, 1], [12912, 1]], s: 94571},
 	{u: 13463, i: 94763, n: "Viper's Fiery Dragon Slayer Shield of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94827},
-	{u: 13471, i: 94781, n: "Marauder Icy Dragon Slayer Shield of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94836}
+	{u: 13471, i: 94781, n: "Marauder Icy Dragon Slayer Shield of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94836},
+	{u: 13868, i: 97691, n: "Dragon's Scale", r: [[96267, 1], [96312, 1], [95913, 1], [96088, 100]], s: 96342}
 ],
 Weaponsmith_Greatsword: [
 	{u: 5417, i: 29990, n: "Charr Greatsword", r: [[19767, 1], [19679, 6]], s: 9505},
@@ -11813,7 +11865,8 @@ Weaponsmith_Greatsword: [
 	{u: 13434, i: 94567, n: "Unfinished Azure Dragon Slayer Greatsword", r: [[94270, 5], [24340, 10], [12840, 1], [12888, 1]], s: 94599},
 	{u: 13447, i: 94467, n: "Unfinished Crimson Dragon Slayer Greatsword", r: [[94270, 5], [24325, 10], [12840, 1], [12888, 1]], s: 94461},
 	{u: 13462, i: 94857, n: "Viper's Fiery Dragon Slayer Greatsword of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94720},
-	{u: 13466, i: 94815, n: "Marauder Icy Dragon Slayer Greatsword of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94761}
+	{u: 13466, i: 94815, n: "Marauder Icy Dragon Slayer Greatsword of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94761},
+	{u: 13562, i: 96357, n: "Dragon's Bite", r: [[97235, 1], [97366, 1], [95913, 1], [96088, 100]], s: 97209}
 ],
 Weaponsmith_Hammer: [
 	{u: 5418, i: 29991, n: "Charr Hammer", r: [[19767, 1], [19679, 6]], s: 9507},
@@ -12042,7 +12095,8 @@ Weaponsmith_Hammer: [
 	{u: 13420, i: 94617, n: "Unfinished Azure Dragon Slayer Hammer", r: [[94270, 5], [24340, 10], [12864, 1], [12899, 1]], s: 94555},
 	{u: 13439, i: 94506, n: "Unfinished Crimson Dragon Slayer Hammer", r: [[94270, 5], [24325, 10], [12899, 1], [12864, 1]], s: 94528},
 	{u: 13459, i: 94822, n: "Marauder Icy Dragon Slayer Hammer of Destroyer Slaying", r: [[94270, 5], [24340, 20], [46746, 1], [92687, 1]], s: 94760},
-	{u: 13469, i: 94788, n: "Viper's Fiery Dragon Slayer Hammer of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94850}
+	{u: 13469, i: 94788, n: "Viper's Fiery Dragon Slayer Hammer of Icebrood Slaying", r: [[94270, 5], [24325, 20], [46746, 1], [92687, 1]], s: 94850},
+	{u: 13802, i: 95920, n: "Dragon's Weight", r: [[96709, 1], [97273, 1], [95913, 1], [96088, 100]], s: 95831}
 ],
 Weaponsmith_Harpoon: [
 	{u: 5344, i: 30683, n: "Quetzal Harpoon", r: [[19887, 1], [12897, 1], [12994, 1]], s: 9410},
@@ -12860,7 +12914,13 @@ Scribe_GuildDecoration: [
 	{u: 13492, i: 95072, n: "Primordus Hologram Generator", r: [[70933, 1], [46738, 30], [46743, 10], [43320, 50]]},
 	{u: 13494, i: 95062, n: "Dragon Bash Windcatcher", r: [[71146, 1], [19742, 20], [19714, 10], [43319, 100]]},
 	{u: 13497, i: 95274, n: "Zephyr Net", r: [[19720, 30], [70454, 1]]},
-	{u: 13503, i: 95354, n: "Shattered Stairway", r: [[70489, 1], [48806, 3], [19681, 40]]}
+	{u: 13503, i: 95354, n: "Shattered Stairway", r: [[70489, 1], [48806, 3], [19681, 40]]},
+	{u: 13505, i: 95519, n: "Wintersday Music Platform", r: [[70454, 1], [19713, 40], [70681, 1]]},
+	{u: 13506, i: 95511, n: "Lounging Tiger Statue", r: [[70926, 1], [95537, 1]]},
+	{u: 13507, i: 95512, n: "Tiger Statue", r: [[70926, 1], [95537, 1]]},
+	{u: 13509, i: 95499, n: "Infinirarium Deck", r: [[72537, 1], [70489, 1], [19684, 100]]},
+	{u: 13510, i: 95565, n: "Toymaker's Machine", r: [[70933, 1], [86627, 20], [70930, 1]]},
+	{u: 13575, i: 97869, n: "Stone Dragon Head", r: [[70933, 1], [70930, 1], [75731, 1]]}
 ],
 Scribe_GuildConsumable: [
 	{u: 9961, i: 71530, n: "Guild Magic Find Banner Schematic", r: [[19714, 5], [19742, 5], [70765, 1], [70714, 3]]},
@@ -13052,7 +13112,12 @@ Chef_IngredientCooking: [
 	{u: 13252, i: 91722, n: "Glob of Gelatin", r: [[91702, 1], [12156, 1]]},
 	{u: 13253, i: 91825, n: "Bottle of Simple Syrup", r: [[12155, 1], [12156, 1]]},
 	{u: 13263, i: 92006, n: "Side of Charred Meat", r: [[24359, 5], [19750, 1], [24313, 1], [68955, 2]]},
-	{u: 13267, i: 92001, n: "Handful of Charr Spice Blend", r: [[92072, 5], [12544, 3], [12504, 10], [12153, 2]]}
+	{u: 13267, i: 92001, n: "Handful of Charr Spice Blend", r: [[92072, 5], [12544, 3], [12504, 10], [12153, 2]]},
+	{u: 13640, i: 96282, n: "Bottle of Sesame Oil", r: [[12342, 5]]},
+	{u: 13661, i: 95745, n: "Bowl of Canthan Vegetable Mix", r: [[12142, 1], [12332, 1], [12330, 1], [12147, 1]]},
+	{u: 13665, i: 97128, n: "Jar of Kimchi", r: [[12332, 1], [12153, 1], [12163, 2], [12331, 3]]},
+	{u: 13750, i: 96793, n: "Block of Tofu", r: [[97105, 3]]},
+	{u: 13805, i: 95898, n: "Jars of Sweet Chili Paste", r: [[96282, 1], [12155, 1], [97105, 1], [12331, 10]]}
 ],
 Chef_Snack: [
 	{u: 2841, i: 12233, n: "Handful of Trail Mix", r: [[12338, 1], [12337, 1], [12250, 1], [12255, 1]], s: 9383},
@@ -13164,7 +13229,8 @@ Chef_Snack: [
 	{u: 9254, i: 91842, n: "Plate of Eggs Benedict", r: [[12143, 1], [91861, 1], [91826, 1], [76603, 1]]},
 	{u: 13266, i: 91917, n: "Plate of Spicy Moa Wings", r: [[92072, 2], [24360, 5], [12158, 2], [12136, 2]], s: 92060},
 	{u: 13498, i: 95277, n: "Fried Banana Chips", r: [[12251, 4], [12158, 2]], s: 95278},
-	{u: 13499, i: 95421, n: "Homemade Campfire Treat", r: [[12155, 12], [91702, 3], [12229, 6], [12169, 8]], s: 95343}
+	{u: 13499, i: 95421, n: "Homemade Campfire Treat", r: [[12155, 12], [91702, 3], [12229, 6], [12169, 8]], s: 95343},
+	{u: 13508, i: 95520, n: "Longevity Noodles", r: [[12156, 2], [12136, 2], [12275, 1], [12533, 1]], s: 95534}
 ],
 Chef_Dessert: [
 	{u: 2899, i: 12225, n: "Cinnamon Apple", r: [[12177, 1], [12165, 1]]},
@@ -13293,7 +13359,8 @@ Chef_Dessert: [
 	{u: 9232, i: 91729, n: "Sesame Cheesecake", r: [[38216, 2], [12169, 1], [91701, 1]]},
 	{u: 13269, i: 92078, n: "Bowl of Green Chile Ice Cream", r: [[92001, 5], [38216, 1], [86601, 25]], s: 91894},
 	{u: 13272, i: 92196, n: "Soul Cake", r: [[12170, 2], [12136, 4], [12155, 2], [12128, 3]]},
-	{u: 13273, i: 92138, n: "Saint Bones", r: [[12337, 10], [12155, 5], [12156, 2], [36052, 5]]}
+	{u: 13273, i: 92138, n: "Saint Bones", r: [[12337, 10], [12155, 5], [12156, 2], [36052, 5]]},
+	{u: 13504, i: 95556, n: "Turrón Slice", r: [[12155, 2], [12337, 15], [12143, 3]], s: 95503}
 ],
 Chef_Soup: [
 	{u: 2878, i: 12199, n: "Bowl of Red Meat Stock", r: [[12156, 1], [24359, 2], [12142, 2], [12134, 2]]},
@@ -13921,7 +13988,8 @@ Jeweler_UpgradeComponent: [
 	{u: 11701, i: 74287, n: "Exquisite Burl Jewel", r: [[72315, 1], [12834, 1], [19721, 1]], s: 76012},
 	{u: 12142, i: 84765, n: "Brandspark Jewel", r: [[76491, 1], [12834, 1], [19721, 1], [82678, 3]], s: 82366},
 	{u: 12151, i: 84581, n: "Sunset Jewel", r: [[76491, 1], [12834, 1], [19721, 1], [83103, 100]], s: 84498},
-	{u: 12459, i: 82495, n: "Mournstone", r: [[76491, 1], [12834, 1], [19721, 1], [83757, 150]], s: 85611}
+	{u: 12459, i: 82495, n: "Mournstone", r: [[76491, 1], [12834, 1], [19721, 1], [83757, 150]], s: 85611},
+	{u: 13827, i: 96477, n: "Mount Energy Booster 1", r: [[24592, 1], [12834, 2], [12815, 2], [97487, 2]], s: 97689}
 ],
 Jeweler_Amulet: [
 	{u: 3393, i: 23893, n: "Enchanted Rock Pendant", r: [[19680, 3], [24465, 1]], s: 9408},
