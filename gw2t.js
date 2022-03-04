@@ -280,7 +280,7 @@ O = {
 		bol_auditVault: true,
 		bol_auditAccountOnReset: false,
 		bol_auditHistoryConverted: false,
-		int_numAuditReports: 1024,
+		int_numAuditReports: 4096,
 		// Trading
 		bol_refreshPrices: true,
 		int_numTradingCalculators: 25,
