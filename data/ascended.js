@@ -1066,7 +1066,20 @@ Ring: [
 	{i: 96126, n: "Master Untamed's Ring (Infused)", p: {coin: 0}},
 	{i: 96456, n: "Attuned Master Specter's Ring (Infused)", p: {coin: 0}},
 	{i: 96515, n: "Master Specter's Ring", p: {coin: 0}},
-	{i: 97115, n: "Master Mechanist's Ring", p: {coin: 0}}
+	{i: 97115, n: "Master Mechanist's Ring", p: {coin: 0}},
+	{i: 95643, n: "Attuned Master Mechanist's Ring (Infused)", p: {coin: 0}},
+	{i: 96090, n: "Master Bladesworn's Ring", p: {coin: 0}},
+	{i: 96118, n: "Attuned Master Vindicator's Ring (Infused)", p: {coin: 0}},
+	{i: 96120, n: "Master Vindicator's Ring (Infused)", p: {coin: 0}},
+	{i: 96269, n: "Master Mechanist's Ring (Infused)", p: {coin: 0}},
+	{i: 96275, n: "Master Catalyst's Ring", p: {coin: 0}},
+	{i: 96368, n: "Master Harbinger's Ring (Infused)", p: {coin: 0}},
+	{i: 96648, n: "Master Harbinger's Ring", p: {coin: 0}},
+	{i: 96671, n: "Master Vindicator's Ring", p: {coin: 0}},
+	{i: 96725, n: "Master Catalyst's Ring (Infused)", p: {coin: 0}},
+	{i: 96841, n: "Attuned Master Catalyst's Ring (Infused)", p: {coin: 0}},
+	{i: 97054, n: "Master Virtuoso's Ring", p: {coin: 0}},
+	{i: 97095, n: "Attuned Master Harbinger's Ring (Infused)", p: {coin: 0}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1154,7 +1167,10 @@ Accessory: [
 	{i: 95990, n: "Master Harbinger's Trinket", p: {achievement: 0}},
 	{i: 96566, n: "Master Mechanist's Trinket", p: {achievement: 0}},
 	{i: 97125, n: "Master Specter's Trinket", p: {achievement: 0}},
-	{i: 97662, n: "Master Untamed's Trinket", p: {achievement: 0}}
+	{i: 97662, n: "Master Untamed's Trinket", p: {achievement: 0}},
+	{i: 96102, n: "Master Vindicator's Trinket", p: {achievement: 0}},
+	{i: 96241, n: "Master Catalyst's Trinket", p: {achievement: 0}},
+	{i: 96982, n: "Master Virtuoso's Trinket", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1236,7 +1252,13 @@ Amulet: [
 	{i: 93940, n: "Amulet of Celebration", p: {achievement: 0}},
 	{i: 95892, n: "Kurzick Brooch", p: {achievement: 0}},
 	{i: 95996, n: "Luxon Brooch", p: {achievement: 0}},
-	{i: 96280, n: "Master Specter's Badge", p: {achievement: 0}}
+	{i: 96280, n: "Master Specter's Badge", p: {achievement: 0}},
+	{i: 96224, n: "Master Catalyst's Badge", p: {achievement: 0}},
+	{i: 96252, n: "Master Mechanist's Badge", p: {achievement: 0}},
+	{i: 96594, n: "Master Vindicator's Badge", p: {achievement: 0}},
+	{i: 96748, n: "Master Untamed's Badge", p: {achievement: 0}},
+	{i: 96934, n: "Master Virtuoso's Amulet", p: {achievement: 0}},
+	{i: 97176, n: "Master Harbinger's Badge", p: {achievement: 0}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -3008,7 +3030,8 @@ Scepter: [
 	{i: 96969, n: "Living Water Scepter", p: {coin: 1100000}},
 	{i: 97272, n: "Togo's Wand", p: {coin: 1100000}},
 	{i: 97845, n: "Possession", p: {coin: 1100000}},
-	{i: 95985, n: "Jade Punk Scepter", p: {coin: 1100000}}
+	{i: 95985, n: "Jade Punk Scepter", p: {coin: 1100000}},
+	{i: 96254, n: "Suun's Wand", p: {coin: 1100000}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -3397,7 +3420,8 @@ Greatsword: [
 	{i: 97326, n: "Living Water Greatsword", p: {coin: 1200000}},
 	{i: 97868, n: "Dichotomy", p: {coin: 1200000}},
 	{i: 96994, n: "Jade Punk Greatsword", p: {coin: 1200000}},
-	{i: 97260, n: "Suun's Claymore", p: {coin: 1200000}}
+	{i: 97260, n: "Suun's Claymore", p: {coin: 1200000}},
+	{i: 96433, n: "Togo's Claymore", p: {coin: 1200000}}
 ],
 Hammer: [
 	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -3940,6 +3964,7 @@ Trident: [
 	{i: 89904, n: "Steelstar's Trident", p: {coin: 1000000}},
 	{i: 90637, n: "Trident of the Scion", p: {coin: 1000000}},
 	{i: 90644, n: "Terracotta Antique Trident", p: {coin: 1000000}},
-	{i: 97555, n: "Togo's Trident", p: {coin: 1000000}}
+	{i: 97555, n: "Togo's Trident", p: {coin: 1000000}},
+	{i: 96417, n: "Suun's Trident", p: {coin: 1000000}}
 ]
 };
