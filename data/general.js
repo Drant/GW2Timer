@@ -1207,6 +1207,14 @@ var GW2T_REGION_DATA = {
 	name_fr: "Désert de cristal",
 	name_zh: "水晶沙漠",
 	color: "tan"
+},
+"cantha": {
+	name_en: "Cantha",
+	name_de: "Cantha",
+	name_es: "Cantha",
+	name_fr: "Cantha",
+	name_zh: "凯珊",
+	color: "jade"
 }
 };
 
@@ -1898,8 +1906,68 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Frontière de Bjora",
 	name_zh: "波卓拉边境",
 	region: "shiverpeaks",
-	map_rect: [[-52224,-24576], [55296,27648]],
+	map_rect: [[-52224, -24576], [55296, 27648]],
 	continent_rect: [[22143, 588], [26623 ,2764]]
+},
+"drizzlewood":
+{
+	id: "1371",
+	name_en: "Drizzlewood Coast",
+	name_de: "Nieselwald-Küste",
+	name_es: "Costa de Bosquellovizna",
+	name_fr: "Côte de Bruinebois",
+	name_zh: "雨森海岸",
+	region: "shiverpeaks",
+	map_rect: [[-24576, -52224], [27648, 55296]],
+	continent_rect: [[50128, 17809], [52304, 22289]]
+},
+"seitung":
+{
+	id: "1442",
+	name_en: "Seitung Province",
+	name_de: "Provinz Seitung",
+	name_es: "Provincia de Seitung",
+	name_fr: "Province de Seitung",
+	name_zh: "青函省",
+	region: "cantha",
+	map_rect: [[-46080, -30720], [46080, 33792]],
+	continent_rect: [[21159, 100457], [24999, 103145]]
+},
+"kaineng":
+{
+	id: "1438",
+	name_en: "New Kaineng City",
+	name_de: "Stadt Neu-Kaineng",
+	name_es: "Ciudad de Nueva Kaineng",
+	name_fr: "Néo-Kaineng",
+	name_zh: "新凯宁城",
+	region: "cantha",
+	map_rect: [[-46080, -30720], [46080, 30720]],
+	continent_rect: [[25000, 98100], [28840, 100660]]
+},
+"echovald":
+{
+	id: "1452",
+	name_en: "The Echovald Wilds",
+	name_de: "Die Echowald-Wildnis",
+	name_es: "Las Selvas de Echovald",
+	name_fr: "Terres sauvages d'Echovald",
+	name_zh: "科瓦德荒野",
+	region: "cantha",
+	map_rect: [[-46080, -30720], [46080, 30720]],
+	continent_rect: [[29185, 100890], [33025, 103450]]
+},
+"dragonsend":
+{
+	id: "1422",
+	name_en: "Dragon's End",
+	name_de: "Drachen-Ende",
+	name_es: "Muerte del Dragón",
+	name_fr: "Trépas du dragon",
+	name_zh: "巨龙尽头",
+	region: "cantha",
+	map_rect: [[-24576, -43008], [27648, 46080]],
+	continent_rect: [[33126, 101838], [35302, 105550]]
 }
 };
 
@@ -1928,6 +1996,30 @@ var GW2T_TIMELINE = [
 			{ time: "00:00", duration: "00:15", primacy: 3, name_en: "Mad King Says", name_de: "Verrückte König sagt", name_es: "Rey Loco dice", name_fr: "Roi Dément a dit", name_zh: "疯王说" },
 		]
 	},*/
+	{
+		zone: "seitung",
+		Segments: [
+			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Aetherblade", name_de: "Ätherklingen", name_es: "Filoetéreo", name_fr: "Étherlames", name_zh: "以太之刃" }
+		]
+	},
+	{
+		zone: "kaineng",
+		Segments: [
+			{ time: "00:00", duration: "00:30", primacy: 3, name_en: "Blackout", name_de: "Blackout", name_es: "Apagón", name_fr: "Black-out", name_zh: "停电" }
+		]
+	},
+	{
+		zone: "echovald",
+		Segments: [
+			{ time: "00:30", duration: "00:35", primacy: 3, name_en: "Gang", name_de: "Bandenkrieg", name_es: "Pandillas", name_fr: "Gangs", name_zh: "打群架" }
+		]
+	},
+	{
+		zone: "dragonsend",
+		Segments: [
+			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Jade", name_de: "Jademeer", name_es: "Jade", name_fr: "Jade", name_zh: "玉之海的战" }
+		]
+	},
 	{
 		zone: "bjora",
 		Segments: [
