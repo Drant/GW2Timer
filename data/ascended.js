@@ -1079,7 +1079,10 @@ Ring: [
 	{i: 96725, n: "Master Catalyst's Ring (Infused)", p: {coin: 0}},
 	{i: 96841, n: "Attuned Master Catalyst's Ring (Infused)", p: {coin: 0}},
 	{i: 97054, n: "Master Virtuoso's Ring", p: {coin: 0}},
-	{i: 97095, n: "Attuned Master Harbinger's Ring (Infused)", p: {coin: 0}}
+	{i: 97095, n: "Attuned Master Harbinger's Ring (Infused)", p: {coin: 0}},
+	{i: 96038, n: "Attuned Master Virtuoso's Ring (Infused)", p: {coin: 0}},
+	{i: 96726, n: "Master Willbender's Ring", p: {coin: 0}},
+	{i: 97834, n: "Master Virtuoso's Ring (Infused)", p: {coin: 0}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1170,7 +1173,9 @@ Accessory: [
 	{i: 97662, n: "Master Untamed's Trinket", p: {achievement: 0}},
 	{i: 96102, n: "Master Vindicator's Trinket", p: {achievement: 0}},
 	{i: 96241, n: "Master Catalyst's Trinket", p: {achievement: 0}},
-	{i: 96982, n: "Master Virtuoso's Trinket", p: {achievement: 0}}
+	{i: 96982, n: "Master Virtuoso's Trinket", p: {achievement: 0}},
+	{i: 95877, n: "Master Bladesworn's Trinket", p: {achievement: 0}},
+	{i: 95965, n: "Master Willbender's Trinket", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1258,7 +1263,9 @@ Amulet: [
 	{i: 96594, n: "Master Vindicator's Badge", p: {achievement: 0}},
 	{i: 96748, n: "Master Untamed's Badge", p: {achievement: 0}},
 	{i: 96934, n: "Master Virtuoso's Amulet", p: {achievement: 0}},
-	{i: 97176, n: "Master Harbinger's Badge", p: {achievement: 0}}
+	{i: 97176, n: "Master Harbinger's Badge", p: {achievement: 0}},
+	{i: 95724, n: "Master Bladesworn's Badge", p: {achievement: 0}},
+	{i: 96877, n: "Master Willbender's Badge", p: {achievement: 0}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -2799,7 +2806,8 @@ Sword: [
 	{i: 97307, n: "Living Water Sword", p: {coin: 1200000}},
 	{i: 96781, n: "Jade Punk Sword", p: {coin: 1200000}},
 	{i: 97308, n: "Suun's Blade", p: {coin: 1200000}},
-	{i: 97681, n: "Togo's Blade", p: {coin: 1200000}}
+	{i: 97681, n: "Togo's Blade", p: {coin: 1200000}},
+	{i: 97649, n: "Purifier", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -3726,7 +3734,8 @@ Rifle: [
 	{i: 94796, n: "Viper's Fiery Dragon Slayer Rifle of Icebrood Slaying", p: {coin: 1200000}},
 	{i: 96840, n: "Living Water Rifle", p: {coin: 1200000}},
 	{i: 95687, n: "Jade Punk Rifle", p: {coin: 1200000}},
-	{i: 96796, n: "Suun's Musket", p: {coin: 1200000}}
+	{i: 96796, n: "Suun's Musket", p: {coin: 1200000}},
+	{i: 97531, n: "Togo's Musket", p: {coin: 1200000}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
