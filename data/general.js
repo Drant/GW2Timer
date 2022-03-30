@@ -2167,7 +2167,7 @@ Announcement:
 //		content: "Please tell new players about gw2timer.com!",
 //		content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='https://gw2timer.com/?page=Pumpkins'>more</a>.",
 //		content: "<a href='https://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
-		content: "End of Dragons meta event timers added to the timeline. Please report errors in the <a target='_blank' href='https://www.tapatalk.com/groups/renaka/gw2timer-com-gw2-guild-wars-2-f4/'>forum</a>.",
+		content: "",
 		Finish: new Date("2022-04-01T17:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
