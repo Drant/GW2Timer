@@ -2011,13 +2011,16 @@ var GW2T_TIMELINE = [
 	{
 		zone: "echovald",
 		Segments: [
-			{ time: "00:30", duration: "00:35", primacy: 3, name_en: "Gang", name_de: "Bandenkrieg", name_es: "Pandillas", name_fr: "Gangs", name_zh: "打群架" }
+			{ time: "00:30", duration: "00:35", primacy: 3, name_en: "Gang", name_de: "Bandenkrieg", name_es: "Pandillas", name_fr: "Gangs", name_zh: "打群架" },
+			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Aspenwood", name_de: "Espenwald", name_es: "Aspenwood", name_fr: "Trembleforêt", name_zh: "白杨峡谷" }
 		]
 	},
 	{
 		zone: "dragonsend",
 		Segments: [
-			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Jade", name_de: "Jademeer", name_es: "Jade", name_fr: "Jade", name_zh: "玉之海的战" }
+			{ time: "00:05", duration: "00:10", primacy: 1, name_en: "Maw", name_de: "Jadeschlund", name_es: "Fauces", name_fr: "Abîme", name_zh: "翠玉巨颚" },
+			{ time: "00:45", duration: "00:10", primacy: 1, name_en: "Maw", name_de: "Jadeschlund", name_es: "Fauces", name_fr: "Abîme", name_zh: "翠玉巨颚" },
+			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Battle", name_de: "Schlacht", name_es: "Batalla", name_fr: "Bataille", name_zh: "玉之海的战" }
 		]
 	},
 	{
@@ -2043,6 +2046,7 @@ var GW2T_TIMELINE = [
 		Segments: [
 			{ time: "00:00", duration: "00:05", primacy: 1, name_en: "Keep", name_de: "Feste", name_es: "Torre", name_fr: "Donjon", name_zh: "要塞" },
 			{ time: "00:45", duration: "00:15", primacy: 3, name_en: "Oil", name_de: "Öl", name_es: "Petróleo", name_fr: "Huile", name_zh: "油料" },
+			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Dragonstorm", name_de: "Drachensturm", name_es: "Tormentadracónica", name_fr: "Tempêtedragons", name_zh: "巨龙风暴" },
 			{ time: "01:45", duration: "00:15", primacy: 3, name_en: "Keep", name_de: "Feste", name_es: "Torre", name_fr: "Donjon", name_zh: "要塞" }
 		]
 	},
