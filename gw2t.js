@@ -16531,7 +16531,7 @@ B = {
 									// If the item the user is buying is outbidded, then highlight it
 									if (pPrice.oPriceBuy === iMultiTrans.oHighest)
 									{
-										iSlot.addClass("bnkSlotMatchAlternate");
+										iSlot.addClass("bnkSlotMatch");
 									}
 								}
 								else if (sectionlower === "selling")
@@ -16539,7 +16539,7 @@ B = {
 									// If the item the user is selling is not outbidded, then highlight it
 									if (pPrice.oPriceSell === iMultiTrans.oLowest)
 									{
-										iSlot.addClass("bnkSlotMatchAlternate");
+										iSlot.addClass("bnkSlotMatch");
 									}
 								}
 							},
