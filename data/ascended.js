@@ -1082,7 +1082,12 @@ Ring: [
 	{i: 97095, n: "Attuned Master Harbinger's Ring (Infused)", p: {coin: 0}},
 	{i: 96038, n: "Attuned Master Virtuoso's Ring (Infused)", p: {coin: 0}},
 	{i: 96726, n: "Master Willbender's Ring", p: {coin: 0}},
-	{i: 97834, n: "Master Virtuoso's Ring (Infused)", p: {coin: 0}}
+	{i: 97834, n: "Master Virtuoso's Ring (Infused)", p: {coin: 0}},
+	{i: 95734, n: "Attuned Master Willbender's Ring (Infused)", p: {coin: 0}},
+	{i: 96411, n: "Attuned Master Bladesworn's Ring (Infused)", p: {coin: 0}},
+	{i: 96684, n: "Attuned Master Untamed's Ring (Infused)", p: {coin: 0}},
+	{i: 97520, n: "Master Bladesworn's Ring (Infused)", p: {coin: 0}},
+	{i: 97708, n: "Master Willbender's Ring (Infused)", p: {coin: 0}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1175,7 +1180,8 @@ Accessory: [
 	{i: 96241, n: "Master Catalyst's Trinket", p: {achievement: 0}},
 	{i: 96982, n: "Master Virtuoso's Trinket", p: {achievement: 0}},
 	{i: 95877, n: "Master Bladesworn's Trinket", p: {achievement: 0}},
-	{i: 95965, n: "Master Willbender's Trinket", p: {achievement: 0}}
+	{i: 95965, n: "Master Willbender's Trinket", p: {achievement: 0}},
+	{i: 97951, n: "Plush Ess", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -2807,7 +2813,8 @@ Sword: [
 	{i: 96781, n: "Jade Punk Sword", p: {coin: 1200000}},
 	{i: 97308, n: "Suun's Blade", p: {coin: 1200000}},
 	{i: 97681, n: "Togo's Blade", p: {coin: 1200000}},
-	{i: 97649, n: "Purifier", p: {coin: 1200000}}
+	{i: 97649, n: "Purifier", p: {coin: 1200000}},
+	{i: 98027, n: "Canthan Noble's Blade", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -3589,7 +3596,8 @@ LongBow: [
 	{i: 94861, n: "Marauder Icy Dragon Slayer Longbow of Destroyer Slaying", p: {coin: 1300000}},
 	{i: 95679, n: "Living Water Longbow", p: {coin: 1300000}},
 	{i: 96518, n: "Jade Punk Longbow", p: {coin: 1300000}},
-	{i: 97748, n: "Suun's Greatbow", p: {coin: 1300000}}
+	{i: 97748, n: "Suun's Greatbow", p: {coin: 1300000}},
+	{i: 97791, n: "Togo's Greatbow", p: {coin: 1300000}}
 ],
 ShortBow: [
 	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
