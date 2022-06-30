@@ -776,7 +776,8 @@ Back: [
 	{i: 94932, n: "Dragonscale Cape (Infused)", p: {craft: true}},
 	{i: 94947, n: "Dragonscale Cape", p: {craft: true}},
 	{i: 97129, n: "Antique Dragon's Drape", p: {craft: true}},
-	{i: 96008, n: "Echovald Cathedral Backpiece", p: {craft: true}}
+	{i: 96008, n: "Echovald Cathedral Backpiece", p: {craft: true}},
+	{i: 98243, n: "Antique Dragon's Drape (Infused)", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1543,7 +1544,8 @@ LightGloves: [
 	{i: 90988, n: "Defender's Mist-Touched Wristguards", p: {coin: 900000}},
 	{i: 90989, n: "Healer's Mist-Touched Wristguards", p: {coin: 900000}},
 	{i: 96140, n: "Togo's Wristguards", p: {coin: 900000}},
-	{i: 97390, n: "Suun's Wristguards", p: {coin: 900000}}
+	{i: 97390, n: "Suun's Wristguards", p: {coin: 900000}},
+	{i: 98280, n: "Keeper's Wristguards", p: {coin: 900000}}
 ],
 LightLeggings: [
 	{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -1810,7 +1812,8 @@ MediumShoulders: [
 	{i: 91051, n: "Malicious Mist-Touched Shoulderguard", p: {coin: 900000}},
 	{i: 91100, n: "Assaulter's Mist-Touched Shoulderguard", p: {coin: 900000}},
 	{i: 97862, n: "Togo's Shoulderguard", p: {coin: 900000}},
-	{i: 96236, n: "Suun's Shoulderguard", p: {coin: 900000}}
+	{i: 96236, n: "Suun's Shoulderguard", p: {coin: 900000}},
+	{i: 98228, n: "Keeper's Shoulderguard", p: {coin: 900000}}
 ],
 MediumCoat: [
 	{i: 48103, n: "Ahamid's Guise", p: {coin: 1200000}},
@@ -1945,7 +1948,8 @@ MediumGloves: [
 	{i: 91047, n: "Malicious Mist-Touched Grips", p: {coin: 900000}},
 	{i: 91133, n: "Defender's Mist-Touched Grips", p: {coin: 900000}},
 	{i: 96795, n: "Togo's Grips", p: {coin: 900000}},
-	{i: 97663, n: "Suun's Grips", p: {coin: 900000}}
+	{i: 97663, n: "Suun's Grips", p: {coin: 900000}},
+	{i: 98234, n: "Keeper's Grips", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -2075,7 +2079,8 @@ MediumBoots: [
 	{i: 91033, n: "Malicious Mist-Touched Striders", p: {coin: 1000000}},
 	{i: 91102, n: "Assaulter's Mist-Touched Striders", p: {coin: 1000000}},
 	{i: 97395, n: "Togo's Striders", p: {coin: 1000000}},
-	{i: 96780, n: "Suun's Striders", p: {coin: 1000000}}
+	{i: 96780, n: "Suun's Striders", p: {coin: 1000000}},
+	{i: 98268, n: "Keeper's Striders", p: {coin: 1000000}}
 ],
 HeavyHelm: [
 	{i: 48093, n: "Ahamid's Visor", p: {coin: 900000}},
@@ -2892,7 +2897,8 @@ Dagger: [
 	{i: 96821, n: "Togo's Razor", p: {coin: 1100000}},
 	{i: 97360, n: "Prima Donna", p: {coin: 1100000}},
 	{i: 97295, n: "Suun's Razor", p: {coin: 1100000}},
-	{i: 97827, n: "Jade Punk Dagger", p: {coin: 1100000}}
+	{i: 97827, n: "Jade Punk Dagger", p: {coin: 1100000}},
+	{i: 98079, n: "Aetherblade Shank", p: {coin: 1100000}}
 ],
 Pistol: [
 	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
@@ -3743,7 +3749,8 @@ Rifle: [
 	{i: 96840, n: "Living Water Rifle", p: {coin: 1200000}},
 	{i: 95687, n: "Jade Punk Rifle", p: {coin: 1200000}},
 	{i: 96796, n: "Suun's Musket", p: {coin: 1200000}},
-	{i: 97531, n: "Togo's Musket", p: {coin: 1200000}}
+	{i: 97531, n: "Togo's Musket", p: {coin: 1200000}},
+	{i: 98085, n: "MinSec Elite Sniper Rifle", p: {coin: 1200000}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
