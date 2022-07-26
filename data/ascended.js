@@ -777,7 +777,8 @@ Back: [
 	{i: 94947, n: "Dragonscale Cape", p: {craft: true}},
 	{i: 97129, n: "Antique Dragon's Drape", p: {craft: true}},
 	{i: 96008, n: "Echovald Cathedral Backpiece", p: {craft: true}},
-	{i: 98243, n: "Antique Dragon's Drape (Infused)", p: {craft: true}}
+	{i: 98243, n: "Antique Dragon's Drape (Infused)", p: {craft: true}},
+	{i: 98252, n: "Dragon's Void-Corrupted Orb", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1088,7 +1089,8 @@ Ring: [
 	{i: 96411, n: "Attuned Master Bladesworn's Ring (Infused)", p: {coin: 0}},
 	{i: 96684, n: "Attuned Master Untamed's Ring (Infused)", p: {coin: 0}},
 	{i: 97520, n: "Master Bladesworn's Ring (Infused)", p: {coin: 0}},
-	{i: 97708, n: "Master Willbender's Ring (Infused)", p: {coin: 0}}
+	{i: 97708, n: "Master Willbender's Ring (Infused)", p: {coin: 0}},
+	{i: 98321, n: "Mists-Charged Jade Band (Infused)", p: {coin: 0}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1182,7 +1184,8 @@ Accessory: [
 	{i: 96982, n: "Master Virtuoso's Trinket", p: {achievement: 0}},
 	{i: 95877, n: "Master Bladesworn's Trinket", p: {achievement: 0}},
 	{i: 95965, n: "Master Willbender's Trinket", p: {achievement: 0}},
-	{i: 97951, n: "Plush Ess", p: {achievement: 0}}
+	{i: 97951, n: "Plush Ess", p: {achievement: 0}},
+	{i: 98322, n: "Mists-Charged Jade Talisman", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1272,7 +1275,8 @@ Amulet: [
 	{i: 96934, n: "Master Virtuoso's Amulet", p: {achievement: 0}},
 	{i: 97176, n: "Master Harbinger's Badge", p: {achievement: 0}},
 	{i: 95724, n: "Master Bladesworn's Badge", p: {achievement: 0}},
-	{i: 96877, n: "Master Willbender's Badge", p: {achievement: 0}}
+	{i: 96877, n: "Master Willbender's Badge", p: {achievement: 0}},
+	{i: 98299, n: "Mists-Charged Jade Pendant", p: {achievement: 0}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1340,7 +1344,8 @@ LightHelm: [
 	{i: 91055, n: "Malicious Mist-Touched Masque", p: {coin: 900000}},
 	{i: 91056, n: "Healer's Mist-Touched Masque", p: {coin: 900000}},
 	{i: 96005, n: "Togo's Masque", p: {coin: 900000}},
-	{i: 97161, n: "Suun's Masque", p: {coin: 900000}}
+	{i: 97161, n: "Suun's Masque", p: {coin: 900000}},
+	{i: 98287, n: "Keeper's Masque", p: {coin: 900000}}
 ],
 LightShoulders: [
 	{i: 48101, n: "Ahamid's Epaulets", p: {coin: 900000}},
@@ -1409,7 +1414,8 @@ LightShoulders: [
 	{i: 91091, n: "Defender's Mist-Touched Epaulets", p: {coin: 900000}},
 	{i: 91110, n: "Malicious Mist-Touched Epaulets", p: {coin: 900000}},
 	{i: 97313, n: "Togo's Epaulets", p: {coin: 900000}},
-	{i: 96731, n: "Suun's Epaulets", p: {coin: 900000}}
+	{i: 96731, n: "Suun's Epaulets", p: {coin: 900000}},
+	{i: 98216, n: "Keeper's Epaulets", p: {coin: 900000}}
 ],
 LightCoat: [
 	{i: 48097, n: "Ahamid's Doublet", p: {coin: 1200000}},
@@ -1472,7 +1478,8 @@ LightCoat: [
 	{i: 91119, n: "Malicious Mist-Touched Doublet", p: {coin: 1200000}},
 	{i: 91130, n: "Healer's Mist-Touched Doublet", p: {coin: 1200000}},
 	{i: 96962, n: "Togo's Doublet", p: {coin: 1200000}},
-	{i: 95626, n: "Suun's Doublet", p: {coin: 1200000}}
+	{i: 95626, n: "Suun's Doublet", p: {coin: 1200000}},
+	{i: 98266, n: "Keeper's Doublet", p: {coin: 1200000}}
 ],
 LightGloves: [
 	{i: 48098, n: "Ahamid's Wristguards", p: {coin: 900000}},
@@ -1608,7 +1615,8 @@ LightLeggings: [
 	{i: 91118, n: "Assaulter's Mist-Touched Breeches", p: {coin: 1100000}},
 	{i: 91129, n: "Healer's Mist-Touched Breeches", p: {coin: 1100000}},
 	{i: 97476, n: "Togo's Breeches", p: {coin: 1100000}},
-	{i: 96818, n: "Suun's Breeches", p: {coin: 1100000}}
+	{i: 96818, n: "Suun's Breeches", p: {coin: 1100000}},
+	{i: 98278, n: "Keeper's Breeches", p: {coin: 1100000}}
 ],
 LightBoots: [
 	{i: 48096, n: "Ahamid's Footwear", p: {coin: 1000000}},
@@ -1675,7 +1683,8 @@ LightBoots: [
 	{i: 91079, n: "Defender's Mist-Touched Footwear", p: {coin: 1000000}},
 	{i: 91083, n: "Assaulter's Mist-Touched Footwear", p: {coin: 1000000}},
 	{i: 96739, n: "Togo's Footwear", p: {coin: 1000000}},
-	{i: 96062, n: "Suun's Footwear", p: {coin: 1000000}}
+	{i: 96062, n: "Suun's Footwear", p: {coin: 1000000}},
+	{i: 98253, n: "Keeper's Footwear", p: {coin: 1000000}}
 ],
 MediumHelm: [
 	{i: 48105, n: "Ahamid's Visage", p: {coin: 900000}},
@@ -1876,7 +1885,8 @@ MediumCoat: [
 	{i: 91089, n: "Defender's Mist-Touched Guise", p: {coin: 1200000}},
 	{i: 91113, n: "Healer's Mist-Touched Guise", p: {coin: 1200000}},
 	{i: 97154, n: "Togo's Guise", p: {coin: 1200000}},
-	{i: 96431, n: "Suun's Guise", p: {coin: 1200000}}
+	{i: 96431, n: "Suun's Guise", p: {coin: 1200000}},
+	{i: 98251, n: "Keeper's Guise", p: {coin: 1200000}}
 ],
 MediumGloves: [
 	{i: 48104, n: "Ahamid's Grips", p: {coin: 900000}},
@@ -2012,7 +2022,8 @@ MediumLeggings: [
 	{i: 91044, n: "Defender's Mist-Touched Leggings", p: {coin: 1100000}},
 	{i: 91053, n: "Healer's Mist-Touched Leggings", p: {coin: 1100000}},
 	{i: 95714, n: "Togo's Leggings", p: {coin: 1100000}},
-	{i: 96230, n: "Suun's Leggings", p: {coin: 1100000}}
+	{i: 96230, n: "Suun's Leggings", p: {coin: 1100000}},
+	{i: 98223, n: "Keeper's Leggings", p: {coin: 1100000}}
 ],
 MediumBoots: [
 	{i: 48102, n: "Ahamid's Striders", p: {coin: 1000000}},
@@ -2148,7 +2159,8 @@ HeavyHelm: [
 	{i: 91031, n: "Healer's Mist-Touched Visor", p: {coin: 900000}},
 	{i: 91058, n: "Malicious Mist-Touched Visor", p: {coin: 900000}},
 	{i: 96711, n: "Togo's Visor", p: {coin: 900000}},
-	{i: 95605, n: "Suun's Visor", p: {coin: 900000}}
+	{i: 95605, n: "Suun's Visor", p: {coin: 900000}},
+	{i: 98265, n: "Keeper's Visor", p: {coin: 900000}}
 ],
 HeavyShoulders: [
 	{i: 48095, n: "Ahamid's Pauldrons", p: {coin: 900000}},
@@ -2217,7 +2229,8 @@ HeavyShoulders: [
 	{i: 91081, n: "Defender's Mist-Touched Pauldrons", p: {coin: 900000}},
 	{i: 91096, n: "Assaulter's Mist-Touched Pauldrons", p: {coin: 900000}},
 	{i: 96114, n: "Togo's Pauldrons", p: {coin: 900000}},
-	{i: 96966, n: "Suun's Pauldrons", p: {coin: 900000}}
+	{i: 96966, n: "Suun's Pauldrons", p: {coin: 900000}},
+	{i: 98246, n: "Keeper's Pauldrons", p: {coin: 900000}}
 ],
 HeavyCoat: [
 	{i: 48091, n: "Ahamid's Breastplate", p: {coin: 1200000}},
@@ -2280,7 +2293,8 @@ HeavyCoat: [
 	{i: 91065, n: "Healer's Mist-Touched Breastplate", p: {coin: 1200000}},
 	{i: 91078, n: "Malicious Mist-Touched Breastplate", p: {coin: 1200000}},
 	{i: 96278, n: "Togo's Breastplate", p: {coin: 1200000}},
-	{i: 97812, n: "Suun's Breastplate", p: {coin: 1200000}}
+	{i: 97812, n: "Suun's Breastplate", p: {coin: 1200000}},
+	{i: 98273, n: "Keeper's Breastplate", p: {coin: 1200000}}
 ],
 HeavyGloves: [
 	{i: 48092, n: "Ahamid's Warfists", p: {coin: 900000}},
@@ -2352,7 +2366,8 @@ HeavyGloves: [
 	{i: 91085, n: "Healer's Mist-Touched Warfists", p: {coin: 900000}},
 	{i: 91120, n: "Malicious Mist-Touched Warfists", p: {coin: 900000}},
 	{i: 96967, n: "Togo's Warfist", p: {coin: 900000}},
-	{i: 97680, n: "Suun's Warfist", p: {coin: 900000}}
+	{i: 97680, n: "Suun's Warfist", p: {coin: 900000}},
+	{i: 98244, n: "Keeper's Warfists", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -2415,7 +2430,8 @@ HeavyLeggings: [
 	{i: 91045, n: "Malicious Mist-Touched Tassets", p: {coin: 1100000}},
 	{i: 91080, n: "Healer's Mist-Touched Tassets", p: {coin: 1100000}},
 	{i: 97710, n: "Togo's Tassets", p: {coin: 1100000}},
-	{i: 97540, n: "Suun's Tassets", p: {coin: 1100000}}
+	{i: 97540, n: "Suun's Tassets", p: {coin: 1100000}},
+	{i: 98220, n: "Keeper's Tassets", p: {coin: 1100000}}
 ],
 HeavyBoots: [
 	{i: 48090, n: "Ahamid's Greaves", p: {coin: 900000}},
@@ -2482,7 +2498,8 @@ HeavyBoots: [
 	{i: 91122, n: "Assaulter's Mist-Touched Greaves", p: {coin: 900000}},
 	{i: 91127, n: "Defender's Mist-Touched Greaves", p: {coin: 900000}},
 	{i: 96932, n: "Togo's Greaves", p: {coin: 900000}},
-	{i: 95583, n: "Suun's Greaves", p: {coin: 900000}}
+	{i: 95583, n: "Suun's Greaves", p: {coin: 900000}},
+	{i: 98261, n: "Keeper's Greaves", p: {coin: 900000}}
 ],
 LightHelmAquatic: [
 	{i: 73723, n: "Ahamid's Cloth Breather", p: {coin: 900000}},
@@ -2515,7 +2532,8 @@ LightHelmAquatic: [
 	{i: 88413, n: "Ruka's Cloth Breather", p: {coin: 900000}},
 	{i: 88427, n: "Maklain's Cloth Breather", p: {coin: 900000}},
 	{i: 88458, n: "Laranthir's Cloth Breather", p: {coin: 900000}},
-	{i: 88466, n: "Thackeray's Cloth Breather", p: {coin: 900000}}
+	{i: 88466, n: "Thackeray's Cloth Breather", p: {coin: 900000}},
+	{i: 98294, n: "Keeper's Cloth Breather", p: {coin: 900000}}
 ],
 MediumHelmAquatic: [
 	{i: 71423, n: "Ahamid's Leather Breather", p: {coin: 900000}},
@@ -2581,7 +2599,8 @@ HeavyHelmAquatic: [
 	{i: 88440, n: "Thackeray's Metal Breather", p: {coin: 900000}},
 	{i: 88445, n: "Maklain's Metal Breather", p: {coin: 900000}},
 	{i: 88463, n: "Ruka's Metal Breather", p: {coin: 900000}},
-	{i: 88467, n: "Tizlak's Metal Breather", p: {coin: 900000}}
+	{i: 88467, n: "Tizlak's Metal Breather", p: {coin: 900000}},
+	{i: 98290, n: "Keeper's Metal Breather", p: {coin: 900000}}
 ],
 Axe: [
 	{i: 77423, n: "Chest of Axes", p: {coin: 1100000}},
