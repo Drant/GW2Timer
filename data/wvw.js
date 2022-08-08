@@ -1022,7 +1022,7 @@ var GW2T_OBJECTIVE_DATA = {
 		nick_en: "Ogrewatch", nick_de: "Ogerwacht", nick_es: "Ogroguardia", nick_fr: "Gardogre", nick_zh: "食人魔",
 		id: "38-19",
 		map_id: "38",
-		coord: [11011, 13850]
+		coord: [10965, 14054]
 	},
 	"38-20": {
 		nativeowner: "Red",
