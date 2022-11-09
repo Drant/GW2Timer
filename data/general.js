@@ -2306,8 +2306,8 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	{
-		isHalloween: true,
+	/*{
+		isHalloween: false,
 		name_en: "Halloween 2022",
 		name_de: "Halloween 2022",
 		name_es: "Halloween 2022",
@@ -2316,7 +2316,7 @@ Countdown: {
 		official: "news/shadow-of-the-mad-king-2022-live/",
 		Start: new Date("2022-10-18T16:00:00Z"),
 		Finish: new Date("2022-11-08T16:00:00Z")
-	}
+	}*/
 	/*{
 		name_en: "Black Friday Sale",
 		name_de: "Black Friday Verkauf",
@@ -2356,7 +2356,7 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: true,
+	isEnabled: false,
 	name_en: "Mad King Says",
 	name_de: "Verrückte König sagt",
 	name_es: "Rey Loco dice",
