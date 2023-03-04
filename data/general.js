@@ -2219,13 +2219,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
+	/*{
 		name: "ArenaNet API Down",
 		url: "https://en-forum.guildwars2.com/topic/128444-api-is-broken/",
 		isIndefinite: true,
 		Start: new Date("2023-02-28T17:00:00Z"),
 		Finish: new Date("2023-03-07T17:00:00Z")
-	},
+	},*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
@@ -2337,7 +2337,7 @@ Countdown: {
 		Start: new Date("2018-03-06T16:00:00Z"),
 		Finish: new Date("2018-03-07T16:00:00Z")
 	}*/
-	{
+	/*{
 		isWintersday: true,
 		name_en: "Wintersday 2022",
 		name_de: "Wintertag 2022",
@@ -2347,7 +2347,7 @@ Countdown: {
 		official: "news/wintersday-2022-is-live/",
 		Start: new Date("2022-12-13T17:00:00Z"),
 		Finish: new Date("2023-01-03T17:00:00Z")
-	}
+	}*/
 	]
 },
 
