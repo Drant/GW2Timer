@@ -2174,8 +2174,8 @@ Announcement:
 //		content: "Pact Supply spreadsheet was locked by Google somehow, it's accessible again now. Sorry for the downtime and thanks for updating it!",
 //		content: "Please tell new players about gw2timer.com!",
 //		content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='https://gw2timer.com/?page=Pumpkins'>more</a>.",
-		content: "<a href='https://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
-//		content: "",
+//		content: "<a href='https://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
+		content: "",
 		Finish: new Date("2023-01-03T17:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
@@ -2223,13 +2223,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	/*{
+	{
 		name: "ArenaNet API Down",
-		url: "https://en-forum.guildwars2.com/topic/128444-api-is-broken/",
-		isIndefinite: true,
-		Start: new Date("2023-02-28T17:00:00Z"),
-		Finish: new Date("2023-03-07T17:00:00Z")
-	},*/
+		url: "https://en-forum.guildwars2.com/topic/135277-guild-wars-2-api-disabled-from-august-18-24/",
+		isIndefinite: false,
+		Start: new Date("2023-08-18T17:00:00Z"),
+		Finish: new Date("2023-08-25T17:00:00Z")
+	},
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
