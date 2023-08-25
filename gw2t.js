@@ -35472,7 +35472,7 @@ H = {
 	isCountdownTickEnabled: false,
 	isStoryEnabled: false,
 	isStoryDashboard: true,
-	isDailyEnabled: true,
+	isDailyEnabled: false,
 	isSaleEnabled: false,
 	isSaleOpened: false,
 	isGemPaused: false,

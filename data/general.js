@@ -2223,13 +2223,13 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
+	/*{
 		name: "ArenaNet API Down",
 		url: "https://en-forum.guildwars2.com/topic/135277-guild-wars-2-api-disabled-from-august-18-24/",
 		isIndefinite: false,
 		Start: new Date("2023-08-18T17:00:00Z"),
 		Finish: new Date("2023-08-25T17:00:00Z")
-	},
+	},*/
 	/*{ // 8 weeks cycle, repeats 56 days after this event's start
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
