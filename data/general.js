@@ -81,7 +81,9 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1228": "riverlands",
 	"1226": "desolation",
 	"1248": "vabbi",
-	"1263": "istan"
+	"1263": "istan",
+	"1510": "skywatch",
+	"1517": "amnytas",
 };
 var GW2T_LAND_ASSOCIATION = {
 	"38": "eternal",
@@ -1219,6 +1221,14 @@ var GW2T_REGION_DATA = {
 	name_fr: "Cantha",
 	name_zh: "凯珊",
 	color: "jade"
+},
+"horn": {
+	name_en: "Horn of Maguuma",
+	name_de: "Horn von Maguuma",
+	name_es: "Cuerno de Maguuma",
+	name_fr: "Corne de Maguuma",
+	name_zh: "迈古玛之角",
+	color: "skyblue"
 }
 };
 
@@ -1972,6 +1982,42 @@ var GW2T_ZONE_DATA = {
 	region: "cantha",
 	map_rect: [[-24576, -43008], [27648, 46080]],
 	continent_rect: [[33126, 101838], [35302, 105550]]
+},
+"gyala":
+{
+	id: "1490",
+	name_en: "Gyala Delve",
+	name_de: "Gyala-Senke",
+	name_es: "Hondonada de Gyala",
+	name_fr: "Fosse de Gyala",
+	name_zh: "盖拉洞窟",
+	region: "cantha",
+	map_rect: [[-24576, -43008], [27648, 46080]],
+	continent_rect: [[36677, 100479], [38853, 104191]]
+},
+"skywatch":
+{
+	id: "1510",
+	name_en: "Skywatch Archipelago",
+	name_de: "Himmelswacht-Archipel",
+	name_es: "Archipiélago Vistacielo",
+	name_fr: "Archipel de l'observatoire céleste",
+	name_zh: "天空哨站群岛",
+	region: "horn",
+	map_rect: [[-43008, -24576], [46080, 27648]],
+	continent_rect: [[23590, 22650], [27302, 24826]]
+},
+"amnytas":
+{
+	id: "1422",
+	name_en: "Amnytas",
+	name_de: "Amnytas",
+	name_es: "Amnytas",
+	name_fr: "Amnytas",
+	name_zh: "阿姆尼塔斯",
+	region: "horn",
+	map_rect: [[-33792, -33792], [36864, 36864]],
+	continent_rect: [[22614, 18938], [25558, 21882]]
 }
 };
 
@@ -2001,6 +2047,13 @@ var GW2T_TIMELINE = [
 		]
 	},*/
 	{
+		zone: "skywatch",
+		Segments: [
+			{ time: "00:00", duration: "00:20", primacy: 3, name_en: "Amnytas", name_de: "Amnytas", name_es: "Amnytas", name_fr: "Amnytas", name_zh: "阿姆尼塔斯" },
+			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Wizard", name_de: "Zauberers", name_es: "Brujo", name_fr: "Sorcier", name_zh: "巫师塔" }
+		]
+	},
+	{
 		zone: "seitung",
 		Segments: [
 			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Aetherblade", name_de: "Ätherklingen", name_es: "Filoetéreo", name_fr: "Étherlames", name_zh: "以太之刃" }
@@ -2024,7 +2077,7 @@ var GW2T_TIMELINE = [
 		Segments: [
 			{ time: "00:05", duration: "00:10", primacy: 1, name_en: "Maw", name_de: "Jadeschlund", name_es: "Fauces", name_fr: "Abîme", name_zh: "翠玉巨颚" },
 			{ time: "00:45", duration: "00:10", primacy: 1, name_en: "Maw", name_de: "Jadeschlund", name_es: "Fauces", name_fr: "Abîme", name_zh: "翠玉巨颚" },
-			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Battle", name_de: "Schlacht", name_es: "Batalla", name_fr: "Bataille", name_zh: "玉之海的战" }
+			{ time: "01:00", duration: "01:00", primacy: 3, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "玉之海的战" }
 		]
 	},
 	{
