@@ -2040,12 +2040,13 @@ var GW2T_TIMELINE = [
 			{ time: "01:45", duration: "00:15", primacy: 2}
 		]
 	},
-	/*{
+	{
+		isHalloween: true,
 		name_en: "Your Mad King says...", name_de: "Der Verrückte König sagt", name_es: "Vuestro Rey Loco dice...", name_fr: "Votre Roi Dément a dit...", name_zh: "疯王说......",
 		Segments: [
 			{ time: "00:00", duration: "00:15", primacy: 3, name_en: "Mad King Says", name_de: "Verrückte König sagt", name_es: "Rey Loco dice", name_fr: "Roi Dément a dit", name_zh: "疯王说" },
 		]
-	},*/
+	},
 	{
 		zone: "skywatch",
 		Segments: [
@@ -2363,17 +2364,17 @@ Countdown: {
 		Start: new Date("2018-08-09T16:00:00Z"),
 		Finish: new Date("2019-09-01T16:00:00Z")
 	},*/
-	/*{
-		isHalloween: false,
-		name_en: "Halloween 2022",
-		name_de: "Halloween 2022",
-		name_es: "Halloween 2022",
-		name_fr: "Halloween 2022",
-		name_zh: "万圣夜2022",
-		official: "news/shadow-of-the-mad-king-2022-live/",
-		Start: new Date("2022-10-18T16:00:00Z"),
-		Finish: new Date("2022-11-08T16:00:00Z")
-	}*/
+	{
+		isHalloween: true,
+		name_en: "Halloween 2023",
+		name_de: "Halloween 2023",
+		name_es: "Halloween 2023",
+		name_fr: "Halloween 2023",
+		name_zh: "万圣夜2023",
+		official: "/news/shadow-of-the-mad-king-2023-is-now-live/",
+		Start: new Date("2023-10-17T16:00:00Z"),
+		Finish: new Date("2023-11-07T16:00:00Z")
+	}
 	/*{
 		name_en: "Black Friday Sale",
 		name_de: "Black Friday Verkauf",
@@ -2413,15 +2414,15 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: false,
+	isEnabled: true,
 	name_en: "Mad King Says",
 	name_de: "Verrückte König sagt",
 	name_es: "Rey Loco dice",
 	name_fr: "Roi Dément a dit",
 	name_zh: "疯王说",
 	url: "https://www.guildwars2.com/en/the-game/releases/october-05-2021/",
-	Start: new Date("2022-10-18T16:00:00Z"),
-	Finish: new Date("2022-11-08T16:00:00Z")
+	Start: new Date("2023-10-17T16:00:00Z"),
+	Finish: new Date("2023-11-07T16:00:00Z")
 },
 
 /*
