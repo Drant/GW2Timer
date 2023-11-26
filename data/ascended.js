@@ -505,7 +505,8 @@ ContainerWeapon: [
 	{i: 86151, n: "Chest of Raider's One-Handed Weapons", p: {coin: 1200000}},
 	{i: 86408, n: "Mistforged Obsidian Weapon Box", p: {coin: 1200000}},
 	{i: 91634, n: "Mist Lord's Weapon Box", p: {coin: 1200000}},
-	{i: 96829, n: "Long-Lost Tahkayun's Weapon Stash", p: {coin: 1200000}}
+	{i: 96829, n: "Long-Lost Tahkayun's Weapon Stash", p: {coin: 1200000}},
+	{i: 99967, n: "Skyscale Weapon Box", p: {coin: 1200000}}
 ],
 ContainerArmor: [
 	{i: 48219, n: "Wupwup Armor Chest", p: {coin: 1200000}},
@@ -1188,7 +1189,8 @@ Accessory: [
 	{i: 95877, n: "Master Bladesworn's Trinket", p: {achievement: 0}},
 	{i: 95965, n: "Master Willbender's Trinket", p: {achievement: 0}},
 	{i: 97951, n: "Plush Ess", p: {achievement: 0}},
-	{i: 98322, n: "Mists-Charged Jade Talisman", p: {achievement: 0}}
+	{i: 98322, n: "Mists-Charged Jade Talisman", p: {achievement: 0}},
+	{i: 101003, n: "Fractal Troubleshooter's Tags", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1560,7 +1562,8 @@ LightGloves: [
 	{i: 96140, n: "Togo's Wristguards", p: {coin: 900000}},
 	{i: 97390, n: "Suun's Wristguards", p: {coin: 900000}},
 	{i: 98280, n: "Keeper's Wristguards", p: {coin: 900000}},
-	{i: 99524, n: "Light Special Ops Gloves", p: {coin: 900000}}
+	{i: 99524, n: "Light Special Ops Gloves", p: {coin: 900000}},
+	{i: 101177, n: "Cursed Light Gloves", p: {coin: 900000}}
 ],
 LightLeggings: [
 	{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -1975,7 +1978,8 @@ MediumGloves: [
 	{i: 96795, n: "Togo's Grips", p: {coin: 900000}},
 	{i: 97663, n: "Suun's Grips", p: {coin: 900000}},
 	{i: 98234, n: "Keeper's Grips", p: {coin: 900000}},
-	{i: 99476, n: "Medium Special Ops Gloves", p: {coin: 900000}}
+	{i: 99476, n: "Medium Special Ops Gloves", p: {coin: 900000}},
+	{i: 101153, n: "Cursed Medium Gloves", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -2390,7 +2394,8 @@ HeavyGloves: [
 	{i: 96967, n: "Togo's Warfist", p: {coin: 900000}},
 	{i: 97680, n: "Suun's Warfist", p: {coin: 900000}},
 	{i: 98244, n: "Keeper's Warfists", p: {coin: 900000}},
-	{i: 99488, n: "Heavy Special Ops Gloves", p: {coin: 900000}}
+	{i: 99488, n: "Heavy Special Ops Gloves", p: {coin: 900000}},
+	{i: 101119, n: "Cursed Heavy Gloves", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -2781,7 +2786,9 @@ Mace: [
 	{i: 97754, n: "Living Water Mace", p: {coin: 1100000}},
 	{i: 96042, n: "Suun's Flanged Mace", p: {coin: 1100000}},
 	{i: 97162, n: "Jade Punk Mace", p: {coin: 1100000}},
-	{i: 100251, n: "Rabid Skyscale Mace", p: {coin: 1100000}}
+	{i: 100251, n: "Rabid Skyscale Mace", p: {coin: 1100000}},
+	{i: 100474, n: "Rabid Abomination Mace", p: {coin: 1100000}},
+	{i: 101122, n: "Wrath of Ignaxious", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -3183,7 +3190,8 @@ Focus: [
 	{i: 97184, n: "Jade Punk Focus", p: {coin: 1000000}},
 	{i: 97831, n: "Togo's Artifact", p: {coin: 1000000}},
 	{i: 100383, n: "Despair's Lament", p: {coin: 1000000}},
-	{i: 100762, n: "Rabid Skyscale Focus", p: {coin: 1000000}}
+	{i: 100762, n: "Rabid Skyscale Focus", p: {coin: 1000000}},
+	{i: 100868, n: "Rabid Abomination Focus", p: {coin: 1000000}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -3267,7 +3275,8 @@ Shield: [
 	{i: 95987, n: "Suun's Bastion", p: {coin: 1000000}},
 	{i: 97023, n: "Jade Punk Shield", p: {coin: 1000000}},
 	{i: 100070, n: "Gluttony's Platter", p: {coin: 1000000}},
-	{i: 100124, n: "Rabid Skyscale Shield", p: {coin: 1000000}}
+	{i: 100124, n: "Rabid Skyscale Shield", p: {coin: 1000000}},
+	{i: 100281, n: "Rabid Abomination Shield", p: {coin: 1000000}}
 ],
 Torch: [
 	{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
@@ -3747,7 +3756,8 @@ ShortBow: [
 	{i: 96387, n: "Jade Punk Short Bow", p: {coin: 1300000}},
 	{i: 96522, n: "Suun's Short Bow", p: {coin: 1300000}},
 	{i: 100483, n: "Malice's Heartstring", p: {coin: 1300000}},
-	{i: 100630, n: "Rabid Skyscale Short Bow", p: {coin: 1300000}}
+	{i: 100630, n: "Rabid Skyscale Short Bow", p: {coin: 1300000}},
+	{i: 100092, n: "Rabid Abomination Short Bow", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
