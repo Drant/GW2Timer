@@ -2395,17 +2395,17 @@ Countdown: {
 		Start: new Date("2018-03-06T16:00:00Z"),
 		Finish: new Date("2018-03-07T16:00:00Z")
 	}*/
-	/*{
+	{
 		isWintersday: true,
-		name_en: "Wintersday 2022",
-		name_de: "Wintertag 2022",
-		name_es: "Día Invernal 2022",
-		name_fr: "Hivernel 2022",
-		name_zh: "冬幕节2022",
-		official: "news/wintersday-2022-is-live/",
-		Start: new Date("2022-12-13T17:00:00Z"),
-		Finish: new Date("2023-01-03T17:00:00Z")
-	}*/
+		name_en: "Wintersday 2023",
+		name_de: "Wintertag 2023",
+		name_es: "Día Invernal 2023",
+		name_fr: "Hivernel 2023",
+		name_zh: "冬幕节2023",
+		official: "news/a-very-merry-wintersday-2023-is-live-now/",
+		Start: new Date("2023-12-12T17:00:00Z"),
+		Finish: new Date("2024-01-02T17:00:00Z")
+	}
 	]
 },
 
