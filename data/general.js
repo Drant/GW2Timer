@@ -2040,13 +2040,13 @@ var GW2T_TIMELINE = [
 			{ time: "01:45", duration: "00:15", primacy: 2}
 		]
 	},
-	{
-		isHalloween: false,
+	/*{
+		isHalloween: true,
 		name_en: "Your Mad King says...", name_de: "Der Verrückte König sagt", name_es: "Vuestro Rey Loco dice...", name_fr: "Votre Roi Dément a dit...", name_zh: "疯王说......",
 		Segments: [
 			{ time: "00:00", duration: "00:15", primacy: 3, name_en: "Mad King Says", name_de: "Verrückte König sagt", name_es: "Rey Loco dice", name_fr: "Roi Dément a dit", name_zh: "疯王说" },
 		]
-	},
+	},*/
 	{
 		zone: "skywatch",
 		Segments: [
@@ -2395,7 +2395,7 @@ Countdown: {
 		Start: new Date("2018-03-06T16:00:00Z"),
 		Finish: new Date("2018-03-07T16:00:00Z")
 	}*/
-	{
+	/*{
 		isWintersday: true,
 		name_en: "Wintersday 2023",
 		name_de: "Wintertag 2023",
@@ -2405,7 +2405,7 @@ Countdown: {
 		official: "news/a-very-merry-wintersday-2023-is-live-now/",
 		Start: new Date("2023-12-12T17:00:00Z"),
 		Finish: new Date("2024-01-02T17:00:00Z")
-	}
+	}*/
 	]
 },
 
@@ -2414,7 +2414,7 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: true,
+	isEnabled: false,
 	name_en: "Mad King Says",
 	name_de: "Verrückte König sagt",
 	name_es: "Rey Loco dice",
