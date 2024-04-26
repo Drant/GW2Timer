@@ -506,7 +506,8 @@ ContainerWeapon: [
 	{i: 86408, n: "Mistforged Obsidian Weapon Box", p: {coin: 1200000}},
 	{i: 91634, n: "Mist Lord's Weapon Box", p: {coin: 1200000}},
 	{i: 96829, n: "Long-Lost Tahkayun's Weapon Stash", p: {coin: 1200000}},
-	{i: 99967, n: "Skyscale Weapon Box", p: {coin: 1200000}}
+	{i: 99967, n: "Skyscale Weapon Box", p: {coin: 1200000}},
+	{i: 101170, n: "Skyscale Weapon Box", p: {coin: 1200000}}
 ],
 ContainerArmor: [
 	{i: 48219, n: "Wupwup Armor Chest", p: {coin: 1200000}},
@@ -782,7 +783,8 @@ Back: [
 	{i: 98243, n: "Antique Dragon's Drape (Infused)", p: {craft: true}},
 	{i: 98252, n: "Dragon's Void-Corrupted Orb", p: {craft: true}},
 	{i: 98247, n: "Void-Corrupted Orb (Infused)", p: {craft: true}},
-	{i: 99267, n: "Echovald Cathedral Backpiece (Infused)", p: {craft: true}}
+	{i: 99267, n: "Echovald Cathedral Backpiece (Infused)", p: {craft: true}},
+	{i: 101495, n: "Saryx Backpiece", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -2596,7 +2598,8 @@ MediumHelmAquatic: [
 	{i: 88432, n: "Thackeray's Leather Breather", p: {coin: 900000}},
 	{i: 88443, n: "Maklain's Leather Breather", p: {coin: 900000}},
 	{i: 88452, n: "Ruka's Leather Breather", p: {coin: 900000}},
-	{i: 88455, n: "Laranthir's Leather Breather", p: {coin: 900000}}
+	{i: 88455, n: "Laranthir's Leather Breather", p: {coin: 900000}},
+	{i: 98267, n: "Keeper's Leather Breather", p: {coin: 900000}}
 ],
 HeavyHelmAquatic: [
 	{i: 75954, n: "Ahamid's Metal Breather", p: {coin: 900000}},
@@ -2875,7 +2878,8 @@ Sword: [
 	{i: 98027, n: "Canthan Noble's Blade", p: {coin: 1200000}},
 	{i: 99498, n: "Tahkayun's Edge", p: {coin: 1200000}},
 	{i: 100084, n: "Rabid Skyscale Sword", p: {coin: 1200000}},
-	{i: 100413, n: "Envy's Bite", p: {coin: 1200000}}
+	{i: 100413, n: "Envy's Bite", p: {coin: 1200000}},
+	{i: 101510, n: "Knaebelag's Fang", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
