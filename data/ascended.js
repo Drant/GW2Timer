@@ -507,7 +507,9 @@ ContainerWeapon: [
 	{i: 91634, n: "Mist Lord's Weapon Box", p: {coin: 1200000}},
 	{i: 96829, n: "Long-Lost Tahkayun's Weapon Stash", p: {coin: 1200000}},
 	{i: 99967, n: "Skyscale Weapon Box", p: {coin: 1200000}},
-	{i: 101170, n: "Skyscale Weapon Box", p: {coin: 1200000}}
+	{i: 101170, n: "Skyscale Weapon Box", p: {coin: 1200000}},
+	{i: 101777, n: "Two-Handed Skyscale Weapon Box", p: {coin: 1200000}},
+	{i: 101930, n: "One-Handed Skyscale Weapon Box", p: {coin: 1200000}}
 ],
 ContainerArmor: [
 	{i: 48219, n: "Wupwup Armor Chest", p: {coin: 1200000}},
@@ -784,7 +786,10 @@ Back: [
 	{i: 98252, n: "Dragon's Void-Corrupted Orb", p: {craft: true}},
 	{i: 98247, n: "Void-Corrupted Orb (Infused)", p: {craft: true}},
 	{i: 99267, n: "Echovald Cathedral Backpiece (Infused)", p: {craft: true}},
-	{i: 101495, n: "Saryx Backpiece", p: {craft: true}}
+	{i: 101495, n: "Saryx Backpiece", p: {craft: true}},
+	{i: 101528, n: "Saryx Backpiece (Infused)", p: {craft: true}},
+	{i: 101790, n: "Midnight King Backpiece (Infused)", p: {craft: true}},
+	{i: 101856, n: "Midnight King Backpiece", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -2711,7 +2716,8 @@ Axe: [
 	{i: 96753, n: "Living Water Axe", p: {coin: 1100000}},
 	{i: 95963, n: "Jade Punk Axe", p: {coin: 1100000}},
 	{i: 96835, n: "Suun's Reaver", p: {coin: 1100000}},
-	{i: 100652, n: "Rabid Skyscale Axe", p: {coin: 1100000}}
+	{i: 100652, n: "Rabid Skyscale Axe", p: {coin: 1100000}},
+	{i: 101845, n: "The Axe of Destiny", p: {coin: 1100000}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
