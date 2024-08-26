@@ -1101,7 +1101,10 @@ Ring: [
 	{i: 96684, n: "Attuned Master Untamed's Ring (Infused)", p: {coin: 0}},
 	{i: 97520, n: "Master Bladesworn's Ring (Infused)", p: {coin: 0}},
 	{i: 97708, n: "Master Willbender's Ring (Infused)", p: {coin: 0}},
-	{i: 98321, n: "Mists-Charged Jade Band (Infused)", p: {coin: 0}}
+	{i: 98321, n: "Mists-Charged Jade Band (Infused)", p: {coin: 0}},
+	{i: 102899, n: "Ring of the Crustacean", p: {coin: 0}},
+	{i: 103009, n: "Knotted Rope Ring", p: {coin: 0}},
+	{i: 103576, n: "Wood Rune Ring", p: {coin: 0}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -1197,7 +1200,9 @@ Accessory: [
 	{i: 95965, n: "Master Willbender's Trinket", p: {achievement: 0}},
 	{i: 97951, n: "Plush Ess", p: {achievement: 0}},
 	{i: 98322, n: "Mists-Charged Jade Talisman", p: {achievement: 0}},
-	{i: 101003, n: "Fractal Troubleshooter's Tags", p: {achievement: 0}}
+	{i: 101003, n: "Fractal Troubleshooter's Tags", p: {achievement: 0}},
+	{i: 103023, n: "Bearkin Carved Shell", p: {achievement: 0}},
+	{i: 103086, n: "Kodan Cub's Companion", p: {achievement: 0}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1288,7 +1293,8 @@ Amulet: [
 	{i: 97176, n: "Master Harbinger's Badge", p: {achievement: 0}},
 	{i: 95724, n: "Master Bladesworn's Badge", p: {achievement: 0}},
 	{i: 96877, n: "Master Willbender's Badge", p: {achievement: 0}},
-	{i: 98299, n: "Mists-Charged Jade Pendant", p: {achievement: 0}}
+	{i: 98299, n: "Mists-Charged Jade Pendant", p: {achievement: 0}},
+	{i: 102420, n: "Fish Bone Whistle", p: {achievement: 0}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1570,7 +1576,8 @@ LightGloves: [
 	{i: 97390, n: "Suun's Wristguards", p: {coin: 900000}},
 	{i: 98280, n: "Keeper's Wristguards", p: {coin: 900000}},
 	{i: 99524, n: "Light Special Ops Gloves", p: {coin: 900000}},
-	{i: 101177, n: "Cursed Light Gloves", p: {coin: 900000}}
+	{i: 101177, n: "Cursed Light Gloves", p: {coin: 900000}},
+	{i: 102940, n: "Meteor-Wielder's Glove", p: {coin: 900000}}
 ],
 LightLeggings: [
 	{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -1986,7 +1993,8 @@ MediumGloves: [
 	{i: 97663, n: "Suun's Grips", p: {coin: 900000}},
 	{i: 98234, n: "Keeper's Grips", p: {coin: 900000}},
 	{i: 99476, n: "Medium Special Ops Gloves", p: {coin: 900000}},
-	{i: 101153, n: "Cursed Medium Gloves", p: {coin: 900000}}
+	{i: 101153, n: "Cursed Medium Gloves", p: {coin: 900000}},
+	{i: 102303, n: "Meteor-Wielder's Glove", p: {coin: 900000}}
 ],
 MediumLeggings: [
 	{i: 48106, n: "Ahamid's Leggings", p: {coin: 1100000}},
@@ -2402,7 +2410,8 @@ HeavyGloves: [
 	{i: 97680, n: "Suun's Warfist", p: {coin: 900000}},
 	{i: 98244, n: "Keeper's Warfists", p: {coin: 900000}},
 	{i: 99488, n: "Heavy Special Ops Gloves", p: {coin: 900000}},
-	{i: 101119, n: "Cursed Heavy Gloves", p: {coin: 900000}}
+	{i: 101119, n: "Cursed Heavy Gloves", p: {coin: 900000}},
+	{i: 103018, n: "Meteor-Wielder's Glove", p: {coin: 900000}}
 ],
 HeavyLeggings: [
 	{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -2717,7 +2726,8 @@ Axe: [
 	{i: 95963, n: "Jade Punk Axe", p: {coin: 1100000}},
 	{i: 96835, n: "Suun's Reaver", p: {coin: 1100000}},
 	{i: 100652, n: "Rabid Skyscale Axe", p: {coin: 1100000}},
-	{i: 101845, n: "The Axe of Destiny", p: {coin: 1100000}}
+	{i: 101845, n: "The Axe of Destiny", p: {coin: 1100000}},
+	{i: 102138, n: "Corrupted Hero Axe", p: {coin: 1100000}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -2797,7 +2807,8 @@ Mace: [
 	{i: 97162, n: "Jade Punk Mace", p: {coin: 1100000}},
 	{i: 100251, n: "Rabid Skyscale Mace", p: {coin: 1100000}},
 	{i: 100474, n: "Rabid Abomination Mace", p: {coin: 1100000}},
-	{i: 101122, n: "Wrath of Ignaxious", p: {coin: 1100000}}
+	{i: 101122, n: "Wrath of Ignaxious", p: {coin: 1100000}},
+	{i: 102104, n: "Corrupted Hero Mace", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2885,7 +2896,8 @@ Sword: [
 	{i: 99498, n: "Tahkayun's Edge", p: {coin: 1200000}},
 	{i: 100084, n: "Rabid Skyscale Sword", p: {coin: 1200000}},
 	{i: 100413, n: "Envy's Bite", p: {coin: 1200000}},
-	{i: 101510, n: "Knaebelag's Fang", p: {coin: 1200000}}
+	{i: 101510, n: "Knaebelag's Fang", p: {coin: 1200000}},
+	{i: 102137, n: "Corrupted Hero Sword", p: {coin: 1200000}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -2967,7 +2979,8 @@ Dagger: [
 	{i: 98079, n: "Aetherblade Shank", p: {coin: 1100000}},
 	{i: 99478, n: "Tahkayun's Armor Piercer", p: {coin: 1100000}},
 	{i: 99544, n: "Tahkayun's Reverse Grip Edge", p: {coin: 1100000}},
-	{i: 100963, n: "Rabid Skyscale Dagger", p: {coin: 1100000}}
+	{i: 100963, n: "Rabid Skyscale Dagger", p: {coin: 1100000}},
+	{i: 102163, n: "Corrupted Hero Dagger", p: {coin: 1100000}}
 ],
 Pistol: [
 	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
@@ -3044,7 +3057,8 @@ Pistol: [
 	{i: 97508, n: "Togo's Revolver", p: {coin: 1100000}},
 	{i: 95852, n: "Suun's Revolver", p: {coin: 1100000}},
 	{i: 96331, n: "Jade Punk Pistol", p: {coin: 1100000}},
-	{i: 100424, n: "Rabid Skyscale Pistol", p: {coin: 1100000}}
+	{i: 100424, n: "Rabid Skyscale Pistol", p: {coin: 1100000}},
+	{i: 102171, n: "Corrupted Hero Pistol", p: {coin: 1100000}}
 ],
 Scepter: [
 	{i: 77441, n: "Chest of Scepters", p: {coin: 1100000}},
@@ -3123,7 +3137,8 @@ Scepter: [
 	{i: 97845, n: "Possession", p: {coin: 1100000}},
 	{i: 95985, n: "Jade Punk Scepter", p: {coin: 1100000}},
 	{i: 96254, n: "Suun's Wand", p: {coin: 1100000}},
-	{i: 100006, n: "Rabid Skyscale Scepter", p: {coin: 1100000}}
+	{i: 100006, n: "Rabid Skyscale Scepter", p: {coin: 1100000}},
+	{i: 102103, n: "Corrupted Hero Scepter", p: {coin: 1100000}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -3201,7 +3216,8 @@ Focus: [
 	{i: 97831, n: "Togo's Artifact", p: {coin: 1000000}},
 	{i: 100383, n: "Despair's Lament", p: {coin: 1000000}},
 	{i: 100762, n: "Rabid Skyscale Focus", p: {coin: 1000000}},
-	{i: 100868, n: "Rabid Abomination Focus", p: {coin: 1000000}}
+	{i: 100868, n: "Rabid Abomination Focus", p: {coin: 1000000}},
+	{i: 102141, n: "Corrupted Hero Focus", p: {coin: 1000000}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -3286,7 +3302,8 @@ Shield: [
 	{i: 97023, n: "Jade Punk Shield", p: {coin: 1000000}},
 	{i: 100070, n: "Gluttony's Platter", p: {coin: 1000000}},
 	{i: 100124, n: "Rabid Skyscale Shield", p: {coin: 1000000}},
-	{i: 100281, n: "Rabid Abomination Shield", p: {coin: 1000000}}
+	{i: 100281, n: "Rabid Abomination Shield", p: {coin: 1000000}},
+	{i: 102136, n: "Corrupted Hero Shield", p: {coin: 1000000}}
 ],
 Torch: [
 	{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
@@ -3363,7 +3380,8 @@ Torch: [
 	{i: 97752, n: "Togo's Brazier", p: {coin: 1000000}},
 	{i: 95785, n: "Jade Punk Torch", p: {coin: 1000000}},
 	{i: 96286, n: "Suun's Brazier", p: {coin: 1000000}},
-	{i: 100929, n: "Rabid Skyscale Torch", p: {coin: 1000000}}
+	{i: 100929, n: "Rabid Skyscale Torch", p: {coin: 1000000}},
+	{i: 102148, n: "Corrupted Hero Torch", p: {coin: 1000000}}
 ],
 Warhorn: [
 	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
@@ -3440,7 +3458,8 @@ Warhorn: [
 	{i: 95749, n: "Suun's Herald", p: {coin: 1000000}},
 	{i: 96216, n: "Jade Punk Warhorn", p: {coin: 1000000}},
 	{i: 100218, n: "Rabid Skyscale Warhorn", p: {coin: 1000000}},
-	{i: 100297, n: "Avarice's Command", p: {coin: 1000000}}
+	{i: 100297, n: "Avarice's Command", p: {coin: 1000000}},
+	{i: 102123, n: "Corrupted Hero Warhorn", p: {coin: 1000000}}
 ],
 Greatsword: [
 	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
@@ -3526,7 +3545,8 @@ Greatsword: [
 	{i: 99151, n: "Berserker's Aetherized Vermilion Greatsword", p: {coin: 1200000}},
 	{i: 99157, n: "Viper's Aetherized Arsenite Greatsword", p: {coin: 1200000}},
 	{i: 99174, n: "Zealot's Aetherized Indigo Greatsword", p: {coin: 1200000}},
-	{i: 100363, n: "Rabid Skyscale Greatsword", p: {coin: 1200000}}
+	{i: 100363, n: "Rabid Skyscale Greatsword", p: {coin: 1200000}},
+	{i: 102176, n: "Corrupted Hero Greatsword", p: {coin: 1200000}}
 ],
 Hammer: [
 	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -3613,7 +3633,8 @@ Hammer: [
 	{i: 99145, n: "Berserker's Aetherized Vermilion Hammer", p: {coin: 1100000}},
 	{i: 99170, n: "Viper's Aetherized Arsenite Hammer", p: {coin: 1100000}},
 	{i: 100649, n: "Rabid Skyscale Hammer", p: {coin: 1100000}},
-	{i: 100721, n: "Rage's Fist", p: {coin: 1100000}}
+	{i: 100721, n: "Rage's Fist", p: {coin: 1100000}},
+	{i: 102112, n: "Corrupted Hero Hammer", p: {coin: 1100000}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
@@ -3693,7 +3714,8 @@ LongBow: [
 	{i: 96518, n: "Jade Punk Longbow", p: {coin: 1300000}},
 	{i: 97748, n: "Suun's Greatbow", p: {coin: 1300000}},
 	{i: 97791, n: "Togo's Greatbow", p: {coin: 1300000}},
-	{i: 100289, n: "Rabid Skyscale Longbow", p: {coin: 1300000}}
+	{i: 100289, n: "Rabid Skyscale Longbow", p: {coin: 1300000}},
+	{i: 102131, n: "Corrupted Hero Longbow", p: {coin: 1300000}}
 ],
 ShortBow: [
 	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
@@ -3767,7 +3789,8 @@ ShortBow: [
 	{i: 96522, n: "Suun's Short Bow", p: {coin: 1300000}},
 	{i: 100483, n: "Malice's Heartstring", p: {coin: 1300000}},
 	{i: 100630, n: "Rabid Skyscale Short Bow", p: {coin: 1300000}},
-	{i: 100092, n: "Rabid Abomination Short Bow", p: {coin: 1300000}}
+	{i: 100092, n: "Rabid Abomination Short Bow", p: {coin: 1300000}},
+	{i: 102125, n: "Corrupted Hero Short Bow", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
@@ -3844,7 +3867,8 @@ Rifle: [
 	{i: 96796, n: "Suun's Musket", p: {coin: 1200000}},
 	{i: 97531, n: "Togo's Musket", p: {coin: 1200000}},
 	{i: 98085, n: "MinSec Elite Sniper Rifle", p: {coin: 1200000}},
-	{i: 100539, n: "Rabid Skyscale Rifle", p: {coin: 1200000}}
+	{i: 100539, n: "Rabid Skyscale Rifle", p: {coin: 1200000}},
+	{i: 102146, n: "Corrupted Hero Rifle", p: {coin: 1200000}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
@@ -3939,7 +3963,8 @@ Staff: [
 	{i: 99162, n: "Viper's Aetherized Arsenite Staff", p: {coin: 1200000}},
 	{i: 99184, n: "Berserker's Aetherized Vermilion Staff", p: {coin: 1200000}},
 	{i: 100229, n: "Rabid Skyscale Staff", p: {coin: 1200000}},
-	{i: 100589, n: "Regret's Memory", p: {coin: 1200000}}
+	{i: 100589, n: "Regret's Memory", p: {coin: 1200000}},
+	{i: 102169, n: "Corrupted Hero Staff", p: {coin: 1200000}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},
@@ -3988,7 +4013,9 @@ Harpoon: [
 	{i: 89610, n: "Steelstar's Impaler", p: {coin: 1100000}},
 	{i: 90226, n: "Impaler of the Scion", p: {coin: 1100000}},
 	{i: 96525, n: "Togo's Impaler", p: {coin: 1100000}},
-	{i: 96974, n: "Suun's Impaler", p: {coin: 1100000}}
+	{i: 96974, n: "Suun's Impaler", p: {coin: 1100000}},
+	{i: 102178, n: "Corrupted Hero Spear", p: {coin: 1100000}},
+	{i: 102692, n: "Falling Star", p: {coin: 1100000}}
 ],
 Speargun: [
 	{i: 77285, n: "Chest of Harpoon Guns", p: {coin: 1300000}},
