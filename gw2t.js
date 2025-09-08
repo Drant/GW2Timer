@@ -25178,7 +25178,7 @@ M = {
 	 */
 	isWithinZone: function(pZone, pCoord)
 	{
-		var rect = pZone.continent_rect;
+		var rect = [this.compensateGC(pZone.continent_rect[0]), this.compensateGC(pZone.continent_rect[1])];
 		if (pCoord[0] >= rect[0][0]
 			&& pCoord[1] >= rect[0][1]
 			&& pCoord[0] <= rect[1][0]
@@ -25221,10 +25221,11 @@ M = {
 			.value = pCoord[0] + ", " + pCoord[1];
 	
 		// Don't continue if mouse is still in the same zone
-		if (pCoord[0] >= this.ZoneCurrent.continent_rect[0][0] // x1
-			&& pCoord[1] >= this.ZoneCurrent.continent_rect[0][1] // y1
-			&& pCoord[0] <= this.ZoneCurrent.continent_rect[1][0] // x2
-			&& pCoord[1] <= this.ZoneCurrent.continent_rect[1][1] // y2
+		let rect = [this.compensateGC(this.ZoneCurrent.continent_rect[0]), this.compensateGC(this.ZoneCurrent.continent_rect[1])];
+		if (pCoord[0] >= rect[0][0] // x1
+			&& pCoord[1] >= rect[0][1] // y1
+			&& pCoord[0] <= rect[1][0] // x2
+			&& pCoord[1] <= rect[1][1] // y2
 			|| this.isZoneLocked === true)
 		{
 			return;
@@ -27266,15 +27267,33 @@ M = {
 			P.tickGPS();
 		}
 	},
+
+	/*
+	 * The original GW2 coordinates are based on a specific map size and origin.
+	 * If the map size changed, the coordinates can be compensated here instead of replacing all the hardcoded ones.
+	 * @param array pCoord array of two numbers.
+	 * @param pCompensate if undefined assume Tyria, if false don't compensate, if true assume WvW Mists
+	 * @returns GW2 coordinates array.
+	 */
+	compensateGC: function(pCoord, pCompensate) {
+		if (pCompensate === false)  return pCoord;
+		if (pCoord && pCoord.length > 1) {
+			if (pCompensate === true) {
+				return [parseInt(pCoord[0]) - 0, parseInt(pCoord[1]) - 0];
+			}
+			return [parseInt(pCoord[0]) + 32768, parseInt(pCoord[1]) + 16384];
+		}
+		return pCoord;
+	},
 	
 	/*
 	 * Converts GW2's coordinates XXXXX,XXXXX to Leaflet LatLng coordinates XXX,XXX.
 	 * @param array pCoord array of two numbers.
 	 * @returns LatLng Leaflet object.
 	 */
-	convertGCtoLC: function(pCoord)
+	convertGCtoLC: function(pCoord, pCompensate)
 	{
-		return this.Map.unproject(pCoord, this.Map.getMaxZoom());
+		return this.Map.unproject(this.compensateGC(pCoord, pCompensate), this.Map.getMaxZoom());
 	},
 	
 	/*
@@ -27283,7 +27302,7 @@ M = {
 	 * @param int pIndexStart starting index.
 	 * @returns array of LatLng.
 	 */
-	convertGCtoLCMulti: function(pCoordArray, pIndexStart)
+	convertGCtoLCMulti: function(pCoordArray, pIndexStart, pCompensate)
 	{
 		pIndexStart = pIndexStart || 0;
 		var i;
@@ -28965,7 +28984,7 @@ P = {
 				var zoneobj = M.Zones[i];
 				// Cover the zone with a colored border signifying its region
 				P.Layer.ZoneBorder.addLayer(L.rectangle(
-					M.convertGCtoLCMulti(zoneobj.continent_rect), {
+					M.convertGCtoLCMulti(zoneobj.continent_rect, 0, false), {
 						fill: false,
 						color: M.Regions[zoneobj.region].color,
 						weight: 2,
@@ -31630,7 +31649,7 @@ W = {
 		{
 			obj = W.Objectives[i];
 			subobjclass = (obj.type === W.ObjectiveEnum.Ruins || obj.type === W.ObjectiveEnum.Bloodlust) ? "objSubobjective" : "";
-			marker = L.marker(W.convertGCtoLC(obj.coord),
+			marker = L.marker(W.convertGCtoLC(obj.coord, true),
 			{
 				clickable: true,
 				riseOnHover: true,
@@ -31676,7 +31695,7 @@ W = {
 			for (var ii in landlabel)
 			{
 				var coord = landlabel[ii];
-				marker = L.marker(W.convertGCtoLC(coord),
+				marker = L.marker(W.convertGCtoLC(coord, true),
 				{
 					icon: L.divIcon(
 					{
@@ -31758,7 +31777,7 @@ W = {
 				{
 					var offset = W.Metadata.Offsets[pZoneNick];
 					var coord = pCoords[i];
-					var marker = L.marker(W.convertGCtoLC([coord[0] + offset[0], coord[1] + offset[1]]),
+					var marker = L.marker(W.convertGCtoLC([coord[0] + offset[0], coord[1] + offset[1]], true),
 					{
 						clickable: false,
 						icon: L.icon(
@@ -31813,7 +31832,7 @@ W = {
 					var coord = pCoords[i];
 					var coordA = [(coord[0])[0] + offset[0], (coord[0])[1] + offset[1]];
 					var coordB = [(coord[1])[0] + offset[0], (coord[1])[1] + offset[1]];
-					var path = L.polyline(W.convertGCtoLCDual([coordA, coordB]),
+					var path = L.polyline(W.convertGCtoLCDual([coordA, coordB], true),
 					{
 						clickable: false,
 						color: pColor,
