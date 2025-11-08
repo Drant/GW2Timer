@@ -14,6 +14,10 @@ var GW2T_CONTINENT_DATA = {
 		Bounds: [[0, 49152], [49152, 0]],
 		Center: [16384, 16384], // Actual: [24576, 24576]
 		CenterInitial: [-1024, 1024], // Initial coords are in Leaflet system, and are out of bounds so browser doesn't download tiles yet
+		Compensate: [32768, 16384], // Geometric translation from original tileset dimensions and origin
+		//Dimensions: [81920, 114688],
+		//Bounds: [[0, 114688], [81920, 0]],
+		//Compensate: [0, 0],
 		Floors: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-18,-19,-20,-21,-22,20,21,22,23,24,25,26,27,28,29,30,34,36,37,38,39,40,41,42,43,44,45,46,47,48,49,-24,-26,-27,-28,-29,-30,-31,-33,-34,-35,-36]
 	},
 	"wvw": { // The Mists
@@ -22,6 +26,7 @@ var GW2T_CONTINENT_DATA = {
 		Bounds: [[0, 16384], [16384, 0]],
 		Center: [10494, 12414], // Actual: [8192, 8192]
 		CenterInitial: [-193.96875, 163.96875],
+		Compensate: [0, 0],
 		Floors: [1,3,5,6,7,8,9,10,13,14,15,16,18,19,20,21,22,23,24,25,26,27,28,29,30,-27,-28,-29,-30,-31,35,32,-32,-33,37,39,40]
 	}
 };
@@ -2225,12 +2230,12 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='https://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	// "<a href='https://gw2timer.com/?page=Audit'>Audit Account</a> to keep track of all your assets over time. <a href='https://gw2timer.com/?page=Catalog'>Catalog</a> updated for HotS release."
 	NewsPVE: { // Shown on main page dashboard
-//		content: "Pact Supply spreadsheet was locked by Google somehow, it's accessible again now. Sorry for the downtime and thanks for updating it!",
+		content: "Pact Supply spreadsheet was temporarily deactivated, it's accessible again now. Sorry for the downtime and thanks for updating it!",
 //		content: "Please tell new players about gw2timer.com!",
 //		content: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='https://gw2timer.com/?page=Pumpkins'>more</a>.",
 //		content: "<a href='https://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
-		content: "",
-		Finish: new Date("2023-01-03T17:00:00Z")
+//		content: "",
+		Finish: new Date("2025-11-15T17:00:00Z")
 	},
 	NewsWVW: { // Shown on WvW message log
 		content: "",
@@ -2466,8 +2471,8 @@ Faux: [
 Pact:
 {
 	isEnabled: true,
-	SpreadsheetEdit: "https://docs.google.com/spreadsheets/d/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/edit?usp=sharing",
-	SpreadsheetData: "https://sheets.googleapis.com/v4/spreadsheets/1hIw2DAzdD72wPfP-GJ3sNlf4weaJ2L2mMFGJPFb93eE/values/Pact%20Supplies?key=AIzaSyAvWYr1PnZfyQ1b5HNlUlp4pIyeMx6E80w",
+	SpreadsheetEdit: "https://docs.google.com/spreadsheets/d/14Jf0-RAcva1w-vx71vK1YvRIcGi4sQfWcrZHyhwAzwQ/edit?usp=sharing",
+	SpreadsheetData: "https://sheets.googleapis.com/v4/spreadsheets/14Jf0-RAcva1w-vx71vK1YvRIcGi4sQfWcrZHyhwAzwQ/values/Pact%20Supplies?key=AIzaSyDZ47Hhnven42-0Wrys0N7zmUjSuo-1aSY",
 	resetHour: 8,
 	name_en: "Pact Supply",
 	name_de: "Pakt-Vorratsnetzwerk",
