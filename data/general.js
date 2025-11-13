@@ -87,8 +87,29 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1226": "desolation",
 	"1248": "vabbi",
 	"1263": "istan",
+	"1271": "sandswept",
+	"1288": "kourna",
+	"1301": "jahai",
+	"1310": "thunderhead",
+	"1317": "dragonfall",
+	"1330": "grothmar",
+	"1343": "bjora",
+	"1371": "drizzlewood",
+	"1442": "seitung",
+	"1438": "kaineng",
+	"1452": "echovald",
+	"1422": "dragonsend",
+	"1490": "gyala",
+	"1509": "wizard",
 	"1510": "skywatch",
 	"1517": "amnytas",
+	"1526": "nayos",
+	"1550": "lowland",
+	"1554": "syntri",
+	"1575": "mistburned",
+	"1574": "nisos",
+	"1595": "shipwreck",
+	"1593": "starlit"
 };
 var GW2T_LAND_ASSOCIATION = {
 	"38": "eternal",
@@ -1225,7 +1246,7 @@ var GW2T_REGION_DATA = {
 	name_es: "Cantha",
 	name_fr: "Cantha",
 	name_zh: "凯珊",
-	color: "jade"
+	color: "seagreen"
 },
 "horn": {
 	name_en: "Horn of Maguuma",
@@ -1234,6 +1255,22 @@ var GW2T_REGION_DATA = {
 	name_fr: "Corne de Maguuma",
 	name_zh: "迈古玛之角",
 	color: "skyblue"
+},
+"janthir": {
+	name_en: "Janthir",
+	name_de: "Janthir",
+	name_es: "Janthir",
+	name_fr: "Janthir",
+	name_zh: "珍瑟",
+	color: "cornflowerblue"
+},
+"castora": {
+	name_en: "Castora",
+	name_de: "Castora",
+	name_es: "Castora",
+	name_fr: "Castora",
+	name_zh: "卡斯特拉",
+	color: "orangered"
 }
 };
 
@@ -1938,7 +1975,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "雨森海岸",
 	region: "shiverpeaks",
 	map_rect: [[-24576, -52224], [27648, 55296]],
-	continent_rect: [[50128, 17809], [52304, 22289]]
+	continent_rect: [[17360, 1425], [19536, 5905]]
 },
 "seitung":
 {
@@ -1950,7 +1987,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "青函省",
 	region: "cantha",
 	map_rect: [[-46080, -30720], [46080, 33792]],
-	continent_rect: [[21159, 100457], [24999, 103145]]
+	continent_rect: [[-11609, 84073], [-7769, 86761]]
 },
 "kaineng":
 {
@@ -1962,7 +1999,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "新凯宁城",
 	region: "cantha",
 	map_rect: [[-46080, -30720], [46080, 30720]],
-	continent_rect: [[25000, 98100], [28840, 100660]]
+	continent_rect: [[-7768, 81716], [-3928, 84276]]
 },
 "echovald":
 {
@@ -1974,7 +2011,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "科瓦德荒野",
 	region: "cantha",
 	map_rect: [[-46080, -30720], [46080, 30720]],
-	continent_rect: [[29185, 100890], [33025, 103450]]
+	continent_rect: [[-3583, 84506], [257, 87066]]
 },
 "dragonsend":
 {
@@ -1986,7 +2023,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "巨龙尽头",
 	region: "cantha",
 	map_rect: [[-24576, -43008], [27648, 46080]],
-	continent_rect: [[33126, 101838], [35302, 105550]]
+	continent_rect: [[358, 85454], [2534, 89166]]
 },
 "gyala":
 {
@@ -1998,7 +2035,19 @@ var GW2T_ZONE_DATA = {
 	name_zh: "盖拉洞窟",
 	region: "cantha",
 	map_rect: [[-24576, -43008], [27648, 46080]],
-	continent_rect: [[36677, 100479], [38853, 104191]]
+	continent_rect: [[3909, 84095], [6085, 87807]]
+},
+"wizard":
+{
+	id: "1509",
+	name_en: "The Wizard's Tower",
+	name_de: "Der Turm des Zauberers",
+	name_es: "La torre del brujo",
+	name_fr: "La Tour du sorcier",
+	name_zh: "巫师塔",
+	region: "horn",
+	map_rect: [[-15360, -9216], [18432, 9216]],
+	continent_rect: [[-9369, 5498], [-7961, 6266]]
 },
 "skywatch":
 {
@@ -2010,11 +2059,11 @@ var GW2T_ZONE_DATA = {
 	name_zh: "天空哨站群岛",
 	region: "horn",
 	map_rect: [[-43008, -24576], [46080, 27648]],
-	continent_rect: [[23590, 22650], [27302, 24826]]
+	continent_rect: [[-9178, 6266], [-5466, 8442]]
 },
 "amnytas":
 {
-	id: "1422",
+	id: "1517",
 	name_en: "Amnytas",
 	name_de: "Amnytas",
 	name_es: "Amnytas",
@@ -2022,8 +2071,92 @@ var GW2T_ZONE_DATA = {
 	name_zh: "阿姆尼塔斯",
 	region: "horn",
 	map_rect: [[-33792, -33792], [36864, 36864]],
-	continent_rect: [[22614, 18938], [25558, 21882]]
-}
+	continent_rect: [[-10154, 2554], [-7210, 5498]]
+},
+"nayos":
+{
+	id: "1526",
+	name_en: "Inner Nayos",
+	name_de: "Inneres Nayos",
+	name_es: "Zona interior de Nayos",
+	name_fr: "Nayos intérieur",
+	name_zh: "纳约斯内层",
+	region: "horn",
+	map_rect: [[-43008, -24576], [46080, 27648]],
+	continent_rect: [[-13333, 5516], [-9621, 7692]]
+},
+"lowland":
+{
+	id: "1550",
+	name_en: "Lowland Shore",
+	name_de: "Tiefland-Küste",
+	name_es: "Costas Bajas",
+	name_fr: "Côte des basses terres",
+	name_zh: "低地海岸",
+	region: "janthir",
+	map_rect: [[-46080, -30720], [46080, 30720]],
+	continent_rect: [[7351, 5134], [11191, 7694]]
+},
+"syntri":
+{
+	id: "1554",
+	name_en: "Janthir Syntri",
+	name_de: "Janthir Syntri",
+	name_es: "Janthir Syntri",
+	name_fr: "Syntri de Janthir",
+	name_zh: "珍瑟新萃",
+	region: "janthir",
+	map_rect: [[-36864, -36864], [39936, 36864]],
+	continent_rect: [[5526, -2302], [8726, 770]]
+},
+"mistburned":
+{
+	id: "1575",
+	name_en: "Mistburned Barrens",
+	name_de: "Nebelbrand-Ödland",
+	name_es: "Yermos de Pavesas de Niebla",
+	name_fr: "Landes de Feu-de-Brume",
+	name_zh: "雾灼荒地",
+	region: "janthir",
+	map_rect: [[-46080, -30720], [46080, 30720]],
+	continent_rect: [[1295, -6023], [2952, -3463]], continent_rect_actual: [[1295, -6023], [5135, -3463]]
+},
+"nisos":
+{
+	id: "1574",
+	name_en: "Bava Nisos",
+	name_de: "Bava Nisos",
+	name_es: "Bava Nisos",
+	name_fr: "Bava Nisos",
+	name_zh: "巴瓦·尼索斯",
+	region: "janthir",
+	map_rect: [[-30720, -30720], [30720,30720]],
+	continent_rect: [[2952, -6040], [5512, -3480]]
+},
+"shipwreck":
+{
+	id: "1595",
+	name_en: "Shipwreck Strand",
+	name_de: "Strand der Wracks",
+	name_es: "Litoral del Naufragio",
+	name_fr: "Rive aux épaves",
+	name_zh: "船难海岸",
+	region: "castora",
+	map_rect: [[-36864, -30720], [39936, 30720]],
+	continent_rect: [[-26438, 41001], [-23238, 43561]]
+},
+"starlit":
+{
+	id: "1593",
+	name_en: "Starlit Weald",
+	name_de: "Sternenlicht-Gehölz",
+	name_es: "Bosquezuelo Estelar",
+	name_fr: "Bois étoilé",
+	name_zh: "星光林地",
+	region: "castora",
+	map_rect: [[-30720, -36864], [30720, 39936]],
+	continent_rect: [[-23238, 41001], [-20678, 44201]]
+},
 };
 
 
@@ -2052,6 +2185,21 @@ var GW2T_TIMELINE = [
 			{ time: "00:00", duration: "00:15", primacy: 3, name_en: "Mad King Says", name_de: "Verrückte König sagt", name_es: "Rey Loco dice", name_fr: "Roi Dément a dit", name_zh: "疯王说" },
 		]
 	},*/
+	{
+		zone: "shipwreck",
+		Segments: [
+			{ time: "00:00", duration: "00:15", primacy: 2, name_en: "Weald", name_de: "Gehölz", name_es: "Bosquezuelo", name_fr: "Bois", name_zh: "林地" },
+			{ time: "00:40", duration: "00:20", primacy: 3, name_en: "Hammerhart", name_de: "Hammerhart", name_es: "Venadoasolador", name_fr: "Cerf-marteau", name_zh: "巨锤猛汉" },
+			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Weald", name_de: "Gehölz", name_es: "Bosquezuelo", name_fr: "Bois", name_zh: "林地" },
+		]
+	},
+	{
+		zone: "syntri",
+		Segments: [
+			{ time: "00:30", duration: "00:25", primacy: 3, name_en: "Mists", name_de: "Nebel", name_es: "Niebla", name_fr: "Brumes", name_zh: "迷雾" },
+			{ time: "01:20", duration: "00:25", primacy: 3, name_en: "Voyage", name_de: "Reise", name_es: "Viaje", name_fr: "Voyage", name_zh: "航程" },
+		]
+	},
 	{
 		zone: "skywatch",
 		Segments: [

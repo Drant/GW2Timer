@@ -81,7 +81,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 220307}, // 171202 is before https transition
+		programVersion: {key: "int_utlProgramVersion", value: 251112}, // 171202 is before https transition
 		buildVersion: {key: "int_utlBuildVersion", value: 0},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
@@ -5303,7 +5303,7 @@ Z = {
 	 * @param object pMapObject which map to execute.
 	 * @param enum pZoom level, optional.
 	 */
-	interpretCommand: function(pString, pMapObject, pZoom, pPin)
+	interpretCommand: function(pString, pMapObject, pZoom, pPin, pCompensate)
 	{
 		if (pString.indexOf(Z.cCommandPrefix) === 0)
 		{
@@ -5327,7 +5327,7 @@ Z = {
 		else if (pMapObject.parsePersonalPath(pString) === false)
 		{
 			// If input looks like a 2D array of coordinates, then create pins from them
-			pMapObject.goToArguments(pString, pZoom, pPin);
+			pMapObject.goToArguments(pString, pZoom, pPin, pCompensate);
 		}
 	},
 	
@@ -21836,6 +21836,8 @@ D = {
 			cs: "skrýt", it: "nascondi", pl: "ukryj", pt: "ocultar", ru: "скрыть", zh: "隐藏"},
 		s_draw: {de: "zeichnen", es: "dibujar", fr: "dessiner",
 			cs: "kreslit", it: "disegnare", pl: "rysować", pt: "desenhar", ru: "рисова́ть", zh: "画"},
+		s_move: {de: "bewegen", es: "mover", fr: "déplacer",
+			cs: "pohyb", it: "spostare", pl: "przenosić", pt: "mover", ru: "двигаться", zh: "移动"},
 		s_undo: {de: "rückgängig", es: "deshacer", fr: "annuler",
 			cs: "zpět", it: "annullare", pl: "cofnąć", pt: "desfazer", ru: "отменить", zh: "撤销"},
 		s_optimize: {de: "optimieren", es: "optimizar", fr: "optimiser",
@@ -24838,7 +24840,7 @@ M = {
 		this.Map.on("click", function(pEvent)
 		{
 			if (that.isMouseOnHUD || that.isTouchEnabled) { return; }
-			var coord = that.convertLCtoGC(pEvent.latlng);
+			var coord = that.compensateGC(that.convertLCtoGC(pEvent.latlng), -1);
 			that.outputCoordinatesCopy(P.formatCoord(coord));
 		});
 
@@ -25217,8 +25219,9 @@ M = {
 		var that = this;
 		var htmlidprefix = that.MapEnum;
 		
+		let compCoord = this.compensateGC(pCoord, -1);
 		document.getElementById(htmlidprefix + "CoordinatesMouse")
-			.value = pCoord[0] + ", " + pCoord[1];
+			.value = compCoord[0] + ", " + compCoord[1];
 	
 		// Don't continue if mouse is still in the same zone
 		let rect = [this.compensateGC(this.ZoneCurrent.continent_rect[0]), this.compensateGC(this.ZoneCurrent.continent_rect[1])];
@@ -26047,15 +26050,17 @@ M = {
 	 * @param 2D array pCoords of x y coordinates.
 	 * @param string pZoomArgs for map view.
 	 */
-	redrawPersonalPath: function(pCoords, pZoomArgs)
+	redrawPersonalPath: function(pCoords, pZoomArgs, pCompensate)
 	{
+		// Keep personal paths as is since they're user generated, but compensate hardcoded paths
+		pCompensate = pCompensate === undefined ? false : pCompensate;
 		var coords = (pCoords !== undefined) ? pCoords : this.getPersonalCoords();
 		if (coords !== undefined && coords !== null && coords.length > 0)
 		{
 			this.clearPersonalPins();
 			for (var i in coords)
 			{
-				this.createPersonalPin(this.convertGCtoLC(coords[i]));
+				this.createPersonalPin(this.convertGCtoLC(coords[i], pCompensate));
 			}
 			this.drawPersonalPath();
 			// View the first point in the generated path
@@ -26063,11 +26068,11 @@ M = {
 			{
 				if (pZoomArgs === undefined)
 				{
-					this.goToArguments(coords[0]);
+					this.goToArguments(coords[0], null, null, pCompensate);
 				}
 				else
 				{
-					this.goToArguments(pZoomArgs);
+					this.goToArguments(pZoomArgs, null, null, pCompensate);
 				}
 			}
 		}
@@ -27060,17 +27065,17 @@ M = {
 	/*
 	 * Views the map at the specifications.
 	 * @param 2D array pCoord coordinates.
-	 * @param object pPin which to move to coordinate.
 	 * @param enum pZoom level or object with integer "offset" key.
+	 * @param object pPin which to move to coordinate.
 	 */
-	goToView: function(pCoord, pZoom, pPin)
+	goToView: function(pCoord, pZoom, pPin, pCompensate)
 	{
-		if (pPin !== undefined)
+		if (pPin !== undefined && pPin !== null)
 		{
 			this.movePin(pPin, pCoord);
 		}
 		
-		if (pZoom === undefined)
+		if (pZoom === undefined || pZoom === null)
 		{
 			pZoom = this.ZoomEnum.Ground;
 		}
@@ -27082,11 +27087,11 @@ M = {
 		{
 			pZoom = this.getAdaptiveZoom();
 		}
-		else if (typeof pZoom === "object" && pZoom.offset !== undefined)
+		else if (typeof pZoom === "object" && pZoom.offset !== undefined && pZoom.offset !== null)
 		{
 			pZoom = this.getAdaptiveZoom(pZoom.offset);
 		}
-		this.Map.setView(this.convertGCtoLC(pCoord), pZoom);
+		this.Map.setView(this.convertGCtoLC(pCoord, pCompensate), pZoom);
 		this.showCurrentZone(pCoord);
 	},
 	
@@ -27168,7 +27173,7 @@ M = {
 	 * coords[1] = y coordinate.
 	 * coords[2] = z coordinate (zoom level, lower value equals greater zoom-in).
 	 */
-	goToArguments: function(pArguments, pZoom, pPin)
+	goToArguments: function(pArguments, pZoom, pPin, pCompensate)
 	{
 		var i;
 		var coords = [];
@@ -27180,7 +27185,7 @@ M = {
 			{
 				if (isFinite(coords[0]) && isFinite(coords[1]))
 				{
-					this.goToView(coords, pZoom, pPin);
+					this.goToView(coords, pZoom, pPin, pCompensate);
 				}
 			}
 			else if (coords.length >= 3)
@@ -27189,7 +27194,7 @@ M = {
 				{
 					// Zoom level 0 is ground level (opposite the enum)
 					var zoomlevel = this.invertZoomLevel(coords[2]);
-					this.goToView([coords[0], coords[1]], zoomlevel, pPin);
+					this.goToView([coords[0], coords[1]], zoomlevel, pPin, pCompensate);
 				}
 			}
 			else
@@ -27206,7 +27211,7 @@ M = {
 					{
 						if (zone.indexOf(i) !== -1)
 						{
-							this.goToView(this.getZoneCenter(i), this.ZoomEnum.Sky);
+							this.goToView(this.getZoneCenter(i), this.ZoomEnum.Sky, pCompensate);
 							break;
 						}
 					}
@@ -27270,20 +27275,36 @@ M = {
 
 	/*
 	 * The original GW2 coordinates are based on a specific map size and origin.
-	 * If the map size changed, the coordinates can be compensated here instead of replacing all the hardcoded ones.
+	 * If the map size changed, the coordinates can be geometrically translated here instead of replacing all the hardcoded ones.
 	 * @param array pCoord array of two numbers.
-	 * @param pCompensate if undefined assume Tyria, if false don't compensate, if true assume WvW Mists
+	 * @param pCompensate if false don't compensate, if -1 uncompensate
 	 * @returns GW2 coordinates array.
 	 */
 	compensateGC: function(pCoord, pCompensate) {
 		if (pCompensate === false)  return pCoord;
 		if (pCoord && pCoord.length > 1) {
-			if (pCompensate === true) {
-				return [parseInt(pCoord[0]) - 0, parseInt(pCoord[1]) - 0];
+			if (pCompensate === -1) {
+				return [
+					parseFloat(pCoord[0]) - this.Continent.Compensate[0],
+					parseFloat(pCoord[1]) - this.Continent.Compensate[1]
+				];
 			}
-			return [parseInt(pCoord[0]) + 32768, parseInt(pCoord[1]) + 16384];
+			return [
+				parseFloat(pCoord[0]) + this.Continent.Compensate[0],
+				parseFloat(pCoord[1]) + this.Continent.Compensate[1]
+			];
 		}
 		return pCoord;
+	},
+	compensateGCMulti: function(pCoordArray, pCompensate)
+	{
+		var i;
+		var coords = [];
+		for (i = 0; i < pCoordArray.length; i++)
+		{
+			coords.push(this.compensateGC(pCoordArray[i], pCompensate));
+		}
+		return coords;
 	},
 	
 	/*
@@ -27309,7 +27330,8 @@ M = {
 		var latlngs = [];
 		for (i = pIndexStart; i < pCoordArray.length; i++)
 		{
-			latlngs.push(this.convertGCtoLC(pCoordArray[i]));
+			var coord = (pCompensate !== undefined) ? this.compensateGC(pCoordArray[i], pCompensate) : pCoordArray[i];
+			latlngs.push(this.convertGCtoLC(coord));
 		}
 		return latlngs;
 	},
@@ -27898,6 +27920,10 @@ P = {
 					for (i = 0; i < numofpois; i++)
 					{
 						poi = apizone.points_of_interest[i];
+						// KLUDGE: Directly mutate the API's coordinates
+						if (Array.isArray(poi.coord)) {
+							poi.coord = that.compensateGC(poi.coord, -1);
+						}
 
 						// Properties assignment based on location's type
 						switch (poi.type)
@@ -28033,6 +28059,10 @@ P = {
 							for (i = 0; i < numofpois; i++)
 							{
 								poi = apizone.training_points[i];
+								// KLUDGE: Directly mutate the API's coordinates
+								if (Array.isArray(poi.coord)) {
+									poi.coord = that.compensateGC(poi.coord, -1);
+								}
 								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
 									title: "<span class='" + "mapPoi" + "'>" + translationmastery + "</span>",
@@ -28059,6 +28089,10 @@ P = {
 							for (i = 0; i < numofpois; i++)
 							{
 								poi = apizone.skill_challenges[i];
+								// KLUDGE: Directly mutate the API's coordinates
+								if (Array.isArray(poi.coord)) {
+									poi.coord = that.compensateGC(poi.coord, -1);
+								}
 								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
 									title: "<span class='" + "mapPoi" + "'>" + translationchallenge + "</span>",
@@ -28085,6 +28119,10 @@ P = {
 							for (i = 0; i < numofpois; i++)
 							{
 								poi = apizone.tasks[i];
+								// KLUDGE: Directly mutate the API's coordinates
+								if (Array.isArray(poi.coord)) {
+									poi.coord = that.compensateGC(poi.coord, -1);
+								}
 								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
 									title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
@@ -28102,7 +28140,7 @@ P = {
 								P.addMapLocation(poi.coord, poi.objective, icon, zonename + " " + translationheart);
 
 								// Heart Area
-								area = L.polygon(that.convertGCtoLCMulti(poi.bounds), {
+								area = L.polygon(that.convertGCtoLCMulti(poi.bounds, 0, -1), {
 									clickable: false,
 									color: "#ffc321",
 									weight: 2,
@@ -28128,6 +28166,10 @@ P = {
 							for (i = 0; i < numofpois; i++)
 							{
 								poi = apizone.sectors[i];
+								// KLUDGE: Directly mutate the API's coordinates
+								if (Array.isArray(poi.coord)) {
+									poi.coord = that.compensateGC(poi.coord, -1);
+								}
 								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
 									clickable: false,
@@ -28143,7 +28185,7 @@ P = {
 								P.addMapLocation(poi.coord, poi.name, icon, zonename + " " + translationsector);
 
 								// Sector Area
-								area = L.polyline(that.convertGCtoLCMulti(poi.bounds), {
+								area = L.polyline(that.convertGCtoLCMulti(poi.bounds, 0, -1), {
 									clickable: false,
 									color: "white",
 									weight: 2,
@@ -28915,7 +28957,7 @@ P = {
 		if (M.isItineraryRetrieved)
 		{
 			var path = (pZone) ? pZone.path : M.ZoneCurrent.path;
-			M.redrawPersonalPath(path);
+			M.redrawPersonalPath(path, undefined, null);
 		}
 		else
 		{
