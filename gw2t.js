@@ -280,7 +280,7 @@ O = {
 		bol_auditVault: true,
 		bol_auditAccountOnReset: false,
 		bol_auditHistoryConverted: false,
-		int_numAuditReports: 4096,
+		int_numAuditReports: 30000, // About 82 years if 1 report per day
 		// Trading
 		bol_refreshPrices: true,
 		int_numTradingCalculators: 25,
@@ -2921,6 +2921,7 @@ U = {
 		LangKey: "",
 		Maps: "https://api.guildwars2.com/v1/maps",
 		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
+		MapFloorTyriaAddendum: "https://api.guildwars2.com/v2/continents/1/floors?ids=49", // Workaround containing the missing Crystal Desert zones
 		MapFloorMists: "https://api.guildwars2.com/v1/map_floor.json?continent_id=2&floor=1",
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
 		
@@ -3056,7 +3057,7 @@ U = {
 		// Dummy jqxhr return in case of already loaded
 		return {fail: function() {}};
 	},
-	getJSON: function(pURL, pCallback, pWantCache)
+	getJSON: function(pURL, pCallback, pWantCache, pError)
 	{
 		var wantcache = (pWantCache !== undefined) ? pWantCache : true;
 		var jqxhr = $.ajax({
@@ -3068,6 +3069,12 @@ U = {
 				if (pCallback)
 				{
 					pCallback(pData);
+				}
+			},
+			error: function(pData) {
+				if (pError)
+				{
+					pError(pData);
 				}
 			}
 		});
@@ -5116,7 +5123,7 @@ U = {
 	 */
 	getTradingItemLink: function(pID, pName)
 	{
-		return "http://www.gw2spidy.com/item/" + U.encodeURL(pID) + "?name=" + U.stripToSentence(pName).replace(/ /g, "_");
+		return "https://www.gw2tp.com/item/" + U.encodeURL(pID) + "?name=" + U.stripToSentence(pName).replace(/ /g, "_");
 	},
 	
 	/*
@@ -5154,7 +5161,7 @@ U = {
 	},
 	
 	/*
-	 * Converts a poi_id number from maps_floor.json to a valid chatlink.
+	 * Converts a poi_id number from map_floor.json to a valid chatlink.
 	 * Code from http://virtus-gilde.de/gw2map
 	 * @param int pID of the poi.
 	 * @returns string chatlink.
@@ -5565,7 +5572,7 @@ Z = {
 			{
 				
 			}},
-			updatedb: {usage: "Prints an updated database of items. <em>Parameters: bol_wantrebuild (optional).", f: function()
+			updatedb: {usage: "Prints an updated database of items. <em>Parameters: bol_wantrebuild (optional)</em>", f: function()
 			{
 				Z.collateDatabase("items", args[1] === "true");
 			}},
@@ -5579,7 +5586,11 @@ Z = {
 			collate: {usage: "Executes a function to update and categorize an unlockables record. <em>Parameters: str_section</em>", f: function()
 			{
 				Z.executeCollate(args[1], args[2]);
-			}}
+			}},
+			collatemaps: {usage: "Executes a function to update the maps cache. <em>Parameters: bol_ismists (optional)</em>", f: function()
+			{
+				Z.collateMaps(args[1] === "true" ? P.MapEnum.Mists : P.MapEnum.Tyria);
+			}},
 		};
 		// Execute the command by finding it in the object
 		if (Commands[command] !== undefined)
@@ -7744,32 +7755,64 @@ Z = {
 	
 	/*
 	 * Gets and trims the current map floor details.
+	 * @param enum pMapEnum.
 	 */
-	collateMaps: function()
+	collateMaps: function(pMapEnum)
 	{
+		var filePrefix = pMapEnum === P.MapEnum.Mists ? "mists_" : "maps_";
 		var printFile = function(pData, pLanguage)
 		{
-			for (var i in pData.regions)
+			// Tyria data is large but Mists is small, so only trim for Tyria
+			if (pMapEnum !== P.MapEnum.Mists)
 			{
-				var region = pData.regions[i];
-				for (var ii in region.maps)
+				for (var i in pData.regions)
 				{
-					// Only keep the prelisted zones
-					if (M.isZoneValid(ii) === false)
+					var region = pData.regions[i];
+					for (var ii in region.maps)
 					{
-						delete region.maps[ii];
+						// Only keep the prelisted zones
+						if (M.isZoneValid(ii) === false)
+						{
+							delete region.maps[ii];
+						}
 					}
 				}
 			}
-			Z.createFile(U.lineJSON(pData), "maps_" + pLanguage + I.cJSON);
+			Z.createFile(U.lineJSON(pData), filePrefix + pLanguage + I.cJSON);
 		};
-		Z.fetchAPIMultilingual(U.URL_API.MapFloorTyria, function(pData)
+
+		if (pMapEnum === P.MapEnum.Mists)
 		{
-			for (var i in pData)
+			Z.fetchAPIMultilingual(U.URL_API.MapFloorMists, function(pData)
 			{
-				printFile(pData[i], i);
-			}
-		});
+				for (var i in pData)
+				{
+					printFile(pData[i], i);
+				}
+			});
+		}
+		else
+		{
+			// Workaround double fetch for the missing Crystal Desert zones
+			// https://github.com/arenanet/api-cdi/issues/586
+			Z.fetchAPIMultilingual(U.URL_API.MapFloorTyria, function(pData)
+			{
+				Z.fetchAPIMultilingual(U.URL_API.MapFloorTyriaAddendum, function(pDataAddendum)
+				{
+					for (var i in pData)
+					{
+						let a = pData[i]["regions"]["12"]["maps"];
+						let b = pDataAddendum[i][0]["regions"]["12"]["maps"];
+						for (let z in b) {
+							if (M.ZoneAssociation[z] && b[z] && a[z] === undefined) {
+								a[z] = b[z];
+							}
+						}
+						printFile(pData[i], i);
+					}
+				});
+			});
+		}
 	},
 	
 	/*
@@ -24604,7 +24647,7 @@ M = {
 		for (var i in this.Zones)
 		{
 			zone = this.Zones[i];
-			zone.center = this.computeZoneCenter(zone);
+			zone.center = this.computeZoneCenter(zone, that.Continent.CompensateScale);
 			zone.nick = i;
 			zone.Layers = {
 				Path: new L.layerGroup(),
@@ -24778,7 +24821,6 @@ M = {
 	
 	/*
 	 * Bind mouse button functions for the map. Also binds the map custom context menu.
-	 * @param enum pMapEnum.
 	 */
 	bindMapClicks: function()
 	{
@@ -25180,7 +25222,8 @@ M = {
 	 */
 	isWithinZone: function(pZone, pCoord)
 	{
-		var rect = [this.compensateGC(pZone.continent_rect[0]), this.compensateGC(pZone.continent_rect[1])];
+		var wantScale = this.MapEnum === P.MapEnum.Mists;
+		var rect = [this.compensateGC(pZone.continent_rect[0], undefined, wantScale), this.compensateGC(pZone.continent_rect[1], undefined, wantScale)];
 		if (pCoord[0] >= rect[0][0]
 			&& pCoord[1] >= rect[0][1]
 			&& pCoord[0] <= rect[1][0]
@@ -25328,13 +25371,14 @@ M = {
 	 * @param object pZone
 	 * @returns array of x and y coordinates.
 	 */
-	computeZoneCenter: function(pZone)
+	computeZoneCenter: function(pZone, pScale)
 	{
+		var scale = pScale ? pScale : 1;
 		var rect = pZone.continent_rect;
 		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
 		var x = rect[0][0] + Math.floor((rect[1][0] - rect[0][0]) / 2);
 		var y = rect[0][1] + Math.floor((rect[1][1] - rect[0][1]) / 2);
-		return [x, y];
+		return [x * scale, y * scale];
 	},
 	getZoneCenter: function(pNick)
 	{
@@ -27276,33 +27320,36 @@ M = {
 	/*
 	 * The original GW2 coordinates are based on a specific map size and origin.
 	 * If the map size changed, the coordinates can be geometrically translated here instead of replacing all the hardcoded ones.
+	 * If the map tileset scaling changed, scale (8, 4, 2, 1, 1/2, 1/4, 1/8) can be used to correct the coordinates to the zoom level.
 	 * @param array pCoord array of two numbers.
 	 * @param pCompensate if false don't compensate, if -1 uncompensate
+	 * @param pScale if false don't rescale
 	 * @returns GW2 coordinates array.
 	 */
-	compensateGC: function(pCoord, pCompensate) {
-		if (pCompensate === false)  return pCoord;
-		if (pCoord && pCoord.length > 1) {
-			if (pCompensate === -1) {
-				return [
-					parseFloat(pCoord[0]) - this.Continent.Compensate[0],
-					parseFloat(pCoord[1]) - this.Continent.Compensate[1]
-				];
-			}
+	compensateGC: function(pCoord, pCompensate, pScale)
+	{
+		if (pCompensate === false)
+		{
+			return pCoord;
+		}
+		if (pCoord && pCoord.length > 1)
+		{
+			let scale = pScale === true ? this.Continent.CompensateScale : 1;
+			let sign = pCompensate === -1 ? -1 : 1;
 			return [
-				parseFloat(pCoord[0]) + this.Continent.Compensate[0],
-				parseFloat(pCoord[1]) + this.Continent.Compensate[1]
+				(parseFloat(pCoord[0]) + (sign * this.Continent.Compensate[0])) * scale,
+				(parseFloat(pCoord[1]) + (sign * this.Continent.Compensate[1])) * scale
 			];
 		}
 		return pCoord;
 	},
-	compensateGCMulti: function(pCoordArray, pCompensate)
+	compensateGCMulti: function(pCoordArray, pCompensate, pScale)
 	{
 		var i;
 		var coords = [];
 		for (i = 0; i < pCoordArray.length; i++)
 		{
-			coords.push(this.compensateGC(pCoordArray[i], pCompensate));
+			coords.push(this.compensateGC(pCoordArray[i], pCompensate, pScale));
 		}
 		return coords;
 	},
@@ -27312,9 +27359,9 @@ M = {
 	 * @param array pCoord array of two numbers.
 	 * @returns LatLng Leaflet object.
 	 */
-	convertGCtoLC: function(pCoord, pCompensate)
+	convertGCtoLC: function(pCoord, pCompensate, pScale)
 	{
-		return this.Map.unproject(this.compensateGC(pCoord, pCompensate), this.Map.getMaxZoom());
+		return this.Map.unproject(this.compensateGC(pCoord, pCompensate, pScale), this.Map.getMaxZoom());
 	},
 	
 	/*
@@ -27323,14 +27370,14 @@ M = {
 	 * @param int pIndexStart starting index.
 	 * @returns array of LatLng.
 	 */
-	convertGCtoLCMulti: function(pCoordArray, pIndexStart, pCompensate)
+	convertGCtoLCMulti: function(pCoordArray, pIndexStart, pCompensate, pScale)
 	{
 		pIndexStart = pIndexStart || 0;
 		var i;
 		var latlngs = [];
 		for (i = pIndexStart; i < pCoordArray.length; i++)
 		{
-			var coord = (pCompensate !== undefined) ? this.compensateGC(pCoordArray[i], pCompensate) : pCoordArray[i];
+			var coord = (pCompensate !== undefined) ? this.compensateGC(pCoordArray[i], pCompensate, pScale) : pCoordArray[i];
 			latlngs.push(this.convertGCtoLC(coord));
 		}
 		return latlngs;
@@ -27793,6 +27840,7 @@ P = {
 		{
 			return;
 		}
+		var wantScale = false;
 		var that = pMapObject;
 		var url;
 		var completionboolean = O.Options["bol_showWorldCompletion" + that.OptionSuffix];
@@ -27804,6 +27852,7 @@ P = {
 			
 			case P.MapEnum.Mists: {
 				url = U.getLangURL(U.URL_API.MapFloorMists);
+				wantScale = true;
 				// Exit this entire function if using the Mists map but have completion option off
 				if (completionboolean === false)
 				{
@@ -27878,8 +27927,8 @@ P = {
 		}*/	
 		var doPopulate = function(pData)
 		{
-			var i;
-			var numofpois;
+			// "Point of Interest" in game is called "landmark" in the API
+			// while various markers like vista and heart are called "points_of_interest" in the API
 			var regionid, region, zoneid, apizone, poi, zoneobj;
 			var marker, icon, area, cssclass, tooltip;
 			var translationsector = D.getTranslation("Sector");
@@ -27906,6 +27955,7 @@ P = {
 					apizone = region.maps[zoneid];
 					var zonename = D.getObjectName(zoneobj);
 					var poiname;
+					var numpoi = 0;
 					var numheart = 0;
 					var numwaypoint = 0;
 					var numlandmark = 0;
@@ -27916,13 +27966,18 @@ P = {
 					/* 
 					 * For waypoints, points of interest, and vistas.
 					 */
-					numofpois = apizone.points_of_interest.length;
-					for (i = 0; i < numofpois; i++)
+					let objs = apizone.points_of_interest;
+					for (let i in objs)
 					{
+						if (!objs.hasOwnProperty(i))
+						{
+							continue;
+						}
+						numpoi++;
 						poi = apizone.points_of_interest[i];
 						// KLUDGE: Directly mutate the API's coordinates
 						if (Array.isArray(poi.coord)) {
-							poi.coord = that.compensateGC(poi.coord, -1);
+							poi.coord = that.compensateGC(poi.coord, -1, wantScale);
 						}
 
 						// Properties assignment based on location's type
@@ -28053,15 +28108,19 @@ P = {
 						// Mastery Insights
 						if (apizone.training_points)
 						{
-							numofpois = apizone.training_points.length;
-							nummastery = numofpois;
+							let objs = apizone.training_points;
 							icon = U.URL_IMG.Mastery;
-							for (i = 0; i < numofpois; i++)
+							for (let i in objs)
 							{
-								poi = apizone.training_points[i];
+								if (!objs.hasOwnProperty(i))
+								{
+									continue;
+								}
+								nummastery++;
+								poi = objs[i];
 								// KLUDGE: Directly mutate the API's coordinates
 								if (Array.isArray(poi.coord)) {
-									poi.coord = that.compensateGC(poi.coord, -1);
+									poi.coord = that.compensateGC(poi.coord, -1, wantScale);
 								}
 								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
@@ -28083,15 +28142,19 @@ P = {
 						// Hero Challenges
 						if (apizone.skill_challenges)
 						{
-							numofpois = apizone.skill_challenges.length;
-							numchallenge = numofpois;
+							let objs = apizone.skill_challenges;
 							icon = U.URL_IMG.Challenge;
-							for (i = 0; i < numofpois; i++)
+							for (let i in objs)
 							{
-								poi = apizone.skill_challenges[i];
+								if (!objs.hasOwnProperty(i))
+								{
+									continue;
+								}
+								numchallenge++;
+								poi = objs[i];
 								// KLUDGE: Directly mutate the API's coordinates
 								if (Array.isArray(poi.coord)) {
-									poi.coord = that.compensateGC(poi.coord, -1);
+									poi.coord = that.compensateGC(poi.coord, -1, wantScale);
 								}
 								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
@@ -28113,15 +28176,19 @@ P = {
 						// Renown Hearts
 						if (apizone.tasks)
 						{
-							numofpois = apizone.tasks.length;
-							numheart = numofpois;
+							let objs = apizone.tasks;
 							icon = U.URL_IMG.Heart;
-							for (i = 0; i < numofpois; i++)
+							for (let i in objs)
 							{
-								poi = apizone.tasks[i];
+								if (!objs.hasOwnProperty(i))
+								{
+									continue;
+								}
+								numheart++;
+								poi = objs[i];
 								// KLUDGE: Directly mutate the API's coordinates
 								if (Array.isArray(poi.coord)) {
-									poi.coord = that.compensateGC(poi.coord, -1);
+									poi.coord = that.compensateGC(poi.coord, -1, wantScale);
 								}
 								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
@@ -28161,14 +28228,18 @@ P = {
 						// Sector Names
 						if (apizone.sectors)
 						{
-							numofpois = apizone.sectors.length;
+							let objs = apizone.sectors;
 							icon = U.URL_IMG.Sector;
-							for (i = 0; i < numofpois; i++)
+							for (let i in objs)
 							{
-								poi = apizone.sectors[i];
+								if (!objs.hasOwnProperty(i))
+								{
+									continue;
+								}
+								poi = objs[i];
 								// KLUDGE: Directly mutate the API's coordinates
 								if (Array.isArray(poi.coord)) {
-									poi.coord = that.compensateGC(poi.coord, -1);
+									poi.coord = that.compensateGC(poi.coord, -1, wantScale);
 								}
 								marker = L.marker(that.convertGCtoLC(poi.coord),
 								{
@@ -28185,7 +28256,7 @@ P = {
 								P.addMapLocation(poi.coord, poi.name, icon, zonename + " " + translationsector);
 
 								// Sector Area
-								area = L.polyline(that.convertGCtoLCMulti(poi.bounds, 0, -1), {
+								area = L.polyline(that.convertGCtoLCMulti(poi.bounds, 0, -1, wantScale), {
 									clickable: false,
 									color: "white",
 									weight: 2,
@@ -28201,7 +28272,7 @@ P = {
 					// Generate locations overview for this zone
 					if (completionboolean)
 					{
-						marker = L.marker(that.convertGCtoLC(zoneobj.center),
+						marker = L.marker(that.convertGCtoLC(zoneobj.center, undefined, true),
 						{
 							mappingzone: zoneobj.nick,
 							riseOnHover: true,
@@ -28233,44 +28304,47 @@ P = {
 			}
 		};
 		
-		// Temporary use of cache until PoF zones are added back by Anet
-		$.getJSON(U.URL_DATA.Maps, function(pBackup)
+		if (that.MapEnum === P.MapEnum.Tyria)
 		{
-			doPopulate(pBackup);
-			finalizePopulate(true);
-		});
-		return;
-		/*
-		 * Retrieve map data from API.
-		 */
-		$.getJSON(url, function(pData)
-		{
-			doPopulate(pData);
-			finalizePopulate(true);
-		}).fail(function()
-		{
-			I.isAPIEnabled = false;
-			// If failed to get from API then use backup cache
-			if (that.MapEnum === P.MapEnum.Tyria)
+			// Workaround use of cache until Crystal Desert zones are added back by Anet
+			$.getJSON(U.URL_DATA.Maps, function(pBackup)
 			{
-				if (I.ModeCurrent === I.ModeEnum.Website)
+				doPopulate(pBackup);
+				finalizePopulate(true);
+			});
+		}
+		else
+		{
+			// Retrieve map data from API
+			$.getJSON(url, function(pData)
+			{
+				doPopulate(pData);
+				finalizePopulate(true);
+			}).fail(function()
+			{
+				I.isAPIEnabled = false;
+				// If failed to get from API then use backup cache
+				if (that.MapEnum === P.MapEnum.Tyria)
 				{
-					I.urge(
-						"ArenaNet API server is unreachable. <a" + U.convertExternalAnchor(U.URL_API.Support + "?source=map") + ">Check status</a>.<br />"
-						+ "Map will use backup cache and features will be limited.<br />");
+					if (I.ModeCurrent === I.ModeEnum.Website)
+					{
+						I.urge(
+							"ArenaNet API server is unreachable. <a" + U.convertExternalAnchor(U.URL_API.Support + "?source=map") + ">Check status</a>.<br />"
+							+ "Map will use backup cache and features will be limited.<br />");
+					}
+					
+					$.getJSON(U.URL_DATA.Maps, function(pBackup)
+					{
+						doPopulate(pBackup);
+						finalizePopulate(true);
+					});
 				}
-				
-				$.getJSON(U.URL_DATA.Maps, function(pBackup)
+				else
 				{
-					doPopulate(pBackup);
-					finalizePopulate(true);
-				});
-			}
-			else
-			{
-				finalizePopulate(false);
-			}
-		});
+					finalizePopulate(false);
+				}
+			});
+		}
 	},
 	
 	/*
@@ -30177,7 +30251,7 @@ G = {
 			if (numnodes > 0)
 			{
 				// The eastmost coordinates will be the starting point of the optimized path
-				M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord));
+				M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord), undefined, 1);
 				waypointcost = P.printClosestWaypoints() * WAYPOINT_COPPER_AVERAGE;
 				timecost = numnodes * TIME_SECOND_AVERAGE;
 				var summary = "Gather Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice) + "</span><br />"
@@ -31691,7 +31765,7 @@ W = {
 		{
 			obj = W.Objectives[i];
 			subobjclass = (obj.type === W.ObjectiveEnum.Ruins || obj.type === W.ObjectiveEnum.Bloodlust) ? "objSubobjective" : "";
-			marker = L.marker(W.convertGCtoLC(obj.coord, true),
+			marker = L.marker(W.convertGCtoLC(obj.coord, true, true),
 			{
 				clickable: true,
 				riseOnHover: true,
@@ -31737,7 +31811,7 @@ W = {
 			for (var ii in landlabel)
 			{
 				var coord = landlabel[ii];
-				marker = L.marker(W.convertGCtoLC(coord, true),
+				marker = L.marker(W.convertGCtoLC(coord, true, true),
 				{
 					icon: L.divIcon(
 					{
@@ -31819,7 +31893,7 @@ W = {
 				{
 					var offset = W.Metadata.Offsets[pZoneNick];
 					var coord = pCoords[i];
-					var marker = L.marker(W.convertGCtoLC([coord[0] + offset[0], coord[1] + offset[1]], true),
+					var marker = L.marker(W.convertGCtoLC([coord[0] + offset[0], coord[1] + offset[1]], true, true),
 					{
 						clickable: false,
 						icon: L.icon(
@@ -31874,7 +31948,7 @@ W = {
 					var coord = pCoords[i];
 					var coordA = [(coord[0])[0] + offset[0], (coord[0])[1] + offset[1]];
 					var coordB = [(coord[1])[0] + offset[0], (coord[1])[1] + offset[1]];
-					var path = L.polyline(W.convertGCtoLCDual([coordA, coordB], true),
+					var path = L.polyline(W.convertGCtoLCDual([coordA, coordB], true, true),
 					{
 						clickable: false,
 						color: pColor,
@@ -34352,6 +34426,30 @@ T = {
 		}
 		return " " + D.getTranslation("in") + " " + hour + min;
 	},
+
+	/*
+	 * Converts a key-value dictionary object to an array.
+	 */
+	dicToArr: function(pObject)
+	{
+		if (Array.isArray(pObject))
+		{
+			return pObject;
+		}
+
+		let arr = [];
+		if (pObject && typeof pObject === "object")
+		{
+			for (let i in pObject)
+			{
+				if (pObject.hasOwnProperty(i))
+				{
+					arr.push(pObject[i]);
+				}
+			}
+		}
+		return arr;
+	},
 	
 	/*
 	 * Gets a random integer between inclusive range.
@@ -36269,7 +36367,7 @@ H = {
 						coords.push(coord);
 					}
 				}
-				M.redrawPersonalPath(P.getGreedyPath(coords), "default");
+				M.redrawPersonalPath(P.getGreedyPath(coords), "default", 1);
 				$(this).data("hasDrawn", true);
 			}
 			else
@@ -36439,7 +36537,12 @@ H = {
 							doGenerate(pData);
 						});
 					}
-				}, false);
+				}, false, function(pData) {
+					table.empty();
+					I.prettyJSON(pData);
+					I.print("Would you like to <a class='urlUpdates' href='" + U.URL_META.Forum + "'>report this error</a>?");
+					U.convertExternalLink(".urlUpdates");
+				});
 			}
 			else
 			{
@@ -38808,15 +38911,15 @@ I = {
 		// Tailor the initial zoom for WvW so all borderlands fit in the screen
 		if (screen.height >= 800)
 		{
-			O.Options.int_setInitialZoomWvW = 3;
+			O.Options.int_setInitialZoomWvW = 4;
 		}
 		else if (screen.height >= 480)
 		{
-			O.Options.int_setInitialZoomWvW = 2;
+			O.Options.int_setInitialZoomWvW = 3;
 		}
 		else
 		{
-			O.Options.int_setInitialZoomWvW = 1;
+			O.Options.int_setInitialZoomWvW = 2;
 		}
 		// Pre-set account bank width
 		if (screen.width < 1200)
@@ -39476,6 +39579,9 @@ I = {
 	 */
 	log: function(pString, pClear)
 	{
+		if (typeof pClear === "string") {
+			I.print(pClear);
+		}
 		if (typeof pString === "string")
 		{
 			I.print(pString, pClear);
@@ -39490,13 +39596,13 @@ I = {
 	 * Prints an object in JSON format.
 	 * @param object pObject.
 	 */
-	printJSON: function(pObject)
+	printJSON: function(pObject, pClear)
 	{
-		I.print(U.escapeJSON(pObject));
+		I.print(U.escapeJSON(pObject), pClear);
 	},
-	prettyJSON: function(pObject)
+	prettyJSON: function(pObject, pClear)
 	{
-		I.print("<pre>" + U.escapeJSON(pObject) + "</pre>");
+		I.print("<pre>" + U.escapeJSON(pObject) + "</pre>", pClear);
 	},
 	
 	/*

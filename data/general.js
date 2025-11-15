@@ -13,8 +13,9 @@ var GW2T_CONTINENT_DATA = {
 		Dimensions: [49152, 49152],
 		Bounds: [[0, 49152], [49152, 0]],
 		Center: [16384, 16384], // Actual: [24576, 24576]
-		CenterInitial: [-1024, 1024], // Initial coords are in Leaflet system, and are out of bounds so browser doesn't download tiles yet
+		CenterInitial: [-1024, 1024], // Initial coords must be in Leaflet system, and are out of bounds so browser doesn't download tiles yet
 		Compensate: [32768, 16384], // Geometric translation from original tileset dimensions and origin
+		CompensateScale: 1, // Each zoom level doubles or halves the map view, so coordinates will need to be scaled if the base level changed
 		//Dimensions: [81920, 114688],
 		//Bounds: [[0, 114688], [81920, 0]],
 		//Compensate: [0, 0],
@@ -24,9 +25,10 @@ var GW2T_CONTINENT_DATA = {
 		id: 2,
 		Dimensions: [16384, 16384],
 		Bounds: [[0, 16384], [16384, 0]],
-		Center: [10494, 12414], // Actual: [8192, 8192]
-		CenterInitial: [-193.96875, 163.96875],
+		Center: [5247, 6207], // Actual: [8192, 8192]
+		CenterInitial: [-96.984375, 81.984375],
 		Compensate: [0, 0],
+		CompensateScale: 1/2,
 		Floors: [1,3,5,6,7,8,9,10,13,14,15,16,18,19,20,21,22,23,24,25,26,27,28,29,30,-27,-28,-29,-30,-31,35,32,-32,-33,37,39,40]
 	}
 };
@@ -2143,7 +2145,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "船难海岸",
 	region: "castora",
 	map_rect: [[-36864, -30720], [39936, 30720]],
-	continent_rect: [[-26438, 41001], [-23238, 43561]]
+	continent_rect: [[-23238, 41001], [-20678, 44201]]
 },
 "starlit":
 {
@@ -2155,7 +2157,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "星光林地",
 	region: "castora",
 	map_rect: [[-30720, -36864], [30720, 39936]],
-	continent_rect: [[-23238, 41001], [-20678, 44201]]
+	continent_rect: [[-26438, 41001], [-23238, 43561]]
 },
 };
 
@@ -2188,7 +2190,7 @@ var GW2T_TIMELINE = [
 	{
 		zone: "shipwreck",
 		Segments: [
-			{ time: "00:00", duration: "00:15", primacy: 2, name_en: "Weald", name_de: "Gehölz", name_es: "Bosquezuelo", name_fr: "Bois", name_zh: "林地" },
+			{ time: "00:00", duration: "00:15", primacy: 1, name_en: "Weald", name_de: "Gehölz", name_es: "Bosquezuelo", name_fr: "Bois", name_zh: "林地" },
 			{ time: "00:40", duration: "00:20", primacy: 3, name_en: "Hammerhart", name_de: "Hammerhart", name_es: "Venadoasolador", name_fr: "Cerf-marteau", name_zh: "巨锤猛汉" },
 			{ time: "01:40", duration: "00:20", primacy: 3, name_en: "Weald", name_de: "Gehölz", name_es: "Bosquezuelo", name_fr: "Bois", name_zh: "林地" },
 		]
