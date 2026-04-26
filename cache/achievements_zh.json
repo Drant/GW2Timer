@@ -8126,5 +8126,8 @@
 "9225": {"id": 9225, "name": "日常汇聚：巴里尔山", "description": "", "requirement": "击败最终敌人，完成巴里尔山的个汇聚。", "locked_text": "", "type": "Default", "flags": ["Daily"], "tiers": [{"count": 1, "points": 0}]},
 "9226": {"id": 9226, "name": "日常雾灼荒地", "description": "", "requirement": "完成雾灼荒地的个事件。", "locked_text": "", "type": "Default", "flags": ["Daily"], "tiers": [{"count": 3, "points": 0}]},
 "9227": {"id": 9227, "name": "传奇守护者林地", "description": "", "requirement": "激活挑战模式，完成守护者林地遭遇。", "locked_text": "", "type": "Default", "flags": ["Permanent"], "tiers": [{"count": 1, "points": 5}], "rewards": [{"type": "Title", "id": 624}]},
-"9228": {"id": 9228, "name": "当地响应：雾灼荒地", "description": "", "requirement": "完成雾灼荒地的个事件。", "locked_text": "", "type": "Default", "flags": ["Permanent"], "tiers": [{"count": 10, "points": 0}, {"count": 10, "points": 0}, {"count": 10, "points": 0}]}
+"9228": {"id": 9228, "name": "当地响应：雾灼荒地", "description": "", "requirement": "完成雾灼荒地的个事件。", "locked_text": "", "type": "Default", "flags": ["Permanent"], "tiers": [{"count": 10, "points": 0}, {"count": 10, "points": 0}, {"count": 10, "points": 0}]},
+"9232": {"id": 9232, "name": "地下3深入冒险", "description": "", "requirement": "完成世界3测试区域2。", "locked_text": "", "type": "Default", "flags": ["Permanent"], "tiers": [{"count": 1, "points": 5}]},
+"9233": {"id": 9233, "name": "地下3秘密提交员", "description": "", "requirement": "找到世界3测试区域2的所有红色玩意。", "locked_text": "", "type": "Default", "flags": ["Permanent"], "bits": [{"type": "Text", "text": "红色玩意#1"}, {"type": "Text", "text": "红色玩意#2"}, {"type": "Text", "text": "红色玩意#3"}], "tiers": [{"count": 3, "points": 5}]},
+"9235": {"id": 9235, "name": "水下生意", "description": "", "requirement": "进入世界3测试区域2的秘密商店。", "locked_text": "", "type": "Default", "flags": ["Permanent"], "tiers": [{"count": 1, "points": 1}], "prerequisites": [7938]}
 }
