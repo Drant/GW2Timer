@@ -1421,7 +1421,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108404, n: "Ruka's Masque", p: {coin: 900000}},
 		{i: 108460, n: "Verata's Masque", p: {coin: 900000}},
 		{i: 108647, n: "Nadijeh's Masque", p: {coin: 900000}},
-		{i: 107897, n: "Thackeray's Masque", p: {coin: 900000}}
+		{i: 107897, n: "Thackeray's Masque", p: {coin: 900000}},
+		{i: 108419, n: "Giftbringer's Masque", p: {coin: 900000}}
 	],
 	LightShoulders: [
 		{i: 48101, n: "Ahamid's Epaulets", p: {coin: 900000}},
@@ -1631,7 +1632,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107775, n: "Ossa's Doublet", p: {coin: 1200000}},
 		{i: 108131, n: "Ventari's Doublet", p: {coin: 1200000}},
 		{i: 108354, n: "Laranthir's Doublet", p: {coin: 1200000}},
-		{i: 108424, n: "Tizlak's Doublet", p: {coin: 1200000}}
+		{i: 108424, n: "Tizlak's Doublet", p: {coin: 1200000}},
+		{i: 107646, n: "Giftbringer's Doublet", p: {coin: 1200000}}
 	],
 	LightGloves: [
 		{i: 48098, n: "Ahamid's Wristguards", p: {coin: 900000}},
@@ -1744,7 +1746,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108353, n: "Togo's Wristguards", p: {coin: 900000}},
 		{i: 108409, n: "Tixx's Wristguards", p: {coin: 900000}},
 		{i: 107634, n: "Thackeray's Gloves", p: {coin: 900000}},
-		{i: 108200, n: "Ossa's Wristguards", p: {coin: 900000}}
+		{i: 108200, n: "Ossa's Wristguards", p: {coin: 900000}},
+		{i: 107572, n: "Giftbringer's Wristguards", p: {coin: 900000}}
 	],
 	LightLeggings: [
 		{i: 48100, n: "Ahamid's Breeches", p: {coin: 1100000}},
@@ -2060,7 +2063,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108493, n: "Tixx's Visage", p: {coin: 900000}},
 		{i: 108567, n: "Laranthir's Visage", p: {coin: 900000}},
 		{i: 107405, n: "Ruka's Visage", p: {coin: 900000}},
-		{i: 107631, n: "Ventari's Visage", p: {coin: 900000}}
+		{i: 107631, n: "Ventari's Visage", p: {coin: 900000}},
+		{i: 107626, n: "Thackeray's Visage", p: {coin: 900000}}
 	],
 	MediumShoulders: [
 		{i: 48107, n: "Ahamid's Shoulderguard", p: {coin: 900000}},
@@ -2168,7 +2172,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108314, n: "Tateos's Shoulderguard", p: {coin: 900000}},
 		{i: 108803, n: "Ossa's Shoulderguard", p: {coin: 900000}},
 		{i: 108136, n: "Ruka's Shoulderguard", p: {coin: 900000}},
-		{i: 108430, n: "Giftbringer's Shoulderguard", p: {coin: 900000}}
+		{i: 108430, n: "Giftbringer's Shoulderguard", p: {coin: 900000}},
+		{i: 108527, n: "Thackeray's Shoulderguard", p: {coin: 900000}}
 	],
 	MediumCoat: [
 		{i: 48103, n: "Ahamid's Guise", p: {coin: 1200000}},
@@ -2488,7 +2493,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108595, n: "Ruka's Leggings", p: {coin: 1100000}},
 		{i: 108793, n: "Ossa's Leggings", p: {coin: 1100000}},
 		{i: 107393, n: "Thackeray's Leggings", p: {coin: 1100000}},
-		{i: 108012, n: "Tizlak's Leggings", p: {coin: 1100000}}
+		{i: 108012, n: "Tizlak's Leggings", p: {coin: 1100000}},
+		{i: 107473, n: "Giftbringer's Leggings", p: {coin: 1100000}}
 	],
 	MediumBoots: [
 		{i: 48102, n: "Ahamid's Striders", p: {coin: 1000000}},
@@ -2594,7 +2600,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108411, n: "Tixx's Striders", p: {coin: 1000000}},
 		{i: 108730, n: "Nerashi's Striders", p: {coin: 1000000}},
 		{i: 108579, n: "Ruka's Striders", p: {coin: 1000000}},
-		{i: 107811, n: "Giftbringer's Striders", p: {coin: 1000000}}
+		{i: 107811, n: "Giftbringer's Striders", p: {coin: 1000000}},
+		{i: 108760, n: "Thackeray's Boots", p: {coin: 1000000}}
 	],
 	HeavyHelm: [
 		{i: 48093, n: "Ahamid's Visor", p: {coin: 900000}},
@@ -2702,7 +2709,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107838, n: "Nerashi's Visor", p: {coin: 900000}},
 		{i: 107895, n: "Ventari's Visor", p: {coin: 900000}},
 		{i: 108018, n: "Verata's Visor", p: {coin: 900000}},
-		{i: 108531, n: "Giftbringer's Visor", p: {coin: 900000}}
+		{i: 108531, n: "Giftbringer's Visor", p: {coin: 900000}},
+		{i: 108316, n: "Thackeray's Barbute", p: {coin: 900000}}
 	],
 	HeavyShoulders: [
 		{i: 48095, n: "Ahamid's Pauldrons", p: {coin: 900000}},
@@ -2810,7 +2818,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107934, n: "Occam's Pauldrons", p: {coin: 900000}},
 		{i: 107941, n: "Laranthir's Pauldrons", p: {coin: 900000}},
 		{i: 108704, n: "Nerashi's Pauldrons", p: {coin: 900000}},
-		{i: 108804, n: "Nadijeh's Pauldrons", p: {coin: 900000}}
+		{i: 108804, n: "Nadijeh's Pauldrons", p: {coin: 900000}},
+		{i: 108197, n: "Thackeray's Pauldrons", p: {coin: 900000}}
 	],
 	HeavyCoat: [
 		{i: 48091, n: "Ahamid's Breastplate", p: {coin: 1200000}},
@@ -2911,7 +2920,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107935, n: "Ventari's Breastplate", p: {coin: 1200000}},
 		{i: 108205, n: "Nerashi's Breastplate", p: {coin: 1200000}},
 		{i: 108362, n: "Verata's Breastplate", p: {coin: 1200000}},
-		{i: 108648, n: "Nadijeh's Breastplate", p: {coin: 1200000}}
+		{i: 108648, n: "Nadijeh's Breastplate", p: {coin: 1200000}},
+		{i: 108330, n: "Thackeray's Breastplate", p: {coin: 1200000}}
 	],
 	HeavyGloves: [
 		{i: 48092, n: "Ahamid's Warfists", p: {coin: 900000}},
@@ -3025,7 +3035,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108438, n: "Verata's Warfists", p: {coin: 900000}},
 		{i: 108478, n: "Tizlak's Warfists", p: {coin: 900000}},
 		{i: 108486, n: "Steelstar's Warfists", p: {coin: 900000}},
-		{i: 108749, n: "Laranthir's Warfists", p: {coin: 900000}}
+		{i: 108749, n: "Laranthir's Warfists", p: {coin: 900000}},
+		{i: 108692, n: "Thackeray's Gauntlets", p: {coin: 900000}}
 	],
 	HeavyLeggings: [
 		{i: 48094, n: "Ahamid's Tassets", p: {coin: 1100000}},
@@ -3289,7 +3300,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107557, n: "Gobrech's Cloth Breather", p: {coin: 900000}},
 		{i: 108114, n: "Forgemaster's Cloth Breather", p: {coin: 900000}},
 		{i: 108659, n: "Ruka's Cloth Breather", p: {coin: 900000}},
-		{i: 108228, n: "Ventari's Cloth Breather", p: {coin: 900000}}
+		{i: 108228, n: "Ventari's Cloth Breather", p: {coin: 900000}},
+		{i: 107462, n: "Beigarth's Cloth Breather", p: {coin: 900000}}
 	],
 	MediumHelmAquatic: [
 		{i: 71423, n: "Ahamid's Leather Breather", p: {coin: 900000}},
@@ -3338,7 +3350,9 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108389, n: "Tateos's Leather Breather", p: {coin: 900000}},
 		{i: 108456, n: "Tizlak's Leather Breather", p: {coin: 900000}},
 		{i: 108033, n: "Ahamid's Leather Breather", p: {coin: 900000}},
-		{i: 108387, n: "Saphir's Leather Breather", p: {coin: 900000}}
+		{i: 108387, n: "Saphir's Leather Breather", p: {coin: 900000}},
+		{i: 107718, n: "Beigarth's Leather Breather", p: {coin: 900000}},
+		{i: 108112, n: "Gobrech's Leather Breather", p: {coin: 900000}}
 	],
 	HeavyHelmAquatic: [
 		{i: 75954, n: "Ahamid's Metal Breather", p: {coin: 900000}},
@@ -3394,7 +3408,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107317, n: "Tateos's Metal Breather", p: {coin: 900000}},
 		{i: 107724, n: "Gobrech's Metal Breather", p: {coin: 900000}},
 		{i: 108080, n: "Verata's Metal Breather", p: {coin: 900000}},
-		{i: 108666, n: "Ventari's Metal Breather", p: {coin: 900000}}
+		{i: 108666, n: "Ventari's Metal Breather", p: {coin: 900000}},
+		{i: 107994, n: "Beigarth's Metal Breather", p: {coin: 900000}}
 	],
 	Axe: [
 		{i: 77423, n: "Chest of Axes", p: {coin: 1100000}},
@@ -3513,7 +3528,9 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108390, n: "Nerashi's Reaver", p: {coin: 1100000}},
 		{i: 108398, n: "Ossa's Reaver", p: {coin: 1100000}},
 		{i: 108571, n: "Steelstar's Reaver", p: {coin: 1100000}},
-		{i: 107487, n: "Laranthir's Reaver", p: {coin: 1100000}}
+		{i: 107487, n: "Laranthir's Reaver", p: {coin: 1100000}},
+		{i: 108191, n: "Thackeray's Cleaver", p: {coin: 1100000}},
+		{i: 108378, n: "Giftbringer's Reaver", p: {coin: 1100000}}
 	],
 	Mace: [
 		{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -4250,7 +4267,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107563, n: "Laranthir's Artifact", p: {coin: 1000000}},
 		{i: 108215, n: "Steelstar's Artifact", p: {coin: 1000000}},
 		{i: 108620, n: "Ventari's Artifact", p: {coin: 1000000}},
-		{i: 108743, n: "Giftbringer's Artifact", p: {coin: 1000000}}
+		{i: 108743, n: "Giftbringer's Artifact", p: {coin: 1000000}},
+		{i: 107976, n: "Thackeray's Focus", p: {coin: 1000000}}
 	],
 	Shield: [
 		{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -4738,7 +4756,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108578, n: "Ruka's Claymore", p: {coin: 1200000}},
 		{i: 108729, n: "Pahua's Claymore", p: {coin: 1200000}},
 		{i: 108786, n: "Laranthir's Claymore", p: {coin: 1200000}},
-		{i: 108762, n: "Togo's Claymore", p: {coin: 1200000}}
+		{i: 108762, n: "Togo's Claymore", p: {coin: 1200000}},
+		{i: 108288, n: "Ventari's Claymore", p: {coin: 1200000}}
 	],
 	Hammer: [
 		{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
@@ -4984,7 +5003,9 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107535, n: "Tizlak's Greatbow", p: {coin: 1300000}},
 		{i: 108001, n: "Tixx's Greatbow", p: {coin: 1300000}},
 		{i: 107546, n: "Verata's Greatbow", p: {coin: 1300000}},
-		{i: 108516, n: "Nadijeh's Greatbow", p: {coin: 1300000}}
+		{i: 108516, n: "Nadijeh's Greatbow", p: {coin: 1300000}},
+		{i: 107984, n: "Nerashi's Greatbow", p: {coin: 1300000}},
+		{i: 108045, n: "Giftbringer's Greatbow", p: {coin: 1300000}}
 	],
 	ShortBow: [
 		{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
@@ -5539,7 +5560,10 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108636, n: "Togo's Harpoon Gun", p: {coin: 1300000}},
 		{i: 108100, n: "Thackeray's Harpoon Gun", p: {coin: 1300000}},
 		{i: 108318, n: "Pahua's Harpoon Gun", p: {coin: 1300000}},
-		{i: 108422, n: "Giftbringer's Harpoon Gun", p: {coin: 1300000}}
+		{i: 108422, n: "Giftbringer's Harpoon Gun", p: {coin: 1300000}},
+		{i: 107461, n: "Ossa's Harpoon Gun", p: {coin: 1300000}},
+		{i: 108053, n: "Ruka's Harpoon Gun", p: {coin: 1300000}},
+		{i: 108500, n: "Verata's Harpoon Gun", p: {coin: 1300000}}
 	],
 	Trident: [
 		{i: 77329, n: "Chest of Tridents", p: {coin: 1000000}},
