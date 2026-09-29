@@ -3364,7 +3364,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 107597, n: "Laranthir's Leather Breather", p: {coin: 900000}},
 		{i: 107760, n: "Angchu Leather Breather", p: {coin: 900000}},
 		{i: 108528, n: "Veldrunner Leather Breather", p: {coin: 900000}},
-		{i: 108697, n: "Ruka's Leather Breather", p: {coin: 900000}}
+		{i: 108697, n: "Ruka's Leather Breather", p: {coin: 900000}},
+		{i: 107446, n: "Ventari's Leather Breather", p: {coin: 900000}}
 	],
 	HeavyHelmAquatic: [
 		{i: 75954, n: "Ahamid's Metal Breather", p: {coin: 900000}},
@@ -3422,7 +3423,9 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108080, n: "Verata's Metal Breather", p: {coin: 900000}},
 		{i: 108666, n: "Ventari's Metal Breather", p: {coin: 900000}},
 		{i: 107994, n: "Beigarth's Metal Breather", p: {coin: 900000}},
-		{i: 107283, n: "Thackeray's Metal Breather", p: {coin: 900000}}
+		{i: 107283, n: "Thackeray's Metal Breather", p: {coin: 900000}},
+		{i: 107380, n: "Veldrunner Metal Breather", p: {coin: 900000}},
+		{i: 107660, n: "Forgemaster's Metal Breather", p: {coin: 900000}}
 	],
 	Axe: [
 		{i: 77423, n: "Chest of Axes", p: {coin: 1100000}},
@@ -4407,7 +4410,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108107, n: "Steelstar's Bastion", p: {coin: 1000000}},
 		{i: 108319, n: "Nerashi's Bastion", p: {coin: 1000000}},
 		{i: 108397, n: "Ruka's Bastion", p: {coin: 1000000}},
-		{i: 108703, n: "Nadijeh's Bastion", p: {coin: 1000000}}
+		{i: 108703, n: "Nadijeh's Bastion", p: {coin: 1000000}},
+		{i: 109975, n: "The Tyrant's Absolute Oppression", p: {coin: 1000000}}
 	],
 	Torch: [
 		{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
@@ -4771,7 +4775,8 @@ var GW2T_ASCENDED_DATA = {
 		{i: 108729, n: "Pahua's Claymore", p: {coin: 1200000}},
 		{i: 108786, n: "Laranthir's Claymore", p: {coin: 1200000}},
 		{i: 108762, n: "Togo's Claymore", p: {coin: 1200000}},
-		{i: 108288, n: "Ventari's Claymore", p: {coin: 1200000}}
+		{i: 108288, n: "Ventari's Claymore", p: {coin: 1200000}},
+		{i: 110206, n: "Torrs Calare Greatsword", p: {coin: 1200000}}
 	],
 	Hammer: [
 		{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
